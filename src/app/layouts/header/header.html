@@ -1,0 +1,16 @@
+<mat-toolbar class="app-navbar">
+  <span class="app-title">Vitoxyz</span>
+  <span class="spacer"></span>
+  <nav mat-tab-nav-bar class="navbar-tabs">
+    <a mat-tab-link
+       *ngFor="let item of menuItems"
+       [routerLink]="item.path"
+       routerLinkActive #rla="routerLinkActive"
+       [active]="rla.isActive">
+      {{ item.label }}
+    </a>
+  </nav>
+</mat-toolbar>
+<div class="main-content-area">
+  <router-outlet></router-outlet>
+</div>

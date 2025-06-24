@@ -1,0 +1,107 @@
+<div class="signup-container">
+  <mat-card class="signup-card">
+    <mat-card-header>
+      <mat-card-title>Sign Up</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="signup-form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+        <!-- Full Name -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Full Name</mat-label>
+          <input matInput placeholder="Enter your full name" formControlName="userName" required>
+          <mat-error *ngIf="signupForm.get('userName')?.invalid && signupForm.get('userName')?.touched">
+            Full Name is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Email -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Enter your email" formControlName="email" required>
+          <mat-error *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
+            Please enter a valid email.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Phone Number -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Phone Number</mat-label>
+          <input matInput placeholder="Enter your phone number" formControlName="phoneNumber" required>
+          <mat-error *ngIf="signupForm.get('phoneNumber')?.invalid && signupForm.get('phoneNumber')?.touched">
+            Phone number is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Address -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Address</mat-label>
+          <input matInput placeholder="Enter your address" formControlName="address" required>
+          <mat-error *ngIf="signupForm.get('address')?.invalid && signupForm.get('address')?.touched">
+            Address is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- City -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>City</mat-label>
+          <input matInput placeholder="Enter your city" formControlName="city" required>
+          <mat-error *ngIf="signupForm.get('city')?.invalid && signupForm.get('city')?.touched">
+            City is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Pin Code -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Pin Code</mat-label>
+          <input matInput placeholder="Enter your pin code" formControlName="pinCode" required type="number">
+          <mat-error *ngIf="signupForm.get('pinCode')?.invalid && signupForm.get('pinCode')?.touched">
+            Pin code is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Password -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Enter your password" formControlName="password" required>
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="signupForm.get('password')?.hasError('required') && signupForm.get('password')?.touched">
+            Password is required.
+          </mat-error>
+          <mat-error *ngIf="signupForm.get('password')?.hasError('minlength') && signupForm.get('password')?.touched">
+            Password must be at least 6 characters.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Confirm Password -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" placeholder="Confirm your password" formControlName="confirmPassword" required>
+          <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide confirm password'" [attr.aria-pressed]="hideConfirmPassword">
+            <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="signupForm.get('confirmPassword')?.hasError('required') && signupForm.get('confirmPassword')?.touched">
+            Confirm Password is required.
+          </mat-error>
+          <mat-error *ngIf="signupForm.hasError('passwordMismatch') && signupForm.get('confirmPassword')?.touched">
+            Passwords do not match.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Submit Button -->
+        <button mat-raised-button color="primary" type="submit" [disabled]="signupForm.invalid">
+          Sign Up
+        </button>
+
+      </form>
+    </mat-card-content>
+
+    <!-- Login Redirect -->
+    <mat-card-actions class="signup-actions">
+      <span>Already have an account?</span>
+      <button mat-button routerLink="/login">Login</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

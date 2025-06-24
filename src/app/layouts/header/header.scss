@@ -1,0 +1,16 @@
+.app-navbar {
+  display: flex;
+  justify-content: space-between; /* Distribute items with space in between */
+  align-items: center;
+  padding: 0 20px; /* Add horizontal padding */
+  height: 64px; /* Standard toolbar height */
+}
+
+.app-title {
+  font-size: 1.5em;
+  font-weight: 500;
+}
+
+.spacer {
+  flex: 1 1 auto; /* Pushes content to the sides */
+}

@@ -1,0 +1,30 @@
+<div class="chatbot-container">
+  <div class="chat-messages" #chatMessages>
+    <div *ngFor="let message of messages" 
+         [class.user-message]="message.isUser" 
+         [class.bot-message]="!message.isUser">
+      {{ message.text }}
+    </div>
+  </div>
+  <div class="chat-input">
+    <div class="input-wrapper">
+      <input 
+        type="text" 
+        [(ngModel)]="userInput" 
+        (ngModelChange)="onInputChange()"
+        (keyup.enter)="sendMessage()" 
+        placeholder="Type your message..."
+      />
+      <button *ngIf="!userInput && !isListening" 
+              class="mic-button" 
+              (click)="toggleSpeechRecognition()">
+        <mat-icon>mic_none</mat-icon>
+      </button>
+      <button *ngIf="userInput || isListening" 
+              class="send-button" 
+              (click)="sendMessage()">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

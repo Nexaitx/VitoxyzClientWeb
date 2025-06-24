@@ -1,0 +1,91 @@
+.chatbot-container {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  background-color: transparent;
+  height: 100vh; /* Full viewport height */
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: calc(100vh - 60px); /* Adjust for chat-input height */
+}
+
+.user-message, .bot-message {
+  background-color: white;
+  border: 0.5px solid #ff6200;
+  color: #333;
+  padding: 8px 15px;
+  border-radius: 20px;
+  margin: 5px 10px;
+  max-width: 80%;
+  display: inline-block;
+  word-wrap: break-word;
+}
+
+.user-message {
+  align-self: flex-end;
+}
+
+.bot-message {
+  align-self: flex-start;
+}
+
+.chat-input {
+  padding: 10px;
+  display: flex;
+  background-color: transparent;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+}
+
+.input-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+input {
+  flex: 1;
+  padding: 8px 40px 8px 15px;
+  border: 0.5px solid #ff6200;
+  border-radius: 20px;
+  background-color: white;
+  outline: none;
+}
+
+.mic-button, .send-button {
+  position: absolute;
+  right: 5px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mic-button mat-icon, .send-button mat-icon {
+  color: #ff6200;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.send-button mat-icon:hover, .mic-button mat-icon:hover {
+  color: #e55a00;
+}
+
+.mic-button:disabled mat-icon {
+  color: #ffb380;
+  cursor: not-allowed;
+}

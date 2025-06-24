@@ -1,0 +1,192 @@
+<mat-stepper #stepper>
+  <mat-step [stepControl]="onboardingForm">
+    <form [formGroup]="onboardingForm">
+  <ng-template matStepLabel>Let's know you better</ng-template>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Full Name</mat-label>
+    <input matInput formControlName="fullName" required>
+    <mat-error *ngIf="onboardingForm.get('fullName')?.invalid && onboardingForm.get('fullName')?.touched">
+      Full Name is required.
+    </mat-error>
+  </mat-form-field>
+
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="form-field-half">
+      <mat-label>Gender</mat-label>
+      <mat-select formControlName="gender" required>
+        <mat-option value="male">Male</mat-option>
+        <mat-option value="female">Female</mat-option>
+        <mat-option value="other">Other</mat-option>
+        <mat-option value="prefer_not_to_say">Prefer not to say</mat-option>
+      </mat-select>
+      <mat-error *ngIf="onboardingForm.get('gender')?.invalid && onboardingForm.get('gender')?.touched">
+        Gender is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field-half">
+      <mat-label>Age</mat-label>
+      <input matInput type="number" formControlName="age" required min="1" max="120">
+      <mat-error *ngIf="onboardingForm.get('age')?.invalid && onboardingForm.get('age')?.touched">
+        Please enter a valid age (1-120).
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="height-section full-width">
+    <mat-label class="section-label">Height:</mat-label>
+    <mat-radio-group aria-label="Select Height Unit" formControlName="heightUnit" class="height-unit-radio-group"
+      required>
+      <mat-radio-button value="cm">Centimeters (cm)</mat-radio-button>
+      <mat-radio-button value="feet_inches">Feet & Inches</mat-radio-button>
+    </mat-radio-group>
+    <mat-error *ngIf="onboardingForm.get('heightUnit')?.invalid && onboardingForm.get('heightUnit')?.touched">
+      Please select a height unit.
+    </mat-error>
+
+    <ng-container *ngIf="onboardingForm.get('heightUnit')?.value === 'cm'">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Height (cm)</mat-label>
+        <input matInput type="number" formControlName="heightCm" required min="50" max="250">
+        <mat-error *ngIf="onboardingForm.get('heightCm')?.invalid && onboardingForm.get('heightCm')?.touched">
+          Please enter a valid height (50-250 cm).
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+
+    <ng-container *ngIf="onboardingForm.get('heightUnit')?.value === 'feet_inches'">
+      <div class="height-feet-inches">
+        <mat-form-field appearance="outline" class="form-field-half">
+          <mat-label>Feet</mat-label>
+          <mat-select formControlName="heightFeet" required>
+            <mat-option *ngFor="let feet of feetOptions" [value]="feet">{{ feet }}'</mat-option>
+          </mat-select>
+          <mat-error *ngIf="onboardingForm.get('heightFeet')?.invalid && onboardingForm.get('heightFeet')?.touched">
+            Feet is required.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field-half">
+          <mat-label>Inches</mat-label>
+          <mat-select formControlName="heightInches" required>
+            <mat-option *ngFor="let inch of inchesOptions" [value]="inch">{{ inch }}"</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="onboardingForm.get('heightInches')?.invalid && onboardingForm.get('heightInches')?.touched">
+            Inches are required.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="form-field-half">
+      <mat-label>Current Weight</mat-label>
+      <input matInput type="number" formControlName="weightKg" required min="10" max="300" placeholder="e.g., 75.2">
+      <mat-error *ngIf="onboardingForm.get('weightKg')?.invalid && onboardingForm.get('weightKg')?.touched">
+        Please enter a valid weight (10-300 kg).
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field-half">
+      <mat-label>City</mat-label>
+      <input matInput formControlName="city" required placeholder="e.g., New Delhi">
+      <mat-error *ngIf="onboardingForm.get('city')?.invalid && onboardingForm.get('city')?.touched">
+        City is required.
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <button matButton matStepperNext>Next</button>
+  </div>
+</form>
+  </mat-step>
+
+  <mat-step [stepControl]="dietaryPreferenceForm">
+    <form>
+      <ng-template matStepLabel>What's your dietary preference?</ng-template>
+      <div class="dietary-preferences-section">
+        <p class="section-description">Select all that apply:</p>
+        <div class="checkbox-group">
+          <mat-checkbox *ngFor="let preference of dietaryOptions">
+            {{preference}}
+          </mat-checkbox>
+        </div>
+        <!-- <mat-error
+          *ngIf="dietaryPreferenceForm.get('preferences')?.invalid && dietaryPreferenceForm.get('preferences')?.touched"
+          class="checkbox-error">
+          Please select at least one dietary preference.
+        </mat-error> -->
+      </div>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-raised-button color="primary" matStepperNext
+          [disabled]="dietaryPreferenceForm.invalid">Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Why do you want to lose weight</ng-template>
+      <div class="checkbox-group">
+        <mat-checkbox *ngFor="let goal of goalsOptions;">
+          {{ goal.label }}
+        </mat-checkbox>
+      </div>
+
+      <div>
+        <p>Go to a different step to see the error state</p>
+        <button matButton matStepperPrevious>Back</button>
+        <button matButton matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="medicalForm" errorMessage="Address is required.">
+        <form [formGroup]="medicalForm">
+            <ng-template matStepLabel>Do you have any of the following health conditions?</ng-template>
+            
+
+        <mat-radio-group aria-label="Medical Condition Status" formControlName="hasMedicalConditions" class="radio-group" required>
+          <mat-radio-button value="no">No medical condition</mat-radio-button>
+          <mat-radio-button value="yes">Yes, I have one or more conditions</mat-radio-button>
+        </mat-radio-group>
+        <mat-error *ngIf="medicalForm.get('hasMedicalConditions')?.invalid && medicalForm.get('hasMedicalConditions')?.touched">
+          Please select an option.
+        </mat-error>
+
+        <div formGroupName="medicalConditions" class="conditions-checkbox-group">
+          <p class="section-label">Select all that apply:</p>
+          <mat-checkbox formControlName="thyroid">Thyroid</mat-checkbox>
+          <mat-checkbox formControlName="diabetes">Diabetes / Pre-diabetes</mat-checkbox>
+          <mat-checkbox formControlName="pcodPcos">PCOD / PCOS</mat-checkbox>
+          <mat-checkbox formControlName="cholesterol">Cholesterol</mat-checkbox>
+          <mat-checkbox formControlName="others" (change)="onOthersCheckboxChange()">Others (Please specify)</mat-checkbox>
+        </div>
+
+        <mat-form-field *ngIf="medicalForm.get('medicalConditions.others')?.value" appearance="outline" class="full-width specify-others-field">
+          <mat-label>Please specify other condition(s)</mat-label>
+          <input matInput formControlName="otherSpecify" required>
+          <mat-error *ngIf="medicalForm.get('otherSpecify')?.invalid && medicalForm.get('otherSpecify')?.touched">
+            Please specify the other condition(s).
+          </mat-error>
+        </mat-form-field>
+            <div>
+                <button matButton matStepperPrevious>Back</button>
+                <button matButton matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+   
+    <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button matButton matStepperPrevious>Back</button>
+      <button matButton (click)="onStepperSubmit()">Submit</button>
+    </div>
+  </mat-step>
+</mat-stepper>
