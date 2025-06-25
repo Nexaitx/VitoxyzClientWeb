@@ -33,7 +33,7 @@ export class Header {
     { label: 'Diet Plans', path: '/user-profile' },
     { label: 'Doctor Consultation', path: '/meera-ai' },
     { label: 'Support', path: '/support' },
-    { label: 'Log out', path: '/login' },
+    { label: 'Log in', path: '/login' },
     { label: 'Sign up', path: '/signup' },
     { label: 'Need Help?', path: '/help' }
   ];

@@ -5,22 +5,25 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpErrorResponse, HttpClientModule } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { environment } from '../../../../src/environments/environment.development'; // Import your environment file
+import { MatCheckboxModule } from '@angular/material/checkbox';
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     MatCardModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
+    MatCheckboxModule,
     RouterLink,
     HttpClientModule,
     MatSnackBarModule
@@ -36,6 +39,10 @@ export class Login implements OnInit {
   loginForm!: FormGroup;
   hide = true; // For password visibility toggle
   isLoading = false; // New property for loading state
+  authMethod: 'password' | 'otp' = 'password';
+  usePassword = true;
+  useOtp = false;
+  rememberMe = true;
 
   constructor(
     private fb: FormBuilder
@@ -74,11 +81,11 @@ export class Login implements OnInit {
         console.error('Login failed', error);
         let errorMessage = 'Login failed. Please try again.';
         if (error.error && typeof error.error === 'object' && error.error.message) {
-            // Check if error.error is an object and has a message property
-            errorMessage = `Login failed: ${error.error.message}`;
+          // Check if error.error is an object and has a message property
+          errorMessage = `Login failed: ${error.error.message}`;
         } else if (typeof error.error === 'string' && error.error.length > 0) {
-            // Sometimes the error.error is a plain string
-            errorMessage = `Login failed: ${error.error}`;
+          // Sometimes the error.error is a plain string
+          errorMessage = `Login failed: ${error.error}`;
         } else if (error.status === 401) {
           errorMessage = 'Invalid credentials. Please check your email and password.';
         } else if (error.status === 0) {
