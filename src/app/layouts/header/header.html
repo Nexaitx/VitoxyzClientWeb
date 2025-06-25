@@ -1,16 +1,23 @@
-<mat-toolbar class="app-navbar">
-  <span class="app-title">Vitoxyz</span>
-  <span class="spacer"></span>
-  <nav mat-tab-nav-bar class="navbar-tabs">
-    <a mat-tab-link
-       *ngFor="let item of menuItems"
-       [routerLink]="item.path"
-       routerLinkActive #rla="routerLinkActive"
-       [active]="rla.isActive">
-      {{ item.label }}
-    </a>
-  </nav>
-</mat-toolbar>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" href="#">Vitoxyz</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item" *ngFor="let item of menuItems">
+          <a class="nav-link text-white" 
+             [ngClass]="{'active rounded-pill': rla.isActive}"
+             [routerLink]="item.path"
+             routerLinkActive #rla="routerLinkActive">
+            {{ item.label }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 <div class="main-content-area">
   <router-outlet></router-outlet>
 </div>

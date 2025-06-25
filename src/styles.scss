@@ -1,18 +1,12 @@
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.dev/guide/theming
-@use '@angular/material' as mat;
-@use 'app_theme-colors' as vitoxyz;
+// @use '@angular/material' as mat;
+// @use 'app_theme-colors' as vitoxyz;
+@import "../node_modules/bootstrap/scss/bootstrap";
+
 html {
-  @include mat.theme((
-    color: (
-      theme-type: light,
-      primary: vitoxyz.$primary-palette,
-      tertiary: vitoxyz.$tertiary-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+ 
 }/* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }

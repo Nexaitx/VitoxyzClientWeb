@@ -1,16 +1,5 @@
-.app-navbar {
-  display: flex;
-  justify-content: space-between; /* Distribute items with space in between */
-  align-items: center;
-  padding: 0 20px; /* Add horizontal padding */
-  height: 64px; /* Standard toolbar height */
-}
-
-.app-title {
-  font-size: 1.5em;
-  font-weight: 500;
-}
-
-.spacer {
-  flex: 1 1 auto; /* Pushes content to the sides */
+.navbar-nav .nav-link.active.rounded-pill {
+  background-color: #ffffff33; /* Light background for active pill */
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
