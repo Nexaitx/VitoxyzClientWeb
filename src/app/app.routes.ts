@@ -11,13 +11,19 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/dashboard/dashboard').then(m => m.Dashboard),
             },
             {
-                path: 'book-staff',
-                loadComponent: () => import('./pages/dashboard/dashboard').then(m => m.Dashboard),
+                path: 'book-staff/book-nurse',
+                loadComponent: () => import('./pages/book-staff/book-nurse/book-nurse').then(m => m.BookNurse),
             },
-            {
-                path: 'locate-nurse',
-                loadComponent: () => import('./pages/book-staff/locate-nurse/locate-nurse').then(m => m.LocateNurse),
-            },
+            // {
+            //     path: 'book-staff',
+            //     loadComponent: () => import('./pages/book-staff/book-staff').then(m => m.BookStaff),
+            //     children: [
+            //         {
+            //             path: 'book-nurse',
+            //             loadComponent: () => import('./pages/book-staff/book-nurse/book-nurse').then(m => m.BookNurse),
+            //         }
+            //     ]
+            // },
             {
                 path: 'user-onboarding',
                 loadComponent: () => import('./pages/user-onboarding/user-onboarding').then(m => m.UserOnboarding),
@@ -41,6 +47,10 @@ export const routes: Routes = [
             {
                 path: 'login',
                 loadComponent: () => import('./pages/login/login').then(m => m.Login),
+            },
+            {
+                path: 'sign-up',
+                loadComponent: () => import('./pages/sign-up/sign-up').then(m => m.SignUp),
             }
         ]
     },

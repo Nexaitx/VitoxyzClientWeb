@@ -1,5 +1,23 @@
-.navbar-nav .nav-link.active.rounded-pill {
+.navbar-nav .nav-link.active.rounded-pill,
+.dropdown-item.active.rounded-pill {
   background-color: #ffffff33; /* Light background for active pill */
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.dropdown-menu {
+  // background-color: #343a40;
+}
+
+.dropdown-item {
+  // color: white;
+}
+
+.dropdown-item:hover {
+  // background-color: #495057;
+}
+
+/* Optional: Style for dropdown toggle on hover */
+.dropdown:hover .dropdown-toggle {
+  background-color: #ffffff33;
 }

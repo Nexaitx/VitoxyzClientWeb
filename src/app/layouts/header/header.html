@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
     <a class="navbar-brand text-white" href="#">Vitoxyz</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -6,18 +6,41 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item" *ngFor="let item of menuItems">
-          <a class="nav-link text-white" 
-             [ngClass]="{'active rounded-pill': rla.isActive}"
-             [routerLink]="item.path"
-             routerLinkActive #rla="routerLinkActive">
-            {{ item.label }}
-          </a>
-        </li>
+        <ng-container *ngFor="let item of menuItems">
+          <li class="nav-item" *ngIf="!item.dropdown">
+            <a class="nav-link text-white"
+               [ngClass]="{'active rounded-pill': rla.isActive}"
+               [routerLink]="item.path"
+               routerLinkActive #rla="routerLinkActive">
+              {{ item.label }}
+            </a>
+          </li>
+          <li class="nav-item dropdown" *ngIf="item.dropdown">
+            <a class="nav-link text-white dropdown-toggle"
+               href="#"
+               id="navbarDropdown"
+               role="button"
+               data-bs-toggle="dropdown"
+               aria-expanded="false">
+              {{ item.label }}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li *ngFor="let dropdownItem of item.dropdownItems">
+                <a class="dropdown-item"
+                   [routerLink]="['/book-staff/book-nurse']"
+                   routerLinkActive="active"
+                   [routerLinkActiveOptions]="{ exact: false }">
+                  {{ dropdownItem.label }}
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ng-container>
       </ul>
     </div>
   </div>
 </nav>
+
 <div class="main-content-area">
   <router-outlet></router-outlet>
 </div>

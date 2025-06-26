@@ -25,20 +25,25 @@ import { MatTabsModule } from '@angular/material/tabs';
 })
 export class Header {
   public router = inject(Router);
-  
+
   menuItems = [
     { label: 'Medecines', path: '/dashboard' },
-    { label: 'Book Staff', path: '/locate-nurse' },
+    {
+      label: 'Book Staff',
+      dropdown: true,
+      dropdownItems: [
+        { label: 'Book Nurse', path: 'book-staff/book-nurse' }
+      ]
+    },
     { label: 'Lab Test', path: '/user-onboarding' },
     { label: 'Diet Plans', path: '/user-profile' },
     { label: 'Doctor Consultation', path: '/meera-ai' },
     { label: 'Support', path: '/support' },
-    { label: 'Log out', path: '/login' },
-    { label: 'Sign up', path: '/signup' },
+    { label: 'Log In', path: '/login' },
+    { label: 'Sign up', path: '/sign-up' },
     { label: 'Need Help?', path: '/help' }
   ];
 
   ngOnInit() {
-    this.router.navigate([this.menuItems[1].path]);
   }
 }

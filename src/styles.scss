@@ -1,13 +1,20 @@
 
-// Custom Theming for Angular Material
-// For more information: https://material.angular.dev/guide/theming
-// @use '@angular/material' as mat;
-// @use 'app_theme-colors' as vitoxyz;
-@import "../node_modules/bootstrap/scss/bootstrap";
+body {
+    height: 100%;
+}
 
-html {
- 
-}/* You can add global styles to this file, and also import other style files */
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.navbar,
+.dropdown-item.active,
+.dropdown-item:active, .btn-primary {
+    background: #3B938A !important;
+}
+
+.form-select,
+.form-control {
+    border-radius: 20px !important;
+}

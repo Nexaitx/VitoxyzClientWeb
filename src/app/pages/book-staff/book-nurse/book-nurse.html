@@ -1,1 +1,169 @@
-<p>book-nurse works!</p>
+<!-- <google-map [center]="center" [zoom]="zoom" height="500px" width="100%"></google-map> -->
+<div class="container">
+  <div class="form-container">
+    <h2 class="form-title">Book a Nurse</h2>
+    <!-- Binds the form to the reactive form group -->
+    <form [formGroup]="nurseBookingForm" (ngSubmit)="onSubmit()">
+
+      <!-- User Information Section -->
+      <h4 class="section-title mb-4">Your Information</h4>
+      <div formGroupName="userInfo" class="row g-3 mb-4">
+        <div class="col-md-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" formControlName="name"
+            [class.is-invalid]="nurseBookingForm.get('userInfo.name')?.invalid && nurseBookingForm.get('userInfo.name')?.touched" />
+          <div *ngIf="nurseBookingForm.get('userInfo.name')?.invalid && nurseBookingForm.get('userInfo.name')?.touched"
+            class="invalid-feedback">
+            Name is required.
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="age" class="form-label">Age</label>
+          <input type="number" class="form-control" id="age" formControlName="age"
+            [class.is-invalid]="nurseBookingForm.get('userInfo.age')?.invalid && nurseBookingForm.get('userInfo.age')?.touched" />
+          <div *ngIf="nurseBookingForm.get('userInfo.age')?.invalid && nurseBookingForm.get('userInfo.age')?.touched"
+            class="invalid-feedback">
+            <span *ngIf="nurseBookingForm.get('userInfo.age')?.errors?.['required']">Age is required.</span>
+            <span *ngIf="nurseBookingForm.get('userInfo.age')?.errors?.['min']">Age must be at least 18.</span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="phoneNumber" class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber"
+            [class.is-invalid]="nurseBookingForm.get('userInfo.phoneNumber')?.invalid && nurseBookingForm.get('userInfo.phoneNumber')?.touched" />
+          <div
+            *ngIf="nurseBookingForm.get('userInfo.phoneNumber')?.invalid && nurseBookingForm.get('userInfo.phoneNumber')?.touched"
+            class="invalid-feedback">
+            <span *ngIf="nurseBookingForm.get('userInfo.phoneNumber')?.errors?.['required']">Phone number is
+              required.</span>
+            <span *ngIf="nurseBookingForm.get('userInfo.phoneNumber')?.errors?.['pattern']">Please enter a valid
+              10-digit phone number.</span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="completeAddress" class="form-label">Complete Address</label>
+          <input type="text" class="form-control" id="completeAddress" formControlName="completeAddress"
+            [class.is-invalid]="nurseBookingForm.get('userInfo.completeAddress')?.invalid && nurseBookingForm.get('userInfo.completeAddress')?.touched" />
+          <div
+            *ngIf="nurseBookingForm.get('userInfo.completeAddress')?.invalid && nurseBookingForm.get('userInfo.completeAddress')?.touched"
+            class="invalid-feedback">
+            Complete Address is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- Nurse Details Section (using FormArray) -->
+      <h4 class="section-title mb-4">Nurse Details</h4>
+      <!-- Iterates over each FormGroup in the nurseDetails FormArray -->
+      <div formArrayName="nurseDetails row">
+        <div *ngFor="let nurseDetail of nurseDetailsFormArray.controls; let i = index" [formGroupName]="i"
+          class="card col-3 mb-3 position-relative">
+          <div class="card-body">
+            <h5 class="card-title text-muted mb-3">Nurse #{{ i + 1 }}</h5>
+            <!-- Remove button for nurse details, only if more than one nurse detail exists -->
+            <button *ngIf="nurseDetailsFormArray.length > 1" type="button"
+              class="btn btn-sm btn-outline-danger btn-remove-card" (click)="removeNurseDetail(i)"
+              title="Remove Nurse Details">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+                viewBox="0 0 16 16">
+                <path
+                  d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+              </svg>
+            </button>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="typeOfNurse-{{i}}" class="form-label">Type of Nurse</label>
+                <select class="form-select" id="typeOfNurse-{{i}}" formControlName="typeOfNurse"
+                  [class.is-invalid]="nurseDetail.get('typeOfNurse')?.invalid && nurseDetail.get('typeOfNurse')?.touched">
+                  <option value="">Select Type</option>
+                  <option value="Registered Nurse (RN)">Registered Nurse (RN)</option>
+                  <option value="Licensed Practical Nurse (LPN)">Licensed Practical Nurse (LPN)</option>
+                  <option value="Certified Nursing Assistant (CNA)">Certified Nursing Assistant (CNA)</option>
+                  <option value="Home Health Aide (HHA)">Home Health Aide (HHA)</option>
+                  <option value="Specialized Nurse">Specialized Nurse</option>
+                </select>
+                <div *ngIf="nurseDetail.get('typeOfNurse')?.invalid && nurseDetail.get('typeOfNurse')?.touched"
+                  class="invalid-feedback">
+                  Type of Nurse is required.
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="shiftTime-{{i}}" class="form-label">Shift Time</label>
+                <select class="form-select" id="shiftTime-{{i}}" formControlName="shiftTime"
+                  [class.is-invalid]="nurseDetail.get('shiftTime')?.invalid && nurseDetail.get('shiftTime')?.touched">
+                  <option value="">Select Shift</option>
+                  <option value="Day Shift (8 AM - 4 PM)">Day Shift (8 AM - 4 PM)</option>
+                  <option value="Evening Shift (4 PM - 12 AM)">Evening Shift (4 PM - 12 AM)</option>
+                  <option value="Night Shift (12 AM - 8 AM)">Night Shift (12 AM - 8 AM)</option>
+                  <option value="Custom Shift">Custom Shift</option>
+                </select>
+                <div *ngIf="nurseDetail.get('shiftTime')?.invalid && nurseDetail.get('shiftTime')?.touched"
+                  class="invalid-feedback">
+                  Shift Time is required.
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="gender-{{i}}" class="form-label">Gender</label>
+                <select class="form-select" id="gender-{{i}}" formControlName="gender"
+                  [class.is-invalid]="nurseDetail.get('gender')?.invalid && nurseDetail.get('gender')?.touched">
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Any">Any</option>
+                </select>
+                <div *ngIf="nurseDetail.get('gender')?.invalid && nurseDetail.get('gender')?.touched"
+                  class="invalid-feedback">
+                  Gender is required.
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="numberOfNurses-{{i}}" class="form-label">Number of Nurses</label>
+                <input type="number" class="form-control" id="numberOfNurses-{{i}}" formControlName="numberOfNurses"
+                  min="1"
+                  [class.is-invalid]="nurseDetail.get('numberOfNurses')?.invalid && nurseDetail.get('numberOfNurses')?.touched" />
+                <div *ngIf="nurseDetail.get('numberOfNurses')?.invalid && nurseDetail.get('numberOfNurses')?.touched"
+                  class="invalid-feedback">
+                  <span *ngIf="nurseDetail.get('numberOfNurses')?.errors?.['required']">Number of Nurses is
+                    required.</span>
+                  <span *ngIf="nurseDetail.get('numberOfNurses')?.errors?.['min']">Must be at least 1.</span>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <label for="daysRequired-{{i}}" class="form-label">How many days should nurses be required?</label>
+                <input type="number" class="form-control" id="daysRequired-{{i}}" formControlName="daysRequired" min="1"
+                  [class.is-invalid]="nurseDetail.get('daysRequired')?.invalid && nurseDetail.get('daysRequired')?.touched" />
+                <div *ngIf="nurseDetail.get('daysRequired')?.invalid && nurseDetail.get('daysRequired')?.touched"
+                  class="invalid-feedback">
+                  <span *ngIf="nurseDetail.get('daysRequired')?.errors?.['required']">Days required is required.</span>
+                  <span *ngIf="nurseDetail.get('daysRequired')?.errors?.['min']">Must be at least 1 day.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Button to add more nurse details -->
+      <!-- <div class="d-grid gap-2 mb-4">
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="addNurseDetail()"
+        >
+          Add More Nurse Details
+        </button>
+      </div> -->
+
+      <!-- Submit Button -->
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-success" (click)="addNurseDetail()">
+          Add More Nurse Details
+        </button>
+        <button type="submit" class="btn btn-primary btn-lg" [disabled]="nurseBookingForm.invalid">
+          Search for Nurses
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
