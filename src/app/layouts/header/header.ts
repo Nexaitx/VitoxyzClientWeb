@@ -36,7 +36,6 @@ export class Header {
         { label: 'Physiotherapist', path: 'book-staff/book-physiotherapist' },
         { label: 'Baby-Sitter', path: 'book-staff/book-baby-sitter' },
         { label: 'Security Guard', path: 'book-staff/book-security-guard' },
-        
         { label: 'Psychiatrist', path: 'book-staff/book-psychiatrist' },
       ]
     },
