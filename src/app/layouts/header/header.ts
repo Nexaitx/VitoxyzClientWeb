@@ -28,7 +28,7 @@ export class Header {
   
   menuItems = [
     { label: 'Medecines', path: '/dashboard' },
-    { label: 'Book Staff', path: '/user-onboarding' },
+    { label: 'Book Staff', path: '/locate-nurse' },
     { label: 'Lab Test', path: '/user-onboarding' },
     { label: 'Diet Plans', path: '/user-profile' },
     { label: 'Doctor Consultation', path: '/meera-ai' },
@@ -39,6 +39,6 @@ export class Header {
   ];
 
   ngOnInit() {
-    this.router.navigate([this.menuItems[0].path]);
+    this.router.navigate([this.menuItems[1].path]);
   }
 }

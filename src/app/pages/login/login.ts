@@ -29,7 +29,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatSnackBarModule
   ],
   templateUrl: './login.html',
-  styleUrl: './login.scss'
+  //styleUrl: './login.scss'
 })
 export class Login implements OnInit {
   private http = inject(HttpClient);
