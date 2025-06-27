@@ -33,8 +33,10 @@ export class Header {
       dropdown: true,
       dropdownItems: [
         { label: 'Nurse', path: 'book-staff/book-nurse' },
-        { label: 'Security Guard', path: 'book-staff/book-security-guard' },
         { label: 'Physiotherapist', path: 'book-staff/book-physiotherapist' },
+        { label: 'Baby-Sitter', path: 'book-staff/book-baby-sitter' },
+        { label: 'Security Guard', path: 'book-staff/book-security-guard' },
+        
         { label: 'Psychiatrist', path: 'book-staff/book-psychiatrist' },
       ]
     },
