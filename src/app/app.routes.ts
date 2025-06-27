@@ -14,16 +14,18 @@ export const routes: Routes = [
                 path: 'book-staff/book-nurse',
                 loadComponent: () => import('./pages/book-staff/book-nurse/book-nurse').then(m => m.BookNurse),
             },
-            // {
-            //     path: 'book-staff',
-            //     loadComponent: () => import('./pages/book-staff/book-staff').then(m => m.BookStaff),
-            //     children: [
-            //         {
-            //             path: 'book-nurse',
-            //             loadComponent: () => import('./pages/book-staff/book-nurse/book-nurse').then(m => m.BookNurse),
-            //         }
-            //     ]
-            // },
+            {
+                path: 'book-staff/book-security-guard',
+                loadComponent: () => import('./pages/book-staff/book-security-guard/book-security-guard').then(m => m.BookSecurityGuard),
+            },
+            {
+                path: 'book-staff/book-physiotherapist',
+                loadComponent: () => import('./pages/book-staff/book-physiotherapist/book-physiotherapist').then(m => m.BookPhysiotherapist),
+            },
+            {
+                path: 'book-staff/book-psychiatrist',
+                loadComponent: () => import('./pages/book-staff/book-psychiatrist/book-psychiatrist').then(m => m.BookPsychiatrist),
+            },
             {
                 path: 'user-onboarding',
                 loadComponent: () => import('./pages/user-onboarding/user-onboarding').then(m => m.UserOnboarding),

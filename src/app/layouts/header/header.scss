@@ -1,23 +1,18 @@
 .navbar-nav .nav-link.active.rounded-pill,
-.dropdown-item.active.rounded-pill {
+.dropdown-item.active.rounded-pill, /* This styles the active dropdown item */
+.nav-item.dropdown.active.rounded-pill { /* Add this to style the parent dropdown */
   background-color: #ffffff33; /* Light background for active pill */
   padding-left: 1rem;
   padding-right: 1rem;
 }
 
-.dropdown-menu {
-  // background-color: #343a40;
+.navbar-nav .nav-item {
+  margin-right: 15px; /* Adjust as needed */
+  /* Or for more flexible spacing using a gap property on the parent if it's a flex container */
+  /* If you want to use gap, you might need to make .navbar-nav display: flex */
 }
 
-.dropdown-item {
-  // color: white;
-}
-
-.dropdown-item:hover {
-  // background-color: #495057;
-}
-
-/* Optional: Style for dropdown toggle on hover */
-.dropdown:hover .dropdown-toggle {
-  background-color: #ffffff33;
+/* To ensure the last item doesn't have extra margin on the right */
+.navbar-nav .nav-item:last-child {
+  margin-right: 0;
 }

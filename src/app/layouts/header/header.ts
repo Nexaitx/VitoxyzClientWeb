@@ -32,12 +32,15 @@ export class Header {
       label: 'Book Staff',
       dropdown: true,
       dropdownItems: [
-        { label: 'Book Nurse', path: 'book-staff/book-nurse' }
+        { label: 'Nurse', path: 'book-staff/book-nurse' },
+        { label: 'Security Guard', path: 'book-staff/book-security-guard' },
+        { label: 'Physiotherapist', path: 'book-staff/book-physiotherapist' },
+        { label: 'Psychiatrist', path: 'book-staff/book-psychiatrist' },
       ]
     },
-    { label: 'Lab Test', path: '/user-onboarding' },
+    // { label: 'Lab Test', path: '/user-onboarding' },
     { label: 'Diet Plans', path: '/user-profile' },
-    { label: 'Doctor Consultation', path: '/meera-ai' },
+    // { label: 'Doctor Consultation', path: '/meera-ai' },
     { label: 'Support', path: '/support' },
     { label: 'Log In', path: '/login' },
     { label: 'Sign up', path: '/sign-up' },
