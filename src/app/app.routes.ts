@@ -15,6 +15,10 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/book-staff/book-nurse/book-nurse').then(m => m.BookNurse),
             },
             {
+                path: 'book-staff/book-baby-sitter',
+                loadComponent: () => import('./pages/book-staff/book-baby-sitter/book-baby-sitter').then(m => m.BookBabySitter),
+            },
+            {
                 path: 'book-staff/book-security-guard',
                 loadComponent: () => import('./pages/book-staff/book-security-guard/book-security-guard').then(m => m.BookSecurityGuard),
             },

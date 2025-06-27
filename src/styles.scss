@@ -1,19 +1,29 @@
-body {
-    height: 100%;
+:root {
+    --primary: #3B938A;
+    --secondary: #4AB8AD;
+    --tertinary: #1A998E;
 }
 
 body {
+    height: 100%;
     margin: 0;
+    font-size: 14px !important;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .navbar,
 .btn-primary {
-    background: #3B938A !important;
+    background: var(--tertinary) !important;
 }
 
-.dropdown-item:hover {
-    background-color: #4AB8AD !important;
+.text-btn {
+    color: var(--tertinary) !important;
+    border: none;
+    background: none;
+}
+
+.dropdown-item:hover , .form-check-input:checked{
+    background-color: var(--secondary) !important;
     color: #fff !important;
 }
 
@@ -25,4 +35,27 @@ body {
 .form-select,
 .form-control {
     border-radius: 20px !important;
+}
+
+.form-label {
+    margin-bottom: 0 !important;
+    font-size: 14px;
+}
+.form-select, .form-control{
+    background: #F9FAFC !important;
+}
+
+.form-control:focus, .form-select:focus , .form-check-input:checked, .form-check-input:focus, option{
+    border-color: var(--secondary) !important;
+    box-shadow: none !important;
+    outline: 0 !important;
+}
+select option:checked , select option:focus, select option:active{
+  background-color: green !important; /* Will likely not work */
+  color: white;
+}
+
+select option:hover {
+  background-color: green !important; /* Will likely not work */
+  color: white;
 }
