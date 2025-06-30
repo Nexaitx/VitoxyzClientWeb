@@ -1,3 +1,5 @@
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons.scss";
+
 :root {
     --primary: #3B938A;
     --secondary: #4AB8AD;
@@ -45,17 +47,63 @@ body {
     background: #F9FAFC !important;
 }
 
-.form-control:focus, .form-select:focus , .form-check-input:checked, .form-check-input:focus, option{
+.form-control:focus, .form-select:focus , .form-check-input:checked, .form-check-input:focus{
     border-color: var(--secondary) !important;
     box-shadow: none !important;
     outline: 0 !important;
 }
-select option:checked , select option:focus, select option:active{
+select option:checked , select option:focus, select option:active, select option:focus-within{
   background-color: green !important; /* Will likely not work */
   color: white;
 }
 
-select option:hover {
-  background-color: green !important; /* Will likely not work */
-  color: white;
+
+
+.main-container {
+  display: flex !important;
+  height: 100vh !important; /* Set height to 100% of the viewport height */
+  overflow: hidden !important; /* Hide any overflow from this container */
+}
+/* Ensure the app-map itself takes the full space of its container */
+app-map {
+  display: block; /* Important for app-map to respect height */
+  width: 100%;
+  height: 100%;
+}
+
+.form-scroll-container {
+  flex: 1; /* Take remaining space */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  height: 100%; /* Take full height of the parent flex item */
+  position: relative; /* Essential for positioning the fixed submission button relative to this container */
+  padding: 15px; /* Add some padding around the form */
+  box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+.submission-fixed {
+  position: sticky; /* Sticky positions relative to the scrollable container */
+  bottom: 0; /* Fixes it to the bottom */
+  width: 100%;
+  background-color: white; /* Add a background to ensure it stands out */
+  padding: 10px 0; /* Padding for the button area */
+  border-top: 1px solid #eee; /* Optional: adds a subtle line above the button */
+  z-index: 10; /* Ensure it's above other content if needed */
+  box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+/* Adjustments for Bootstrap's col-md-6 margin-top, if it causes issues with the sticky footer */
+.form-content .row.g-3 .col-md-6.mt-1 {
+  margin-top: 0 !important; /* Resetting margin-top if it creates unwanted space at the top when scrolled */
+  padding-top: 0.25rem; /* Re-add a small padding if needed for spacing after removing mt-1 */
+}
+
+/* Specific styling for the form title */
+.form-title {
+  margin-top: 0;
+  padding-top: 15px; /* Adjust as needed */
+  background-color: white; /* Ensures the title doesn't scroll under the fixed header */
+  position: sticky;
+  top: 0;
+  z-index: 5;
 }

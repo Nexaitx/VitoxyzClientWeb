@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MapComponent } from '../map/map';
+import { Submission } from '../submission/submission';
 
 
 @Component({
   selector: 'app-book-nurse',
-  imports: [CommonModule, ReactiveFormsModule, MapComponent],
+  imports: [CommonModule, ReactiveFormsModule, Submission],
   templateUrl: './book-nurse.html',
   styleUrls: ['./book-nurse.scss']
 })
@@ -123,12 +124,12 @@ export class BookNurse {
    * @param formGroup The FormGroup to mark as touched.
    */
   private markAllAsTouched(formGroup: FormGroup | FormArray): void {
-    Object.values(formGroup.controls).forEach(control => {
-      control.markAsTouched();
-      if (control instanceof FormGroup || control instanceof FormArray) {
-        this.markAllAsTouched(control);
-      }
-    });
+    // Object.values(formGroup.controls).forEach(control => {
+    //   control.markAsTouched();
+    //   if (control instanceof FormGroup || control instanceof FormArray) {
+    //     this.markAllAsTouched(control);
+    //   }
+    // });
   }
 
   shiftDurationValidator(control: AbstractControl): ValidationErrors | null {

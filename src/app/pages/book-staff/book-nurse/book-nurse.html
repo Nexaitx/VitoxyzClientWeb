@@ -1,211 +1,216 @@
-<div class="container-fluid">
-  <div class="row">
-
-    <div class="col-md-6 mt-1">
-      <app-map></app-map>
-    </div>
-
-    <div class="form-container col-md-6 mt-1">
-      <h2 class="form-title">Book Nurse<i class="bi bi-airplane"></i></h2>
-      <!-- Binds the form to the reactive form group -->
-      <form [formGroup]="nurseBookingForm" (ngSubmit)="onSubmit()">
-
-        <!-- User Information Section -->
-        <!-- <h4 class="section-title mb-4">Patient Information</h4> -->
-        <div formGroupName="userInfo" class="row g-3">
-          <div class="col-md-6 mt-1">
-            <label for="name" class="form-label">Patient Name</label>
-            <input type="text" class="form-control" id="name" formControlName="name"
-              [class.is-invalid]="nurseBookingForm.get('userInfo.name')?.invalid && nurseBookingForm.get('userInfo.name')?.touched" />
-            <div
-              *ngIf="nurseBookingForm.get('userInfo.name')?.invalid && nurseBookingForm.get('userInfo.name')?.touched"
-              class="invalid-feedback">
-              Patient Name is required.
-            </div>
-          </div>
-          <div class="col-md-6 mt-1">
-            <label for="age" class="form-label">Patient Age</label>
-            <input type="number" class="form-control" id="age" formControlName="age"
-              [class.is-invalid]="nurseBookingForm.get('userInfo.age')?.invalid && nurseBookingForm.get('userInfo.age')?.touched" />
-            <div *ngIf="nurseBookingForm.get('userInfo.age')?.invalid && nurseBookingForm.get('userInfo.age')?.touched"
-              class="invalid-feedback">
-              <span *ngIf="nurseBookingForm.get('userInfo.age')?.errors?.['required']">Age is required.</span>
-              <span *ngIf="nurseBookingForm.get('userInfo.age')?.errors?.['min']">Age must be at least 18.</span>
-            </div>
-          </div>
-          <div class="col-md-6 mt-1">
-            <label for="phoneNumber" class="form-label">Phone Number</label>
-            <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber"
-              [class.is-invalid]="nurseBookingForm.get('userInfo.phoneNumber')?.invalid && nurseBookingForm.get('userInfo.phoneNumber')?.touched" />
-            <div
-              *ngIf="nurseBookingForm.get('userInfo.phoneNumber')?.invalid && nurseBookingForm.get('userInfo.phoneNumber')?.touched"
-              class="invalid-feedback">
-              <span *ngIf="nurseBookingForm.get('userInfo.phoneNumber')?.errors?.['required']">Phone number is
-                required.</span>
-              <span *ngIf="nurseBookingForm.get('userInfo.phoneNumber')?.errors?.['pattern']">Please enter a valid
-                10-digit phone number.</span>
-            </div>
-          </div>
-          <div class="col-md-6 mt-1">
-            <label for="completeAddress" class="form-label">Complete Address</label>
-            <input type="text" class="form-control" id="completeAddress" formControlName="completeAddress"
-              [class.is-invalid]="nurseBookingForm.get('userInfo.completeAddress')?.invalid && nurseBookingForm.get('userInfo.completeAddress')?.touched" />
-            <div
-              *ngIf="nurseBookingForm.get('userInfo.completeAddress')?.invalid && nurseBookingForm.get('userInfo.completeAddress')?.touched"
-              class="invalid-feedback">
-              Complete Address is required.
-            </div>
+<div class="form-scroll-container">
+  <div class="form-content">
+    <h2 class="form-title">Book Nurse</h2>
+    <form [formGroup]="nurseBookingForm" (ngSubmit)="onSubmit()">
+      <div formGroupName="userInfo" class="row g-3">
+        <div class="col-md-6 mt-1">
+          <label for="name" class="form-label">Patient Name</label>
+          <input type="text" class="form-control" id="name" formControlName="name" [class.is-invalid]="
+                nurseBookingForm.get('userInfo.name')?.invalid &&
+                nurseBookingForm.get('userInfo.name')?.touched
+              " />
+          <div *ngIf="
+                nurseBookingForm.get('userInfo.name')?.invalid &&
+                nurseBookingForm.get('userInfo.name')?.touched
+              " class="invalid-feedback">
+            Patient Name is required.
           </div>
         </div>
+        <div class="col-md-6 mt-1">
+          <label for="age" class="form-label">Patient Age</label>
+          <input type="number" class="form-control" id="age" formControlName="age" [class.is-invalid]="
+                nurseBookingForm.get('userInfo.age')?.invalid &&
+                nurseBookingForm.get('userInfo.age')?.touched
+              " />
+          <div *ngIf="
+                nurseBookingForm.get('userInfo.age')?.invalid &&
+                nurseBookingForm.get('userInfo.age')?.touched
+              " class="invalid-feedback">
+            <span *ngIf="nurseBookingForm.get('userInfo.age')?.errors?.['required']">Age is required.</span>
+            <span *ngIf="nurseBookingForm.get('userInfo.age')?.errors?.['min']">Age must be at least 18.</span>
+          </div>
+        </div>
+        <div class="col-md-6 mt-1">
+          <label for="phoneNumber" class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" [class.is-invalid]="
+                nurseBookingForm.get('userInfo.phoneNumber')?.invalid &&
+                nurseBookingForm.get('userInfo.phoneNumber')?.touched
+              " />
+          <div *ngIf="
+                nurseBookingForm.get('userInfo.phoneNumber')?.invalid &&
+                nurseBookingForm.get('userInfo.phoneNumber')?.touched
+              " class="invalid-feedback">
+            <span *ngIf="nurseBookingForm.get('userInfo.phoneNumber')?.errors?.['required']">Phone number is
+              required.</span>
+            <span *ngIf="nurseBookingForm.get('userInfo.phoneNumber')?.errors?.['pattern']">Please enter a valid
+              10-digit phone number.</span>
+          </div>
+        </div>
+        <div class="col-md-6 mt-1">
+          <label for="completeAddress" class="form-label">Complete Address</label>
+          <input type="text" class="form-control" id="completeAddress" formControlName="completeAddress"
+            [class.is-invalid]="
+                nurseBookingForm.get('userInfo.completeAddress')?.invalid &&
+                nurseBookingForm.get('userInfo.completeAddress')?.touched
+              " />
+          <div *ngIf="
+                nurseBookingForm.get('userInfo.completeAddress')?.invalid &&
+                nurseBookingForm.get('userInfo.completeAddress')?.touched
+              " class="invalid-feedback">
+            Complete Address is required.
+          </div>
+        </div>
+      </div>
 
-        <!-- Nurse Details Section (using FormArray) -->
-        <!-- <h4 class="section-title mb-4">Nurse Details</h4> -->
-        <!-- Iterates over each FormGroup in the nurseDetails FormArray -->
-        <div formArrayName="nurseDetails">
-          <div *ngFor="let nurseDetail of nurseDetailsFormArray.controls; let i = index" [formGroupName]="i"
-            class=" mb-3">
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label for="typeOfNurse-{{i}}" class="form-label">Type of Nurse</label>
-                <select class="form-select" id="typeOfNurse-{{i}}" formControlName="typeOfNurse"
-                  [class.is-invalid]="nurseDetail.get('typeOfNurse')?.invalid && nurseDetail.get('typeOfNurse')?.touched">
-                  <option value="">Select Type</option>
-                  <option *ngFor="let nurse of typesOfNurses" [value]="nurse.value">{{ nurse.label }}</option>
+      <div formArrayName="nurseDetails">
+        <div *ngFor="let nurseDetail of nurseDetailsFormArray.controls; let i = index" [formGroupName]="i" class="mb-3">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="typeOfNurse-{{ i }}" class="form-label">Type of Nurse</label>
+              <select class="form-select" id="typeOfNurse-{{ i }}" formControlName="typeOfNurse" [class.is-invalid]="
+                    nurseDetail.get('typeOfNurse')?.invalid &&
+                    nurseDetail.get('typeOfNurse')?.touched
+                  ">
+                <option value="">Select Type</option>
+                <option *ngFor="let nurse of typesOfNurses" [value]="nurse.value">
+                  {{ nurse.label }}
+                </option>
+              </select>
+              <div *ngIf="
+                    nurseDetail.get('typeOfNurse')?.invalid &&
+                    nurseDetail.get('typeOfNurse')?.touched
+                  " class="invalid-feedback">
+                Type of Nurse is required.
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="daysRequired-{{ i }}" class="form-label">Number of Nurses</label>
+              <select class="form-select" id="daysRequired-{{ i }}" formControlName="numberOfNurses" [class.is-invalid]="
+                    nurseDetail.get('numberOfNurses')?.invalid &&
+                    nurseDetail.get('numberOfNurses')?.touched
+                  ">
+                <option value="">Select Number of Nurses</option>
+                <option *ngFor="let quantity of quantity" [value]="quantity">
+                  {{ quantity }}
+                </option>
+              </select>
+              <div *ngIf="
+                    nurseDetail.get('daysRequired')?.invalid &&
+                    nurseDetail.get('daysRequired')?.touched
+                  " class="invalid-feedback">
+                <span *ngIf="nurseDetail.get('daysRequired')?.errors?.['required']">Days required is required.</span>
+                <span *ngIf="nurseDetail.get('daysRequired')?.errors?.['min']">Must be at least 1 day.</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="" class="form-label">Shift Date</label>
+              <input type="date" class="form-control" />
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Shift Time</label>
+              <div class="row">
+                <div class="col-md-6 mt-1 position-relative">
+                  <select class="form-select" id="shiftHour-{{ i }}" formControlName="shiftHour" [class.is-invalid]="
+                        nurseDetail.get('shiftHour')?.invalid &&
+                        nurseDetail.get('shiftHour')?.touched
+                      ">
+                    <option value="">Select Hour</option>
+                    <option *ngFor="let hour of hours" [value]="hour">
+                      {{ hour | number : '2.0' }}:00
+                    </option>
+                  </select>
 
-                </select>
-                <div *ngIf="nurseDetail.get('typeOfNurse')?.invalid && nurseDetail.get('typeOfNurse')?.touched"
-                  class="invalid-feedback">
-                  Type of Nurse is required.
-                </div>
-              </div>
-              <div class="col-md-6">
-                <label for="daysRequired-{{i}}" class="form-label">Number of Nurses</label>
-                <select class="form-select" id="daysRequired-{{i}}" formControlName="numberOfNurses"
-                  [class.is-invalid]="nurseDetail.get('numberOfNurses')?.invalid && nurseDetail.get('numberOfNurses')?.touched">
-                  <option value="">Select Number of Nurses</option>
-                  <option *ngFor="let quantity of quantity" [value]="quantity">{{ quantity }}</option>
-                </select>
-                <!-- <input type="number" class="form-control" id="daysRequired-{{i}}" formControlName="daysRequired"
-                    min="1"
-                    [class.is-invalid]="nurseDetail.get('daysRequired')?.invalid && nurseDetail.get('daysRequired')?.touched" /> -->
-                <div *ngIf="nurseDetail.get('daysRequired')?.invalid && nurseDetail.get('daysRequired')?.touched"
-                  class="invalid-feedback">
-                  <span *ngIf="nurseDetail.get('daysRequired')?.errors?.['required']">Days required is
-                    required.</span>
-                  <span *ngIf="nurseDetail.get('daysRequired')?.errors?.['min']">Must be at least 1 day.</span>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <label class="form-label">Shift Time</label>
-                <div class="row">
-                  <!-- Hour Dropdown -->
-                  <div class="col-md-6 mt-1 position-relative">
-                    <select class="form-select" id="shiftHour-{{i}}" formControlName="shiftHour"
-                      [class.is-invalid]="nurseDetail.get('shiftHour')?.invalid && nurseDetail.get('shiftHour')?.touched">
-                      <option value="">Select Hour</option>
-                      <option *ngFor="let hour of hours" [value]="hour">{{ hour | number: '2.0' }}:00</option>
-                    </select>
-                    <span class="position-absolute" style="top: 50%; right: 10px; transform: translateY(10%);">
-                      <svg width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
-                        <path
-                          d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm0-1A7 7 0 1 1 8 1a7 7 0 0 1 0 14zM8 4a.5.5 0 0 0-.5.5v3h-3a.5.5 0 0 0 0 1h3.5v-3A.5.5 0 0 0 8 4z" />
-                      </svg>
-                    </span>
-                    <div *ngIf="nurseDetail.get('shiftHour')?.invalid && nurseDetail.get('shiftHour')?.touched"
-                      class="invalid-feedback">
-                      Start hour is required.
-                    </div>
-                  </div>
-                  <!-- Minute Dropdown -->
-                  <div class="col-md-6 mt-1 position-relative">
-                    <select class="form-select" id="shiftMinute-{{i}}" formControlName="shiftMinute"
-                      [class.is-invalid]="nurseDetail.get('shiftMinute')?.invalid && nurseDetail.get('shiftMinute')?.touched">
-                      <option value="">Select Minute</option>
-                      <option *ngFor="let minute of minutes" [value]="minute">{{ minute | number: '2.0' }}</option>
-                    </select>
-                    <span class="position-absolute" style="top: 50%; right: 10px; transform: translateY(10%);">
-                      <svg width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
-                        <path
-                          d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm0-1A7 7 0 1 1 8 1a7 7 0 0 1 0 14zM8 4a.5.5 0 0 0-.5.5v3h-3a.5.5 0 0 0 0 1h3.5v-3A.5.5 0 0 0 8 4z" />
-                      </svg>
-                    </span>
-                    <div *ngIf="nurseDetail.get('shiftMinute')?.invalid && nurseDetail.get('shiftMinute')?.touched"
-                      class="invalid-feedback">
-                      Minute is required.
-                    </div>
+                  <div *ngIf="
+                        nurseDetail.get('shiftHour')?.invalid &&
+                        nurseDetail.get('shiftHour')?.touched
+                      " class="invalid-feedback">
+                    Start hour is required.
                   </div>
                 </div>
-                <!-- <div
-                    *ngIf="nurseDetail.errors?.invalidShiftDuration && (nurseDetail.get('shiftHour')?.touched || nurseDetail.get('shiftMinute')?.touched)"
-                    class="invalid-feedback d-block">
-                    The shift must be exactly 8 hours.
-                  </div> -->
-              </div>
-              <div class="col-md-6">
-                <label for="typeOfNurse-{{i}}" class="form-label">Tenure</label>
-                <select class="form-select" id="typeOfNurse-{{i}}" formControlName="typeOfNurse"
-                  [class.is-invalid]="nurseDetail.get('typeOfNurse')?.invalid && nurseDetail.get('typeOfNurse')?.touched">
-                  <option value="">Select Tenure</option>
-                  <option *ngFor="let tenure of nurseTenure" [value]="tenure">{{ tenure }}</option>
+                <div class="col-md-6 mt-1 position-relative">
+                  <select class="form-select" id="shiftMinute-{{ i }}" formControlName="shiftMinute" [class.is-invalid]="
+                        nurseDetail.get('shiftMinute')?.invalid &&
+                        nurseDetail.get('shiftMinute')?.touched
+                      ">
+                    <option value="">Select Minute</option>
+                    <option *ngFor="let minute of minutes" [value]="minute">
+                      {{ minute | number : '2.0' }}
+                    </option>
+                  </select>
 
-                </select>
-                <div *ngIf="nurseDetail.get('typeOfNurse')?.invalid && nurseDetail.get('typeOfNurse')?.touched"
-                  class="invalid-feedback">
-                  Tenure is required.
-                </div>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label d-block">Gender Preference</label>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" id="gender-{{i}}-male" value="Male"
-                    formControlName="gender"
-                    [class.is-invalid]="nurseDetail.get('gender')?.invalid && nurseDetail.get('gender')?.touched">
-                  <label class="form-check-label" for="gender-{{i}}-male">Male</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" id="gender-{{i}}-female" value="Female"
-                    formControlName="gender"
-                    [class.is-invalid]="nurseDetail.get('gender')?.invalid && nurseDetail.get('gender')?.touched">
-                  <label class="form-check-label" for="gender-{{i}}-female">Female</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" id="gender-{{i}}-any" value="Any"
-                    formControlName="gender"
-                    [class.is-invalid]="nurseDetail.get('gender')?.invalid && nurseDetail.get('gender')?.touched">
-                  <label class="form-check-label" for="gender-{{i}}-any">Any</label>
-                </div>
-
-                <div *ngIf="nurseDetail.get('gender')?.invalid && nurseDetail.get('gender')?.touched"
-                  class="invalid-feedback d-block">
-                  Gender is required.
+                  <div *ngIf="
+                        nurseDetail.get('shiftMinute')?.invalid &&
+                        nurseDetail.get('shiftMinute')?.touched
+                      " class="invalid-feedback">
+                    Minute is required.
+                  </div>
                 </div>
               </div>
-
-
             </div>
-            <!-- Remove button for nurse details -->
-            <div *ngIf="nurseDetailsFormArray.length > 1" class="d-grid mt-3">
-              <button type="button" class="btn btn-outline-danger btn-sm" (click)="removeNurseDetail(i)">
-                Remove Nurse #{{ i + 1 }}
-              </button>
+            <div class="col-md-6">
+              <label for="typeOfNurse-{{ i }}" class="form-label">Tenure</label>
+              <select class="form-select" id="typeOfNurse-{{ i }}" formControlName="typeOfNurse" [class.is-invalid]="
+                    nurseDetail.get('typeOfNurse')?.invalid &&
+                    nurseDetail.get('typeOfNurse')?.touched
+                  ">
+                <option value="">Select Tenure</option>
+                <option *ngFor="let tenure of nurseTenure" [value]="tenure">
+                  {{ tenure }}
+                </option>
+              </select>
+              <div *ngIf="
+                    nurseDetail.get('typeOfNurse')?.invalid &&
+                    nurseDetail.get('typeOfNurse')?.touched
+                  " class="invalid-feedback">
+                Tenure is required.
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label d-block">Gender Preference</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="gender-{{ i }}-male" value="Male"
+                  formControlName="gender" [class.is-invalid]="
+                      nurseDetail.get('gender')?.invalid && nurseDetail.get('gender')?.touched
+                    " />
+                <label class="form-check-label" for="gender-{{ i }}-male">Male</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="gender-{{ i }}-female" value="Female"
+                  formControlName="gender" [class.is-invalid]="
+                      nurseDetail.get('gender')?.invalid && nurseDetail.get('gender')?.touched
+                    " />
+                <label class="form-check-label" for="gender-{{ i }}-female">Female</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="gender-{{ i }}-any" value="Any"
+                  formControlName="gender" [class.is-invalid]="
+                      nurseDetail.get('gender')?.invalid && nurseDetail.get('gender')?.touched
+                    " />
+                <label class="form-check-label" for="gender-{{ i }}-any">Any</label>
+              </div>
+
+              <div *ngIf="nurseDetail.get('gender')?.invalid && nurseDetail.get('gender')?.touched"
+                class="invalid-feedback d-block">
+                Gender is required.
+              </div>
             </div>
           </div>
+          <div *ngIf="nurseDetailsFormArray.length > 1" class="d-grid mt-3">
+            <button type="button" class="btn btn-outline-danger btn-sm" (click)="removeNurseDetail(i)">
+              Remove Nurse #{{ i + 1 }}
+            </button>
+          </div>
         </div>
+      </div>
 
-        <!-- Button to add more nurse details -->
-        <div class="d-grid gap-2 mb-4">
-          <button type="button" class="text-btn" (click)="addNurseDetail()">
-            <i class="bi bi-plus"></i>Add Another Nurse
-          </button>
-        </div>
-
-        <!-- Submit Button -->
-        <div class="d-grid">
-          <button type="submit" class="btn btn-primary rounded-pill">
-            Submit Booking
-          </button>
-        </div>
-      </form>
-    </div>
+      <div class="d-grid gap-2 mb-4">
+        <button type="button" class="text-btn" (click)="addNurseDetail()">
+          <i class="bi bi-plus"></i>Add Another Nurse
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="submission-fixed">
+    <app-submission></app-submission>
   </div>
 </div>

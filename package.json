@@ -14,7 +14,7 @@
     "@angular/common": "^20.0.0",
     "@angular/compiler": "^20.0.0",
     "@angular/core": "^20.0.0",
-    "@angular/forms": "^20.0.0",
+    "@angular/forms": "^20.0.5",
     "@angular/google-maps": "^20.0.4",
     "@angular/material": "^20.0.1",
     "@angular/platform-browser": "^20.0.0",
@@ -28,8 +28,8 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular/build": "^20.0.0",
-    "@angular/cli": "^20.0.0",
+    "@angular/build": "^20.0.4",
+    "@angular/cli": "^20.0.4",
     "@angular/compiler-cli": "^20.0.0",
     "@types/google.maps": "^3.58.1",
     "@types/jasmine": "~5.1.0",
