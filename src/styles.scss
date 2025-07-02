@@ -3,7 +3,7 @@
 :root {
     --primary: #3B938A;
     --secondary: #4AB8AD;
-    --tertinary: #1A998E;
+    --tertinary: #14bbc1;
 }
 
 body {
@@ -13,9 +13,13 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.title, .links, .bi{
+  color: #14bbc1 !important;
+}
 .navbar,
-.btn-primary {
-    background: var(--tertinary) !important;
+.btn {
+    color: #fff !important;
+    background-image: linear-gradient(to right, #0DC1C0, #09B7C2);
 }
 
 .text-btn {
@@ -48,12 +52,12 @@ body {
 }
 
 .form-control:focus, .form-select:focus , .form-check-input:checked, .form-check-input:focus{
-    border-color: var(--secondary) !important;
+    border-color: var(--tertinary) !important;
     box-shadow: none !important;
     outline: 0 !important;
 }
 select option:checked , select option:focus, select option:active, select option:focus-within{
-  background-color: green !important; /* Will likely not work */
+  background-color: var(--tertinary) !important; /* Will likely not work */
   color: white;
 }
 
@@ -106,4 +110,19 @@ app-map {
   position: sticky;
   top: 0;
   z-index: 5;
+}
+
+
+.phone-input-group .form-control {
+  padding-left: 2.2rem; /* Adjust this value to make space for the icon */
+}
+
+.phone-input-group .icon-inside {
+  position: absolute; /* Position the icon absolutely within the input group */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust for precise vertical centering */
+  z-index: 9; /* Ensure icon is above the input field */
+  background-color: transparent; /* Make background transparent */
+  border: none; /* Remove border */
+
 }
