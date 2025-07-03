@@ -8,14 +8,10 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink, RouterModule } from '@angular/router';
-import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http'; //  Added HttpClient
+import { HttpClient, HttpHeaders } from '@angular/common/http'; //  Added HttpClient
 import { environment } from '../../../../environments/environment.development';
+import { Submission } from '../../submission/submission';
 
 // Password Match Validator
 export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): { [key: string]: boolean } | null => {
@@ -31,22 +27,18 @@ export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    HttpClientModule,
     RouterModule,
-    MatCardModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatFormFieldModule,
-    RouterLink
+    RouterLink,
+    Submission
   ],
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.scss'
 })
 export class SignUp {
   signupForm!: FormGroup;
-  hidePassword = true;
-  hideConfirmPassword = true;
+  showPassword = false;
+  showConfirmPassword = false;
+  button = 'Sign Up';
 
   private router = inject(Router);
   private http = inject(HttpClient);

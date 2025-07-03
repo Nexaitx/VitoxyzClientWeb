@@ -62,20 +62,17 @@ export const routes: Routes = [
         path: 'support',
         loadComponent: () => import('./pages/support/support').then(m => m.Support),
       },
-      // If you want a default route for the Header layout
       {
         path: '',
-        redirectTo: 'dashboard', // or whatever your default landing page is
+        redirectTo: 'dashboard',
         pathMatch: 'full'
       }
     ]
   },
   {
-    // This route will use the Authorization component as its layout/parent
-    // The children 'login' and 'sign-up' will be rendered inside the <router-outlet>
-    // of the Authorization component.
-    path: '', // This means paths like /login and /sign-up
-    component: Authorization, // Authorization component acts as the layout for these routes
+   
+    path: '', 
+    component: Authorization, 
     children: [
       {
         path: 'login',
@@ -85,7 +82,6 @@ export const routes: Routes = [
         path: 'sign-up',
         loadComponent: () => import('./pages/authorization/sign-up/sign-up').then(m => m.SignUp),
       }
-      // You can add more authorization-related routes here if needed
     ]
   },
   {

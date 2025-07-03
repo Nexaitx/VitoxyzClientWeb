@@ -1,10 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpErrorResponse, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../../../environments/environment.development'; // Import your environment file
-import { Submission } from '../../book-staff/submission/submission';
+import { Submission } from '../../submission/submission';
+import { Subscription, interval } from 'rxjs';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -29,7 +30,13 @@ export class Login implements OnInit {
   usePassword = true;
   useOtp = false;
   rememberMe = true;
-  button = 'Login';
+  button = 'Next';
+  showPhoneInput = true; // Control visibility of phone input
+
+  timeLeft: number = 30;
+  private subscription: Subscription | undefined;
+  phoneNumber: string = '+919876543210'; // Default phone number
+  maskedPhoneNumber: string = '';
 
   constructor(
     private fb: FormBuilder
@@ -44,7 +51,32 @@ export class Login implements OnInit {
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit() {
+    this.subscription = interval(1000).subscribe(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--;
+      } else {
+        this.subscription?.unsubscribe();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
+  }
+
+  ngOnChanges() {
+    this.maskedPhoneNumber = this.maskPhoneNumber(this.phoneNumber);
+    console.log('Masked Phone Number:', this.maskedPhoneNumber);
+  }
+
+  private maskPhoneNumber(phone: string): string {
+    if (!phone || phone.length < 2) return phone; // Handle invalid input
+    const lastTwoDigits = phone.slice(-2);
+    const countryCode = phone.startsWith('+91') ? '+91' : '';
+    const maskedPart = '*'.repeat(phone.length - 2 - countryCode.length);
+    return `${countryCode}${maskedPart}${lastTwoDigits}`;
+  }
 
   login(): void {
     if (this.loginForm.invalid) {

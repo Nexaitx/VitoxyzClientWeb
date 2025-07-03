@@ -1,53 +1,32 @@
-<form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form p-4 w-75">
-          <!-- Phone Number -->
-          <div class="form-group">
-            <label for="phoneNumber">Phone Number</label>
-            <div class="input-group phone-input-group"> <span class="input-group-text icon-inside">
-                <i class="bi bi-telephone"></i> </span>
-              <input type="text" class="form-control" formControlName="phoneNumber" id="phoneNumber"
-                placeholder="Phone Number" required />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="password">
-              Password
-            </label>
-            <div class="input-group phone-input-group"> <span class="input-group-text icon-inside">
-                <i class="bi bi-lock"></i> </span>
-              <div class="password-input-wrapper w-100" style="position: relative;">
-                <input [type]="showPassword ? 'text' : 'password'" class="form-control w-100" formControlName="password"
-                  placeholder="Password" required>
-                <span (click)="showPassword = !showPassword"
-                  style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"
-                  tabindex="0" aria-label="Toggle password visibility">
-                  <i [ngClass]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between">
-            <div class="form-group">
-              <label for="rememberMe">
-                <input type="checkbox" class="form-check-input" formControlName="rememberMe" id="rememberMe">
-                Remember Me
-              </label>
-            </div>
+<div class="d-flex justify-content-center">
+@if(showPhoneInput) {
+  <form class="auth-form p-4 w-75">
+    <!-- Phone Number -->
+    <div class="form-group mb-3">
+      <label for="phoneNumber">Phone Number</label>
+      <div class="input-group phone-input-group"> <span class="input-group-text icon-inside">
+          <i class="bi bi-telephone"></i> </span>
+        <input type="text" class="form-control"  id="phoneNumber"
+          placeholder="Phone Number" required />
+      </div>
+    </div>
 
-            <div class="form-group">
-              <a href="#" class="forgot-password-link links">Forgot Password?</a>
-            </div>
-          </div>
+    <app-submission [buttonType]="button" (click)="showPhoneInput = false"></app-submission>
 
-          <div class="d-flex justify-content-end">
-            <div class="form-group d-flex align-items-center">
-              <input type="radio" id="checkPswd" checked class="form-check-input me-2"
-               name="authMethod" value="password" required />
-              <label for="checkPswd"> Password </label>
-            </div>
-            <div class="form-group ms-3 d-flex align-items-center">
-              <input type="radio" id="otp" class="form-check-input me-2" name="authMethod" value="otp" required />
-              <label for="otp"> OTP </label>
-            </div>
-          </div>
-          <app-submission [buttonType]="button"></app-submission>
-        </form>
+    <div class="text-center mt-3">
+      <span>New To Vitoxyz? &nbsp;</span>
+      <a class="links" [routerLink]="['/sign-up']">Sign Up</a>
+    </div>
+  </form>
+}
+@else {
+  <div>
+  <p>Please enter OTP we've shared to this {{ maskedPhoneNumber }}</p>
+  <div class="form-group mb-3">
+    <label for="otp">OTP</label>
+    <input type="text" class="form-control" id="otp" placeholder="Enter OTP" required />
+  </div>
+  <p>Resend code in {{ timeLeft }} seconds</p>
+  </div>
+}
+</div>

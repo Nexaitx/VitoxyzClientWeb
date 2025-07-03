@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MapComponent } from '../map/map';
-import { Submission } from '../submission/submission';
+import { Submission } from '../../submission/submission';
 import { HttpClient } from '@angular/common/http';
 import { BookNurseService } from './book-nurse.service';
 
