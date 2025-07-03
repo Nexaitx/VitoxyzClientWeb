@@ -1,216 +1,182 @@
-<div class="form-scroll-container">
-  <div class="form-content">
-    <h2 class="form-title">Book Nurse</h2>
-    <form [formGroup]="nurseBookingForm" (ngSubmit)="onSubmit()">
-      <div formGroupName="userInfo" class="row g-3">
-        <div class="col-md-6 mt-1">
-          <label for="name" class="form-label">Patient Name</label>
-          <input type="text" class="form-control" id="name" formControlName="name" [class.is-invalid]="
-                nurseBookingForm.get('userInfo.name')?.invalid &&
-                nurseBookingForm.get('userInfo.name')?.touched
-              " />
-          <div *ngIf="
-                nurseBookingForm.get('userInfo.name')?.invalid &&
-                nurseBookingForm.get('userInfo.name')?.touched
-              " class="invalid-feedback">
-            Patient Name is required.
-          </div>
-        </div>
-        <div class="col-md-6 mt-1">
-          <label for="age" class="form-label">Patient Age</label>
-          <input type="number" class="form-control" id="age" formControlName="age" [class.is-invalid]="
-                nurseBookingForm.get('userInfo.age')?.invalid &&
-                nurseBookingForm.get('userInfo.age')?.touched
-              " />
-          <div *ngIf="
-                nurseBookingForm.get('userInfo.age')?.invalid &&
-                nurseBookingForm.get('userInfo.age')?.touched
-              " class="invalid-feedback">
-            <span *ngIf="nurseBookingForm.get('userInfo.age')?.errors?.['required']">Age is required.</span>
-            <span *ngIf="nurseBookingForm.get('userInfo.age')?.errors?.['min']">Age must be at least 18.</span>
-          </div>
-        </div>
-        <div class="col-md-6 mt-1">
-          <label for="phoneNumber" class="form-label">Phone Number</label>
-          <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" [class.is-invalid]="
-                nurseBookingForm.get('userInfo.phoneNumber')?.invalid &&
-                nurseBookingForm.get('userInfo.phoneNumber')?.touched
-              " />
-          <div *ngIf="
-                nurseBookingForm.get('userInfo.phoneNumber')?.invalid &&
-                nurseBookingForm.get('userInfo.phoneNumber')?.touched
-              " class="invalid-feedback">
-            <span *ngIf="nurseBookingForm.get('userInfo.phoneNumber')?.errors?.['required']">Phone number is
-              required.</span>
-            <span *ngIf="nurseBookingForm.get('userInfo.phoneNumber')?.errors?.['pattern']">Please enter a valid
-              10-digit phone number.</span>
-          </div>
-        </div>
-        <div class="col-md-6 mt-1">
-          <label for="completeAddress" class="form-label">Complete Address</label>
-          <input type="text" class="form-control" id="completeAddress" formControlName="completeAddress"
-            [class.is-invalid]="
-                nurseBookingForm.get('userInfo.completeAddress')?.invalid &&
-                nurseBookingForm.get('userInfo.completeAddress')?.touched
-              " />
-          <div *ngIf="
-                nurseBookingForm.get('userInfo.completeAddress')?.invalid &&
-                nurseBookingForm.get('userInfo.completeAddress')?.touched
-              " class="invalid-feedback">
-            Complete Address is required.
-          </div>
-        </div>
-      </div>
-
-      <div formArrayName="nurseDetails">
-        <div *ngFor="let nurseDetail of nurseDetailsFormArray.controls; let i = index" [formGroupName]="i" class="mb-3">
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label for="typeOfNurse-{{ i }}" class="form-label">Type of Nurse</label>
-              <select class="form-select" id="typeOfNurse-{{ i }}" formControlName="typeOfNurse" [class.is-invalid]="
-                    nurseDetail.get('typeOfNurse')?.invalid &&
-                    nurseDetail.get('typeOfNurse')?.touched
-                  ">
-                <option value="">Select Type</option>
-                <option *ngFor="let nurse of typesOfNurses" [value]="nurse.value">
-                  {{ nurse.label }}
-                </option>
-              </select>
-              <div *ngIf="
-                    nurseDetail.get('typeOfNurse')?.invalid &&
-                    nurseDetail.get('typeOfNurse')?.touched
-                  " class="invalid-feedback">
-                Type of Nurse is required.
-              </div>
-            </div>
-            <div class="col-md-6">
-              <label for="daysRequired-{{ i }}" class="form-label">Number of Nurses</label>
-              <select class="form-select" id="daysRequired-{{ i }}" formControlName="numberOfNurses" [class.is-invalid]="
-                    nurseDetail.get('numberOfNurses')?.invalid &&
-                    nurseDetail.get('numberOfNurses')?.touched
-                  ">
-                <option value="">Select Number of Nurses</option>
-                <option *ngFor="let quantity of quantity" [value]="quantity">
-                  {{ quantity }}
-                </option>
-              </select>
-              <div *ngIf="
-                    nurseDetail.get('daysRequired')?.invalid &&
-                    nurseDetail.get('daysRequired')?.touched
-                  " class="invalid-feedback">
-                <span *ngIf="nurseDetail.get('daysRequired')?.errors?.['required']">Days required is required.</span>
-                <span *ngIf="nurseDetail.get('daysRequired')?.errors?.['min']">Must be at least 1 day.</span>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <label for="" class="form-label">Shift Date</label>
-              <input type="date" class="form-control" />
-            </div>
-            <div class="col-md-12">
-              <label class="form-label">Shift Time</label>
-              <div class="row">
-                <div class="col-md-6 mt-1 position-relative">
-                  <select class="form-select" id="shiftHour-{{ i }}" formControlName="shiftHour" [class.is-invalid]="
-                        nurseDetail.get('shiftHour')?.invalid &&
-                        nurseDetail.get('shiftHour')?.touched
-                      ">
-                    <option value="">Select Hour</option>
-                    <option *ngFor="let hour of hours" [value]="hour">
-                      {{ hour | number : '2.0' }}:00
-                    </option>
-                  </select>
-
-                  <div *ngIf="
-                        nurseDetail.get('shiftHour')?.invalid &&
-                        nurseDetail.get('shiftHour')?.touched
-                      " class="invalid-feedback">
-                    Start hour is required.
-                  </div>
-                </div>
-                <div class="col-md-6 mt-1 position-relative">
-                  <select class="form-select" id="shiftMinute-{{ i }}" formControlName="shiftMinute" [class.is-invalid]="
-                        nurseDetail.get('shiftMinute')?.invalid &&
-                        nurseDetail.get('shiftMinute')?.touched
-                      ">
-                    <option value="">Select Minute</option>
-                    <option *ngFor="let minute of minutes" [value]="minute">
-                      {{ minute | number : '2.0' }}
-                    </option>
-                  </select>
-
-                  <div *ngIf="
-                        nurseDetail.get('shiftMinute')?.invalid &&
-                        nurseDetail.get('shiftMinute')?.touched
-                      " class="invalid-feedback">
-                    Minute is required.
-                  </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <app-map (locationSelected)="getAddressFromCoords($event.lat, $event.lng)"></app-map>
+    </div>
+    <div class="col-md-6">
+      <div class="form-scroll-container">
+        <div class="form-content">
+          <h2 class="form-title">Please fill the form</h2>
+          <form [formGroup]="staffBookingForm" (ngSubmit)="onSubmit()">
+            <div class="row g-3">
+              <div class="col-md-12">
+                <label class="form-label">Enter your area</label>
+                <input type="text" class="form-control" formControlName="userAddress" [class.is-invalid]="
+      staffBookingForm.get('userAddress')?.invalid &&
+      staffBookingForm.get('userAddress')?.touched
+    " />
+                <div *ngIf="
+      staffBookingForm.get('userAddress')?.invalid &&
+      staffBookingForm.get('userAddress')?.touched
+    " class="invalid-feedback">
+                  Area is required.
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
-              <label for="typeOfNurse-{{ i }}" class="form-label">Tenure</label>
-              <select class="form-select" id="typeOfNurse-{{ i }}" formControlName="typeOfNurse" [class.is-invalid]="
-                    nurseDetail.get('typeOfNurse')?.invalid &&
-                    nurseDetail.get('typeOfNurse')?.touched
+            <div formArrayName="staff">
+              <div *ngFor="let staffGroup of staffListFormArray.controls; let i = index" [formGroupName]="i">
+                <div class="col-md-12 d-flex justify-content-end mt-3">
+                  <button type="button" *ngIf="i !== 0"
+                    class="btn btn-outline-danger btn-lg rounded-circle d-flex align-items-center justify-content-center"
+                    style="width: 20px; height: 30px;" (click)="removeStaff(i)" title="Remove Staff">
+                    <i class="bi bi-trash fs-5"></i>
+                  </button>
+                </div>
+                <!-- this needs to be repeated-->
+                <div formArrayName="staffDetails">
+                  <div *ngFor="let staffDetails of getNestedStaffDetailsControls(i); let s = index" [formGroupName]="s">
+                    <div class="row g-3">
+                      <div class="col-md-12">
+                        <label for="category-{{ i }}" class="form-label">Select Staff Type</label>
+                        <select class="form-select" id="category-{{ i }}" formControlName="category" [class.is-invalid]="
+                    staffDetails.get('category')?.invalid &&
+                    staffDetails.get('category')?.touched
                   ">
-                <option value="">Select Tenure</option>
-                <option *ngFor="let tenure of nurseTenure" [value]="tenure">
-                  {{ tenure }}
-                </option>
-              </select>
-              <div *ngIf="
-                    nurseDetail.get('typeOfNurse')?.invalid &&
-                    nurseDetail.get('typeOfNurse')?.touched
+                          <option value="" disabled>Select Type</option>
+                          <option *ngFor="let staff of staffTypes" [value]="staff.value">
+                            {{ staff.label }}
+                          </option>
+                        </select>
+                        <div *ngIf="
+                    staffDetails.get('category')?.invalid &&
+                    staffDetails.get('category')?.touched
                   " class="invalid-feedback">
-                Tenure is required.
-              </div>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label d-block">Gender Preference</label>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="gender-{{ i }}-male" value="Male"
-                  formControlName="gender" [class.is-invalid]="
-                      nurseDetail.get('gender')?.invalid && nurseDetail.get('gender')?.touched
-                    " />
-                <label class="form-check-label" for="gender-{{ i }}-male">Male</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="gender-{{ i }}-female" value="Female"
-                  formControlName="gender" [class.is-invalid]="
-                      nurseDetail.get('gender')?.invalid && nurseDetail.get('gender')?.touched
-                    " />
-                <label class="form-check-label" for="gender-{{ i }}-female">Female</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="gender-{{ i }}-any" value="Any"
-                  formControlName="gender" [class.is-invalid]="
-                      nurseDetail.get('gender')?.invalid && nurseDetail.get('gender')?.touched
-                    " />
-                <label class="form-check-label" for="gender-{{ i }}-any">Any</label>
-              </div>
+                          Type of Staff is required.
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <label for="subCategory-{{ i }}" class="form-label">Selct Nurse Type</label>
+                        <select class="form-select" id="subCategory-{{ i }}" formControlName="subCategory"
+                          [disabled]="!staffDetails.get('category')?.value" [class.is-invalid]="
+                    staffDetails.get('subCategory')?.invalid &&
+                    staffDetails.get('subCategory')?.touched
+                  ">
+                          <option value="" disabled>Select Nurse</option>
+                          <option *ngFor="let nurse of typesOfNurses" [value]="nurse.value">
+                            {{ nurse.label }}
+                          </option>
+                        </select>
+                        <div *ngIf="
+                    staffDetails.get('subCategory')?.invalid &&
+                    staffDetails.get('subCategory')?.touched
+                  " class="invalid-feedback">
+                          Type of Nurse is required.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- this needs to be repeated-->
+                <div formArrayName="shiftDetails">
+                  <div *ngFor="let shiftDetail of getNestedShiftDetailsControls(i); let sh = index"
+                    [formGroupName]="sh">
+                    <div class="row g-3">
+                      <div class="col-md-2">
+                        <label class="form-label">Prefered Time Slot</label>
+                        <select class="form-select" formControlName="timeSlot" [class.is-invalid]="
+                    shiftDetail.get('timeSlot')?.invalid &&
+                    shiftDetail.get('timeSlot')?.touched
+                  ">
+                          <option *ngFor="let time of times" [value]="time.value">
+                            {{ time.label }}
+                          </option>
+                        </select>
+                        <div *ngIf="
+                    shiftDetail.get('timeSlot')?.invalid &&
+                    shiftDetail.get('timeSlot')?.touched
+                  " class="invalid-feedback">
+                          Time Slot is required.
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <label class="form-label d-block">Prefered Gender</label>
+                        <select class="form-select" formControlName="gender" [class.is-invalid]="
+                    shiftDetail.get('gender')?.invalid &&
+                    shiftDetail.get('gender')?.touched
+                  ">
+                          <option *ngFor="let gen of gender" [value]="gen.value">
+                            {{ gen.label }}
+                          </option>
+                        </select>
+                        <div *ngIf="
+                    shiftDetail.get('gender')?.invalid &&
+                    shiftDetail.get('gender')?.touched
+                  " class="invalid-feedback">
+                          Area is required.
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <label for="quantity-{{ i }}" class="form-label">Quantity</label>
+                        <div class="input-group quantity-selector">
+                          <input type="number" class="form-control" aria-live="polite" data-bs-step="counter"
+                            title="quantity" value="1" min="1" max="10" step="1" data-bs-round="0"
+                            aria-label="Quantity selector" formControlName="quantity">
+                        </div>
+                      </div>
 
-              <div *ngIf="nurseDetail.get('gender')?.invalid && nurseDetail.get('gender')?.touched"
-                class="invalid-feedback d-block">
-                Gender is required.
+                      <div class="col-md-2">
+                        <label class="form-label">Tenure</label>
+                        <select class="form-select" formControlName="tenure" [class.is-invalid]="
+                    shiftDetail.get('tenure')?.invalid &&
+                    shiftDetail.get('tenure')?.touched
+                  ">
+                          <option *ngFor="let ten of tenure" [value]="ten.value">
+                            {{ ten.label }}
+                          </option>
+                        </select>
+                        <div *ngIf="
+                    shiftDetail.get('tenure')?.invalid &&
+                    shiftDetail.get('tenure')?.touched
+                  " class="invalid-feedback">
+                          Shift type is required.
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <label class="form-label">Duty Start Date</label>
+                        <input type="date" class="form-control" formControlName="startDate" />
+                      </div>
+                      <div class="col-md-2 d-flex align-items-start gap-2 mt-3">
+                        <!-- Add Button -->
+                        <button type="button" *ngIf="sh === 0"
+                          class="btn btn-outline-success btn-lg rounded-circle mt-3 d-flex align-items-center justify-content-center"
+                          style="width: 20px; height: 30px;" (click)="addShift(i)" title="Add Time Slot">
+                          <i class="bi bi-plus-lg fs-5"></i>
+                        </button>
+                        <!-- Remove Button -->
+                        <button type="button" *ngIf="getNestedShiftDetailsControls(i).length > 1 && sh > 0"
+                          class="btn btn-outline-danger btn-lg rounded-circle mt-3 d-flex align-items-center justify-content-center"
+                          style="width: 20px; height: 30px;" (click)="removeShiftDetail(i, sh)"
+                          title="Remove Time Slot">
+                          <i class="bi bi-x-lg fs-5"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div *ngIf="nurseDetailsFormArray.length > 1" class="d-grid mt-3">
-            <button type="button" class="btn btn-outline-danger btn-sm" (click)="removeNurseDetail(i)">
-              Remove Nurse #{{ i + 1 }}
-            </button>
-          </div>
+            <div class="d-flex justify-content-end mb-4">
+              <button type="button" class="text-btn" (click)="addNewStaff()">
+                <i class="bi bi-plus"></i>Add New Staff
+              </button>
+            </div>
+            <div class="submission-fixed">
+              <button type="submit" class="btn btn-primary">Search For Staff</button>
+              <!-- <app-submission></app-submission> -->
+            </div>
+          </form>
         </div>
       </div>
-
-      <div class="d-grid gap-2 mb-4">
-        <button type="button" class="text-btn" (click)="addNurseDetail()">
-          <i class="bi bi-plus"></i>Add Another Nurse
-        </button>
-      </div>
-    </form>
-  </div>
-  <div class="submission-fixed">
-    <app-submission></app-submission>
+    </div>
   </div>
 </div>
