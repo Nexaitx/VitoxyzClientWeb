@@ -9,52 +9,64 @@
   </div>
 
   <!-- Right Panel -->
-  <div class="right-panel">
-    <div class="form-container">
-      <h1 class="brand-title">Vitoxyz</h1>
-      <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
-        <!-- Phone Number -->
-        <label class="field-label">Phone Number</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-icon matPrefix>call</mat-icon>
-          <input matInput type="tel" placeholder="Enter Phone Number" formControlName="username" required pattern="[0-9]*" maxlength="10" inputmode="numeric">
-          <mat-error *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
-            Phone number is required.
-          </mat-error>
-        </mat-form-field>
-        <!-- Password -->
-        <label class="field-label">Password</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-icon matPrefix>lock</mat-icon>
-          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter your password"
-            formControlName="password" required>
-          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-          <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-            Password is required.
-          </mat-error>
-        </mat-form-field>
-        <!-- Remember Me and Forgot Password -->
-        <div class="form-row">
-          <mat-checkbox [(ngModel)]="rememberMe" [ngModelOptions]="{standalone: true}" name="rememberMe" checked>Remember For 30 Days</mat-checkbox>
-          <a class="forgot-link" routerLink="/forgot-password">Forgot Password</a>
-        </div>
-        <!-- Password / OTP Toggle -->
-        <div class="form-row checkbox-right">
-          <mat-checkbox [(ngModel)]="usePassword" [ngModelOptions]="{standalone: true}" name="usePassword" checked>
-            Password
-          </mat-checkbox>
-          <mat-checkbox [(ngModel)]="useOtp" [ngModelOptions]="{standalone: true}" name="useOtp">
-            Otp
-          </mat-checkbox>
-        </div>
-        <!-- Submit Button -->
-        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || isLoading">
-          {{ isLoading ? 'Logging in...' : 'Login' }}
-        </button>
-      </form>
+  <div class="right-panel d-flex align-items-center">
+    <div class="w-100">
+      <h1 class="title text-center">Vitoxyz</h1>
+      <div class="form-container d-flex justify-content-center">
+        <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form p-4 w-75">
+          <!-- Phone Number -->
+          <div class="form-group">
+            <label for="phoneNumber">Phone Number</label>
+            <div class="input-group phone-input-group"> <span class="input-group-text icon-inside">
+                <i class="bi bi-telephone"></i> </span>
+              <input type="text" class="form-control" formControlName="phoneNumber" id="phoneNumber"
+                placeholder="Phone Number" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password">
+              Password
+            </label>
+            <div class="input-group phone-input-group"> <span class="input-group-text icon-inside">
+                <i class="bi bi-lock"></i> </span>
+              <div class="password-input-wrapper w-100" style="position: relative;">
+                <input [type]="showPassword ? 'text' : 'password'" class="form-control w-100" formControlName="password"
+                  placeholder="Password" required>
+                <span (click)="showPassword = !showPassword"
+                  style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"
+                  tabindex="0" aria-label="Toggle password visibility">
+                  <i [ngClass]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between">
+            <div class="form-group">
+              <label for="rememberMe">
+                <input type="checkbox" class="form-check-input" formControlName="rememberMe" id="rememberMe">
+                Remember Me
+              </label>
+            </div>
+
+            <div class="form-group">
+              <a href="#" class="forgot-password-link links">Forgot Password?</a>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end">
+            <div class="form-group d-flex align-items-center">
+              <input type="radio" id="checkPswd" checked class="form-check-input me-2"
+               name="authMethod" value="password" required />
+              <label for="checkPswd"> Password </label>
+            </div>
+            <div class="form-group ms-3 d-flex align-items-center">
+              <input type="radio" id="otp" class="form-check-input me-2" name="authMethod" value="otp" required />
+              <label for="otp"> OTP </label>
+            </div>
+          </div>
+          <app-submission [buttonType]="button"></app-submission>
+        </form>
+      </div>
     </div>
   </div>
 </div>
