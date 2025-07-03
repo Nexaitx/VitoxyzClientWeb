@@ -3,7 +3,7 @@
 
         <!-- Staff Maps -->
         <div class="col-md-4 mt-1">
-            <app-map></app-map>
+            <app-map (locationSelected)="getAddressFromCoords($event.lat, $event.lng)"></app-map>
         </div>
 
         <!-- Staff Booking Forms -->
