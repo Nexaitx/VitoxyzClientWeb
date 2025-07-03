@@ -20,7 +20,9 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "typeCheckHostBindings": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "enableNgCompilerCli": true,
+    "controlFlow": true
   },
   "files": [],
   "references": [

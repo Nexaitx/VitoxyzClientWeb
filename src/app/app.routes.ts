@@ -38,7 +38,7 @@ export const routes: Routes = [
         path: '', // Default child route for 'book-staff'
         redirectTo: 'book-nurse', // Redirect to 'book-nurse' if only 'book-staff' is accessed
         pathMatch: 'full'
-      }
+      }      
     ]
   },
 
@@ -92,6 +92,10 @@ export const routes: Routes = [
             }
         ]
     },
+    {
+        path: 'view-staff',
+        loadComponent: () => import('./pages/view-staff/view-staff').then(m => m.ViewStaff)
+      },
     {
         path: '**',
         redirectTo: 'home'
