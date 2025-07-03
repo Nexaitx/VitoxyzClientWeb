@@ -3,8 +3,8 @@ import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpErrorResponse, HttpClientModule } from '@angular/common/http';
-import { environment } from '../../../../src/environments/environment.development'; // Import your environment file
-import { Submission } from '../book-staff/submission/submission';
+import { environment } from '../../../../environments/environment.development'; // Import your environment file
+import { Submission } from '../../book-staff/submission/submission';
 @Component({
   selector: 'app-login',
   standalone: true,

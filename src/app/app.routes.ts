@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { Header } from './layouts/header/header';
+import { Authorization } from './pages/authorization/authorization'; // Make sure to import Authorization component
 
 export const routes: Routes = [
   {
@@ -61,19 +62,34 @@ export const routes: Routes = [
         path: 'support',
         loadComponent: () => import('./pages/support/support').then(m => m.Support),
       },
-
+      // If you want a default route for the Header layout
+      {
+        path: '',
+        redirectTo: 'dashboard', // or whatever your default landing page is
+        pathMatch: 'full'
+      }
     ]
   },
   {
-    path: 'login',
-    loadComponent: () => import('./pages/login/login').then(m => m.Login),
+    // This route will use the Authorization component as its layout/parent
+    // The children 'login' and 'sign-up' will be rendered inside the <router-outlet>
+    // of the Authorization component.
+    path: '', // This means paths like /login and /sign-up
+    component: Authorization, // Authorization component acts as the layout for these routes
+    children: [
+      {
+        path: 'login',
+        loadComponent: () => import('./pages/authorization/login/login').then(m => m.Login),
+      },
+      {
+        path: 'sign-up',
+        loadComponent: () => import('./pages/authorization/sign-up/sign-up').then(m => m.SignUp),
+      }
+      // You can add more authorization-related routes here if needed
+    ]
   },
   {
-    path: 'sign-up',
-    loadComponent: () => import('./pages/sign-up/sign-up').then(m => m.SignUp),
-  },
-  {
-    path: '**',
-    redirectTo: 'home'
+    path: '**', // Wildcard route for any unmatched paths
+    redirectTo: 'dashboard' // Redirect to dashboard or a 404 page
   }
 ];

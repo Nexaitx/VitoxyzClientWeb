@@ -7,27 +7,40 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <ng-container *ngFor="let item of menuItems">
-          <li class="nav-item" *ngIf="!item.dropdown">
+        <ng-container *ngFor="let item of menuItems; let i = index">
+          <li class="nav-item" *ngIf="!item.dropdown && !item.icon">
             <a class="nav-link text-white" [ngClass]="{'active rounded-pill': rla.isActive}" [routerLink]="item.path"
               routerLinkActive #rla="routerLinkActive">
               {{ item.label }}
             </a>
           </li>
-        <li class="nav-item dropdown" *ngIf="item.dropdown" [routerLinkActive]="['active', 'rounded-pill']"
-            [routerLinkActiveOptions]="{ exact: false }"> <a
-              class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown" role="button"
-              data-bs-toggle="dropdown" aria-expanded="false">
+
+          <ng-container *ngIf="item.label === 'Log In'">
+            <li class="nav-item d-flex align-items-center">
+              <span style="color: white; padding: 0 0.2rem;">|</span>
+            </li>
+          </ng-container>
+
+          <li class="nav-item dropdown" *ngIf="item.dropdown" [routerLinkActive]="['active', 'rounded-pill']"
+            [routerLinkActiveOptions]="{ exact: false }">
+
+            <a *ngIf="item.icon" class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown{{i}}"
+              role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person"></i> </a>
+
+            <a *ngIf="!item.icon" class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown{{i}}"
+              role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{ item.label }}
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li *ngFor="let dropdownItem of item.dropdownItems">
-                  <a class="dropdown-item" [routerLink]="dropdownItem.path" routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }">
-                    {{ dropdownItem.label }}
-                  </a>
-                </li>
-              </ul>
+            </a>
+
+            <ul class="dropdown-menu" [attr.aria-labelledby]="'navbarDropdown' + i">
+              <li *ngFor="let dropdownItem of item.dropdownItems">
+                <a class="dropdown-item" [routerLink]="dropdownItem.path" routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }">
+                  {{ dropdownItem.label }}
+                </a>
+              </li>
+            </ul>
           </li>
         </ng-container>
       </ul>

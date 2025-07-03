@@ -39,12 +39,20 @@ export class Header {
         { label: 'Psychiatrist', path: 'book-staff/book-psychiatrist' },
       ]
     },
-    // { label: 'Lab Test', path: '/user-onboarding' },
     { label: 'Diet Plans', path: '/user-profile' },
-    // { label: 'Doctor Consultation', path: '/meera-ai' },
     { label: 'Support', path: '/support' },
     { label: 'Log In', path: '/login' },
     { label: 'Sign up', path: '/sign-up' },
+    {
+      label: 'Profile', // This will be the key to identify your profile menu
+      icon: 'bi bi-person-circle', // Example using Bootstrap Icons or Font Awesome class
+      dropdown: true,
+      dropdownItems: [
+        { label: 'My Profile', path: '/profile' },
+        { label: 'Settings', path: '/settings' },
+        { label: 'Logout', path: '/logout' }
+      ]
+    },
     { label: 'Need Help?', path: '/help' }
   ];
 

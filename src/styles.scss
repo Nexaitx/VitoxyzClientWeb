@@ -56,7 +56,7 @@ body {
     box-shadow: none !important;
     outline: 0 !important;
 }
-select option:checked , select option:focus, select option:active, select option:focus-within{
+select option:checked , select option:focus, select option:active, select option:focus-within, .dropdown-item:hover{
   background-color: var(--tertinary) !important; /* Will likely not work */
   color: white;
 }

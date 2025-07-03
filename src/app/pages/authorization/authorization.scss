@@ -1,0 +1,44 @@
+.login-screen {
+    display: flex;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    background: url('/assets/login/background.png') no-repeat center center;
+
+    .left-panel {
+        flex: 1;
+        background: url('/assets/login/login-illustrate.png') no-repeat center center;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        padding: 2rem;
+
+        .overlay-content {
+            text-align: center;
+            //font: optional;
+
+            h2 {
+                font-size: 2rem;
+                font-weight: 600;
+            }
+
+            p {
+                font-size: 1rem;
+                margin-top: 0.8rem;
+                line-height: 1.5;
+                margin: 0;
+            }
+        }
+    }
+
+    .right-panel {
+        flex: 1;
+        padding: 2rem;
+
+        .form-container {
+            width: 100%;
+            border-radius: 12px;
+        }
+    }
+}

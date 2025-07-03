@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http'; //  Added HttpClient
-import { environment } from '../../../../src/environments/environment.development';
+import { environment } from '../../../../environments/environment.development';
 
 // Password Match Validator
 export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): { [key: string]: boolean } | null => {
