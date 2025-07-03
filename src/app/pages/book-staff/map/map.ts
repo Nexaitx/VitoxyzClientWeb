@@ -2,7 +2,9 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   OnInit,
+  Output,
   ViewChild
 } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
@@ -18,7 +20,7 @@ declare const google: any;
 })
 export class MapComponent implements AfterViewInit, OnInit {
   @ViewChild('mapElement', { static: false }) mapElement!: ElementRef;
-
+  @Output() locationSelected = new EventEmitter<{ lat: number; lng: number }>();
   userLat = 28.6139; // fallback
   userLng = 77.2090;
   map: any;
@@ -69,8 +71,15 @@ export class MapComponent implements AfterViewInit, OnInit {
     this.map.addListener('click', (e: any) => {
       const lat = e.latLng.lat();
       const lng = e.latLng.lng();
-      alert(`Clicked location:\nLatitude: ${lat}\nLongitude: ${lng}`);
+      this.locationSelected.emit({ lat, lng });
+      //alert(`Clicked location:\nLatitude: ${lat}\nLongitude: ${lng}`);
     });
+  }
+
+  onMapClick(event: any) {
+    const lat = event.latLng.lat();
+    const lng = event.latLng.lng();
+    this.locationSelected.emit({ lat, lng });
   }
 }
 

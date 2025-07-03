@@ -1,0 +1,46 @@
+<div class="container-fluid mt-4">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row" *ngIf="staffList && staffList.length > 0">
+                <div class="col-md-3 mb-4" *ngFor="let staff of staffList; let i = index">
+                    <div class="card h-100 shadow-sm">
+                        <div class="row g-0">
+                            <!-- Left: Image -->
+                            <div class="col-5 d-flex align-items-center justify-content-center p-2">
+                                <img [src]="staff.imageUrl || 'https://via.placeholder.com/100'"
+                                    class="img-fluid rounded" alt="Staff Image" />
+                            </div>
+
+                            <!-- Right: Details -->
+                            <div class="col-7">
+                                <div class="card-body p-2">
+                                    <h6 class="card-title mb-1"><strong>{{ staff.name }}</strong></h6>
+                                    <p class="mb-1 text-muted">Exp: {{ staff.experience }} years</p>
+                                    <p class="mb-1 text-muted">Rating: ⭐ {{ staff.rating }}/5</p>
+                                    <p class="mb-1 text-muted">Rate: ₹{{ staff.rate }}/hr</p>
+
+                                    <!-- Icons: Add / Remove -->
+                                    <div class="d-flex justify-content-end gap-2 mt-2">
+                                        <button class="btn btn-sm btn-outline-success" (click)="addStaff(i)">
+                                            <i class="bi bi-plus-lg"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" (click)="removeStaff(i)">
+                                            <i class="bi bi-x-lg"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Optional: Empty State -->
+            <div *ngIf="staffList.length === 0" class="text-center mt-4">
+                <p>No staff found.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
