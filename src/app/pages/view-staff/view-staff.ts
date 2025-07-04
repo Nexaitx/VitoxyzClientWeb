@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-staff',
@@ -9,86 +10,173 @@ import { Component } from '@angular/core';
   standalone: true
 })
 export class ViewStaff {
-staffList = [
-  {
-    name: 'Nurse A',
-    experience: 5,
-    rating: 4.5,
-    rate: 250,
-    imageUrl: 'https://via.placeholder.com/100'
-  },
-  {
-    name: 'Nurse B',
-    experience: 3,
-    rating: 4.0,
-    rate: 200,
-    imageUrl: 'https://via.placeholder.com/100'
-  },
-  {
-    name: 'Nurse A',
-    experience: 5,
-    rating: 4.5,
-    rate: 250,
-    imageUrl: 'https://via.placeholder.com/100'
-  },
-  {
-    name: 'Nurse B',
-    experience: 3,
-    rating: 4.0,
-    rate: 200,
-    imageUrl: 'https://via.placeholder.com/100'
-  },
-  {
-    name: 'Nurse A',
-    experience: 5,
-    rating: 4.5,
-    rate: 250,
-    imageUrl: 'https://via.placeholder.com/100'
-  },
-  {
-    name: 'Nurse B',
-    experience: 3,
-    rating: 4.0,
-    rate: 200,
-    imageUrl: 'https://via.placeholder.com/100'
-  },
-  {
-    name: 'Nurse A',
-    experience: 5,
-    rating: 4.5,
-    rate: 250,
-    imageUrl: 'https://via.placeholder.com/100'
-  },
-  {
-    name: 'Nurse B',
-    experience: 3,
-    rating: 4.0,
-    rate: 200,
-    imageUrl: 'https://via.placeholder.com/100'
-  },
-  {
-    name: 'Nurse A',
-    experience: 5,
-    rating: 4.5,
-    rate: 250,
-    imageUrl: 'https://via.placeholder.com/100'
-  },
-  {
-    name: 'Nurse B',
-    experience: 3,
-    rating: 4.0,
-    rate: 200,
-    imageUrl: 'https://via.placeholder.com/100'
-  },
-  // Add more objects as needed
-];
+  //staffDetails: any[] = [];
+  // staffList = [
+  //   {
+  //     name: 'Nurse A',
+  //     experience: 5,
+  //     rating: 4.5,
+  //     rate: 250,
+  //     imageUrl: 'https://via.placeholder.com/100'
+  //   },
+  //   {
+  //     name: 'Nurse B',
+  //     experience: 3,
+  //     rating: 4.0,
+  //     rate: 200,
+  //     imageUrl: 'https://via.placeholder.com/100'
+  //   },
+  //   {
+  //     name: 'Nurse A',
+  //     experience: 5,
+  //     rating: 4.5,
+  //     rate: 250,
+  //     imageUrl: 'https://via.placeholder.com/100'
+  //   },
+  //   {
+  //     name: 'Nurse B',
+  //     experience: 3,
+  //     rating: 4.0,
+  //     rate: 200,
+  //     imageUrl: 'https://via.placeholder.com/100'
+  //   },
+  //   {
+  //     name: 'Nurse A',
+  //     experience: 5,
+  //     rating: 4.5,
+  //     rate: 250,
+  //     imageUrl: 'https://via.placeholder.com/100'
+  //   },
+  //   {
+  //     name: 'Nurse B',
+  //     experience: 3,
+  //     rating: 4.0,
+  //     rate: 200,
+  //     imageUrl: 'https://via.placeholder.com/100'
+  //   },
+  //   {
+  //     name: 'Nurse A',
+  //     experience: 5,
+  //     rating: 4.5,
+  //     rate: 250,
+  //     imageUrl: 'https://via.placeholder.com/100'
+  //   },
+  //   {
+  //     name: 'Nurse B',
+  //     experience: 3,
+  //     rating: 4.0,
+  //     rate: 200,
+  //     imageUrl: 'https://via.placeholder.com/100'
+  //   },
+  //   {
+  //     name: 'Nurse A',
+  //     experience: 5,
+  //     rating: 4.5,
+  //     rate: 250,
+  //     imageUrl: 'https://via.placeholder.com/100'
+  //   },
+  //   {
+  //     name: 'Nurse B',
+  //     experience: 3,
+  //     rating: 4.0,
+  //     rate: 200,
+  //     imageUrl: 'https://via.placeholder.com/100'
+  //   },
+  //   // Add more objects as needed
+  // ];
+  staffDetails: any[] = [
+    {
+      "category": "nurse",
+      "availableStaff": [
+        {
+          "subCategory": "babycare",
+          "id": 6,
+          "name": "string",
+          "gender": "male",
+          "tenure": null,
+          "startDate": "2025-07-04",
+          "timeSlot": "1",
+          "experience": '3',
+          "duties": "34",
+          "rating": "3",
+          "payment": "230"
+        },
+        {
+          "subCategory": "babycare",
+          "id": 3,
+          "name": "test",
+          "gender": "female",
+          "tenure": null,
+          "startDate": "2025-07-04",
+          "timeSlot": "1",
+          "experience": '3',
+          "duties": "34",
+          "rating": "4",
+          "payment": "230"
+        },
+        {
+          "subCategory": "dialysis",
+          "id": 3,
+          "name": "test",
+          "gender": "female",
+          "tenure": null,
+          "startDate": "2025-07-04",
+          "timeSlot": "1",
+          "experience": '3',
+          "duties": "34",
+          "rating": "2",
+          "payment": "230"
+        }
+      ]
+    },
+    {
+      "category": "Security",
+      "availableStaff": [
+        {
+          "subCategory": "day",
+          "id": 6,
+          "name": "string",
+          "gender": "male",
+          "tenure": null,
+          "startDate": "2025-07-04",
+          "timeSlot": "1",
+          "experience": '3',
+          "duties": "34",
+          "rating": "4",
+          "payment": "230"
+        },
+        {
+          "subCategory": "night",
+          "id": 3,
+          "name": "test",
+          "gender": "female",
+          "tenure": null,
+          "startDate": "2025-07-04",
+          "timeSlot": "1",
+          "experience": '3',
+          "duties": "34",
+          "rating": "4",
+          "payment": "230"
+        }
+      ]
+    }
+  ]
+  constructor(private router: Router) {
+    const nav = this.router.getCurrentNavigation();
+    debugger
+    //this.staffDetails = nav?.extras?.state?.['staffDetails'] ?? [];
+  }
 
-addStaff(index: number) {
-  console.log('Add clicked for', this.staffList[index]);
-}
+  getStars(rating: number): number[] {
+    return Array(5).fill(0).map((_, i) => i);
+  }
 
-removeStaff(index: number) {
-  console.log('Remove clicked for', this.staffList[index]);
-}
+  addStaff(index: number) {
+    console.log('Add clicked for', this.staffDetails[index]);
+  }
+
+  removeStaff(index: number) {
+    console.log('Remove clicked for', this.staffDetails[index]);
+  }
 
 }

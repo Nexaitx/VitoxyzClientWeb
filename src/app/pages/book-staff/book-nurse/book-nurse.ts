@@ -6,10 +6,12 @@ import { Submission } from '../../submission/submission';
 import { HttpClient } from '@angular/common/http';
 import { BookNurseService } from './book-nurse.service';
 import { API_URL, ENDPOINTS } from '../../../core/const';
+import { SpinnerToastService } from '../../../core/toasts/spinner-toast/spinner-toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-nurse',
-  imports: [CommonModule, ReactiveFormsModule, Submission, MapComponent, ],
+  imports: [CommonModule, ReactiveFormsModule, MapComponent,],
   templateUrl: './book-nurse.html',
   styleUrls: ['./book-nurse.scss'],
   providers: [BookNurseService]
@@ -19,6 +21,7 @@ export class BookNurse {
   fb = inject(FormBuilder);
   bookNurseService = inject(BookNurseService);
   http = inject(HttpClient);
+  router = inject(Router)
   staffBookingForm!: FormGroup;
   hours: number[] = Array.from({ length: 24 }, (_, i) => i); // 0 to 23
   minutes: number[] = [0, 15, 30, 45];
@@ -79,7 +82,8 @@ export class BookNurse {
     { label: '1 Day', value: '1' }, { label: '3 Days', value: '2' }, { label: '1 Week', value: '3' }, { label: '2 Weeks', value: '4' }, { label: '1 Month', value: '5' }
   ]
 
-  constructor( 
+  constructor(
+    private spinnerService: SpinnerToastService
   ) { }
 
   ngOnInit(): void {
@@ -111,10 +115,10 @@ export class BookNurse {
   }
 
   getAddressFromCoords(lat: number, lng: number) {
-    this.staffBookingForm.patchValue({ 
+    this.staffBookingForm.patchValue({
       latitude: lat,
       longitude: lng
-     });
+    });
     const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
     this.http.get<any>(url).subscribe(
       (response) => {
@@ -199,14 +203,24 @@ export class BookNurse {
 
   onSubmit(): void {
     if (this.staffBookingForm.valid) {
+      this.spinnerService.show();
       const apiUrl = API_URL + ENDPOINTS.SEARCH;
       const payload = this.staffBookingForm.value;
       this.bookNurseService.searchStaff(apiUrl, payload).subscribe({
         next: (response) => {
-          console.log('Staff search response:', response);
+          this.spinnerService.hide();
+          const staffDetails = response?.staff[0]?.staffDetails || [];
+          if (staffDetails.length > 0) {
+            this.router.navigate(['/view-staff'], {
+              state: { staffDetails } // pass data via navigation state
+            });
+          } else {
+            alert('No staff found.');
+          }
         },
         error: (error) => {
           console.error('Staff search failed:', error);
+          this.spinnerService.hide();
         }
       });
     } else {
