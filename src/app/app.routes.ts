@@ -85,6 +85,10 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'view-staff',
+    loadComponent: () => import('./pages/view-staff/view-staff').then(m => m.ViewStaff),
+  },
+  {
     path: '**', // Wildcard route for any unmatched paths
     redirectTo: 'dashboard' // Redirect to dashboard or a 404 page
   }
