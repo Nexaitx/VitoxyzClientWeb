@@ -26,7 +26,14 @@
     <label for="otp">OTP</label>
     <input type="text" class="form-control" id="otp" placeholder="Enter OTP" required />
   </div>
-  <p>Resend code in {{ timeLeft }} seconds</p>
-  </div>
+
+  <ng-container *ngIf="timeLeft > 0; else resendButton">
+    <p>Resend code in {{ timeLeft }} seconds</p>
+  </ng-container>
+
+  <ng-template #resendButton>
+    <button type="button" class="btn btn-link" (click)="resendOtp()">Resend OTP</button>
+  </ng-template>
+</div>
 }
 </div>

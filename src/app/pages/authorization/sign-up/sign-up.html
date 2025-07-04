@@ -2,18 +2,7 @@
   <form class="auth-form p-4" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <div class="mb-3 col-md-6">
-        <label for="userName" class="form-label">First Name</label>
-        <input type="text" class="form-control" id="userName" placeholder="Enter your full name"
-          formControlName="userName"
-          [class.is-invalid]="signupForm.get('userName')?.invalid && signupForm.get('userName')?.touched">
-        <div *ngIf="signupForm.get('userName')?.invalid && signupForm.get('userName')?.touched"
-          class="invalid-feedback">
-          Full Name is required.
-        </div>
-      </div>
-
-       <div class="mb-3 col-md-6">
-        <label for="userName" class="form-label">Last Name</label>
+        <label for="userName" class="form-label">Full Name</label>
         <input type="text" class="form-control" id="userName" placeholder="Enter your full name"
           formControlName="userName"
           [class.is-invalid]="signupForm.get('userName')?.invalid && signupForm.get('userName')?.touched">
@@ -43,8 +32,6 @@
         </div>
       </div>
 
-      
-
       <div class="mb-3 col-md-12">
         <label for="address" class="form-label">Address</label>
         <input type="text" class="form-control" id="address" placeholder="Enter your address" formControlName="address"
@@ -55,17 +42,8 @@
       </div>
 
       <div class="mb-3 col-md-6">
-        <label for="city" class="form-label">Country</label>
-        <input type="text" class="form-control" id="city" placeholder="Enter your city" formControlName="city"
-          [class.is-invalid]="signupForm.get('city')?.invalid && signupForm.get('city')?.touched">
-        <div *ngIf="signupForm.get('city')?.invalid && signupForm.get('city')?.touched" class="invalid-feedback">
-          City is required.
-        </div>
-      </div>
-
-      <div class="mb-3 col-md-6">
         <label for="pinCode" class="form-label">Zip Code</label>
-        <input type="number" class="form-control" id="pinCode" placeholder="Enter your pin code"
+        <input type="number" class="form-control" id="pinCode" placeholder="Enter your zip code"
           formControlName="pinCode"
           [class.is-invalid]="signupForm.get('pinCode')?.invalid && signupForm.get('pinCode')?.touched">
         <div *ngIf="signupForm.get('pinCode')?.invalid && signupForm.get('pinCode')?.touched" class="invalid-feedback">

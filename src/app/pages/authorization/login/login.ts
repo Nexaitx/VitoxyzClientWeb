@@ -36,7 +36,7 @@ export class Login implements OnInit {
   timeLeft: number = 30;
   private subscription: Subscription | undefined;
   phoneNumber: string = '+919876543210'; // Default phone number
-  maskedPhoneNumber: string = '';
+  maskedPhoneNumber: string = ''; // Initialize here or in ngOnInit
 
   constructor(
     private fb: FormBuilder
@@ -52,6 +52,10 @@ export class Login implements OnInit {
   }
 
   ngOnInit() {
+    this.startOtpTimer();
+    this.maskedPhoneNumber = this.maskPhoneNumber(this.phoneNumber); // <--- Add this line
+    console.log('Masked Phone Number:', this.maskedPhoneNumber);
+
     this.subscription = interval(1000).subscribe(() => {
       if (this.timeLeft > 0) {
         this.timeLeft--;
@@ -65,10 +69,11 @@ export class Login implements OnInit {
     this.subscription?.unsubscribe();
   }
 
-  ngOnChanges() {
-    this.maskedPhoneNumber = this.maskPhoneNumber(this.phoneNumber);
-    console.log('Masked Phone Number:', this.maskedPhoneNumber);
-  }
+  // ngOnChanges is not needed here unless phoneNumber becomes an @Input()
+  // ngOnChanges() {
+  //   this.maskedPhoneNumber = this.maskPhoneNumber(this.phoneNumber);
+  //   console.log('Masked Phone Number:', this.maskedPhoneNumber);
+  // }
 
   private maskPhoneNumber(phone: string): string {
     if (!phone || phone.length < 2) return phone; // Handle invalid input
@@ -78,6 +83,35 @@ export class Login implements OnInit {
     return `${countryCode}${maskedPart}${lastTwoDigits}`;
   }
 
+  resendOtp() {
+    console.log('Resending OTP...');
+    // Implement your API call here to resend the OTP
+    // Example:
+    // this.http.post(`${environment.apiBaseUrl}api/user/resendOtp`, { phoneNumber: this.phoneNumber }).subscribe({
+    //   next: (response) => {
+    //     console.log('OTP Resent', response);
+    //     this.startOtpTimer(); // Restart the timer after successful resend
+    //   },
+    //   error: (error) => {
+    //     console.error('Failed to resend OTP', error);
+    //     // Handle error (e.g., show a message to the user)
+    //   }
+    // });
+
+    // For demonstration, simply restart the timer:
+    this.startOtpTimer();
+  }
+   startOtpTimer() {
+    this.timeLeft = 30; // Reset the timer
+    this.subscription?.unsubscribe(); // Unsubscribe from any previous timer
+    this.subscription = interval(1000).subscribe(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--;
+      } else {
+        this.subscription?.unsubscribe(); // Stop the timer when it reaches 0
+      }
+    });
+  }
   login(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -87,7 +121,7 @@ export class Login implements OnInit {
 
     this.isLoading = true; // Set loading to true before API call
     const { username, password } = this.loginForm.value;
-    //  environment for api
+    //  environment for api
     const apiUrl = `${environment.apiBaseUrl}api/user/loginWithPasswordUser`; // Assuming environment.apiBaseUrl is defined
 
     const payload = { username, password };

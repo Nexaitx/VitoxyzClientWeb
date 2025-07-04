@@ -6,7 +6,7 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-book-staff',
   imports: [
-    RouterOutlet, MapComponent
+    RouterOutlet
   ],
   templateUrl: './book-staff.html',
   styleUrl: './book-staff.scss'
