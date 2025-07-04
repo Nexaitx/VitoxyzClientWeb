@@ -5,10 +5,11 @@ import { MapComponent } from '../map/map';
 import { Submission } from '../../submission/submission';
 import { HttpClient } from '@angular/common/http';
 import { BookNurseService } from './book-nurse.service';
+import { API_URL, ENDPOINTS } from '../../../core/const';
 
 @Component({
   selector: 'app-book-nurse',
-  imports: [CommonModule, ReactiveFormsModule, Submission, MapComponent],
+  imports: [CommonModule, ReactiveFormsModule, Submission, MapComponent, ],
   templateUrl: './book-nurse.html',
   styleUrls: ['./book-nurse.scss'],
   providers: [BookNurseService]
@@ -78,7 +79,7 @@ export class BookNurse {
     { label: '1 Day', value: '1' }, { label: '3 Days', value: '2' }, { label: '1 Week', value: '3' }, { label: '2 Weeks', value: '4' }, { label: '1 Month', value: '5' }
   ]
 
-  constructor(
+  constructor( 
   ) { }
 
   ngOnInit(): void {
@@ -198,7 +199,7 @@ export class BookNurse {
 
   onSubmit(): void {
     if (this.staffBookingForm.valid) {
-      const apiUrl = 'https://7df0-152-56-69-87.ngrok-free.app/api/search';
+      const apiUrl = API_URL + ENDPOINTS.SEARCH;
       const payload = this.staffBookingForm.value;
       this.bookNurseService.searchStaff(apiUrl, payload).subscribe({
         next: (response) => {
