@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { SpinnerToastComponent } from "./core/toasts/spinner-toast/spinner-toast.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, SpinnerToastComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

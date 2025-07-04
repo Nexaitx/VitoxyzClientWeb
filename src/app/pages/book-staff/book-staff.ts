@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MapComponent } from './map/map';
 import { BookNurse } from './book-nurse/book-nurse';
 import { RouterOutlet } from '@angular/router';
 
