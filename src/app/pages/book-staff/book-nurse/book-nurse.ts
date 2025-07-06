@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MapComponent } from '../map/map';
 import { Submission } from '../../submission/submission';
@@ -11,7 +11,11 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-nurse',
-  imports: [CommonModule, ReactiveFormsModule, MapComponent,],
+  imports: [CommonModule,
+    ReactiveFormsModule,
+    MapComponent,
+    Submission
+  ],
   templateUrl: './book-nurse.html',
   styleUrls: ['./book-nurse.scss'],
   providers: [BookNurseService]
@@ -64,7 +68,7 @@ export class BookNurse {
     { value: 'babycare', label: 'Baby Care' },
     { value: 'other', label: 'Other' }
   ];
-  gender = [{ label: 'Male', value: 'male' }, { label: 'Female', value: 'female' },]
+  button = 'Search for staff';
 
   staffTypes = [
     { label: 'Nurse', value: 'nurse' },
@@ -78,9 +82,19 @@ export class BookNurse {
     { label: '09am-05pm', value: '1' }, { label: '08am-04pm', value: '2' }, { label: '10am-06pm', value: '3' }
   ]
 
+  shiftTypes = ['2 Hours Max', '8 Hours', '12 Hours', '24 Hours'];
   tenure = [
     { label: '1 Day', value: '1' }, { label: '3 Days', value: '2' }, { label: '1 Week', value: '3' }, { label: '2 Weeks', value: '4' }, { label: '1 Month', value: '5' }
   ]
+
+
+  @Input() initialHours: number = 9;
+  @Input() initialMinutes: number = 0;
+  @Input() initialAmPm: 'AM' | 'PM' = 'AM';
+
+  @Output() timeSelected = new EventEmitter<{ hours: number; minutes: number; ampm: 'AM' | 'PM' }>();
+
+  timeForm!: FormGroup;
 
   constructor(
     private spinnerService: SpinnerToastService
@@ -94,6 +108,58 @@ export class BookNurse {
       longitude: [],
       staff: this.fb.array([this.createStaffFormGroup()])
     });
+
+
+     this.timeForm = this.fb.group({
+      hours: [this.initialHours, [Validators.required, Validators.min(1), Validators.max(12)]],
+      minutes: [this.initialMinutes, [Validators.required, Validators.min(0), Validators.max(59)]],
+      ampm: [this.initialAmPm, Validators.required]
+    });
+
+    // Emit initial value and subscribe to changes
+    this.emitTime();
+    this.timeForm.valueChanges.subscribe(() => {
+      this.emitTime();
+    });
+  }
+
+  increment(unit: 'hours' | 'minutes'): void {
+    if (unit === 'hours') {
+      let currentHours = this.timeForm.get('hours')?.value;
+      currentHours = (currentHours % 12) + 1; // Cycle from 1 to 12
+      if (currentHours === 0) currentHours = 12; // Handle 12 AM/PM correctly
+      this.timeForm.get('hours')?.setValue(currentHours);
+    } else if (unit === 'minutes') {
+      let currentMinutes = this.timeForm.get('minutes')?.value;
+      currentMinutes = (currentMinutes + 1) % 60; // Cycle from 0 to 59
+      this.timeForm.get('minutes')?.setValue(currentMinutes);
+    }
+  }
+
+  /**
+   * Decrements the value of the specified time unit (hours or minutes).
+   * @param {string} unit - 'hours' or 'minutes'
+   */
+  decrement(unit: 'hours' | 'minutes'): void {
+    if (unit === 'hours') {
+      let currentHours = this.timeForm.get('hours')?.value;
+      currentHours = (currentHours - 1 + 12) % 12; // Cycle from 12 down to 1
+      if (currentHours === 0) currentHours = 12; // Handle 12 AM/PM correctly
+      this.timeForm.get('hours')?.setValue(currentHours);
+    } else if (unit === 'minutes') {
+      let currentMinutes = this.timeForm.get('minutes')?.value;
+      currentMinutes = (currentMinutes - 1 + 60) % 60; // Cycle from 59 down to 0
+      this.timeForm.get('minutes')?.setValue(currentMinutes);
+    }
+  }
+
+  /**
+   * Emits the currently selected time.
+   */
+  private emitTime(): void {
+    if (this.timeForm.valid) {
+      this.timeSelected.emit(this.timeForm.value);
+    }
   }
 
   getUserLocation() {
@@ -147,10 +213,12 @@ export class BookNurse {
 
   createShiftDetailFormGroup(): FormGroup {
     return this.fb.group({
-      shiftType: ['morning'],
+      shiftType: ['Small Shift'],
       timeSlot: ['1'],
       tenure: ['1'],
-      gender: ['male'],
+      gender: ['Male'],
+      male: ['Male'],
+      female: ['Female'],
       startDate: [new Date().toISOString().substring(0, 10)],
       quantity: ['1', [Validators.required, Validators.min(1)]],
     }, { validators: this.shiftDurationValidator });
