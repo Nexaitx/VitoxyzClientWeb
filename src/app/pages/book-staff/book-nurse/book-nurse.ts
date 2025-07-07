@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors, FormControl } from '@angular/forms';
 import { MapComponent } from '../map/map';
 import { Submission } from '../../submission/submission';
 import { HttpClient } from '@angular/common/http';
@@ -29,7 +29,6 @@ export class BookNurse {
   staffBookingForm!: FormGroup;
   hours: number[] = Array.from({ length: 24 }, (_, i) => i); // 0 to 23
   minutes: number[] = [0, 15, 30, 45];
-  quantity: number[] = Array.from({ length: 20 }, (_, i) => i + 1); // 1 to 10
   nurseTenure = ['1 Day', '15 Days', 'Monthly', 'Quarterly', 'Half Yearly', 'Yearly'];
   typesOfNurses = [
     { value: 'general', label: 'General Nurse (Staff Nurse)' },
@@ -81,20 +80,11 @@ export class BookNurse {
   times = [
     { label: '09am-05pm', value: '1' }, { label: '08am-04pm', value: '2' }, { label: '10am-06pm', value: '3' }
   ]
-
   shiftTypes = ['2 Hours Max', '8 Hours', '12 Hours', '24 Hours'];
   tenure = [
     { label: '1 Day', value: '1' }, { label: '3 Days', value: '2' }, { label: '1 Week', value: '3' }, { label: '2 Weeks', value: '4' }, { label: '1 Month', value: '5' }
   ]
-
-
-  @Input() initialHours: number = 9;
-  @Input() initialMinutes: number = 0;
-  @Input() initialAmPm: 'AM' | 'PM' = 'AM';
-
-  @Output() timeSelected = new EventEmitter<{ hours: number; minutes: number; ampm: 'AM' | 'PM' }>();
-
-  timeForm!: FormGroup;
+  today: string = new Date().toISOString().split('T')[0];
 
   constructor(
     private spinnerService: SpinnerToastService
@@ -108,58 +98,75 @@ export class BookNurse {
       longitude: [],
       staff: this.fb.array([this.createStaffFormGroup()])
     });
-
-
-     this.timeForm = this.fb.group({
-      hours: [this.initialHours, [Validators.required, Validators.min(1), Validators.max(12)]],
-      minutes: [this.initialMinutes, [Validators.required, Validators.min(0), Validators.max(59)]],
-      ampm: [this.initialAmPm, Validators.required]
-    });
-
-    // Emit initial value and subscribe to changes
-    this.emitTime();
-    this.timeForm.valueChanges.subscribe(() => {
-      this.emitTime();
-    });
   }
 
-  increment(unit: 'hours' | 'minutes'): void {
+  incrementTime(unit: 'hours' | 'minutes', staffIndex: number, shiftIndex: number): void {
+    const shiftGroup = this.getShiftGroup(staffIndex, shiftIndex);
+    if (!shiftGroup) return;
+
     if (unit === 'hours') {
-      let currentHours = this.timeForm.get('hours')?.value;
-      currentHours = (currentHours % 12) + 1; // Cycle from 1 to 12
-      if (currentHours === 0) currentHours = 12; // Handle 12 AM/PM correctly
-      this.timeForm.get('hours')?.setValue(currentHours);
-    } else if (unit === 'minutes') {
-      let currentMinutes = this.timeForm.get('minutes')?.value;
-      currentMinutes = (currentMinutes + 1) % 60; // Cycle from 0 to 59
-      this.timeForm.get('minutes')?.setValue(currentMinutes);
+      let currentHours = +shiftGroup.get('hours')?.value || 1;
+      currentHours = (currentHours % 12) + 1;
+      if (currentHours === 0) currentHours = 12;
+      shiftGroup.get('hours')?.setValue(currentHours);
+    } else {
+      let currentMinutes = +shiftGroup.get('minutes')?.value || 0;
+      currentMinutes = (currentMinutes + 1) % 60;
+      shiftGroup.get('minutes')?.setValue(currentMinutes);
     }
   }
 
-  /**
-   * Decrements the value of the specified time unit (hours or minutes).
-   * @param {string} unit - 'hours' or 'minutes'
-   */
-  decrement(unit: 'hours' | 'minutes'): void {
+  decrementTime(unit: 'hours' | 'minutes', staffIndex: number, shiftIndex: number): void {
+    const shiftGroup = this.getShiftGroup(staffIndex, shiftIndex);
+    if (!shiftGroup) return;
     if (unit === 'hours') {
-      let currentHours = this.timeForm.get('hours')?.value;
-      currentHours = (currentHours - 1 + 12) % 12; // Cycle from 12 down to 1
-      if (currentHours === 0) currentHours = 12; // Handle 12 AM/PM correctly
-      this.timeForm.get('hours')?.setValue(currentHours);
-    } else if (unit === 'minutes') {
-      let currentMinutes = this.timeForm.get('minutes')?.value;
-      currentMinutes = (currentMinutes - 1 + 60) % 60; // Cycle from 59 down to 0
-      this.timeForm.get('minutes')?.setValue(currentMinutes);
+      let currentHours = +shiftGroup.get('hours')?.value || 1;
+      currentHours = (currentHours - 1 + 12) % 12;
+      if (currentHours === 0) currentHours = 12;
+      shiftGroup.get('hours')?.setValue(this.pad(currentHours));
+    } else {
+      let currentMinutes = +shiftGroup.get('minutes')?.value || 0;
+      currentMinutes = (currentMinutes - 1 + 60) % 60;
+      shiftGroup.get('minutes')?.setValue(this.pad(currentMinutes));
     }
   }
 
-  /**
-   * Emits the currently selected time.
-   */
-  private emitTime(): void {
-    if (this.timeForm.valid) {
-      this.timeSelected.emit(this.timeForm.value);
+  private getShiftGroup(staffIndex: number, shiftIndex: number): FormGroup | null {
+    const staffGroup = this.staffListFormArray.at(staffIndex) as FormGroup;
+    const shiftArray = staffGroup.get('shiftDetails') as FormArray;
+    return shiftArray.at(shiftIndex) as FormGroup;
+  }
+
+  pad(value: number): string {
+    return value != null ? value.toString().padStart(2, '0') : '00';
+  }
+
+  increase(type: 'male' | 'female', staffIndex: number, shiftIndex: number): void {
+    const control = this.getQuantityControl(type, staffIndex, shiftIndex);
+    control.setValue(Math.min((control.value || 0) + 1, 10));
+
+    this.updateGenderInShift(staffIndex, shiftIndex);
+  }
+
+  decrease(type: 'male' | 'female', staffIndex: number, shiftIndex: number): void {
+    const control = this.getQuantityControl(type, staffIndex, shiftIndex);
+    control.setValue(Math.max((control.value || 1) - 1, 0));
+    this.updateGenderInShift(staffIndex, shiftIndex);
+  }
+
+  private updateGenderInShift(staffIndex: number, shiftIndex: number): void {
+    const shiftGroup = this.getShiftGroup(staffIndex, shiftIndex);
+    if (shiftGroup) {
+      this.updateGenderQty(shiftGroup);
     }
+  }
+
+  getQuantityControl(type: 'male' | 'female', staffIndex: number, shiftIndex: number): FormControl {
+    const staffGroup = this.staffListFormArray.at(staffIndex) as FormGroup;
+    const shiftArray = staffGroup.get('shiftDetails') as FormArray;
+    const shiftGroup = shiftArray.at(shiftIndex) as FormGroup;
+
+    return shiftGroup.get(type === 'male' ? 'male' : 'female') as FormControl;
   }
 
   getUserLocation() {
@@ -199,7 +206,6 @@ export class BookNurse {
     );
   }
 
-
   createStaffDetailFormGroup(): FormGroup {
     return this.fb.group({
       category: ['', Validators.required],
@@ -212,16 +218,43 @@ export class BookNurse {
   }
 
   createShiftDetailFormGroup(): FormGroup {
-    return this.fb.group({
-      shiftType: ['Small Shift'],
-      timeSlot: ['1'],
+    const group = this.fb.group({
+      shiftType: ['', Validators.required],
+      timeSlot: [''],
       tenure: ['1'],
-      gender: ['Male'],
-      male: ['Male'],
-      female: ['Female'],
+      gender: [''],
       startDate: [new Date().toISOString().substring(0, 10)],
-      quantity: ['1', [Validators.required, Validators.min(1)]],
-    }, { validators: this.shiftDurationValidator });
+      male: ['0', [Validators.min(0), Validators.max(10)]],
+      female: ['0', [Validators.min(0), Validators.max(10)]],
+      hours: [9, [Validators.required, Validators.min(1), Validators.max(12)]],
+      minutes: [0, [Validators.required, Validators.min(0), Validators.max(59)]],
+      ampm: ['AM', Validators.required],
+    }, { validators: [this.shiftDurationValidator] });
+
+    group.get('hours')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
+    group.get('minutes')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
+    group.get('ampm')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
+    group.get('male')?.valueChanges.subscribe(() => this.updateGenderQty(group));
+    group.get('female')?.valueChanges.subscribe(() => this.updateGenderQty(group));
+    return group;
+  }
+
+  private updateTimeSlot(shiftGroup: FormGroup): void {
+    const hours = shiftGroup.get('hours')?.value ?? 0;
+    const minutes = shiftGroup.get('minutes')?.value ?? 0;
+    const ampm = shiftGroup.get('ampm')?.value ?? 'AM';
+    const pad = (v: number): string => v.toString().padStart(2, '0');
+    const time = `${pad(+hours)}:${pad(+minutes)} ${ampm}`;
+    const timeSlotControl = shiftGroup.get('timeSlot');
+    timeSlotControl?.setValue(time, { emitEvent: false });
+    timeSlotControl?.markAsTouched();
+    timeSlotControl?.markAsDirty();
+  }
+
+  private updateGenderQty(group: FormGroup): void {
+    const male = Number(group.get('male')?.value || 0);
+    const female = Number(group.get('female')?.value || 0);
+    group.get('gender')?.setValue([{ male, female }], { emitEvent: false });
   }
 
   get shiftDetailsFormArray(): FormArray {
@@ -270,17 +303,36 @@ export class BookNurse {
   }
 
   onSubmit(): void {
-    if (this.staffBookingForm.valid) {
+    const hasPastTimeError = this.hasPastTimeError();
+    const hasZeroQuantityError = this.hasZeroQuantityError();
+    if (this.staffBookingForm.valid && !hasPastTimeError && !hasZeroQuantityError) {
+      console.log(this.staffBookingForm.value)
       this.spinnerService.show();
       const apiUrl = API_URL + ENDPOINTS.SEARCH;
-      const payload = this.staffBookingForm.value;
+      const payload = {
+        ...this.staffBookingForm.value,
+        staff: this.staffListFormArray.controls.map((staffGroup: AbstractControl) => {
+          const staffDetailsArray = (staffGroup.get('staffDetails') as FormArray).value;
+          const shiftDetailsArray = (staffGroup.get('shiftDetails') as FormArray).value.map((shift: any) => {
+            const {
+              male, female, hours, minutes, ampm,
+              ...rest
+            } = shift;
+            return rest;
+          });
+          return {
+            staffDetails: staffDetailsArray,
+            shiftDetails: shiftDetailsArray
+          };
+        })
+      };
       this.bookNurseService.searchStaff(apiUrl, payload).subscribe({
         next: (response) => {
           this.spinnerService.hide();
           const staffDetails = response?.staff[0]?.staffDetails || [];
           if (staffDetails.length > 0) {
             this.router.navigate(['/view-staff'], {
-              state: { staffDetails } // pass data via navigation state
+              state: { staffDetails }
             });
           } else {
             alert('No staff found.');
@@ -296,6 +348,68 @@ export class BookNurse {
     }
   }
 
+  hasPastTimeError(): boolean {
+    let hasPastTimeError = false;
+    this.staffListFormArray.controls.forEach((staffGroup: AbstractControl) => {
+      const shiftArray = staffGroup.get('shiftDetails') as FormArray;
+      shiftArray.controls.forEach((shiftGroup: AbstractControl) => {
+        const startDate = shiftGroup.get('startDate')?.value;
+        const hours = +shiftGroup.get('hours')?.value;
+        const minutes = +shiftGroup.get('minutes')?.value;
+        const ampm = shiftGroup.get('ampm')?.value;
+        if (!startDate || hours == null || minutes == null || !ampm) return;
+        const selectedDate = new Date(startDate);
+        const today = new Date();
+        const pad = (v: number) => v.toString().padStart(2, '0');
+        const formattedTime = `${pad(hours)}:${pad(minutes)} ${ampm}`;
+        shiftGroup.get('timeSlot')?.setValue(formattedTime, { emitEvent: false });
+        const isToday =
+          selectedDate.getFullYear() === today.getFullYear() &&
+          selectedDate.getMonth() === today.getMonth() &&
+          selectedDate.getDate() === today.getDate();
+        if (isToday) {
+          let h = hours;
+          if (ampm === 'PM' && h !== 12) h += 12;
+          if (ampm === 'AM' && h === 12) h = 0;
+          const selectedTime = new Date();
+          selectedTime.setHours(h, minutes, 0, 0);
+          if (selectedTime < today) {
+            shiftGroup.get('timeSlot')?.setErrors({ pastTime: true });
+            hasPastTimeError = true;
+          } else {
+            const ctrl = shiftGroup.get('timeSlot');
+            if (ctrl?.hasError('pastTime')) {
+              ctrl.setErrors(null);
+            }
+          }
+        }
+      });
+    });
+    return hasPastTimeError;
+  }
+
+  hasZeroQuantityError(): boolean {
+    let hasError = false;
+    this.staffListFormArray.controls.forEach((staffGroup: AbstractControl) => {
+      const shiftArray = staffGroup.get('shiftDetails') as FormArray;
+      shiftArray.controls.forEach((shiftGroup: AbstractControl) => {
+        const male = +shiftGroup.get('male')?.value || 0;
+        const female = +shiftGroup.get('female')?.value || 0;
+        if (male === 0 && female === 0) {
+          shiftGroup.setErrors({ ...(shiftGroup.errors || {}), zeroQuantity: true });
+          hasError = true;
+        } else {
+          if (shiftGroup.errors?.['zeroQuantity']) {
+            const errors = { ...shiftGroup.errors };
+            delete errors['zeroQuantity'];
+            shiftGroup.setErrors(Object.keys(errors).length ? errors : null);
+          }
+        }
+      });
+    });
+    return hasError;
+  }
+
   private markAllAsTouched(formGroup: FormGroup | FormArray): void {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();
@@ -309,13 +423,10 @@ export class BookNurse {
     const hour = parseInt(control.get('shiftHour')?.value, 10);
     const minute = parseInt(control.get('shiftMinute')?.value, 10);
     if (isNaN(hour) || isNaN(minute)) {
-      return null; // Return null if values are not selected yet
+      return null;
     }
-    // Calculate end time (8 hours later)
     const startTime = hour * 60 + minute;
-    const endTime = (startTime + 8 * 60) % (24 * 60); // Ensure it wraps around 24 hours
-    // For simplicity, we only check if the duration is valid
-    // You can extend this to validate specific end times if needed
+    const endTime = (startTime + 8 * 60) % (24 * 60);
     return startTime >= 0 && endTime >= 0 ? null : { invalidShiftDuration: true };
   }
 
