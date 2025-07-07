@@ -77,9 +77,6 @@ export class BookNurse {
     { label: 'Psychiatrist', value: 'psychiatrist' }
   ];
 
-  times = [
-    { label: '09am-05pm', value: '1' }, { label: '08am-04pm', value: '2' }, { label: '10am-06pm', value: '3' }
-  ]
   shiftTypes = ['2 Hours Max', '8 Hours', '12 Hours', '24 Hours'];
   tenure = [
     { label: '1 Day', value: '1' }, { label: '3 Days', value: '2' }, { label: '1 Week', value: '3' }, { label: '2 Weeks', value: '4' }, { label: '1 Month', value: '5' }
@@ -226,7 +223,7 @@ export class BookNurse {
       startDate: [new Date().toISOString().substring(0, 10)],
       male: ['0', [Validators.min(0), Validators.max(10)]],
       female: ['0', [Validators.min(0), Validators.max(10)]],
-      hours: [9, [Validators.required, Validators.min(1), Validators.max(12)]],
+      hours: [0, [Validators.required, Validators.min(1), Validators.max(12)]],
       minutes: [0, [Validators.required, Validators.min(0), Validators.max(59)]],
       ampm: ['AM', Validators.required],
     }, { validators: [this.shiftDurationValidator] });
