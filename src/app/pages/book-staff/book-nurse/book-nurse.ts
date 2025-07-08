@@ -215,6 +215,13 @@ export class BookNurse {
   }
 
   createShiftDetailFormGroup(): FormGroup {
+    const now = new Date();
+    let currentHour = now.getHours(); // 0 - 23
+    const minutes = '00';
+    const ampm = currentHour >= 12 ? 'PM' : 'AM';
+
+    if (currentHour === 0) currentHour = 12;
+    else if (currentHour > 12) currentHour -= 12;
     const group = this.fb.group({
       shiftType: ['', Validators.required],
       timeSlot: [''],
@@ -223,9 +230,9 @@ export class BookNurse {
       startDate: [new Date().toISOString().substring(0, 10)],
       male: ['0', [Validators.min(0), Validators.max(10)]],
       female: ['0', [Validators.min(0), Validators.max(10)]],
-      hours: [0, [Validators.required, Validators.min(1), Validators.max(12)]],
-      minutes: [0, [Validators.required, Validators.min(0), Validators.max(59)]],
-      ampm: ['AM', Validators.required],
+      hours: [currentHour, [Validators.required, Validators.min(1), Validators.max(12)]],
+      minutes: [minutes, [Validators.required, Validators.min(0), Validators.max(59)]],
+      ampm: [ampm, Validators.required],
     }, { validators: [this.shiftDurationValidator] });
 
     group.get('hours')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
@@ -233,6 +240,12 @@ export class BookNurse {
     group.get('ampm')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
     group.get('male')?.valueChanges.subscribe(() => this.updateGenderQty(group));
     group.get('female')?.valueChanges.subscribe(() => this.updateGenderQty(group));
+    group.get('startDate')?.valueChanges.subscribe((value) => {
+      if (!value) {
+        const today = new Date().toISOString().substring(0, 10);
+        group.get('startDate')?.setValue(today, { emitEvent: false });
+      }
+    });
     return group;
   }
 
@@ -251,7 +264,7 @@ export class BookNurse {
   private updateGenderQty(group: FormGroup): void {
     const male = Number(group.get('male')?.value || 0);
     const female = Number(group.get('female')?.value || 0);
-    group.get('gender')?.setValue([{ male, female }], { emitEvent: false });
+    group.get('gender')?.setValue({ male, female }, { emitEvent: false });
   }
 
   get shiftDetailsFormArray(): FormArray {
