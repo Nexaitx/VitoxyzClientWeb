@@ -100,7 +100,6 @@ export class BookNurse {
   incrementTime(unit: 'hours' | 'minutes', staffIndex: number, shiftIndex: number): void {
     const shiftGroup = this.getShiftGroup(staffIndex, shiftIndex);
     if (!shiftGroup) return;
-
     if (unit === 'hours') {
       let currentHours = +shiftGroup.get('hours')?.value || 1;
       currentHours = (currentHours % 12) + 1;
@@ -141,7 +140,6 @@ export class BookNurse {
   increase(type: 'male' | 'female', staffIndex: number, shiftIndex: number): void {
     const control = this.getQuantityControl(type, staffIndex, shiftIndex);
     control.setValue(Math.min((control.value || 0) + 1, 10));
-
     this.updateGenderInShift(staffIndex, shiftIndex);
   }
 
@@ -162,7 +160,6 @@ export class BookNurse {
     const staffGroup = this.staffListFormArray.at(staffIndex) as FormGroup;
     const shiftArray = staffGroup.get('shiftDetails') as FormArray;
     const shiftGroup = shiftArray.at(shiftIndex) as FormGroup;
-
     return shiftGroup.get(type === 'male' ? 'male' : 'female') as FormControl;
   }
 
@@ -172,7 +169,6 @@ export class BookNurse {
         position => {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
-
           this.getAddressFromCoords(lat, lng);
         },
         error => {
@@ -215,6 +211,12 @@ export class BookNurse {
   }
 
   createShiftDetailFormGroup(): FormGroup {
+    const now = new Date();
+    let currentHour = now.getHours(); // 0 - 23
+    const minutes = '00';
+    const ampm = currentHour >= 12 ? 'PM' : 'AM';
+    if (currentHour === 0) currentHour = 12;
+    else if (currentHour > 12) currentHour -= 12;
     const group = this.fb.group({
       shiftType: ['', Validators.required],
       timeSlot: [''],
@@ -223,16 +225,21 @@ export class BookNurse {
       startDate: [new Date().toISOString().substring(0, 10)],
       male: ['0', [Validators.min(0), Validators.max(10)]],
       female: ['0', [Validators.min(0), Validators.max(10)]],
-      hours: [0, [Validators.required, Validators.min(1), Validators.max(12)]],
-      minutes: [0, [Validators.required, Validators.min(0), Validators.max(59)]],
-      ampm: ['AM', Validators.required],
+      hours: [currentHour, [Validators.required, Validators.min(1), Validators.max(12)]],
+      minutes: [minutes, [Validators.required, Validators.min(0), Validators.max(59)]],
+      ampm: [ampm, Validators.required],
     }, { validators: [this.shiftDurationValidator] });
-
     group.get('hours')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
     group.get('minutes')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
     group.get('ampm')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
     group.get('male')?.valueChanges.subscribe(() => this.updateGenderQty(group));
     group.get('female')?.valueChanges.subscribe(() => this.updateGenderQty(group));
+    group.get('startDate')?.valueChanges.subscribe((value) => {
+      if (!value) {
+        const today = new Date().toISOString().substring(0, 10);
+        group.get('startDate')?.setValue(today, { emitEvent: false });
+      }
+    });
     return group;
   }
 
@@ -251,7 +258,7 @@ export class BookNurse {
   private updateGenderQty(group: FormGroup): void {
     const male = Number(group.get('male')?.value || 0);
     const female = Number(group.get('female')?.value || 0);
-    group.get('gender')?.setValue([{ male, female }], { emitEvent: false });
+    group.get('gender')?.setValue({ male, female }, { emitEvent: false });
   }
 
   get shiftDetailsFormArray(): FormArray {
@@ -309,13 +316,25 @@ export class BookNurse {
       const payload = {
         ...this.staffBookingForm.value,
         staff: this.staffListFormArray.controls.map((staffGroup: AbstractControl) => {
-          const staffDetailsArray = (staffGroup.get('staffDetails') as FormArray).value;
-          const shiftDetailsArray = (staffGroup.get('shiftDetails') as FormArray).value.map((shift: any) => {
+          const staffDetailsArray = (staffGroup.get('staffDetails') as FormArray).controls.map(staffDetail =>
+            staffDetail.value
+          );
+          const shiftDetailsArray = (staffGroup.get('shiftDetails') as FormArray).controls.map((shiftGroup: AbstractControl) => {
+            const shift = shiftGroup.value;
             const {
-              male, female, hours, minutes, ampm,
-              ...rest
+              shiftType,
+              timeSlot,
+              tenure,
+              gender,
+              startDate
             } = shift;
-            return rest;
+            return {
+              shiftType,
+              timeSlot,
+              tenure,
+              gender,
+              startDate
+            };
           });
           return {
             staffDetails: staffDetailsArray,

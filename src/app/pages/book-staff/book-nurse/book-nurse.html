@@ -88,7 +88,8 @@
                     </div>
                   </div>
                 </div>
-                <ng-container *ngIf="getNestedStaffDetailsControls(i)[0]?.get('category')?.value">
+                @if(getNestedStaffDetailsControls(i)[0]?.get('category')?.value) {
+                  <ng-container>
                   <div formArrayName="shiftDetails">
                     <div *ngFor="let shiftDetail of getNestedShiftDetailsControls(i); let sh = index"
                       [formGroupName]="sh" class="shift-detail">
@@ -121,12 +122,12 @@
                             <select class="form-select time-select" formControlName="ampm">
                               <option value="AM">AM</option>
                               <option value="PM">PM</option>
-                            </select>
-                            <div class="invalid-feedback"
+                            </select>                            
+                          </div>
+                          <div class="text-danger"
                               *ngIf="shiftDetail.get('timeSlot')?.errors?.['pastTime'] && shiftDetail.get('timeSlot')?.touched">
                               Past time is not allowed.
                             </div>
-                          </div>
                         </div>
                         <div class="col-md-2">
                           <label class="form-label">Shift Time</label>
@@ -150,6 +151,10 @@
                           <label class="form-label d-block">Prefered Gender</label>
                           <input type="text" readonly value="Male" class="form-control">
                           <input type="text" readonly value="Female" class="form-control mt-2">
+                          <div class="text-danger"
+                            *ngIf="shiftDetail.errors?.['zeroQuantity'] && (shiftDetail.touched || shiftDetail.dirty)">
+                            Quantity is required.
+                          </div>
                         </div>
                         <div class="col-md-2">
                           <label class="form-label">Quantity</label>
@@ -173,11 +178,8 @@
                               <i class="bi bi-plus"></i>
                             </button>
                           </div>
-                          <div class="invalid-feedback"
-                            *ngIf="shiftDetail.errors?.['zeroQuantity'] && (shiftDetail.touched || shiftDetail.dirty)">
-                            At least one male or female quantity is required.
-                          </div>
-                        </div>
+                          
+                        </div>                        
                         <div class="col-md-2">
                           <label class="form-label">Tenure</label>
                           <select class="form-select" formControlName="tenure" [class.is-invalid]="
@@ -202,7 +204,6 @@
                         <div class="d-flex align-items-start justify-content-end gap-2 mt-3">
                           <i *ngIf="sh === 0" class="bi bi-plus-lg fs-5 add" (click)="addShift(i)"
                             title="Add Time Slot"></i>
-
                           <i *ngIf="getNestedShiftDetailsControls(i).length > 1 && sh > 0"
                             class="bi bi-x-lg fs-5 text-danger remove" (click)="removeShiftDetail(i, sh)"
                             title="Remove Time Slot"></i>
@@ -211,6 +212,8 @@
                     </div>
                   </div>
                 </ng-container>
+                }
+                
               </div>
             </div>
             <ng-container *ngIf="staffListFormArray.controls[0]?.get('staffDetails')?.get('0')?.get('category')?.value">

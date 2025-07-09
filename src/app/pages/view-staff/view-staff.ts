@@ -11,79 +11,6 @@ import { Router } from '@angular/router';
 })
 export class ViewStaff {
   //staffDetails: any[] = [];
-  // staffList = [
-  //   {
-  //     name: 'Nurse A',
-  //     experience: 5,
-  //     rating: 4.5,
-  //     rate: 250,
-  //     imageUrl: 'https://via.placeholder.com/100'
-  //   },
-  //   {
-  //     name: 'Nurse B',
-  //     experience: 3,
-  //     rating: 4.0,
-  //     rate: 200,
-  //     imageUrl: 'https://via.placeholder.com/100'
-  //   },
-  //   {
-  //     name: 'Nurse A',
-  //     experience: 5,
-  //     rating: 4.5,
-  //     rate: 250,
-  //     imageUrl: 'https://via.placeholder.com/100'
-  //   },
-  //   {
-  //     name: 'Nurse B',
-  //     experience: 3,
-  //     rating: 4.0,
-  //     rate: 200,
-  //     imageUrl: 'https://via.placeholder.com/100'
-  //   },
-  //   {
-  //     name: 'Nurse A',
-  //     experience: 5,
-  //     rating: 4.5,
-  //     rate: 250,
-  //     imageUrl: 'https://via.placeholder.com/100'
-  //   },
-  //   {
-  //     name: 'Nurse B',
-  //     experience: 3,
-  //     rating: 4.0,
-  //     rate: 200,
-  //     imageUrl: 'https://via.placeholder.com/100'
-  //   },
-  //   {
-  //     name: 'Nurse A',
-  //     experience: 5,
-  //     rating: 4.5,
-  //     rate: 250,
-  //     imageUrl: 'https://via.placeholder.com/100'
-  //   },
-  //   {
-  //     name: 'Nurse B',
-  //     experience: 3,
-  //     rating: 4.0,
-  //     rate: 200,
-  //     imageUrl: 'https://via.placeholder.com/100'
-  //   },
-  //   {
-  //     name: 'Nurse A',
-  //     experience: 5,
-  //     rating: 4.5,
-  //     rate: 250,
-  //     imageUrl: 'https://via.placeholder.com/100'
-  //   },
-  //   {
-  //     name: 'Nurse B',
-  //     experience: 3,
-  //     rating: 4.0,
-  //     rate: 200,
-  //     imageUrl: 'https://via.placeholder.com/100'
-  //   },
-  //   // Add more objects as needed
-  // ];
   staffDetails: any[] = [
     {
       "category": "nurse",
@@ -163,7 +90,6 @@ export class ViewStaff {
   ]
   constructor(private router: Router) {
     const nav = this.router.getCurrentNavigation();
-    debugger
     //this.staffDetails = nav?.extras?.state?.['staffDetails'] ?? [];
   }
 
