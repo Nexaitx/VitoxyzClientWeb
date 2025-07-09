@@ -1,22 +1,27 @@
-<div class="login-screen">
-  <!-- Left Panel -->
-  <div class="left-panel">
-    <div class="overlay-content">
-    <button class="btn btn-link" [routerLink]="['/home']">Back</button>
-      <h2>Care that connects</h2>
-      <p>Instantly connect with nearby nurses and</p>
-      <p>support staff.</p>
-    </div>
-  </div>
 
-  <!-- Right Panel -->
-  <div class="right-panel d-flex align-items-center">
-    <div class="w-100">
-      <h1 class="title text-center">Vitoxyz</h1>
-      <div class="form-container">
-        <router-outlet></router-outlet>
+<div class="modal-body">
+  <div class="login-screen">
+
+    <div class="left-panel">
+      <div class="overlay-content">
+        <h2>Care that connects</h2>
+        <p>Instantly connect with nearby nurses and</p>
+        <p>support staff.</p>
+      </div>
+    </div>
+
+    <div class="right-panel d-flex align-items-center">
+      <div class="w-100">
+        <h1 class="title text-center">Vitoxyz</h1>
+        <div class="form-container">
+          <div *ngIf="authMode === 'login'">
+            <app-login [authMode]="authMode"></app-login>
+          </div>
+          <div *ngIf="authMode === 'signup'">
+            <app-sign-up [authMode]="authMode"></app-sign-up>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-

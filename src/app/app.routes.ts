@@ -63,24 +63,17 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/support/support').then(m => m.Support),
       },
       {
+        path: 'plans',
+        loadComponent: () => import('./pages/plans/plans').then(m => m.Plans),
+      },
+      {
+        path: 'user-onboarding',
+        loadComponent: () => import('./pages/user-onboarding/user-onboarding').then(m => m.UserOnboarding),
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
-      }
-    ]
-  },
-  {
-   
-    path: '', 
-    component: Authorization, 
-    children: [
-      {
-        path: 'login',
-        loadComponent: () => import('./pages/authorization/login/login').then(m => m.Login),
-      },
-      {
-        path: 'sign-up',
-        loadComponent: () => import('./pages/authorization/sign-up/sign-up').then(m => m.SignUp),
       }
     ]
   },
@@ -89,7 +82,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/view-staff/view-staff').then(m => m.ViewStaff),
   },
   {
-    path: '**', // Wildcard route for any unmatched paths
-    redirectTo: 'dashboard' // Redirect to dashboard or a 404 page
+    path: '**',
+    redirectTo: 'dashboard'
   }
 ];

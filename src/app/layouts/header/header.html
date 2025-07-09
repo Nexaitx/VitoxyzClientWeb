@@ -7,7 +7,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
+        <!-- Iterate over menuItems, excluding 'Log In' and 'Sign up' as they are now separate buttons -->
         <ng-container *ngFor="let item of menuItems; let i = index">
+          <!-- Regular menu items without dropdowns or icons -->
           <li class="nav-item" *ngIf="!item.dropdown && !item.icon">
             <a class="nav-link text-white" [ngClass]="{'active rounded-pill': rla.isActive}" [routerLink]="item.path"
               routerLinkActive #rla="routerLinkActive">
@@ -15,18 +17,13 @@
             </a>
           </li>
 
-          <ng-container *ngIf="item.label === 'Log In'">
-            <li class="nav-item d-flex align-items-center">
-              <span style="color: white; padding: 0 0.2rem;">|</span>
-            </li>
-          </ng-container>
-
+          <!-- Dropdown menu items -->
           <li class="nav-item dropdown" *ngIf="item.dropdown" [routerLinkActive]="['active', 'rounded-pill']"
             [routerLinkActiveOptions]="{ exact: false }">
-
             <a *ngIf="item.icon" class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown{{i}}"
               role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-person"></i> </a>
+              <i class="bi bi-person"></i>
+            </a>
 
             <a *ngIf="!item.icon" class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown{{i}}"
               role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -43,10 +40,53 @@
             </ul>
           </li>
         </ng-container>
+
+        <!-- Separator for Login/Sign Up buttons -->
+        <li class="nav-item d-flex align-items-center">
+          <span style="color: white; padding: 0 0.2rem;">|</span>
+        </li>
+
+        <!-- Login Button to open modal -->
+        <li class="nav-item">
+          <button type="button" class="btn nav-link text-white" data-bs-toggle="modal" data-bs-target="#authModal"
+            (click)="setAuthMode('login')">
+            Log In
+          </button>
+        </li>
+
+        <!-- Sign Up Button to open modal -->
+        <li class="nav-item">
+          <button type="button" class="btn nav-link text-white" data-bs-toggle="modal" data-bs-target="#authModal"
+            (click)="setAuthMode('signup')">
+            Sign Up
+          </button>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
+
+<!-- Unified Authentication Modal -->
+<div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- Dynamic Modal Title -->
+        <h1 class="modal-title fs-5" id="authModalLabel">
+          {{ authMode === 'login' ? 'Log In to Vitoxyz' : 'Sign Up for Vitoxyz' }}
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="authMode">
+  <app-authorization [authMode]="authMode"></app-authorization>
+</ng-container>
+
+
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="main-content-area">
   <router-outlet></router-outlet>

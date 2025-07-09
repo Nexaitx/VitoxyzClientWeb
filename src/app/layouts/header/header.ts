@@ -7,6 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar'; // For the navbar 
 import { MatButtonModule } from '@angular/material/button';   // For the navigation buttons
 import { MatIconModule } from '@angular/material/icon';     // Optional: if you want icons
 import { MatTabsModule } from '@angular/material/tabs';
+import { Authorization } from '../../pages/authorization/authorization';
 
 
 @Component({
@@ -18,14 +19,15 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatButtonModule,
     MatIconModule,
     RouterOutlet,
-    MatTabsModule
+    MatTabsModule,
+    Authorization
   ],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
 export class Header {
   public router = inject(Router);
-
+  authMode: 'login' | 'signup' = 'login'; // Default mode is 'login'
   menuItems = [
     { label: 'Medecines', path: '/dashboard' },
     {
@@ -41,8 +43,8 @@ export class Header {
     },
     { label: 'Diet Plans', path: '/user-profile' },
     { label: 'Support', path: '/support' },
-    { label: 'Log In', path: '/login' },
-    { label: 'Sign up', path: '/sign-up' },
+    // { label: 'Log In', path: '/login' },
+    // { label: 'Sign up', path: '/sign-up' },
     {
       label: 'Profile', // This will be the key to identify your profile menu
       icon: 'bi bi-person-circle', // Example using Bootstrap Icons or Font Awesome class
@@ -57,5 +59,8 @@ export class Header {
   ];
 
   ngOnInit() {
+  }
+  setAuthMode(mode: 'login' | 'signup') {
+    this.authMode = mode;
   }
 }

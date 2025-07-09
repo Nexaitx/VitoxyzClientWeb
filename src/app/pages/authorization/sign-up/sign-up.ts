@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -12,6 +12,7 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //  Added HttpClient
 import { environment } from '../../../../environments/environment.development';
 import { Submission } from '../../submission/submission';
+import { Login } from '../login/login';
 
 // Password Match Validator
 export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): { [key: string]: boolean } | null => {
@@ -29,23 +30,27 @@ export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): {
     ReactiveFormsModule,
     RouterModule,
     RouterLink,
-    Submission
+    Submission,
+    Login
   ],
   templateUrl: './sign-up.html',
-  styleUrl: './sign-up.scss'
+  styleUrls: ['./sign-up.scss']
 })
 export class SignUp {
   signupForm!: FormGroup;
   showPassword = false;
   showConfirmPassword = false;
   button = 'Sign Up';
+   @Input() authMode: 'login' | 'signup' = 'signup';
 
   private router = inject(Router);
   private http = inject(HttpClient);
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+  }
 
   ngOnInit(): void {
+
     this.signupForm = this.fb.group(
       {
         userName: ['', Validators.required],

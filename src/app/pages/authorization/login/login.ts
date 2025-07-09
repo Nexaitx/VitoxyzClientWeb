@@ -6,6 +6,7 @@ import { HttpClient, HttpErrorResponse, HttpClientModule } from '@angular/common
 import { environment } from '../../../../environments/environment.development'; // Import your environment file
 import { Submission } from '../../submission/submission';
 import { Subscription, interval } from 'rxjs';
+import { SignUp } from '../sign-up/sign-up';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -14,7 +15,8 @@ import { Subscription, interval } from 'rxjs';
     ReactiveFormsModule,
     FormsModule,
     RouterLink,
-    Submission
+    Submission,
+    SignUp
   ],
   templateUrl: './login.html',
   styleUrl: './login.scss'
@@ -37,7 +39,7 @@ export class Login implements OnInit {
   private subscription: Subscription | undefined;
   phoneNumber: string = '+919876543210'; // Default phone number
   maskedPhoneNumber: string = ''; // Initialize here or in ngOnInit
-
+  @Input() authMode: 'login' | 'signup' = 'login'; // Default mode is 'login'
   constructor(
     private fb: FormBuilder
   ) {
@@ -54,8 +56,6 @@ export class Login implements OnInit {
   ngOnInit() {
     this.startOtpTimer();
     this.maskedPhoneNumber = this.maskPhoneNumber(this.phoneNumber); // <--- Add this line
-    console.log('Masked Phone Number:', this.maskedPhoneNumber);
-
     this.subscription = interval(1000).subscribe(() => {
       if (this.timeLeft > 0) {
         this.timeLeft--;
@@ -69,12 +69,6 @@ export class Login implements OnInit {
     this.subscription?.unsubscribe();
   }
 
-  // ngOnChanges is not needed here unless phoneNumber becomes an @Input()
-  // ngOnChanges() {
-  //   this.maskedPhoneNumber = this.maskPhoneNumber(this.phoneNumber);
-  //   console.log('Masked Phone Number:', this.maskedPhoneNumber);
-  // }
-
   private maskPhoneNumber(phone: string): string {
     if (!phone || phone.length < 2) return phone; // Handle invalid input
     const lastTwoDigits = phone.slice(-2);
@@ -85,23 +79,10 @@ export class Login implements OnInit {
 
   resendOtp() {
     console.log('Resending OTP...');
-    // Implement your API call here to resend the OTP
-    // Example:
-    // this.http.post(`${environment.apiBaseUrl}api/user/resendOtp`, { phoneNumber: this.phoneNumber }).subscribe({
-    //   next: (response) => {
-    //     console.log('OTP Resent', response);
-    //     this.startOtpTimer(); // Restart the timer after successful resend
-    //   },
-    //   error: (error) => {
-    //     console.error('Failed to resend OTP', error);
-    //     // Handle error (e.g., show a message to the user)
-    //   }
-    // });
-
     // For demonstration, simply restart the timer:
     this.startOtpTimer();
   }
-   startOtpTimer() {
+  startOtpTimer() {
     this.timeLeft = 30; // Reset the timer
     this.subscription?.unsubscribe(); // Unsubscribe from any previous timer
     this.subscription = interval(1000).subscribe(() => {

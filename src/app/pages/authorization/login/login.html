@@ -1,39 +1,44 @@
 <div class="d-flex justify-content-center">
-@if(showPhoneInput) {
+  @if(authMode === 'login') {
+
+  @if(showPhoneInput) {
   <form class="auth-form p-4 w-75">
     <!-- Phone Number -->
     <div class="form-group mb-3">
       <label for="phoneNumber">Phone Number</label>
       <div class="input-group phone-input-group"> <span class="input-group-text icon-inside">
           <i class="bi bi-telephone"></i> </span>
-        <input type="text" class="form-control"  id="phoneNumber"
-          placeholder="Phone Number" required />
+        <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number" required />
       </div>
     </div>
 
     <app-submission [buttonType]="button" (click)="showPhoneInput = false"></app-submission>
 
-    <div class="text-center mt-3">
-      <span>New To Vitoxyz? &nbsp;</span>
-      <a class="links" [routerLink]="['/sign-up']">Sign Up</a>
-    </div>
+
   </form>
-}
-@else {
+  }
+  @else {
   <div>
-  <p>Please enter OTP we've shared to this {{ maskedPhoneNumber }}</p>
-  <div class="form-group mb-3">
-    <label for="otp">OTP</label>
-    <input type="text" class="form-control" id="otp" placeholder="Enter OTP" required />
+    <p>Please enter OTP we've shared to this {{ maskedPhoneNumber }}</p>
+    <div class="form-group mb-3">
+      <label for="otp">OTP</label>
+      <input type="text" class="form-control" id="otp" placeholder="Enter OTP" required />
+    </div>
+
+    <ng-container *ngIf="timeLeft > 0; else resendButton">
+      <p>Resend code in {{ timeLeft }} seconds</p>
+    </ng-container>
+
+    <ng-template #resendButton>
+      <button type="button" class="btn btn-link" (click)="resendOtp()">Resend OTP</button>
+    </ng-template>
   </div>
-
-  <ng-container *ngIf="timeLeft > 0; else resendButton">
-    <p>Resend code in {{ timeLeft }} seconds</p>
-  </ng-container>
-
-  <ng-template #resendButton>
-    <button type="button" class="btn btn-link" (click)="resendOtp()">Resend OTP</button>
-  </ng-template>
-</div>
+  }
+  <div class="text-center mt-3">
+    <span>New To Vitoxyz? &nbsp;</span>
+    <span class="links" (click)="authMode = 'signup'">Sign Up</span>
+  </div>
 }
 </div>
+
+<app-sign-up *ngIf="authMode === 'signup'"></app-sign-up>
