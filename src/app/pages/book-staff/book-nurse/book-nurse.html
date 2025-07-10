@@ -12,13 +12,13 @@
               <div class="col-md-12">
                 <label class="form-label">Select your area</label>
                 <input type="text" class="form-control" formControlName="userAddress" [class.is-invalid]="
-    staffBookingForm.get('userAddress')?.invalid &&
-    staffBookingForm.get('userAddress')?.touched
-  " />
+                  staffBookingForm.get('userAddress')?.invalid &&
+                  staffBookingForm.get('userAddress')?.touched
+                " />
                 <div *ngIf="
-    staffBookingForm.get('userAddress')?.invalid &&
-    staffBookingForm.get('userAddress')?.touched
-  " class="invalid-feedback">
+                  staffBookingForm.get('userAddress')?.invalid &&
+                  staffBookingForm.get('userAddress')?.touched
+                  " class="invalid-feedback">
                   Area is required.
                 </div>
               </div>
@@ -89,7 +89,7 @@
                   </div>
                 </div>
                 @if(getNestedStaffDetailsControls(i)[0]?.get('category')?.value) {
-                  <ng-container>
+                <ng-container>
                   <div formArrayName="shiftDetails">
                     <div *ngFor="let shiftDetail of getNestedShiftDetailsControls(i); let sh = index"
                       [formGroupName]="sh" class="shift-detail">
@@ -122,12 +122,12 @@
                             <select class="form-select time-select" formControlName="ampm">
                               <option value="AM">AM</option>
                               <option value="PM">PM</option>
-                            </select>                            
+                            </select>
                           </div>
                           <div class="text-danger"
-                              *ngIf="shiftDetail.get('timeSlot')?.errors?.['pastTime'] && shiftDetail.get('timeSlot')?.touched">
-                              Past time is not allowed.
-                            </div>
+                            *ngIf="shiftDetail.get('timeSlot')?.errors?.['pastTime'] && shiftDetail.get('timeSlot')?.touched">
+                            Past time is not allowed.
+                          </div>
                         </div>
                         <div class="col-md-2">
                           <label class="form-label">Shift Time</label>
@@ -178,8 +178,8 @@
                               <i class="bi bi-plus"></i>
                             </button>
                           </div>
-                          
-                        </div>                        
+
+                        </div>
                         <div class="col-md-2">
                           <label class="form-label">Tenure</label>
                           <select class="form-select" formControlName="tenure" [class.is-invalid]="
@@ -213,10 +213,10 @@
                   </div>
                 </ng-container>
                 }
-                
               </div>
             </div>
-            <ng-container *ngIf="staffListFormArray.controls[0]?.get('staffDetails')?.get('0')?.get('category')?.value">
+            @if(staffListFormArray.controls[0]?.get('staffDetails')?.get('0')?.get('category')?.value) {
+            <ng-container>
               <div class="d-flex justify-content-center addNewBtn p-2 my-2">
                 <button type="button" class="text-btn" (click)="addNewStaff()">
                   <i class="bi bi-plus"></i>Add Another Staff
@@ -226,9 +226,11 @@
                 <app-submission [buttonType]="button"></app-submission>
               </div>
             </ng-container>
+            }
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+<app-aadhar-verification *ngIf="showAadharPopup" (verified)="onAadharVerified()"></app-aadhar-verification>
