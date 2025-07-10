@@ -11,8 +11,9 @@
                 <div class="row g-0">
                     <!-- Left: Image -->
                     <div class="col-5 d-flex align-items-center justify-content-center p-2">
-                        <img [src]="staff.imageUrl || 'https://via.placeholder.com/100'" class="img-fluid rounded"
-                            alt="Staff Image" />
+                        <img [src]="staff.imageUrl || (staff.gender?.toLowerCase() === 'female' 
+                            ? '/assets/female-icon.png' 
+                            : '/assets/male-icon.png')" class="img-fluid rounded" alt="Staff Image" />
                     </div>
 
                     <!-- Right: Details -->
@@ -27,22 +28,24 @@
 
                             <!-- Rating -->
                             <p class="mb-1">
-                                <ng-container *ngFor="let star of getStars(staff.rating); let i = index">
+                                <ng-container *ngFor="let star of getStars(staff.rating)">
                                     <i class="bi" [ngClass]="{
-                                        'bi-star-fill text-warning': i < staff.rating,
-                                        'bi-star text-muted': i >= staff.rating
-                                    }"></i>
+                                    'bi-star-fill text-warning': star === 'full',
+                                    'bi-star-half text-warning': star === 'half',
+                                    'bi-star text-muted': star === 'empty'
+                                }"></i>
                                 </ng-container>
                                 <span class="ms-1 text-muted">{{ staff.rating }}/5</span>
+
                             </p>
 
                             <!-- Price -->
-                            <p class="mb-1 text-muted">₹{{ staff.payment }}</p>
+                            <p class="mb-1 text-muted">₹{{ staff.price }}</p>
 
                             <!-- Icons: Add / Remove -->
                             <div class="d-flex justify-content-start gap-2 mt-2">
                                 <button class="btn btn-sm btn-outline-success" (click)="addStaff(staff)">
-                                    <i class="bi bi-plus-lg"></i>
+                                    <i class="bi bi-arrow-left-right"></i>
                                 </button>
                                 <button class="btn btn-sm btn-outline-danger" (click)="removeStaff(staff)">
                                     <i class="bi bi-x-lg"></i>

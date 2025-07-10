@@ -1,0 +1,21 @@
+<div *ngIf="isVisible" class="aadhar-toast-box">
+    <!-- Close only in Aadhar step -->
+    <button *ngIf="step === 'input'" class="btn-close top-right" (click)="closePopup()"></button>
+
+    <h5 class="text-center mb-3">Aadhar Verification</h5>
+
+    <!-- Step 1: Enter Aadhar -->
+    <div *ngIf="step === 'input'">
+        <input type="text" class="form-control mb-3" [(ngModel)]="aadharNumber"
+            placeholder="Enter your 12-digit Aadhar Number" maxlength="12" />
+        <button class="btn btn-primary w-100" (click)="sendOtp()">Send OTP</button>
+    </div>
+
+    <!-- Step 2: Enter OTP -->
+    <div *ngIf="step === 'otp'">
+        <input type="text" class="form-control mb-2" [ngClass]="{ 'is-invalid': otpError }" [(ngModel)]="otp"
+            placeholder="Enter 6-digit OTP" maxlength="6" (input)="otpError = false" />
+        <button class="btn btn-success w-100" (click)="verifyOtp()">Verify OTP</button>
+        <div *ngIf="otpError" class="text-danger text-center mt-1">Invalid OTP. Please try again.</div>
+    </div>
+</div>

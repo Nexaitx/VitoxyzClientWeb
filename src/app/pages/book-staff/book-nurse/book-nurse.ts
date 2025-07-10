@@ -8,14 +8,14 @@ import { BookNurseService } from './book-nurse.service';
 import { API_URL, ENDPOINTS } from '../../../core/const';
 import { SpinnerToastService } from '../../../core/toasts/spinner-toast/spinner-toast.service';
 import { Router } from '@angular/router';
+import { AadharVerificationComponent } from "../../aadhar-verification/aadhar-verification.component";
 
 @Component({
   selector: 'app-book-nurse',
   imports: [CommonModule,
     ReactiveFormsModule,
     MapComponent,
-    Submission
-  ],
+    Submission, AadharVerificationComponent],
   templateUrl: './book-nurse.html',
   styleUrls: ['./book-nurse.scss'],
   providers: [BookNurseService]
@@ -82,6 +82,10 @@ export class BookNurse {
     { label: '1 Day', value: '1' }, { label: '3 Days', value: '2' }, { label: '1 Week', value: '3' }, { label: '2 Weeks', value: '4' }, { label: '1 Month', value: '5' }
   ]
   today: string = new Date().toISOString().split('T')[0];
+  //isLogin = localStorage.getItem('JWT')
+  isLogin = false; // This should ideally come from an AuthService
+  showAadharPopup = false; // Toggle for popup
+  staffSearchResponse: any = null; // Store response temporarily
 
   constructor(
     private spinnerService: SpinnerToastService
@@ -310,7 +314,6 @@ export class BookNurse {
     const hasPastTimeError = this.hasPastTimeError();
     const hasZeroQuantityError = this.hasZeroQuantityError();
     if (this.staffBookingForm.valid && !hasPastTimeError && !hasZeroQuantityError) {
-      console.log(this.staffBookingForm.value)
       this.spinnerService.show();
       const apiUrl = API_URL + ENDPOINTS.SEARCH;
       const payload = {
@@ -320,26 +323,10 @@ export class BookNurse {
             staffDetail.value
           );
           const shiftDetailsArray = (staffGroup.get('shiftDetails') as FormArray).controls.map((shiftGroup: AbstractControl) => {
-            const shift = shiftGroup.value;
-            const {
-              shiftType,
-              timeSlot,
-              tenure,
-              gender,
-              startDate
-            } = shift;
-            return {
-              shiftType,
-              timeSlot,
-              tenure,
-              gender,
-              startDate
-            };
+            const { shiftType, timeSlot, tenure, gender, startDate } = shiftGroup.value;
+            return { shiftType, timeSlot, tenure, gender, startDate };
           });
-          return {
-            staffDetails: staffDetailsArray,
-            shiftDetails: shiftDetailsArray
-          };
+          return { staffDetails: staffDetailsArray, shiftDetails: shiftDetailsArray };
         })
       };
       this.bookNurseService.searchStaff(apiUrl, payload).subscribe({
@@ -347,9 +334,13 @@ export class BookNurse {
           this.spinnerService.hide();
           const staffDetails = response?.staff[0]?.staffDetails || [];
           if (staffDetails.length > 0) {
-            this.router.navigate(['/view-staff'], {
-              state: { staffDetails }
-            });
+            if (this.isLogin) {
+              this.router.navigate(['/view-staff'], { state: { staffDetails } });
+            } else {
+              // Save data temporarily and show Aadhar popup
+              this.staffSearchResponse = staffDetails;
+              this.showAadharPopup = true;
+            }
           } else {
             alert('No staff found.');
           }
@@ -434,6 +425,18 @@ export class BookNurse {
       }
     });
   }
+
+  onAadharVerified() {
+    this.isLogin = true;
+    this.showAadharPopup = false;
+    if (this.staffSearchResponse) {
+      this.router.navigate(['/view-staff'], {
+        state: { staffDetails: this.staffSearchResponse }
+      });
+      this.staffSearchResponse = null; // clear
+    }
+  }
+
 
   shiftDurationValidator(control: AbstractControl): ValidationErrors | null {
     const hour = parseInt(control.get('shiftHour')?.value, 10);
