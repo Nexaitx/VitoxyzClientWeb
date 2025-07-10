@@ -88,7 +88,7 @@
                     </div>
                   </div>
                 </div>
-                <!-- @if(getNestedStaffDetailsControls(i)[0]?.get('category')?.value) { -->
+                 @if(getNestedStaffDetailsControls(i)[0]?.get('category')?.value) { 
                 <ng-container>
                   <div formArrayName="shiftDetails">
                     <div *ngFor="let shiftDetail of getNestedShiftDetailsControls(i); let sh = index"
@@ -212,10 +212,10 @@
                     </div>
                   </div>
                 </ng-container>
-                <!-- } -->
+                 } 
               </div>
             </div>
-            <!-- @if(staffListFormArray.controls[0]?.get('staffDetails')?.get('0')?.get('category')?.value) { -->
+             @if(staffListFormArray.controls[0]?.get('staffDetails')?.get('0')?.get('category')?.value) { 
             <ng-container>
               <div class="d-flex justify-content-center addNewBtn p-2 my-2">
                 <button type="button" class="text-btn" (click)="addNewStaff()">
@@ -226,7 +226,7 @@
                 <app-submission [buttonType]="button"></app-submission>
               </div>
             </ng-container>
-            <!-- } -->
+             } 
           </form>
         </div>
       </div>

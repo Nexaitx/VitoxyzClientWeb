@@ -66,25 +66,7 @@
   </div>
 </nav>
 
-<!-- Unified Authentication Modal -->
-<div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <!-- Dynamic Modal Title -->
-        <h1 class="modal-title fs-5" id="authModalLabel">
-          {{ authMode === 'login' ? 'Log In to Vitoxyz' : 'Sign Up for Vitoxyz' }}
-        </h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <ng-container *ngIf="authMode">
-          <app-authorization [authMode]="authMode"></app-authorization>
-        </ng-container>
-      </div>
-    </div>
-  </div>
-</div>
+<app-auth-modal></app-auth-modal>
 
 <div class="main-content-area">
   <router-outlet></router-outlet>

@@ -1,0 +1,16 @@
+.modal-dialog {
+    width: 80% !important;
+    max-width: 1000px !important;
+}
+
+.modal-body {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.modal-close {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+
+}

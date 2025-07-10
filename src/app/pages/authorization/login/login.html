@@ -1,11 +1,11 @@
-<div class="d-flex justify-content-center">
+<div class="">
   @if(authMode === 'login') {
 
   @if(showPhoneInput) {
-  <form class="auth-form p-4 w-75">
+  <form class="auth-form p-4">
     <!-- Phone Number -->
     <div class="form-group mb-3">
-      <label for="phoneNumber">Phone Number</label>
+      <label for="phoneNumber" class="text-center">Phone Number</label>
       <div class="input-group phone-input-group"> <span class="input-group-text icon-inside">
           <i class="bi bi-telephone"></i> </span>
         <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number" required />

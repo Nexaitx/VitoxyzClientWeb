@@ -1,0 +1,15 @@
+<!-- Auth Modal -->
+<div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered p-0">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="modal-close">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <ng-container *ngIf="authMode">
+          <app-authorization [authMode]="authMode"></app-authorization>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
