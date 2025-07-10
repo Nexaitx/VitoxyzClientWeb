@@ -1,5 +1,5 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpErrorResponse, HttpClientModule } from '@angular/common/http';
@@ -14,7 +14,6 @@ import { SignUp } from '../sign-up/sign-up';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    RouterLink,
     Submission,
     SignUp
   ],

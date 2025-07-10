@@ -1,5 +1,4 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
 import { Login } from './login/login';
 import { SignUp } from './sign-up/sign-up';
 import { CommonModule } from '@angular/common';
@@ -7,8 +6,6 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-authorization',
   imports: [
-    RouterOutlet,
-    RouterLink,
     Login,
     SignUp,
     CommonModule

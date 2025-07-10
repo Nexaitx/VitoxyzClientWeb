@@ -8,7 +8,7 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //  Added HttpClient
 import { environment } from '../../../../environments/environment.development';
 import { Submission } from '../../submission/submission';
@@ -29,7 +29,6 @@ export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): {
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    RouterLink,
     Submission,
     Login
   ],

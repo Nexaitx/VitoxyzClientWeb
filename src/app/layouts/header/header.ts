@@ -34,23 +34,21 @@ export class Header {
       label: 'Book Staff',
       dropdown: true,
       dropdownItems: [
-        { label: 'Nurse', path: 'book-staff/book-nurse' },
-        { label: 'Physiotherapist', path: 'book-staff/book-physiotherapist' },
-        { label: 'Baby-Sitter', path: 'book-staff/book-baby-sitter' },
-        { label: 'Security Guard', path: 'book-staff/book-security-guard' },
-        { label: 'Psychiatrist', path: 'book-staff/book-psychiatrist' },
+        { label: 'Nurse', path: 'book-staff' },
+        { label: 'Physiotherapist', path: 'book-staff' },
+        { label: 'Baby-Sitter', path: 'book-staff' },
+        { label: 'Security Guard', path: 'book-staff' },
+        { label: 'Psychiatrist', path: 'book-staff' },
       ]
     },
-    { label: 'Diet Plans', path: '/user-profile' },
+    { label: 'Diet Plans', path: '/user-onboarding' },
     { label: 'Support', path: '/support' },
-    // { label: 'Log In', path: '/login' },
-    // { label: 'Sign up', path: '/sign-up' },
     {
       label: 'Profile', // This will be the key to identify your profile menu
       icon: 'bi bi-person-circle', // Example using Bootstrap Icons or Font Awesome class
       dropdown: true,
       dropdownItems: [
-        { label: 'My Profile', path: '/profile' },
+        { label: 'My Profile', path: '/user-profile' },
         { label: 'Settings', path: '/settings' },
         { label: 'Logout', path: '/logout' }
       ]

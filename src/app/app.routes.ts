@@ -13,34 +13,7 @@ export const routes: Routes = [
       },
       {
         path: 'book-staff',
-        loadComponent: () => import('./pages/book-staff/book-staff').then(m => m.BookStaff),
-        children: [
-          {
-            path: 'book-nurse',
-            loadComponent: () => import('./pages/book-staff/book-nurse/book-nurse').then(m => m.BookNurse)
-          },
-          {
-            path: 'book-physiotherapist',
-            loadComponent: () => import('./pages/book-staff/book-physiotherapist/book-physiotherapist').then(m => m.BookPhysiotherapist)
-          },
-          {
-            path: 'book-baby-sitter',
-            loadComponent: () => import('./pages/book-staff/book-baby-sitter/book-baby-sitter').then(m => m.BookBabySitter)
-          },
-          {
-            path: 'book-security-guard',
-            loadComponent: () => import('./pages/book-staff/book-security-guard/book-security-guard').then(m => m.BookSecurityGuard)
-          },
-          {
-            path: 'book-psychiatrist',
-            loadComponent: () => import('./pages/book-staff/book-psychiatrist/book-psychiatrist').then(m => m.BookPsychiatrist)
-          },
-          {
-            path: '', // Default child route for 'book-staff'
-            redirectTo: 'book-nurse', // Redirect to 'book-nurse' if only 'book-staff' is accessed
-            pathMatch: 'full'
-          }
-        ]
+        loadComponent: () => import('./pages/book-staff-process/book-staff/book-staff').then(m => m.BookStaff),
       },
       {
         path: 'user-onboarding',
@@ -74,13 +47,14 @@ export const routes: Routes = [
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
-      }
+      },
+      {
+        path: 'view-staff',
+        loadComponent: () => import('./pages/view-staff/view-staff').then(m => m.ViewStaff),
+      },
     ]
   },
-  {
-    path: 'view-staff',
-    loadComponent: () => import('./pages/view-staff/view-staff').then(m => m.ViewStaff),
-  },
+
   {
     path: '**',
     redirectTo: 'dashboard'

@@ -42,9 +42,6 @@
         </ng-container>
 
         <!-- Separator for Login/Sign Up buttons -->
-        <li class="nav-item d-flex align-items-center">
-          <span style="color: white; padding: 0 0.2rem;">|</span>
-        </li>
 
         <!-- Login Button to open modal -->
         <li class="nav-item">
@@ -52,6 +49,9 @@
             (click)="setAuthMode('login')">
             Log In
           </button>
+        </li>
+        <li class="nav-item d-flex align-items-center">
+          <span style="color: white; padding: 0 0.2rem;">|</span>
         </li>
 
         <!-- Sign Up Button to open modal -->
@@ -79,10 +79,8 @@
       </div>
       <div class="modal-body">
         <ng-container *ngIf="authMode">
-  <app-authorization [authMode]="authMode"></app-authorization>
-</ng-container>
-
-
+          <app-authorization [authMode]="authMode"></app-authorization>
+        </ng-container>
       </div>
     </div>
   </div>

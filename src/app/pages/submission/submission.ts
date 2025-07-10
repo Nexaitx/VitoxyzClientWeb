@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-submission',
@@ -8,6 +8,12 @@ import { Component, Input } from '@angular/core';
 })
 export class Submission {
   @Input() buttonType: string = 'Submit'; // Default value for buttonType
+   @Output() onSubmit = new EventEmitter<void>();
+
   ngOnInit() {
+  }
+
+  handleClick() {
+    this.onSubmit.emit(); // Notify parent
   }
 }
