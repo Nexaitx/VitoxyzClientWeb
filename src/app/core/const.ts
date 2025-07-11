@@ -4,4 +4,6 @@ export const ENDPOINTS = {
     SIGNUP: '/auth/signup',
     USER_PROFILE: '/user/profile',
     SEARCH: '/staff/advanced',
+    CATEGORIES: '/categories',
+    SUB_CATEGORIES: '/subcategories',
 }
