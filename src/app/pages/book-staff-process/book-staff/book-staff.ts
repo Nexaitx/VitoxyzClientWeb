@@ -28,53 +28,9 @@ export class BookStaff {
   hours: number[] = Array.from({ length: 24 }, (_, i) => i); // 0 to 23
   minutes: number[] = [0, 15, 30, 45];
   nurseTenure = ['1 Day', '15 Days', 'Monthly', 'Quarterly', 'Half Yearly', 'Yearly'];
-  typesOfNurses = [
-    { value: 'general', label: 'General Nurse (Staff Nurse)' },
-    { value: 'icu', label: 'ICU/Critical Care Nurse' },
-    { value: 'pediatric', label: 'Pediatric Nurse' },
-    { value: 'geriatric', label: 'Geriatric Nurse' },
-    { value: 'homecare', label: 'Home Care Nurse' },
-    { value: 'surgical', label: 'Surgical/Operating Room (OT) Nurse' },
-    { value: 'psychiatric', label: 'Psychiatric/Mental Health Nurse' },
-    { value: 'midwife', label: 'Midwife (Registered Midwife - RM)' },
-    { value: 'dialysis', label: 'Dialysis Nurse' },
-    { value: 'rehabilitation', label: 'Rehabilitation Nurse' },
-    { value: 'oncology', label: 'Oncology Nurse (Cancer Care)' },
-    { value: 'emergency', label: 'Emergency Room (ER) Nurse' },
-    { value: 'cardiac', label: 'Cardiac Nurse' },
-    { value: 'neonatal', label: 'Neonatal Nurse (NICU Nurse)' },
-    { value: 'community_health', label: 'Community Health Nurse' },
-    { value: 'public_health', label: 'Public Health Nurse' },
-    { value: 'nurse_practitioner', label: 'Nurse Practitioner (NP)' },
-    { value: 'clinical_nurse_specialist', label: 'Clinical Nurse Specialist (CNS)' },
-    { value: 'nurse_educator', label: 'Nurse Educator' },
-    { value: 'nurse_administrator', label: 'Nurse Administrator/Manager' },
-    { value: 'nurse_researcher', label: 'Nurse Researcher' },
-    { value: 'nurse_informaticist', label: 'Nurse Informaticist' },
-    { value: 'auxiliary_nurse_midwife', label: 'Auxiliary Nurse Midwife (ANM)' },
-    { value: 'general_nursing_midwifery', label: 'General Nursing and Midwifery (GNM)' },
-    { value: 'orthopedic', label: 'Orthopedic Nurse' },
-    { value: 'neurology', label: 'Neurology Nurse' },
-    { value: 'maternal_child_health', label: 'Maternal and Child Health Nurse' },
-    { value: 'occupational_health', label: 'Occupational Health Nurse' },
-    { value: 'school_nurse', label: 'School Nurse' },
-    { value: 'forensic', label: 'Forensic Nurse' },
-    { value: 'travel_nurse', label: 'Travel Nurse' },
-    { value: 'flight_nurse', label: 'Flight Nurse' },
-    { value: 'certified_registered_nurse_anesthetist', label: 'Certified Registered Nurse Anesthetist (CRNA)' },
-    { value: 'babycare', label: 'Baby Care' },
-    { value: 'other', label: 'Other' }
-  ];
   button = 'Search for staff';
-
-  staffTypes = [
-    { label: 'Nurse', value: 'nurse' },
-    { label: 'Physiotherapist', value: 'physiotherapist' },
-    { label: 'Baby-Sitter', value: 'babysitter' },
-    { label: 'Security Guard', value: 'securityguard' },
-    { label: 'Psychiatrist', value: 'psychiatrist' }
-  ];
-
+  staffCategories: { id: number; name: string }[] = [];
+  staffSubCategories: { [index: number]: { label: string; value: string }[] } = {};
   shiftTypes = ['2 Hours Max', '8 Hours', '12 Hours', '24 Hours'];
   tenure = [
     { label: '1 Day', value: '1' }, { label: '3 Days', value: '2' }, { label: '1 Week', value: '3' }, { label: '2 Weeks', value: '4' }, { label: '1 Month', value: '5' }
@@ -91,11 +47,39 @@ export class BookStaff {
 
   ngOnInit(): void {
     this.getUserLocation();
+    this.getStaffCategories();
     this.staffBookingForm = this.fb.group({
       userAddress: ['', Validators.required],
       latitude: [],
       longitude: [],
       staff: this.fb.array([this.createStaffFormGroup()])
+    });
+    this.subscribeToCategoryChange(0);
+  }
+
+  getStaffCategories(): void {
+    const apiUrl = API_URL + ENDPOINTS.CATEGORIES;
+    this.http.get<{ id: number; name: string }[]>(apiUrl).subscribe({
+      next: (response) => {
+        this.staffCategories = response || [];
+      },
+      error: (error) => {
+        console.error('Error fetching categories:', error);
+      }
+    });
+  }
+
+  subscribeToCategoryChange(staffIndex: number): void {
+    const staffGroup = this.staffListFormArray.at(staffIndex) as FormGroup;
+    const staffDetailsArray = staffGroup.get('staffDetails') as FormArray;
+    const staffDetailsGroup = staffDetailsArray.at(0) as FormGroup;
+    staffDetailsGroup.get('category')?.valueChanges.subscribe(selectedName => {
+      const selected = this.staffCategories.find(cat => cat.name === selectedName);
+      if (selected) {
+        const categoryId = selected.id;
+        this.fetchSubCategories(categoryId, staffIndex);
+        staffDetailsGroup.get('subCategory')?.setValue('');
+      }
     });
   }
 
@@ -208,6 +192,19 @@ export class BookStaff {
     });
   }
 
+  fetchSubCategories(categoryId: number, staffIndex: number): void {
+    const apiUrl = `${API_URL}${ENDPOINTS.CATEGORIES}/${categoryId}${ENDPOINTS.SUB_CATEGORIES}`;
+    this.http.get<{ label: string; value: string }[]>(apiUrl).subscribe({
+      next: (subcategories) => {
+        this.staffSubCategories[staffIndex] = subcategories;
+      },
+      error: (err) => {
+        console.error('Failed to fetch subcategories', err);
+        this.staffSubCategories[staffIndex] = [];
+      }
+    });
+  }
+
   get staffDetailsFormArray(): FormArray {
     return this.staffBookingForm.get('staffDetails') as FormArray;
   }
@@ -288,6 +285,8 @@ export class BookStaff {
 
   addNewStaff() {
     this.staffListFormArray.push(this.createStaffFormGroup());
+    const index = this.staffListFormArray.length - 1;
+    this.subscribeToCategoryChange(index);
   }
 
   get staffListFormArray(): FormArray {
@@ -327,27 +326,26 @@ export class BookStaff {
           return { staffDetails: staffDetailsArray, shiftDetails: shiftDetailsArray };
         })
       };
-      // this.bookNurseService.searchStaff(apiUrl, payload).subscribe({
-      //   next: (response) => {
-      //     this.spinnerService.hide();
-      //     const staffDetails = response?.staff[0]?.staffDetails || [];
-      //     if (staffDetails.length > 0) {
-      //       if (this.isLogin) {
-      //         this.router.navigate(['/view-staff'], { state: { staffDetails } });
-      //       } else {
-      //         // Save data temporarily and show Aadhar popup
-      //         this.staffSearchResponse = staffDetails;
-      //         this.showAadharPopup = true;
-      //       }
-      //     } else {
-      //       alert('No staff found.');
-      //     }
-      //   },
-      //   error: (error) => {
-      //     console.error('Staff search failed:', error);
-      //     this.spinnerService.hide();
-      //   }
-      // });
+      this.http.post<any>(apiUrl, payload).subscribe({
+        next: (response) => {
+          this.spinnerService.hide();
+          const staffDetails = response?.staff[0]?.staffDetails || [];
+          if (staffDetails.length > 0) {
+            if (this.isLogin) {
+              this.router.navigate(['/view-staff'], { state: { staffDetails } });
+            } else {
+              this.staffSearchResponse = staffDetails;
+              this.showAadharPopup = true;
+            }
+          } else {
+            alert('No staff found.');
+          }
+        },
+        error: (error) => {
+          console.error('Staff search failed:', error);
+          this.spinnerService.hide();
+        }
+      });
     } else {
       this.markAllAsTouched(this.staffBookingForm);
     }
@@ -434,7 +432,6 @@ export class BookStaff {
       this.staffSearchResponse = null; // clear
     }
   }
-
 
   shiftDurationValidator(control: AbstractControl): ValidationErrors | null {
     const hour = parseInt(control.get('shiftHour')?.value, 10);
