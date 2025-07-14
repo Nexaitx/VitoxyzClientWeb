@@ -1,53 +1,132 @@
+// .login-screen {
+//     display: flex;
+//     font-family: 'Segoe UI', sans-serif;
+//     background: url('/assets/login/background.png') no-repeat center center;
+
+//     .left-panel {
+//         flex: 1;
+//         background: url('/assets/login/login-illustrate.png') no-repeat center center;
+//         background-size: cover;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         color: white;
+//         padding: 2rem;
+//         min-height: 450px !important;
+
+//         .overlay-content {
+//             text-align: center;
+
+//             h2 {
+//                 font-size: 2rem;
+//                 font-weight: 600;
+//             }
+
+//             p {
+//                 font-size: 1rem;
+//                 margin-top: 0.8rem;
+//                 line-height: 1.5;
+//                 margin: 0;
+//             }
+//         }
+//     }
+
+//     .right-panel {
+//         flex: 1;
+//         padding: 2rem;
+
+//         .form-container {
+//             width: 100%;
+//             border-radius: 12px;
+//         }
+//     }
+// }
+
+// .modal-close {
+//     position: absolute !important;
+//     right: 10px !important;
+//     top: 10px !important;
+// }
+
+// .modal.show .modal-dialog {
+//     max-width: 800px !important
+// }
 .login-screen {
-    display: flex;
-    font-family: 'Segoe UI', sans-serif;
-    background: url('/assets/login/background.png') no-repeat center center;
+  display: flex;
+  font-family: 'Segoe UI', sans-serif;
+  background: url('/assets/login/background.png') no-repeat center center;
+  height: 500px; /* Fixed height for consistency */
+}
 
-    .left-panel {
-        flex: 1;
-        background: url('/assets/login/login-illustrate.png') no-repeat center center;
-        background-size: cover;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        padding: 2rem;
+.left-panel {
+  flex: 1;
+  background: url('/assets/login/login-illustrate.png') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 2rem;
+  height: 100%; /* Match the login-screen height */
+}
 
-        .overlay-content {
-            text-align: center;
-            //font: optional;
+.left-panel .overlay-content {
+  text-align: center;
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  p {
+    font-size: 1rem;
+    margin-top: 0.8rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
 
-            h2 {
-                font-size: 2rem;
-                font-weight: 600;
-            }
+.right-panel {
+  flex: 1;
+  padding: 2rem;
+  height: 100%; /* Match the login-screen height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-            p {
-                font-size: 1rem;
-                margin-top: 0.8rem;
-                line-height: 1.5;
-                margin: 0;
-            }
-        }
-    }
-
-    .right-panel {
-        flex: 1;
-        padding: 2rem;
-
-        .form-container {
-            width: 100%;
-            border-radius: 12px;
-        }
-    }
+.form-container {
+  width: 100%;
+  border-radius: 12px;
+  max-height: 100%; /* Ensure it fits within right-panel */
+  overflow-y: auto; /* Handle overflow if form content is too long */
 }
 
 .modal-close {
-    position: absolute !important;
-    right: 10px !important;
-    top: 10px !important;
+  position: absolute !important;
+  right: 10px !important;
+  top: 10px !important;
 }
 
 .modal.show .modal-dialog {
-    max-width: 800px !important
+  max-width: 800px !important;
+}
+
+/* Ensure form components have consistent height */
+app-login,
+app-sign-up {
+  display: flex;
+  flex-direction: column;
+  min-height: 350px; /* Adjust based on content needs */
+}
+
+/* Style for form fields to ensure consistency */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.input-group {
+  position: relative;
+}
+
+.form-control {
+  padding-right: 40px; /* Space for password icon */
 }
