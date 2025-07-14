@@ -6,4 +6,5 @@ export const ENDPOINTS = {
     SEARCH: '/staff/advanced',
     CATEGORIES: '/categories',
     SUB_CATEGORIES: '/subcategories',
+    SIGN_UP: '/user/singup'
 }
