@@ -8,8 +8,6 @@ import { MatButtonModule } from '@angular/material/button';   // For the navigat
 import { MatIconModule } from '@angular/material/icon';     // Optional: if you want icons
 import { MatTabsModule } from '@angular/material/tabs';
 import { Authorization } from '../../pages/authorization/authorization';
-import { AuthModal } from '../../pages/auth-modal/auth-modal';
-
 
 @Component({
   selector: 'app-header',
@@ -21,8 +19,7 @@ import { AuthModal } from '../../pages/auth-modal/auth-modal';
     MatIconModule,
     RouterOutlet,
     MatTabsModule,
-    // Authorization,
-    AuthModal
+    Authorization,
   ],
   templateUrl: './header.html',
   styleUrl: './header.scss'

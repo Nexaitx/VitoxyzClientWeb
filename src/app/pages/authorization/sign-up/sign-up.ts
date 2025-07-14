@@ -30,7 +30,7 @@ export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): {
     ReactiveFormsModule,
     RouterModule,
     Submission,
-    Login
+    // Login
   ],
   templateUrl: './sign-up.html',
   styleUrls: ['./sign-up.scss']
@@ -49,7 +49,7 @@ export class SignUp {
   }
 
   ngOnInit(): void {
-
+console.log(this.authMode)
     this.signupForm = this.fb.group(
       {
         userName: ['', Validators.required],

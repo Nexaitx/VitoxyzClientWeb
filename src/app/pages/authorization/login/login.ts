@@ -6,7 +6,6 @@ import { HttpClient, HttpErrorResponse, HttpClientModule } from '@angular/common
 import { environment } from '../../../../environments/environment.development'; // Import your environment file
 import { Submission } from '../../submission/submission';
 import { Subscription, interval } from 'rxjs';
-import { SignUp } from '../sign-up/sign-up';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -15,7 +14,6 @@ import { SignUp } from '../sign-up/sign-up';
     ReactiveFormsModule,
     FormsModule,
     Submission,
-    SignUp
   ],
   templateUrl: './login.html',
   styleUrl: './login.scss'

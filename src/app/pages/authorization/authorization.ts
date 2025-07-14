@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-authorization',
+  standalone: true,
   imports: [
     Login,
     SignUp,
@@ -21,7 +22,7 @@ export class Authorization {
   ngOnInit() {
     console.log(this.authMode)
   }
-   ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['authMode']) {
       console.log('authMode changed:', changes['authMode'].currentValue);
     }

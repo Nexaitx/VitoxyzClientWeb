@@ -1,25 +1,54 @@
-
-  <div class="login-screen">
-
-    <div class="left-panel">
-      <div class="overlay-content">
-        <h2>Care that connects</h2>
-        <p>Instantly connect with nearby nurses and</p>
-        <p>support staff.</p>
-      </div>
-    </div>
-
-    <div class="right-panel d-flex align-items-center">
-      <div class="w-100">
-        <h1 class="title text-center">Vitoxyz</h1>
-        <div class="form-container">
-          <div *ngIf="authMode === 'login'">
-            <app-login [authMode]="authMode"></app-login>
+<!-- Auth Modal -->
+<div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered p-0">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="modal-close">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="login-screen">
+          <div class="left-panel">
+            <div class="overlay-content">
+              <h2>Care that connects</h2>
+              <p>Instantly connect with nearby nurses and</p>
+              <p>support staff.</p>
+            </div>
           </div>
-          <div *ngIf="authMode === 'signup'">
-            <app-sign-up [authMode]="authMode"></app-sign-up>
+
+          <div class="right-panel d-flex align-items-center">
+            <div class="w-100">
+              <h1 class="title text-center">Vitoxyz</h1>
+              <!-- <div class="form-container">
+                <div *ngIf="authMode === 'login'">
+                  <app-login [authMode]="authMode"></app-login>
+                </div>
+                <div *ngIf="authMode === 'signup'">
+                  <app-sign-up [authMode]="authMode"></app-sign-up>
+                </div>
+                
+              </div> -->
+              <div class="form-container">
+                <!-- Login Form -->
+                <div *ngIf="authMode === 'login'">
+                  <app-login [authMode]="authMode"></app-login>
+                  <div class="text-center mt-3">
+                    New to Vitoxyz? <span class="links" (click)="authMode = 'signup'">Sign Up</span>
+                  </div>
+                </div>
+
+                <!-- Signup Form -->
+                <div *ngIf="authMode === 'signup'">
+                  <app-sign-up [authMode]="authMode"></app-sign-up>
+                  <div class="text-center mt-3">
+                    Already have an account? <span class="links" (click)="authMode = 'login'">Login</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>

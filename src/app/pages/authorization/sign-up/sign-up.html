@@ -1,9 +1,20 @@
 <div class="d-flex justify-content-center">
-   @if(authMode === 'signup') {
+   <!-- @if(authMode === 'signup') { -->
   <form class="auth-form p-4" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <div class="mb-3 col-md-6">
-        <label for="userName" class="form-label">Full Name</label>
+        <label for="userName" class="form-label">First Name</label>
+        <input type="text" class="form-control" id="userName" placeholder="Enter your full name"
+          formControlName="userName"
+          [class.is-invalid]="signupForm.get('userName')?.invalid && signupForm.get('userName')?.touched">
+        <div *ngIf="signupForm.get('userName')?.invalid && signupForm.get('userName')?.touched"
+          class="invalid-feedback">
+          Full Name is required.
+        </div>
+      </div>
+
+      <div class="mb-3 col-md-6">
+        <label for="userName" class="form-label">Last Name</label>
         <input type="text" class="form-control" id="userName" placeholder="Enter your full name"
           formControlName="userName"
           [class.is-invalid]="signupForm.get('userName')?.invalid && signupForm.get('userName')?.touched">
@@ -34,7 +45,7 @@
       </div>
 
       <div class="mb-3 col-md-12">
-        <label for="address" class="form-label">Address</label>
+        <label for="address" class="form-label">User Id</label>
         <input type="text" class="form-control" id="address" placeholder="Enter your address" formControlName="address"
           [class.is-invalid]="signupForm.get('address')?.invalid && signupForm.get('address')?.touched">
         <div *ngIf="signupForm.get('address')?.invalid && signupForm.get('address')?.touched" class="invalid-feedback">
@@ -43,7 +54,17 @@
       </div>
 
       <div class="mb-3 col-md-6">
-        <label for="pinCode" class="form-label">Zip Code</label>
+        <label for="pinCode" class="form-label">Password</label>
+        <input type="number" class="form-control" id="pinCode" placeholder="Enter your zip code"
+          formControlName="pinCode"
+          [class.is-invalid]="signupForm.get('pinCode')?.invalid && signupForm.get('pinCode')?.touched">
+        <div *ngIf="signupForm.get('pinCode')?.invalid && signupForm.get('pinCode')?.touched" class="invalid-feedback">
+          Zip code is required.
+        </div>
+      </div>
+
+      <div class="mb-3 col-md-6">
+        <label for="pinCode" class="form-label">Confirm Password</label>
         <input type="number" class="form-control" id="pinCode" placeholder="Enter your zip code"
           formControlName="pinCode"
           [class.is-invalid]="signupForm.get('pinCode')?.invalid && signupForm.get('pinCode')?.touched">
@@ -58,11 +79,11 @@
   </form>
 
 
-<div class="text-center mt-3">
+<!-- <div class="text-center mt-3">
       <span>Already have an account? &nbsp;</span>
       <span class="links" (click)="authMode = 'signup'">Login</span>
     </div>
 
-   }
-</div>
-<app-login *ngIf="authMode === 'signup'"></app-login>
+   } -->
+</div> 
+<!-- <app-login *ngIf="authMode === 'signup'"></app-login> -->

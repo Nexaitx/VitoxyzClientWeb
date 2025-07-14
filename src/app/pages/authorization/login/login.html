@@ -1,5 +1,5 @@
 <div class="">
-  @if(authMode === 'login') {
+  <!-- @if(authMode === 'login') { -->
 
   @if(showPhoneInput) {
   <form class="auth-form p-4">
@@ -34,11 +34,9 @@
     </ng-template>
   </div>
   }
-  <div class="text-center mt-3">
+  <!-- <div class="text-center mt-3">
     <span>New To Vitoxyz? &nbsp;</span>
-    <span class="links" (click)="authMode = 'signup'">Sign Up</span>
+    <span class="links" >Sign Up</span>
   </div>
-}
+} -->
 </div>
-
-<app-sign-up *ngIf="authMode === 'signup'"></app-sign-up>
