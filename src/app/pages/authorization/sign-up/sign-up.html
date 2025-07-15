@@ -1,29 +1,24 @@
 <div class="d-flex justify-content-center">
   <form class="auth-form p-4" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <div class="row">
-      <div class="mb-3 col-md-6">
-        <label for="firstName" class="form-label">First Name</label>
-        <input type="text" class="form-control" id="firstName" placeholder="Enter your first name"
-          formControlName="firstName"
-          [class.is-invalid]="signupForm.get('firstName')?.invalid && signupForm.get('firstName')?.touched">
-        <div *ngIf="signupForm.get('firstName')?.invalid && signupForm.get('firstName')?.touched"
+      <div class="mb-1 col-md-12">
+        <label for="userName" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="userName" placeholder="Enter full name" formControlName="userName"
+          [class.is-invalid]="signupForm.get('userName')?.invalid && signupForm.get('userName')?.touched">
+        <div *ngIf="signupForm.get('userName')?.invalid && signupForm.get('userName')?.touched"
           class="invalid-feedback">
-          First Name is required.
+          Full name is required.
         </div>
       </div>
-
-      <div class="mb-3 col-md-6">
-        <label for="lastName" class="form-label">Last Name</label>
-        <input type="text" class="form-control" id="lastName" placeholder="Enter your last name"
-          formControlName="lastName"
-          [class.is-invalid]="signupForm.get('lastName')?.invalid && signupForm.get('lastName')?.touched">
-        <div *ngIf="signupForm.get('lastName')?.invalid && signupForm.get('lastName')?.touched"
-          class="invalid-feedback">
-          Last Name is required.
+      <div class="mb-1 col-md-12">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter your email" formControlName="email"
+          [class.is-invalid]="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
+        <div *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched" class="invalid-feedback">
+          Please enter a valid email.
         </div>
       </div>
-
-      <div class="mb-3 col-md-6">
+      <div class="mb-1 col-md-12">
         <label for="phoneNumber" class="form-label">Phone Number</label>
         <input type="tel" class="form-control" id="phoneNumber" placeholder="Enter your phone number"
           formControlName="phoneNumber"
@@ -33,54 +28,7 @@
           Phone number is required.
         </div>
       </div>
-
-      <div class="mb-3 col-md-6">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="Enter your email" formControlName="email"
-          [class.is-invalid]="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
-        <div *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched" class="invalid-feedback">
-          Please enter a valid email.
-        </div>
-      </div>
-
-      <div class="mb-3 col-md-12">
-        <label for="address" class="form-label">Address</label>
-        <input type="text" class="form-control" id="address" placeholder="Enter your address" formControlName="address"
-          [class.is-invalid]="signupForm.get('address')?.invalid && signupForm.get('address')?.touched">
-        <div *ngIf="signupForm.get('address')?.invalid && signupForm.get('address')?.touched" class="invalid-feedback">
-          Address is required.
-        </div>
-      </div>
-
-      <div class="mb-3 col-md-6">
-        <label for="city" class="form-label">City</label>
-        <input type="text" class="form-control" id="city" placeholder="Enter your city" formControlName="city"
-          [class.is-invalid]="signupForm.get('city')?.invalid && signupForm.get('city')?.touched">
-        <div *ngIf="signupForm.get('city')?.invalid && signupForm.get('city')?.touched" class="invalid-feedback">
-          Please enter your city.
-        </div>
-      </div>
-
-      <div class="mb-3 col-md-6">
-        <label for="pinCode" class="form-label">Pincode</label>
-        <input type="text" class="form-control" id="pinCode" placeholder="Enter your pincode" formControlName="pinCode"
-          [class.is-invalid]="signupForm.get('pinCode')?.invalid && signupForm.get('pinCode')?.touched">
-        <div *ngIf="signupForm.get('pinCode')?.invalid && signupForm.get('pinCode')?.touched" class="invalid-feedback">
-          Please enter a valid 6-digit pincode.
-        </div>
-      </div>
-
-      <div class="mb-3 col-md-12">
-        <label for="userName" class="form-label">User ID</label>
-        <input type="text" class="form-control" id="userName" placeholder="Choose a unique User ID"
-          formControlName="userName"
-          [class.is-invalid]="signupForm.get('userName')?.invalid && signupForm.get('userName')?.touched">
-        <div *ngIf="signupForm.get('userName')?.invalid && signupForm.get('userName')?.touched" class="invalid-feedback">
-          User ID is required.
-        </div>
-      </div>
-
-      <div class="mb-3 col-md-6">
+      <div class="mb-1 col-md-12">
         <label for="password" class="form-label">Password</label>
         <input type="password" class="form-control" id="password" placeholder="Enter password"
           formControlName="password"
@@ -94,8 +42,7 @@
           Password must be at least 6 characters.
         </div>
       </div>
-
-      <div class="mb-3 col-md-6">
+      <div class="mb-1 col-md-12">
         <label for="confirmPassword" class="form-label">Confirm Password</label>
         <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password"
           formControlName="confirmPassword"
@@ -110,13 +57,7 @@
           Passwords do not match.
         </div>
       </div>
-      
     </div>
     <app-submission [buttonType]="button"></app-submission>
   </form>
-
-  <!-- <div class="text-center mt-3">
-    <span>Already have an account? &nbsp;</span>
-    <span class="links" routerLink="/login">Login</span>
-  </div> -->
 </div>

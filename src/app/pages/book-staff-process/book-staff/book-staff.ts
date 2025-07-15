@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors, FormControl } from '@angular/forms';
 import { MapComponent } from '../map/map';
 import { Submission } from '../../submission/submission';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '../../../core/const';
 import { SpinnerToastService } from '../../../core/toasts/spinner-toast/spinner-toast.service';
 import { Router } from '@angular/router';
@@ -36,7 +36,7 @@ export class BookStaff {
     { label: '1 Day', value: '1' }, { label: '3 Days', value: '2' }, { label: '1 Week', value: '3' }, { label: '2 Weeks', value: '4' }, { label: '1 Month', value: '5' }
   ]
   today: string = new Date().toISOString().split('T')[0];
-  //isLogin = localStorage.getItem('JWT')
+  isToken = localStorage.getItem('authToken')
   isLogin = false; // This should ideally come from an AuthService
   showAadharPopup = false; // Toggle for popup
   staffSearchResponse: any = null; // Store response temporarily
@@ -52,7 +52,7 @@ export class BookStaff {
       userAddress: ['', Validators.required],
       latitude: [],
       longitude: [],
-      staff: this.fb.array([this.createStaffFormGroup()])
+      staffForms: this.fb.array([this.createStaffFormGroup()])
     });
     this.subscribeToCategoryChange(0);
   }
@@ -73,12 +73,12 @@ export class BookStaff {
     const staffGroup = this.staffListFormArray.at(staffIndex) as FormGroup;
     const staffDetailsArray = staffGroup.get('staffDetails') as FormArray;
     const staffDetailsGroup = staffDetailsArray.at(0) as FormGroup;
-    staffDetailsGroup.get('category')?.valueChanges.subscribe(selectedName => {
+    staffDetailsGroup.get('typeOfStaff')?.valueChanges.subscribe(selectedName => {
       const selected = this.staffCategories.find(cat => cat.name === selectedName);
       if (selected) {
         const categoryId = selected.id;
         this.fetchSubCategories(categoryId, staffIndex);
-        staffDetailsGroup.get('subCategory')?.setValue('');
+        staffDetailsGroup.get('typeOfSubStaff')?.setValue('');
       }
     });
   }
@@ -123,13 +123,13 @@ export class BookStaff {
     return value != null ? value.toString().padStart(2, '0') : '00';
   }
 
-  increase(type: 'male' | 'female', staffIndex: number, shiftIndex: number): void {
+  increase(type: 'maleQuantity' | 'femaleQuantity', staffIndex: number, shiftIndex: number): void {
     const control = this.getQuantityControl(type, staffIndex, shiftIndex);
     control.setValue(Math.min((control.value || 0) + 1, 10));
     this.updateGenderInShift(staffIndex, shiftIndex);
   }
 
-  decrease(type: 'male' | 'female', staffIndex: number, shiftIndex: number): void {
+  decrease(type: 'maleQuantity' | 'femaleQuantity', staffIndex: number, shiftIndex: number): void {
     const control = this.getQuantityControl(type, staffIndex, shiftIndex);
     control.setValue(Math.max((control.value || 1) - 1, 0));
     this.updateGenderInShift(staffIndex, shiftIndex);
@@ -142,11 +142,11 @@ export class BookStaff {
     }
   }
 
-  getQuantityControl(type: 'male' | 'female', staffIndex: number, shiftIndex: number): FormControl {
+  getQuantityControl(type: 'maleQuantity' | 'femaleQuantity', staffIndex: number, shiftIndex: number): FormControl {
     const staffGroup = this.staffListFormArray.at(staffIndex) as FormGroup;
     const shiftArray = staffGroup.get('shiftDetails') as FormArray;
     const shiftGroup = shiftArray.at(shiftIndex) as FormGroup;
-    return shiftGroup.get(type === 'male' ? 'male' : 'female') as FormControl;
+    return shiftGroup.get(type === 'maleQuantity' ? 'maleQuantity' : 'femaleQuantity') as FormControl;
   }
 
   getUserLocation() {
@@ -187,8 +187,8 @@ export class BookStaff {
 
   createStaffDetailFormGroup(): FormGroup {
     return this.fb.group({
-      category: ['', Validators.required],
-      subCategory: ['', Validators.required]
+      typeOfStaff: ['', Validators.required],
+      typeOfSubStaff: ['', Validators.required]
     });
   }
 
@@ -220,10 +220,10 @@ export class BookStaff {
       shiftType: ['', Validators.required],
       timeSlot: [''],
       tenure: ['1'],
-      gender: [''],
-      startDate: [new Date().toISOString().substring(0, 10)],
-      male: ['0', [Validators.min(0), Validators.max(10)]],
-      female: ['0', [Validators.min(0), Validators.max(10)]],
+      //gender: [''],
+      dutyStartDate: [new Date().toISOString().substring(0, 10)],
+      maleQuantity: ['0', [Validators.min(0), Validators.max(10)]],
+      femaleQuantity: ['0', [Validators.min(0), Validators.max(10)]],
       hours: [currentHour, [Validators.required, Validators.min(1), Validators.max(12)]],
       minutes: [minutes, [Validators.required, Validators.min(0), Validators.max(59)]],
       ampm: [ampm, Validators.required],
@@ -231,12 +231,12 @@ export class BookStaff {
     group.get('hours')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
     group.get('minutes')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
     group.get('ampm')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
-    group.get('male')?.valueChanges.subscribe(() => this.updateGenderQty(group));
-    group.get('female')?.valueChanges.subscribe(() => this.updateGenderQty(group));
-    group.get('startDate')?.valueChanges.subscribe((value) => {
+    group.get('maleQuantity')?.valueChanges.subscribe(() => this.updateGenderQty(group));
+    group.get('femaleQuantity')?.valueChanges.subscribe(() => this.updateGenderQty(group));
+    group.get('dutyStartDate')?.valueChanges.subscribe((value) => {
       if (!value) {
         const today = new Date().toISOString().substring(0, 10);
-        group.get('startDate')?.setValue(today, { emitEvent: false });
+        group.get('dutyStartDate')?.setValue(today, { emitEvent: false });
       }
     });
     return group;
@@ -255,9 +255,11 @@ export class BookStaff {
   }
 
   private updateGenderQty(group: FormGroup): void {
-    const male = Number(group.get('male')?.value || 0);
-    const female = Number(group.get('female')?.value || 0);
-    group.get('gender')?.setValue({ male, female }, { emitEvent: false });
+    const maleQuantity = Number(group.get('maleQuantity')?.value || 0);
+    const femaleQuantity = Number(group.get('femaleQuantity')?.value || 0);
+    group.get('maleQuantity')?.setValue(maleQuantity);
+    group.get('gender')?.setValue(femaleQuantity);
+    //group.get('gender')?.setValue({ maleQuantity, femaleQuantity }, { emitEvent: false });
   }
 
   get shiftDetailsFormArray(): FormArray {
@@ -290,7 +292,7 @@ export class BookStaff {
   }
 
   get staffListFormArray(): FormArray {
-    return this.staffBookingForm.get('staff') as FormArray;
+    return this.staffBookingForm.get('staffForms') as FormArray;
   }
 
   getNestedShiftDetailsControls(index: number): FormGroup[] {
@@ -312,21 +314,30 @@ export class BookStaff {
     const hasZeroQuantityError = this.hasZeroQuantityError();
     if (this.staffBookingForm.valid && !hasPastTimeError && !hasZeroQuantityError) {
       this.spinnerService.show();
-      const apiUrl = API_URL + ENDPOINTS.SEARCH;
+      const apiUrl = API_URL + ENDPOINTS.BOOK_STAFF;
       const payload = {
         ...this.staffBookingForm.value,
-        staff: this.staffListFormArray.controls.map((staffGroup: AbstractControl) => {
-          const staffDetailsArray = (staffGroup.get('staffDetails') as FormArray).controls.map(staffDetail =>
-            staffDetail.value
-          );
+        staffForms: this.staffListFormArray.controls.map((staffGroup: AbstractControl) => {
+          const staffDetailsControl = (staffGroup.get('staffDetails') as FormArray).at(0);
+          const { typeOfStaff, typeOfSubStaff } = staffDetailsControl.value;
           const shiftDetailsArray = (staffGroup.get('shiftDetails') as FormArray).controls.map((shiftGroup: AbstractControl) => {
-            const { shiftType, timeSlot, tenure, gender, startDate } = shiftGroup.value;
-            return { shiftType, timeSlot, tenure, gender, startDate };
+            const { shiftType, timeSlot, tenure, maleQuantity, femaleQuantity, dutyStartDate } = shiftGroup.value;
+            return { shiftType, timeSlot, tenure, maleQuantity, femaleQuantity, dutyStartDate };
           });
-          return { staffDetails: staffDetailsArray, shiftDetails: shiftDetailsArray };
+          return {
+            typeOfStaff,
+            typeOfSubStaff,
+            shifts: shiftDetailsArray
+          };
         })
       };
-      this.http.post<any>(apiUrl, payload).subscribe({
+      let headers = new HttpHeaders({
+        'Content-Type': 'application/json' // Often required for POST requests
+      });
+      if (this.isToken) {
+        headers = headers.set('Authorization', `Bearer ${this.isToken}`);
+      }
+      this.http.post<any>(apiUrl, payload, { headers: headers }).subscribe({
         next: (response) => {
           this.spinnerService.hide();
           const staffDetails = response?.staff[0]?.staffDetails || [];
@@ -356,12 +367,12 @@ export class BookStaff {
     this.staffListFormArray.controls.forEach((staffGroup: AbstractControl) => {
       const shiftArray = staffGroup.get('shiftDetails') as FormArray;
       shiftArray.controls.forEach((shiftGroup: AbstractControl) => {
-        const startDate = shiftGroup.get('startDate')?.value;
+        const dutyStartDate = shiftGroup.get('dutyStartDate')?.value;
         const hours = +shiftGroup.get('hours')?.value;
         const minutes = +shiftGroup.get('minutes')?.value;
         const ampm = shiftGroup.get('ampm')?.value;
-        if (!startDate || hours == null || minutes == null || !ampm) return;
-        const selectedDate = new Date(startDate);
+        if (!dutyStartDate || hours == null || minutes == null || !ampm) return;
+        const selectedDate = new Date(dutyStartDate);
         const today = new Date();
         const pad = (v: number) => v.toString().padStart(2, '0');
         const formattedTime = `${pad(hours)}:${pad(minutes)} ${ampm}`;
@@ -396,9 +407,9 @@ export class BookStaff {
     this.staffListFormArray.controls.forEach((staffGroup: AbstractControl) => {
       const shiftArray = staffGroup.get('shiftDetails') as FormArray;
       shiftArray.controls.forEach((shiftGroup: AbstractControl) => {
-        const male = +shiftGroup.get('male')?.value || 0;
-        const female = +shiftGroup.get('female')?.value || 0;
-        if (male === 0 && female === 0) {
+        const maleQuantity = +shiftGroup.get('maleQuantity')?.value || 0;
+        const femaleQuantity = +shiftGroup.get('femaleQuantity')?.value || 0;
+        if (maleQuantity === 0 && femaleQuantity === 0) {
           shiftGroup.setErrors({ ...(shiftGroup.errors || {}), zeroQuantity: true });
           hasError = true;
         } else {
