@@ -3,7 +3,7 @@
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Personal Info</ng-template>
       <div class="row">
-         <div class="col-md-6">
+         <div class="col-md-12">
       <label class="form-label">Full Name</label>
       <div class="input-group">
         <span class="input-group-text">
@@ -14,15 +14,7 @@
     </div>
 
     <!-- Last Name -->
-    <div class="col-md-6">
-      <label class="form-label">Last Name</label>
-      <div class="input-group">
-        <span class="input-group-text">
-          <i class="bi bi-person"></i>
-        </span>
-        <input type="text" class="form-control" placeholder="Enter Last Name" />
-      </div>
-    </div>
+    
 
     <!-- Age -->
     <div class="col-md-6">
@@ -55,9 +47,9 @@
       <label class="form-label">Height</label>
       <div class="d-flex gap-2">
         <div class="input-group" style="max-width: 120px;">
-          <button class="btn btn-outline-secondary" type="button">−</button>
-          <input type="text" class="form-control text-center" value="09">
-          <button class="btn btn-outline-secondary" type="button">+</button>
+          <button class="btn btn-outline-secondary action border-0" type="button">−</button>
+          <input type="text" class="form-control measure text-center" value="00">
+          <button class="btn btn-outline-secondary action-add border-0" type="button">+</button>
         </div>
         <select class="form-select" style="max-width: 100px;">
           <option>Inches</option>
@@ -72,9 +64,9 @@
       <label class="form-label">Weight</label>
       <div class="d-flex gap-2 align-items-center">
         <div class="input-group" style="max-width: 120px;">
-          <button class="btn btn-outline-secondary" type="button">−</button>
-          <input type="text" class="form-control text-center" value="09">
-          <button class="btn btn-outline-secondary" type="button">+</button>
+          <button class="btn btn-outline-secondary action border-0" type="button">−</button>
+          <input type="text" class="form-control measure text-center" value="00">
+          <button class="btn btn-outline-secondary action-add border-0" type="button">+</button>
         </div>
         <span>kg</span>
       </div>
@@ -87,20 +79,6 @@
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup">
-    <form [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>Health & Goals</ng-template>
-      <mat-form-field>
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-               required>
-      </mat-form-field>
-      <div class="text-end mt-3">
-        <button matButton matStepperPrevious>Back</button>
-        <button matButton matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="secondFormGroup" >
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Health & Goals</ng-template>
       <mat-form-field>
@@ -138,17 +116,8 @@
       </mat-form-field>
       <div class="text-end mt-3">
         <button matButton matStepperPrevious>Back</button>
-        <button matButton matStepperNext>Next</button>
+        <app-submission [buttonType]="'Submit'"  (onSubmit)="goToPlans()"></app-submission>
       </div>
     </form>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
-    <div class="d-flex justify-content-end mt-3">
-      <button matButton matStepperPrevious>Back</button>
-
-      <app-submission [buttonType]="'Submit'"  (onSubmit)="goToPlans()"></app-submission>
-    </div>
   </mat-step>
 </mat-stepper>
