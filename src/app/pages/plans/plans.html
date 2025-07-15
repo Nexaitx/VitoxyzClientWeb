@@ -1,43 +1,57 @@
 <div class="plans-container">
-      <mat-card class="plan-card">
-        <mat-card-header>
-          <mat-card-title>Choose Your Plan</mat-card-title>
-          <mat-card-subtitle>Select the best plan that fits your needs.</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content class="plans-content">
-          <div class="plan-item">
-            <h3>Basic Wellness</h3>
-            <p>Access to basic dietary advice and meal plans.</p>
-            <ul>
-              <li>Monthly check-ins</li>
-              <li>Standard meal library</li>
-            </ul>
-            <h4>₹499/month</h4>
-            <button mat-raised-button color="primary">Select Plan</button>
-          </div>
-          <div class="plan-item">
-            <h3>Premium Health</h3>
-            <p>Personalized coaching, advanced meal plans, and more!</p>
-            <ul>
-              <li>Weekly one-on-one sessions</li>
-              <li>Customized meal plans</li>
-              <li>24/7 chat support</li>
-            </ul>
-            <h4>₹1499/month</h4>
-            <button mat-raised-button color="accent">Select Plan</button>
-          </div>
-          <div class="plan-item">
-            <h3>Elite Transformation</h3>
-            <p>Comprehensive support for your ultimate health journey.</p>
-            <ul>
-              <li>Daily progress tracking</li>
-              <li>Premium resource access</li>
-              <li>Exclusive workshops</li>
-              <li>Direct dietician access</li>
-            </ul>
-            <h4>₹2499/month</h4>
-            <button mat-raised-button color="warn">Select Plan</button>
-          </div>
-        </mat-card-content>
-      </mat-card>
+  <mat-card class="plan-card">
+    <div class="text-center">
+      <h3>Choose Your Plan</h3>
+      <p>Select the best plan that fits your needs.</p>
+      <div class="btn-group" role="group" aria-label="Toggle options">
+        <input type="radio" class="btn-check" name="options" id="yearlyOption" autocomplete="off"
+          [(ngModel)]="selectedPlan" value="yearly">
+        <label class="btn" [ngClass]="selectedPlan === 'yearly' ? 'primary' : 'secondary'"
+          for="yearlyOption">Yearly</label>
+
+        <input type="radio" class="btn-check" name="options" id="monthlyOption" autocomplete="off"
+          [(ngModel)]="selectedPlan" value="monthly" checked>
+        <label class="btn" [ngClass]="selectedPlan === 'monthly' ? 'primary' : 'secondary'"
+          for="monthlyOption">Monthly</label>
+      </div>
     </div>
+    <mat-card-content class="plans-content">
+      <div class="plan-item">
+        <h3>Basic Wellness</h3>
+        <p>Access to basic dietary advice and meal plans.</p>
+        <hr>
+        <ul>
+          <li><i class="bi bi-check2"></i>Monthly check-ins</li>
+          <li><i class="bi bi-check2"></i>Standard meal library</li>
+        </ul>
+        <h4>₹499/month</h4>
+        <button mat-raised-button color="primary">Select Plan</button>
+      </div>
+      <div class="plan-item">
+        <h3>Premium Health</h3>
+        <p>Personalized coaching, advanced meal plans, and more!</p>
+        <hr>
+        <ul>
+          <li><i class="bi bi-check2"></i>Weekly one-on-one sessions</li>
+          <li><i class="bi bi-check2"></i>Customized meal plans</li>
+          <li><i class="bi bi-check2"></i>24/7 chat support</li>
+        </ul>
+        <h4>₹1499/month</h4>
+        <button mat-raised-button color="accent">Select Plan</button>
+      </div>
+      <div class="plan-item">
+        <h3>Elite Transformation</h3>
+        <p>Comprehensive support for your ultimate health journey.</p>
+        <hr>
+        <ul>
+          <li><i class="bi bi-check2"></i>Daily progress tracking</li>
+          <li><i class="bi bi-check2"></i>Premium resource access</li>
+          <li><i class="bi bi-check2"></i>Exclusive workshops</li>
+          <li><i class="bi bi-check2"></i>Direct dietician access</li>
+        </ul>
+        <h4>₹2499/month</h4>
+        <button mat-raised-button color="warn">Select Plan</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

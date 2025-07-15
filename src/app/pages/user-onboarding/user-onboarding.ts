@@ -6,7 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Router } from '@angular/router';
 import { MatStepperModule } from '@angular/material/stepper';
-import { Submission } from '../submission/submission';
 
 @Component({
   selector: 'app-user-onboarding',
@@ -18,7 +17,7 @@ import { Submission } from '../submission/submission';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    Submission
+    CommonModule
   ],
   templateUrl: './user-onboarding.html',
   styleUrl: './user-onboarding.scss'
@@ -32,6 +31,7 @@ export class UserOnboarding {
   secondFormGroup = this._formBuilder.group({
     secondCtrl: ['', Validators.required],
   });
+  isOnMedication: string = 'no';
 
   constructor() { }
   

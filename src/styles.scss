@@ -1,12 +1,8 @@
-// @use 'app_theme-colors';
-// @use '@angular/material' as mat;
-// @use '@angular/material/prebuilt-themes/indigo-pink.css' as indigo-pink;
 // :root {
 //   --primary: #3B938A;
 //   --secondary: #4AB8AD;
 //   --tertinary: #14bbc1;
 // }
-@use '_theme-colors' as *;
 body {
   height: 100%;
   margin: 0;

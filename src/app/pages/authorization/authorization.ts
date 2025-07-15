@@ -15,16 +15,15 @@ import { CommonModule } from '@angular/common';
   styleUrl: './authorization.scss'
 })
 export class Authorization {
-  @Input() authMode: 'login' | 'signup' = 'login'; // Default mode is 'login'
+  @Input() authMode: 'login' | 'signup' = 'login';
 
-  constructor() {
-  }
-  ngOnInit() {
-    console.log(this.authMode)
-  }
+  constructor() { }
+
+  ngOnInit() { }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['authMode']) {
-      console.log('authMode changed:', changes['authMode'].currentValue);
     }
   }
+  
 }
