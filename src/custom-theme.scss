@@ -1,22 +1,13 @@
 @use '@angular/material' as mat;
-@use './_theme-colors' as custom;
 
-// Include core Material styles
-@include mat.core();
-
-// Use your custom palette with map-get
-$my-primary: mat.define-palette(map-get(custom.$palettes, primary)); // Access the 'primary' palette
-$my-accent: mat.define-palette(map-get(custom.$palettes, secondary)); // Access the 'secondary' palette
-$my-warn: mat.define-palette(mat.$red-palette); // Use the default red palette for warn
-
-// Create a light theme
-$my-app-theme: mat.define-light-theme((
-  color: (
-    primary: $my-primary,
-    accent: $my-accent,
-    warn: $my-warn,
-  )
-));
-
-// Include the custom theme
-@include mat.all-component-themes($my-app-theme);
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$violet-palette,
+      tertiary: mat.$orange-palette,
+      theme-type: light,
+    ),
+    typography: Roboto,
+    density: 0
+  ));
+}
