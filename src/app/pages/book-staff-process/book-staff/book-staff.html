@@ -22,7 +22,7 @@
                 }
               </div>
             </div>
-            <div formArrayName="staff" class="staff-list">
+            <div formArrayName="staffForms" class="staff-list">
               <div class="pe-2" *ngFor="let staffGroup of staffListFormArray.controls; let i = index"
                 [formGroupName]="i">
                 @if(i > 0){
@@ -45,41 +45,41 @@
                   <div *ngFor="let staffDetails of getNestedStaffDetailsControls(i); let s = index" [formGroupName]="s">
                     <div class="row">
                       <div class="col-md-12 mb-2">
-                        <label for="category-{{ i }}" class="form-label">Select Staff Type</label>
-                        <select class="form-select" id="category-{{ i }}" formControlName="category" [class.is-invalid]="
-                          staffDetails.get('category')?.invalid &&
-                          staffDetails.get('category')?.touched
+                        <label for="typeOfStaff-{{ i }}" class="form-label">Select Staff Type</label>
+                        <select class="form-select" id="typeOfStaff-{{ i }}" formControlName="typeOfStaff" [class.is-invalid]="
+                          staffDetails.get('typeOfStaff')?.invalid &&
+                          staffDetails.get('typeOfStaff')?.touched
                         ">
                           <option value="" disabled>Select Type</option>
                           <option *ngFor="let staff of staffCategories" [value]="staff.name">
                             {{ staff.name }}
                           </option>
                         </select>
-                        @if(staffDetails.get('category')?.invalid && staffDetails.get('category')?.touched) {
+                        @if(staffDetails.get('typeOfStaff')?.invalid && staffDetails.get('typeOfStaff')?.touched) {
                         <div class="invalid-feedback">
                           Type of Staff is required.
                         </div>
                         }
                       </div>
-                      @if(staffDetails.get('category')?.value && staffDetails.get('category')?.value !== '') {
+                      @if(staffDetails.get('typeOfStaff')?.value && staffDetails.get('typeOfStaff')?.value !== '') {
                       <ng-container>
                         <div class="col-md-12 my-3">
-                          <label for="subCategory-{{ i }}" class="form-label">Select {{
-                            staffDetails.get('category')?.value | titlecase }} Type</label>
-                          <select class="form-select" id="subCategory-{{ i }}" formControlName="subCategory"
-                            [disabled]="!staffDetails.get('category')?.value" [class.is-invalid]="
-                            staffDetails.get('subCategory')?.invalid &&
-                            staffDetails.get('subCategory')?.touched
+                          <label for="typeOfSubStaff-{{ i }}" class="form-label">Select {{
+                            staffDetails.get('typeOfStaff')?.value | titlecase }} Type</label>
+                          <select class="form-select" id="typeOfSubStaff-{{ i }}" formControlName="typeOfSubStaff"
+                            [disabled]="!staffDetails.get('typeOfStaff')?.value" [class.is-invalid]="
+                            staffDetails.get('typeOfSubStaff')?.invalid &&
+                            staffDetails.get('typeOfSubStaff')?.touched
                           ">
-                            <option value="" disabled>Select {{ staffDetails.get('category')?.value | titlecase }}
+                            <option value="" disabled>Select {{ staffDetails.get('typeOfStaff')?.value | titlecase }}
                             </option>
                             <option *ngFor="let nurse of staffSubCategories[i]" [value]="nurse.value">
                               {{ nurse.label }}
                             </option>
                           </select>
-                          @if(staffDetails.get('subCategory')?.invalid && staffDetails.get('subCategory')?.touched) {
+                          @if(staffDetails.get('typeOfSubStaff')?.invalid && staffDetails.get('typeOfSubStaff')?.touched) {
                           <div class="invalid-feedback">
-                            Type of {{ staffDetails.get('category')?.value | titlecase }} is required.
+                            Type of {{ staffDetails.get('typeOfStaff')?.value | titlecase }} is required.
                           </div>
                           }
                         </div>
@@ -88,7 +88,7 @@
                     </div>
                   </div>
                 </div>
-                @if(getNestedStaffDetailsControls(i)[0].get('category')?.value) {
+                @if(getNestedStaffDetailsControls(i)[0].get('typeOfStaff')?.value) {
                 <ng-container>
                   <div formArrayName="shiftDetails">
                     <div *ngFor="let shiftDetail of getNestedShiftDetailsControls(i); let sh = index"
@@ -161,22 +161,22 @@
                         <div class="col-md-2">
                           <label class="form-label">Quantity</label>
                           <div class="d-flex align-items-center mb-2 counter-box">
-                            <button class="btn btn-minus px-0" type="button" (click)="decrease('male', i, sh)">
+                            <button class="btn btn-minus px-0" type="button" (click)="decrease('maleQuantity', i, sh)">
                               <i class="bi bi-dash"></i>
                             </button>
-                            <input type="number" class="form-control" [formControlName]="'male'" min="0" max="10"
+                            <input type="number" class="form-control" [formControlName]="'maleQuantity'" min="0" max="10"
                               readonly readonly>
-                            <button class="btn btn-plus px-0" type="button" (click)="increase('male', i, sh)">
+                            <button class="btn btn-plus px-0" type="button" (click)="increase('maleQuantity', i, sh)">
                               <i class="bi bi-plus"></i>
                             </button>
                           </div>
                           <div class="d-flex align-items-center counter-box">
-                            <button class="btn btn-minus px-0" type="button" (click)="decrease('female', i, sh)">
+                            <button class="btn btn-minus px-0" type="button" (click)="decrease('femaleQuantity', i, sh)">
                               <i class="bi bi-dash"></i>
                             </button>
-                            <input type="number" class="form-control" [formControlName]="'female'" min="0" max="10"
+                            <input type="number" class="form-control" [formControlName]="'femaleQuantity'" min="0" max="10"
                               readonly readonly>
-                            <button class="btn btn-plus px-0" type="button" (click)="increase('female', i, sh)">
+                            <button class="btn btn-plus px-0" type="button" (click)="increase('femaleQuantity', i, sh)">
                               <i class="bi bi-plus"></i>
                             </button>
                           </div>
@@ -199,7 +199,7 @@
                         </div>
                         <div class="col-md-12">
                           <label class="form-label">Duty Start Date</label>
-                          <input type="date" class="form-control" [min]="today" formControlName="startDate" />
+                          <input type="date" class="form-control" [min]="today" formControlName="dutyStartDate" />
                         </div>
                         <div class="d-flex align-items-start justify-content-end gap-2 mt-3">
                           @if(sh === 0) {
@@ -217,7 +217,7 @@
                 }
               </div>
             </div>
-            @if(staffListFormArray.controls[0].get('staffDetails')?.get('0')?.get('category')?.value) {
+            @if(staffListFormArray.controls[0].get('staffDetails')?.get('0')?.get('typeOfStaff')?.value) {
             <ng-container>
               <div class="d-flex justify-content-center addNewBtn p-2 my-2">
                 <button type="button" class="text-btn" (click)="addNewStaff()">

@@ -3,10 +3,11 @@ export const ENDPOINTS = {
     LOGIN: '/user/loginWithPasswordUser',
     SIGNUP: '/user/signup',
     USER_PROFILE: '/user/profile',
-    SEARCH: '/staff/advanced',
+    BOOK_STAFF: '/user/complex-booking',
     CATEGORIES: '/categories',
     SUB_CATEGORIES: '/subcategories',
-    SIGN_UP: '/user/singup',
+    SIGN_UP: '/user/signup',
     SEND_OTP: '/user/otp',
-    VERIFY_OTP: '/user/verify-otp'
+    VERIFY_OTP: '/user/verify-otp',
+    LOGIN_EMAIL: '/user/loginWithEmail'
 }
