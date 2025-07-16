@@ -3,7 +3,7 @@ export const ENDPOINTS = {
     LOGIN: '/user/loginWithPasswordUser',
     SIGNUP: '/user/signup',
     USER_PROFILE: '/user/profile',
-    BOOK_STAFF: '/user/complex-booking',
+    BOOK_STAFF: '/user/email-booking',
     CATEGORIES: '/categories',
     SUB_CATEGORIES: '/subcategories',
     SIGN_UP: '/user/signup',

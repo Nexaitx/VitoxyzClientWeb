@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { Header } from './layouts/header/header';
-import { Authorization } from './pages/authorization/authorization'; // Make sure to import Authorization component
+import { BillingDetailsComponent } from './core/toasts/billing-details/billing-details.component';
 
 export const routes: Routes = [
   {
@@ -54,6 +54,13 @@ export const routes: Routes = [
       },
     ]
   },
+  // {
+  //   path: 'billing', 
+  //   //loadComponent: () => import('src/app/core/toasts/billing-details').then(m => m.BillingDetails),
+
+  //   component: BillingDetailsComponent,
+  //   data: { initialGstNumber: 'TESTGST1234567', paymentAmount: 500 }
+  // },
 
   {
     path: '**',
