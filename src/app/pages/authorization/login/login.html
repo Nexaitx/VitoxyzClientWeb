@@ -5,10 +5,12 @@
         <div class="form-group">
           <label>Email</label>
           <input class="form-control" formControlName="username" placeholder="Enter your email" required />
-          <span class="text-danger" *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched">
+          <span class="text-danger"
+            *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched">
             Email is required.
           </span>
-          <span class="text-danger" *ngIf="loginForm.get('username')?.hasError('username') && loginForm.get('username')?.touched">
+          <span class="text-danger"
+            *ngIf="loginForm.get('username')?.hasError('username') && loginForm.get('username')?.touched">
             Please enter a valid email address.
           </span>
         </div>
@@ -24,18 +26,20 @@
               <i class="bi" [ngClass]="showPassword ? 'bi-eye' : 'bi-eye-slash'"></i>
             </button>
           </div>
-          <span class="text-danger" *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+          <span class="text-danger"
+            *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
             Password is required.
           </span>
-          <span class="text-danger" *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched">
+          <span class="text-danger"
+            *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched">
             Password must be at least 6 characters long.
           </span>
         </div>
 
         <div class="d-flex justify-content-between">
           <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" id="rememberMe" formControlName="rememberMe" />
-            <label class="form-check-label" for="rememberMe">
+            <input type="checkbox" class="form-check-input" id="rememberMe" formControlName="rememberMe" />
+            <label class="form-check-label">
               Remember Me
             </label>
           </div>
@@ -43,7 +47,7 @@
           <a class="links">Forgot Password?</a>
         </div>
 
-        <app-submission [buttonType]="'Login'"></app-submission>
+        <app-submission [buttonType]="'Login'" [disableButton]="isLoading"></app-submission>
       </form>
     </mat-tab>
 
@@ -72,10 +76,12 @@
           <div class="form-group mb-3">
             <label>OTP</label>
             <input class="form-control" formControlName="otpCode" placeholder="Enter OTP" required />
-            <span class="text-danger" *ngIf="phoneLoginForm.get('otpCode')?.hasError('required') && phoneLoginForm.get('otpCode')?.touched">
+            <span class="text-danger"
+              *ngIf="phoneLoginForm.get('otpCode')?.hasError('required') && phoneLoginForm.get('otpCode')?.touched">
               OTP is required.
             </span>
-            <span class="text-danger" *ngIf="phoneLoginForm.get('otpCode')?.hasError('pattern') && phoneLoginForm.get('otpCode')?.touched">
+            <span class="text-danger"
+              *ngIf="phoneLoginForm.get('otpCode')?.hasError('pattern') && phoneLoginForm.get('otpCode')?.touched">
               OTP must be 6 digits.
             </span>
           </div>

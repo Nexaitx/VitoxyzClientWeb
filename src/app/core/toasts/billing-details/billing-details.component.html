@@ -1,0 +1,67 @@
+<div class="billing-details-container">
+  <div class="popup-header">
+    <h5 class="popup-title">Please Enter billing Information</h5>
+    <button type="button" class="btn-close custom-close-btn top-right" aria-label="Close" (click)="onClose()"></button>
+  </div>
+
+  <div class="popup-body">
+    <form [formGroup]="billingForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="billingAddress" class="form-label">Billing Address</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <svg xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+              <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+            </svg>
+          </span>
+          <input type="text" class="form-control rounded-end" id="billingAddress" placeholder="Enter your billing address"
+            formControlName="address"
+            [class.is-invalid]="billingForm.get('address')?.invalid && billingForm.get('address')?.touched">
+          <div *ngIf="billingForm.get('address')?.invalid && billingForm.get('address')?.touched" class="invalid-feedback">
+            Billing Address is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <svg xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+              <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            </svg>
+          </span>
+          <input type="text" class="form-control rounded-end" id="name" placeholder="Enter your Name"
+            formControlName="name"
+            [class.is-invalid]="billingForm.get('name')?.invalid && billingForm.get('name')?.touched">
+          <div *ngIf="billingForm.get('name')?.invalid && billingForm.get('name')?.touched" class="invalid-feedback">
+            Name is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="gstNumber" class="form-label">GST Number</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <svg xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
+              <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-6 3A.5.5 0 0 1 4.5 5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM2 13.5V7.21l-.81-.07-.02-.003A.5.5 0 0 1 1 6.5v-.5a.5.5 0 0 1 .5-.5H3V.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v14a.5.5 0 0 1-.5.5H12V13.5a.5.5 0 0 1 .5-.5h-8a.5.5 0 0 1 .5.5zM12 1H3v14h9V1z"/>
+            </svg>
+          </span>
+          <input type="text" class="form-control rounded-end" id="gstNumber" placeholder="Enter GST Number"
+            formControlName="gstNumber"
+            [class.is-invalid]="billingForm.get('gstNumber')?.invalid && billingForm.get('gstNumber')?.touched">
+          <div *ngIf="billingForm.get('gstNumber')?.hasError('pattern') && billingForm.get('gstNumber')?.touched" class="invalid-feedback">
+            Please enter a valid 15-character GST number.
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center mt-4">
+        <button type="submit" class="btn btn-primary proceed-button" [disabled]="billingForm.invalid">
+          Proceed Payment ( {{ paymentAmount | currency:'INR':'symbol':'1.0-0' }} )
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
