@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -13,7 +13,6 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Submission } from '../../submission/submission';
 import { API_URL, ENDPOINTS } from '../../../core/const';
-import { SpinnerToastService } from '../../../core/toasts/spinner-toast/spinner-toast.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -33,11 +32,13 @@ export class SignUp {
   showPassword = false;
   showConfirmPassword = false;
   button = 'Sign Up';
+  isLoading: boolean = false;
   @Input() authMode: 'login' | 'signup' = 'signup';
   @Output() signupSuccess = new EventEmitter<void>(); 
+  @Output() loadingChange = new EventEmitter<boolean>();
   private router = inject(Router);
   private http = inject(HttpClient);
-  constructor(private fb: FormBuilder, private spinnerService: SpinnerToastService) {
+  constructor(private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -66,18 +67,21 @@ export class SignUp {
       console.log('❌ Form is invalid.');
       return;
     } else {
-      this.spinnerService.show();
+      this.isLoading = true;
+      this.loadingChange.emit(true);
       const apiUrl = API_URL + ENDPOINTS.SIGN_UP;
       this.http.post(apiUrl, this.signupForm.value).subscribe({
         next: (res) => {
-          this.spinnerService.hide();
+          this.isLoading = false;
           console.log('✅ Signup successful:', res);
           //alert('Signup successful! Now redirecting...');
           this.signupSuccess.emit();
+          this.loadingChange.emit(false);
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
-          this.spinnerService.hide();
+          this.isLoading = false;
+          this.loadingChange.emit(false);
           console.error('❌ Signup failed:', err);
           alert(err.error.message);
         }

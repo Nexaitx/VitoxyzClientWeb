@@ -7,7 +7,6 @@ import { Submission } from '../../submission/submission';
 import { Subscription, interval } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ENDPOINTS, API_URL } from '../../../core/const';
-import { SpinnerToastService } from '../../../core/toasts/spinner-toast/spinner-toast.service';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +32,7 @@ export class Login implements OnInit, OnDestroy {
   // authMethod: 'password' | 'otp' = 'password'; // No longer needed with tabs
   // usePassword = true; // No longer needed with tabs
   // useOtp = false; // No longer needed with tabs
-  rememberMe = true;
+  //rememberMe = true;
   // button = 'Next'; // Button text is now dynamic per form/state
   showPhoneInput = true; // Controls visibility of phone input vs. OTP input
   selectedTabIndex: number = 0; // 0 for email/password, 1 for phone/OTP
@@ -43,7 +42,8 @@ export class Login implements OnInit, OnDestroy {
   maskedPhoneNumber: string = ''; // Initialize here or in ngOnInit
   @Input() authMode: 'login' | 'signup' = 'login'; // Default mode is 'login'
   @Output() loginSuccess = new EventEmitter<void>();
-  constructor(private spinnerService: SpinnerToastService) {
+  @Output() loadingChange = new EventEmitter<boolean>();
+  constructor() {
     this.initForms();
   }
 
@@ -120,14 +120,14 @@ export class Login implements OnInit, OnDestroy {
       console.log('Email/Password form is invalid');
       return;
     } else {
-      this.spinnerService.show();
       this.isLoading = true;
+      this.loadingChange.emit(true);
       const { username, password, rememberMe } = this.loginForm.value;
       const apiUrl = API_URL + ENDPOINTS.LOGIN_EMAIL;
       const payload = { username, password }; // Assuming your API expects 'username' and 'password'
       this.http.post(apiUrl, payload).subscribe({
         next: (response: any) => {
-          this.spinnerService.hide();
+          this.isLoading = false;
           console.log('Email/Password Login successful', response);
           // Store token/user data if rememberMe is true, or in session storage
           if (rememberMe) {
@@ -136,11 +136,10 @@ export class Login implements OnInit, OnDestroy {
             sessionStorage.setItem('authToken', response.token);
           }
           this.loginSuccess.emit();
-          this.router.navigate(['/dashboard']);
-          this.isLoading = false;
+          this.loadingChange.emit(false);
+          this.router.navigate(['/dashboard']); 
         },
         error: (error: HttpErrorResponse) => {
-          this.spinnerService.hide();
           console.error('Email/Password Login failed', error);
           let errorMessage = 'Login failed. Please try again.';
           if (error.error && typeof error.error === 'object' && error.error.message) {
@@ -155,6 +154,7 @@ export class Login implements OnInit, OnDestroy {
           // Display error message to user (e.g., using a MatSnackBar)
           alert(errorMessage); // For simplicity, using alert
           this.isLoading = false;
+          this.loadingChange.emit(false);
         }
       });
     }
