@@ -16,16 +16,16 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/book-staff-process/book-staff/book-staff').then(m => m.BookStaff),
       },
       {
-        path: 'user-onboarding',
-        loadComponent: () => import('./pages/user-onboarding/user-onboarding').then(m => m.UserOnboarding),
+        path: 'diet/user-onboarding',
+        loadComponent: () => import('./pages/Diet-Plan/user-onboarding/user-onboarding').then(m => m.UserOnboarding),
       },
       {
         path: 'user-profile',
         loadComponent: () => import('./pages/profile/profile').then(m => m.Profile),
       },
       {
-        path: 'plans',
-        loadComponent: () => import('./pages/plans/plans').then(m => m.Plans),
+        path: 'diet-plans',
+        loadComponent: () => import('./pages/Diet-Plan/plans/plans').then(m => m.Plans),
       },
       {
         path: 'meera-ai',
@@ -34,14 +34,6 @@ export const routes: Routes = [
       {
         path: 'support',
         loadComponent: () => import('./pages/support/support').then(m => m.Support),
-      },
-      {
-        path: 'plans',
-        loadComponent: () => import('./pages/plans/plans').then(m => m.Plans),
-      },
-      {
-        path: 'user-onboarding',
-        loadComponent: () => import('./pages/user-onboarding/user-onboarding').then(m => m.UserOnboarding),
       },
       {
         path: '',

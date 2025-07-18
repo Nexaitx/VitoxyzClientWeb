@@ -40,7 +40,7 @@ export class Header {
         { label: 'Psychiatrist', path: 'book-staff' },
       ]
     },
-    { label: 'Diet Plans', path: '/user-onboarding' },
+    { label: 'Diet Plans', path: 'diet/user-onboarding' },
     { label: 'Support', path: '/support' },
     {
       label: 'Profile', // This will be the key to identify your profile menu

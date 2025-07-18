@@ -29,7 +29,7 @@
   cursor: pointer;
 }
 
-.plan-item:hover .bi-check2 {
+.plan-item:hover .bi-check2 , .plan-item:hover .planBtn{
   background: #fff;
   color: #0AB8C2;
 }
@@ -100,10 +100,17 @@
     max-width: 90%;
   }
 }
+
 .primary {
   background: #0BBBC1;
   color: #fff;
 }
+
 .secondary {
   background: #86E9EC;
+}
+
+.planBtn {
+  color: #0BBBC1;
+  border: 1px solid #0BBBC1;
 }
