@@ -235,6 +235,8 @@
     </div>
   </div>
 </div>
-@if(showAadharPopup) {
-<app-aadhar-verification (verified)="onAadharVerified()"></app-aadhar-verification>
-}
+<app-aadhar-verification
+  *ngIf="showAadharPopup"
+  (verified)="onAadharVerified()"
+></app-aadhar-verification>
+

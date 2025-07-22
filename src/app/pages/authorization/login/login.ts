@@ -129,15 +129,26 @@ export class Login implements OnInit, OnDestroy {
         next: (response: any) => {
           this.isLoading = false;
           console.log('Email/Password Login successful', response);
+          localStorage.setItem('userProfile', JSON.stringify(response.profile));
+
           // Store token/user data if rememberMe is true, or in session storage
           if (rememberMe) {
             localStorage.setItem('authToken', response.token);
           } else {
             sessionStorage.setItem('authToken', response.token);
+            sessionStorage.setItem('userProfile', JSON.stringify(response.profile));
+
           }
+           console.log('Stored token:', rememberMe ? localStorage.getItem('token') : sessionStorage.getItem('token'));
+          console.log('Stored profile:', rememberMe ? 
+            JSON.parse(localStorage.getItem('userProfile') || '{}') : 
+            JSON.parse(sessionStorage.getItem('userProfile') || '{}'));
+          
           this.loginSuccess.emit();
           this.loadingChange.emit(false);
-          this.router.navigate(['/dashboard']); 
+          this.router.navigate(['/dashboard']);
+
+          
         },
         error: (error: HttpErrorResponse) => {
           console.error('Email/Password Login failed', error);

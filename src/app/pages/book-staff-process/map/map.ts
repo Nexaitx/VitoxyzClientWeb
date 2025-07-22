@@ -16,42 +16,41 @@ declare const google: any;
   selector: 'app-map',
   templateUrl: './map.html',
   styleUrls: ['./map.scss'],
+  standalone: true,
   imports: [GoogleMapsModule]
 })
-export class MapComponent implements AfterViewInit, OnInit {
+export class MapComponent implements AfterViewInit {
   @ViewChild('mapElement', { static: false }) mapElement!: ElementRef;
   @Output() locationSelected = new EventEmitter<{ lat: number; lng: number }>();
-  userLat = 28.6139; // fallback
+  userLat = 28.6139;
   userLng = 77.2090;
   map: any;
 
-  ngOnInit(): void {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.userLat = position.coords.latitude;
-          this.userLng = position.coords.longitude;
-          this.initMap();
-        },
-        (error) => {
-          console.error('Geolocation error:', error);
-          this.initMap(); // Load with fallback
-        }
-      );
+  ngAfterViewInit(): void {
+    this.loadGoogleMaps();
+  }
+
+  loadGoogleMaps(): void {
+    if (typeof google === 'undefined') {
+      // Load Google Maps API if not already loaded
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&loading=async&libraries=marker`;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => this.initMap();
+      document.head.appendChild(script);
     } else {
-      console.warn('Geolocation not supported');
       this.initMap();
     }
   }
 
-  ngAfterViewInit(): void {
-    if (!navigator.geolocation) {
-      this.initMap(); // fallback if geolocation not supported
-    }
-  }
-
   initMap(): void {
-    if (typeof google === 'undefined' || !google.maps) {
+    if (!this.mapElement?.nativeElement) {
+      console.error('Map element not found');
+      return;
+    }
+
+    if (!google?.maps) {
       console.error('Google Maps API not loaded');
       return;
     }
@@ -61,25 +60,17 @@ export class MapComponent implements AfterViewInit, OnInit {
       zoom: 12
     });
 
-    new google.maps.Marker({
-      map: this.map,
-      position: { lat: this.userLat, lng: this.userLng },
-      title: 'You are here'
-    });
+   const advancedMarker = new google.maps.marker.AdvancedMarkerElement({
+  map: this.map,
+  position: { lat: this.userLat, lng: this.userLng },
+  title: 'You are here'
+});
 
-    // Click listener to get coordinates
+
     this.map.addListener('click', (e: any) => {
       const lat = e.latLng.lat();
       const lng = e.latLng.lng();
       this.locationSelected.emit({ lat, lng });
-      //alert(`Clicked location:\nLatitude: ${lat}\nLongitude: ${lng}`);
     });
   }
-
-  onMapClick(event: any) {
-    const lat = event.latLng.lat();
-    const lng = event.latLng.lng();
-    this.locationSelected.emit({ lat, lng });
-  }
 }
-

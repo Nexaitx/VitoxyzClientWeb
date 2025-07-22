@@ -3,11 +3,13 @@ export const ENDPOINTS = {
     LOGIN: '/user/loginWithPasswordUser',
     SIGNUP: '/user/signup',
     USER_PROFILE: '/user/profile',
-    BOOK_STAFF: '/user/email-booking',
+    BOOK_STAFF: '/user/create-booking',
     CATEGORIES: '/categories',
     SUB_CATEGORIES: '/subcategories',
     SIGN_UP: '/user/signup',
     SEND_OTP: '/user/otp',
     VERIFY_OTP: '/user/verify-otp',
-    LOGIN_EMAIL: '/user/loginWithEmail'
+    LOGIN_EMAIL: '/user/loginWithEmail',
+    AADHAAR_VERIFICATION : '/aadhaar/verify',
+    BOOKING_RESPONSE: '/user/booking-response'
 }
