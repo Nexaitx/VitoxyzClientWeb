@@ -8,13 +8,19 @@
     box-sizing: border-box;
 }
 
+.form {
+    height: 52vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
 .submission-fixed {
     // position: sticky;
     bottom: 0;
     width: 100%;
     background-color: white;
     padding: 10px 0;
-   
+
     z-index: 10;
     box-sizing: border-box;
 }
@@ -88,7 +94,6 @@ input[type="number"] {
 .staff-list {
     overflow-x: hidden;
     overflow-y: scroll;
-    height: 45vh;
 
     &:hover {
         overflow-y: auto;
@@ -142,7 +147,18 @@ input[type="number"] {
     text-align: center;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
-.search-staff-form{
-    height: 90vh;
-    overflow: hidden;
+
+.form-group {
+    position: relative;
+}
+
+.address {
+    position: absolute;
+    left: 5px;
+    top: 28px;
+    color: #09b8c2;
+}
+
+.female {
+    top: 8px !important;
 }
