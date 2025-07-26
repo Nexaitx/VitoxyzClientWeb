@@ -10,7 +10,7 @@ export class BookingResponseService {
   constructor(private http: HttpClient) {}
 
   getBookingResponse(): Observable<any> {
-    const token = localStorage.getItem('token');
+const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
 
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`

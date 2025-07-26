@@ -324,7 +324,7 @@ onSubmit(): void {
   }
 
   // Check authentication and Aadhaar status
-  const token = localStorage.getItem('token');
+const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
   
   // Get user profile from localStorage
   const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
@@ -333,6 +333,8 @@ onSubmit(): void {
   // Debug logs
   console.log('User Profile from localStorage:', userProfile);
   console.log('Aadhaar Status:', userProfile.aadhaarStatus);
+  console.log('Token retrieved from localStorage:', token ? 'Token present' : 'Token NOT present'); // Added check
+
 //here toekn check if not present
   if (!token) {
     console.log('User not logged in. Redirecting to login page.');
@@ -347,6 +349,9 @@ onSubmit(): void {
   }
 
   console.log('User is logged in and Aadhaar is verified. Proceeding with API call.');
+  console.log('Token being sent in Authorization header (first few chars):', token ? token.substring(0, 20) + '...' : 'No token'); // Debug token part
+  console.log('Full token length:', token ? token.length : '0'); // Debug token length
+
   this.spinnerService.show();
 
   const apiUrl = API_URL + ENDPOINTS.BOOK_STAFF;
@@ -370,6 +375,8 @@ onSubmit(): void {
 
   let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   headers = headers.set('Authorization', `Bearer ${token}`);
+    console.log('Headers sent with request:', headers); // Log the HttpHeaders object
+
 
   this.http.post<any>(apiUrl, payload, { headers }).subscribe({
     next: (response) => {

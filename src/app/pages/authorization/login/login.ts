@@ -133,7 +133,7 @@ export class Login implements OnInit, OnDestroy {
 
           // Store token/user data if rememberMe is true, or in session storage
           if (rememberMe) {
-            localStorage.setItem('authToken', response.token);
+            const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
           } else {
             sessionStorage.setItem('authToken', response.token);
             sessionStorage.setItem('userProfile', JSON.stringify(response.profile));
