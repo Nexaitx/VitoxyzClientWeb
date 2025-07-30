@@ -4,22 +4,18 @@
       <ng-template matStepLabel>Personal Info</ng-template>
       <div class="row">
         <div class="col-md-12">
-          <label class="form-label">Full Name</label>
-          <div class="input-group">
-            <span class="input-group-text">
-              <i class="bi bi-person"></i>
-            </span>
-            <input type="text" class="form-control" placeholder="Enter Full Name" />
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <i class="bi bi-person icons"></i>
+            <input type="text" class="form-control ps-4" placeholder="Enter Full Name" />
           </div>
         </div>
 
         <div class="col-md-6">
-          <label class="form-label">Enter Age</label>
-          <div class="input-group">
-            <span class="input-group-text">
-              <i class="bi bi-person"></i>
-            </span>
-            <input type="number" class="form-control" placeholder="Enter your age" />
+          <div class="form-group">
+            <label class="form-label">Enter Age</label>
+            <i class="bi bi-diagram-2 icons"></i>
+            <input type="number" class="form-control ps-4" placeholder="Enter your age" />
           </div>
         </div>
 
@@ -149,7 +145,7 @@
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup">
-    <form >
+    <form>
       <ng-template matStepLabel>Food Preferences</ng-template>
       <h3>Food & Preferences</h3>
       <div class="row">
@@ -191,7 +187,7 @@
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup">
-    <form >
+    <form>
       <ng-template matStepLabel>Lifestyle & Activity</ng-template>
       <h3>Tell Us About Your Day</h3>
       <div class="col-md-12">
@@ -228,8 +224,7 @@
       </div>
       <div class="text-end mt-3">
         <button matButton matStepperPrevious>Back</button>
-        <button type="button" class="btn px-4 rounded-pill submission"
-          (click)="goToPlans()">Submit</button>
+        <button type="button" class="btn px-4 rounded-pill submission" (click)="goToPlans()">Submit</button>
       </div>
     </form>
   </mat-step>

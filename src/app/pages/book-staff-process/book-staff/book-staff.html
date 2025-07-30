@@ -233,12 +233,13 @@
                             <input type="date" class="form-control" [min]="today" formControlName="dutyStartDate" />
                           </div>
                           <div class="d-flex align-items-start justify-content-end gap-2 mt-3">
-                            @if(sh === 0) {
-                            <i class="bi bi-plus-lg fs-5 add" (click)="addShift(i)" title="Add Time Slot"></i>
+                            <!-- Show plus icon at 0 index and at last index -->
+                            @if(sh === 0 || sh === getNestedShiftDetailsControls(i).length - 1) {
+                              <i class="bi bi-plus-lg add" (click)="addShift(i)" title="Add Time Slot"></i>
                             }
-                            @if(getNestedShiftDetailsControls(i).length > 1 && sh > 0) {
-                            <i class="bi bi-x-lg fs-5 text-danger remove" (click)="removeShiftDetail(i, sh)"
-                              title="Remove Time Slot"></i>
+                            <!-- Show delete icon for all except 0 index -->
+                            @if(sh > 0) {
+                              <i class="bi bi-trash text-danger remove" (click)="removeShiftDetail(i, sh)" title="Remove Time Slot"></i>
                             }
                           </div>
                         </div>
@@ -252,8 +253,8 @@
 
             @if(staffListFormArray.controls[0].get('staffDetails')?.get('0')?.get('typeOfStaff')?.value) {
             <ng-container>
-              <div class="d-flex justify-content-center addNewBtn p-2 my-2">
-                <button type="button" class="text-btn" (click)="addNewStaff()">
+              <div class="d-flex justify-content-center addNewBtn my-2">
+                <button type="button" class="btn " (click)="addNewStaff()">
                   <i class="bi bi-plus"></i>Add Another Staff
                 </button>
               </div>

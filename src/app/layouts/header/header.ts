@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; // For NgFor
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
-
+import { CdkMenuModule } from '@angular/cdk/menu';
 // Angular Material Imports
 import { MatToolbarModule } from '@angular/material/toolbar'; // For the navbar itself
 import { MatButtonModule } from '@angular/material/button';   // For the navigation buttons
@@ -20,13 +20,14 @@ import { Authorization } from '../../pages/authorization/authorization';
     RouterOutlet,
     MatTabsModule,
     Authorization,
+    CdkMenuModule
   ],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
 export class Header {
   public router = inject(Router);
-  authMode: 'login' | 'signup' = 'login'; // Default mode is 'login'
+  authMode: 'login' | 'signup' = 'login';
   menuItems = [
     { label: 'Medecines', path: '/dashboard' },
     {
@@ -43,8 +44,8 @@ export class Header {
     { label: 'Diet Plans', path: 'diet/user-onboarding' },
     { label: 'Support', path: '/support' },
     {
-      label: 'Profile', // This will be the key to identify your profile menu
-      icon: 'bi bi-person-circle', // Example using Bootstrap Icons or Font Awesome class
+      label: 'Profile',
+      icon: 'bi bi-person-circle',
       dropdown: true,
       dropdownItems: [
         { label: 'My Profile', path: '/user-profile' },

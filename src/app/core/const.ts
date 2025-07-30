@@ -9,5 +9,11 @@ export const ENDPOINTS = {
     SIGN_UP: '/user/signup',
     SEND_OTP: '/user/otp',
     VERIFY_OTP: '/user/verify-otp',
-    LOGIN_EMAIL: '/user/loginWithEmail'
+    LOGIN_EMAIL: '/user/loginWithEmail',
+
+    // On board to diet plan
+    ONBOARD_DIET: '/user/onboard-diet',
+
+    SUBSCRIPTION_PLANS: '/plans',
+    
 }

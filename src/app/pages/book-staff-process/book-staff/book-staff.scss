@@ -1,96 +1,8 @@
-.form-scroll-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    position: relative;
-    padding: 15px;
-    box-sizing: border-box;
-}
-
 .form {
     height: 52vh;
     overflow-x: hidden;
     overflow-y: scroll;
 }
-
-.submission-fixed {
-    // position: sticky;
-    bottom: 0;
-    width: 100%;
-    background-color: white;
-    padding: 10px 0;
-
-    z-index: 10;
-    box-sizing: border-box;
-}
-
-.time-selector-container {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 15px;
-    /* Rounded corners for the container */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.input-group-time {
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid #ced4da;
-}
-
-.input-group-time .form-control {
-    text-align: center;
-    border: none;
-    padding: 0.5rem 0.75rem;
-}
-
-.input-group-time .btn {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background-color: transparent;
-    color: #495057;
-    font-size: 1.2rem;
-    transition: background-color 0.2s, color 0.2s;
-}
-
-.input-group-time .btn:hover {
-    background-color: #e9ecef;
-}
-
-.input-group-time .btn-minus {
-    color: #df3745;
-}
-
-.input-group-time .btn-plus {
-    color: #09b8c2;
-}
-
-.time-select {
-    width: 120px;
-    border-radius: 10px;
-    border: 1px solid #ced4da;
-    background-color: #f0f2f5;
-}
-
-.time-select:focus {
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-    border-color: #86b7fe;
-}
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-input[type="number"] {
-    -moz-appearance: textfield;
-}
-
 .staff-list {
     overflow-x: hidden;
     overflow-y: scroll;
@@ -155,7 +67,7 @@ input[type="number"] {
 .address {
     position: absolute;
     left: 5px;
-    top: 28px;
+    top: 34px;
     color: #09b8c2;
 }
 
