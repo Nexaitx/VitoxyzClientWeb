@@ -31,11 +31,13 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "src/styles.scss",
-                            "src/app/styles/custom-bootstrap.scss",
-                            "src/app/styles/custom-angular.scss"
+                            "src/styles/custom-bootstrap.scss",
+                            "src/styles.scss"
                         ],
-                        "scripts":[]
+                        "scripts": [
+                            "./node_modules/jquery/dist/jquery.min.js",
+                            "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+                        ]
                     },
                     "configurations": {
                         "production": {

@@ -1,0 +1,265 @@
+<!-- Banner -->
+<div class="container-fluid w-100 px-0">
+  <img src="../../../assets/banner.png" class="w-100" alt="">
+</div>
+
+<div class="filters-container">
+  <!-- City Locator -->
+  <div class="form-group">
+    <label>Select City</label>
+    <select class="form-control" [(ngModel)]="selectedCity">
+      <option *ngFor="let city of cities" [value]="city">
+        {{ city }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Search Filter -->
+  <div class="form-group">
+    <input [(ngModel)]="searchTerm" placeholder="Search medicines" (input)="filterMedicines()" class="form-control">
+  </div>
+</div>
+<!-- health conecerns -->
+<div class="container-fluid my-3">
+  <div>
+    <p class="fs-4 fw-bold">Shop by health concern</p>
+  </div>
+  
+  <!-- The main carousel container with a unique ID -->
+  <div id="healthConcernCarousel" class="carousel slide" data-bs-ride="carousel">
+    
+    <!-- The inner container for all carousel items (slides) -->
+    <div class="carousel-inner">
+      <!-- First carousel item: This slide is active by default -->
+      <div class="carousel-item active">
+        <div class="row g-2 w-100 mx-auto justify-content-center">
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="border rounded d-flex flex-column justify-content-center">
+              <img src="../../../assets/medicines/health-1.png" class="img-fluid" height="150" alt="Diabetes">
+              <p class="text-center mt-2">Diabetes</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="border rounded d-flex flex-column align-items-center justify-content-center">
+              <img src="../../../assets/medicines/health-2.png" height="150" class="img-fluid" alt="Heart rate">
+              <p class="text-center mt-2">Heart rate</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-md-block">
+            <div class="border rounded d-flex flex-column align-items-center justify-content-center">
+              <img src="../../../assets/medicines/health-3.png" height="150" class="img-fluid" alt="Stomach care">
+              <p class="text-center mt-2">Stomach care</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-lg-block">
+            <div class="border rounded d-flex flex-column align-items-center justify-content-center">
+              <img src="../../../assets/medicines/health-4.png" height="150" class="img-fluid" alt="Liver care">
+              <p class="text-center mt-2">Liver care</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-md-block">
+            <div class="border rounded d-flex flex-column align-items-center justify-content-center">
+              <img src="../../../assets/medicines/health-3.png" height="150" class="img-fluid" alt="Stomach care">
+              <p class="text-center mt-2">Stomach care</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-lg-block">
+            <div class="border rounded d-flex flex-column align-items-center justify-content-center">
+              <img src="../../../assets/medicines/health-4.png" height="150" class="img-fluid" alt="Liver care">
+              <p class="text-center mt-2">Liver care</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-lg-block">
+            <div class="border rounded d-flex flex-column align-items-center justify-content-center">
+              <img src="../../../assets/medicines/health-1.png" height="150" class="img-fluid" alt="Eye care">
+              <p class="text-center mt-2">Eye care</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Second carousel item -->
+      <div class="carousel-item">
+        <div class="row g-2 w-100 mx-auto justify-content-center">
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="border rounded d-flex flex-column align-items-center justify-content-center">
+              <img src="../../../assets/medicines/health-5.png" height="150" class="img-fluid" alt="Bone, Joints & Muscles Care">
+              <p class="text-center mt-2">Bone, Joints & Muscles Care</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="border rounded d-flex flex-column align-items-center justify-content-center">
+              <img src="../../../assets/medicines/health-6.png" height="150" class="img-fluid" alt="Kidney care">
+              <p class="text-center mt-2">Kidney care</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-md-block">
+            <div class="border rounded d-flex flex-column align-items-center justify-content-center">
+              <img src="../../../assets/medicines/health-7.png" height="150" class="img-fluid" alt="Derma care">
+              <p class="text-center mt-2">Derma care</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-lg-block">
+            <div class="border rounded d-flex flex-column align-items-center justify-content-center">
+              <img src="../../../assets/medicines/health-1.png" height="150" class="img-fluid" alt="Eye care">
+              <p class="text-center mt-2">Eye care</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-md-block">
+            <div class="border rounded d-flex flex-column align-items-center justify-content-center">
+              <img src="../../../assets/medicines/health-3.png" height="150" class="img-fluid" alt="Stomach care">
+              <p class="text-center mt-2">Stomach care</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-lg-block">
+            <div class="border rounded d-flex flex-column align-items-center justify-content-center">
+              <img src="../../../assets/medicines/health-4.png" height="150" class="img-fluid" alt="Liver care">
+              <p class="text-center mt-2">Liver care</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-lg-block">
+            <div class="border rounded d-flex flex-column align-items-center justify-content-center">
+              <img src="../../../assets/medicines/health-1.png" height="150" class="img-fluid" alt="Eye care">
+              <p class="text-center mt-2">Eye care</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Carousel controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#healthConcernCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#healthConcernCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+
+<!-- featured brands -->
+<div id="brandCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+
+    <div class="carousel-item active">
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="brandBackground">
+              <img src="../../../assets/medicines/brand-1.png" alt="">
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="brandBackground">
+              <img src="../../../assets/medicines/brand-1.png" alt="">
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="brandBackground">
+              <img src="../../../assets/medicines/brand-1.png" alt="">
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="brandBackground">
+              <img src="../../../assets/medicines/brand-1.png" alt="">
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="brandBackground">
+              <img src="../../../assets/medicines/brand-1.png" alt="">
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="brandBackground">
+              <img src="../../../assets/medicines/brand-1.png" alt="">
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="brandBackground">
+              <img src="../../../assets/medicines/brand-1.png" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="brandBackground">
+              <img src="../../../assets/medicines/brand-1.png" alt="">
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="brandBackground">
+              <img src="../../../assets/medicines/brand-1.png" alt="">
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="brandBackground">
+              <img src="../../../assets/medicines/brand-1.png" alt="">
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="brandBackground">
+              <img src="../../../assets/medicines/brand-1.png" alt="">
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="brandBackground">
+              <img src="../../../assets/medicines/brand-1.png" alt="">
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="brandBackground">
+              <img src="../../../assets/medicines/brand-1.png" alt="">
+            </div>
+          </div>
+          
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+            <div class="brandBackground">
+              <img src="../../../assets/medicines/brand-1.png" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Carousel controls -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#brandCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#brandCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+<!-- personal care -->
+<div class="row w-100 container-fluid my-3">
+  <ng-container *ngFor="let med of medicines">
+    <ng-container *ngFor="let n of [].constructor(7)">
+      <mat-card class="medicine-card col-6 col-md-4 col-lg-3 my-2 p-0 col-xl-2">
+        <img mat-card-image [src]="med.image" alt="{{ med.name }}" />
+        <span class="bg-warning rounded text-white rating">4.4 <i class=" bi bi-star-fill"></i></span>
+        <mat-card-content class="bg-white">
+          <small class="description">{{ med.description }}</small><br>
+          <small class="text-muted">30 ml Shampoo</small><br>
+          <small class="text-muted">Get in <span class="text-primary bold">30 mins</span></small><br>
+          <div class="d-flex">
+            <h5>378</h5><span class="text-muted mx-2 strike">499</span>
+            <p class="text-primary bold">12% Off</p>
+          </div>
+          <button class="btn btn-primary rounded-pill btn-sm text-light w-100">Add</button>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+  </ng-container>
+</div>

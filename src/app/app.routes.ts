@@ -9,7 +9,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadComponent: () => import('./pages/dashboard/dashboard').then(m => m.Dashboard),
+        loadComponent: () => import('./pages/medicines/medicines').then(m => m.Medicines),
       },
       {
         path: 'book-staff',
