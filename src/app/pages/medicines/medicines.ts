@@ -16,6 +16,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { AfterViewInit } from '@angular/core';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-dashboard',
@@ -37,7 +39,7 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './medicines.html',
   styleUrls: ['./medicines.scss']
 })
-export class Medicines {
+export class Medicines implements AfterViewInit  {
   medicines = [
     {
       name: 'Med-Supply',
@@ -80,4 +82,18 @@ export class Medicines {
     this.selectedCity = city;
     console.log(`Selected city: ${city}`);
   }
+
+
+ ngAfterViewInit(): void {
+    const carouselEl = document.querySelector('#healthConcernCarousel');
+    if (carouselEl) {
+      new bootstrap.Carousel(carouselEl, {
+        interval: 3000, //change  time interval what you need
+        ride: 'carousel',
+        pause: false,
+        wrap: true,
+      });
+    }
+  }
+
 }
