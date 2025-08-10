@@ -19,7 +19,6 @@ import { MatInputModule } from '@angular/material/input';
 
 import { AfterViewInit } from '@angular/core';
 declare var bootstrap: any;
-=======
 import { Footer } from '../footer/footer';
 
 @Component({
