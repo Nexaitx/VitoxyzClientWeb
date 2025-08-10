@@ -128,14 +128,15 @@ export class Login implements OnInit, OnDestroy {
       this.http.post(apiUrl, payload).subscribe({
         next: (response: any) => {
           this.isLoading = false;
-          console.log('Email/Password Login successful', response);
+         
           // Store token/user data if rememberMe is true, or in session storage
           if (rememberMe) {
             localStorage.setItem('authToken', response.token);
+            this.loginSuccess.emit();
           } else {
             sessionStorage.setItem('authToken', response.token);
           }
-          this.loginSuccess.emit();
+          
           this.loadingChange.emit(false);
           this.router.navigate(['/dashboard']); 
         },

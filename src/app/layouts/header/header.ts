@@ -28,6 +28,8 @@ import { Authorization } from '../../pages/authorization/authorization';
 export class Header {
   public router = inject(Router);
   authMode: 'login' | 'signup' = 'login';
+  isLoggedIn: boolean = false;
+
   menuItems = [
     { label: 'Medecines', path: '/dashboard' },
     {
@@ -49,6 +51,8 @@ export class Header {
       dropdown: true,
       dropdownItems: [
         { label: 'My Profile', path: '/user-profile' },
+        { label: 'My Orders', path: '' },
+        { label: 'Manage Payments', path: '' },
         { label: 'Settings', path: '/settings' },
         { label: 'Logout', path: '/logout' }
       ]
@@ -56,9 +60,22 @@ export class Header {
     { label: 'Need Help?', path: '/help' }
   ];
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.checkLoginStatus();
   }
+
+  checkLoginStatus(): void {
+    const token = localStorage.getItem('authToken');
+    this.isLoggedIn = !!token;
+  }
+
   setAuthMode(mode: 'login' | 'signup') {
     this.authMode = mode;
+  }
+
+  logout() {
+    localStorage.removeItem('authToken');
+    this.isLoggedIn = false;
+    this.router.navigate(['/']); 
   }
 }

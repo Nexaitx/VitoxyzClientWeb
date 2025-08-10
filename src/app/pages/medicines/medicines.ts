@@ -16,8 +16,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+
 import { AfterViewInit } from '@angular/core';
 declare var bootstrap: any;
+=======
+import { Footer } from '../footer/footer';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,6 +38,7 @@ declare var bootstrap: any;
     MatSelectModule,
     FormsModule,
     MatInputModule,
+    Footer
   ],
   templateUrl: './medicines.html',
   styleUrls: ['./medicines.scss']
