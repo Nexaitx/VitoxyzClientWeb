@@ -16,6 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { Footer } from '../footer/footer';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,6 +34,7 @@ import { MatInputModule } from '@angular/material/input';
     MatSelectModule,
     FormsModule,
     MatInputModule,
+    Footer
   ],
   templateUrl: './medicines.html',
   styleUrls: ['./medicines.scss']
