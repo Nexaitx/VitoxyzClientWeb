@@ -66,11 +66,12 @@
           <p class="small">Get our mobile app for iOS and Android.</p>
           <div class="app-badges">
             <!-- replace with real badges or links -->
-            <a href="#"><img src="../../../assets/footer/play-store.png" alt="App Store"></a>
-            <a href="#"><img src="../../../assets/footer/app-store.png" alt="Google Play"></a>
+            <a (click)="goToPlayStore()"
+            ><img src="../../../assets/footer/play-store.png" alt="App Store"></a>
+            <a (click)="goToAppStore()"
+            ><img src="../../../assets/footer/app-store.png" alt="Google Play"></a>
           </div>
         </div>
-
       </div>
 
       <hr class="mt-4" style="border-color: rgba(255,255,255,0.06)">
