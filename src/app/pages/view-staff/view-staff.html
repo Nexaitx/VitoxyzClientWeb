@@ -43,14 +43,20 @@
                             <p class="mb-1 text-muted">₹{{ staff.price }}</p>
 
                             <!-- Icons: Add / Remove -->
-                            <div class="d-flex justify-content-start gap-2 mt-2">
-                                <button class="btn btn-sm btn-outline-success" (click)="addStaff(staff)">
-                                    <i class="bi bi-arrow-left-right"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-danger" (click)="removeStaff(staff)">
-                                    <i class="bi bi-x-lg"></i>
-                                </button>
-                            </div>
+                           <div class="d-flex justify-content-start gap-2 mt-2">
+    <button class="btn btn-sm btn-outline-success" 
+        (click)="addSpecificStaff(staff)"
+        [disabled]="staff.isBooked">
+    <i class="bi bi-arrow-left-right"></i>
+</button>
+
+
+    <button class="btn btn-sm btn-outline-danger" 
+            (click)="removeStaff(staff)">
+        <i class="bi bi-x-lg"></i>
+    </button>
+</div>
+
                         </div>
                     </div>
                 </div>
