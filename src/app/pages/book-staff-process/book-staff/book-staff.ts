@@ -308,59 +308,107 @@ export class BookStaff {
   removeStaff(index: number) {
     this.staffListFormArray.removeAt(index);
   }
+onSubmit(): void {
+  // Form validation
+  const hasPastTimeError = this.hasPastTimeError();
+  const hasZeroQuantityError = this.hasZeroQuantityError();
 
-  onSubmit(): void {
-    const hasPastTimeError = this.hasPastTimeError();
-    const hasZeroQuantityError = this.hasZeroQuantityError();
-    if (this.staffBookingForm.valid && !hasPastTimeError && !hasZeroQuantityError) {
-      this.spinnerService.show();
-      const apiUrl = API_URL + ENDPOINTS.BOOK_STAFF;
-      const payload = {
-        ...this.staffBookingForm.value,
-        staffForms: this.staffListFormArray.controls.map((staffGroup: AbstractControl) => {
-          const staffDetailsControl = (staffGroup.get('staffDetails') as FormArray).at(0);
-          const { typeOfStaff, typeOfSubStaff } = staffDetailsControl.value;
-          const shiftDetailsArray = (staffGroup.get('shiftDetails') as FormArray).controls.map((shiftGroup: AbstractControl) => {
-            const { shiftType, timeSlot, tenure, maleQuantity, femaleQuantity, dutyStartDate } = shiftGroup.value;
-            return { shiftType, timeSlot, tenure, maleQuantity, femaleQuantity, dutyStartDate };
-          });
-          return {
-            typeOfStaff,
-            typeOfSubStaff,
-            shifts: shiftDetailsArray
-          };
-        })
-      };
-      let headers = new HttpHeaders({
-        'Content-Type': 'application/json' // Often required for POST requests
-      });
-      if (this.isToken) {
-        headers = headers.set('Authorization', `Bearer ${this.isToken}`);
-      }
-      this.http.post<any>(apiUrl, payload, { headers: headers }).subscribe({
-        next: (response) => {
-          this.spinnerService.hide();
-          const staffDetails = response?.staff[0]?.staffDetails || [];
-          if (staffDetails.length > 0) {
-            if (this.isLogin) {
-              this.router.navigate(['/view-staff'], { state: { staffDetails } });
-            } else {
-              this.staffSearchResponse = staffDetails;
-              this.showAadharPopup = true;
-            }
-          } else {
-            alert('No staff found.');
-          }
-        },
-        error: (error) => {
-          console.error('Staff search failed:', error);
-          this.spinnerService.hide();
-        }
-      });
-    } else {
-      this.markAllAsTouched(this.staffBookingForm);
-    }
+  if (!this.staffBookingForm.valid || hasPastTimeError || hasZeroQuantityError) {
+    this.markAllAsTouched(this.staffBookingForm);
+    console.log('Form validation failed.');
+    return;
   }
+
+  // Check authentication and Aadhaar status
+const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+  
+  // Get user profile from localStorage
+  const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+  const isAadharVerified = userProfile.aadhaarStatus === true;
+
+  // Debug logs
+  console.log('User Profile from localStorage:', userProfile);
+  console.log('Aadhaar Status:', userProfile.aadhaarStatus);
+  console.log('Token retrieved from localStorage:', token ? 'Token present' : 'Token NOT present'); // Added check
+
+//here toekn check if not present
+  if (!token) {
+    console.log('User not logged in. Redirecting to login page.');
+    alert("Please login or signup first to access book staff page")
+    this.router.navigate(['/login']); // Changed from dashboard to login
+    return;
+  }
+
+  if (!isAadharVerified) {
+    console.log('Aadhaar not verified. Showing Aadhaar popup.');
+    this.showAadharPopup = true;
+    return;
+  }
+
+  console.log('User is logged in and Aadhaar is verified. Proceeding with API call.');
+  console.log('Token being sent in Authorization header (first few chars):', token ? token.substring(0, 20) + '...' : 'No token'); // Debug token part
+  console.log('Full token length:', token ? token.length : '0'); // Debug token length
+
+  this.spinnerService.show();
+
+  const apiUrl = API_URL + ENDPOINTS.BOOK_STAFF;
+
+  const payload = {
+    ...this.staffBookingForm.value,
+    staffForms: this.staffListFormArray.controls.map((staffGroup: AbstractControl) => {
+      const staffDetailsControl = (staffGroup.get('staffDetails') as FormArray).at(0);
+      const { typeOfStaff, typeOfSubStaff } = staffDetailsControl.value;
+      const shiftDetailsArray = (staffGroup.get('shiftDetails') as FormArray).controls.map((shiftGroup: AbstractControl) => {
+        const { shiftType, timeSlot, tenure, maleQuantity, femaleQuantity, dutyStartDate } = shiftGroup.value;
+        return { shiftType, timeSlot, tenure, maleQuantity, femaleQuantity, dutyStartDate };
+      });
+      return {
+        typeOfStaff,
+        typeOfSubStaff,
+        shifts: shiftDetailsArray
+      };
+    })
+  };
+
+  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  headers = headers.set('Authorization', `Bearer ${token}`);
+    console.log('Headers sent with request:', headers); // Log the HttpHeaders object
+
+
+  this.http.post<any>(apiUrl, payload, { headers }).subscribe({
+    next: (response) => {
+      this.spinnerService.hide();
+      console.log('API Response:', response);
+
+      if (response?.status === true) {
+        const staffDetails = response?.staff?.[0]?.staffDetails || [];
+        this.router.navigate(['/view-staff'], {
+          state: { staffDetails: staffDetails, bookingIds: response.bookingIds }
+        });
+      } else {
+        console.warn('Booking failed:', response?.message || 'Unknown error');
+        alert(response?.message || 'Something went wrong.');
+      }
+    },
+    error: (error) => {
+      console.error('Staff search API call failed:', error);
+      this.spinnerService.hide();
+      alert('An error occurred while processing your request.');
+    }
+  });
+}
+//pop when show or when not 
+onAadharVerified() {
+  this.showAadharPopup = false;
+  
+  // Update the user profile in localStorage with verified Aadhaar status
+  const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+  userProfile.aadhaarStatus = true;
+  localStorage.setItem('userProfile', JSON.stringify(userProfile));
+  
+  // Retry submission after Aadhaar is marked as verified
+  this.onSubmit();
+}
 
   hasPastTimeError(): boolean {
     let hasPastTimeError = false;
@@ -433,16 +481,16 @@ export class BookStaff {
     });
   }
 
-  onAadharVerified() {
-    this.isLogin = true;
-    this.showAadharPopup = false;
-    if (this.staffSearchResponse) {
-      this.router.navigate(['/view-staff'], {
-        state: { staffDetails: this.staffSearchResponse }
-      });
-      this.staffSearchResponse = null; // clear
-    }
-  }
+  // onAadharVerified() {
+  //   this.isLogin = true;
+  //   this.showAadharPopup = false;
+  //   if (this.staffSearchResponse) {
+  //     this.router.navigate(['/view-staff'], {
+  //       state: { staffDetails: this.staffSearchResponse }
+  //     });
+  //     this.staffSearchResponse = null; // clear
+  //   }
+  // }
 
   shiftDurationValidator(control: AbstractControl): ValidationErrors | null {
     const hour = parseInt(control.get('shiftHour')?.value, 10);
