@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Login } from './login/login';
 import { SignUp } from './sign-up/sign-up';
 import { CommonModule } from '@angular/common';
@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 export class Authorization {
   @Input() authMode: 'login' | 'signup' = 'login'; // Default mode is 'login'
   @ViewChild('authModal') authModalElement!: ElementRef;
+  @Output() loginSuccess = new EventEmitter<void>();
   isChildLoading = false;
   constructor() {
   }
@@ -28,6 +29,7 @@ export class Authorization {
   closeAuthModal() {
     const closeButton = this.authModalElement.nativeElement.querySelector('.btn-close');
     if (closeButton) {
+      this.loginSuccess.emit();
       (closeButton as HTMLElement).click();
     }
   }

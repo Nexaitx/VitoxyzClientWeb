@@ -6,100 +6,76 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- <button [cdkMenuTriggerFor]="menu" class="example-standalone-trigger">Click me!</button>
-
-    <ng-template #menu>
-      <div class="example-menu" cdkMenu>
-        <button class="example-menu-item" cdkMenuItem>Refresh</button>
-        <button class="example-menu-item" cdkMenuItem>Settings</button>
-        <button class="example-menu-item" cdkMenuItem>Help</button>
-        <button class="example-menu-item" cdkMenuItem>Sign out</button>
-      </div>
-    </ng-template> -->
-
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <ng-container *ngFor="let item of menuItems; let i = index">
-          <!-- Regular menu item -->
-          <li class="nav-item" *ngIf="!item.dropdown && !item.icon">
+
+          <li class="nav-item" *ngIf="item.label === 'Profile' && isLoggedIn">
+            <button class="nav-link text-white" [cdkMenuTriggerFor]="profileMenu" type="button">
+              <i class="bi bi-person-circle" style="font-size: large;"></i>
+            </button>
+            <ng-template #profileMenu>
+              <div cdkMenu class="dropdown-menu show" style="position: absolute;">
+                 <ng-container *ngFor="let dropdownItem of item.dropdownItems">
+                    <button *ngIf="dropdownItem.label === 'Logout'" cdkMenuItem class="dropdown-item" (click)="logout()">
+                        {{ dropdownItem.label }}
+                    </button>
+                    <a *ngIf="dropdownItem.label !== 'Logout'" cdkMenuItem class="dropdown-item" [routerLink]="dropdownItem.path" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact: true }">
+                        {{ dropdownItem.label }}
+                    </a>
+                </ng-container>
+              </div>
+            </ng-template>
+          </li>
+
+          <li class="nav-item" *ngIf="!item.dropdown && item.label !== 'Profile'">
             <a class="nav-link text-white" [ngClass]="{'active rounded-pill': rla.isActive}" [routerLink]="item.path"
               routerLinkActive #rla="routerLinkActive">
               {{ item.label }}
             </a>
           </li>
 
-          <!-- CDK Menu Dropdown for Book Staff -->
           <li class="nav-item" *ngIf="item.label === 'Book Staff'">
             <button class="nav-link text-white" [cdkMenuTriggerFor]="bookStaffMenu" type="button">
               {{ item.label }}
             </button>
             <ng-template #bookStaffMenu>
               <div cdkMenu class="dropdown-menu show" style="position: absolute;">
-                <button
-                  *ngFor="let dropdownItem of item.dropdownItems"
-                  cdkMenuItem
-                  class="dropdown-item"
-                  [routerLink]="dropdownItem.path"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                >
+                <button *ngFor="let dropdownItem of item.dropdownItems" cdkMenuItem class="dropdown-item"
+                  [routerLink]="dropdownItem.path" routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }">
                   {{ dropdownItem.label }}
                 </button>
               </div>
             </ng-template>
           </li>
 
-          <!-- Other dropdowns (e.g., Profile) can be handled similarly -->
-          <!-- Dropdown menu items -->
-          <li class="nav-item dropdown" *ngIf="item.dropdown && item.label !== 'Book Staff'" [routerLinkActive]="['active', 'rounded-pill']"
-            [routerLinkActiveOptions]="{ exact: false }">
-            <a *ngIf="item.icon" class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown{{i}}"
-              role="button" aria-expanded="false">
-              <i class="bi bi-person"></i>
-            </a>
-
-            <a *ngIf="!item.icon" class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown{{i}}"
-              role="button" aria-expanded="false">
-              {{ item.label }}
-            </a>
-
-            <ul class="dropdown-menu" [attr.aria-labelledby]="'navbarDropdown' + i">
-              <li *ngFor="let dropdownItem of item.dropdownItems">
-                <a class="dropdown-item" [routerLink]="dropdownItem.path" routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }">
-                  {{ dropdownItem.label }}
-                </a>
-              </li>
-            </ul>
-          </li>
         </ng-container>
 
-        <!-- Separator for Login/Sign Up buttons -->
-
-        <!-- Login Button to open modal -->
-        <li class="nav-item">
-          <button type="button" class="btn nav-link text-white" data-bs-toggle="modal" data-bs-target="#authModal"
-            (click)="setAuthMode('login')">
-            Log In
-          </button>
-        </li>
-        <li class="nav-item d-flex align-items-center">
-          <span style="color: white; padding: 0 0.2rem;">|</span>
-        </li>
-
-        <!-- Sign Up Button to open modal -->
-        <li class="nav-item">
-          <button type="button" class="btn nav-link text-white" data-bs-toggle="modal" data-bs-target="#authModal"
-            (click)="setAuthMode('signup')">
-            Sign Up
-          </button>
-        </li>
+        <ng-container *ngIf="!isLoggedIn">
+          <li class="nav-item">
+            <button type="button" class="btn nav-link text-white" data-bs-toggle="modal" data-bs-target="#authModal"
+              (click)="setAuthMode('login')">
+              Log In
+            </button>
+          </li>
+          <li class="nav-item d-flex align-items-center">
+            <span style="color: white; padding: 0 0.2rem;">|</span>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn nav-link text-white" data-bs-toggle="modal" data-bs-target="#authModal"
+              (click)="setAuthMode('signup')">
+              Sign Up
+            </button>
+          </li>
+        </ng-container>
       </ul>
     </div>
   </div>
 </nav>
 
-<app-authorization [authMode]="authMode"></app-authorization>
+<app-authorization [authMode]="authMode" (loginSuccess)="checkLoginStatus()"></app-authorization>
 
 <div class="main-content-area">
   <router-outlet></router-outlet>
