@@ -9,7 +9,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadComponent: () => import('./pages/medicines/medicines').then(m => m.Medicines),
+        loadChildren: () => import('./pages/medicines/medicines-module').then(m => m.MedicinesModule),
       },
       {
         path: 'book-staff',
