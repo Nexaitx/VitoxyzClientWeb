@@ -1,43 +1,192 @@
 <div class="container">
-    <p class="text-muted my-2">Home | <span class="text-primary link" (click)="goToMedicines()">Medicine</span> | View Medicine</p>
+    <p class="text-muted my-2">Home | <span class="text-primary link" (click)="goToMedicines()">Medicine</span> | View
+        Medicine</p>
     <div class="row my-5">
-        <div class="col-2">
-            <div class="border rounded p-2 my-2" style="width: 90px">
-                <img src="../../../../assets/dettol.png" alt="small-preview" height="70" weight="70">
+        <!-- Thumbnail Images -->
+        <div class="col-3 col-sm-2 col-md-2 col-lg-1">
+            <div class="border rounded p-2 my-2" style="width: 100%;">
+                <img src="../../../../assets/dettol.png" alt="small-preview" class="img-fluid">
             </div>
-            <div class="border rounded p-2 my-2" style="width: 90px">
-                <img src="../../../../assets/dettol.png" alt="small-preview" height="70" weight="70">
+            <div class="border rounded p-2 my-2" style="width: 100%;">
+                <img src="../../../../assets/dettol.png" alt="small-preview" class="img-fluid">
             </div>
-            <div class="border rounded p-2 my-2" style="width: 90px">
-                <img src="../../../../assets/dettol.png" alt="small-preview" height="70" weight="70">
+            <div class="border rounded p-2 my-2" style="width: 100%;">
+                <img src="../../../../assets/dettol.png" alt="small-preview" class="img-fluid">
             </div>
-            <div class="border rounded p-2 my-2" style="width: 90px">
-                <img src="../../../../assets/dettol.png" alt="small-preview" height="70" weight="70">
+            <div class="border rounded p-2 my-2" style="width: 100%;">
+                <img src="../../../../assets/dettol.png" alt="small-preview" class="img-fluid">
             </div>
         </div>
 
-        <div class="col-4">
-            <img src="../../../../assets/dettol.png" class="img-fluid" width="400" height="350">
+        <!-- Main Image -->
+        <div class="col-9 col-sm-4 col-md-4 col-lg-4">
+            <img src="../../../../assets/dettol.png" class="img-fluid w-100" alt="main-preview">
         </div>
 
-        <div class="col-3">
-            <h5>Organic India Moringa Capsule| Supports Energy Levels, Stamina & Vitality</h5>
+        <!-- Product Info -->
+        <div class="col-12 col-sm-6 col-md-6 col-lg-3 mt-4 mt-lg-0">
+            <h6>Organic India Moringa Capsule | Supports Energy Levels, Stamina & Vitality</h6>
+            <div>
+                <span class="bg-warning rounded text-white rating px-2 py-1">4.4 <i class="bi bi-star-fill"></i></span>
+                Stomach Care
+            </div><br>
 
-            <small><b>Product highlights:</b></small><br>
-            <ul>
-                <li>Rich in protein and fibre</li>
-                <li>Healthier alternative for breakfast</li>
-                <li>Manages appetite and hunger pangs</li>
-            </ul>
+            <div class="d-flex flex-wrap gap-3">
+                <div class="border boxes border-secondary bg-success p-2 rounded flex-grow-1">
+                    <p class="headings mb-2">Genuine</p>
+                    <span>Authenticity Assurance</span>
+                </div>
+                <div class="border boxes border-secondary bg-success p-2 rounded flex-grow-1">
+                    <p class="headings mb-2">4.4</p>
+                    <span>502 rating</span>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <p class="headings">Product highlights:</p>
+                <ul>
+                    <li>Rich in protein and fibre</li>
+                    <li>Healthier alternative for breakfast</li>
+                    <li>Manages appetite and hunger pangs</li>
+                </ul>
+            </div>
         </div>
-        <div class="col-3">
+
+        <!-- Pricing & Cart -->
+        <div class="col-12 col-sm-12 col-md-12 col-lg-4 mt-4 mt-lg-0">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">₹ 378</h5>
-                    <span class="text-muted mx-2 strike">₹ 499</span>
-                    <p class="text-primary bold">12% Off</p>
-                    <button class="btn btn-primary rounded-pill btn-sm text-light w-100">Add to Cart</button>
+                    <div class="border cartBoxes border-secondary my-2 p-3 rounded d-flex align-items-center">
+                        <input type="radio" name="priceOption" checked class="form-check-input me-2" value="399">
+                        <span class="headings">399&nbsp; <strong><span class="text-primary">14% off with
+                                    coupon</span></strong></span>
+                    </div>
+                    <div class="border cartBoxes border-secondary my-2 p-3 rounded d-flex align-items-center">
+                        <input type="radio" name="priceOption" class="form-check-input me-2" value="399">
+                        <span class="headings">399&nbsp; <strong><span class="text-primary">14% off with
+                                    coupon</span></strong></span>
+                    </div>
+                    <div class="text-center text-info mt-4">
+                        <span>60 Capsules</span>
+                    </div>
+                    <button class="btn btn-primary rounded-pill btn-sm text-light w-100" (click)="addToCart()">Add to
+                        Cart</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="description my-4">
+        <p class="mb-1">Information about Acne Care Combo of Cetaphil Oily Skin Cleanser 125ml and Klm Klin Face Wash
+            100ml</p>
+        <p class="headings mb-1">Information about Acne Care Combo of Cetaphil Oily Skin Cleanser 125ml and Klm Klin
+            Face Wash
+            100ml</p>
+        <p class="mb-1"><span class="headings">Cetaphil Oily Skin Cleanser 125ml</span>is a non-comedogenic, pH balanced
+            and non-drying cleanser.
+            It is an oily skin cleanser that can help in cleansing oily and acne-prone skin. Its gentle foaming action
+            can help in reducing oils, dirt and makeup on the skin without leaving the skin dry. It does not leave any
+            irritating residue on the skin. It is a soap-free and hypoallergenic cleanser. The low-lather gel deep
+            cleans and minimizes the appearance of pores without stripping the skin of natural moisture. It is paraben
+            and mineral oil free.
+        </p>
+        <p class="mb-1">Klm Klin Face Wash 100ml is a daily cleanser suitable for oily and acnegenic skin. It may help
+            remove excess
+            oil from the skin and reduce the formation of acne and pimples. It gently cleanses the skin and unclogs
+            clogged pores which may lead to acne formation. Regular use can help exfoliate the skin and remove dead skin
+            cells accumulated in the pores. It gives a fresh and rejuvenated feeling.</p>
+
+        <p class="headings mb-1">Key Ingredients:</p>
+        <p class="headings mb-1">Cetaphil Oily Skin Cleanser 125ml</p>
+        <p class="mb-1">Purified Water, PEG-200 Hydrogenated Glyceryl Palmate & PEG-7 Glyceryl Cocoate, Sodium Lauroyl
+            Sarcosinate,
+            Acrylates/Steareth-20 Methacrylate Copolymer, Glycerol, Sodium Laureth Sulfate, Butylene Glycol,
+            Phenoxyethanol, Dexpanthenol, Methyl Parahydroxybenzoate, PEG-60 Hydrogenated Castor Oil, Fragrance,
+            Disodium EDTA</p>
+        <p class="headings mb-1">Klm Klin Face Wash 100ml</p>
+        <p class="mb-1">Water, Sodium Lauroyl Sarcosinate, Cocamidopropyl Betaine, Glycerin, Acrylates/Steareth-20
+            Methacrylate
+            Copolymer, Sodium Chloride, Citric Acid, Phenoxyethanol, Dexpanthenol, Methyl Parahydroxybenzoate,
+            PEG-60 Hydrogenated Castor Oil, Fragrance, Disodium EDTA</p>
+        <p class="headings mb-1">Key Benefits:</p>
+        <p class="headings mb-1">Cetaphil Oily Skin Cleanser 125ml</p>
+        <ul>
+            <li>Gently cleanses oily and acne-prone skin</li>
+            <li>Non-comedogenic and pH balanced</li>
+            <li>Removes dirt, oil, and makeup without drying</li>
+        </ul>
+        <p class="headings mb-1">Klm Klin Face Wash 100ml</p>
+        <ul>
+            <li>Helps reduce acne and pimples</li>
+            <li>Unclogs pores and exfoliates skin</li>
+            <li>Provides a fresh and rejuvenated feeling</li>
+        </ul>
+        <p class="headings mb-1">Directions For Use:</p>
+        <p class="headings mb-1">Cetaphil Oily Skin Cleanser 125ml</p>
+        <p class="mb-1">Apply to skin, gently massage and rinse.</p>
+        <p class="headings mb-1">Klm Klin Face Wash 100ml</p>
+        <ul>
+            <li>Apply to wet skin, massage gently and rinse.</li>
+            <li>Allow it to remain for 20 to 30 seconds</li>
+        </ul>
+        <p class="headings mb-1">Safety Information:</p>
+        <p class="mb-1">For external use only. Avoid contact with eyes. If contact occurs, rinse thoroughly with water.
+            Keep out of
+            reach of children. If swallowed, seek medical help.</p>
+
+    </div>
+
+
+    <div class="rating">
+        <h5>Ratings & Reviews (273)</h5>
+        <p>Summary</p>
+        <div class="d-flex w-100">
+            <div class="w-25 me-4">
+                <div class="d-flex align-items-center w-100">
+                    <span>5</span>&nbsp; <div class="progress w-100" role="progressbar" aria-label="Warning example"
+                        aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar bg-warning" style="width: 75%"></div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center w-100">
+                    <span>4</span>&nbsp; <div class="progress  w-100 my-2" role="progressbar"
+                        aria-label="Warning example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar bg-warning" style="width: 45%"></div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center w-100">
+                    <span>3</span>&nbsp; <div class="progress  w-100 my-2" role="progressbar"
+                        aria-label="Warning example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar bg-warning" style="width: 35%"></div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center w-100">
+                    <span>2</span>&nbsp; <div class="progress w-100 my-2" role="progressbar"
+                        aria-label="Warning example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar bg-warning" style="width: 25%"></div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center w-100">
+                    <span>1</span>&nbsp; <div class="progress w-100 my-2" role="progressbar"
+                        aria-label="Warning example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar bg-warning" style="width: 5%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="mn-0">4.5 <i class="bi bi-star-fill text-warning"></i></h4>
+                <p class="text-info">273 reviews</p>
+
+                <h4 class="mt-2 mb-0">88%</h4>
+                <p class="text-info">Recommended</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<app-footer></app-footer>
