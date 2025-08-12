@@ -128,13 +128,10 @@ export class Login implements OnInit, OnDestroy {
       this.http.post(apiUrl, payload).subscribe({
         next: (response: any) => {
           this.isLoading = false;
-<<<<<<< HEAD
           console.log('Email/Password Login successful', response);
           localStorage.setItem('userProfile', JSON.stringify(response.profile));
 
-=======
          
->>>>>>> 04dd4a9b62bcf0668fa9513ed88aa91565d6d7f7
           // Store token/user data if rememberMe is true, or in session storage
           if (rememberMe) {
             localStorage.setItem('authToken', response.token);
@@ -144,16 +141,13 @@ export class Login implements OnInit, OnDestroy {
             sessionStorage.setItem('userProfile', JSON.stringify(response.profile));
 
           }
-<<<<<<< HEAD
            console.log('Stored token:', rememberMe ? localStorage.getItem('token') : sessionStorage.getItem('token'));
           console.log('Stored profile:', rememberMe ? 
             JSON.parse(localStorage.getItem('userProfile') || '{}') : 
             JSON.parse(sessionStorage.getItem('userProfile') || '{}'));
           
           this.loginSuccess.emit();
-=======
           
->>>>>>> 04dd4a9b62bcf0668fa9513ed88aa91565d6d7f7
           this.loadingChange.emit(false);
           this.router.navigate(['/dashboard']);
 
