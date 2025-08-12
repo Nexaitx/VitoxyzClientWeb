@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "npx ng build",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@angular/build": "^20.0.4",
-    "@angular/cli": "^20.0.4",
+    "@angular/cli": "^20.1.5",
     "@angular/compiler-cli": "^20.0.0",
     "@types/bootstrap": "^5.2.10",
     "@types/google.maps": "^3.58.1",
