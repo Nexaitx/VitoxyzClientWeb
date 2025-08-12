@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "build": "npx ng build",
+    "watch": "ng build --configuration development",
     "test": "ng test"
   },
   "private": true,
