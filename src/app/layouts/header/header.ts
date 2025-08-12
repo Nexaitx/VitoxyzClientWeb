@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; // For NgFor
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { CdkMenuModule } from '@angular/cdk/menu';
 // Angular Material Imports
 import { MatToolbarModule } from '@angular/material/toolbar'; // For the navbar itself
@@ -20,7 +20,8 @@ import { Authorization } from '../../pages/authorization/authorization';
     RouterOutlet,
     MatTabsModule,
     Authorization,
-    CdkMenuModule
+    CdkMenuModule,
+    RouterLink
   ],
   templateUrl: './header.html',
   styleUrl: './header.scss'
@@ -31,7 +32,7 @@ export class Header {
   isLoggedIn: boolean = false;
 
   menuItems = [
-    { label: 'Medecines', path: '/dashboard' },
+    { label: 'Medecines', path: '/medicine' },
     {
       label: 'Book Staff',
       dropdown: true,
@@ -77,5 +78,9 @@ export class Header {
     localStorage.removeItem('authToken');
     this.isLoggedIn = false;
     this.router.navigate(['/']); 
+  }
+
+  goToCart() {
+    this.router.navigate(['/medicine/cart']);
   }
 }

@@ -1,0 +1,30 @@
+.action-add {
+    position: absolute;
+    right: 0;
+}
+
+.action-add:hover {
+    border-radius: 20px !important;
+    color: #fff !important;
+}
+
+.action {
+    position: absolute;
+    left: 0;
+}
+.action:hover {
+    border-radius: 20px !important;
+    color: #fff !important;
+}
+
+input {
+    border-radius: 20px !important;
+}
+
+td {
+    font-size: 12px;
+}
+
+.border-top td {
+    font-size: 16px !important;
+}

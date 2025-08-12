@@ -7,7 +7,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav ms-auto align-items-center">
         <ng-container *ngFor="let item of menuItems; let i = index">
 
           <li class="nav-item" *ngIf="item.label === 'Profile' && isLoggedIn">
@@ -16,14 +16,15 @@
             </button>
             <ng-template #profileMenu>
               <div cdkMenu class="dropdown-menu show" style="position: absolute;">
-                 <ng-container *ngFor="let dropdownItem of item.dropdownItems">
-                    <button *ngIf="dropdownItem.label === 'Logout'" cdkMenuItem class="dropdown-item" (click)="logout()">
-                        {{ dropdownItem.label }}
-                    </button>
-                    <a *ngIf="dropdownItem.label !== 'Logout'" cdkMenuItem class="dropdown-item" [routerLink]="dropdownItem.path" routerLinkActive="active"
-                        [routerLinkActiveOptions]="{ exact: true }">
-                        {{ dropdownItem.label }}
-                    </a>
+                <ng-container *ngFor="let dropdownItem of item.dropdownItems">
+                  <button *ngIf="dropdownItem.label === 'Logout'" cdkMenuItem class="dropdown-item" (click)="logout()">
+                    {{ dropdownItem.label }}
+                  </button>
+                  <a *ngIf="dropdownItem.label !== 'Logout'" cdkMenuItem class="dropdown-item"
+                    [routerLink]="dropdownItem.path" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">
+                    {{ dropdownItem.label }}
+                  </a>
                 </ng-container>
               </div>
             </ng-template>
@@ -52,6 +53,12 @@
           </li>
 
         </ng-container>
+
+        <li class="nav-item">
+          <a class="nav-link text-white" (click)="goToCart()">
+            <i class="bi bi-cart" style="font-size: large;"></i>
+          </a>
+        </li>
 
         <ng-container *ngIf="!isLoggedIn">
           <li class="nav-item">

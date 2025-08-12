@@ -50,12 +50,24 @@ body {
 .bold {
     font-weight: 500;
 }
-a{
-    text-decoration: none;;
+
+a {
+    text-decoration: none;
+    ;
 }
+
 .strike {
-  text-decoration: line-through;
+    text-decoration: line-through;
 }
+
 .cartBoxes {
     border: 1.35px solid #0BBBC1 !important;
+}
+
+.strong {
+    font-weight: 500;
+}
+
+.form-control {
+    border-radius: 20px !important;
 }

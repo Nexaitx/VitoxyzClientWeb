@@ -8,7 +8,7 @@ export const routes: Routes = [
     component: Header,
     children: [
       {
-        path: 'dashboard',
+        path: 'medicine',
         loadChildren: () => import('./pages/medicines/medicines-module').then(m => m.MedicinesModule),
       },
       {
@@ -37,7 +37,7 @@ export const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'medicine',
         pathMatch: 'full'
       },
       {
