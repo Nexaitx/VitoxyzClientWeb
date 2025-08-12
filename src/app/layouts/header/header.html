@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-lg bg-primary">
   <div class="container-fluid">
     <a class="navbar-brand text-white" href="#">Vitoxyz</a>
-    <button class="navbar-toggler" type="button" aria-controls="navbarNav" aria-expanded="false"
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+  aria-controls="navbarNav" aria-expanded="false"
       aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -65,15 +66,6 @@
             <button type="button" class="btn nav-link text-white" data-bs-toggle="modal" data-bs-target="#authModal"
               (click)="setAuthMode('login')">
               Log In
-            </button>
-          </li>
-          <li class="nav-item d-flex align-items-center">
-            <span style="color: white; padding: 0 0.2rem;">|</span>
-          </li>
-          <li class="nav-item">
-            <button type="button" class="btn nav-link text-white" data-bs-toggle="modal" data-bs-target="#authModal"
-              (click)="setAuthMode('signup')">
-              Sign Up
             </button>
           </li>
         </ng-container>
