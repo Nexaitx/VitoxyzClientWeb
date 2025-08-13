@@ -15,6 +15,6 @@ export class CartItems {
   private router = inject(Router)
 
   goToMedicines() {
-    this.router.navigate(['/medicine/medicines']);
+    this.router.navigate(['/medicines']);
   }
 }

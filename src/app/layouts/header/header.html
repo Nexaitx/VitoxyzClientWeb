@@ -57,8 +57,10 @@
 
         <li class="nav-item">
           <a class="nav-link text-white" (click)="goToCart()">
-            <i class="bi bi-cart" style="font-size: large;"></i>
-          </a>
+           <button type="button" class="btn nav-link text-white" style="font-size: large;">
+             <i class="bi bi-cart"></i>
+           </button>
+           </a>
         </li>
 
         <ng-container *ngIf="!isLoggedIn">

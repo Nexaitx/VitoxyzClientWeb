@@ -1,16 +1,27 @@
-<div class="d-flex container my-3">
-    <div class="form-group w-25">
-        <select class="form-control w-100">
-            <option value="">Chandigarh</option>
-            <option value="">Ludhiana</option>
-            <option value="">Chennai</option>
-            <option value="">Delhi</option>
+<div class="container my-3">
+  <div class="row g-2">
+    <!-- Location Dropdown -->
+    <div class="col-12 col-md-3">
+      <div class="form-group">
+        <select class="form-control">
+          <option value="">Chandigarh</option>
+          <option value="">Ludhiana</option>
+          <option value="">Chennai</option>
+          <option value="">Delhi</option>
         </select>
+      </div>
     </div>
 
-    <div class="form-group mx-3 w-100">
-        <input type="text" class="form-control w-100" placeholder="Search medicine">
+    <!-- Search Input -->
+    <div class="col-12 col-md-7">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search medicine">
+      </div>
     </div>
 
-    <button class="btn btn-primary rounded-pill text-light px-4 btn-sm">Add</button>
+    <!-- Optional Button (e.g., Search) -->
+    <div class="col-12 col-md-2">
+      <button class="btn btn-primary btn-sm rounded-pill text-light px-3 w-100">Search</button>
+    </div>
+  </div>
 </div>

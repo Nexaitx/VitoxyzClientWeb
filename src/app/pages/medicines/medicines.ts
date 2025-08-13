@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { AfterViewInit } from '@angular/core';
 import { Footer } from '../footer/footer';
+import { Header } from './header/header';
 declare var bootstrap: any;
 
 @Component({
@@ -32,6 +33,7 @@ declare var bootstrap: any;
     MatSelectModule,
     FormsModule,
     MatInputModule,
+    Header,
     Footer
   ],
   templateUrl: './medicines.html',
@@ -59,6 +61,45 @@ export class Medicines implements AfterViewInit  {
     'Jaipur',
     'Lucknow'
   ];
+
+  brands = [
+    {
+      name: 'Brand 1',
+      image: '../../../assets/medicines/brand-1.png'
+    },
+    {
+      name: 'Brand 2',
+      image: '../../../assets/medicines/brand-1.png'
+    },
+    {
+      name: 'Brand 3',
+      image: '../../../assets/medicines/brand-1.png'
+    },
+    {
+      name: 'Brand 4',
+      image: '../../../assets/medicines/brand-1.png'
+    },
+    {
+      name: 'Brand 5',
+      image: '../../../assets/medicines/brand-1.png'
+    },
+     {
+      name: 'Brand 2',
+      image: '../../../assets/medicines/brand-1.png'
+    },
+    {
+      name: 'Brand 3',
+      image: '../../../assets/medicines/brand-1.png'
+    },
+    {
+      name: 'Brand 4',
+      image: '../../../assets/medicines/brand-1.png'
+    },
+    {
+      name: 'Brand 5',
+      image: '../../../assets/medicines/brand-1.png'
+    }
+  ]
 
   selectedCity: string = 'Mumbai';
   searchTerm: string = '';
@@ -94,7 +135,7 @@ export class Medicines implements AfterViewInit  {
   }
 
   viewDetails(): void {
-    this.router.navigate(['/dashboard/medicines', this.selectedMedicine.id]);
+    this.router.navigate(['/medicines', this.selectedMedicine.id]);
   }
 
 }

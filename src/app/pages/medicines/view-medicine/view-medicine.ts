@@ -16,10 +16,10 @@ export class ViewMedicine {
   private router: Router = inject(Router);
 
   goToMedicines() {
-    this.router.navigate(['/medicine/medicines']);
+    this.router.navigate(['medicines']);
   }
 
   addToCart() {
-    this.router.navigate(['/medicine/cart']);
+    this.router.navigate(['cart']);
   }
 }

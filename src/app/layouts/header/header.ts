@@ -32,7 +32,7 @@ export class Header {
   isLoggedIn: boolean = false;
 
   menuItems = [
-    { label: 'Medecines', path: '/medicine' },
+    { label: 'Medecines', path: '/medicines' },
     {
       label: 'Book Staff',
       dropdown: true,
@@ -81,6 +81,6 @@ export class Header {
   }
 
   goToCart() {
-    this.router.navigate(['/medicine/cart']);
+    this.router.navigate(['/cart']);
   }
 }

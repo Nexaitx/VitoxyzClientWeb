@@ -3,22 +3,7 @@
   <img src="../../../assets/banner.png" class="w-100" alt="">
 </div>
 
-<div class="filters-container">
-  <!-- City Locator -->
-  <div class="form-group">
-    <label>Select City</label>
-    <select class="form-control" [(ngModel)]="selectedCity">
-      <option *ngFor="let city of cities" [value]="city">
-        {{ city }}
-      </option>
-    </select>
-  </div>
-
-  <!-- Search Filter -->
-  <div class="form-group">
-    <input [(ngModel)]="searchTerm" placeholder="Search medicines" (input)="filterMedicines()" class="form-control">
-  </div>
-</div>
+<app-header></app-header>
 <!-- health conecerns -->
 <div class="container-fluid my-3">
   <div>
@@ -143,103 +128,78 @@
 <!-- featured brands -->
 <div id="brandCarousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
-
     <div class="carousel-item active">
-      <div class="container-fluid">
-        <div class="row justify-content-center">
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div class="brandBackground">
-              <img src="../../../assets/medicines/brand-1.png" alt="">
-            </div>
+      <div class="row justify-content-center g-2">
+        <div class="col-6 col-md-3 col-lg-2 p-2">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 1" />
           </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div class="brandBackground">
-              <img src="../../../assets/medicines/brand-1.png" alt="">
-            </div>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2 p-2">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 2" />
           </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div class="brandBackground">
-              <img src="../../../assets/medicines/brand-1.png" alt="">
-            </div>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-md-block">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 3" />
           </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div class="brandBackground">
-              <img src="../../../assets/medicines/brand-1.png" alt="">
-            </div>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-md-block">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 4" />
           </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div class="brandBackground">
-              <img src="../../../assets/medicines/brand-1.png" alt="">
-            </div>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-lg-block">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 5" />
           </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div class="brandBackground">
-              <img src="../../../assets/medicines/brand-1.png" alt="">
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div class="brandBackground">
-              <img src="../../../assets/medicines/brand-1.png" alt="">
-            </div>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-lg-block">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 6" />
           </div>
         </div>
       </div>
     </div>
-
+    
     <div class="carousel-item">
-      <div class="container-fluid">
-        <div class="row justify-content-center">
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div class="brandBackground">
-              <img src="../../../assets/medicines/brand-1.png" alt="">
-            </div>
+      <div class="row justify-content-center g-2">
+        <div class="col-6 col-md-3 col-lg-2 p-2">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 7" />
           </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div class="brandBackground">
-              <img src="../../../assets/medicines/brand-1.png" alt="">
-            </div>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2 p-2">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 8" />
           </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div class="brandBackground">
-              <img src="../../../assets/medicines/brand-1.png" alt="">
-            </div>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-md-block">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 9" />
           </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div class="brandBackground">
-              <img src="../../../assets/medicines/brand-1.png" alt="">
-            </div>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-md-block">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 10" />
           </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div class="brandBackground">
-              <img src="../../../assets/medicines/brand-1.png" alt="">
-            </div>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-lg-block">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 11" />
           </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div class="brandBackground">
-              <img src="../../../assets/medicines/brand-1.png" alt="">
-            </div>
-          </div>
-
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div class="brandBackground">
-              <img src="../../../assets/medicines/brand-1.png" alt="">
-            </div>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-lg-block">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 12" />
           </div>
         </div>
       </div>
     </div>
-
   </div>
-
-  <!-- Carousel controls -->
-  <button class="carousel-control-prev" type="button" data-bs-target="#brandCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#brandCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
+  <button class="carousel-control-prev" type="button" data-bs-target="#brandCarousel" data-bs-slide="prev">...</button>
+  <button class="carousel-control-next" type="button" data-bs-target="#brandCarousel" data-bs-slide="next">...</button>
 </div>
 
 
@@ -258,7 +218,8 @@
             <h5>378</h5><span class="text-muted mx-2 strike">499</span>
             <p class="text-primary bold">12% Off</p>
           </div>
-          <button class="btn btn-primary rounded-pill btn-sm text-light w-100" (click)="selectedMedicine = med; viewDetails()">Add</button>
+          <button class="btn btn-primary rounded-pill btn-sm text-light w-100"
+            (click)="selectedMedicine = med; viewDetails()">Add</button>
         </mat-card-content>
       </mat-card>
     </ng-container>
