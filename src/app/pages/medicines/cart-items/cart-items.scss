@@ -12,6 +12,7 @@
     position: absolute;
     left: 0;
 }
+
 .action:hover {
     border-radius: 20px !important;
     color: #fff !important;
@@ -27,4 +28,16 @@ td {
 
 .border-top td {
     font-size: 16px !important;
+}
+
+@media (max-width: 576px) {
+    .quantity {
+        display: flex !important;
+        justify-content: space-between;
+
+        div {
+            margin-left: 10px;
+            min-width: 100px !important;
+        }
+    }
 }

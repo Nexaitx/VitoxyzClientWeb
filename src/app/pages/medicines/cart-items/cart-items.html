@@ -1,8 +1,7 @@
 <app-header></app-header>
 
 <div class="container">
-    <p class="text-muted my-2">Home | <span class="text-primary link" (click)="goToMedicines()">Medicine</span> | View
-        Medicine | Add to Cart</p>
+    <p class="text-muted my-2">Home | <span class="text-primary link" (click)="goToMedicines()">Medicine</span> | <span class="text-primary link" (click)="goToViewMedicines()">View Medicine </span>| Add to Cart</p>
 
     <div class="my-4">
         <h5>1 Item Added</h5>
@@ -10,21 +9,21 @@
     </div>
 
     <div class="row">
-        <div class="col-1 col-sm-2 col-md-2 col-lg-1">
+        <div class="col-4 col-sm-2 col-md-2 col-lg-1">
             <img src="../../../../assets/dettol.png" alt="small-preview" class="img-fluid">
         </div>
 
-        <div class="col-4 col-sm-8 col-md-8 col-lg-5">
+        <div class="col-8 col-sm-8 col-md-8 col-lg-5">
             <h6>Pain Relief Gel for Lower Back Pain, Joint Pain, Neck Pain & Sprain | by Vitoxyz</h6>
             <small>Supports Energy Levels, Stamina & Vitality</small>
 
-            <div class="text-primary mt-3"><u>Remove</u></div>
+            <div class="text-primary mt-3 mb-2"><u>Remove</u></div>
         </div>
 
-        <div class="col-1 col-sm-2 col-md-3 col-lg-2 text-end">
-            <h6>399 <span class="text-muted strike">499</span><span class="text-primary ms-2">40% Off</span></h6>
-            <div class="d-flex  justify-content-end">
-                <div class="input-group w-50" style="max-width: 120px;">
+        <div class="col-8 col-sm-2 col-md-3 col-lg-2">
+            <div class="quantity">
+                <h6><span>399</span><span class="text-muted strike">&nbsp;499</span><span class="text-primary">&nbsp;40%&nbsp;Off</span></h6>
+                <div class="input-group w-50 d-flex align-items-center">
                     <button class="btn btn-outline-secondary action border-0 py-1" type="button">−</button>
                     <input type="text" class="form-control measure text-center py-1" value="00">
                     <button class="btn btn-outline-secondary action-add border-0 py-1" type="button">+</button>
@@ -32,17 +31,19 @@
             </div>
         </div>
 
-        <div class="col-5 col-sm-4 col-md-4 col-lg-4">
+        <div class="col-12 col-sm-4 col-md-4 col-lg-4">
             <h6>You can save extra ₹12 on this order</h6>
             <small class="text-primary">Become a careplan member</small>
 
-            <div class="d-flex align-items-baseline mt-2">
-                <p class="mb-1">3 months membership for only </p>
-                <h6>&nbsp;165</h6>
+            <div class="mt-2">
+                <p class="mb-1">3 months membership for only <strong>&nbsp;165</strong></p>
+
             </div>
-            <div class="d-flex mb-2">
-                <button class="btn btn-sm btn-outline-primary rounded-pill">Know more</button>
-                <button class="btn btn-sm btn-primary rounded-pill text-light ms-2">Add Membership</button>
+            <div class="row mb-2">
+                <button
+                    class="col-12 col-lg-4 btn btn-sm btn-outline-primary rounded-pill me-2 px-3 mb-1">Know&nbsp;more</button>
+                <button
+                    class="col-12 col-lg-5 btn btn-sm btn-primary rounded-pill text-light mb-1">Add&nbsp;Membership</button>
             </div>
             <small class="strong mb-2">Check the health of your vital organs</small>
             <p><small>Book Good Health Silver Package for just ₹649</small></p>

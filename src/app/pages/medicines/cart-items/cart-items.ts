@@ -17,4 +17,8 @@ export class CartItems {
   goToMedicines() {
     this.router.navigate(['/medicines']);
   }
+
+  goToViewMedicines() {
+    this.router.navigate(['/medicines/1']);
+  }
 }
