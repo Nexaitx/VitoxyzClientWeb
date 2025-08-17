@@ -58,6 +58,12 @@
   height: 500px; /* Fixed height for consistency */
 }
 
+@media screen and (max-width: 768px) {
+  .left-panel {
+    display: none !important;
+  }
+}
+
 .left-panel {
   flex: 1;
   background: url('/assets/login/login-illustrate.png') no-repeat center center;
