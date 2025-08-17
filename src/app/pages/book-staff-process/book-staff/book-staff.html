@@ -110,15 +110,18 @@
                         [formGroupName]="sh" class="shift-detail">
                         <div class="row d-flex">
                           <div class="col-md-4">
+                            
+                          </div>
+                          <!-- <div class="col-md-4">
                             <label class="form-label">Duty Start Time</label>
-                            <div class="d-flex gap-3 align-items-center"
+                            <div class="d-flex align-items-center"
                               [class.is-invalid]="shiftDetail.get('timeSlot')?.errors?.['pastTime'] && shiftDetail.get('timeSlot')?.touched">
                               <div class="input-group input-group-time d-flex align-items-center">
                                 <button class="btn btn-minus px-0" type="button" (click)="decrementTime('hours',i,sh)">
                                   <i class="bi bi-dash"></i>
                                 </button>
                                 <input type="number" [value]="pad(shiftDetail.get('hours')?.value)"
-                                  class="form-control px-0" formControlName="hours" value="09" min="0" max="12"
+                                  class="form-control px-auto" formControlName="hours" value="09" min="0" max="12"
                                   readonly>
                                 <button class="btn btn-plus px-0" type="button" (click)="incrementTime('hours',i,sh)">
                                   <i class="bi bi-plus"></i>
@@ -148,14 +151,14 @@
                               Past time is not allowed.
                             </div>
                             }
-                          </div>
+                          </div> -->
                           <div class="col-md-2">
                             <label class="form-label">Shift Time</label>
                             <select class="form-select pe-1" formControlName="shiftType" [class.is-invalid]="
                             shiftDetail.get('shiftType')?.invalid &&
                             shiftDetail.get('shiftType')?.touched
                           ">
-                              <option value="" disabled>Select Time</option>
+
                               <option *ngFor="let type of shiftTypes" [value]="type">
                                 {{ type }}
                               </option>
@@ -166,7 +169,7 @@
                             </div>
                             }
                           </div>
-                          <div class="col-md-2">
+                          <div class="col-md-2 col-6 col-sm-6">
                             <div class="form-group">
                               <label class="form-label d-block">Prefered Gender</label>
                               <i class="bi bi-person-standing address"></i>
@@ -183,7 +186,7 @@
                             </div>
                             }
                           </div>
-                          <div class="col-md-2">
+                          <div class="col-md-2 col-6 col-sm-6">
                             <label class="form-label">Quantity</label>
                             <div class="d-flex align-items-center mb-2 counter-box">
                               <button class="btn btn-minus px-0" type="button"
@@ -235,11 +238,12 @@
                           <div class="d-flex align-items-start justify-content-end gap-2 mt-3">
                             <!-- Show plus icon at 0 index and at last index -->
                             @if(sh === 0 || sh === getNestedShiftDetailsControls(i).length - 1) {
-                              <i class="bi bi-plus-lg add" (click)="addShift(i)" title="Add Time Slot"></i>
+                            <i class="bi bi-plus-lg add" (click)="addShift(i)" title="Add Time Slot"></i>
                             }
                             <!-- Show delete icon for all except 0 index -->
                             @if(sh > 0) {
-                              <i class="bi bi-trash text-danger remove" (click)="removeShiftDetail(i, sh)" title="Remove Time Slot"></i>
+                            <i class="bi bi-trash text-danger remove" (click)="removeShiftDetail(i, sh)"
+                              title="Remove Time Slot"></i>
                             }
                           </div>
                         </div>

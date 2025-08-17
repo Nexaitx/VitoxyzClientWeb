@@ -24,15 +24,21 @@
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
                         "assets": [
-                            {
-                                "glob": "**/*",
-                                "input": "public"
-                            },
-                            "src/assets"
+                          {
+                            "glob": "**/*",
+                            "input": "public"
+                          },
+                          "src/assets",
+                          {
+                            "glob": "**/*",
+                            "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                            "output": "/assets/"
+                          }
                         ],
                         "styles": [
-                            "./src/app/styles/custom-bootstrap.scss",
-                            "src/styles.scss"
+                          "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+                          "./src/app/styles/custom-bootstrap.scss",
+                          "src/styles.scss"
                         ],
                         "scripts": [
                             "./node_modules/jquery/dist/jquery.min.js",
@@ -102,7 +108,8 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "src/styles.scss"
+                          "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+                          "src/styles.scss"
                         ]
                     }
                 }

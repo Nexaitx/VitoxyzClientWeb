@@ -1,13 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SpinnerToastComponent } from "./core/toasts/spinner-toast/spinner-toast.component";
-
+import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SpinnerToastComponent],
+  imports: [RouterOutlet, NzTimePickerModule, FormsModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
   protected title = 'VitoxyzAdmin';
+  time: Date | null = null;
+  defaultOpenValue = new Date(0, 0, 0, 0, 0, 0);
+
+
+  ngOnInit() { 
+   
+  }
 }

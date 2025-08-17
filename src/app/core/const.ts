@@ -1,4 +1,4 @@
-export const API_URL = 'https://vitoxyzbackend.onrender.com/api';
+export const API_URL = 'https://vitoxyzbackend-27e9.onrender.com/';
 // export const API_URL = 'http://localhost:8080/api';
 
 export const ENDPOINTS = {

@@ -202,16 +202,15 @@
   <button class="carousel-control-next" type="button" data-bs-target="#brandCarousel" data-bs-slide="next">...</button>
 </div>
 
-
+<!-- medicines: med.patient.drug[0].medicinalproduct -->
 <!-- personal care -->
 <div class="row w-100 container-fluid my-3">
-  <ng-container *ngFor="let med of medicines">
-    <ng-container *ngFor="let n of [].constructor(7);">
+  <ng-container *ngFor="let med of fdaMedicines">
       <mat-card class="medicine-card col-6 col-md-4 col-lg-3 my-2 p-0 col-xl-2">
-        <img mat-card-image [src]="med.image" alt="{{ med.name }}" />
+        <img mat-card-image src="../../../assets/dettol.png" alt="{{ med.patient.drug[0].medicinalproduct }}" />
         <span class="bg-warning rounded text-white rating">4.4 <i class=" bi bi-star-fill"></i></span>
         <mat-card-content class="bg-white">
-          <small class="description">{{ med.description }}</small><br>
+          <small class="description">{{ med.patient.drug[0].medicinalproduct }}</small><br>
           <small class="text-muted">30 ml Shampoo</small><br>
           <small class="text-muted">Get in <span class="text-primary bold">30 mins</span></small><br>
           <div class="d-flex">
@@ -222,7 +221,6 @@
             (click)="selectedMedicine = med; viewDetails()">Add</button>
         </mat-card-content>
       </mat-card>
-    </ng-container>
   </ng-container>
 </div>
 

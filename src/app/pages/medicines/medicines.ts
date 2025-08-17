@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { AfterViewInit } from '@angular/core';
 import { Footer } from '../footer/footer';
 import { Header } from './header/header';
+import { HttpClient } from '@angular/common/http';
 declare var bootstrap: any;
 
 @Component({
@@ -39,7 +40,7 @@ declare var bootstrap: any;
   templateUrl: './medicines.html',
   styleUrls: ['./medicines.scss']
 })
-export class Medicines implements AfterViewInit  {
+export class Medicines implements AfterViewInit {
   medicines = [
     {
       name: 'Med-Supply',
@@ -83,7 +84,7 @@ export class Medicines implements AfterViewInit  {
       name: 'Brand 5',
       image: '../../../assets/medicines/brand-1.png'
     },
-     {
+    {
       name: 'Brand 2',
       image: '../../../assets/medicines/brand-1.png'
     },
@@ -106,11 +107,38 @@ export class Medicines implements AfterViewInit  {
   filteredMedicines = [...this.medicines];
   private router: Router = inject(Router);
   selectedMedicine: any;
+  private http = inject(HttpClient);
+  fdaMedicines: any[] = [];
+
 
   ngOnInit(): void {
     this.filteredMedicines = [...this.medicines];
+    // this.getOpenFDAMedicines();
+    // this.getGovMed();
+    this.getRapidAPI();
   }
 
+  getRapidAPI(){
+    this.http.get('https://endlessmedicalapi1.p.rapidapi.com/InitSession', {
+      headers: {
+        'X-RapidAPI-Key': '42e5de4446mshe40107c87b9eda9p158850jsn6f71b343d85f',
+        'X-RapidAPI-Host': 'endlessmedicalapi1.p.rapidapi.com'
+      }, withCredentials: true
+    }).subscribe((data: any) => {
+      console.log(data);
+    });
+  }
+
+  getOpenFDAMedicines() {
+    this.http.get('https://api.fda.gov/drug/label.json').subscribe((data: any) => {
+      this.fdaMedicines = data.results;
+    });
+  }
+  getGovMed(){
+    this.http.get('https://rxnav.nlm.nih.gov/REST/RxTerms/allconcepts.xml').subscribe((data: any) =>{
+
+    })
+  }
   filterMedicines(): void {
     const term = this.searchTerm.toLowerCase().trim();
     this.filteredMedicines = this.medicines.filter(med =>
@@ -122,7 +150,7 @@ export class Medicines implements AfterViewInit  {
     this.selectedCity = city;
   }
 
- ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     const carouselEl = document.querySelector('#healthConcernCarousel');
     if (carouselEl) {
       new bootstrap.Carousel(carouselEl, {
