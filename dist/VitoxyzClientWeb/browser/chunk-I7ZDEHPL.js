@@ -1,1 +1,0 @@
-import{Hb as a,Ib as i,fc as m,hb as s}from"./chunk-IHMD6L5C.js";var n=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=s({type:t,selectors:[["app-cart-items"]],decls:2,vars:0,template:function(e,r){e&1&&(a(0,"p"),m(1,"cart-items works!"),i())},encapsulation:2})};export{n as CartItems};
