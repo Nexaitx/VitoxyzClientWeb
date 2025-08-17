@@ -1,11 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SpinnerToastComponent } from "./core/toasts/spinner-toast/spinner-toast.component";
-import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NzTimePickerModule, FormsModule],
+  imports: [RouterOutlet, FormsModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

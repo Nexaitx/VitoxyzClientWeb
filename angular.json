@@ -36,7 +36,6 @@
                           }
                         ],
                         "styles": [
-                          "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
                           "./src/app/styles/custom-bootstrap.scss",
                           "src/styles.scss"
                         ],
@@ -108,7 +107,6 @@
                             "src/assets"
                         ],
                         "styles": [
-                          "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
                           "src/styles.scss"
                         ]
                     }
