@@ -14,7 +14,5 @@ export class App {
   defaultOpenValue = new Date(0, 0, 0, 0, 0, 0);
 
 
-  ngOnInit() { 
-   
-  }
+  ngOnInit() { }
 }

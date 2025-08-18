@@ -16,9 +16,7 @@ import { AadharVerificationComponent } from "../../aadhar-verification/aadhar-ve
     MapComponent,
     Submission,
     AadharVerificationComponent,
-    // NgbTimepickerModule,
-    // FormsModule,
-    // JsonPipe
+   
   ],
   templateUrl: './book-staff.html',
   styleUrls: ['./book-staff.scss'],
@@ -35,7 +33,7 @@ export class BookStaff {
   button = 'Search for staff';
   staffCategories: { id: number; name: string }[] = [];
   staffSubCategories: { [index: number]: { label: string; value: string }[] } = {};
-  shiftTypes = ['2 Hours Max', '8 Hours', '12 Hours', '24 Hours'];
+  shiftTypes = ['2 Hours', '8 Hours', '12 Hours', '24 Hours'];
   tenure = [
     { label: '1 Day', value: '1' }, { label: '3 Days', value: '2' }, { label: '1 Week', value: '3' }, { label: '2 Weeks', value: '4' }, { label: '1 Month', value: '5' }
   ]

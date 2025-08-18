@@ -110,50 +110,40 @@
                         [formGroupName]="sh" class="shift-detail">
                         <div class="row d-flex">
                           <div class="col-md-4">
-                            
-                          </div>
-                          <!-- <div class="col-md-4">
-                            <label class="form-label">Duty Start Time</label>
+                             <label class="form-label">Preferred Time Slot</label>
                             <div class="d-flex align-items-center"
                               [class.is-invalid]="shiftDetail.get('timeSlot')?.errors?.['pastTime'] && shiftDetail.get('timeSlot')?.touched">
-                              <div class="input-group input-group-time d-flex align-items-center">
-                                <button class="btn btn-minus px-0" type="button" (click)="decrementTime('hours',i,sh)">
+                              <div class="d-flex align-items-center border rounded">
+                                <button class="btn btn-minus px-0 ps-1 text-primary" type="button" (click)="decrementTime('hours',i,sh)">
                                   <i class="bi bi-dash"></i>
                                 </button>
                                 <input type="number" [value]="pad(shiftDetail.get('hours')?.value)"
-                                  class="form-control px-auto" formControlName="hours" value="09" min="0" max="12"
+                                  class="form-control px-0 ps-2 hrsMin border-0" formControlName="hours" value="09" min="0" max="12"
                                   readonly>
-                                <button class="btn btn-plus px-0" type="button" (click)="incrementTime('hours',i,sh)">
+                                <button class="btn btn-plus px-0 text-primary" type="button" (click)="incrementTime('hours',i,sh)">
                                   <i class="bi bi-plus"></i>
                                 </button>
                               </div>
-                              <div class="input-group input-group-time align-items-center d-flex">
-                                <button class="btn btn-minus px-0" type="button"
+                              <div class="align-items-center d-flex border rounded mx-2">
+                                <button class="btn btn-minus px-2 text-primary" type="button"
                                   (click)="decrementTime('minutes',i,sh)">
                                   <i class="bi bi-dash"></i>
                                 </button>
                                 <input type="number" [value]="pad(shiftDetail.get('minutes')?.value)"
-                                  class="form-control px-0" formControlName="minutes" value="00" min="0" max="59"
+                                  class="form-control px-0 hrsMin border-0" formControlName="minutes" value="00" min="0" max="59"
                                   readonly>
-                                <button class="btn btn-plus px-0" type="button" (click)="incrementTime('minutes',i,sh)">
+                                <button class="btn btn-plus px-0 text-primary" type="button" (click)="incrementTime('minutes',i,sh)">
                                   <i class="bi bi-plus"></i>
                                 </button>
                               </div>
-                              <select class="form-select time-select" formControlName="ampm">
+                              <select class="form-select time-select px-0 ps-2 amPm" formControlName="ampm">
                                 <option value="AM">AM</option>
                                 <option value="PM">PM</option>
                               </select>
                             </div>
-                            @if(shiftDetail.get('timeSlot')?.errors?.['pastTime'] &&
-                            shiftDetail.get('timeSlot')?.touched)
-                            {
-                            <div class="text-danger">
-                              Past time is not allowed.
-                            </div>
-                            }
-                          </div> -->
+                          </div>
                           <div class="col-md-2">
-                            <label class="form-label">Shift Time</label>
+                            <label class="form-label">Shift Duration</label>
                             <select class="form-select pe-1" formControlName="shiftType" [class.is-invalid]="
                             shiftDetail.get('shiftType')?.invalid &&
                             shiftDetail.get('shiftType')?.touched
@@ -172,12 +162,12 @@
                           <div class="col-md-2 col-6 col-sm-6">
                             <div class="form-group">
                               <label class="form-label d-block">Prefered Gender</label>
-                              <i class="bi bi-person-standing address"></i>
+                              <i class="bi bi-person address"></i>
                               <input type="text" readonly value="Male" class="form-control ps-4">
                             </div>
 
                             <div class="form-group">
-                              <i class="bi bi-person-standing-dress address female"></i>
+                              <i class="bi bi-person address female"></i>
                               <input type="text" readonly value="Female" class="form-control mt-2 ps-4">
                             </div>
                             @if(shiftDetail.errors?.['zeroQuantity'] && (shiftDetail.touched || shiftDetail.dirty)) {

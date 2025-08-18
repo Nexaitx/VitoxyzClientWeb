@@ -68,8 +68,10 @@ a {
     font-weight: 500;
 }
 
-.form-control {
+.form-control, .form-select {
     border-radius: 8px !important;
+    color: #7D8282 !important;
+    font-size: small !important;
 }
 
 .link {

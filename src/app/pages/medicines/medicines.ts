@@ -115,7 +115,7 @@ export class Medicines implements AfterViewInit {
     this.filteredMedicines = [...this.medicines];
     // this.getOpenFDAMedicines();
     // this.getGovMed();
-    this.getRapidAPI();
+    // this.getRapidAPI();
   }
 
   getRapidAPI(){
