@@ -1,231 +1,234 @@
-<mat-stepper labelPosition="bottom" #stepper>
-  <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Personal Info</ng-template>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="form-group">
-            <label class="form-label">Full Name</label>
-            <i class="bi bi-person icons"></i>
-            <input type="text" class="form-control ps-4" placeholder="Enter Full Name" />
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group">
-            <label class="form-label">Enter Age</label>
-            <i class="bi bi-diagram-2 icons"></i>
-            <input type="number" class="form-control ps-4" placeholder="Enter your age" />
-          </div>
-        </div>
-
-        <!-- Gender -->
-        <div class="col-md-6 d-flex align-items-end">
-          <div>
-            <label class="form-label d-block">Gender</label>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="gender" id="male" value="male">
-              <label class="form-check-label" for="male">Male</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="gender" id="female" value="female">
-              <label class="form-check-label" for="female">Female</label>
-            </div>
-          </div>
-        </div>
-
-        <!-- Height -->
-        <div class="col-md-6">
-          <label class="form-label">Height</label>
-          <div class="d-flex gap-2">
-            <div class="input-group" style="max-width: 120px;">
-              <button class="btn btn-outline-secondary action border-0" type="button">−</button>
-              <input type="text" class="form-control measure text-center" value="00">
-              <button class="btn btn-outline-secondary action-add border-0" type="button">+</button>
-            </div>
-            <select class="form-select" style="max-width: 100px;">
-              <option>Inches</option>
-              <option>Feet</option>
-              <option>cm</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Weight -->
-        <div class="col-md-6">
-          <label class="form-label">Weight</label>
-          <div class="d-flex gap-2 align-items-center">
-            <div class="input-group" style="max-width: 120px;">
-              <button class="btn btn-outline-secondary action border-0" type="button">−</button>
-              <input type="text" class="form-control measure text-center" value="00">
-              <button class="btn btn-outline-secondary action-add border-0" type="button">+</button>
-            </div>
-            <span>kg</span>
-          </div>
-        </div>
-
-      </div>
-      <div class="text-end mt-3">
-        <button matStepperNext class="btn px-4  rounded-pill submission">Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="secondFormGroup">
-    <form>
-      <ng-template matStepLabel>Health & Goals</ng-template>
-      <div class="row">
-        <h3>Tell Us About Your Goals</h3>
-        <div class="col-md-12">
-          <label class="form-label d-block mb-2">Diet Preference</label>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="dietPreference" id="weightLoss" value="weightLoss">
-            <label class="form-check-label" for="weightLoss">Weight Loss</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="dietPreference" id="weightGain" value="weightGain">
-            <label class="form-check-label" for="weightGain">Weight Gain</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="dietPreference" id="maintainWeight"
-              value="maintainWeight">
-            <label class="form-check-label" for="maintainWeight">Maintain Weight</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="dietPreference" id="improveHealth" value="improveHealth">
-            <label class="form-check-label" for="improveHealth">Improve Health</label>
-          </div>
-        </div>
-
-        <div class="col-md-12">
-          <label class="form-label d-block mb-2">Do you have any medical conditions?</label>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="diabetes" value="diabetes">
-            <label class="form-check-label" for="diabetes">Diabetes</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="thyroid" value="thyroid">
-            <label class="form-check-label" for="thyroid">Thyroid</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="pcos" value="pcos">
-            <label class="form-check-label" for="pcos">PCOS</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="improveHealth" value="improveHealth">
-            <label class="form-check-label" for="improveHealth">Improve Health</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="none" value="none">
-            <label class="form-check-label" for="none">None</label>
-          </div>
-        </div>
-
-        <div class="col-md-12">
-          <label class="form-label d-block mb-2">Are you on any Medications?</label>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="medicationsYes" name="medications" value="yes"
-              [(ngModel)]="isOnMedication">
-            <label class="form-check-label" for="medicationsYes">Yes</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="medicationsNo" name="medications" value="no"
-              [(ngModel)]="isOnMedication">
-            <label class="form-check-label" for="medicationsNo">No</label>
-          </div>
-          <div *ngIf="isOnMedication === 'yes'" class="mt-2">
-            <input type="text" class="form-control" placeholder="Enter medication details">
-          </div>
-        </div>
-      </div>
-
-      <div class="text-end mt-3">
-        <button matButton matStepperPrevious>Back</button>
-        <button matStepperNext class="btn px-4  rounded-pill submission">Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="secondFormGroup">
-    <form>
-      <ng-template matStepLabel>Food Preferences</ng-template>
-      <h3>Food & Preferences</h3>
-      <div class="row">
-        <div class="col-md-12">
-          <label class="form-label d-block mb-2">Diet Preference</label>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="foodDietPreference" id="vegetarian" value="vegetarian">
-            <label class="form-check-label" for="vegetarian">Vegetarian</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="foodDietPreference" id="nonVegetarian"
-              value="nonVegetarian">
-            <label class="form-check-label" for="nonVegetarian">Non-Vegetarian</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="foodDietPreference" id="eggetarian" value="eggetarian">
-            <label class="form-check-label" for="eggetarian">Eggetarian</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="foodDietPreference" id="vegan" value="vegan">
-            <label class="form-check-label" for="vegan">Vegan</label>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <label class="form-label">Food to Avoid?</label>
-          <textarea class="form-control" rows="3" placeholder="List any foods you want to avoid"></textarea>
-        </div>
-
-        <div class="col-md-12 form-group">
-          <label class="form-label">Daily Water Intake</label>
-          <input type="text" class="form-control">
-        </div>
-
-      </div>
-      <div class="text-end mt-3">
-        <button matButton matStepperPrevious>Back</button>
-        <button matStepperNext class="btn px-4  rounded-pill submission">Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="secondFormGroup">
-    <form>
-      <ng-template matStepLabel>Lifestyle & Activity</ng-template>
-      <h3>Tell Us About Your Day</h3>
-      <div class="col-md-12">
-        <label class="form-label d-block mb-2">Activity Level</label>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="activityLevel" id="sedentary" value="sedentary">
-          <label class="form-check-label" for="sedentary">Sedentary</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="activityLevel" id="lightly" value="lightly">
-          <label class="form-check-label" for="lightly">Lightly Active</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="activityLevel" id="moderate" value="moderate">
-          <label class="form-check-label" for="moderate">Moderate</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="activityLevel" id="veryActive" value="veryActive">
-          <label class="form-check-label" for="veryActive">Very Active</label>
-        </div>
-      </div>
-
-      <div class="col-md-12">
+<div class="container">
+  <mat-stepper labelPosition="bottom" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Personal Info</ng-template>
         <div class="row">
-          <div class="col-md-6">
-            <label class="form-label">Wake Up Time</label>
-            <input type="time" class="form-control" placeholder="Select wake up time">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <i class="bi bi-person icons"></i>
+              <input type="text" class="form-control ps-4" placeholder="Enter Full Name" />
+            </div>
           </div>
+
           <div class="col-md-6">
-            <label class="form-label">Sleep Time</label>
-            <input type="time" class="form-control" placeholder="Select sleep time">
+            <div class="form-group">
+              <label class="form-label">Enter Age</label>
+              <i class="bi bi-diagram-2 icons"></i>
+              <input type="number" class="form-control ps-4" placeholder="Enter your age" />
+            </div>
+          </div>
+
+          <!-- Gender -->
+          <div class="col-md-6 d-flex align-items-end">
+            <div>
+              <label class="form-label d-block">Gender</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="male" value="male">
+                <label class="form-check-label" for="male">Male</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+                <label class="form-check-label" for="female">Female</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Height -->
+          <div class="col-md-6">
+            <label class="form-label">Height</label>
+            <div class="d-flex gap-2">
+              <div class="input-group" style="max-width: 120px;">
+                <button class="btn btn-outline-secondary action border-0" type="button">−</button>
+                <input type="text" class="form-control measure text-center" value="00">
+                <button class="btn btn-outline-secondary action-add border-0" type="button">+</button>
+              </div>
+              <select class="form-select" style="max-width: 100px;">
+                <option>Inches</option>
+                <option>Feet</option>
+                <option>cm</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Weight -->
+          <div class="col-md-6">
+            <label class="form-label">Weight</label>
+            <div class="d-flex gap-2 align-items-center">
+              <div class="input-group" style="max-width: 120px;">
+                <button class="btn btn-outline-secondary action border-0" type="button">−</button>
+                <input type="text" class="form-control measure text-center" value="00">
+                <button class="btn btn-outline-secondary action-add border-0" type="button">+</button>
+              </div>
+              <span>kg</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="text-end mt-3">
+          <button matStepperNext class="btn px-4  rounded-pill submission">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form>
+        <ng-template matStepLabel>Health & Goals</ng-template>
+        <div class="row">
+          <h3>Tell Us About Your Goals</h3>
+          <div class="col-md-12">
+            <label class="form-label d-block mb-2">Diet Preference</label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="dietPreference" id="weightLoss" value="weightLoss">
+              <label class="form-check-label" for="weightLoss">Weight Loss</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="dietPreference" id="weightGain" value="weightGain">
+              <label class="form-check-label" for="weightGain">Weight Gain</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="dietPreference" id="maintainWeight"
+                value="maintainWeight">
+              <label class="form-check-label" for="maintainWeight">Maintain Weight</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="dietPreference" id="improveHealth"
+                value="improveHealth">
+              <label class="form-check-label" for="improveHealth">Improve Health</label>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <label class="form-label d-block mb-2">Do you have any medical conditions?</label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="diabetes" value="diabetes">
+              <label class="form-check-label" for="diabetes">Diabetes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="thyroid" value="thyroid">
+              <label class="form-check-label" for="thyroid">Thyroid</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="pcos" value="pcos">
+              <label class="form-check-label" for="pcos">PCOS</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="improveHealth" value="improveHealth">
+              <label class="form-check-label" for="improveHealth">Improve Health</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="none" value="none">
+              <label class="form-check-label" for="none">None</label>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <label class="form-label d-block mb-2">Are you on any Medications?</label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="medicationsYes" name="medications" value="yes"
+                [(ngModel)]="isOnMedication">
+              <label class="form-check-label" for="medicationsYes">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="medicationsNo" name="medications" value="no"
+                [(ngModel)]="isOnMedication">
+              <label class="form-check-label" for="medicationsNo">No</label>
+            </div>
+            <div *ngIf="isOnMedication === 'yes'" class="mt-2">
+              <input type="text" class="form-control" placeholder="Enter medication details">
+            </div>
           </div>
         </div>
-      </div>
-      <div class="text-end mt-3">
-        <button matButton matStepperPrevious>Back</button>
-        <button type="button" class="btn px-4 rounded-pill submission" (click)="goToPlans()">Submit</button>
-      </div>
-    </form>
-  </mat-step>
-</mat-stepper>
+
+        <div class="text-end mt-3">
+          <button matButton matStepperPrevious>Back</button>
+          <button matStepperNext class="btn px-4  rounded-pill submission">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form>
+        <ng-template matStepLabel>Food Preferences</ng-template>
+        <h3>Food & Preferences</h3>
+        <div class="row">
+          <div class="col-md-12">
+            <label class="form-label d-block mb-2">Diet Preference</label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="foodDietPreference" id="vegetarian" value="vegetarian">
+              <label class="form-check-label" for="vegetarian">Vegetarian</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="foodDietPreference" id="nonVegetarian"
+                value="nonVegetarian">
+              <label class="form-check-label" for="nonVegetarian">Non-Vegetarian</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="foodDietPreference" id="eggetarian" value="eggetarian">
+              <label class="form-check-label" for="eggetarian">Eggetarian</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="foodDietPreference" id="vegan" value="vegan">
+              <label class="form-check-label" for="vegan">Vegan</label>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <label class="form-label">Food to Avoid?</label>
+            <textarea class="form-control" rows="3" placeholder="List any foods you want to avoid"></textarea>
+          </div>
+
+          <div class="col-md-12 form-group">
+            <label class="form-label">Daily Water Intake</label>
+            <input type="text" class="form-control">
+          </div>
+
+        </div>
+        <div class="text-end mt-3">
+          <button matButton matStepperPrevious>Back</button>
+          <button matStepperNext class="btn px-4  rounded-pill submission">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form>
+        <ng-template matStepLabel>Lifestyle & Activity</ng-template>
+        <h3>Tell Us About Your Day</h3>
+        <div class="col-md-12">
+          <label class="form-label d-block mb-2">Activity Level</label>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="activityLevel" id="sedentary" value="sedentary">
+            <label class="form-check-label" for="sedentary">Sedentary</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="activityLevel" id="lightly" value="lightly">
+            <label class="form-check-label" for="lightly">Lightly Active</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="activityLevel" id="moderate" value="moderate">
+            <label class="form-check-label" for="moderate">Moderate</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="activityLevel" id="veryActive" value="veryActive">
+            <label class="form-check-label" for="veryActive">Very Active</label>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="form-label">Wake Up Time</label>
+              <input type="time" class="form-control" placeholder="Select wake up time">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Sleep Time</label>
+              <input type="time" class="form-control" placeholder="Select sleep time">
+            </div>
+          </div>
+        </div>
+        <div class="text-end mt-3">
+          <button matButton matStepperPrevious>Back</button>
+          <button type="button" class="btn px-4 rounded-pill submission" (click)="goToPlans()">Submit</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+</div>
