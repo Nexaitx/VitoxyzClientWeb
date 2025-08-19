@@ -21,7 +21,7 @@
               <div class="form-container">
                 <!-- Login Form -->
                 <div *ngIf="authMode === 'login'">
-                  <app-login [authMode]="authMode" (loginSuccess)="closeAuthModal()"></app-login>
+                  <app-login [authMode]="authMode" (loginSuccess)="onLoginSuccess()" (loadingChange)="handleLoadingChange($event)"></app-login>
                   <div class="text-center mt-3">
                     New to Vitoxyz? <span class="links" (click)="authMode = 'signup'">Sign Up</span>
                   </div>
@@ -29,7 +29,7 @@
 
                 <!-- Signup Form -->
                 <div *ngIf="authMode === 'signup'">
-                  <app-sign-up [authMode]="authMode" (signupSuccess)="closeAuthModal()"></app-sign-up>
+                  <app-sign-up [authMode]="authMode" (signupSuccess)="onLoginSuccess()" (loadingChange)="handleLoadingChange($event)"></app-sign-up>
                   <div class="text-center pb-3">
                     Already have an account? <span class="links" (click)="authMode = 'login'">Login</span>
                   </div>

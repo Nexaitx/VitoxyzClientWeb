@@ -8,6 +8,8 @@ import { API_URL, ENDPOINTS } from '../../../core/const';
 import { SpinnerToastService } from '../../../core/toasts/spinner-toast/spinner-toast.service';
 import { Router } from '@angular/router';
 import { AadharVerificationComponent } from "../../aadhar-verification/aadhar-verification.component";
+import { Login } from "../../authorization/login/login";
+import { Authorization } from '../../authorization/authorization';
 
 @Component({
   selector: 'app-book-staff',
@@ -15,9 +17,7 @@ import { AadharVerificationComponent } from "../../aadhar-verification/aadhar-ve
     ReactiveFormsModule,
     MapComponent,
     Submission,
-    AadharVerificationComponent,
-   
-  ],
+    AadharVerificationComponent, Authorization],
   templateUrl: './book-staff.html',
   styleUrls: ['./book-staff.scss'],
 })
@@ -41,6 +41,9 @@ export class BookStaff {
   isToken = localStorage.getItem('authToken')
   isLogin = false; // This should ideally come from an AuthService
   showAadharPopup = false; // Toggle for popup
+  showLoginPopup = false;
+  showAuthPopup = false;
+
   staffSearchResponse: any = null; // Store response temporarily
   time = { hour: 13, minute: 30 };
   meridian = true;
@@ -338,8 +341,9 @@ export class BookStaff {
     //here toekn check if not present
     if (!token) {
       console.log('User not logged in. Redirecting to login page.');
-      alert("Please login or signup first to access book staff page")
-      this.router.navigate(['/login']); // Changed from dashboard to login
+      // alert("Please login or signup first to access book staff page")
+      // this.router.navigate(['login']); // Changed from dashboard to login
+      this.showAuthPopup = true;
       return;
     }
 
@@ -400,6 +404,15 @@ export class BookStaff {
         alert('An error occurred while processing your request.');
       }
     });
+  }
+
+  onAuthSuccess() {
+    this.showAuthPopup = false;
+    this.onSubmit();
+  }
+
+  onAuthClose() {
+    this.showAuthPopup = false;
   }
   //pop when show or when not 
   onAadharVerified() {
