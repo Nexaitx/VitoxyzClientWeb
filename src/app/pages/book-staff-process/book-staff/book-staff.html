@@ -266,3 +266,8 @@
 @if(showAadharPopup) {
 <app-aadhar-verification (verified)="onAadharVerified()"></app-aadhar-verification>
 }
+<!-- Remove this -->
+ @if(showAuthPopup) {
+    <app-authorization [showAuthModal]="showAuthPopup" [authMode]="'login'" (loginSuccess)="onAuthSuccess()" (close)="onAuthClose()"></app-authorization>
+  }
+

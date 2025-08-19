@@ -1,42 +1,68 @@
-import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, AfterViewInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Login } from './login/login';
 import { SignUp } from './sign-up/sign-up';
-import { CommonModule } from '@angular/common';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-authorization',
   standalone: true,
   imports: [
+    CommonModule,
     Login,
-    SignUp,
-    CommonModule
+    SignUp
   ],
   templateUrl: './authorization.html',
   styleUrl: './authorization.scss'
 })
-export class Authorization {
-  @Input() authMode: 'login' | 'signup' = 'login'; // Default mode is 'login'
-  @ViewChild('authModal') authModalElement!: ElementRef;
+export class Authorization implements AfterViewInit, OnChanges, OnDestroy {
+  @Input() authMode: 'login' | 'signup' = 'login';
+  @Input() showAuthModal: boolean = false;
   @Output() loginSuccess = new EventEmitter<void>();
+  @Output() close = new EventEmitter<void>();
+  @ViewChild('authModal') authModalElement!: ElementRef;
   isChildLoading = false;
-  constructor() {
-  }
+  private modalInstance: bootstrap.Modal | undefined;
 
-  ngOnInit() {
-    console.log(this.authMode)
-  }
-
-  closeAuthModal() {
-    const closeButton = this.authModalElement.nativeElement.querySelector('.btn-close');
-    if (closeButton) {
-      this.loginSuccess.emit();
-      (closeButton as HTMLElement).click();
+  ngAfterViewInit() {
+    this.modalInstance = new bootstrap.Modal(this.authModalElement.nativeElement, {
+      backdrop: 'static',
+      keyboard: false
+    });
+    if (this.showAuthModal) {
+      this.modalInstance.show();
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['showAuthModal'] && this.modalInstance) {
+      if (this.showAuthModal) {
+        this.modalInstance.show();
+      } else {
+        this.modalInstance.hide();
+      }
+    }
     if (changes['authMode']) {
+      console.log('Auth mode changed to:', this.authMode);
     }
   }
 
+  ngOnDestroy() {
+    this.modalInstance?.dispose();
+  }
+
+  closeAuthModal() {
+    this.showAuthModal = false;
+    this.modalInstance?.hide();
+    this.close.emit();
+  }
+
+  handleLoadingChange(isLoading: boolean) {
+    this.isChildLoading = isLoading;
+  }
+
+  onLoginSuccess() {
+    this.loginSuccess.emit();
+    this.closeAuthModal();
+  }
 }
