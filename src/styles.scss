@@ -69,7 +69,8 @@ a {
     font-weight: 500;
 }
 
-.form-control, .form-select {
+.form-control,
+.form-select {
     border-radius: 8px !important;
     color: #7D8282 !important;
     font-size: small !important;
@@ -77,4 +78,11 @@ a {
 
 .link {
     cursor: pointer;
+}
+
+.spinner-border {
+    width: 20px !important;
+    height: 20px !important;
+    font-size: x-small !important;
+    top: 60% !important;
 }

@@ -7,6 +7,7 @@ import { Submission } from '../../submission/submission';
 import { Subscription, interval } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ENDPOINTS, API_URL } from '../../../core/const';
+import { Toast } from 'bootstrap';
 
 @Component({
   selector: 'app-login',
@@ -24,17 +25,12 @@ import { ENDPOINTS, API_URL } from '../../../core/const';
 export class Login implements OnInit, OnDestroy {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private fb = inject(FormBuilder); // Inject FormBuilder
-  loginForm!: FormGroup; // For email/password login
-  phoneLoginForm!: FormGroup; // For phone/OTP login
+  private fb = inject(FormBuilder); 
+  loginForm!: FormGroup;
+  phoneLoginForm!: FormGroup;
   showPassword = false;
-  isLoading = false;
-  // authMethod: 'password' | 'otp' = 'password'; // No longer needed with tabs
-  // usePassword = true; // No longer needed with tabs
-  // useOtp = false; // No longer needed with tabs
-  //rememberMe = true;
-  // button = 'Next'; // Button text is now dynamic per form/state
-  showPhoneInput = true; // Controls visibility of phone input vs. OTP input
+  isLoading = false;  
+  showPhoneInput = true; 
   selectedTabIndex: number = 0; // 0 for email/password, 1 for phone/OTP
   timeLeft: number = 30;
   private otpTimerSubscription: Subscription | undefined;
@@ -147,7 +143,12 @@ export class Login implements OnInit, OnDestroy {
             JSON.parse(sessionStorage.getItem('userProfile') || '{}'));
           
           this.loginSuccess.emit();
-          
+          // ✨ Add this new block to show the Bootstrap toast
+          const toastElement = document.getElementById('loginToast');
+          if (toastElement) {
+            const toast = new Toast(toastElement);
+            toast.show();
+          }
           this.loadingChange.emit(false);
           this.router.navigate(['/dashboard']);
 
@@ -166,7 +167,7 @@ export class Login implements OnInit, OnDestroy {
             errorMessage = 'Could not connect to the server. Please check your internet connection.';
           }
           // Display error message to user (e.g., using a MatSnackBar)
-          alert(errorMessage); // For simplicity, using alert
+          alert(errorMessage); 
           this.isLoading = false;
           this.loadingChange.emit(false);
         }
