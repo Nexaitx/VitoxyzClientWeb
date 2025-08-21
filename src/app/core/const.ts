@@ -1,4 +1,4 @@
-export const API_URL = 'http://13.48.58.197/Backend/api';
+export const API_URL = 'http://13.62.104.56/Backend/api';
 // export const API_URL = 'http://localhost:8080/api';
 
 export const ENDPOINTS = {

@@ -1,165 +1,64 @@
-<div class="update-profile-container">
-  <mat-card class="update-profile-card">
-    <mat-card-header>
-      <mat-card-title>Update Your Profile</mat-card-title>
-      <mat-card-subtitle>Edit your personal details and photo below.</mat-card-subtitle>
-    </mat-card-header>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <h5>Hi!</h5>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between">
+          <div>
+            <i class="bi bi-telephone me-3"></i>
+          </div>
+          <div>
+            <p class="text-muted mb-0">Mobile Number</p>
+            +91 7717471907
+          </div>
+        </div>
+        <div><button class="btn text-primary border-0">Edit</button></div>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between">
+          <div>
+            <i class="bi bi-envelope me-3"></i>
+          </div>
+          <div>
+            <p class="text-muted mb-0">Email</p>
+            text@nexaitx.com
+          </div>
+        </div>
+        <div><button class="btn text-primary border-0">Edit</button></div>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between">
+          <div>
+            <i class="bi bi-house me-3"></i>
+          </div>
+          <div>
+            <p class="text-muted mb-0">Your Address</p>
+            Street 1, lane II test, Xyz
+          </div>
+        </div>
+        <div><button class="btn text-primary border-0">Edit</button></div>
+      </div>
+      <hr>
+    </div>
 
-    <mat-card-content>
-      <form [formGroup]="updateProfileForm" (ngSubmit)="onSubmit()" class="update-profile-form">
-
-        <div class="profile-photo-section full-width">
-          <label for="profilePhotoInput" class="profile-photo-wrapper">
-            <img [src]="profilePhotoUrl || 'assets/placeholder-profile.png'" alt="Profile Photo" class="profile-photo">
-            <div class="photo-overlay">
-              <mat-icon>camera_alt</mat-icon>
-              <span>Change Photo</span>
-            </div>
-          </label>
-          <input type="file" id="profilePhotoInput" (change)="onFileSelected($event)" accept="image/*" hidden>
+    <div class="col-12 col-md-6">
+      <div class="ps-4 pt-4">
+        <div>
+          <h5 class="text-muted" [routerLink]="['/medicine']"><i class="bi bi-1-circle"></i> &nbsp;Order Medicines</h5>
         </div>
 
-
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Full Name</mat-label>
-          <input matInput formControlName="fullName" required>
-          <mat-error *ngIf="updateProfileForm.get('fullName')?.invalid && updateProfileForm.get('fullName')?.touched">
-            Full Name is required.
-          </mat-error>
-        </mat-form-field>
-
-        <div class="form-row">
-          <mat-form-field appearance="outline" class="form-field-half">
-            <mat-label>Email</mat-label>
-            <input matInput type="email" formControlName="email" required>
-            <mat-error *ngIf="updateProfileForm.get('email')?.invalid && updateProfileForm.get('email')?.touched">
-              Please enter a valid email address.
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="form-field-half">
-            <mat-label>Phone Number</mat-label>
-            <input matInput type="tel" formControlName="phoneNumber" required pattern="[0-9]{10}">
-            <mat-error *ngIf="updateProfileForm.get('phoneNumber')?.invalid && updateProfileForm.get('phoneNumber')?.touched">
-              Please enter a valid 10-digit phone number.
-            </mat-error>
-          </mat-form-field>
+        <div>
+          <h5 class="text-muted my-3" [routerLink]="['/book-staff']"><i class="bi bi-2-circle"></i> &nbsp;Book Staff</h5>
         </div>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Address Line 1</mat-label>
-          <input matInput formControlName="addressLine1">
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Address Line 2 (Optional)</mat-label>
-          <input matInput formControlName="addressLine2">
-        </mat-form-field>
-
-        <div class="form-row">
-          <mat-form-field appearance="outline" class="form-field-half">
-            <mat-label>City</mat-label>
-            <input matInput formControlName="city" required>
-            <mat-error *ngIf="updateProfileForm.get('city')?.invalid && updateProfileForm.get('city')?.touched">
-              City is required.
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="form-field-half">
-            <mat-label>State / Province</mat-label>
-            <input matInput formControlName="stateProvince">
-          </mat-form-field>
+        <div>
+          <h5 class="text-muted" [routerLink]="['/diet/user-onboarding']"><i class="bi bi-3-circle"></i> &nbsp;Get Diet Plans</h5>
         </div>
 
-        <div class="form-row">
-          <mat-form-field appearance="outline" class="form-field-half">
-            <mat-label>Zip / Postal Code</mat-label>
-            <input matInput formControlName="zipCode">
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="form-field-half">
-            <mat-label>Gender</mat-label>
-            <mat-select formControlName="gender" required>
-              <mat-option value="male">Male</mat-option>
-              <mat-option value="female">Female</mat-option>
-              <mat-option value="other">Other</mat-option>
-              <mat-option value="prefer_not_to_say">Prefer not to say</mat-option>
-            </mat-select>
-            <mat-error *ngIf="updateProfileForm.get('gender')?.invalid && updateProfileForm.get('gender')?.touched">
-              Gender is required.
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Age</mat-label>
-          <input matInput type="number" formControlName="age" required min="1" max="120">
-          <mat-error *ngIf="updateProfileForm.get('age')?.invalid && updateProfileForm.get('age')?.touched">
-            Please enter a valid age (1-120).
-          </mat-error>
-        </mat-form-field>
-
-        <div class="height-section full-width">
-          <mat-label class="section-label">Height:</mat-label>
-          <mat-radio-group aria-label="Select Height Unit" formControlName="heightUnit" class="height-unit-radio-group" required>
-            <mat-radio-button value="cm">Centimeters (cm)</mat-radio-button>
-            <mat-radio-button value="feet_inches">Feet & Inches</mat-radio-button>
-          </mat-radio-group>
-          <mat-error *ngIf="updateProfileForm.get('heightUnit')?.invalid && updateProfileForm.get('heightUnit')?.touched">
-            Please select a height unit.
-          </mat-error>
-
-          <ng-container *ngIf="updateProfileForm.get('heightUnit')?.value === 'cm'">
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Height (cm)</mat-label>
-              <input matInput type="number" formControlName="heightCm" required min="50" max="250">
-              <mat-error *ngIf="updateProfileForm.get('heightCm')?.invalid && updateProfileForm.get('heightCm')?.touched">
-                Please enter a valid height (50-250 cm).
-              </mat-error>
-            </mat-form-field>
-          </ng-container>
-
-          <ng-container *ngIf="updateProfileForm.get('heightUnit')?.value === 'feet_inches'">
-            <div class="height-feet-inches">
-              <mat-form-field appearance="outline" class="form-field-half">
-                <mat-label>Feet</mat-label>
-                <mat-select formControlName="heightFeet" required>
-                  <mat-option *ngFor="let feet of feetOptions" [value]="feet">{{ feet }}'</mat-option>
-                </mat-select>
-                <mat-error *ngIf="updateProfileForm.get('heightFeet')?.invalid && updateProfileForm.get('heightFeet')?.touched">
-                  Feet is required.
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field appearance="outline" class="form-field-half">
-                <mat-label>Inches</mat-label>
-                <mat-select formControlName="heightInches" required>
-                  <mat-option *ngFor="let inch of inchesOptions" [value]="inch">{{ inch }}"</mat-option>
-                </mat-select>
-                <mat-error *ngIf="updateProfileForm.get('heightInches')?.invalid && updateProfileForm.get('heightInches')?.touched">
-                  Inches are required.
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </ng-container>
-        </div>
-
-        <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Current Weight</mat-label>
-            <input matInput type="number" formControlName="weightKg" required min="10" max="300" placeholder="e.g., 75.2">
-            <!-- <mat-suffix>kg</mat-suffix> -->
-            <mat-error *ngIf="updateProfileForm.get('weightKg')?.invalid && updateProfileForm.get('weightKg')?.touched">
-              Please enter a valid weight (10-300 kg).
-            </mat-error>
-          </mat-form-field>
-
-
-        <button mat-raised-button color="primary" type="submit" [disabled]="updateProfileForm.invalid || isLoading" class="submit-button">
-          <mat-spinner *ngIf="isLoading" color="accent" [diameter]="20" class="spinner"></mat-spinner>
-          {{ isLoading ? 'Saving...' : 'Save Changes' }}
-        </button>
-      </form>
-    </mat-card-content>
-  </mat-card>
+      </div>
+    </div>
+  </div>
 </div>

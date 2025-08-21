@@ -12,8 +12,8 @@
                         <div class="col-4">
                             <div class="staff-img">
                                 <img [src]="staff.imageUrl || (staff.gender?.toLowerCase() === 'female' 
-                            ? '/assets/dettol.png' 
-                            : '/assets/dettol.png')" class="img-fluid rounded" alt="Staff Image" />
+                            ? '/assets/profile.jpeg' 
+                            : '/assets/profile.jpeg')" class="img-fluid rounded" alt="Staff Image" />
                             </div>
                         </div>
 
@@ -40,14 +40,17 @@
                                 <p class="mb-1 text-muted">₹{{ staff.price }}</p>
 
                                 <div class="d-flex justify-content-start gap-2 mt-2">
-                                    <button class="btn btn-outline-primary actionSwap" (click)="addSpecificStaff(staff)"
+                                    <button class="btn btn-outline-primary actionSwap" data-bs-toggle="modal"
+                                        data-bs-target="#swapStaff" (click)="selectedStaff = staff"
                                         [disabled]="staff.isBooked">
                                         <i class="bi bi-arrow-left-right"></i>
                                     </button>
 
 
                                     <button class="btn btn-sm btn-outline-danger actionDelete"
-                                        (click)="removeStaff(staff)">
+                                     data-bs-toggle="modal"
+                                        data-bs-target="#deleteStaff" 
+                                         (click)="selectedStaff = staff">
                                         <i class="bi bi-x-lg"></i>
                                     </button>
                                 </div>
@@ -73,6 +76,7 @@
 
 </footer>
 
+<!-- proceed to billing address -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -87,7 +91,7 @@
                 </div>
                 <div class="form-group my-3">
                     <label for="">Your Name</label>
-                    <input type="text"class="form-control" placeholder="Enter your name">
+                    <input type="text" class="form-control" placeholder="Enter your name">
                 </div>
                 <div class="form-group">
                     <label for="">GST Number</label>
@@ -95,10 +99,47 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary submission text-light btn-sm w-100 rounded-pill">Proceed to Payment (1212)</button>
+                <button type="button" class="btn btn-primary submission text-light btn-sm w-100 rounded-pill">Proceed to
+                    Payment (1212)</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Optional: Empty Message -->
+<!-- Swap staff -->
+<div class="modal fade" id="swapStaff" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Please Enter Billing Information</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5>Are you Sure, you want to swap the Staff?</h5>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn submission text-light btn-sm w-100 rounded-pill">No</button>
+                <button type="submit" class="btn btn-primary submission text-light btn-sm rounded-pill" (click)="addSpecificStaff(selectedStaff)">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Remove the staff -->
+<div class="modal fade" id="deleteStaff" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               <h5>Are you sure you want to remove this staff ?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn submission text-light btn-sm w-100 rounded-pill">Cancel</button>
+                <button type="submit" class="btn btn-primary submission text-light btn-sm rounded-pill" (click)="removeStaff(selectedStaff)">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>

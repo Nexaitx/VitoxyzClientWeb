@@ -36,6 +36,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/support/support').then(m => m.Support),
       },
       {
+        path: 'help',
+        loadComponent: () => import('./pages/help/help').then(m => m.Help),
+      },
+      {
         path: '',
         redirectTo: '',
         pathMatch: 'full'
