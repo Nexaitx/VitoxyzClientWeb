@@ -1,6 +1,6 @@
-<div class="chatbot-container container w-50">
+<div class="chatbot-container container">
   <div class="chat-messages w-100" #chatMessages>
-    <div *ngFor="let message of messages" 
+    <div *ngFor="let message of messages"  class="text-muted"
          [class.user-message]="message.isUser" 
          [class.bot-message]="!message.isUser">
       {{ message.text }}

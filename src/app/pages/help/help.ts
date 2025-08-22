@@ -15,10 +15,7 @@ export class Help {
   isLoggedIn: boolean = false;
   showAuth = false;
 
-  ngOnInit(): void {
-    console.log(this.isLoggedIn);
-    console.log(this.authToken)
-  }
+  ngOnInit(): void { }
 
   onLoginSuccess() {
     this.isLoggedIn = true;

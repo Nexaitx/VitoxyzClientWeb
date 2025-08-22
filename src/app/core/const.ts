@@ -1,14 +1,13 @@
-export const API_URL = 'http://13.62.104.56/Backend/api';
+export const API_URL = 'https://vitoxyzbackend-27e9.onrender.com/api';
 // export const API_URL = 'http://localhost:8080/api';
 
 export const ENDPOINTS = {
     LOGIN: '/user/loginWithPasswordUser',
-    SIGNUP: '/user/signup',
+    SIGN_UP: '/user/signup',
     USER_PROFILE: '/user/profile',
     BOOK_STAFF: '/user/create-booking',
     CATEGORIES: '/categories',
     SUB_CATEGORIES: '/subcategories',
-    SIGN_UP: '/user/signup',
     SEND_OTP: '/user/otp',
     VERIFY_OTP: '/user/verify-otp',
     LOGIN_EMAIL: '/user/loginWithEmail',
