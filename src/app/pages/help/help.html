@@ -4,11 +4,12 @@
     <div class="unAuthorised mb-3">
         <div class="d-flex justify-content-between shadow p-3">
             <div>With your orders?</div>
-            <button class="btn btn-primary rounded-pill text-light px-3">Login</button>
+            <button class="btn btn-primary btn-sm rounded-pill text-light px-3" data-bs-toggle="modal" data-bs-target="#authModal"
+                (click)="setAuthMode('login')">Login</button>
         </div>
     </div>
     }
-    @else {
+    @else if(authToken){
     <div class="accordion" id="accordionExample">
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -66,3 +67,5 @@
     </div>
     }
 </div>
+@if(showAuth){
+<app-authorization [authMode]="authMode" (loginSuccess)="onLoginSuccess()"></app-authorization>}

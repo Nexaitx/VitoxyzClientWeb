@@ -39,12 +39,12 @@ export class Login implements OnInit, OnDestroy {
   @Input() authMode: 'login' | 'signup' = 'login'; // Default mode is 'login'
   @Output() loginSuccess = new EventEmitter<void>();
   @Output() loadingChange = new EventEmitter<boolean>();
+   
   constructor() {
     this.initForms();
   }
 
   ngOnInit() {
-    // No initial timer start here, as it depends on phone input submission
   }
 
   ngOnDestroy() {
@@ -52,14 +52,12 @@ export class Login implements OnInit, OnDestroy {
   }
 
   private initForms(): void {
-    // Form for Email/Password Login
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       rememberMe: [true]
     });
 
-    // Form for Phone/OTP Login
     this.phoneLoginForm = this.fb.group({
       phoneNumber: ['', [Validators.required, Validators.pattern(/^\+?\d{10,14}$/)]], // Basic phone number validation
       otpCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]] // 6-digit OTP
@@ -71,15 +69,15 @@ export class Login implements OnInit, OnDestroy {
   }
 
   private maskPhoneNumber(phone: string): string {
-    if (!phone || phone.length < 4) return phone; // Handle invalid input or very short numbers
-    const countryCodeMatch = phone.match(/^\+\d{1,3}/); // Matches + followed by 1-3 digits
+    if (!phone || phone.length < 4) return phone; 
+    const countryCodeMatch = phone.match(/^\+\d{1,3}/);
     let countryCode = '';
     let numberPart = phone;
     if (countryCodeMatch) {
       countryCode = countryCodeMatch[0];
       numberPart = phone.substring(countryCode.length);
     }
-    if (numberPart.length < 2) return phone; // Ensure at least 2 digits to show
+    if (numberPart.length < 2) return phone;
     const lastTwoDigits = numberPart.slice(-2);
     const maskedPart = '*'.repeat(numberPart.length - 2);
     return `${countryCode}${maskedPart}${lastTwoDigits}`;
@@ -88,13 +86,11 @@ export class Login implements OnInit, OnDestroy {
   resendOtp(): void {
     console.log('Resending OTP...');
     this.isLoading = true;
-    // In a real application, you would make an API call here to resend OTP
-    // For demonstration, we just simulate success and restart the timer
     setTimeout(() => {
       console.log('OTP Resent (simulated)');
       this.startOtpTimer();
       this.isLoading = false;
-    }, 1000); // Simulate API call delay
+    }, 1000);
   }
 
   startOtpTimer(): void {
@@ -109,53 +105,28 @@ export class Login implements OnInit, OnDestroy {
     });
   }
 
-  // --- Email/Password Login Methods ---
   login(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
-      console.log('Email/Password form is invalid');
       return;
     } else {
       this.isLoading = true;
       this.loadingChange.emit(true);
       const { username, password, rememberMe } = this.loginForm.value;
       const apiUrl = API_URL + ENDPOINTS.LOGIN_EMAIL;
-      const payload = { username, password }; // Assuming your API expects 'username' and 'password'
+      const payload = { username, password };
       this.http.post(apiUrl, payload).subscribe({
         next: (response: any) => {
           this.isLoading = false;
-          console.log('Email/Password Login successful', response);
           localStorage.setItem('userProfile', JSON.stringify(response.profile));
-
-         
-          // Store token/user data if rememberMe is true, or in session storage
+          this.ngOnInit();
           if (rememberMe) {
             localStorage.setItem('authToken', response.token);
             this.loginSuccess.emit();
-          } else {
-            sessionStorage.setItem('authToken', response.token);
-            sessionStorage.setItem('userProfile', JSON.stringify(response.profile));
-
           }
-           console.log('Stored token:', rememberMe ? localStorage.getItem('token') : sessionStorage.getItem('token'));
-          console.log('Stored profile:', rememberMe ? 
-            JSON.parse(localStorage.getItem('userProfile') || '{}') : 
-            JSON.parse(sessionStorage.getItem('userProfile') || '{}'));
-          
-          this.loginSuccess.emit();
-          // ✨ Add this new block to show the Bootstrap toast
-          const toastElement = document.getElementById('loginToast');
-          if (toastElement) {
-            const toast = new Toast(toastElement);
-            toast.show();
-          }
-          this.loadingChange.emit(false);
-          this.router.navigate(['/dashboard']);
-
-          
+          // this.loadingChange.emit(false);
         },
         error: (error: HttpErrorResponse) => {
-          console.error('Email/Password Login failed', error);
           let errorMessage = 'Login failed. Please try again.';
           if (error.error && typeof error.error === 'object' && error.error.message) {
             errorMessage = `Login failed: ${error.error.message}`;
@@ -166,7 +137,6 @@ export class Login implements OnInit, OnDestroy {
           } else if (error.status === 0) {
             errorMessage = 'Could not connect to the server. Please check your internet connection.';
           }
-          // Display error message to user (e.g., using a MatSnackBar)
           alert(errorMessage); 
           this.isLoading = false;
           this.loadingChange.emit(false);
@@ -229,7 +199,7 @@ export class Login implements OnInit, OnDestroy {
         } else if (error.status === 400) {
           errorMessage = 'Invalid OTP or OTP expired.';
         }
-        alert(errorMessage); // For simplicity, using alert
+        alert(errorMessage);
         this.isLoading = false;
       }
     });
