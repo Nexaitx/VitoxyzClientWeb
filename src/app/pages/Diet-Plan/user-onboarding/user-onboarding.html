@@ -1,14 +1,20 @@
-<!-- <div class="container">
+<div class="container">
   <mat-stepper labelPosition="bottom" #stepper>
+    <!-- Step 1: Personal Info -->
     <mat-step [stepControl]="onBoardDiet">
       <form [formGroup]="onBoardDiet">
         <ng-template matStepLabel>Personal Info</ng-template>
         <div class="row">
+
           <div class="col-md-12">
             <div class="form-group">
               <label class="form-label">Full Name</label>
               <i class="bi bi-person icons"></i>
               <input type="text" class="form-control ps-4" placeholder="Enter Full Name" formControlName="fullName" />
+              <div *ngIf="f['fullName'].touched && f['fullName'].invalid" class="text-danger small mt-1">
+                <div *ngIf="f['fullName'].errors?.['required']">Full Name is required!</div>
+                <div *ngIf="f['fullName'].errors?.['invalidName']">Only alphabets and spaces allowed!</div>
+              </div>
             </div>
           </div>
 
@@ -17,6 +23,9 @@
               <label class="form-label">Enter Age</label>
               <i class="bi bi-diagram-2 icons"></i>
               <input type="number" class="form-control ps-4" placeholder="Enter your age" formControlName="age" />
+              <div *ngIf="f['age'].touched && f['age'].invalid" class="text-danger small mt-1">
+                Age is required
+              </div>
             </div>
           </div>
 
@@ -24,88 +33,88 @@
             <div>
               <label class="form-label d-block">Gender</label>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="gender" id="male" value="male" formControlName="gender">
+                <input class="form-check-input" type="radio" value="male" formControlName="gender" id="male">
                 <label class="form-check-label" for="male">Male</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="gender" id="female" value="female" formControlName="gender">
+                <input class="form-check-input" type="radio" value="female" formControlName="gender" id="female">
                 <label class="form-check-label" for="female">Female</label>
               </div>
+            </div>
+            <div *ngIf="f['gender'].touched && f['gender'].invalid" class="text-danger small mt-1">
+              Gender is required!
             </div>
           </div>
 
           <div class="col-md-6">
             <label class="form-label">Height</label>
-            <div class="d-flex gap-2">
-              <div class="input-group" style="max-width: 120px;">
-                <button class="btn btn-outline-secondary action border-0" type="button">−</button>
-                <input type="text" class="form-control measure text-center" value="00" formControlName="height">
-                <button class="btn btn-outline-secondary action-add border-0" type="button">+</button>
-              </div>
-              <select class="form-select" style="max-width: 100px;">
-                <option>Inches</option>
-                <option>Feet</option>
-                <option>cm</option>
-              </select>
-            </div>
+            <input type="number" class="form-control" placeholder="Enter height" formControlName="height" />
           </div>
 
           <div class="col-md-6">
             <label class="form-label">Weight</label>
-            <div class="d-flex gap-2 align-items-center">
-              <div class="input-group" style="max-width: 120px;">
-                <button class="btn btn-outline-secondary action border-0" type="button">−</button>
-                <input type="text" class="form-control measure text-center" value="00" formControlName="weight">
-                <button class="btn btn-outline-secondary action-add border-0" type="button">+</button>
-              </div>
-              <span>kg</span>
-            </div>
+            <input type="number" class="form-control" placeholder="Enter weight" formControlName="weight" />
           </div>
         </div>
+
         <div class="text-end mt-3">
           <button matStepperNext class="btn px-4 rounded-pill submission">Next</button>
         </div>
       </form>
     </mat-step>
 
-    <mat-step [stepControl]="onBoardDiet">
+    <!-- Step 2: Health & Goals -->
+    <mat-step [stepControl]="onBoardDiet.get('healthGoals')!">
       <form [formGroup]="onBoardDiet">
         <ng-template matStepLabel>Health & Goals</ng-template>
-        <div class="row">
+        <div class="row" formGroupName="healthGoals">
           <h3>Tell Us About Your Goals</h3>
+
           <div class="col-md-12">
             <label class="form-label d-block mb-2">Diet Preference</label>
-            <div class="form-check form-check-inline" *ngFor="let option of ['weightLoss', 'weightGain', 'maintainWeight', 'improveHealth']">
-              <input class="form-check-input" type="radio" [id]="option" [value]="option" formControlName="dietPreference" [name]="'dietPreference'">
+            <div class="form-check form-check-inline"
+              *ngFor="let option of ['weightLoss', 'weightGain', 'maintainWeight', 'improveHealth']">
+              <input class="form-check-input" type="radio" [id]="option" [value]="option"
+                formControlName="dietPreference" name="dietPreference">
               <label class="form-check-label" [for]="option">{{ option | titlecase }}</label>
+            </div>
+            <div *ngIf="onBoardDiet.get('healthGoals.dietPreference')?.touched 
+              && onBoardDiet.get('healthGoals.dietPreference')?.invalid" class="text-danger small mt-1">
+              Diet Preference is required!
             </div>
           </div>
 
           <div class="col-md-12">
             <label class="form-label d-block mb-2">Do you have any medical conditions?</label>
-            <div formArrayName="medicalCondition">
-              <div class="form-check form-check-inline" *ngFor="let condition of ['diabetes', 'thyroid', 'pcos', 'none']; let i = index">
-                <input class="form-check-input" type="checkbox" [id]="condition" [value]="condition" [formControlName]="i">
-                <label class="form-check-label" [for]="condition">{{ condition | titlecase }}</label>
-              </div>
-            </div>
+            <!-- keep it simple instead of FormArray for now -->
+            <select class="form-select" formControlName="medicalCondition">
+              <option value="">Select</option>
+              <option *ngFor="let condition of ['diabetes','thyroid','pcos','none']" [value]="condition">
+                {{ condition | titlecase }}
+              </option>
+            </select>
           </div>
 
           <div class="col-md-12">
             <label class="form-label d-block mb-2">Are you on any Medications?</label>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" id="medicationsYes" value="true" formControlName="anyMedication">
+              <input class="form-check-input" type="radio" [value]="true" formControlName="anyMedication"
+                id="medicationsYes">
               <label class="form-check-label" for="medicationsYes">Yes</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" id="medicationsNo" value="false" formControlName="anyMedication">
+              <input class="form-check-input" type="radio" [value]="false" formControlName="anyMedication"
+                id="medicationsNo">
               <label class="form-check-label" for="medicationsNo">No</label>
             </div>
-            <div *ngIf="onBoardDiet.get('anyMedication').value" class="mt-2">
-              <input type="text" class="form-control" placeholder="Enter medication details" formControlName="medication">
+
+            <div class="mt-2" *ngIf="onBoardDiet.get('healthGoals.anyMedication')?.value">
+              <input type="text" class="form-control" placeholder="Enter medication details"
+                formControlName="medication">
             </div>
           </div>
         </div>
+
         <div class="text-end mt-3">
           <button matButton matStepperPrevious>Back</button>
           <button matStepperNext class="btn px-4 rounded-pill submission">Next</button>
@@ -113,27 +122,35 @@
       </form>
     </mat-step>
 
-    <mat-step [stepControl]="onBoardDiet">
+    <!-- Step 3: Food Preferences -->
+    <mat-step [stepControl]="onBoardDiet.get('foodPreference')!">
       <form [formGroup]="onBoardDiet">
         <ng-template matStepLabel>Food Preferences</ng-template>
         <h3>Food & Preferences</h3>
-        <div class="row">
+
+        <div class="row" formGroupName="foodPreference">
           <div class="col-md-12">
             <label class="form-label d-block mb-2">Diet Preference</label>
-            <div class="form-check form-check-inline" *ngFor="let option of ['vegetarian', 'nonVegetarian', 'eggetarian', 'vegan']">
-              <input class="form-check-input" type="radio" [id]="option" [value]="option" formControlName="foodPreference" [name]="'foodPreference'">
+            <div class="form-check form-check-inline"
+              *ngFor="let option of ['vegetarian', 'nonVegetarian', 'eggetarian', 'vegan']">
+              <input class="form-check-input" type="radio" [id]="option" [value]="option"
+                formControlName="foodPreference" name="foodPreference">
               <label class="form-check-label" [for]="option">{{ option | titlecase }}</label>
             </div>
           </div>
+
           <div class="col-md-12">
             <label class="form-label">Food to Avoid?</label>
-            <textarea class="form-control" rows="3" placeholder="List any foods you want to avoid" formControlName="foodAvoid"></textarea>
+            <textarea class="form-control" rows="3" placeholder="List any foods you want to avoid"
+              formControlName="foodAvoid"></textarea>
           </div>
+
           <div class="col-md-12 form-group">
             <label class="form-label">Daily Water Intake</label>
             <input type="text" class="form-control" formControlName="dailyWaterIntake">
           </div>
         </div>
+
         <div class="text-end mt-3">
           <button matButton matStepperPrevious>Back</button>
           <button matStepperNext class="btn px-4 rounded-pill submission">Next</button>
@@ -141,29 +158,33 @@
       </form>
     </mat-step>
 
-    <mat-step [stepControl]="onBoardDiet">
+    <!-- Step 4: Lifestyle & Activity -->
+    <mat-step [stepControl]="onBoardDiet.get('lifestyleActivity')!">
       <form [formGroup]="onBoardDiet">
         <ng-template matStepLabel>Lifestyle & Activity</ng-template>
         <h3>Tell Us About Your Day</h3>
-        <div class="col-md-12">
-          <label class="form-label d-block mb-2">Activity Level</label>
-          <div class="form-check form-check-inline" *ngFor="let option of ['sedentary', 'lightly', 'moderate', 'veryActive']">
-            <input class="form-check-input" type="radio" [id]="option" [value]="option" formControlName="activity_level" [name]="'activityLevel'">
-            <label class="form-check-label" [for]="option">{{ option | titlecase }}</label>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-6">
-              <label class="form-label">Wake Up Time</label>
-              <input type="time" class="form-control" formControlName="wakeup" placeholder="Select wake up time">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Sleep Time</label>
-              <input type="time" class="form-control" formControlName="sleep" placeholder="Select sleep time">
+
+        <div class="row" formGroupName="lifestyleActivity">
+          <div class="col-md-12">
+            <label class="form-label d-block mb-2">Activity Level</label>
+            <div class="form-check form-check-inline"
+              *ngFor="let option of ['sedentary', 'lightly', 'moderate', 'veryActive']">
+              <input class="form-check-input" type="radio" [id]="option" [value]="option"
+                formControlName="activity_level" name="activity_level">
+              <label class="form-check-label" [for]="option">{{ option | titlecase }}</label>
             </div>
           </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Wake Up Time</label>
+            <input type="time" class="form-control" formControlName="wakeup">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Sleep Time</label>
+            <input type="time" class="form-control" formControlName="sleep">
+          </div>
         </div>
+
         <div class="text-end mt-3">
           <button matButton matStepperPrevious>Back</button>
           <button type="submit" class="btn px-4 rounded-pill submission" (click)="onSubmission()">Submit</button>
@@ -171,4 +192,18 @@
       </form>
     </mat-step>
   </mat-stepper>
-</div> -->
+</div>
+
+
+<!-- Bootstrap Toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div class="toast align-items-center text-bg-danger border-0" role="alert" id="formErrorToast">
+    <div class="d-flex">
+      <div class="toast-body">
+        Please fill in all required fields before submitting!
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+        aria-label="Close"></button>
+    </div>
+  </div>
+</div>

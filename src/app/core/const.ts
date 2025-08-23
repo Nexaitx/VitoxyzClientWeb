@@ -13,9 +13,9 @@ export const ENDPOINTS = {
     LOGIN_EMAIL: '/user/loginWithEmail',
 
     // On board to diet plan
-    ONBOARD_DIET: '/user/onboard-diet',
+    ONBOARD_DIET: '/user/diet/onboard-diet',
     BOOKING_RESPONSE: '/user/booking-response',
-    SUBSCRIPTION_PLANS: '/plans',
+    SUBSCRIPTION_PLANS: '/user/subscription/plans',
     REMOVE_STAFF: '/user/remove-staff/{bookingId}',
     BOOK_SINGLE_STAFF:'/user/create-booking',
 

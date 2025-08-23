@@ -25,12 +25,12 @@ import { Toast } from 'bootstrap';
 export class Login implements OnInit, OnDestroy {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private fb = inject(FormBuilder); 
+  private fb = inject(FormBuilder);
   loginForm!: FormGroup;
   phoneLoginForm!: FormGroup;
   showPassword = false;
-  isLoading = false;  
-  showPhoneInput = true; 
+  isLoading = false;
+  showPhoneInput = true;
   selectedTabIndex: number = 0; // 0 for email/password, 1 for phone/OTP
   timeLeft: number = 30;
   private otpTimerSubscription: Subscription | undefined;
@@ -39,7 +39,7 @@ export class Login implements OnInit, OnDestroy {
   @Input() authMode: 'login' | 'signup' = 'login'; // Default mode is 'login'
   @Output() loginSuccess = new EventEmitter<void>();
   @Output() loadingChange = new EventEmitter<boolean>();
-   
+
   constructor() {
     this.initForms();
   }
@@ -69,7 +69,7 @@ export class Login implements OnInit, OnDestroy {
   }
 
   private maskPhoneNumber(phone: string): string {
-    if (!phone || phone.length < 4) return phone; 
+    if (!phone || phone.length < 4) return phone;
     const countryCodeMatch = phone.match(/^\+\d{1,3}/);
     let countryCode = '';
     let numberPart = phone;
@@ -115,18 +115,16 @@ export class Login implements OnInit, OnDestroy {
       const { username, password, rememberMe } = this.loginForm.value;
       const apiUrl = API_URL + ENDPOINTS.LOGIN_EMAIL;
       const payload = { username, password };
-      this.http.post(apiUrl, payload).subscribe({
-        next: (response: any) => {
-          this.isLoading = false;
-          localStorage.setItem('userProfile', JSON.stringify(response.profile));
-          this.ngOnInit();
-          if (rememberMe) {
-            localStorage.setItem('authToken', response.token);
-            this.loginSuccess.emit();
-          }
-          // this.loadingChange.emit(false);
-        },
-        error: (error: HttpErrorResponse) => {
+      this.http.post(apiUrl, payload).subscribe((res: any) => {
+        this.isLoading = false;
+        localStorage.setItem('userProfile', JSON.stringify(res.profile));
+        if (rememberMe) {
+          localStorage.setItem('authToken', res.token);
+          this.loginSuccess.emit();
+        }
+        this.loadingChange.emit(false);
+      },
+        error => {
           let errorMessage = 'Login failed. Please try again.';
           if (error.error && typeof error.error === 'object' && error.error.message) {
             errorMessage = `Login failed: ${error.error.message}`;
@@ -137,26 +135,22 @@ export class Login implements OnInit, OnDestroy {
           } else if (error.status === 0) {
             errorMessage = 'Could not connect to the server. Please check your internet connection.';
           }
-          alert(errorMessage); 
+          alert(errorMessage);
           this.isLoading = false;
           this.loadingChange.emit(false);
         }
-      });
+      )
     }
-
   }
 
   sendOtp(): void {
     if (this.phoneLoginForm.get('phoneNumber')?.invalid) {
       this.phoneLoginForm.get('phoneNumber')?.markAsTouched();
-      console.log('Phone number form is invalid');
       return;
     }
-
     this.isLoading = true;
     this.phoneNumber = this.phoneLoginForm.get('phoneNumber')?.value;
     this.maskedPhoneNumber = this.maskPhoneNumber(this.phoneNumber);
-
 
     this.http.post(API_URL + ENDPOINTS.SEND_OTP, { phoneNumber: this.phoneNumber }).subscribe({
       next: (response: any) => {

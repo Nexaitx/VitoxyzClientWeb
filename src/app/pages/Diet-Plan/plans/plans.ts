@@ -1,11 +1,13 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { API_URL, ENDPOINTS } from '@src/app/core/const';
 
 @Component({
   selector: 'app-plans',
@@ -22,7 +24,13 @@ import { FormsModule } from '@angular/forms';
 })
 export class Plans implements OnInit {
   selectedPlan: string = 'monthly';
-  // No specific logic needed for now, just displays content
+  http = inject(HttpClient)
+
   constructor() { }
+
   ngOnInit(): void { }
+
+  getPlans() {
+// this.http.get(API_URL + ENDPOINTS.SUBSCRIPTION_PLANS)
+  }
 }
