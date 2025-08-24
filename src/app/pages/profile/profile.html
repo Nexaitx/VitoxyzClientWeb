@@ -4,58 +4,55 @@
       <h5>Hi!</h5>
       <hr>
       <div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between">
-          <div>
-            <i class="bi bi-telephone me-3"></i>
-          </div>
-          <div>
-            <p class="text-muted mb-0">Mobile Number</p>
-            +91 7717471907
-          </div>
-        </div>
-        <div><button class="btn text-primary border-0">Edit</button></div>
+        @if(!isEdit) {
+        <div>
+          <p class="text-muted mb-0">Mobile Number</p>
+          +91 7717471907
+        </div>}
+        <div><button class="btn text-primary border-0" (click)="isEdit= true">Edit</button></div>
       </div>
       <hr>
       <div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between">
-          <div>
-            <i class="bi bi-envelope me-3"></i>
-          </div>
-          <div>
-            <p class="text-muted mb-0">Email</p>
-            text@nexaitx.com
-          </div>
+        @if(!isEdit) {
+        <div>
+          <p class="text-muted mb-0">Email</p>
+          text@nexaitx.com
         </div>
-        <div><button class="btn text-primary border-0">Edit</button></div>
+        }
+        @else {
+        <div>
+          <label for="email">Enter E-mail</label><br>
+          <input type="email" id="email" class="form-control border-0 border-bottom">
+        </div>
+        }
+        <div><button class="btn text-primary border-0" (click)="isEdit= true">Edit</button></div>
       </div>
       <hr>
       <div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between">
-          <div>
-            <i class="bi bi-house me-3"></i>
-          </div>
-          <div>
-            <p class="text-muted mb-0">Your Address</p>
-            Street 1, lane II test, Xyz
-          </div>
-        </div>
-        <div><button class="btn text-primary border-0">Edit</button></div>
+        @if(!isEdit) {
+        <div>
+          <p class="text-muted mb-0">Your Address</p>
+          Street 1, lane II test, Xyz
+        </div>}
+        <div><button class="btn text-primary border-0" (click)="isEdit= true">Edit</button></div>
       </div>
       <hr>
     </div>
 
     <div class="col-12 col-md-6">
       <div class="ps-4 pt-4">
-        <div>
+        <div class="cards py-3 px-2">
           <h5 class="text-muted" [routerLink]="['/medicine']"><i class="bi bi-1-circle"></i> &nbsp;Order Medicines</h5>
         </div>
 
-        <div>
-          <h5 class="text-muted my-3" [routerLink]="['/book-staff']"><i class="bi bi-2-circle"></i> &nbsp;Book Staff</h5>
+        <div class="cards py-3 px-2 my-2">
+          <h5 class="text-muted my-3" [routerLink]="['/book-staff']"><i class="bi bi-2-circle"></i> &nbsp;Book Staff
+          </h5>
         </div>
 
-        <div>
-          <h5 class="text-muted" [routerLink]="['/diet/user-onboarding']"><i class="bi bi-3-circle"></i> &nbsp;Get Diet Plans</h5>
+        <div class="cards py-3 px-2">
+          <h5 class="text-muted" [routerLink]="['/diet/user-onboarding']"><i class="bi bi-3-circle"></i> &nbsp;Get Diet
+            Plans</h5>
         </div>
 
       </div>

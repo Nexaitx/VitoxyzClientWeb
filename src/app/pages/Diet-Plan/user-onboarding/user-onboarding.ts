@@ -34,7 +34,7 @@ export class UserOnboarding {
   onBoardDiet = this._formBuilder.group({
     fullName: ['', [Validators.required, this.nameValidator]],
     age: [null, Validators.required],
-    gender: ['', Validators.required],
+    gender: ['male', Validators.required],
     height: [''],
     weight: [''],
     healthGoals: this._formBuilder.group({

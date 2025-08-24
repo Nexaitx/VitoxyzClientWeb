@@ -86,5 +86,11 @@ a {
     font-size: x-small !important;
     top: 60% !important;
 }
+
+.cards {
+  box-shadow: 1px 2px 7px #e0e2e2;
+  border-radius: 10px
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
