@@ -10,5 +10,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './profile.scss'
 })
 export class Profile {
-
+  isEdit: boolean = false;
 }

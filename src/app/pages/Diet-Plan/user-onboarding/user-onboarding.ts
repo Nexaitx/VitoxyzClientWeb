@@ -34,12 +34,12 @@ export class UserOnboarding {
   onBoardDiet = this._formBuilder.group({
     fullName: ['', [Validators.required, this.nameValidator]],
     age: [null, Validators.required],
-    gender: ['', Validators.required],
+    gender: ['male', Validators.required],
     height: [''],
     weight: [''],
     healthGoals: this._formBuilder.group({
       dietPreference: ['', Validators.required],
-      medicalCondition: [[]],
+      medicalCondition: this._formBuilder.array([]),
       anyMedication: [false],
       medication: ['']
     }),
@@ -71,9 +71,9 @@ export class UserOnboarding {
     return this.onBoardDiet.controls;
   }
 
-  get medicalCondition() {
-    return (this.onBoardDiet.get('healthGoals') as FormGroup).get('medicalCondition') as FormArray;
-  }
+ get medicalCondition(): FormArray {
+  return (this.onBoardDiet.get('healthGoals.medicalCondition') as FormArray);
+}
 
   onSubmission() {
     if (this.onBoardDiet.valid) {

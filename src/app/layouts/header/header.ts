@@ -52,7 +52,7 @@ export class Header {
       dropdown: true,
       dropdownItems: [
         { label: 'My Profile', path: '/user-profile' },
-        { label: 'My Orders', path: '' },
+        { label: 'My Orders', path: '/orders' },
         { label: 'Manage Payments', path: '' },
         { label: 'Settings', path: '/settings' },
         { label: 'Logout', path: '/logout' }
