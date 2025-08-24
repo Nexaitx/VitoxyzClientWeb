@@ -24,20 +24,20 @@
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
                         "assets": [
-                          {
-                            "glob": "**/*",
-                            "input": "public"
-                          },
-                          "src/assets",
-                          {
-                            "glob": "**/*",
-                            "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
-                            "output": "/assets/"
-                          }
+                            {
+                                "glob": "**/*",
+                                "input": "public"
+                            },
+                            "src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                                "output": "/assets/"
+                            }
                         ],
                         "styles": [
-                          "./src/app/styles/custom-bootstrap.scss",
-                          "src/styles.scss"
+                            "./src/app/styles/custom-bootstrap.scss",
+                            "src/styles.scss"
                         ],
                         "scripts": [
                             "./node_modules/jquery/dist/jquery.min.js",
@@ -107,7 +107,7 @@
                             "src/assets"
                         ],
                         "styles": [
-                          "src/styles.scss"
+                            "src/styles.scss"
                         ]
                     }
                 }

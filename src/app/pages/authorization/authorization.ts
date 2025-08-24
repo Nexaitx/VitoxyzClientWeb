@@ -62,6 +62,13 @@ export class Authorization implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   onLoginSuccess() {
+    const modalEl = document.getElementById('authModal');
+    if (modalEl) {
+      const modal = bootstrap.Modal.getInstance(modalEl) ||
+        new bootstrap.Modal(modalEl);
+      modal.hide();
+    }
+    window.location.reload();
     this.loginSuccess.emit();
     this.closeAuthModal();
   }

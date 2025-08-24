@@ -29,19 +29,18 @@
 }
 
 /* When the button is expanded */
-.navbar-toggler[aria-expanded="true"] {
-  /* Hide the three-dots icon */
-  .bi-three-dots {
-    display: none;
-  }
-  
-  /* Show the 'X' icon by overriding d-none */
-  .bi-x-lg {
-    display: inline-block !important; 
-    /* Use !important to override the d-none utility class */
-  }
+.navbar-toggler[aria-expanded="true"] .bi-three-dots {
+  display: none !important;
 }
+
+.navbar-toggler[aria-expanded="true"] .bi-x-lg {
+  display: inline-block !important;
+}
+
+.navbar-toggler[aria-expanded="false"] .bi-x-lg {
+  display: none !important;
+}
+
 .navbar-toggler:focus{
   box-shadow: none !important;
-  outline: none !important;
 }

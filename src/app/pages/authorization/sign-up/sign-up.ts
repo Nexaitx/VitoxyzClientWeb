@@ -13,6 +13,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Submission } from '../../submission/submission';
 import { API_URL, ENDPOINTS } from '../../../core/const';
+import { Toast } from 'bootstrap';
 
 @Component({
   selector: 'app-sign-up',
@@ -75,6 +76,12 @@ export class SignUp {
           this.isLoading = false;
           console.log('✅ Signup successful:', res);
           //alert('Signup successful! Now redirecting...');
+          // ✨ Add this new block to show the Bootstrap toast
+          const toastElement = document.getElementById('loginToast');
+          if (toastElement) {
+            const toast = new Toast(toastElement);
+            toast.show();
+          }
           this.signupSuccess.emit();
           this.loadingChange.emit(false);
           this.router.navigate(['/dashboard']);

@@ -45,7 +45,7 @@ export class Header {
       ]
     },
     { label: 'Diet Plans', path: 'diet/user-onboarding' },
-    { label: 'Support', path: '/support' },
+    // { label: 'Support', path: '/support' },
     {
       label: 'Profile',
       icon: 'bi bi-person-circle',

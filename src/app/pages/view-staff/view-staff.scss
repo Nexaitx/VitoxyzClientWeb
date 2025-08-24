@@ -1,11 +1,65 @@
 .text-center {
-    position: fixed;
-    top: 50%;
-    left: 45%;
+  position: fixed;
+  top: 50%;
+  left: 45%;
 }
+
 .bi-star-half.text-warning {
-  color: #000000 !important; /* Bootstrap's warning yellow */
+  color: #000000 !important;
+  /* Bootstrap's warning yellow */
 }
+
 .bi-star-full.text-warning {
-  color: #000000 !important; /* Bootstrap's warning yellow */
+  color: #000000 !important;
+  /* Bootstrap's warning yellow */
+}
+
+.actionSwap {
+  width: 36px !important;
+  height: 37px !important;
+  border-radius: 100% !important;
+  padding: 0px !important;
+  background: #E4F4F3 !important;
+  border: 0 !important;
+
+  .bi {
+    font-size: 18px !important;
+  }
+}
+
+.actionDelete {
+  border: 0 !important;
+  background: #ffe6e6 !important;
+  padding: 0px !important;
+  width: 36px !important;
+  height: 37px !important;
+  border-radius: 100% !important;
+
+  .bi {
+    font-size: 18px !important;
+  }
+}
+
+.card {
+  border: 1px solid #ccebec !important;
+  background: #f4f5f7 !important;
+
+  .staff-img {
+    height: auto;
+    background: white;
+    border-radius: 20px;
+    position: relative;
+    margin: 30px 10px;
+    padding: 10px 0px;
+  }
+}
+
+footer {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+}
+
+.form-control {
+  border-radius: 25px !important;
 }

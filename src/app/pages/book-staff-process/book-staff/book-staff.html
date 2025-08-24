@@ -63,6 +63,7 @@
                                 {{ staff.name }}
                               </option>
                             </select>
+                            
                             @if(staffDetails.get('typeOfStaff')?.invalid && staffDetails.get('typeOfStaff')?.touched) {
                             <div class="invalid-feedback">
                               Type of Staff is required.
@@ -90,6 +91,7 @@
                                   {{ nurse.label }}
                                 </option>
                               </select>
+                              
                               @if(staffDetails.get('typeOfSubStaff')?.invalid &&
                               staffDetails.get('typeOfSubStaff')?.touched) {
                               <div class="invalid-feedback">
@@ -110,17 +112,19 @@
                         [formGroupName]="sh" class="shift-detail">
                         <div class="row d-flex">
                           <div class="col-md-4">
-                             <label class="form-label">Preferred Time Slot</label>
+                            <label class="form-label">Preferred Time Slot</label>
                             <div class="d-flex align-items-center"
                               [class.is-invalid]="shiftDetail.get('timeSlot')?.errors?.['pastTime'] && shiftDetail.get('timeSlot')?.touched">
                               <div class="d-flex align-items-center border rounded">
-                                <button class="btn btn-minus px-0 ps-1 text-primary" type="button" (click)="decrementTime('hours',i,sh)">
+                                <button class="btn btn-minus px-0 ps-1 text-primary" type="button"
+                                  (click)="decrementTime('hours',i,sh)">
                                   <i class="bi bi-dash"></i>
                                 </button>
                                 <input type="number" [value]="pad(shiftDetail.get('hours')?.value)"
-                                  class="form-control px-0 ps-2 hrsMin border-0" formControlName="hours" value="09" min="0" max="12"
-                                  readonly>
-                                <button class="btn btn-plus px-0 text-primary" type="button" (click)="incrementTime('hours',i,sh)">
+                                  class="form-control px-0 ps-2 hrsMin border-0" formControlName="hours" value="09"
+                                  min="0" max="12" readonly>
+                                <button class="btn btn-plus px-0 text-primary" type="button"
+                                  (click)="incrementTime('hours',i,sh)">
                                   <i class="bi bi-plus"></i>
                                 </button>
                               </div>
@@ -130,9 +134,10 @@
                                   <i class="bi bi-dash"></i>
                                 </button>
                                 <input type="number" [value]="pad(shiftDetail.get('minutes')?.value)"
-                                  class="form-control px-0 hrsMin border-0" formControlName="minutes" value="00" min="0" max="59"
-                                  readonly>
-                                <button class="btn btn-plus px-0 text-primary" type="button" (click)="incrementTime('minutes',i,sh)">
+                                  class="form-control px-0 hrsMin border-0" formControlName="minutes" value="00" min="0"
+                                  max="59" readonly>
+                                <button class="btn btn-plus px-0 text-primary" type="button"
+                                  (click)="incrementTime('minutes',i,sh)">
                                   <i class="bi bi-plus"></i>
                                 </button>
                               </div>
@@ -263,11 +268,11 @@
     </div>
   </div>
 </div>
-@if(showAadharPopup) {
+<!-- @if(!showAadharPopup) {
 <app-aadhar-verification (verified)="onAadharVerified()"></app-aadhar-verification>
-}
+} -->
 <!-- Remove this -->
- @if(showAuthPopup) {
-    <app-authorization [showAuthModal]="showAuthPopup" [authMode]="'login'" (loginSuccess)="onAuthSuccess()" (close)="onAuthClose()"></app-authorization>
-  }
-
+@if(showAuthPopup) {
+<app-authorization [showAuthModal]="showAuthPopup" [authMode]="'login'" (loginSuccess)="onAuthSuccess()"
+  (close)="onAuthClose()"></app-authorization>
+}
