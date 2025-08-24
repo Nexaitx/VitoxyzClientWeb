@@ -18,6 +18,7 @@ export const ENDPOINTS = {
     SUBSCRIPTION_PLANS: '/user/subscription/plans',
     REMOVE_STAFF: '/user/remove-staff/{bookingId}',
     BOOK_SINGLE_STAFF:'/user/create-booking',
+    UPDATE_PROFILE : '/user/update-profile',
 
     
 }

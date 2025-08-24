@@ -105,6 +105,7 @@ export class Login implements OnInit, OnDestroy {
     });
   }
 
+  //login and save its profile
   login(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
