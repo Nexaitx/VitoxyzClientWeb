@@ -22,6 +22,9 @@ export const routes: Routes = [
       {
         path: 'user-profile',
         loadComponent: () => import('./pages/profile/profile').then(m => m.Profile),
+      },{
+        path:'privacy-policy',
+        loadComponent: () => import('./pages/privacy-policy/privacy-policy').then(m =>m.PrivacyPolicy),
       },
       {
         path: 'diet-plans',
