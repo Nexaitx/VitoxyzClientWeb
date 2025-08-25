@@ -9,6 +9,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { HttpClient } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '@src/app/core/const';
 import { Toast } from 'bootstrap';
+import { Authorization } from '../../authorization/authorization';
 
 @Component({
   selector: 'app-user-onboarding',
@@ -20,7 +21,8 @@ import { Toast } from 'bootstrap';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    CommonModule
+    CommonModule,
+    Authorization
   ],
   templateUrl: './user-onboarding.html',
   styleUrl: './user-onboarding.scss'
@@ -29,7 +31,11 @@ export class UserOnboarding {
   private _formBuilder = inject(FormBuilder);
   private router = inject(Router);
   private http = inject(HttpClient);
-  isOnMedication: string = 'no';
+  token = localStorage.getItem('authToken');
+  authMode: 'login' | 'signup' = 'login';
+  isLoggedIn: boolean = false;
+  showAuth = false;
+  showLoginAlert: boolean = false;
 
   onBoardDiet = this._formBuilder.group({
     fullName: ['', [Validators.required, this.nameValidator]],
@@ -67,23 +73,46 @@ export class UserOnboarding {
 
   constructor() { }
 
+  ngOnInit() { }
+
+  openLogin() {
+    this.showLoginAlert = false;   // hide alert
+    this.showAuth = true;          // open <app-authorization>
+    this.setAuthMode('login');
+  }
+  onLoginSuccess() {
+    this.isLoggedIn = true;
+    this.showAuth = false;
+    this.ngOnInit();
+  }
+  setAuthMode(mode: 'login' | 'signup') {
+    this.authMode = mode;
+  }
   get f() {
     return this.onBoardDiet.controls;
   }
 
- get medicalCondition(): FormArray {
-  return (this.onBoardDiet.get('healthGoals.medicalCondition') as FormArray);
-}
+  get medicalCondition(): FormArray {
+    return (this.onBoardDiet.get('healthGoals.medicalCondition') as FormArray);
+  }
 
   onSubmission() {
     if (this.onBoardDiet.valid) {
-      this.http.post(API_URL + ENDPOINTS.ONBOARD_DIET, this.onBoardDiet.value).subscribe((res: any) => {
-        this.goToPlans();
-      });
-    }
-    else {
+      const token = localStorage.getItem('authToken');
+
+      if (token) {
+        // ✅ Logged in → submit + navigate
+        this.http.post(API_URL + ENDPOINTS.ONBOARD_DIET, this.onBoardDiet.value).subscribe(
+          (res: any) => this.goToPlans(),
+          (error) => this.showErrorToast()
+        );
+      } else {
+        // ❌ Not logged in → show alert
+        this.showLoginAlert = true; // 👈 new flag
+      }
+    } else {
       this.onBoardDiet.markAllAsTouched();
-      this.showErrorToast(); // 👈 show toast if invalid
+      this.showErrorToast();
     }
   }
 

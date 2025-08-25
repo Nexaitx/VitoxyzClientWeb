@@ -1,0 +1,29 @@
+@use 'sass:map';
+@use '@angular/material/theming' as mat;
+@use './_theme-colors.scss' as colors;
+
+@include mat.core();
+
+// Use the palette maps directly from _theme-colors.scss
+// map.get returns the map with numeric keys (50,100,...)
+$primary-map: map.get(colors.$palettes, primary);
+$secondary-map: map.get(colors.$palettes, secondary);
+$warn-map: map.get(colors.$palettes, error);
+
+// Define theme using the maps directly. Angular Material theming will accept color maps.
+$my-app-theme: mat.define-light-theme((
+  color: (
+    primary: $primary-map,
+    accent: $secondary-map,
+    warn: $warn-map,
+  )
+));
+
+@include mat.all-component-themes($my-app-theme);
+
+// Optional: expose CSS variables for easy use in non-Material components
+:root {
+  --vtx-primary: #{map.get($primary-map, 50)};
+  --vtx-primary-70: #{map.get($primary-map, 70)};
+  --vtx-accent: #{map.get($secondary-map, 50)};
+}

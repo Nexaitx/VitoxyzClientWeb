@@ -27,20 +27,3 @@
 .bi{
   color: #fff !important;
 }
-
-/* When the button is expanded */
-.navbar-toggler[aria-expanded="true"] .bi-three-dots {
-  display: none !important;
-}
-
-.navbar-toggler[aria-expanded="true"] .bi-x-lg {
-  display: inline-block !important;
-}
-
-.navbar-toggler[aria-expanded="false"] .bi-x-lg {
-  display: none !important;
-}
-
-.navbar-toggler:focus{
-  box-shadow: none !important;
-}

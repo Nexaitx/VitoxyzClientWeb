@@ -1,4 +1,4 @@
-// @import './app/src/_theme-colors.scss';
+// @use './custom-theme' as *;
 html,
 body {
     height: 100%;

@@ -1,10 +1,9 @@
-<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+<nav class="navbar fixed-top navbar-expand-lg bg-primary" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand text-white" href="#">Vitoxyz</a>
-    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="bi bi-three-dots"></span>
-      <span class="bi bi-x-lg d-none"></span>
+  <button class="navbar-toggler border-0" type="button" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
+      <span class="bi " [class.bi-three-dots]="!isMobileMenuOpen()" [class.bi-x-lg]="isMobileMenuOpen()"></span>
+      <!-- <span class="bi"></span> -->
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -78,6 +77,6 @@
 
 <app-authorization [authMode]="authMode" (loginSuccess)="checkLoginStatus()"></app-authorization>
 
-<div class="main-content-area">
+<div class="main-content-area mt-5">
   <router-outlet></router-outlet>
 </div>

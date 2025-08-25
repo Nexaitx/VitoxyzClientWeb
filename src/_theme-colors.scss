@@ -2,13 +2,10 @@
 // Proceed with caution if making changes to this file.
 
 @use 'sass:map';
-@use '@angular/material' as mat;
-@include material.core();
 
 // Note: Color palettes are generated from primary: #0BBBC1, secondary: #86E9EC
-$_palettes: (
-  primary: (
-    0: #000000,
+$palettes: (
+  primary: (0: #000000,
     10: #002021,
     20: #003739,
     25: #004345,
@@ -25,8 +22,7 @@ $_palettes: (
     99: #f1ffff,
     100: #ffffff,
   ),
-  secondary: (
-    0: #000000,
+  secondary: (0: #000000,
     10: #002021,
     20: #003738,
     25: #004345,
@@ -43,8 +39,7 @@ $_palettes: (
     99: #f1ffff,
     100: #ffffff,
   ),
-  tertiary: (
-    0: #000000,
+  tertiary: (0: #000000,
     10: #2e004d,
     20: #471869,
     25: #532575,
@@ -61,8 +56,7 @@ $_palettes: (
     99: #fffbff,
     100: #ffffff,
   ),
-  neutral: (
-    0: #000000,
+  neutral: (0: #000000,
     10: #161d1d,
     20: #2b3232,
     25: #363d3d,
@@ -89,8 +83,7 @@ $_palettes: (
     94: #e9efef,
     96: #eff5f5,
   ),
-  neutral-variant: (
-    0: #000000,
+  neutral-variant: (0: #000000,
     10: #111e1e,
     20: #263333,
     25: #313e3e,
@@ -107,8 +100,7 @@ $_palettes: (
     99: #f1ffff,
     100: #ffffff,
   ),
-  error: (
-    0: #000000,
+  error: (0: #000000,
     10: #410002,
     20: #690005,
     25: #7e0007,
@@ -127,24 +119,18 @@ $_palettes: (
   ),
 );
 
-$_rest: (
-  secondary: map.get($_palettes, secondary),
-  neutral: map.get($_palettes, neutral),
-  neutral-variant: map.get($_palettes,  neutral-variant),
-  error: map.get($_palettes, error),
+$rest: (
+  secondary: map.get($palettes, secondary),
+  neutral: map.get($palettes, neutral),
+  "neutral-variant": map.get($palettes,  neutral-variant),
+  error: map.get($palettes, error),
 );
 
-$primary-palette: map.merge(map.get($_palettes, primary), $_rest);
-$tertiary-palette: map.merge(map.get($_palettes, tertiary), $_rest);
+// Public convenience palettes
+$primary-palette: map.merge(map.get($palettes, primary), $rest);
+$tertiary-palette: map.merge(map.get($palettes, tertiary), $rest);
 
-$my-custom-primary: mat.define-palette(mat.$indigo-palette, 500, 100, 900);
-    $my-custom-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-    $my-custom-warn: mat.define-palette(mat.$red-palette);
+// NOTE: individual Material palettes can be defined in a separate file (custom-theme.scss)
+// Export $palettes and convenience variables for use by other theme files.
 
-    $my-custom-theme: mat.define-light-theme((
-      color: (
-        primary: $my-custom-primary,
-        accent: $my-custom-accent,
-        warn: $my-custom-warn,
-      )
-    ));
+// Make $palettes available to other files via @use

@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '../../../core/const';
 import { SpinnerToastService } from '../../../core/toasts/spinner-toast/spinner-toast.service';
 import { Router } from '@angular/router';
-import { AadharVerificationComponent } from "../../aadhar-verification/aadhar-verification.component";
+// import { AadharVerificationComponent } from "../../aadhar-verification/aadhar-verification.component";
 import { Login } from "../../authorization/login/login";
 import { Authorization } from '../../authorization/authorization';
 
@@ -17,7 +17,8 @@ import { Authorization } from '../../authorization/authorization';
     ReactiveFormsModule,
     MapComponent,
     Submission,
-    AadharVerificationComponent, Authorization],
+    // AadharVerificationComponent,
+    Authorization],
   templateUrl: './book-staff.html',
   styleUrls: ['./book-staff.scss'],
 })

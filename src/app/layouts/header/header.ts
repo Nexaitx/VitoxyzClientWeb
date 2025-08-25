@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common'; // For NgFor
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { CdkMenuModule } from '@angular/cdk/menu';
@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';   // For the navigat
 import { MatIconModule } from '@angular/material/icon';     // Optional: if you want icons
 import { MatTabsModule } from '@angular/material/tabs';
 import { Authorization } from '../../pages/authorization/authorization';
+declare var bootstrap: any; // Add this at the top if not already imported
 
 @Component({
   selector: 'app-header',
@@ -30,7 +31,7 @@ export class Header {
   public router = inject(Router);
   authMode: 'login' | 'signup' = 'login';
   isLoggedIn: boolean = false;
-
+  isMobileMenuOpen = signal(false);
   menuItems = [
     { label: 'Medecines', path: '/medicines' },
     {
@@ -82,5 +83,23 @@ export class Header {
 
   goToCart() {
     this.router.navigate(['/cart']);
+  }
+
+  toggleNavbar() {
+    const navbar = document.getElementById('navbarNav');
+    this.isMobileMenuOpen.update((menu)=>!menu);
+    if (!navbar) return;
+    try {
+      const instance = bootstrap.Collapse.getOrCreateInstance(navbar);
+      // toggle based on current shown state
+      if (navbar.classList.contains('show')) {
+        instance.hide();
+      } else {
+        instance.show();
+      }
+    } catch (err) {
+      // fallback to class toggle
+      navbar.classList.toggle('show');
+    }
   }
 }

@@ -28,9 +28,13 @@ export class Plans implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.getPlans();
+  }
 
   getPlans() {
-// this.http.get(API_URL + ENDPOINTS.SUBSCRIPTION_PLANS)
+    this.http.get(API_URL + ENDPOINTS.SUBSCRIPTION_PLANS).subscribe((res: any) => {
+      console.log(res)
+    })
   }
 }

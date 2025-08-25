@@ -1,5 +1,6 @@
-<div class="container">
-  <mat-stepper labelPosition="bottom" #stepper>
+<div class="container mt-3">
+  @if (!showLoginAlert)
+  { <mat-stepper labelPosition="bottom" #stepper>
     <!-- Step 1: Personal Info -->
     <mat-step [stepControl]="onBoardDiet">
       <form [formGroup]="onBoardDiet">
@@ -191,9 +192,27 @@
         </div>
       </form>
     </mat-step>
-  </mat-stepper>
+  </mat-stepper> }
+  @if(showLoginAlert) {
+  <div class="cards p-3">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <p class="mb-0">Hi! there,</p>
+        <div class="alert alert-warning">
+          <strong>⚠️ Please log in</strong> to access the Diet Plan feature.
+        </div>
+      </div>
+      <div>
+        <button class="text-primary btn btn-primary rounded-pill text-light btn-sm px-3" data-bs-toggle="modal"
+          data-bs-target="#authModal" (click)="openLogin()">Login</button>
+      </div>
+    </div>
+  </div>
+  }
 </div>
 
+@if(showAuth){
+<app-authorization [authMode]="authMode" (loginSuccess)="onLoginSuccess()"></app-authorization>}
 
 <!-- Bootstrap Toast -->
 <div class="toast-container position-fixed bottom-0 end-0 p-3">

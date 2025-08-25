@@ -27,6 +27,10 @@ export const routes: Routes = [
         path: 'diet-plans',
         loadComponent: () => import('./pages/Diet-Plan/plans/plans').then(m => m.Plans),
       },
+       {
+        path: 'diet-charts',
+        loadComponent: () => import('./pages/Diet-Plan/diet-dashboard/diet-dashboard').then(m => m.DietDashboard),
+      },
       {
         path: 'meera-ai',
         loadComponent: () => import('./pages/meera-ai/meera-ai').then(m => m.MeeraAi),
