@@ -31,7 +31,7 @@ declare var bootstrap: any;
   styleUrl: './header.scss'
 })
 export class Header {
-   aadhaarNumber !: string;
+  aadhaarNumber !: string;
   otp !: string;
   refId !: string;
   verificationResult: any;
@@ -71,34 +71,11 @@ export class Header {
     { label: 'Need Help?', path: '/help' }
   ];
 
- 
+
 
   ngOnInit(): void {
-   
+
     this.checkLoginStatus();
-  }
-
-  requestOtp() {
-    this.profileService.requestAadhaarOtp(this.aadhaarNumber).subscribe(
-      (response) => {
-        this.refId = response.ref_id; // Store the reference ID
-        console.log('OTP requested successfully. Reference ID:', this.refId);
-      },
-      (error) => console.error('Error requesting OTP:', error)
-    );
-  }
-
-  verifyOtp() {
-    // Make sure you have the OTP and the refId before calling this
-    if (this.otp && this.refId) {
-      this.profileService.verifyAadhaarOtp(this.otp, this.refId).subscribe(
-        (response) => {
-          this.verificationResult = response;
-          console.log('Verification Result:', response);
-        },
-        (error) => console.error('Error verifying OTP:', error)
-      );
-    }
   }
 
   checkLoginStatus(): void {
@@ -113,7 +90,7 @@ export class Header {
   logout() {
     localStorage.removeItem('authToken');
     this.isLoggedIn = false;
-    this.router.navigate(['/']); 
+    this.router.navigate(['/']);
   }
 
   goToCart() {
@@ -122,18 +99,16 @@ export class Header {
 
   toggleNavbar() {
     const navbar = document.getElementById('navbarNav');
-    this.isMobileMenuOpen.update((menu)=>!menu);
+    this.isMobileMenuOpen.update((menu) => !menu);
     if (!navbar) return;
     try {
       const instance = bootstrap.Collapse.getOrCreateInstance(navbar);
-      // toggle based on current shown state
       if (navbar.classList.contains('show')) {
         instance.hide();
       } else {
         instance.show();
       }
     } catch (err) {
-      // fallback to class toggle
       navbar.classList.toggle('show');
     }
   }
