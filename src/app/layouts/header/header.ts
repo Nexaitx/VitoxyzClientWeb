@@ -3,18 +3,21 @@ import { CommonModule } from '@angular/common'; // For NgFor
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { CdkMenuModule } from '@angular/cdk/menu';
 // Angular Material Imports
-import { MatToolbarModule } from '@angular/material/toolbar'; // For the navbar itself
-import { MatButtonModule } from '@angular/material/button';   // For the navigation buttons
-import { MatIconModule } from '@angular/material/icon';     // Optional: if you want icons
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Authorization } from '../../pages/authorization/authorization';
-declare var bootstrap: any; // Add this at the top if not already imported
+import { ProfileService } from '@src/app/core/services/profile.service';
+import { FormsModule } from '@angular/forms';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-header',
   imports: [MatButtonModule,
     CommonModule,
     RouterModule,
+    FormsModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
@@ -28,6 +31,12 @@ declare var bootstrap: any; // Add this at the top if not already imported
   styleUrl: './header.scss'
 })
 export class Header {
+   aadhaarNumber !: string;
+  otp !: string;
+  refId !: string;
+  verificationResult: any;
+
+  private profileService = inject(ProfileService)
   public router = inject(Router);
   authMode: 'login' | 'signup' = 'login';
   isLoggedIn: boolean = false;
@@ -62,8 +71,34 @@ export class Header {
     { label: 'Need Help?', path: '/help' }
   ];
 
+ 
+
   ngOnInit(): void {
+   
     this.checkLoginStatus();
+  }
+
+  requestOtp() {
+    this.profileService.requestAadhaarOtp(this.aadhaarNumber).subscribe(
+      (response) => {
+        this.refId = response.ref_id; // Store the reference ID
+        console.log('OTP requested successfully. Reference ID:', this.refId);
+      },
+      (error) => console.error('Error requesting OTP:', error)
+    );
+  }
+
+  verifyOtp() {
+    // Make sure you have the OTP and the refId before calling this
+    if (this.otp && this.refId) {
+      this.profileService.verifyAadhaarOtp(this.otp, this.refId).subscribe(
+        (response) => {
+          this.verificationResult = response;
+          console.log('Verification Result:', response);
+        },
+        (error) => console.error('Error verifying OTP:', error)
+      );
+    }
   }
 
   checkLoginStatus(): void {
