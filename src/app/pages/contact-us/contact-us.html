@@ -1,0 +1,104 @@
+<div>
+  <div>
+    <img src="../../../assets/footer/aboutus/stethoscope.png" style="width: 100%; height: 330px; object-fit: cover;">
+  </div>
+
+  <div class="container my-5">
+    <div class="row g-4 align-items-start">
+
+      <div class="col-lg-6">
+        <div class="p-4 shadow-sm contact-card">
+          <h5 class="fw-bold mb-3 heading-text">Contact Us</h5>
+
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+
+            <div class="form-group mb-3 position-relative">
+              <label class="form-label">Name</label>
+              <i class="bi bi-person input-icon"></i>
+              <input type="text" class="form-control input-with-icon" placeholder="Enter your Name"
+                formControlName="name">
+                 
+            </div>
+
+            <div class="d-flex gap-3">
+              <div class="form-group flex-fill mb-3 position-relative">
+                <label class="form-label">Email</label>
+                <i class="bi bi-envelope input-icon "></i>
+                <input type="email" class="form-control input-with-icon" placeholder="Enter your Email"
+                  formControlName="email">
+              </div>
+
+              <div class="form-group flex-fill mb-3 position-relative">
+                <label class="form-label">Phone Number</label>
+                <i class="bi bi-telephone input-icon "></i>
+                <input type="text" class="form-control input-with-icon" placeholder="Enter your Phone Number"
+                  formControlName="phone">
+              </div>
+            </div>
+
+            <div class="form-group mb-3 position-relative">
+              <label class="form-label">Your Query</label>
+              <textarea class="form-control input-without-icon" rows="4" placeholder="Type your query"
+                formControlName="query"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-submit w-100">Submit</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-lg-6 position-relative">
+        <!-- Map Image -->
+        <div class="map-box">
+          <img src="../../../assets/footer/aboutus/mapImage.png" alt="Map" class="img-fluid rounded shadow-sm w-100">
+        </div>
+
+        <!-- Overlay Box -->
+        <div class="corporate-box shadow-sm p-3 bg-white rounded">
+          <h6 class="fw-bold">Corporate Details</h6>
+          <p><strong>Mail us at:</strong> care@lmg.com</p>
+          <p><strong>CIN:</strong> U24290DL2016PTC302634</p>
+          <p><strong>Our location:</strong><br>
+            2nd Floor, Plot No. B-225, Okhla Industrial Area, Phase-I, South Delhi, New Delhi – 110020
+          </p>
+          <p><strong>Postal Address:</strong><br>
+            5th Floor Tower – B of The Presidency Building, 46/4 Mehrauli Gurgaon Road, Sector 14,<br>
+            Gurugram, Haryana – 122001, India
+          </p>
+        </div>
+      </div>
+
+
+      
+      <div class="container my-5">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="otherinfo">
+              <h6>Other Information:</h6>
+              <p>A licensed vendor partner from nearest location will deliver Mamaearth Ubtan Face Wash for Healthy Skin
+                |</p>
+              <p>Paraben & SLS-Free | Free Care Product for All Skin</p>
+              <p>Types, Once the pharmacy accepts your order, the details of the pharmacy will be shared with you.</p>
+
+              <h6>Marketer details</h6>
+              <p>Name: Honasa Consumer Pvt Ltd</p>
+              <p>Address : 208, Gali No 7, Vishnu Garden, Delhi West Delhi</p>
+              <p>110018 India</p>
+              <p>Country of origin India</p>
+
+              <h6>In case of any issues, contact us</h6>
+              <p>Email ID: Honasa Consumer Pvt Ltd</p>
+              <p>Phone Number : 208, Gali No 7, Vishnu Garden, Delhi West Address : 208, Gali No 7, Vishnu Garden, Delhi
+                West Delhi</p>
+              <p>110018 India</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <app-footer></app-footer>
+</div>
