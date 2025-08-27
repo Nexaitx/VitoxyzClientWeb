@@ -1,8 +1,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://vitoxyzbackend-27e9.onrender.com/',
-    // apiBaseUrl: 'http://localhost:8080/',
+  apiBaseUrl: 'https://vitoxyz.com/Backend/api',
 
   apiKey: 'dev_api_key',
   googleMapsApiKey: 'AIzaSyAL0m-w-jkSFRy7S8aUhjvZI8KOYNZBNCQ'

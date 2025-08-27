@@ -8,7 +8,7 @@ import { API_URL, ENDPOINTS } from '../const';
 })
 export class ProfileService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   updateProfile(data: any): Observable<any> {
     const token = localStorage.getItem('token');  // login ke baad aap token store karte ho
@@ -18,4 +18,5 @@ export class ProfileService {
 
     return this.http.put(`${API_URL}${ENDPOINTS.UPDATE_PROFILE}`, data, { headers });
   }
+
 }
