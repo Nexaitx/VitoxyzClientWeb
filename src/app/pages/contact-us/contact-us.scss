@@ -1,0 +1,100 @@
+
+.contact-card {
+  background: #F5F8FF;
+  border-radius: 12px;
+}
+
+.heading-text {
+  color: #21534E;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.form-control.input-with-icon {
+  border-radius: 50px !important;
+  height: 48px;
+  padding-left: 40px;
+  background-color: #ffffff;
+  border: 1px solid #0BBBC11A;
+}
+
+.form-control.input-without-icon {
+  background-color: #ffffff;
+  border: 1px solid #0BBBC11A;
+  border-radius: 12px;
+  min-height: 120px;
+  padding: 12px;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  color: #6c757d;
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.row-input-icon {
+  left: 24px;
+  background-color: red;
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #495057;
+}
+
+.btn-submit {
+  background-color: #0BBBC1;
+  color: white;
+  border-radius: 30px;
+  padding: 10px;
+  font-weight: 500;
+}
+
+.btn-submit:hover {
+  background-color: #0b9da2;
+}
+
+.map-box {
+  position: relative;
+}
+
+.corporate-box {
+  position: absolute;
+  max-width: 70%;
+  transform: translate(50%, -60%); 
+}
+
+.corporate-box,
+.info-box {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  background-color: transparent;
+}
+
+.corporate-box h6,
+.info-box h6 {
+  font-size: 1rem;
+  color: #333;
+}
+
+
+@media (max-width: 991px) {
+  .corporate-box {
+    transform: none;
+    position: static;   
+    max-width: 100%;    
+    margin-top: 15px;   
+  }
+}
+
+
+@media (max-width: 768px) {
+  .corporate-box, .info-box {
+    font-size: 0.9rem;
+    padding: 1rem;
+  }
+}

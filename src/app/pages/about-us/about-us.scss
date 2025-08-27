@@ -1,0 +1,174 @@
+.hero-banner {
+  min-height: 300px;
+}
+
+.about-banner {
+  width: 100%;
+  height: auto;
+  max-height: 330px; 
+  object-fit: cover; 
+  display: block;
+}
+
+.color-box {
+  background-color: #00B6C9;
+  height: 100%;
+  min-height: 250px;
+  border-radius: 0;
+  position: relative;
+}
+
+.big-icon {
+  font-size: 80px;
+  opacity: 0.9;
+}
+
+.abouttop-header {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin-top: 50px;
+  padding: 0 15px;
+}
+
+.abouttop-header h1 {
+  font-size: 2rem;
+}
+
+.otherinfo {
+  margin-top: 40px;
+  padding: 0 15px;
+}
+
+.otherinfo h6 {
+  margin: 20px 0;
+}
+
+.otherinfo p {
+  margin-bottom: 8px;
+}
+
+.helathcards {
+  border: 1px solid #EAECF0BA;
+  padding: 25px;
+  border-radius: 10px;
+  background-color: #fff;
+  height: 100%; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.helathcards h4 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.helathcards p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #333;
+  margin: 0;
+}
+
+.helathcards:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+.row.text-center > .col-md-4 {
+  padding: 10px 15px;
+}
+
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 992px) {
+  .abouttop-header {
+    margin-top: 30px;
+  }
+
+  .abouttop-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .row.align-items-center {
+    text-align: center;
+  }
+
+  .row.align-items-center img {
+    margin: 0 auto 20px auto;
+  }
+
+   .helathcards {
+    margin-bottom: 20px;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .abouttop-header h1 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+  }
+
+  .otherinfo {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .abouttop-header {
+    flex-direction: column;
+    margin-top: 20px;
+  }
+
+  .abouttop-header h1 {
+    font-size: 1.3rem;
+  }
+
+  .abouttop-header p {
+    font-size: 0.9rem;
+  }
+
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+    .helathcards {
+    padding: 15px;
+  }
+
+  .helathcards h4 {
+    font-size: 1rem;
+  }
+
+  .helathcards p {
+    font-size: 0.9rem;
+  }
+}

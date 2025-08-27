@@ -22,10 +22,21 @@ export const routes: Routes = [
       {
         path: 'user-profile',
         loadComponent: () => import('./pages/profile/profile').then(m => m.Profile),
+      },{
+        path:'privacy-policy',
+        loadComponent: () => import('./pages/privacy-policy/privacy-policy').then(m =>m.PrivacyPolicy),
+      },
+      {
+        path:'about-us',
+        loadComponent:()=> import('./pages/about-us/about-us').then(m => m.AboutUs),
       },
       {
         path: 'diet-plans',
         loadComponent: () => import('./pages/Diet-Plan/plans/plans').then(m => m.Plans),
+      },
+      {
+        path:'contact-us',
+        loadComponent:()=> import('./pages/contact-us/contact-us').then(m => m.ContactUs),
       },
        {
         path: 'diet-charts',
