@@ -97,4 +97,8 @@
     font-size: 0.9rem;
     padding: 1rem;
   }
+
+  .d-flex.gap-3 {
+    flex-direction: column !important; 
+  }
 }
