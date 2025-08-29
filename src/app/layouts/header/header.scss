@@ -1,3 +1,9 @@
+.navbar {
+  position: relative;
+  z-index: 1055;
+}
+
+
 .navbar-nav .nav-link.active.rounded-pill,
 .dropdown-item.active.rounded-pill, /* This styles the active dropdown item */
 .nav-item.dropdown.active.rounded-pill { /* Add this to style the parent dropdown */
@@ -30,3 +36,35 @@
 .main-content-area {
   margin-top: 70px;
 }
+
+
+.dropdown-menu {
+  position: absolute;
+  z-index: 9999 !important; 
+}
+
+@media (max-width: 991px) {
+  .dropdown-menu {
+    position: relative;
+    z-index: 1 !important;
+  }
+}
+
+.nav-item.dropdown,
+.navbar,
+.sidebar {
+  position: relative;
+  overflow: visible !important; 
+}
+
+
+.sidebar, .navbar, .nav-item {
+  overflow: visible !important; 
+  z-index: auto !important;     
+}
+
+
+
+
+
+
