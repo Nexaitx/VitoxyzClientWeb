@@ -8,6 +8,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '@src/app/core/const';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-plans',
@@ -24,11 +25,12 @@ import { API_URL, ENDPOINTS } from '@src/app/core/const';
 })
 export class Plans implements OnInit {
   selectedPlan: string = 'monthly';
-  http = inject(HttpClient)
+  http = inject(HttpClient);
+  router = inject(Router)
 
   constructor() { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.getPlans();
   }
 
@@ -36,5 +38,9 @@ export class Plans implements OnInit {
     this.http.get(API_URL + ENDPOINTS.SUBSCRIPTION_PLANS).subscribe((res: any) => {
       console.log(res)
     })
+  }
+
+  goToPayment() {
+    this.router.navigate(['/payment']);
   }
 }

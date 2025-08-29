@@ -22,27 +22,31 @@ export const routes: Routes = [
       {
         path: 'user-profile',
         loadComponent: () => import('./pages/profile/profile').then(m => m.Profile),
-      },{
-        path:'privacy-policy',
-        loadComponent: () => import('./pages/privacy-policy/privacy-policy').then(m =>m.PrivacyPolicy),
+      }, {
+        path: 'privacy-policy',
+        loadComponent: () => import('./pages/privacy-policy/privacy-policy').then(m => m.PrivacyPolicy),
       },
       {
-        path:'about-us',
-        loadComponent:()=> import('./pages/about-us/about-us').then(m => m.AboutUs),
+        path: 'about-us',
+        loadComponent: () => import('./pages/about-us/about-us').then(m => m.AboutUs),
       },
       {
         path:'termsandconditions',
         loadComponent:() => import('./pages/termsandconditions/termsandconditions').then(m => m.Termsandconditions),
       },
       {
-        path: 'diet-plans',
+        path: 'subscription-plans',
         loadComponent: () => import('./pages/Diet-Plan/plans/plans').then(m => m.Plans),
       },
       {
-        path:'contact-us',
-        loadComponent:()=> import('./pages/contact-us/contact-us').then(m => m.ContactUs),
+        path: 'payment',
+        loadComponent: () => import('./pages/Diet-Plan/payment-screen/payment-screen').then(m => m.PaymentScreen),
       },
-       {
+      {
+        path: 'contact-us',
+        loadComponent: () => import('./pages/contact-us/contact-us').then(m => m.ContactUs),
+      },
+      {
         path: 'diet-charts',
         loadComponent: () => import('./pages/Diet-Plan/diet-dashboard/diet-dashboard').then(m => m.DietDashboard),
       },

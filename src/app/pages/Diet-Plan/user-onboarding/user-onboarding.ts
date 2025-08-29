@@ -125,6 +125,6 @@ export class UserOnboarding {
   }
 
   goToPlans() {
-    this.router.navigate(['/diet-plans']);
+    this.router.navigate(['/subscription-plans']);
   }
 }
