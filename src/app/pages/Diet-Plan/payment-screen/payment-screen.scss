@@ -1,0 +1,199 @@
+// .payment-container {
+//   min-height: 100vh;
+//   display: flex;
+//   align-items: center;
+//   background: linear-gradient(135deg, #e0f7fa, #ffffff);
+// }
+
+// .card {
+//   border-radius: 20px;
+// }
+
+// .input-field {
+//   border-radius: 12px !important;
+// }
+
+// .summary-box {
+//   background-color: #f8f9fa;
+//   border-radius: 15px;
+// }
+
+// button {
+//   font-size: 16px;
+//   font-weight: 600;
+// }
+
+.heading-text {
+  color: #21534E;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.form-control.input-with-icon {
+  border-radius: 50px !important;
+  height: 48px;
+  padding-left: 40px;
+  background-color: #ffffff;
+  border: 1px solid #0BBBC11A;
+    color: #0bbbc1;
+
+}
+
+.form-control.input-without-icon {
+  background-color: #ffffff;
+  border: 1px solid #0BBBC11A;
+  border-radius: 12px;
+  min-height: 120px;
+  padding: 12px;
+}
+
+
+/* Wrapper for positioning icon and select */
+.custom-select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Icon inside select */
+.custom-select-wrapper .input-icon {
+  position: absolute;
+  left: 14px;
+  top:10px;
+  font-size: 18px;
+  color: #0bbbc1; /* teal color for icon */
+  pointer-events: none;
+}
+
+/* Select box */
+.custom-select {
+  appearance: none; /* hide default arrow */
+  width: 100%;
+  padding: 10px 40px 10px 40px; /* space for icon + arrow */
+  border: 1px solid #e0e6ed;
+  border-radius: 25px; /* pill shape */
+  background-color: #fafbfd;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1a1a1a;
+  outline: none;
+  cursor: pointer;
+}
+.makepaymt{
+  color: white !important;
+}
+/* Placeholder style */
+.custom-select option[value=""] {
+  color: #9ca3af; /* gray for placeholder */
+}
+
+/* Custom dropdown arrow */
+.custom-select-wrapper::after {
+  content: "▼";
+  position: absolute;
+  right: 14px;
+  font-size: 12px;
+  color: #333;
+  pointer-events: none;
+}
+
+
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  color: #0BBBc1 !important;
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.row-input-icon {
+  left: 24px;
+  background-color: red;
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #495057;
+}
+
+
+
+.page-wrap{
+  min-height:100vh;
+  background: linear-gradient(180deg,#ffffff 0%, #F6FBFF 100%);
+}
+
+.title{
+  color: #303642;
+  font-weight: 600;
+}
+
+.section-heading{
+  color: #101828;
+  font-weight: 500;
+}
+
+.card{
+  background: #ffffff;
+  border-radius: 20px !important;
+}
+
+.summary-box{
+  background: #F0FBF9;
+  border: 1px solid #E9F6F3;
+}
+
+.muted{ color: var(--muted); }
+
+/* ---- Angular Material field tuning to get "icons inside" & soft pill look ---- */
+.mat-field.mat-mdc-form-field {
+  margin-bottom: 16px;
+}
+
+.mat-mdc-form-field .mdc-text-field--outlined,
+.mat-mdc-form-field .mdc-text-field--no-label {
+  border-radius: 14px !important;
+  background: #F0FBF9;
+}
+
+// .mat-mdc-form-field .mdc-notched-outline__leading,
+// .mat-mdc-form-field .mdc-notched-outline__trailing,
+// .mat-mdc-form-field .mdc-notched-outline__notch{
+//   border-color: #E6EEF5 !important;
+// }
+
+// .mat-mdc-form-field .mdc-text-field--outlined:hover .mdc-notched-outline__leading,
+// .mat-mdc-form-field .mdc-text-field--outlined:hover .mdc-notched-outline__trailing,
+// .mat-mdc-form-field .mdc-text-field--outlined:hover .mdc-notched-outline__notch{
+//   border-color:#cfe3f1 !important;
+// }
+
+.mat-mdc-form-field .mdc-text-field__input{
+  padding-left: 6px !important;   /* space after prefix icon */
+}
+
+.mat-mdc-form-field .mat-mdc-form-field-icon-prefix{
+  margin-right: 6px;
+  color: #14C1B5;
+}
+
+.mat-mdc-select-min-line{
+  padding-left: 0 !important;
+}
+
+/* Button */
+.pay-btn.mdc-button--raised{
+  height: 52px;
+  font-weight: 500;
+  letter-spacing: .2px;
+  background-color: #0BBBC1 !important;
+}
+.pay-btn:hover{ background-color: #10a99e!important; }
+
+/* Responsive tweaks */
+@media (max-width: 991.98px){
+  .title{ margin-bottom: 0.75rem; }
+}

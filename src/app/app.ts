@@ -1,11 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SpinnerToastComponent } from "./core/toasts/spinner-toast/spinner-toast.component";
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChatSupport } from './pages/chat-support/chat-support';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet,
+    FormsModule,
+    ReactiveFormsModule,
     ChatSupport],
   templateUrl: './app.html',
   styleUrl: './app.scss'

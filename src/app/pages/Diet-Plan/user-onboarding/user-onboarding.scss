@@ -1,16 +1,208 @@
-.form-group {
-    position: relative;
+/* Style input fields to be fully rounded and soft */
+
+
+::ng-deep .custom-stepper .mat-horizontal-stepper-header-container {
+  width: 600px;
+  margin: 0 auto;  
 }
 
+/* Common base for step icons */
+::ng-deep .custom-stepper .mat-step-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* Upcoming step (number) */
+::ng-deep .custom-stepper .mat-step-icon-state-number {
+  background-color: transparent !important;
+  border: 2px solid #0BBBC1 !important;
+  color: #0BBBC1 !important;
+}
+
+/* Current step (edit) */
+::ng-deep .custom-stepper .mat-step-icon-state-edit {
+  background-color: #0BBBC1 !important;
+  color: #fff !important;
+  border: 2px solid #0BBBC1 !important;
+}
+
+/* Completed step (done) */
+::ng-deep .custom-stepper .mat-step-icon-state-done {
+  background-color: #0BBBC1 !important;
+  color: #fff !important;
+  border: 2px solid #0BBBC1 !important;
+}
+
+::ng-deep .custom-stepper .mat-step-icon-state-edit,
+::ng-deep .custom-stepper .mat-step-icon-state-done {
+  background-color: #0BBBC1 !important;
+  color: #fff !important;
+  border-radius: 50%;
+  border: 2px solid #0BBBC1 !important;
+}
+
+
+::ng-deep .custom-stepper .mat-step-header[aria-selected="true"] ~ .mat-stepper-horizontal-line,
+::ng-deep .custom-stepper .mat-step-header.mat-step-header-state-done ~ .mat-stepper-horizontal-line {
+  border-top-color: #00bcd4 !important; /* teal for progress */
+}
+
+/* Step labels */
+::ng-deep .custom-stepper .mat-step-label {
+  font-weight: 500;
+  color: #000000;
+}
+
+::ng-deep .custom-stepper .mat-step-label.mat-step-label-active {
+  font-weight: 500;
+  color: #000000;
+}
+
+.main-container{
+  width:900px;
+}
+
+// #stepper{
+//  background-color: #130cd0;   
+// }
+// .main-container,.form-stepper {
+//      background-color: #130cd0;
+// }
+
+input.form-control,
+select.form-select {
+    border-radius: 999px !important;
+    border: none;
+    background-color: #f4f6f5;
+    padding-left: 2.5rem;
+    height: 45px;
+    box-shadow: none !important;
+}
+
+input.form-control::placeholder {
+    color: #ccc;
+}
+
+/* Remove number input arrows */
+input.no-arrows::-webkit-outer-spin-button,
+input.no-arrows::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input.no-arrows {
+    -moz-appearance: textfield;
+}
+
+/* Radio buttons circle and spacing */
+.form-check-input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+    border: 2px solid #09b8c2;
+}
+
+.form-check-input:checked {
+    background-color: #09b8c2;
+    border-color: #09b8c2;
+}
+
+/* Rounded increment-decrement group */
+/* Remove borders from + / - buttons */
+.input-group .btn,
+.input-group button {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent; /* optional, if you want no button styling */
+}
+
+/* Style the whole group with one border */
+.rounded-input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;  /* single border */
+  border-radius: 8px;      /* rounded corners */
+  overflow: hidden;        /* ensures children don't break radius */
+}
+
+
+
+.input-row {
+  display: flex;
+  gap: 12px; /* spacing between number box and unit select */
+}
+
+/* Number input group */
+.rounded-input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e0e6ed;
+  border-radius: 12px;
+  padding: 4px 8px;
+  background: #fafbfd;
+  width:150px;
+  height:40px;
+}
+
+/* Remove borders from children */
+.rounded-input-group input,
+.rounded-input-group button {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  outline: none;
+  width:15px;
+  height:15px;
+}
+
+/* Number input */
+.rounded-input-group .form-control {
+  width: 40px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* +/- buttons */
+.rounded-input-group button {
+  font-size: 20px;
+  font-weight: bold;
+  color: #0bbbc1; /* teal color for icons */
+  cursor: pointer;
+}
+
+/* Unit select */
+.unit-select {
+  border: 1px solid #e0e6ed;
+  border-radius: 12px;
+  padding: 4px 12px;
+  background: #fafbfd;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1a1a1a !important;
+}
+
+
+/* Icon positioning */
 .icons {
     position: absolute;
-    left: 5px;
-    top: 34px;
+    left: 15px;
+    top: 37px;
     color: #09b8c2;
+    font-size: 1.2rem;
 }
 
-@media screen and (min-width: 992px) {
-    .container {
-        width: 50%;
-    }
+/* Next button styling */
+button.submission {
+    background-color: #09b8c2;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 30px;
 }

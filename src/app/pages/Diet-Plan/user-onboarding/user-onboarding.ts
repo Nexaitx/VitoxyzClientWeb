@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '@src/app/core/const';
 import { Toast } from 'bootstrap';
 import { Authorization } from '../../authorization/authorization';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-user-onboarding',
@@ -21,6 +22,7 @@ import { Authorization } from '../../authorization/authorization';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatIconModule,
     CommonModule,
     Authorization
   ],
@@ -101,13 +103,11 @@ export class UserOnboarding {
       const token = localStorage.getItem('authToken');
 
       if (token) {
-        // ✅ Logged in → submit + navigate
         this.http.post(API_URL + ENDPOINTS.ONBOARD_DIET, this.onBoardDiet.value).subscribe(
           (res: any) => this.goToPlans(),
           (error) => this.showErrorToast()
         );
       } else {
-        // ❌ Not logged in → show alert
         this.showLoginAlert = true; // 👈 new flag
       }
     } else {
@@ -127,4 +127,33 @@ export class UserOnboarding {
   goToPlans() {
     this.router.navigate(['/subscription-plans']);
   }
+
+
+  // Increment logic for height or weight
+// ✅ Safe increment function for height or weight
+
+
+
+increment(type: 'height' | 'weight'): void {
+  const control = this.onBoardDiet.get(type);
+  if (control) {
+    const rawValue = control.value;
+    const currentValue = parseInt(rawValue || '0', 10);
+    control.setValue((currentValue + 1).toString()); // 👈 cast to string
+  }
+}
+
+decrement(type: 'height' | 'weight'): void {
+  const control = this.onBoardDiet.get(type);
+  if (control) {
+    const rawValue = control.value;
+    const currentValue = parseInt(rawValue || '0', 10);
+    if (currentValue > 0) {
+      control.setValue((currentValue - 1).toString()); // 👈 cast to string
+    }
+  }
+}
+
+
+  
 }

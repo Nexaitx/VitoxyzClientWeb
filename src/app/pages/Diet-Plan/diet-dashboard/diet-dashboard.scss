@@ -1,42 +1,188 @@
+// .calendar-container {
+//   background: #fcfbfb;
+//   border: 0.1px solid #f5f5f5;
+//   overflow-x: auto; // responsive on small screens
+// }
+
+// .plancls{width: 735px;
+//     height: 26px;
+//  text-align: center;
+// }
+
+// .calendar-day {
+//   cursor: pointer;
+//   transition: all 0.3s ease;
+//   color: #333;
+
+//   &:hover {
+//     background-color: #f1f1f1;
+//   }
+
+//   &.active {
+//     background-color: #0bbbc1;
+//     color: #fff;
+
+//     .fw-bold {
+//       color: #fff;
+//     }
+//   }
+// }
+
+// .font-500 {
+//   font-weight: 500;
+//   font-size: 16px;
+// }
+
+// td {
+//   background: #fff !important;
+// }
+
+// td:last-child {
+//   text-align: end;
+// }
+
+// .profile-img {
+//   height: 100px;
+//   border-radius: 100%;
+// }
+.diet-plan-container {
+  padding: 1.3rem;
+  .title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+}
+.plancls{width: 735px;
+     height: 26px;
+ text-align: center;
+  font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    margin-top: -36px;
+ }
 .calendar-container {
-  background: #fcfbfb;
-  border: 0.1px solid #f5f5f5;
-  overflow-x: auto; // responsive on small screens
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  overflow-x: auto;
 }
 
 .calendar-day {
   cursor: pointer;
-  transition: all 0.3s ease;
-  color: #333;
+  min-width: 50px;
+  color: #444;
+  font-size: 14px;
+  transition: 0.3s;
 
   &:hover {
-    background-color: #f1f1f1;
+    background: #f5f5f5;
   }
 
   &.active {
-    background-color: #0bbbc1;
+    background: #0bbbc1;
     color: #fff;
+    border-radius: 8px;
+  }
 
-    .fw-bold {
-      color: #fff;
+  .date {
+    font-weight: 600;
+    font-size: 16px;
+  }
+}
+  .total-kcal {
+    display: flex;
+    justify-content: flex-end;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 8px;
+    color: #333;
+
+    span:first-child {
+      margin-right: 5px;
+    }
+  }
+.stat-card {
+  background: #fff;
+  border-radius: 12px;
+  // padding: 1rem;
+  padding: 4px;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+  .icon {
+    height: 28px;
+  }
+}
+
+.meals {
+  .meal-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+    img {
+      height: 60px;
+      width: 60px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .cal {
+      color: #ff5a5a;
+      font-size: 13px;
+      margin-left: 6px;
+    }
+
+    p {
+      font-size: 13px;
+      color: #555;
+      margin: 2px 0 0;
     }
   }
 }
 
-.font-500 {
-  font-weight: 500;
-  font-size: 16px;
-}
+.profile-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #eee;
 
-td {
-  background: #fff !important;
-}
+  .profile-img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 
-td:last-child {
-  text-align: end;
-}
+  .profile-info {
+    padding: 0.5rem 1rem;
 
-.profile-img {
-  height: 100px;
-  border-radius: 100%;
+    div {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 14px;
+      border-bottom: 1px solid #f0f0f0;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      span:first-child {
+        color: #666;
+      }
+
+      span:last-child {
+        font-weight: 500;
+      }
+    }
+  }
 }

@@ -1,8 +1,24 @@
-<div class="container mt-3">
+<div class="container mt-3 main-container">
   @if (!showLoginAlert)
-  { <mat-stepper labelPosition="bottom" #stepper>
+  { <mat-stepper class="custom-stepper" labelPosition="bottom" #stepper  >
+
+      <ng-template matStepperIcon="number" let-index="index">
+    <span>{{ index + 1 }}</span>
+  </ng-template>
+
+
+    <ng-template matStepperIcon="edit">
+    <mat-icon>check</mat-icon>
+  </ng-template>
+
+  <!-- Completed step -->
+  <ng-template matStepperIcon="done">
+    <mat-icon>check</mat-icon>
+  </ng-template>
+
+
     <!-- Step 1: Personal Info -->
-    <mat-step [stepControl]="onBoardDiet">
+    <mat-step [stepControl]="onBoardDiet" [editable]="true">
       <form [formGroup]="onBoardDiet">
         <ng-template matStepLabel>Personal Info</ng-template>
         <div class="row">
@@ -48,24 +64,47 @@
           </div>
 
           <div class="col-md-6">
-            <label class="form-label">Height</label>
-            <input type="number" class="form-control" placeholder="Enter height" formControlName="height" />
-          </div>
+  <label class="form-label">Height</label>
 
-          <div class="col-md-6">
-            <label class="form-label">Weight</label>
-            <input type="number" class="form-control" placeholder="Enter weight" formControlName="weight" />
-          </div>
-        </div>
+  <div class="input-row">
+  <!-- Number input with + / - -->
+  <div class="input-group rounded-input-group">
+    <button type="button" (click)="decrement('height')">−</button>
+    <input type="number" class="form-control text-center no-arrows" formControlName="height" />
+    <button type="button" (click)="increment('height')">+</button>
+  </div>
+
+  <!-- Unit select -->
+  <select class="form-select unit-select">
+    <option value="inches">Inches</option>
+    <option value="cm">CM</option>
+  </select>
+</div>
+
+</div>
+
+<!-- Weight Input with Increment-Decrement -->
+<div class="col-md-6">
+  <label class="form-label">Weight</label>
+  <div class="input-group rounded-input-group">
+<button type="button" (click)="decrement('weight')">−</button>
+    <input type="number" class="form-control text-center no-arrows" formControlName="weight" />
+<button type="button" (click)="increment('weight')">+</button>
+  </div>
+      <span class="input-group-text">kg</span>
+
+</div>
+
 
         <div class="text-end mt-3">
           <button matStepperNext class="btn px-4 rounded-pill submission">Next</button>
         </div>
+         </div>
       </form>
     </mat-step>
 
     <!-- Step 2: Health & Goals -->
-    <mat-step [stepControl]="onBoardDiet.get('healthGoals')!">
+    <mat-step [stepControl]="onBoardDiet.get('healthGoals')!" [editable]="true">
       <form [formGroup]="onBoardDiet">
         <ng-template matStepLabel>Health & Goals</ng-template>
         <div class="row" formGroupName="healthGoals">
@@ -124,7 +163,7 @@
     </mat-step>
 
     <!-- Step 3: Food Preferences -->
-    <mat-step [stepControl]="onBoardDiet.get('foodPreference')!">
+    <mat-step [stepControl]="onBoardDiet.get('foodPreference')!" [editable]="true">
       <form [formGroup]="onBoardDiet">
         <ng-template matStepLabel>Food Preferences</ng-template>
         <h3>Food & Preferences</h3>
@@ -160,7 +199,7 @@
     </mat-step>
 
     <!-- Step 4: Lifestyle & Activity -->
-    <mat-step [stepControl]="onBoardDiet.get('lifestyleActivity')!">
+    <mat-step [stepControl]="onBoardDiet.get('lifestyleActivity')!" [editable]="true">
       <form [formGroup]="onBoardDiet">
         <ng-template matStepLabel>Lifestyle & Activity</ng-template>
         <h3>Tell Us About Your Day</h3>
@@ -193,6 +232,7 @@
       </form>
     </mat-step>
   </mat-stepper> }
+
   @if(showLoginAlert) {
   <div class="cards p-3">
     <div class="d-flex justify-content-between align-items-center">

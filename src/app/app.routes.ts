@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { Header } from './layouts/header/header';
 import { BillingDetailsComponent } from './core/toasts/billing-details/billing-details.component';
+import { UserOnboarding } from './pages/user-onboarding/user-onboarding';
 
 export const routes: Routes = [
   {
@@ -16,9 +17,13 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/book-staff-process/book-staff/book-staff').then(m => m.BookStaff),
       },
       {
-        path: 'diet/user-onboarding',
-        loadComponent: () => import('./pages/Diet-Plan/user-onboarding/user-onboarding').then(m => m.UserOnboarding),
-      },
+  path: 'diet/user-onboarding',
+  component: UserOnboarding
+},
+      // {
+      //   path: 'diet/user-onboarding',
+      //   loadComponent: () => import('./pages/Diet-Plan/user-onboarding/user-onboarding').then(m => m.UserOnboarding),
+      // },
       {
         path: 'user-profile',
         loadComponent: () => import('./pages/profile/profile').then(m => m.Profile),
