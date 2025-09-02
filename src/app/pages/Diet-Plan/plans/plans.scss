@@ -7,6 +7,7 @@
   background-size: cover;
   padding: 20px;
   box-sizing: border-box;
+      margin-top: -76px;
 }
 
 .plan-card mat-card-title,
@@ -43,15 +44,16 @@
 }
 
 .plan-item {
-  flex: 1 1 300px;
   /* Allows items to grow/shrink, minimum 300px width */
   border: 1px solid #0AB8C2;
-  border-radius: 8px;
+  border-radius: 26px;
   padding: 25px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background: #fff;
+  width: 100%;
+  max-width: 295px;
 }
 
 .plan-item h3 {

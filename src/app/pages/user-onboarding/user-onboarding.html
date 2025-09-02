@@ -1,38 +1,57 @@
-<mat-stepper labelPosition="bottom" #stepper>
+<div class="container mt-3 main-container">
+
+
+<mat-stepper class="custom-stepper" labelPosition="bottom" #stepper>
+
+       <ng-template matStepperIcon="number" let-index="index">
+    <span>{{ index + 1 }}</span>
+  </ng-template>
+
+
+    <ng-template matStepperIcon="edit">
+    <mat-icon>check</mat-icon>
+  </ng-template>
+
+  <!-- Completed step -->
+  <ng-template matStepperIcon="done">
+    <mat-icon>check</mat-icon>
+  </ng-template>
+
+
   <!-- Step 1: Personal Info -->
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Personal Info</ng-template>
       <div class="row">
-        <div class="col-md-12 mb-3">
+        <div class="col-md-12 mb-3 position-relative">
           <label class="form-label">Full Name</label>
-          <div class="input-group">
-            <span class="input-group-text">
-              <i class="bi bi-person"></i>
-            </span>
-            <input type="text" class="form-control" placeholder="Enter Full Name" formControlName="fullName"
+
+           <i class="bi bi-person input-icon"></i>
+            <input type="text" class="form-control with-icon" placeholder="Enter Full Name" formControlName="fullName"
               [class.is-invalid]="firstFormGroup.get('fullName')?.invalid && firstFormGroup.get('fullName')?.touched">
             <div *ngIf="firstFormGroup.get('fullName')?.invalid && firstFormGroup.get('fullName')?.touched"
               class="invalid-feedback">
               Full Name is required.
             </div>
-          </div>
+         
         </div>
 
         <!-- Age -->
-        <div class="col-md-6 mb-3">
+        <div class="col-md-6 mb-3 position-relative">
           <label class="form-label">Enter Age</label>
-          <div class="input-group">
-            <span class="input-group-text">
-              <i class="bi bi-person"></i>
-            </span>
+          <!-- <div class="input-group"> -->
+            <!-- <span class="input-group-text"> -->
+              <!-- <i class="bi bi-person"></i> -->
+            <!-- </span> -->
+                        <i class="bi bi-person input-icon"></i>
+
             <input type="number" class="form-control" placeholder="Enter your age" formControlName="age"
               [class.is-invalid]="firstFormGroup.get('age')?.invalid && firstFormGroup.get('age')?.touched">
             <div *ngIf="firstFormGroup.get('age')?.invalid && firstFormGroup.get('age')?.touched"
               class="invalid-feedback">
               Age is required and must be a positive number.
             </div>
-          </div>
+          <!-- </div> -->
         </div>
 
         <!-- Gender -->
@@ -68,7 +87,6 @@
                 (click)="adjustValue('heightValue', 'heightValue', true)">+</button>
             </div>
             <select class="form-select" style="max-width: 100px;" formControlName="heightUnit">
-              <option value="Inches">Inches</option>
               <option value="Feet">Feet</option>
               <option value="cm">cm</option>
             </select>
@@ -99,10 +117,13 @@
         </div>
       </div>
       <div class="text-end mt-3">
-        <button matStepperNext class="btn px-4 rounded-pill submission" [disabled]="firstFormGroup.invalid">Next</button>
+        <button matStepperNext class="btn px-4 rounded-pill submission next-button" [disabled]="firstFormGroup.invalid">Next</button>
       </div>
     </form>
   </mat-step>
+
+
+
 
   <!-- Step 2: Health & Goals -->
   <mat-step [stepControl]="secondFormGroup">
@@ -183,7 +204,7 @@
 
       <div class="text-end mt-3">
         <button matButton matStepperPrevious class="btn px-4 rounded-pill me-2">Back</button>
-        <button matStepperNext class="btn px-4 rounded-pill submission" [disabled]="secondFormGroup.invalid">Next</button>
+        <button matStepperNext class="btn px-4 rounded-pill submission next-button" [disabled]="secondFormGroup.invalid">Next</button>
       </div>
     </form>
   </mat-step>
@@ -240,7 +261,7 @@
       </div>
       <div class="text-end mt-3">
         <button matButton matStepperPrevious class="btn px-4 rounded-pill me-2">Back</button>
-        <button matStepperNext class="btn px-4 rounded-pill submission" [disabled]="thirdFormGroup.invalid">Next</button>
+        <button matStepperNext class="btn px-4 rounded-pill submission next-button" [disabled]="thirdFormGroup.invalid">Next</button>
       </div>
     </form>
   </mat-step>
@@ -314,8 +335,9 @@
       </div>
       <div class="text-end mt-3">
         <button matButton matStepperPrevious class="btn px-4 rounded-pill me-2">Back</button>
-        <button type="button" class="btn px-4 rounded-pill submission" (click)="goToPlans()">Submit</button>
+        <button type="button" class="btn px-4 rounded-pill submission next-button" (click)="goToPlans()">Submit</button>
       </div>
     </form>
   </mat-step>
 </mat-stepper>
+</div>

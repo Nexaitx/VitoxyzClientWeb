@@ -6,6 +6,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Router } from '@angular/router';
 import { MatStepperModule, MatStepper } from '@angular/material/stepper';
+import { MatIconModule } from '@angular/material/icon';
+import { HttpClient } from '@angular/common/http';
+import { API_URL, ENDPOINTS } from '@src/app/core/const';
+import { Toast } from 'bootstrap';
 
 @Component({
   selector: 'app-user-onboarding',
@@ -16,6 +20,7 @@ import { MatStepperModule, MatStepper } from '@angular/material/stepper';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatIconModule,
     MatButtonModule,
     CommonModule
   ],
@@ -25,6 +30,7 @@ import { MatStepperModule, MatStepper } from '@angular/material/stepper';
 export class UserOnboarding implements OnInit {
   private _formBuilder = inject(FormBuilder);
   private router = inject(Router);
+  private http = inject(HttpClient);
   @ViewChild('stepper') stepper!: MatStepper; 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -191,7 +197,29 @@ export class UserOnboarding implements OnInit {
 
       console.log('Final Submission Payload:', finalPayload);
       alert('Form Submitted! Check console for payload.');
-      this.router.navigate(['/plans']); 
+      
+     const token = localStorage.getItem('authToken');
+           console.log('token Payload:', token);
+
+    if (token) {
+      // 👇 Pass Authorization header with token
+      this.http.post(API_URL + ENDPOINTS.ONBOARD_DIET, finalPayload, {
+        headers: { Authorization: `Bearer ${token}` }
+      }).subscribe({
+        next: (res: any) => {
+          console.log('API Response:', res);
+          this.goToSubscriptionPlans();
+        },
+        error: (error) => {
+          console.error('API Error:', error);
+          this.showErrorToast();
+        }
+      });
+    } else {
+      // this.showLoginAlert = true; // 👈 new flag
+    }
+
+       
     } else {
       alert('Please complete all required fields in all steps.');
       // Optional: Go to the first invalid step
@@ -210,4 +238,16 @@ export class UserOnboarding implements OnInit {
   goToPlans() {
     this.submitForm(); 
   }
+
+    showErrorToast() {
+      const toastEl = document.getElementById('formErrorToast');
+      if (toastEl) {
+        const toast = new Toast(toastEl);
+        toast.show();
+      }
+    }
+  
+    goToSubscriptionPlans() {
+     this.router.navigate(['/subscription-plans']);
+    }
 }

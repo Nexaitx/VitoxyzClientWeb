@@ -1,2 +1,141 @@
-<p>payment-screen works!</p>
+
+<!-- <div class="payment-container container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-12 card shadow-lg p-4 rounded-4 bg-white">
+      <h5 class="fw-bold mb-4">Enter your payment details.</h5>
+
+      <div class="row">
+       
+        <div class="col-md-6 mb-4">
+          <h6 class="fw-semibold mb-3">Payment details</h6>
+
+      
+          <mat-form-field appearance="outline" class="w-100 mb-3 input-field">
+            <mat-label>Full Name</mat-label>
+            <mat-icon matPrefix>person</mat-icon>
+            <input matInput placeholder="Enter Full Name">
+          </mat-form-field>
+
+         
+          <mat-form-field appearance="outline" class="w-100 mb-3 input-field">
+            <mat-label>Email Address</mat-label>
+            <mat-icon matPrefix>email</mat-icon>
+            <input matInput placeholder="Enter Email Address">
+          </mat-form-field>
+
+          
+          <mat-form-field appearance="outline" class="w-100 mb-3 input-field">
+            <mat-label>Country</mat-label>
+            <mat-icon matPrefix>public</mat-icon>
+            <mat-select>
+              <mat-option *ngFor="let country of countries" [value]="country">
+                {{ country }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        
+        <div class="col-md-6">
+          <h6 class="fw-semibold mb-3">Order Summary</h6>
+
+          <div class="summary-box p-3 rounded-4 shadow-sm">
+            <p><strong>Plan:</strong> Premium Health</p>
+            <p><strong>Plan Price:</strong> $499/month</p>
+            <p><strong>Duration:</strong> 1 Month</p>
+            <p><strong>Income Tax:</strong> $5.00</p>
+            <hr>
+            <p class="fw-bold">Total Due: $503.00</p>
+          </div>
+
+          <button mat-raised-button color="primary" class="w-100 mt-3 py-3 rounded-pill">
+            Make a Payment
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="page-wrap">
+    <div class="container py-5">
+        <div class="row g-4 justify-content-between" style="margin-top: -86px;">
+
+            <div class="col-12">
+                <h5 class="title mb-4">Enter your payment details.</h5>
+            </div>
+
+            <!-- Left: Payment details -->
+            <div class="col-lg-7">
+                <!-- <div class="card p-4 shadow-sm rounded-4 border-0"> -->
+                    <h6 class="section-heading mb-3">Payment details</h6>
+                    <div class="form-group mb-3 position-relative">
+                        <label class="form-label">Name</label>
+                        <i class="bi bi-person input-icon"></i>
+                        <input type="text" class="form-control input-with-icon" placeholder="Enter your Name"
+                            formControlName="name">
+
+                    </div>
+                    <!-- Name -->
+                    <div class="form-group flex-fill mb-3 position-relative">
+                        <label class="form-label">Email</label>
+                        <i class="bi bi-envelope input-icon "></i>
+                        <input type="email" class="form-control input-with-icon" placeholder="Enter your Email"
+                            formControlName="email">
+                    </div>
+
+                     <div class="form-group flex-fill mb-3 position-relative">
+  <label class="form-label">Country</label>
+  <div class="custom-select-wrapper">
+    <i class="bi bi-geo-alt input-icon"></i>
+    <select class="form-control custom-select input-with-icon">
+      <option value="" disabled selected>Select Country</option>
+      <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+    </select>
+  </div>
+</div>
+
+                <!-- </div> -->
+            </div>
+
+            <!-- Right: Summary -->
+            <div class="col-lg-5">
+                <div class="card p-4 shadow-sm rounded-4 border-0">
+                    <h6 class="section-heading mb-3">Order Summary</h6>
+
+                    <div class="summary-box rounded-4 p-3">
+                        <div class="d-flex justify-content-between py-1">
+                            <span class="muted">Plan</span>
+                            <span class="fw-semibold">{{ plan }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-1">
+                            <span class="muted">Plan Price</span>
+                            <span class="fw-semibold">${{ price }}/month</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-1">
+                            <span class="muted">Duration</span>
+                            <span class="fw-semibold">{{ duration }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-1">
+                            <span class="muted">Income Tax</span>
+                            <span class="fw-semibold">${{ tax.toFixed(2) }}</span>
+                        </div>
+                        <mat-divider class="my-2"></mat-divider>
+                        <div class="d-flex justify-content-between py-1">
+                            <span class="fw-semibold">Total Due</span>
+                            <span class="fw-bold">${{ total.toFixed(2) }}</span>
+                        </div>
+                    </div>
+
+                    <button mat-raised-button color="primary" class="pay-btn w-90 mt-3 makepaymt rounded-pill" (click)="pay()"
+                        [disabled]="form.invalid">
+                        Make a Payment
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <button class="btn btn-primary rounded-pill px-3 text-light" (click)="goToDietDashboard()">Proceed to Payment</button>

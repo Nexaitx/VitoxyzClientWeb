@@ -1,3 +1,7 @@
+<!-- <div class="plancls" >
+<h5 >Diet Plan</h5>
+</div>
+
 <div class="container mt-3">
     <div class="row">
         <div class="col-md-8 col-12">
@@ -98,4 +102,119 @@
 
 
 
+</div> -->
+<div class="plancls" >
+<h5 >Diet Plan</h5>
 </div>
+<div class="diet-plan-container">
+  
+
+  <div class="row">
+    <!-- LEFT CONTENT -->
+    <div class="col-md-8 col-12">
+      <!-- Calendar -->
+      <div class="calendar-container d-flex gap-3 p-3 rounded shadow-sm">
+        @for (day of weekDays; track day) {
+          <div
+            class="calendar-day text-center px-3 py-2 rounded"
+            [class.active]="day?.isToday"
+            (click)="selectDay(day)"
+          >
+            <div class="date">{{ day?.date }}</div>
+            <span>{{ day?.name }}</span>
+          </div>
+        }
+      </div>
+
+      <!-- Stats -->
+      <div class="row mt-3 g-3">
+        <div class="col-12 col-md-4">
+          <div class="stat-card">
+            <div class="d-flex justify-content-between">
+              <span class="fw-semibold">Daily Water Consumption</span>
+              <span>8 to 10</span>
+            </div>
+            <!-- <div class="d-flex flex-wrap mt-2">
+              <img src="../../../../assets/diet/glass.png" alt="" *ngFor="let i of [].constructor(8)" />
+            </div> -->
+            <div class="d-flex justify-content-evenly mt-3">
+                            <img src="../../../../assets/diet/glass.png" alt="">
+                            <img src="../../../../assets/diet/glass.png" alt="">
+                            <img src="../../../../assets/diet/glass.png" alt="">
+                            <img src="../../../../assets/diet/glass.png" alt="">
+                            <img src="../../../../assets/diet/glass.png" alt="">
+                            <img src="../../../../assets/diet/glass.png" alt="">
+                            <img src="../../../../assets/diet/glass.png" alt="">
+                            <img src="../../../../assets/diet/glass.png" alt="">
+                        </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+          <div class="stat-card text-center">
+            <img src="../../../../assets/diet/step.png" alt="" class="icon" />
+            <div class="fw-semibold mt-2">215 Steps</div>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+          <div class="stat-card text-center">
+            <img src="../../../../assets/diet/sleep.png" alt="" class="icon" />
+            <div class="fw-semibold mt-2">7:30 Hrs</div>
+          </div>
+        </div>
+      </div>
+  <!-- TOTAL KCAL -->
+        <div class="total-kcal">
+          <span>Total:</span>
+          <span>1400 kcal</span>
+        </div>
+      <!-- Meals Section -->
+      <div class="meals mt-3">
+        <div class="meal-card">
+          <img src="../../../../assets/diet/breakfast.jpg" alt="breakfast" />
+          <div>
+            <div class="fw-semibold">Breakfast <span class="cal">351 kcal</span></div>
+            <p>Oats porridge with fruits + 1 boiled egg + lemon water</p>
+          </div>
+        </div>
+
+        <div class="meal-card">
+          <img src="../../../../assets/diet/lunch.jpg" alt="lunch" />
+          <div>
+            <div class="fw-semibold">Lunch <span class="cal">351 kcal</span></div>
+            <p>2 chapatis, mixed veg curry, curd, salad</p>
+          </div>
+        </div>
+
+        <div class="meal-card">
+          <img src="../../../../assets/diet/snack.jpg" alt="snack" />
+          <div>
+            <div class="fw-semibold">Snack <span class="cal">351 kcal</span></div>
+            <p>Roasted almonds + green tea + salad</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="col-md-4 col-12">
+      <div class="profile-card shadow-sm">
+        <div class="text-center p-3">
+          <img src="../../../../assets/diet/profileImage.png" alt="" class="profile-img" />
+        </div>
+        <div class="profile-info">
+          <div><span>Name</span> <span>Rukhsana</span></div>
+          <div><span>Age</span> <span>32 yr</span></div>
+          <div><span>Height</span> <span>5'4</span></div>
+          <div><span>Weight</span> <span>83kg</span></div>
+          <div><span>Diet Preference</span> <span>Non Veg</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
