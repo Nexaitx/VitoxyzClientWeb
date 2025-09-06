@@ -48,30 +48,28 @@
 }
 
 
-/* Wrapper for positioning icon and select */
 .custom-select-wrapper {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-/* Icon inside select */
+
 .custom-select-wrapper .input-icon {
   position: absolute;
   left: 14px;
   top:10px;
   font-size: 18px;
-  color: #0bbbc1; /* teal color for icon */
+  color: #0bbbc1; 
   pointer-events: none;
 }
 
-/* Select box */
 .custom-select {
-  appearance: none; /* hide default arrow */
+  appearance: none; 
   width: 100%;
-  padding: 10px 40px 10px 40px; /* space for icon + arrow */
+  padding: 10px 40px 10px 40px; 
   border: 1px solid #e0e6ed;
-  border-radius: 25px; /* pill shape */
+  border-radius: 25px; 
   background-color: #fafbfd;
   font-size: 16px;
   font-weight: 500;
@@ -82,12 +80,10 @@
 .makepaymt{
   color: white !important;
 }
-/* Placeholder style */
 .custom-select option[value=""] {
-  color: #9ca3af; /* gray for placeholder */
+  color: #9ca3af; 
 }
 
-/* Custom dropdown arrow */
 .custom-select-wrapper::after {
   content: "▼";
   position: absolute;
@@ -148,7 +144,7 @@
 
 .muted{ color: var(--muted); }
 
-/* ---- Angular Material field tuning to get "icons inside" & soft pill look ---- */
+
 .mat-field.mat-mdc-form-field {
   margin-bottom: 16px;
 }

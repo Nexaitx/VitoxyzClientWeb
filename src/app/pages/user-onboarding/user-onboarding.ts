@@ -41,7 +41,6 @@ export class UserOnboarding implements OnInit {
   displayedMedicalConditionsOptions: string[] = [];
 
   constructor() {
-    // Initialize first form group (Personal Info)
     this.firstFormGroup = this._formBuilder.group({
       fullName: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(1)]],
@@ -51,7 +50,6 @@ export class UserOnboarding implements OnInit {
       weightValue: [0, [Validators.required, Validators.min(1)]], 
     });
 
-    // Initialize second form group (Health & Goals)
     this.secondFormGroup = this._formBuilder.group({
       dietPreference: ['', Validators.required],
       medicalConditions: this._formBuilder.array([], Validators.required), 
@@ -59,14 +57,12 @@ export class UserOnboarding implements OnInit {
       medicationDetails: [''] 
     });
 
-    // Initialize third form group (Food Preferences)
     this.thirdFormGroup = this._formBuilder.group({
       foodPreference: ['', Validators.required],
       foodToAvoid: [''],
       dailyWaterIntake: ['', [Validators.required, Validators.pattern('^[0-9]+(\\.[0-9]+)?\\s*(liters|ml|cups)?$')]]
     });
 
-    // Initialize fourth form group (Lifestyle & Activity)
     this.fourthFormGroup = this._formBuilder.group({
       activityLevel: ['', Validators.required],
       wakeUpTime: ['', Validators.required],
@@ -176,7 +172,7 @@ export class UserOnboarding implements OnInit {
 
         health_goals: {
           dietPreference: this.secondFormGroup.value.dietPreference,
-          medicalCondition: medicalConditionString, //this.secondFormGroup.value.medicalConditions, 
+          medicalCondition: medicalConditionString, 
           anyMedication: this.secondFormGroup.value.anyMedication === 'yes', 
           medication: this.secondFormGroup.value.medicationDetails
         },
@@ -197,12 +193,13 @@ export class UserOnboarding implements OnInit {
 
       console.log('Final Submission Payload:', finalPayload);
       alert('Form Submitted! Check console for payload.');
-      
+      this.goToSubscriptionPlans()
+
+
      const token = localStorage.getItem('authToken');
            console.log('token Payload:', token);
 
     if (token) {
-      // 👇 Pass Authorization header with token
       this.http.post(API_URL + ENDPOINTS.ONBOARD_DIET, finalPayload, {
         headers: { Authorization: `Bearer ${token}` }
       }).subscribe({
@@ -216,13 +213,12 @@ export class UserOnboarding implements OnInit {
         }
       });
     } else {
-      // this.showLoginAlert = true; // 👈 new flag
+      // this.showLoginAlert = true; 
     }
 
        
     } else {
       alert('Please complete all required fields in all steps.');
-      // Optional: Go to the first invalid step
       if (this.firstFormGroup.invalid) {
         this.stepper.selectedIndex = 0;
       } else if (this.secondFormGroup.invalid) {

@@ -12,13 +12,11 @@
     <mat-icon>check</mat-icon>
   </ng-template>
 
-  <!-- Completed step -->
   <ng-template matStepperIcon="done">
     <mat-icon>check</mat-icon>
   </ng-template>
 
 
-  <!-- Step 1: Personal Info -->
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Personal Info</ng-template>
@@ -36,7 +34,6 @@
          
         </div>
 
-        <!-- Age -->
         <div class="col-md-6 mb-3 position-relative">
           <label class="form-label">Enter Age</label>
           <!-- <div class="input-group"> -->
@@ -51,10 +48,8 @@
               class="invalid-feedback">
               Age is required and must be a positive number.
             </div>
-          <!-- </div> -->
         </div>
 
-        <!-- Gender -->
         <div class="col-md-6 d-flex align-items-end mb-3">
           <div>
             <label class="form-label d-block">Gender</label>
@@ -75,7 +70,6 @@
           </div>
         </div>
 
-        <!-- Height -->
         <div class="col-md-6 mb-3">
           <label class="form-label">Height</label>
           <div class="d-flex gap-2 align-items-center">
@@ -125,7 +119,6 @@
 
 
 
-  <!-- Step 2: Health & Goals -->
   <mat-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Health & Goals</ng-template>

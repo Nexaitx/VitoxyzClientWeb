@@ -39,7 +39,7 @@ export class BookStaff {
     { label: '1 Day', value: '1' }, { label: '3 Days', value: '2' }, { label: '1 Week', value: '3' }, { label: '2 Weeks', value: '4' }, { label: '1 Month', value: '5' }
   ]
   today: string = new Date().toISOString().split('T')[0];
-  showAadharPopup = false; // Toggle for popup
+  showAadharPopup = false; 
   showAuthPopup = false;
   time = { hour: 13, minute: 30 };
   meridian = true;
@@ -220,6 +220,7 @@ export class BookStaff {
       timeSlot: [''],
       tenure: ['1'],
       dutyStartDate: [new Date().toISOString().substring(0, 10)],
+       dutyEndDate: ['', Validators.required],  
       maleQuantity: ['0', [Validators.min(0), Validators.max(10)]],
       femaleQuantity: ['0', [Validators.min(0), Validators.max(10)]],
       hours: [currentHour, [Validators.required, Validators.min(1), Validators.max(12)]],
@@ -231,13 +232,26 @@ export class BookStaff {
     group.get('ampm')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
     group.get('maleQuantity')?.valueChanges.subscribe(() => this.updateGenderQty(group));
     group.get('femaleQuantity')?.valueChanges.subscribe(() => this.updateGenderQty(group));
-    group.get('dutyStartDate')?.valueChanges.subscribe((value) => {
-      if (!value) {
-        const today = new Date().toISOString().substring(0, 10);
-        group.get('dutyStartDate')?.setValue(today, { emitEvent: false });
-      }
-    });
-    return group;
+    group.get('dutyStartDate')?.valueChanges.subscribe((value: string | null) => {
+    if (!value) {
+      const today = new Date().toISOString().substring(0, 10);
+      group.get('dutyStartDate')?.setValue(today, { emitEvent: false });
+      return; 
+    }
+
+   const endDateCtrl = group.get('dutyEndDate');
+  if (endDateCtrl) {  
+    const endDateVal = endDateCtrl.value as string | null; 
+
+    if (endDateVal && new Date(endDateVal) < new Date(value)) {
+      endDateCtrl.setValue(value, { emitEvent: false });
+    }
+  }
+  });
+
+  return group;
+
+    
   }
 
   private updateTimeSlot(shiftGroup: FormGroup): void {
@@ -332,8 +346,8 @@ export class BookStaff {
         const staffDetailsControl = (staffGroup.get('staffDetails') as FormArray).at(0);
         const { typeOfStaff, typeOfSubStaff } = staffDetailsControl.value;
         const shiftDetailsArray = (staffGroup.get('shiftDetails') as FormArray).controls.map((shiftGroup: AbstractControl) => {
-          const { shiftType, timeSlot, tenure, maleQuantity, femaleQuantity, dutyStartDate } = shiftGroup.value;
-          return { shiftType, timeSlot, tenure, maleQuantity, femaleQuantity, dutyStartDate };
+          const { shiftType, timeSlot, tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate } = shiftGroup.value;
+          return { shiftType, timeSlot, tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate };
         });
         return {
           typeOfStaff,
