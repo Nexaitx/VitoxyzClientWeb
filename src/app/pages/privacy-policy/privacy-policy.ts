@@ -31,7 +31,7 @@ import { Header } from '@src/app/layouts/header/header';
     MatSelectModule,
     FormsModule,
     MatInputModule
-    ,Header, Footer],
+    , Footer],
   templateUrl: './privacy-policy.html',
   styleUrl: './privacy-policy.scss'
 })

@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid"style=" margin-top: -48px;">
   <div class="row">
     <div class="col-md-4 h-100">
       <app-map (locationSelected)="getAddressFromCoords($event.lat, $event.lng)"></app-map>
@@ -230,12 +230,22 @@
                             <label class="form-label">Duty Start Date</label>
                             <input type="date" class="form-control" [min]="today" formControlName="dutyStartDate" />
                           </div>
+                          <div class="col-md-12 mt-2">
+                            <label class="form-label">Duty End Date</label>
+                            <input type="date" class="form-control"
+                              [min]="shiftDetail.get('dutyStartDate')?.value || today" formControlName="dutyEndDate" />
+                            <div class="invalid-feedback"
+                              *ngIf="shiftDetail.get('dutyEndDate')?.invalid && shiftDetail.get('dutyEndDate')?.touched">
+                              Duty End Date is required.
+                            </div>
+                          </div>
+
                           <div class="d-flex align-items-start justify-content-end gap-2 mt-3">
-                            <!-- Show plus icon at 0 index and at last index -->
+                          
                             @if(sh === 0 || sh === getNestedShiftDetailsControls(i).length - 1) {
                             <i class="bi bi-plus-lg add" (click)="addShift(i)" title="Add Time Slot"></i>
                             }
-                            <!-- Show delete icon for all except 0 index -->
+                    
                             @if(sh > 0) {
                             <i class="bi bi-trash text-danger remove" (click)="removeShiftDetail(i, sh)"
                               title="Remove Time Slot"></i>

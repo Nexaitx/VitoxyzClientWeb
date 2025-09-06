@@ -18,7 +18,7 @@ import { Footer } from "../footer/footer";
 
 @Component({
   selector: 'app-about-us',
-  imports: [Header,
+  imports: [
     CommonModule,
     RouterModule,
     LayoutModule,

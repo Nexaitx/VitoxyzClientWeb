@@ -1,12 +1,12 @@
-<div class="container-fluid mt-4" *ngIf="staffDetails.length > 0">
-    <div>
-        <div class="row" *ngFor="let categoryGroup of staffDetails">
-            <div class="col-12 mb-2">
-                {{ categoryGroup.category | titlecase }} ({{ categoryGroup.availableStaff?.length || 0 | number: '2.0'
-                }})
-            </div>
+<div class="container-fluid mt-4">
+  <ng-container *ngIf="staffDetails.length > 0; else noStaff">
+    <div *ngFor="let categoryGroup of staffDetails" class="row">
+      <div class="col-12 mb-2">
+        {{ categoryGroup.category | titlecase }}
+        ({{ categoryGroup.availableStaff?.length || 0 }})
+      </div>
 
-            <div class="col-md-3 mb-4" *ngFor="let staff of categoryGroup.availableStaff; let i = index">
+        <div class="col-md-3 mb-4" *ngFor="let staff of categoryGroup.availableStaff; let i = index">
                 <div class="card h-100">
                     <div class="row g-0">
                         <div class="col-4">
@@ -60,13 +60,17 @@
                     </div>
                 </div>
             </div>
+    </div>
+  </ng-container>
 
-        </div>
+  <ng-template #noStaff>
+    <div class="text-center mt-4">
+      <h2>No staff found.</h2>
     </div>
-    <div *ngIf="staffDetails.length === 0" class="text-center mt-4">
-        <h2>No staff found.</h2>
-    </div>
+  </ng-template>
 </div>
+
+
 <footer class="bg-white px-0">
     <div class="p-3 d-flex justify-content-between">
         <p class="text-muted">Total Staff: 01</p>
@@ -76,37 +80,46 @@
 
 </footer>
 
-<!-- proceed to billing address -->
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Please Enter Billing Information</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="">Billing Address</label>
-                    <input type="text" class="form-control" placeholder="Enter you billing address">
-                </div>
-                <div class="form-group my-3">
-                    <label for="">Your Name</label>
-                    <input type="text" class="form-control" placeholder="Enter your name">
-                </div>
-                <div class="form-group">
-                    <label for="">GST Number</label>
-                    <input type="text" class="form-control" placeholder="Enter GST number">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary submission text-light btn-sm w-100 rounded-pill">Proceed to
-                    Payment (1212)</button>
-            </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Please Enter Billing Information</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Billing Address</label>
+          <input #billingAddress type="text" class="form-control" placeholder="Enter you billing address">
         </div>
+
+        <div class="form-group my-3">
+          <label>Your Name</label>
+          <input #billingName type="text" class="form-control" placeholder="Enter your name">
+        </div>
+
+        <div class="form-group">
+          <label>GST Number</label>
+          <input #gstNumber type="text" class="form-control" placeholder="Enter GST number">
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary submission text-light btn-sm w-100 rounded-pill"
+          (click)="onProceedToPayment(billingName.value, billingAddress.value, gstNumber.value)">
+          Proceed to Payment (1212)
+        </button>
+      </div>
     </div>
+  </div>
 </div>
 
-<!-- Swap staff -->
+
+
 <div class="modal fade" id="swapStaff" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -125,7 +138,7 @@
     </div>
 </div>
 
-<!-- Remove the staff -->
+
 <div class="modal fade" id="deleteStaff" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

@@ -1,5 +1,7 @@
-export const API_URL = 'https://vitoxyz.com/Backend/api';
+export const API_URL = 'https://vitoxyzbackend-27e9.onrender.com/api';
 
+// export const API_URL = 'https://vitoxyz.com/Backend/api';
+ 
 export const ENDPOINTS = {
     LOGIN: '/user/loginWithPasswordUser',
     SIGN_UP: '/user/signup',
