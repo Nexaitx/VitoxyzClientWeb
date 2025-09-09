@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Login } from './login/login';
 import { SignUp } from './sign-up/sign-up';
 import * as bootstrap from 'bootstrap';
+import { ForgotPassword } from "./forgot-password/forgot-password";
+import { ResetPassword } from './reset-password/reset-password';
 
 @Component({
   selector: 'app-authorization',
@@ -10,13 +12,16 @@ import * as bootstrap from 'bootstrap';
   imports: [
     CommonModule,
     Login,
-    SignUp
-  ],
+    SignUp,
+    ForgotPassword,
+    ResetPassword
+],
   templateUrl: './authorization.html',
   styleUrl: './authorization.scss'
 })
 export class Authorization implements AfterViewInit, OnChanges, OnDestroy {
-  @Input() authMode: 'login' | 'signup' = 'login';
+  @Input() authMode: 'login' | 'signup' | 'forgotPassword' | 'resetPassword' = 'login';;
+
   @Input() showAuthModal: boolean = false;
   @Output() loginSuccess = new EventEmitter<void>();
   @Output() close = new EventEmitter<void>();

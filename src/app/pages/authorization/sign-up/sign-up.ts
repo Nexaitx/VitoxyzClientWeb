@@ -35,7 +35,7 @@ export class SignUp {
   button = 'Sign Up';
   isLoading: boolean = false;
   @Input() authMode: 'login' | 'signup' = 'signup';
-  @Output() signupSuccess = new EventEmitter<void>(); 
+  @Output() signupSuccess = new EventEmitter<void>();
   @Output() loadingChange = new EventEmitter<boolean>();
   private router = inject(Router);
   private http = inject(HttpClient);
@@ -47,8 +47,8 @@ export class SignUp {
       {
         userName: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        phoneNumber: ['', Validators.required],
-        password: ['', [Validators.required, Validators.minLength(6)]],
+        phoneNumber: ['', [ Validators.required, Validators.minLength(10), Validators.maxLength(10),  Validators.pattern('^[0-9]*$') ]],
+        password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(14)]],
         confirmPassword: ['', Validators.required],
         roleType: "User"
       }, { validators: passwordMatchValidator }
