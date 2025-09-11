@@ -36,7 +36,7 @@
           </span>
         </div>
 
-        <div class="d-flex justify-content-between">
+        <!-- <div class="d-flex justify-content-between">
           <div class="form-check mb-3">
             <input type="checkbox" class="form-check-input" id="rememberMe" formControlName="rememberMe" />
             <label class="form-check-label">
@@ -45,7 +45,14 @@
           </div>
 
           <a class="links">Forgot Password?</a>
-        </div>
+        </div> -->
+          <div class="d-flex justify-content-between">
+                  <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="rememberMe" formControlName="rememberMe" />
+                    <label class="form-check-label" for="rememberMe">Remember Me</label>
+                  </div>
+            <a class="links" (click)="goToForgotPassword()">Forgot Password?</a>
+                </div>
 
         <app-submission [buttonType]="'Login'" [disableButton]="isLoading"></app-submission>
       </form>

@@ -3,33 +3,44 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookingResponseService } from '../../core/booking-response.service';
 import { API_URL, ENDPOINTS } from '@src/app/core/const';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 declare var Razorpay: any;
 
 @Component({
   selector: 'app-view-staff',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './view-staff.html',
   styleUrls: ['./view-staff.scss']
 })
 export class ViewStaff implements OnInit {
   staffDetails: any[] = [];
   selectedStaff: any;
-
+billingForm!: FormGroup;
 
   private readonly razorpayKeyId = 'rzp_test_RARA6BGk8D2Y2o';
   private isPaymentLoading = false;
 
 
   constructor(
+    private fb: FormBuilder,
     private router: Router,
     private bookingResponseService: BookingResponseService
   ) { }
 
   ngOnInit(): void {
     this.fetchBookingResponses();
+    this.billingForm = this.fb.group({
+    billingAddress: ['', [Validators.required, Validators.minLength(5)]],
+    billingName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]],
+    gstNumber: ['', [Validators.required, ]]
+  });
   }
+    // gstNumber: ['', [Validators.required, Validators.pattern(/^([0-9A-Z]{15})$/)]]
+
 
   fetchBookingResponses() {
     this.bookingResponseService.getBookingResponse().subscribe({

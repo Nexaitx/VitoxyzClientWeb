@@ -4,7 +4,8 @@
     <div class="modal-content">
       <div class="modal-body p-0">
         <div class="modal-close">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isChildLoading"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            [disabled]="isChildLoading"></button>
         </div>
         <div class="login-screen">
           <div class="left-panel">
@@ -20,8 +21,10 @@
               <h1 class="title text-center pt-3 mb-0">Vitoxyz</h1>
               <div class="form-container">
                 <!-- Login Form -->
+
                 <div *ngIf="authMode === 'login'">
-                  <app-login [authMode]="authMode" (loginSuccess)="onLoginSuccess()" (loadingChange)="handleLoadingChange($event)"></app-login>
+                  <app-login [authMode]="authMode" (authModeChange)="authMode = $event"
+                    (loginSuccess)="onLoginSuccess()" (loadingChange)="handleLoadingChange($event)"></app-login>
                   <div class="text-center mt-3">
                     New to Vitoxyz? <span class="links" (click)="authMode = 'signup'">Sign Up</span>
                   </div>
@@ -29,10 +32,19 @@
 
                 <!-- Signup Form -->
                 <div *ngIf="authMode === 'signup'">
-                  <app-sign-up [authMode]="authMode" (signupSuccess)="onLoginSuccess()" (loadingChange)="handleLoadingChange($event)"></app-sign-up>
+                  <app-sign-up [authMode]="authMode" (signupSuccess)="onLoginSuccess()"
+                    (loadingChange)="handleLoadingChange($event)"></app-sign-up>
                   <div class="text-center pb-3">
                     Already have an account? <span class="links" (click)="authMode = 'login'">Login</span>
                   </div>
+                </div>
+                <div *ngIf="authMode === 'forgotPassword'">
+                  <app-forgot-password (backToLogin)="authMode = 'login'"  (goToReset)="authMode = 'resetPassword'" (loadingChange)="handleLoadingChange($event)">
+                  </app-forgot-password>
+                </div>
+                <div *ngIf="authMode === 'resetPassword'">
+                  <app-reset-password (backToLogin)="authMode = 'login'" (loadingChange)="handleLoadingChange($event)">
+                  </app-reset-password>
                 </div>
               </div>
             </div>

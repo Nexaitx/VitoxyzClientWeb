@@ -36,7 +36,8 @@ export class Login implements OnInit, OnDestroy {
   private otpTimerSubscription: Subscription | undefined;
   phoneNumber: string = ''; // Will be set from the form
   maskedPhoneNumber: string = ''; // Initialize here or in ngOnInit
-  @Input() authMode: 'login' | 'signup' = 'login'; // Default mode is 'login'
+ @Input() authMode: 'login' | 'signup' | 'forgotPassword' = 'login';
+  @Output() authModeChange = new EventEmitter<'login' | 'signup' | 'forgotPassword'>();
   @Output() loginSuccess = new EventEmitter<void>();
   @Output() loadingChange = new EventEmitter<boolean>();
 
@@ -54,7 +55,7 @@ export class Login implements OnInit, OnDestroy {
   private initForms(): void {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(3)]],
+        password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(14)]],
       rememberMe: [true]
     });
 
@@ -66,6 +67,9 @@ export class Login implements OnInit, OnDestroy {
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
+  }
+  goToForgotPassword() {
+    this.authModeChange.emit('forgotPassword');
   }
 
   private maskPhoneNumber(phone: string): string {
