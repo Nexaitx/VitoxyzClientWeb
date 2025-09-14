@@ -13,6 +13,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
 import { Router, RouterModule } from '@angular/router';
+import { Footer } from "../../footer/footer";
 
 declare var Razorpay: any;
 
@@ -34,8 +35,9 @@ declare var Razorpay: any;
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatDividerModule, 
-  ],
+    MatDividerModule,
+    Footer
+],
   templateUrl: './payment-screen.html',
   styleUrls: ['./payment-screen.scss'],
 })

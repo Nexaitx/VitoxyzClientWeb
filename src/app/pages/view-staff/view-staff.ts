@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { BookingResponseService } from '../../core/booking-response.service';
 import { API_URL, ENDPOINTS } from '@src/app/core/const';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Footer } from "../footer/footer";
+
 
 declare var Razorpay: any;
 
@@ -11,8 +13,7 @@ declare var Razorpay: any;
   selector: 'app-view-staff',
   standalone: true,
   imports: [CommonModule,
-    ReactiveFormsModule,
-  ],
+    ReactiveFormsModule, Footer],
   templateUrl: './view-staff.html',
   styleUrls: ['./view-staff.scss']
 })
@@ -199,7 +200,9 @@ console.log('Formatted staff:', formatted);
 
   private onPaymentSuccess(response: any, amountInINR: number) {
     console.log('Payment success:', response);
-    alert(`Payment successful! Payment ID: ${response?.razorpay_payment_id || 'N/A'}`);
+          // this.router.navigate(['/medicines']);
+
+    // alert(`Payment successful! Payment ID: ${response?.razorpay_payment_id || 'N/A'}`);
   }
 
   private onPaymentFailed(resp: any) {

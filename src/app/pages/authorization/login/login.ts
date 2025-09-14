@@ -55,7 +55,7 @@ export class Login implements OnInit, OnDestroy {
   private initForms(): void {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(14)]],
+        password: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(14)]],
       rememberMe: [true]
     });
 
@@ -157,7 +157,7 @@ export class Login implements OnInit, OnDestroy {
     this.phoneNumber = this.phoneLoginForm.get('phoneNumber')?.value;
     this.maskedPhoneNumber = this.maskPhoneNumber(this.phoneNumber);
 
-    this.http.post(API_URL + ENDPOINTS.SEND_OTP, { phoneNumber: this.phoneNumber }).subscribe({
+    this.http.post(`${API_URL}${ENDPOINTS.SEND_OTP_LOGIN}?phoneNumber=${this.phoneNumber}`, {}).subscribe({
       next: (response: any) => {
         this.showPhoneInput = false;
         this.startOtpTimer();
@@ -184,11 +184,16 @@ export class Login implements OnInit, OnDestroy {
     this.isLoading = true;
     const otpCode = this.phoneLoginForm.get('otpCode')?.value;
     const payload = { phoneNumber: this.phoneNumber, otp: otpCode };
-    this.http.post(API_URL + ENDPOINTS.VERIFY_OTP, payload).subscribe({
+    this.http.post(`${API_URL}${ENDPOINTS.VERIFY_OTP_LOGIN}?phoneNumber=${this.phoneNumber}&otp=${otpCode}`, {}).subscribe({
       next: (response: any) => {
-        console.log('OTP verified successfully', response);
-        this.router.navigate(['/dashboard']); // Navigate to dashboard on success
-        this.isLoading = false;
+        // console.log('OTP verified successfully', response);
+                this.isLoading = false;
+
+                localStorage.setItem('userProfile', JSON.stringify(response.profile));
+          localStorage.setItem('authToken', response.token);
+          this.loginSuccess.emit();
+
+        // this.router.navigate(['/dashboard']); // Navigate to dashboard on success
       },
       error: (error: HttpErrorResponse) => {
         console.error('OTP verification failed', error);
@@ -203,4 +208,34 @@ export class Login implements OnInit, OnDestroy {
       }
     });
   }
+
+//   verifyOtp(): void {
+//     console.log('verifyOtp() clicked');
+    
+//   if (this.phoneLoginForm.get('otpCode')?.invalid) {
+//     this.phoneLoginForm.get('otpCode')?.markAsTouched();
+//     console.log('OTP form is invalid');
+//     return;
+//   }
+
+//   this.isLoading = true;
+//   const otpCode = this.phoneLoginForm.get('otpCode')?.value;
+//   const payload = { phoneNumber: this.phoneNumber, otp: otpCode };
+
+//   console.log('🔹 Verify OTP Payload:', payload);
+//   console.log('🔹 Verify OTP URL:', API_URL + ENDPOINTS.VERIFY_OTP);
+
+//   this.http.post(`${API_URL}${ENDPOINTS.VERIFY_OTP_LOGIN}?phoneNumber=${this.phoneNumber}&otp=${otpCode}`, {}).subscribe({
+//     next: (response: any) => {
+//       console.log('✅ OTP verified successfully', response);
+//       this.router.navigate(['/dashboard']);
+//       this.isLoading = false;
+//     },
+//     error: (error: HttpErrorResponse) => {
+//       console.error('❌ OTP verification failed:', error);
+//       this.isLoading = false;
+//     }
+//   });
+// }
+
 }

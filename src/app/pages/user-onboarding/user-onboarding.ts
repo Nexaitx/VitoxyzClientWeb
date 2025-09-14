@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClient } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '@src/app/core/const';
 import { Toast } from 'bootstrap';
+import { Footer } from "../footer/footer";
 
 @Component({
   selector: 'app-user-onboarding',
@@ -22,8 +23,9 @@ import { Toast } from 'bootstrap';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    CommonModule
-  ],
+    CommonModule,
+    Footer
+],
   templateUrl: './user-onboarding.html',
   styleUrl: './user-onboarding.scss'
 })
@@ -192,7 +194,7 @@ export class UserOnboarding implements OnInit {
       };
 
       console.log('Final Submission Payload:', finalPayload);
-      alert('Form Submitted! Check console for payload.');
+      // alert('Form Submitted! Check console for payload.');
       this.goToSubscriptionPlans()
 
 

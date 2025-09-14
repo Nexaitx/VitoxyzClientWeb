@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 // import { AadharVerificationComponent } from "../../aadhar-verification/aadhar-verification.component";
 import { Login } from "../../authorization/login/login";
 import { Authorization } from '../../authorization/authorization';
+import { Footer } from "../../footer/footer";
 
 @Component({
   selector: 'app-book-staff',
@@ -18,7 +19,7 @@ import { Authorization } from '../../authorization/authorization';
     MapComponent,
     Submission,
     // AadharVerificationComponent,
-    Authorization],
+    Authorization, Footer],
   templateUrl: './book-staff.html',
   styleUrls: ['./book-staff.scss'],
 })
@@ -478,5 +479,39 @@ export class BookStaff {
     const endTime = (startTime + 8 * 60) % (24 * 60);
     return startTime >= 0 && endTime >= 0 ? null : { invalidShiftDuration: true };
   }
+
+
+  onManualChange(field: string, i: number, sh: number, event: Event) {
+  const input = event.target as HTMLInputElement;
+  let value = Number(input.value);
+
+  if (isNaN(value)) value = 0;
+  if (value < 0) value = 0;
+  if (value > 10) value = 10;
+
+  this.getNestedShiftDetailsControls(i)[sh].get(field)?.setValue(value);
+}
+
+
+onManualTimeChange(field: string, i: number, sh: number, event: Event) {
+  const input = event.target as HTMLInputElement;
+  let value = Number(input.value);
+
+  if (isNaN(value)) value = 0;
+
+  if (field === 'hours') {
+    if (value < 0) value = 0;
+    if (value > 12) value = 12;
+  }
+
+  if (field === 'minutes') {
+    if (value < 0) value = 0;
+    if (value > 59) value = 59;
+  }
+
+  this.getNestedShiftDetailsControls(i)[sh].get(field)?.setValue(value);
+}
+
+
 
 }

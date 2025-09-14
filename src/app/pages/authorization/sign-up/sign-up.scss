@@ -1,0 +1,44 @@
+.signup-container {
+  max-width: 420px;
+  margin: auto;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.password-rules {
+  font-size: 12px;
+  color: #555;
+  margin-left: 10px;
+  padding-left: 15px;
+}
+.password-rules li {
+  list-style: disc;
+}
+
+.tabContainer{
+   height:350px 
+}
+
+.eye-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: #6c757d;
+  cursor: pointer;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+.links {
+  cursor: pointer;
+  color: #0BBBc1; /* optional: make it look like a link */
+}
+
+.links:hover {
+  color: #0BBBc1;
+}

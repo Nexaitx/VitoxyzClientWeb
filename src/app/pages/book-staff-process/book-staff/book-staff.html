@@ -1,12 +1,16 @@
-<div class="container-fluid"style=" margin-top: -48px;">
+<div class="container-fluid" style=" margin-top: -65px;">
   <div class="row">
-    <div class="col-md-4 h-100">
+
+        <div class="col-md-4 h-100 map-styles">
+
       <app-map (locationSelected)="getAddressFromCoords($event.lat, $event.lng)"></app-map>
     </div>
+
     <div class="col-md-8 search-staff-form">
-      <div class="form-scroll-container">
-        <div class="form-content">
+      <!-- <div class="form-scroll-container"> -->
           <h2 class="form-title">Please fill the form</h2>
+          <div class="form-scroll-container">
+        <div class="form-content">
           <form [formGroup]="staffBookingForm" (ngSubmit)="onSubmit()">
             <div class="form">
               <div class="row my-3">
@@ -63,7 +67,7 @@
                                 {{ staff.name }}
                               </option>
                             </select>
-                            
+
                             @if(staffDetails.get('typeOfStaff')?.invalid && staffDetails.get('typeOfStaff')?.touched) {
                             <div class="invalid-feedback">
                               Type of Staff is required.
@@ -91,7 +95,7 @@
                                   {{ nurse.label }}
                                 </option>
                               </select>
-                              
+
                               @if(staffDetails.get('typeOfSubStaff')?.invalid &&
                               staffDetails.get('typeOfSubStaff')?.touched) {
                               <div class="invalid-feedback">
@@ -111,11 +115,15 @@
                       <div *ngFor="let shiftDetail of getNestedShiftDetailsControls(i); let sh = index"
                         [formGroupName]="sh" class="shift-detail">
                         <div class="row d-flex">
+
+
                           <div class="col-md-4">
                             <label class="form-label">Preferred Time Slot</label>
+
                             <div class="d-flex align-items-center"
                               [class.is-invalid]="shiftDetail.get('timeSlot')?.errors?.['pastTime'] && shiftDetail.get('timeSlot')?.touched">
-                              <div class="d-flex align-items-center border rounded">
+
+                              <!-- <div class="d-flex align-items-center border rounded">
                                 <button class="btn btn-minus px-0 ps-1 text-primary" type="button"
                                   (click)="decrementTime('hours',i,sh)">
                                   <i class="bi bi-dash"></i>
@@ -127,29 +135,55 @@
                                   (click)="incrementTime('hours',i,sh)">
                                   <i class="bi bi-plus"></i>
                                 </button>
-                              </div>
-                              <div class="align-items-center d-flex border rounded mx-2">
-                                <button class="btn btn-minus px-2 text-primary" type="button"
-                                  (click)="decrementTime('minutes',i,sh)">
+                              </div> -->
+
+
+                              <div class="d-flex align-items-center counter-box">
+                                <button class="btn-counter btn-minus" type="button"
+                                  (click)="decrementTime('hours', i, sh)">
                                   <i class="bi bi-dash"></i>
+
                                 </button>
-                                <input type="number" [value]="pad(shiftDetail.get('minutes')?.value)"
-                                  class="form-control px-0 hrsMin border-0" formControlName="minutes" value="00" min="0"
-                                  max="59" readonly>
-                                <button class="btn btn-plus px-0 text-primary" type="button"
-                                  (click)="incrementTime('minutes',i,sh)">
+
+                                <input type="number" class="form-control counter-input" formControlName="hours"
+                                  [value]="pad(shiftDetail.get('hours')?.value)" min="0" max="12"
+                                  (input)="onManualTimeChange('hours', i, sh, $event)" />
+
+                                <button class="btn-counter btn-plus" type="button"
+                                  (click)="incrementTime('hours', i, sh)">
                                   <i class="bi bi-plus"></i>
                                 </button>
                               </div>
-                              <select class="form-select time-select px-0 ps-2 amPm" formControlName="ampm">
+
+                              <div class="d-flex align-items-center counter-box mx-2">
+                                <button class="btn-counter btn-minus" type="button"
+                                  (click)="decrementTime('minutes', i, sh)">
+                                  <i class="bi bi-dash"></i>
+
+                                </button>
+
+                                <input type="number" class="form-control counter-input hrsMin" formControlName="minutes"
+                                  [value]="pad(shiftDetail.get('minutes')?.value)" min="0" max="59"
+                                  (input)="onManualTimeChange('minutes', i, sh, $event)" />
+
+                                <button class="btn-counter btn-plus" type="button"
+                                  (click)="incrementTime('minutes', i, sh)">
+                                  <i class="bi bi-plus"></i>
+
+                                </button>
+                              </div>
+
+                              <select class="d-flex align-items-center counter-box mx-2" formControlName="ampm">
                                 <option value="AM">AM</option>
                                 <option value="PM">PM</option>
                               </select>
+
                             </div>
                           </div>
                           <div class="col-md-2">
                             <label class="form-label">Shift Duration</label>
-                            <select class="form-select pe-1" formControlName="shiftType" [class.is-invalid]="
+                            <select class="d-flex align-items-center counter-box mx-2" formControlName="shiftType"
+                              [class.is-invalid]="
                             shiftDetail.get('shiftType')?.invalid &&
                             shiftDetail.get('shiftType')?.touched
                           ">
@@ -165,60 +199,77 @@
                             }
                           </div>
                           <div class="col-md-2 col-6 col-sm-6">
-                            <div class="form-group">
-                              <label class="form-label d-block">Prefered Gender</label>
-                              <i class="bi bi-person address"></i>
-                              <input type="text" readonly value="Male" class="form-control ps-4">
+                            <label class="form-label d-block">Prefered Gender</label>
+
+                            <div class="d-flex align-items-center counter-box mx-2">
+                              <i class="bi bi-person text-primary me-2"></i>
+                              <span class="counter-label">Male</span>
                             </div>
 
-                            <div class="form-group">
-                              <i class="bi bi-person address female"></i>
-                              <input type="text" readonly value="Female" class="form-control mt-2 ps-4">
+                            <div class="d-flex align-items-center counter-box mx-2">
+                              <i class="bi bi-person text-primary me-2"></i>
+                              <span class="counter-label">Female</span>
                             </div>
+
                             @if(shiftDetail.errors?.['zeroQuantity'] && (shiftDetail.touched || shiftDetail.dirty)) {
                             <div class="text-danger">
                               Quantity is required.
                             </div>
                             }
                           </div>
-                          <div class="col-md-2 col-6 col-sm-6">
+
+
+                          <div class="col-md-2 col-6 col-sm-6 ">
                             <label class="form-label">Quantity</label>
-                            <div class="d-flex align-items-center mb-2 counter-box">
-                              <button class="btn btn-minus px-0" type="button"
+                            <div class="d-flex align-items-center counter-box">
+                              <button class="btn-counter btn-minus" type="button"
                                 (click)="decrease('maleQuantity', i, sh)">
                                 <i class="bi bi-dash"></i>
                               </button>
-                              <input type="number" class="form-control" [formControlName]="'maleQuantity'" min="0"
-                                max="10" readonly readonly>
-                              <button class="btn btn-plus px-0" type="button" (click)="increase('maleQuantity', i, sh)">
+
+                              <input type="number" class="form-control counter-input" [formControlName]="'maleQuantity'"
+                                min="0" max="10" (input)="onManualChange('maleQuantity', i, sh, $event)" />
+
+                              <button class="btn-counter btn-plus" type="button"
+                                (click)="increase('maleQuantity', i, sh)">
                                 <i class="bi bi-plus"></i>
+
                               </button>
                             </div>
+
+
                             <div class="d-flex align-items-center counter-box">
-                              <button class="btn btn-minus px-0" type="button"
+                              <button class="btn-counter btn-minus" type="button"
                                 (click)="decrease('femaleQuantity', i, sh)">
                                 <i class="bi bi-dash"></i>
                               </button>
-                              <input type="number" class="form-control" [formControlName]="'femaleQuantity'" min="0"
-                                max="10" readonly readonly>
-                              <button class="btn btn-plus px-0" type="button"
+
+                              <input type="number" class="form-control counter-input"
+                                [formControlName]="'femaleQuantity'" min="0" max="10"
+                                (input)="onManualChange('femaleQuantity', i, sh, $event)" />
+                              <button class="btn-counter btn-plus" type="button"
                                 (click)="increase('femaleQuantity', i, sh)">
                                 <i class="bi bi-plus"></i>
                               </button>
                             </div>
                           </div>
+
+
                           <div class="col-md-2">
                             <div class="form-group">
                               <label class="form-label">Tenure</label>
-                              <i class="bi bi-calendar4 address"></i>
-                              <select class="form-select ps-4 pe-1" formControlName="tenure" [class.is-invalid]="
-                            shiftDetail.get('tenure')?.invalid &&
-                            shiftDetail.get('tenure')?.touched
-                          ">
-                                <option *ngFor="let ten of tenure" [value]="ten.value">
-                                  {{ ten.label }}
-                                </option>
-                              </select>
+
+                              <div class="d-flex align-items-center counter-box mx-2">
+                                <i class="bi bi-calendar4 text-primary"></i>
+                                <select class="form-select border-0 counter-select" formControlName="tenure"
+                                  [class.is-invalid]="shiftDetail.get('tenure')?.invalid && shiftDetail.get('tenure')?.touched">
+                                  <option *ngFor="let ten of tenure" [value]="ten.value">
+                                    {{ ten.label }}
+                                  </option>
+                                </select>
+                              </div>
+
+
                               @if(shiftDetail.get('tenure')?.invalid && shiftDetail.get('tenure')?.touched) {
                               <div class="invalid-feedback">
                                 Tenure is required.
@@ -226,26 +277,31 @@
                               }
                             </div>
                           </div>
-                          <div class="col-md-12">
-                            <label class="form-label">Duty Start Date</label>
-                            <input type="date" class="form-control" [min]="today" formControlName="dutyStartDate" />
-                          </div>
-                          <div class="col-md-12 mt-2">
-                            <label class="form-label">Duty End Date</label>
-                            <input type="date" class="form-control"
-                              [min]="shiftDetail.get('dutyStartDate')?.value || today" formControlName="dutyEndDate" />
-                            <div class="invalid-feedback"
-                              *ngIf="shiftDetail.get('dutyEndDate')?.invalid && shiftDetail.get('dutyEndDate')?.touched">
-                              Duty End Date is required.
+                          <div class="row">
+                            <div class="col-md-6">
+                              <label class="form-label">Duty Start Date</label>
+                              <input type="date" class="form-control" [min]="today" formControlName="dutyStartDate" />
+                            </div>
+
+                            <div class="col-md-6">
+                              <label class="form-label">Duty End Date</label>
+                              <input type="date" class="form-control"
+                                [min]="shiftDetail.get('dutyStartDate')?.value || today"
+                                formControlName="dutyEndDate" />
+                              <div class="invalid-feedback"
+                                *ngIf="shiftDetail.get('dutyEndDate')?.invalid && shiftDetail.get('dutyEndDate')?.touched">
+                                Duty End Date is required.
+                              </div>
                             </div>
                           </div>
 
+
                           <div class="d-flex align-items-start justify-content-end gap-2 mt-3">
-                          
+
                             @if(sh === 0 || sh === getNestedShiftDetailsControls(i).length - 1) {
                             <i class="bi bi-plus-lg add" (click)="addShift(i)" title="Add Time Slot"></i>
                             }
-                    
+
                             @if(sh > 0) {
                             <i class="bi bi-trash text-danger remove" (click)="removeShiftDetail(i, sh)"
                               title="Remove Time Slot"></i>
@@ -273,10 +329,17 @@
             </ng-container>
             }
           </form>
+          </div>
+
         </div>
       </div>
-    </div>
+    <!-- </div> -->
+
   </div>
+</div>
+
+<div>
+  <app-footer></app-footer>
 </div>
 <!-- @if(!showAadharPopup) {
 <app-aadhar-verification (verified)="onAadharVerified()"></app-aadhar-verification>

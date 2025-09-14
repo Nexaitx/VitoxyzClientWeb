@@ -76,3 +76,157 @@
 .amPm {
     width: 70px !important;;
 }
+
+
+
+.counter-box {
+  background: #f9fbfd; /* light background */
+  border: 2px solid #dff4f6; 
+  border-radius: 12px;
+  padding: 0px 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+  width: 120px;
+  height: 40px;
+}
+
+
+.counter-box .btn-counter {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #09b8c2; /* teal color like image */
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.counter-box .btn-counter:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.counter-input {
+  width: 55px;
+  text-align: center;
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  font-weight: 600;
+  color: #212529;
+   padding: 0;       /* remove bootstrap padding */
+  margin: 0;     
+}
+
+.counter-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.counter-input.hrsMin {
+  width: 50px;   /* increased width so 2 digits like "59" are visible */
+}
+
+.counter-select {
+  background: transparent;
+  font-size: 16px;
+  font-weight: 500;
+  color: #212529;
+  padding-left: 8px;
+  box-shadow: none !important;
+}
+
+.counter-select:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.counter-select option {
+  color: #212529;
+}
+
+
+
+/* Apply to all inputs and selects in this page */
+.search-staff-form .form-control,
+.search-staff-form .form-select {
+  height: 40px !important;
+  min-height: 40px !important;
+  line-height: 40px;
+  padding: 0 10px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+    background: #f9fbfd;
+
+}
+
+/* Counter inputs inside your custom boxes */
+.search-staff-form .counter-input {
+  height: 40px !important;
+  min-height: 40px !important;
+  text-align: center;
+  padding: 0;
+}
+    // background: #f9fbfd;
+
+/* Counter buttons (+/-) */
+.search-staff-form .btn-counter {
+  height: 40px !important;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dropdown select (tenure, gender, shift type, etc.) */
+.search-staff-form .counter-select {
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 8px;
+}
+
+
+.form-scroll-container {
+  max-height: 600px;   /* fixed height (adjust as per your layout) */
+  overflow-y: auto;    /* enable vertical scrolling */
+  overflow-x: hidden;  /* prevent horizontal scroll */
+  padding-right: 10px; /* space for scrollbar */
+}
+
+/* Smooth scrollbar styling (optional, works in modern browsers) */
+.form-scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+.form-scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+.form-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.row {
+  display: flex;          /* make row a flex container */
+  align-items: stretch;   /* force children to equal height */
+}
+
+/* Left map column */
+.map-styles {
+  height: auto;       /* let flexbox control the height */
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+/* Ensure app-map fills the column */
+.map-styles app-map {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

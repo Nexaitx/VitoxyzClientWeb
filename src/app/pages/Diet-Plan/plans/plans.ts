@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '@src/app/core/const';
 import { Router } from '@angular/router';
+import { Footer } from "../../footer/footer";
 
 @Component({
   selector: 'app-plans',
@@ -18,8 +19,7 @@ import { Router } from '@angular/router';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatRadioModule
-  ],
+    MatRadioModule, Footer],
   templateUrl: './plans.html',
   styleUrl: './plans.scss'
 })

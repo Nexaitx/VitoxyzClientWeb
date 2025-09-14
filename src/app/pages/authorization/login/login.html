@@ -36,22 +36,12 @@
           </span>
         </div>
 
-        <!-- <div class="d-flex justify-content-between">
-          <div class="form-check mb-3">
-            <input type="checkbox" class="form-check-input" id="rememberMe" formControlName="rememberMe" />
-            <label class="form-check-label">
-              Remember Me
-            </label>
-          </div>
-
-          <a class="links">Forgot Password?</a>
-        </div> -->
           <div class="d-flex justify-content-between">
                   <div class="form-check mb-3">
                     <input type="checkbox" class="form-check-input" id="rememberMe" formControlName="rememberMe" />
                     <label class="form-check-label" for="rememberMe">Remember Me</label>
                   </div>
-            <a class="links" (click)="goToForgotPassword()">Forgot Password?</a>
+                 <a class="links" (click)="goToForgotPassword()">Forgot Password?</a>
                 </div>
 
         <app-submission [buttonType]="'Login'" [disableButton]="isLoading"></app-submission>
@@ -79,6 +69,8 @@
         </form>
         } @else {
         <div>
+                  <form [formGroup]="phoneLoginForm" (ngSubmit)="verifyOtp()" class="auth-form">
+
           <p class="otp-message">Please enter the OTP we've shared to {{ maskedPhoneNumber }}</p>
           <div class="form-group mb-3">
             <label>OTP</label>
@@ -93,8 +85,13 @@
             </span>
           </div>
 
-          <app-submission [buttonType]="'Verify OTP'" (submissionClick)="verifyOtp()">
-          </app-submission>
+
+          <app-submission [buttonType]="'Verify OTP'" >
+</app-submission>
+        </form>
+
+          <!-- <app-submission [buttonType]="'Verify OTP'" (submissionClick)="verifyOtp()">
+          </app-submission> -->
 
           <div class="resend-otp-section">
             <ng-container *ngIf="timeLeft > 0; else resendButton">
