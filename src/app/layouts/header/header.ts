@@ -41,20 +41,19 @@ export class Header {
   authMode: 'login' | 'signup' = 'login';
   isLoggedIn: boolean = false;
   isMobileMenuOpen = signal(false);
-  menuItems = [
-    { label: 'Medecines', path: '/medicines' },
-    {
+  menuItems = [{
       label: 'Book Staff',
       dropdown: true,
       dropdownItems: [
-        { label: 'Nurse', path: 'book-staff' },
-        { label: 'Physiotherapist', path: 'book-staff' },
-        { label: 'Baby-Sitter', path: 'book-staff' },
-        { label: 'Security Guard', path: 'book-staff' },
-        { label: 'Psychiatrist', path: 'book-staff' },
+        { label: 'Nurse', path: '' },
+        { label: 'Physiotherapist', path: '' },
+        { label: 'Baby-Sitter', path: '' },
+        { label: 'Security Guard', path: '' },
+        { label: 'Psychiatrist', path: '' },
       ]
     },
     { label: 'Diet Plans', path: 'diet/user-onboarding' },
+    { label: 'Medecines', path: '/medicines' },
     {
       label: 'Profile',
       icon: 'bi bi-person-circle',

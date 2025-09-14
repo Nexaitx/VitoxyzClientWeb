@@ -10,16 +10,16 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('./pages/medicines/medicines-module').then(m => m.MedicinesModule),
-      },
-      {
-        path: 'book-staff',
         loadComponent: () => import('./pages/book-staff-process/book-staff/book-staff').then(m => m.BookStaff),
       },
       {
-  path: 'diet/user-onboarding',
-  component: UserOnboarding
-},
+        path: 'medicines',
+        loadChildren: () => import('./pages/medicines/medicines-module').then(m => m.MedicinesModule),
+      },
+      {
+        path: 'diet/user-onboarding',
+        component: UserOnboarding
+      },
       // {
       //   path: 'diet/user-onboarding',
       //   loadComponent: () => import('./pages/Diet-Plan/user-onboarding/user-onboarding').then(m => m.UserOnboarding),
@@ -36,8 +36,8 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/about-us/about-us').then(m => m.AboutUs),
       },
       {
-        path:'termsandconditions',
-        loadComponent:() => import('./pages/termsandconditions/termsandconditions').then(m => m.Termsandconditions),
+        path: 'termsandconditions',
+        loadComponent: () => import('./pages/termsandconditions/termsandconditions').then(m => m.Termsandconditions),
       },
       {
         path: 'subscription-plans',
