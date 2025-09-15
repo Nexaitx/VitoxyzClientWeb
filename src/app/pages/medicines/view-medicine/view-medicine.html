@@ -1,10 +1,109 @@
 <app-header></app-header>
+<div class="container" *ngIf="isLoaded && !hasError; else loadingOrError">
 
-<div class="container">
+  <p class="text-muted my-2">
+    Home | <span class="text-primary link" (click)="goToMedicines()">Medicine</span> | View Medicine
+  </p>
+
+  <div class="row my-5">
+    <!-- Thumbnail Images -->
+    <div class="col-3 col-sm-2 col-md-2 col-lg-1">
+      <div class="border rounded p-2 my-2" style="width: 100%;">
+        <img src="../../../../assets/dettol.png" alt="small-preview" class="img-fluid">
+      </div>
+      <!-- Repeat thumbnails if you have more image URLs — adapt as needed -->
+    </div>
+
+    <!-- Main Image -->
+    <div class="col-9 col-sm-4 col-md-4 col-lg-4">
+      <img src="../../../../assets/dettol.png" class="img-fluid w-100" alt="main-preview">
+    </div>
+
+    <!-- Product Info -->
+    <div class="col-12 col-sm-6 col-md-6 col-lg-3 mt-4 mt-lg-0">
+      <h6>{{ medicine['Product Name'] }}</h6>
+      <div>
+        <!-- Example: rating if you have rating field -->
+        <span *ngIf="medicine['Rating']" class="bg-warning rounded text-white rating px-2 py-1">
+          {{ medicine['Rating'] }} <i class="bi bi-star-fill"></i>
+        </span>
+        {{ medicine['medicine_type'] }}
+      </div>
+      <br>
+
+      <div class="d-flex flex-wrap gap-3">
+        <div class="border boxes border-secondary bg-success p-2 rounded flex-grow-1">
+          <p class="headings mb-2">Genuine</p>
+          <span>Authenticity Assurance</span>
+        </div>
+        <div class="border boxes border-secondary bg-success p-2 rounded flex-grow-1">
+          <p class="headings mb-2">{{ medicine['Rating'] || '-' }}</p>
+          <span>{{ medicine['Some_Rating_Count_Label'] || '0' }} rating</span>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <p class="headings">Product highlights:</p>
+        <ul>
+          <li *ngIf="medicine['primary_use']">{{ medicine['primary_use'] }}</li>
+          <li *ngIf="medicine['common_side_effect']">{{ medicine['common_side_effect'] }}</li>
+          <li *ngIf="medicine['salt_composition']">{{ medicine['salt_composition'] }}</li>
+        </ul>
+
+        <p>Prescription Required: {{ medicine['prescription_required'] ? 'Yes' : 'No' }}</p>
+      </div>
+    </div>
+
+    <!-- Pricing & Cart -->
+    <div class="col-12 col-sm-12 col-md-12 col-lg-4 mt-4 mt-lg-0">
+      <div class="card">
+        <div class="card-body">
+          <div class="border cartBoxes border-secondary my-2 p-3 rounded d-flex align-items-center">
+            <input type="radio" name="priceOption" checked class="form-check-input me-2" [value]="medicine['mrp']">
+            <span class="headings">{{ medicine['mrp'] }} <strong><span class="text-primary"> - -</span></strong></span>
+          </div>
+          <!-- maybe other price options if present in medicine data -->
+          <div class="text-center text-info mt-4">
+            <span>{{ medicine['Packaging Detail'] || '' }} </span>
+          </div>
+          <button class="btn btn-primary rounded-pill btn-sm text-light w-100" (click)="addToCart()">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="description my-4">
+    <p class="mb-1">{{ medicine['introduction'] }}</p>
+    <p class="headings mb-1">{{ medicine['description'] }}</p>
+
+    <p class="headings mb-1">How to use:</p>
+    <p class="mb-1">{{ medicine['how_to_use'] }}</p>
+
+    <p class="headings mb-1">Safety Advice:</p>
+    <p class="mb-1" [innerHTML]="medicine['safety_advise']"></p>
+
+    <p class="headings mb-1">Common Side Effects:</p>
+    <p class="mb-1">{{ medicine['common_side_effect'] }}</p>
+
+    <p class="headings mb-1">Storage:</p>
+    <p class="mb-1">{{ medicine['storage'] }}</p>
+  </div>
+
+</div>
+
+<ng-template #loadingOrError>
+  <p *ngIf="!isLoaded">Loading medicine details…</p>
+  <p *ngIf="isLoaded && hasError">Could not load medicine details.</p>
+</ng-template>
+
+
+
+
+<!-- Static data below -->
+<!-- <div class="container">
     <p class="text-muted my-2">Home | <span class="text-primary link" (click)="goToMedicines()">Medicine</span> | View
         Medicine</p>
     <div class="row my-5">
-        <!-- Thumbnail Images -->
         <div class="col-3 col-sm-2 col-md-2 col-lg-1">
             <div class="border rounded p-2 my-2" style="width: 100%;">
                 <img src="../../../../assets/dettol.png" alt="small-preview" class="img-fluid">
@@ -20,12 +119,10 @@
             </div>
         </div>
 
-        <!-- Main Image -->
         <div class="col-9 col-sm-4 col-md-4 col-lg-4">
             <img src="../../../../assets/dettol.png" class="img-fluid w-100" alt="main-preview">
         </div>
 
-        <!-- Product Info -->
         <div class="col-12 col-sm-6 col-md-6 col-lg-3 mt-4 mt-lg-0">
             <h6>Organic India Moringa Capsule | Supports Energy Levels, Stamina & Vitality</h6>
             <div>
@@ -54,7 +151,6 @@
             </div>
         </div>
 
-        <!-- Pricing & Cart -->
         <div class="col-12 col-sm-12 col-md-12 col-lg-4 mt-4 mt-lg-0">
             <div class="card">
                 <div class="card-body">
@@ -189,6 +285,6 @@
         </div>
 
     </div>
-</div>
+</div> -->
 
 <app-footer></app-footer>

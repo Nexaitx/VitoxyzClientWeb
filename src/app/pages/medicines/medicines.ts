@@ -164,7 +164,7 @@ export class Medicines implements AfterViewInit {
   }
 
   viewDetails(): void {
-    this.router.navigate(['/medicines', this.selectedMedicine.id]);
+    this.router.navigate(['/medicines/medicines', this.selectedMedicine.id]);
   }
 
 }
