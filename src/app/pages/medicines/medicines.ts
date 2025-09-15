@@ -111,35 +111,45 @@ export class Medicines implements AfterViewInit {
   private http = inject(HttpClient);
   fdaMedicines: any[] = [];
 
+  medicineList: { [label: string]: any }[] = [];
+  cols: { id: string; label: string; type: string }[] = [];
+  isLoaded = false;
+  hasError = false;
 
   ngOnInit(): void {
-    this.filteredMedicines = [...this.medicines];
-    // this.getOpenFDAMedicines();
-    // this.getGovMed();
-    // this.getRapidAPI();
+    const sheetId = '1_y6cpj0wDj8u6KRz9YopVnvGp8qi7BgAhe3seH7-Ysk';
+    const gid = '0';  // sheet/tab id
+    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&gid=${gid}`;
+
+    this.http.get(url, { responseType: 'text' })
+      .subscribe(raw => {
+        const match = raw.match(/google\.visualization\.Query\.setResponse\(([\s\S\w]+)\)/);
+        if (!match || match.length < 2) {
+          console.error('Unexpected Google Sheets JSON response format');
+          this.hasError = true;
+          return;
+        }
+        const data = JSON.parse(match[1]);
+        this.cols = data.table.cols as any[];
+        const rows = data.table.rows as any[];
+
+        this.medicineList = [];  // reset
+        rows.forEach((rowObj, rowIndex) => {
+          const medicineObj: { [label: string]: any } = {};
+          this.cols.forEach((colDef, colIdx) => {
+            const cell = rowObj.c[colIdx];
+            medicineObj[colDef.label] = (cell && cell.v != null) ? cell.v : 'N/A';
+          });
+          this.medicineList.push(medicineObj);
+        });
+
+        this.isLoaded = true;
+      }, err => {
+        console.error('Error fetching sheet data', err);
+        this.hasError = true;
+      });
   }
 
-  getRapidAPI() {
-    this.http.get('https://endlessmedicalapi1.p.rapidapi.com/InitSession', {
-      headers: {
-        'X-RapidAPI-Key': '42e5de4446mshe40107c87b9eda9p158850jsn6f71b343d85f',
-        'X-RapidAPI-Host': 'endlessmedicalapi1.p.rapidapi.com'
-      }, withCredentials: true
-    }).subscribe((data: any) => {
-      console.log(data);
-    });
-  }
-
-  getOpenFDAMedicines() {
-    this.http.get('https://api.fda.gov/drug/label.json').subscribe((data: any) => {
-      this.fdaMedicines = data.results;
-    });
-  }
-  getGovMed() {
-    this.http.get('https://rxnav.nlm.nih.gov/REST/RxTerms/allconcepts.xml').subscribe((data: any) => {
-
-    })
-  }
   filterMedicines(): void {
     const term = this.searchTerm.toLowerCase().trim();
     this.filteredMedicines = this.medicines.filter(med =>

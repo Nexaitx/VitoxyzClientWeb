@@ -202,10 +202,45 @@
   <button class="carousel-control-next" type="button" data-bs-target="#brandCarousel" data-bs-slide="next">...</button>
 </div>
 
+<ng-container *ngIf="isLoaded && !hasError; else loadingOrError">
+  <div class="row">
+    <div *ngFor="let med of medicineList" class="col-6 col-md-4 col-lg-3 my-2 p-0 col-xl-2">
+      <mat-card class="medicine-card">
+        <img mat-card-image src="../../../assets/medicines/med1.jpeg"
+             alt="{{ med['Product Name'] || '' }}">
+
+        <span *ngIf="med['Rating']"
+              class="bg-warning rounded text-white rating">
+          {{ med['Rating'] }} <i class="bi bi-star-fill"></i>
+        </span>
+
+        <mat-card-content class="bg-white">
+          <small class="description">{{ med['Product Name'] || '-' }}</small><br>
+          <small class="text-muted">{{ med['Product Form'] || med['Package'] || '-' }}</small><br>
+          <!-- You can include other fields similarly -->
+          <div class="d-flex">
+            <h5>{{ med['mrp'] || '-' }}</h5>
+            <span *ngIf="med['Original Price']" class="text-muted mx-2 strike">{{ med['Original Price'] }}</span>
+            <p *ngIf="med['Discount']" class="text-primary bold">{{ med['Discount'] }}</p>
+          </div>
+          <button class="btn btn-primary rounded-pill btn-sm text-light w-100"
+                  (click)="viewDetails()">View Details</button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #loadingOrError>
+  <p *ngIf="!isLoaded">Loading…</p>
+  <p *ngIf="isLoaded && hasError">Error loading medicine data.</p>
+</ng-template>
+
+
 <!-- personal care -->
 <div class="row w-100 container-fluid my-3">
   <ng-container *ngFor="let med of filteredMedicines">
-      <mat-card class="medicine-card col-6 col-md-4 col-lg-3 my-2 p-0 col-xl-2">
+      <!-- <mat-card class="medicine-card col-6 col-md-4 col-lg-3 my-2 p-0 col-xl-2">
         <img mat-card-image src="../../../assets/dettol.png" alt="{{ med.description }}" />
         <span class="bg-warning rounded text-white rating">4.4 <i class=" bi bi-star-fill"></i></span>
         <mat-card-content class="bg-white">
@@ -219,7 +254,8 @@
           <button class="btn btn-primary rounded-pill btn-sm text-light w-100"
             (click)="selectedMedicine = med; viewDetails()">Add</button>
         </mat-card-content>
-      </mat-card>
+      </mat-card> -->
+      <!-- Only show after data is loaded -->
   </ng-container>
 </div>
 
