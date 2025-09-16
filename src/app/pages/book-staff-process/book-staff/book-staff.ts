@@ -219,9 +219,9 @@ export class BookStaff {
     const group = this.fb.group({
       shiftType: ['', Validators.required],
       timeSlot: [''],
-      tenure: ['1'],
+      tenure: [''],
       dutyStartDate: [new Date().toISOString().substring(0, 10)],
-       dutyEndDate: ['', Validators.required],  
+       dutyEndDate: [''],  
       maleQuantity: ['0', [Validators.min(0), Validators.max(10)]],
       femaleQuantity: ['0', [Validators.min(0), Validators.max(10)]],
       hours: [currentHour, [Validators.required, Validators.min(1), Validators.max(12)]],
@@ -233,6 +233,19 @@ export class BookStaff {
     group.get('ampm')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
     group.get('maleQuantity')?.valueChanges.subscribe(() => this.updateGenderQty(group));
     group.get('femaleQuantity')?.valueChanges.subscribe(() => this.updateGenderQty(group));
+     group.get('tenure')?.valueChanges.subscribe((value) => {
+    const endDateCtrl = group.get('dutyEndDate');
+    if (value === '1') {
+      // Hide & clear validation if 1 Day
+      endDateCtrl?.clearValidators();
+      endDateCtrl?.setValue('');
+    } else {
+      // Add validation back for other tenures
+      endDateCtrl?.setValidators([Validators.required]);
+    }
+    endDateCtrl?.updateValueAndValidity();
+  });
+
     group.get('dutyStartDate')?.valueChanges.subscribe((value: string | null) => {
     if (!value) {
       const today = new Date().toISOString().substring(0, 10);

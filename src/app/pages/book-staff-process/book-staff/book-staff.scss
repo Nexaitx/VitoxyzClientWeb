@@ -163,8 +163,13 @@
   padding: 0 10px;
   font-size: 0.9rem;
   border-radius: 6px;
-    background: #f9fbfd;
+  border-color: #dff4f6;
+  background: #f9fbfd;
+}
 
+.value-font {
+  font-size: 16px;
+  font-weight: normal;   /* removes bold */
 }
 
 /* Counter inputs inside your custom boxes */

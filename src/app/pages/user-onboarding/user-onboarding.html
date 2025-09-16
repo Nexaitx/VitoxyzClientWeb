@@ -1,4 +1,4 @@
-<div class="container mt-3 main-container">
+<div class="container  main-container" style="margin-top:-70px;">
 
 
 <mat-stepper class="custom-stepper" labelPosition="bottom" #stepper>
@@ -83,6 +83,7 @@
             <select class="form-select" style="max-width: 100px;" formControlName="heightUnit">
               <option value="Feet">Feet</option>
               <option value="cm">cm</option>
+              <option value="Inches ">Inches </option>
             </select>
           </div>
           <div *ngIf="firstFormGroup.get('heightValue')?.invalid && firstFormGroup.get('heightValue')?.touched"
@@ -243,12 +244,12 @@
 
         <div class="col-md-12 form-group mb-3">
           <label class="form-label">Daily Water Intake</label>
-          <input type="text" class="form-control" placeholder="e.g., 2 liters or 8 cups"
+          <input type="text" class="form-control" placeholder="e.g., 2 litres or 8 cups"
             formControlName="dailyWaterIntake"
             [class.is-invalid]="thirdFormGroup.get('dailyWaterIntake')?.invalid && thirdFormGroup.get('dailyWaterIntake')?.touched">
           <div *ngIf="thirdFormGroup.get('dailyWaterIntake')?.invalid && thirdFormGroup.get('dailyWaterIntake')?.touched"
             class="invalid-feedback d-block">
-            Daily Water Intake is required and should be a valid format (e.g., "2 liters").
+            Daily Water Intake is required and should be a valid format (e.g., "2 litres").
           </div>
         </div>
       </div>
