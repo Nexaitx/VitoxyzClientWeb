@@ -45,6 +45,8 @@ export class BookStaff {
   time = { hour: 13, minute: 30 };
   meridian = true;
 
+   isSubmitting = false;
+   
   constructor(
     private spinnerService: SpinnerToastService
   ) { }
@@ -54,6 +56,7 @@ export class BookStaff {
     this.getStaffCategories();
     this.staffBookingForm = this.fb.group({
       userAddress: ['', Validators.required],
+      address: ['', Validators.required],
       latitude: [],
       longitude: [],
       staffForms: this.fb.array([this.createStaffFormGroup()])
@@ -330,11 +333,15 @@ export class BookStaff {
     this.staffListFormArray.removeAt(index);
   }
   onSubmit(): void {
+      if (this.isSubmitting) return; // prevent multiple clicks
+    this.isSubmitting = true;
+
     const hasPastTimeError = this.hasPastTimeError();
     const hasZeroQuantityError = this.hasZeroQuantityError();
 
     if (!this.staffBookingForm.valid || hasPastTimeError || hasZeroQuantityError) {
       this.markAllAsTouched(this.staffBookingForm);
+            this.isSubmitting = false;
       return;
     }
 
@@ -345,6 +352,7 @@ export class BookStaff {
     if (!token) {
       console.log('User not logged in. Redirecting to login page.');
       this.showAuthPopup = true;
+        this.isSubmitting = false;
       return;
     }
 
@@ -376,6 +384,7 @@ export class BookStaff {
     this.http.post<any>(apiUrl, payload, { headers }).subscribe({
       next: (response) => {
         this.spinnerService.hide();
+        this.isSubmitting = false;
         if (response?.status === true) {
           const staffDetails = response?.staff?.[0]?.staffDetails || [];
           this.router.navigate(['/view-staff'], {
@@ -386,8 +395,9 @@ export class BookStaff {
         }
       },
       error: (error) => {
-        console.error('Staff search API call failed:', error);
         this.spinnerService.hide();
+        this.isSubmitting = false;
+         console.error('Staff search API call failed:', error);
         alert('An error occurred while processing your request.');
       }
     });
