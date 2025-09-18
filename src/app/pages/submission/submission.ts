@@ -4,7 +4,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   selector: 'app-submission',
   imports: [],
   templateUrl: './submission.html',
-  styleUrl: './submission.scss'
+  styleUrls: ['./submission.scss']
 })
 export class Submission {
   @Input() buttonType: string = 'Submit'; // Default value for buttonType

@@ -45,6 +45,8 @@ export class BookStaff {
   time = { hour: 13, minute: 30 };
   meridian = true;
 
+   isSubmitting = false;
+   
   constructor(
     private spinnerService: SpinnerToastService
   ) { }
@@ -54,6 +56,7 @@ export class BookStaff {
     this.getStaffCategories();
     this.staffBookingForm = this.fb.group({
       userAddress: ['', Validators.required],
+      address: ['', Validators.required],
       latitude: [],
       longitude: [],
       staffForms: this.fb.array([this.createStaffFormGroup()])
@@ -219,9 +222,9 @@ export class BookStaff {
     const group = this.fb.group({
       shiftType: ['', Validators.required],
       timeSlot: [''],
-      tenure: ['1'],
+      tenure: [''],
       dutyStartDate: [new Date().toISOString().substring(0, 10)],
-       dutyEndDate: ['', Validators.required],  
+       dutyEndDate: [''],  
       maleQuantity: ['0', [Validators.min(0), Validators.max(10)]],
       femaleQuantity: ['0', [Validators.min(0), Validators.max(10)]],
       hours: [currentHour, [Validators.required, Validators.min(1), Validators.max(12)]],
@@ -233,6 +236,19 @@ export class BookStaff {
     group.get('ampm')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
     group.get('maleQuantity')?.valueChanges.subscribe(() => this.updateGenderQty(group));
     group.get('femaleQuantity')?.valueChanges.subscribe(() => this.updateGenderQty(group));
+     group.get('tenure')?.valueChanges.subscribe((value) => {
+    const endDateCtrl = group.get('dutyEndDate');
+    if (value === '1') {
+      // Hide & clear validation if 1 Day
+      endDateCtrl?.clearValidators();
+      endDateCtrl?.setValue('');
+    } else {
+      // Add validation back for other tenures
+      endDateCtrl?.setValidators([Validators.required]);
+    }
+    endDateCtrl?.updateValueAndValidity();
+  });
+
     group.get('dutyStartDate')?.valueChanges.subscribe((value: string | null) => {
     if (!value) {
       const today = new Date().toISOString().substring(0, 10);
@@ -317,11 +333,15 @@ export class BookStaff {
     this.staffListFormArray.removeAt(index);
   }
   onSubmit(): void {
+      if (this.isSubmitting) return; // prevent multiple clicks
+    this.isSubmitting = true;
+
     const hasPastTimeError = this.hasPastTimeError();
     const hasZeroQuantityError = this.hasZeroQuantityError();
 
     if (!this.staffBookingForm.valid || hasPastTimeError || hasZeroQuantityError) {
       this.markAllAsTouched(this.staffBookingForm);
+            this.isSubmitting = false;
       return;
     }
 
@@ -332,6 +352,7 @@ export class BookStaff {
     if (!token) {
       console.log('User not logged in. Redirecting to login page.');
       this.showAuthPopup = true;
+        this.isSubmitting = false;
       return;
     }
 
@@ -363,6 +384,7 @@ export class BookStaff {
     this.http.post<any>(apiUrl, payload, { headers }).subscribe({
       next: (response) => {
         this.spinnerService.hide();
+        this.isSubmitting = false;
         if (response?.status === true) {
           const staffDetails = response?.staff?.[0]?.staffDetails || [];
           this.router.navigate(['/view-staff'], {
@@ -373,8 +395,9 @@ export class BookStaff {
         }
       },
       error: (error) => {
-        console.error('Staff search API call failed:', error);
         this.spinnerService.hide();
+        this.isSubmitting = false;
+         console.error('Staff search API call failed:', error);
         alert('An error occurred while processing your request.');
       }
     });
