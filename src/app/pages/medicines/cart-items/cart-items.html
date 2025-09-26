@@ -1,82 +1,237 @@
 <app-header></app-header>
 
 <div class="container">
-    <p class="text-muted my-2">Home | <span class="text-primary link" (click)="goToMedicines()">Medicine</span> | <span class="text-primary link" (click)="goToViewMedicines()">View Medicine </span>| Add to Cart</p>
+  <p class="text-muted my-2">
+    Home |
+    <span class="text-primary link" (click)="goToMedicines()">Medicine</span> |
+    <span class="text-primary link" (click)="goToViewMedicines()"
+      >View Medicine </span
+    >| Add to Cart
+  </p>
 
-    <div class="my-4">
-        <h5>1 Item Added</h5>
-        <small>Items not requiring prescriptions</small>
+  <div class="my-4">
+    <h5>1 Item Added</h5>
+    <small>Items not requiring prescriptions</small>
+  </div>
+
+  <div class="row">
+    <div class="col-4 col-sm-2 col-md-2 col-lg-1">
+      <img
+        src="../../../../assets/dettol.png"
+        alt="small-preview"
+        class="img-fluid"
+      />
     </div>
 
-    <div class="row">
-        <div class="col-4 col-sm-2 col-md-2 col-lg-1">
-            <img src="../../../../assets/dettol.png" alt="small-preview" class="img-fluid">
-        </div>
+    <div class="col-8 col-sm-8 col-md-8 col-lg-5">
+      <h6>
+        Pain Relief Gel for Lower Back Pain, Joint Pain, Neck Pain & Sprain | by
+        Vitoxyz
+      </h6>
+      <small>Supports Energy Levels, Stamina & Vitality</small>
 
-        <div class="col-8 col-sm-8 col-md-8 col-lg-5">
-            <h6>Pain Relief Gel for Lower Back Pain, Joint Pain, Neck Pain & Sprain | by Vitoxyz</h6>
-            <small>Supports Energy Levels, Stamina & Vitality</small>
-
-            <div class="text-primary mt-3 mb-2"><u>Remove</u></div>
-        </div>
-
-        <div class="col-8 col-sm-2 col-md-3 col-lg-2">
-            <div class="quantity">
-                <h6><span>399</span><span class="text-muted strike">&nbsp;499</span><span class="text-primary">&nbsp;40%&nbsp;Off</span></h6>
-                <div class="input-group w-50 d-flex align-items-center">
-                    <button class="btn btn-outline-secondary action border-0 py-1" type="button">−</button>
-                    <input type="text" class="form-control measure text-center py-1" value="00">
-                    <button class="btn btn-outline-secondary action-add border-0 py-1" type="button">+</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-sm-4 col-md-4 col-lg-4">
-            <h6>You can save extra ₹12 on this order</h6>
-            <small class="text-primary">Become a careplan member</small>
-
-            <div class="mt-2">
-                <p class="mb-1">3 months membership for only <strong>&nbsp;165</strong></p>
-
-            </div>
-            <div class="row mb-2">
-                <button
-                    class="col-12 col-lg-4 btn btn-sm btn-outline-primary rounded-pill me-2 px-3 mb-1">Know&nbsp;more</button>
-                <button
-                    class="col-12 col-lg-5 btn btn-sm btn-primary rounded-pill text-light mb-1">Add&nbsp;Membership</button>
-            </div>
-            <small class="strong mb-2">Check the health of your vital organs</small>
-            <p><small>Book Good Health Silver Package for just ₹649</small></p>
-            <p><small>Get the tests done easily from your home. This package will help you in identifying potential
-                    disorders and deficiencies at an early stage.</small></p>
-            <p class="strong mb-2">Bill summary</p>
-            <table>
-                <tbody>
-                    <tr>
-                        <td class="w-100">Item Total</td>
-                        <td>399</td>
-                    </tr>
-                    <tr>
-                        <td class="w-100">Total Discount</td>
-                        <td>99</td>
-                    </tr>
-                    <tr>
-                        <td class="w-100">Shipping Feee</td>
-                        <td>70</td>
-                    </tr>
-                    <tr class="border-top">
-                        <td class="w-100 strong">To be Paid</td>
-                        <td class="strong">799</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="mt-4">
-                <p class="mb-2 strong">Delivery Address</p>
-                <p class="d-flex"><small>Chandigarh</small> <span class="text-primary ms-auto"><u>Change</u></span></p>
-                <button class="btn btn-sm btn-primary rounded-pill text-light w-100">Continue</button>
-            </div>
-        </div>
+      <div class="text-primary mt-3 mb-2"><u>Remove</u></div>
     </div>
+
+    <div class="col-8 col-sm-2 col-md-3 col-lg-2">
+      <div class="quantity">
+        <h6>
+          <span>399</span><span class="text-muted strike">&nbsp;499</span
+          ><span class="text-primary">&nbsp;40%&nbsp;Off</span>
+        </h6>
+        <div class="input-group w-50 d-flex align-items-center">
+          <button
+            class="btn btn-outline-secondary action border-0 py-1"
+            type="button"
+          >
+            −
+          </button>
+          <input
+            type="text"
+            class="form-control measure text-center py-1"
+            value="00"
+          />
+          <button
+            class="btn btn-outline-secondary action-add border-0 py-1"
+            type="button"
+          >
+            +
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-4 col-md-4 col-lg-4">
+      <h6>You can save extra ₹12 on this order</h6>
+      <small class="text-primary">Become a careplan member</small>
+
+      <div class="mt-2">
+        <p class="mb-1">
+          3 months membership for only <strong>&nbsp;165</strong>
+        </p>
+      </div>
+      <div class="row mb-2">
+        <button
+          class="col-12 col-lg-4 btn btn-sm btn-outline-primary rounded-pill me-2 px-3 mb-1"
+        >
+          Know&nbsp;more
+        </button>
+        <button
+          class="col-12 col-lg-5 btn btn-sm btn-primary rounded-pill text-light mb-1"
+        >
+          Add&nbsp;Membership
+        </button>
+      </div>
+      <small class="strong mb-2">Check the health of your vital organs</small>
+      <p><small>Book Good Health Silver Package for just ₹649</small></p>
+      <p>
+        <small
+          >Get the tests done easily from your home. This package will help you
+          in identifying potential disorders and deficiencies at an early
+          stage.</small
+        >
+      </p>
+      <p class="strong mb-2">Bill summary</p>
+      <table>
+        <tbody>
+          <tr>
+            <td class="w-100">Item Total</td>
+            <td>399</td>
+          </tr>
+          <tr>
+            <td class="w-100">Total Discount</td>
+            <td>99</td>
+          </tr>
+          <tr>
+            <td class="w-100">Shipping Feee</td>
+            <td>70</td>
+          </tr>
+          <tr class="border-top">
+            <td class="w-100 strong">To be Paid</td>
+            <td class="strong">799</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="mt-4">
+        <p class="mb-2 strong">Delivery Address</p>
+        <p class="d-flex">
+          <small>Chandigarh</small>
+          <span class="text-primary ms-auto"><u>Change</u></span>
+        </p>
+        <button class="btn btn-sm btn-primary rounded-pill text-light w-100">
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
+<!-- <div class="container" *ngIf="items.length > 0; else emptyCart">
+  <div class="my-4">
+    <h5>{{ items.length }} Item(s) Added</h5>
+  </div>
+
+  <div class="row mb-3" *ngFor="let item of items">
+    <div class="col-4 col-sm-2">
+      <img [src]="item.image || 'assets/no-image.png'" alt="preview" class="img-fluid">
+    </div>
+    <div class="col-8 col-sm-6">
+      <h6>{{ item.name }}</h6>
+      <div class="text-primary mt-2" (click)="removeItem(item.id)"><u>Remove</u></div>
+    </div>
+    <div class="col-12 col-sm-4">
+      <h6>₹{{ item.mrp }}</h6>
+      <small>Qty: {{ item.quantity }}</small>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="container">
+  <h4>My Cart ({{ cart.length }} items)</h4>
+
+  <div *ngIf="cart.length === 0">
+    <p>Your cart is empty.</p>
+  </div>
+
+  <div *ngFor="let item of cart" class="row my-3 border rounded p-2">
+    <div class="col-3">
+      <img [src]="item.image" alt="{{ item.name }}" class="img-fluid" />
+    </div>
+    
+    <div class="col-6">
+      <h6>{{ item.name }}</h6>
+      <p>Quantity: {{ item.qty }}</p>
+    </div>
+    <div class="col-3 text-end">
+      <p class="text-primary">₹{{ item.price }}</p>
+    </div>
+  </div>
+</div> -->
+
+<div class="container my-4">
+  <div class="my-4">
+    <h5>{{ cart.length }} Item(s) added</h5>
+    <small>Items not requiring prescription</small>
+  </div>
+
+  <div *ngIf="cart.length === 0" class="text-center my-4">
+    <p>Your cart is empty.</p>
+  </div>
+
+  <div *ngFor="let item of cart" class="row cart-item border rounded p-3 my-3 align-items-center">
+    <div class="col-3 col-sm-2">
+      <img [src]="item.image" alt="{{ item.name }}" class="img-fluid rounded" />
+    </div>
+
+    <div class="col-6 col-sm-6">
+      <h6 class="fw-bold">{{ item.name }}</h6>
+      <small class="text-muted">{{ item.qty || '' }}</small>
+      <div class="text-danger mt-2" role="button" (click)="removeItem(item.id)">Remove</div>
+    </div>
+
+    <div class="col-3 col-sm-4 text-end">
+      <h6 class="price">
+        ₹{{ item.price }}
+        <span *ngIf="item.mrp && item.mrp > item.price" class="text-muted strike">₹{{ item.mrp }}</span>
+        <span *ngIf="item.mrp && item.mrp > item.price" class="text-success"> {{ getDiscount(item) }}% off</span>
+      </h6>
+
+      <div class="input-group qty-box mt-2 justify-content-end">
+        <button class="btn btn-outline-secondary" (click)="decreaseQty(item)">−</button>
+        <input type="text" class="form-control text-center" [value]="item.count" readonly />
+        <button class="btn btn-outline-secondary" (click)="increaseQty(item)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bill Summary -->
+  <div class="bill-summary border rounded p-3 mt-4">
+    <h6 class="fw-bold mb-3">Bill Summary</h6>
+    <table class="table table-borderless">
+      <tbody>
+        <tr>
+          <td>Item Total</td>
+          <td class="text-end">₹{{ getItemTotal() }}</td>
+        </tr>
+        <tr>
+          <td>Total Discount</td>
+          <td class="text-end text-success">− ₹{{ getTotalDiscount() }}</td>
+        </tr>
+        <tr>
+          <td>Shipping Fee</td>
+          <td class="text-end">₹{{ shippingFee }}</td>
+        </tr>
+        <tr class="border-top fw-bold">
+          <td>To be Paid</td>
+          <td class="text-end">₹{{ getFinalAmount() }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="btn btn-primary w-100 rounded-pill">Continue</button>
+  </div>
+</div>
+<ng-template #emptyCart>
+  <p class="text-center text-muted my-4">Your cart is empty</p>
+</ng-template>
 
 <app-footer></app-footer>

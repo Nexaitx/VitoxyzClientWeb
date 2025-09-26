@@ -41,3 +41,39 @@ td {
         }
     }
 }
+.cart-item {
+  align-items: center;
+
+  h6 {
+    font-size: 1rem;
+  }
+
+  .price {
+    font-size: 1rem;
+  }
+
+  .strike {
+    text-decoration: line-through;
+    margin-left: 5px;
+  }
+
+  .qty-box {
+    max-width: 120px;
+
+    input {
+      font-size: 0.9rem;
+    }
+
+    button {
+      padding: 0 10px;
+    }
+  }
+}
+
+.bill-summary {
+  background: #fafafa;
+
+  table {
+    font-size: 0.9rem;
+  }
+}

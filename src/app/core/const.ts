@@ -20,7 +20,11 @@ FORGOT_PASSWORD:'/user/email/forgot-password',
 RESET_PASSWORD:'/user/reset-password',
     
     LOGIN_EMAIL: '/user/loginWithEmail',
+    MEDICINES:'/medicines/getMedicine',
 
+    MEDICINE_BY_ID:(id: string) => `/medicines/${id}`,
+    OTC_MEDICINE_BY_ID:(id: string) => `/products/${id}`,
+    OTC_MEDICINES:'/products',
     // On board to diet plan
     ONBOARD_DIET: '/user/diet/onboard-diet',
     BOOKING_RESPONSE: '/user/booking-response',

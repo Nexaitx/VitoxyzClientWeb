@@ -1,9 +1,9 @@
 
 
-::ng-deep .custom-stepper .mat-horizontal-stepper-header-container {
-  width: 600px;
-  margin: 0 auto;  
-}
+// ::ng-deep .custom-stepper .mat-horizontal-stepper-header-container {
+//   width: 600px;
+//   margin: 0 auto;  
+// }
 
 /* Common base for step icons */
 ::ng-deep .custom-stepper .mat-step-icon {
@@ -47,16 +47,16 @@
 }
 
 
-::ng-deep .custom-stepper .mat-step-header[aria-selected="true"] ~ .mat-stepper-horizontal-line,
-::ng-deep .custom-stepper .mat-step-header.mat-step-header-state-done ~ .mat-stepper-horizontal-line {
-  border-top-color: #00bcd4 !important; /* teal for progress */
-}
+// ::ng-deep .custom-stepper .mat-step-header[aria-selected="true"] ~ .mat-stepper-horizontal-line,
+// ::ng-deep .custom-stepper .mat-step-header.mat-step-header-state-done ~ .mat-stepper-horizontal-line {
+//   border-top-color: #0BBBC1 !important; /* teal for progress */
+// }
 
 /* Step labels */
-::ng-deep .custom-stepper .mat-step-label {
-  font-weight: 500;
-  color: #000000;
-}
+// ::ng-deep .custom-stepper .mat-step-label {
+//   font-weight: 500;
+//   color: #000000;
+// }
 
 ::ng-deep .custom-stepper .mat-step-label.mat-step-label-active {
   font-weight: 500;
@@ -65,9 +65,9 @@
 
 
 
-.main-container{
-  width:900px;
-}
+// .main-container{
+//   width:900px;
+// }
 
 // .next-button{
 // background-color: #0BBBC1;
@@ -80,7 +80,7 @@ input.form-control {
   border-radius: 50px !important;  /* pill shape */
   background-color: #F9FAFC !important;
   border: 1px solid #E5E7EB !important;
-  padding: 14px 30px !important;
+  padding: 10px 30px !important;
   font-size: 14px;
   color: #333;
 }
@@ -193,9 +193,67 @@ select.form-select {
   font-size: 16px;
   pointer-events: none; /* Prevent blocking clicks in input */
 }
+.input-with-icon {
+  position: relative;
+  display: block;
+}
+
+.input-with-icon .input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #0BBBC1;
+  font-size: 18px;
+  pointer-events: none; /* don’t block typing */
+  z-index: 2;
+}
+
+.input-with-icon .with-icon {
+  padding-left: 44px !important; /* space for icon */
+  border-radius: 50px;
+  background-color: #F9FAFC;
+  border: 1px solid #E5E7EB;
+  font-size: 14px;
+  color: #333;
+  min-height: 46px;
+}
+
+.input-with-icon .with-icon:focus {
+  border-color: #0BBBC1 !important;
+  box-shadow: none !important;
+}
+
+.input-with-icon .with-icon.is-invalid {
+  padding-left: 44px !important;
+}
+
+.input-with-icon {
+  position: relative;
+
+  .input-icon {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    color: #0BBBC1;
+    font-size: 18px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .form-control.with-icon {
+    padding-left: 44px !important;  // always leave space for the icon
+  }
+
+  .form-control.with-icon.is-invalid {
+    padding-left: 44px !important;  // don’t shrink when invalid
+  }
+}
+
 
 input.form-control.with-icon {
-  padding-left: 40px; /* Space for the icon */
+  padding-left: 40px ; /* Space for the icon */
   border-radius: 50px;
   background-color: #F9FAFC;
   border: 1px solid #E5E7EB;
@@ -208,6 +266,37 @@ input.form-control.with-icon:focus {
   box-shadow: none;
 }
 
+/* Wrapper for inputs with icons */
+// .position-relative {
+//   .input-icon {
+//     position: absolute;
+//     top: 50%;
+//     left: 14px; /* Adjust icon distance */
+//     transform: translateY(-50%);
+//     color: #0BBBC1;
+//     font-size: 16px;
+//     pointer-events: none; /* Don’t block clicks */
+//   }
+
+//   .form-control.with-icon {
+//     padding-left: 42px !important; /* Always give space for icon */
+//     border-radius: 50px;
+//     background-color: #F9FAFC;
+//     border: 1px solid #E5E7EB;
+//     font-size: 14px;
+//     color: #333;
+//   }
+
+//   .form-control.with-icon:focus {
+//     border-color: #0BBBC1 !important;
+//     box-shadow: none !important;
+//   }
+
+//   /* Keep invalid state aligned */
+//   .form-control.with-icon.is-invalid {
+//     padding-left: 42px !important;
+//   }
+// }
 /* Next Button */
 .next-button {
   background-color: #0BBBC1 !important;
@@ -343,4 +432,141 @@ input.form-control.with-icon:focus {
 .input-group .measure {
   border-left: 0;
   border-right: 0;
+}
+
+
+
+.main-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Stepper container */
+::ng-deep .custom-stepper .mat-horizontal-stepper-header-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+::ng-deep .custom-stepper .mat-step-header {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+::ng-deep .custom-stepper .mat-step-label {
+  font-size: 14px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+
+@media (max-width: 992px) {
+  .main-container {
+    padding: 0 20px;
+  }
+
+  .row > [class*="col-md-"] {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .text-end {
+    text-align: center !important;
+  }
+
+  .next-button {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
+/* === TABLET (≤768px) === */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 0 14px;
+  }
+
+  ::ng-deep .custom-stepper .mat-horizontal-stepper-header-container {
+    max-width: 100%;
+  }
+
+  .form-label {
+    font-size: 14px;
+  }
+
+  input.form-control,
+  select.form-select,
+  textarea.form-control {
+    font-size: 14px;
+    padding: 10px 16px !important;
+  }
+}
+
+/* === MOBILE (≤576px) === */
+@media (max-width: 576px) {
+  .main-container {
+    padding: 0 10px;
+  }
+
+  /* Shrink stepper */
+  ::ng-deep .custom-stepper .mat-step-icon {
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+  }
+
+  // ::ng-deep .custom-stepper .mat-step-label {
+  //   font-size: 11px;
+  // }
+
+  h3 {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .form-label {
+    font-size: 13px;
+  }
+
+  input.form-control,
+  select.form-select,
+  textarea.form-control {
+    font-size: 13px;
+    padding: 8px 12px !important;
+  }
+
+  .input-icon {
+    left: 10px;
+    font-size: 12px;
+  }
+
+  input.form-control.with-icon {
+    padding-left: 28px;
+  }
+
+  /* Radios stack */
+  .form-check-inline {
+    display: block !important;
+    margin-right: 0 !important;
+    margin-bottom: 6px;
+  }
+
+  /* Buttons full width */
+  .next-button,
+  button[matStepperPrevious] {
+    width: 100%;
+    margin-top: 10px;
+  }
 }
