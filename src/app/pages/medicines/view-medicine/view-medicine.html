@@ -1,29 +1,24 @@
 <app-header></app-header>
-<div class="container" *ngIf="isLoaded && !hasError; else loadingOrError">
+<!-- <div class="container" *ngIf="isLoaded && !hasError; else loadingOrError">
 
   <p class="text-muted my-2">
     Home | <span class="text-primary link" (click)="goToMedicines()">Medicine</span> | View Medicine
   </p>
 
   <div class="row my-5">
-    <!-- Thumbnail Images -->
     <div class="col-3 col-sm-2 col-md-2 col-lg-1">
       <div class="border rounded p-2 my-2" style="width: 100%;">
         <img src="../../../../assets/dettol.png" alt="small-preview" class="img-fluid">
       </div>
-      <!-- Repeat thumbnails if you have more image URLs — adapt as needed -->
     </div>
 
-    <!-- Main Image -->
     <div class="col-9 col-sm-4 col-md-4 col-lg-4">
       <img src="../../../../assets/dettol.png" class="img-fluid w-100" alt="main-preview">
     </div>
 
-    <!-- Product Info -->
     <div class="col-12 col-sm-6 col-md-6 col-lg-3 mt-4 mt-lg-0">
       <h6>{{ medicine['Product Name'] }}</h6>
       <div>
-        <!-- Example: rating if you have rating field -->
         <span *ngIf="medicine['Rating']" class="bg-warning rounded text-white rating px-2 py-1">
           {{ medicine['Rating'] }} <i class="bi bi-star-fill"></i>
         </span>
@@ -54,7 +49,6 @@
       </div>
     </div>
 
-    <!-- Pricing & Cart -->
     <div class="col-12 col-sm-12 col-md-12 col-lg-4 mt-4 mt-lg-0">
       <div class="card">
         <div class="card-body">
@@ -62,7 +56,6 @@
             <input type="radio" name="priceOption" checked class="form-check-input me-2" [value]="medicine['mrp']">
             <span class="headings">{{ medicine['mrp'] }} <strong><span class="text-primary"> - -</span></strong></span>
           </div>
-          <!-- maybe other price options if present in medicine data -->
           <div class="text-center text-info mt-4">
             <span>{{ medicine['Packaging Detail'] || '' }} </span>
           </div>
@@ -89,7 +82,170 @@
     <p class="mb-1">{{ medicine['storage'] }}</p>
   </div>
 
+</div> -->
+
+    <ng-container *ngIf="medicineType === 'health' && isLoaded && !hasError; else loadingOrError">
+
+  <div class="container mt-4 product-detail">
+    <div class="row">
+
+      <!-- Left Section: Thumbnails + Main Image -->
+      <div class="col-md-6 d-flex">
+        <!-- Thumbnails -->
+        <div class="d-flex flex-column me-3">
+          <img *ngFor="let img of medicine.images"
+               [src]="img"
+               class="thumb-img mb-2"
+               (click)="selectedImage = img"
+               style="width:60px; height:60px; cursor:pointer; border:1px solid #ddd;" />
+        </div>
+
+        <!-- Main Image -->
+        <div>
+          <img [src]="selectedImage"
+               class="main-img"
+               style="width:400px; height:400px; object-fit:contain; border:1px solid #ddd;" />
+        </div>
+      </div>
+
+      <!-- Right Section: Details -->
+      <div class="col mt-3">
+        <h3>{{ medicine.name }}</h3>
+        <p class="manufacturer">{{ medicine.manufacturer }}</p>
+
+        <div class="rating mb-2 ">
+          <span class="badge bg-warning text-dark">{{ medicine.rating }}★</span>
+          <small>{{ medicine.reviewsCount }} Ratings & {{ medicine.reviewTextCount }} Reviews</small>
+        </div>
+
+        <h5>Product highlights</h5>
+        <ul>
+          <li *ngFor="let point of medicine.highlights">{{ point }}</li>
+        </ul>
+
+        <div class="price-box my-2 mt-3">
+          <h4 class="text-primary">
+            ₹{{ medicine.price }}
+            <small class="text-muted">₹{{ medicine.mrp }}</small>
+            <span class="text-success" *ngIf="medicine.discount">{{ medicine.discount }}% off</span>
+          </h4>
+        </div>
+
+        <div class="quantity mb-3">
+          <label>Qty:</label>
+          <select [(ngModel)]="selectedQty" class="form-select w-auto d-inline-block ms-2">
+            <option *ngFor="let qty of medicine.packSizes" [value]="qty">{{ qty }}</option>
+          </select>
+        </div>
+
+        <button class="btn btn-primary btn-lg mb-3 mt-3" (click)="addToCart()">Add to cart</button>
+
+        <div class="delivery mt-3">
+          <strong>Get by {{ medicine.deliveryTime }}</strong>
+        </div>
+      </div>
+
+    </div> <!-- End row -->
+
+    <!-- Extra info below -->
+    <div class="description my-4">
+      <p class="mb-1">{{ medicine.introduction }}</p>
+      <p class="headings mb-1">{{ medicine.description }}</p>
+
+      <p class="headings mb-1">How to use:</p>
+      <p class="mb-1">{{ medicine.howToUse }}</p>
+
+      <p class="headings mb-1">Safety Advice:</p>
+      <p class="mb-1" [innerHTML]="medicine.safetyAdvise"></p>
+
+      <p class="headings mb-1">Common Side Effects:</p>
+      <p class="mb-1">{{ medicine.commonSideEffect }}</p>
+
+      <p class="headings mb-1">Storage:</p>
+      <p class="mb-1">{{ medicine.storage }}</p>
+    </div>
+
+  </div> <!-- End container -->
+</ng-container>
+
+
+
+<ng-container *ngIf="medicineType === 'otc' && isLoaded && !hasError; else loadingOrError">
+
+<div class="container mt-4 product-detail">
+  <div class="row">
+    <!-- Left Images -->
+   
+
+    <div class="col-md-6 d-flex">
+        <!-- Thumbnails -->
+        <div class="d-flex flex-column me-3">
+          <img *ngFor="let img of product.images"
+               [src]="img"
+               class="thumb-img mb-2"
+               (click)="selectedImage = img"
+               style="width:60px; height:60px; cursor:pointer; border:1px solid #ddd;" />
+        </div>
+
+        <!-- Main Image -->
+        <div>
+          <img [src]="selectedImage"
+               class="main-img"
+               style="width:400px; height:400px; object-fit:contain; border:1px solid #ddd;" />
+        </div>
+      </div>
+    <!-- Details -->
+    <div class="col-md-6">
+      <h3>{{ product.name }}</h3>
+      <p class="manufacturer">{{ product.manufacturer }}</p>
+
+      <div class="rating">
+        <span class="badge  bg-warning text-dark">{{ product.rating }}★</span>
+        <small>{{ product.reviewsCount }} Ratings & {{ product.reviewTextCount }} Reviews</small>
+      </div>
+
+      <h5 class="mt-3">Product highlights</h5>
+      <ul>
+        <li *ngFor="let point of product.highlights">{{ point }}</li>
+      </ul>
+
+      <div class="price-box">
+        <h4 class="text-primary">₹{{ product.price }} <small class="text-muted">₹{{ product.mrp }}</small> <span class="text-success">{{ product.discount }}% off</span></h4>
+      </div>
+
+      <div class="quantity">
+        <label>Qty:</label>
+        <select [(ngModel)]="selectedQty">
+          <option *ngFor="let qty of product.packSizes" [value]="qty">{{ qty }}</option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary btn-lg mt-3" (click)="addToCarOtc()">Add to cart</button>
+
+      <div class="delivery mt-3">
+        <strong>Get by {{ product.deliveryTime }}</strong>
+      </div>
+    </div>
+  </div>
+  <div class="description my-4">
+      <p class="mb-1">{{ product.introduction }}</p>
+      <p class="headings mb-1">{{ product.description }}</p>
+
+      <p class="headings mb-1">How to use:</p>
+      <p class="mb-1">{{ product.howToUse }}</p>
+
+      <p class="headings mb-1">Safety Advice:</p>
+      <p class="mb-1" [innerHTML]="product.safetyAdvise"></p>
+
+      <p class="headings mb-1">Common Side Effects:</p>
+      <p class="mb-1">{{ product.commonSideEffect }}</p>
+
+      <p class="headings mb-1">Storage:</p>
+      <p class="mb-1">{{ product.storage }}</p>
+    </div>
 </div>
+</ng-container>
+
 
 <ng-template #loadingOrError>
   <p *ngIf="!isLoaded">Loading medicine details…</p>

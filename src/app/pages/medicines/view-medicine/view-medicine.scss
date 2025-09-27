@@ -14,3 +14,48 @@ li, span, .description {
 .progress {
     height: 10px;
 }
+.product-detail {
+  .thumbs {
+    .thumb-img {
+      width: 50px;
+      margin-bottom: 8px;
+      border: 1px solid #ddd;
+      cursor: pointer;
+    }
+  }
+
+  .main-img {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .rating {
+    margin: 8px 0;
+    .badge {
+      font-size: 14px;
+      margin-right: 8px;
+    }
+  }
+
+  .price-box {
+    h4 {
+      font-weight: 600;
+    }
+    small {
+      text-decoration: line-through;
+    }
+  }
+
+  .quantity {
+    margin: 12px 0;
+    select {
+      margin-left: 6px;
+    }
+  }
+
+  .delivery {
+    font-size: 14px;
+    color: #007bff;
+  }
+}

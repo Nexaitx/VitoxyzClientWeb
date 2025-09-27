@@ -66,7 +66,8 @@ export class Header {
         { label: 'Logout', path: '/logout' }
       ]
     },
-    { label: 'Need Help?', path: '/help' }
+    { label: 'Need Help?', path: '/help' },
+  
   ];
 
 
@@ -92,6 +93,8 @@ export class Header {
   }
 
   goToCart() {
+    console.log("go to cart");
+    
     this.router.navigate(['/cart']);
   }
 
