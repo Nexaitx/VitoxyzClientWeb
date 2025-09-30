@@ -18,6 +18,7 @@ import { Header } from "./header/header";
 import { HttpClient } from "@angular/common/http";
 import { API_URL, ENDPOINTS } from "@src/app/core/const";
 import { CartService } from "@src/app/core/cart.service";
+import { Observable } from "rxjs";
 declare var bootstrap: any;
 export interface Medicine {
   id: string;
@@ -55,6 +56,14 @@ interface otcMedicine {
   expiration: string;
   image: string;
 }
+
+interface Category {
+  name: string;
+  apiValue: string; // API mein bhej jaane wali value (e.g., 'skin_care' agar zarurat ho)
+  cssClass: string; 
+  imageUrl: string; 
+  altText: string;
+}
 @Component({
   selector: "app-dashboard",
   imports: [
@@ -78,6 +87,8 @@ interface otcMedicine {
   styleUrls: ["./medicines.scss"],
 })
 export class Medicines implements AfterViewInit {
+  API_BASE_URL: string = ''; 
+
   medicines = [
     {
       id: 1,
@@ -219,7 +230,34 @@ export class Medicines implements AfterViewInit {
       image: "../../../assets/medicines/brand-1.png",
     },
   ];
+  // personal care add same to next 
+  // for testing
+  //  private readonly API_BASE_URL = 'http://localhost:8080/api/products/filter';
+
+   ngOnInit(): void {
+       this.API_BASE_URL = `${API_URL}/products/filter`; 
+
+  }
+  // Products ko store karne ke liye
+  products$: Observable<any> | undefined; 
+
+  //copy this and make same others category
+  categories: Category[] = [
+    { name: 'Skin Care', apiValue: 'Face Wash', cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/skincare.avif', altText: 'Skin Care Products' },
+    { name: 'Hair Care', apiValue: 'Shampoo', cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/haircare.avif', altText: 'Hair Care Products' },
+    { name: 'Sexual Wellness', apiValue: 'Condom', cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/sexcare.avif', altText: 'Sexual Wellness Products' },
+    { name: 'Oral Care', apiValue: 'Oral Gel', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/oralcare.avif', altText: 'Oral care Wellness Products' },
+        { name: 'Elder Care', apiValue: 'Belt', cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/eldercare.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Baby Care', apiValue: 'Nipple', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
+        { name: 'Men Care', apiValue: 'Mouth Wash', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/mencare.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Women Care', apiValue: 'Face Pack', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/womencare.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Pet Care', apiValue: 'Pet Food', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/petcare.avif', altText: 'Oral care Wellness Products' },
+
+    // { name: 'Oral Care', apiValue: 'Oralcare', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
+
+  ];
   constructor(private cartService: CartService) {}
+  
   @ViewChild("slider", { static: false }) slider!: ElementRef;
 
   selectedCity: string = "Mumbai";
@@ -235,42 +273,8 @@ export class Medicines implements AfterViewInit {
   cols: { id: string; label: string; type: string }[] = [];
   isLoaded = false;
   hasError = false;
-
-  ngOnInit(): void {
-    // const sheetId = '1_y6cpj0wDj8u6KRz9YopVnvGp8qi7BgAhe3seH7-Ysk';
-    // const gid = '0';  // sheet/tab id
-    // const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&gid=${gid}`;
-
-    // this.http.get(url, { responseType: 'text' })
-    //   .subscribe(raw => {
-    //     const match = raw.match(/google\.visualization\.Query\.setResponse\(([\s\S\w]+)\)/);
-    //     if (!match || match.length < 2) {
-    //       console.error('Unexpected Google Sheets JSON response format');
-    //       this.hasError = true;
-    //       return;
-    //     }
-    //     const data = JSON.parse(match[1]);
-    //     this.cols = data.table.cols as any[];
-    //     const rows = data.table.rows as any[];
-
-    //     this.medicineList = [];  // reset
-    //     rows.forEach((rowObj, rowIndex) => {
-    //       const medicineObj: { [label: string]: any } = {};
-    //       this.cols.forEach((colDef, colIdx) => {
-    //         const cell = rowObj.c[colIdx];
-    //         medicineObj[colDef.label] = (cell && cell.v != null) ? cell.v : 'N/A';
-    //       });
-    //       this.medicineList.push(medicineObj);
-    //     });
-
-    //     this.isLoaded = true;
-    //   }, err => {
-    //     console.error('Error fetching sheet data', err);
-    //     this.hasError = true;
-    //   });
-    this.fetchMedicines();
-    this.fetchOtcMedicines();
-  }
+ 
+ 
 
   fetchMedicines(page: number = 0, size: number = 10) {
     this.http
@@ -400,5 +404,39 @@ export class Medicines implements AfterViewInit {
 
   scrollRight() {
     this.slider.nativeElement.scrollBy({ left: 200, behavior: "smooth" });
+  }
+
+//here new slider code
+  // personal care
+   fetchProductsByCategory(categoryApiValue: string): void {
+    // URL ko category ke hisaab se construct karein
+    const url = `${this.API_BASE_URL}?productForm=${categoryApiValue}&page=0&size=10`;
+    
+    console.log('Calling API:', url); // Check karne ke liye
+
+    // this.products$ = this.http.get(url);
+    this.router.navigate(['/products', categoryApiValue]);
+
+        console.log(`Redirecting to category page for: ${categoryApiValue}`);
+
+
+
+  }
+
+ // Slider/Carousel Container ko reference karne ke liye
+  @ViewChild("categoryCarouselWrapper", { static: false }) 
+  carouselWrapper!: ElementRef<HTMLDivElement>;
+
+   scrollCarousel(direction: 'left' | 'right'): void {
+    if (this.carouselWrapper) {
+      const element = this.carouselWrapper.nativeElement;
+      const scrollAmount = 180 * 4; 
+      
+      if (direction === 'left') {
+        element.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        element.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
   }
 }

@@ -13,6 +13,13 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/book-staff-process/book-staff/book-staff').then(m => m.BookStaff),
       },
       {
+        // Jab URL '/products/Eldercare' hoga, yeh route match hoga
+        path: 'products/:category', 
+        // Component ka sahi path den
+        loadComponent: () => import('./pages/medicines/category-products/category-products') // PATH ADJUST KAREIN
+          .then(m => m.CategoryProductsComponent),
+      },
+      {
         path: 'medicines',
         loadChildren: () => import('./pages/medicines/medicines-module').then(m => m.MedicinesModule),
       },

@@ -361,6 +361,48 @@
   <p *ngIf="isLoaded && hasError">Error loading medicine data.</p>
 </ng-template>
 
+
+<!-- personal care -->
+
+
+<div class="category-section">
+  <div class="category-section-header mat-elevation-z2">
+    <h2>Personal Care</h2>
+    </div>
+
+  <div class="carousel-container">
+    
+    <button
+      class="side-nav-button left-button mat-elevation-z4"
+      (click)="scrollCarousel('left')"
+    >
+      &lt; </button>
+
+    <div #categoryCarouselWrapper class="carousel-wrapper">
+      <mat-card
+        *ngFor="let category of categories"
+        class="category-card mat-elevation-z4"
+        (click)="fetchProductsByCategory(category.apiValue)"
+      >
+        <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
+        <mat-card-content>
+          <h3>{{ category.name }}</h3>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <button
+      class="side-nav-button right-button mat-elevation-z4"
+      (click)="scrollCarousel('right')"
+    >
+      &gt; </button>
+    
+  </div>
+</div>
+
+<!-- papular category section -->
+
+
 <div class="container mt-4">
   <h4 class="mb-4">Available Medicines</h4>
 
@@ -408,6 +450,23 @@
 </div>
 
 
+
+
+
+<div *ngIf="products$ | async as products">
+  <hr>
+  <h3>Products for Selected Category:</h3>
+  <div *ngIf="products.content && products.content.length > 0">
+    <ul>
+      <li *ngFor="let product of products.content">{{ product.name }}</li>
+    </ul>
+  </div>
+  <div *ngIf="!products.content || products.content.length === 0">
+    No products found for this category.
+  </div>
+</div>
+
+<!-- //otc filter for medicines -->
 
 <div class="container mt-5">
   <h4 class="mb-4">Available OTC Medicines</h4>
