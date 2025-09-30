@@ -326,42 +326,6 @@
   </button>
 </div>
 
-<ng-container *ngIf="isLoaded && !hasError; else loadingOrError">
-  <div class="row">
-    <!-- <div *ngFor="let med of medicineList" class="col-6 col-md-4 col-lg-3 my-2 p-0 col-xl-2">
-      <mat-card class="medicine-card">
-        <img mat-card-image src="../../../assets/medicines/med1.jpeg"
-             alt="{{ med['Product Name'] || '' }}">
-
-        <span *ngIf="med['Rating']"
-              class="bg-warning rounded text-white rating">
-          {{ med['Rating'] }} <i class="bi bi-star-fill"></i>
-        </span>
-
-        <mat-card-content class="bg-white">
-          <small class="description">{{ med['Product Name'] || '-' }}</small><br>
-          <small class="text-muted">{{ med['Product Form'] || med['Package'] || '-' }}</small><br>
-          <div class="d-flex">
-            <h5>{{ med['mrp'] || '-' }}</h5>
-            <span *ngIf="med['Original Price']" class="text-muted mx-2 strike">{{ med['Original Price'] }}</span>
-            <p *ngIf="med['Discount']" class="text-primary bold">{{ med['Discount'] }}</p>
-          </div>
-          <button class="btn btn-primary rounded-pill btn-sm text-light w-100"
-                  (click)="viewDetails()">View Details</button>
-        </mat-card-content>
-      </mat-card>
-    </div> -->
-
-    
-  </div>
-</ng-container>
-
-<ng-template #loadingOrError>
-  <p *ngIf="!isLoaded">Loading…</p>
-  <p *ngIf="isLoaded && hasError">Error loading medicine data.</p>
-</ng-template>
-
-
 <!-- personal care -->
 
 
@@ -399,6 +363,77 @@
     
   </div>
 </div>
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Cream'" 
+  [title]="'Skin care products'">
+</app-common-filter-component>
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Lotion'" 
+  [title]="'Syrup Products'">
+</app-common-filter-component>
+
+<!-- popular category -->
+
+<div class="category-section">
+  <div class="category-section-header mat-elevation-z2">
+    <h2>Popular Category</h2>
+    </div>
+
+  <div class="carousel-container">
+    
+    <button
+      class="side-nav-button left-button mat-elevation-z4"
+      (click)="scrollCarousel('left')"
+    >
+      &lt; </button>
+
+    <div #categoryCarouselWrapper class="carousel-wrapper">
+      <mat-card
+        *ngFor="let category of categories2"
+        class="category-card mat-elevation-z4"
+        (click)="fetchProductsByCategory(category.apiValue)"
+      >
+        <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
+        <mat-card-content>
+          <h3>{{ category.name }}</h3>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <button
+      class="side-nav-button right-button mat-elevation-z4"
+      (click)="scrollCarousel('right')"
+    >
+      &gt; </button>
+    
+  </div>
+</div>
+
+<!-- Syrup Products -->
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'syrup'" 
+  [title]="'Syrup Products'">
+</app-common-filter-component>
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Spray'" 
+  [title]="'Top deals of Spray '">
+</app-common-filter-component>
+
+
+<ng-template #loadingOrError>
+  <p *ngIf="!isLoaded">Loading…</p>
+  <p *ngIf="isLoaded && hasError">Error loading medicine data.</p>
+</ng-template>
+
+
+
 
 <!-- papular category section -->
 

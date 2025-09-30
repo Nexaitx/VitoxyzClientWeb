@@ -25,4 +25,17 @@ export class ProductService {
     
     return this.http.get(url);
   }
+
+
+  getProductsByEndpoint(apiUrl: string, category?: string): Observable<any> {
+  if (category) {
+    return this.http.get<any>(`${apiUrl}?category=${category}`);
+  }
+  return this.http.get<any>(apiUrl);
+}
+getFilteredProducts(apiUrl: string, productForm: string, page: number, size: number): Observable<any> {
+  const url = `${apiUrl}?productForm=${productForm}&page=${page}&size=${size}`;
+  return this.http.get<any>(url);
+}
+
 }

@@ -1,8 +1,8 @@
 // export const API_URL = 'http://localhost:8080/api';
 
-// export const API_URL = 'https://vitoxyz.com/Backend/api';
+export const API_URL = 'https://vitoxyz.com/Backend/api';
 
-export const API_URL = `https://vitoxyzbackend-az2e.onrender.com/api`;
+// export const API_URL = `https://vitoxyzbackend-az2e.onrender.com/api`;
 
  
 export const ENDPOINTS = {
@@ -32,6 +32,8 @@ RESET_PASSWORD:'/user/reset-password',
     REMOVE_STAFF: '/user/remove-staff/{bookingId}',
     BOOK_SINGLE_STAFF:'/user/create-booking',
     UPDATE_PROFILE : '/user/update-profile',
+        PRODUCT_FILTER: '/products/filter', 
+
 
     
 }

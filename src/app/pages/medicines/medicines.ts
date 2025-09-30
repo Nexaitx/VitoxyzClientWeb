@@ -19,6 +19,7 @@ import { HttpClient } from "@angular/common/http";
 import { API_URL, ENDPOINTS } from "@src/app/core/const";
 import { CartService } from "@src/app/core/cart.service";
 import { Observable } from "rxjs";
+import { CommonFilterComponent } from "../shared/common-filter-component/common-filter-component";
 declare var bootstrap: any;
 export interface Medicine {
   id: string;
@@ -82,12 +83,12 @@ interface Category {
     MatInputModule,
     Header,
     Footer,
-  ],
+    CommonFilterComponent
+],
   templateUrl: "./medicines.html",
   styleUrls: ["./medicines.scss"],
 })
 export class Medicines implements AfterViewInit {
-  API_BASE_URL: string = ''; 
 
   medicines = [
     {
@@ -233,11 +234,13 @@ export class Medicines implements AfterViewInit {
   // personal care add same to next 
   // for testing
   //  private readonly API_BASE_URL = 'http://localhost:8080/api/products/filter';
+    // private readonly FILTER_ENDPOINT = '/products/filter';
 
-   ngOnInit(): void {
-       this.API_BASE_URL = `${API_URL}/products/filter`; 
 
-  }
+  //  ngOnInit(): void {
+  //      this.API_BASE_URL = `${API_URL}/products/filter`; 
+
+  // }
   // Products ko store karne ke liye
   products$: Observable<any> | undefined; 
 
@@ -247,11 +250,26 @@ export class Medicines implements AfterViewInit {
     { name: 'Hair Care', apiValue: 'Shampoo', cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/haircare.avif', altText: 'Hair Care Products' },
     { name: 'Sexual Wellness', apiValue: 'Condom', cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/sexcare.avif', altText: 'Sexual Wellness Products' },
     { name: 'Oral Care', apiValue: 'Oral Gel', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/oralcare.avif', altText: 'Oral care Wellness Products' },
-        { name: 'Elder Care', apiValue: 'Belt', cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/eldercare.avif', altText: 'Oral care Wellness Products' },
+        { name: 'Elder Care', apiValue: 'Mother Tincture', cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/eldercare.avif', altText: 'Oral care Wellness Products' },
     { name: 'Baby Care', apiValue: 'Nipple', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
         { name: 'Men Care', apiValue: 'Mouth Wash', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/mencare.avif', altText: 'Oral care Wellness Products' },
     { name: 'Women Care', apiValue: 'Face Pack', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/womencare.avif', altText: 'Oral care Wellness Products' },
     { name: 'Pet Care', apiValue: 'Pet Food', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/petcare.avif', altText: 'Oral care Wellness Products' },
+
+    // { name: 'Oral Care', apiValue: 'Oralcare', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
+
+  ];
+
+   categories2: Category[] = [
+    { name: 'Best offers', apiValue: 'Butter', cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/bestoffer.avif', altText: 'Skin Care Products' },
+    { name: 'Vitamins & Supplements', apiValue: 'Powder', cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/vitamins.avif', altText: 'Hair Care Products' },
+    { name: 'Nutritional Drinks', apiValue: 'Juice', cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/drinks.avif', altText: 'Sexual Wellness Products' },
+    { name: 'Skin Care', apiValue: 'Body Wash', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/skin1.avif', altText: 'Oral care Wellness Products' },
+        { name: 'Hair Care', apiValue: 'Hair Mask', cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/hair1.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Sexual Wellness', apiValue: 'Condom', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/sexual.avif', altText: 'Oral care Wellness Products' },
+        { name: 'Ayurveda Products', apiValue: 'Mouth Wash', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Pain Relief', apiValue: 'Spray', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/pain.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Homeopathy', apiValue: 'Flower', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/homopathy.avif', altText: 'Oral care Wellness Products' },
 
     // { name: 'Oral Care', apiValue: 'Oralcare', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
 
@@ -409,8 +427,11 @@ export class Medicines implements AfterViewInit {
 //here new slider code
   // personal care
    fetchProductsByCategory(categoryApiValue: string): void {
-    // URL ko category ke hisaab se construct karein
-    const url = `${this.API_BASE_URL}?productForm=${categoryApiValue}&page=0&size=10`;
+        const fullApiUrl = `${API_URL}${ENDPOINTS.PRODUCT_FILTER}`;
+
+    // const url = `${this.API_BASE_URL}?productForm=${categoryApiValue}&page=0&size=10`;
+        const url = `${fullApiUrl}?productForm=${categoryApiValue}&page=0&size=10`;
+
     
     console.log('Calling API:', url); // Check karne ke liye
 
