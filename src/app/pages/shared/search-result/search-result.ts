@@ -3,11 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { API_URL } from '@src/app/core/const';
+import { Footer } from "../../footer/footer";
 
 @Component({
   selector: 'app-search-result',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Footer],
   templateUrl: './search-result.html',
   styleUrls: ['./search-result.scss']
 })
