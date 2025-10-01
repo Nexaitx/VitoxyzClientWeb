@@ -1,6 +1,6 @@
 <div class="category-page">
     <div class="section-header">
-        <mat-paginator 
+        <!-- <mat-paginator 
             [length]="totalProducts"
             [pageSize]="pageSize"
             [pageSizeOptions]="[10, 30, 50, 100]"
@@ -9,7 +9,7 @@
             class="product-paginator product-paginator-top"
         ></mat-paginator>
         
-        <h2>{{ categoryName }} Products ({{ totalProducts }} items)</h2>
+        <h2>{{ categoryName }} Products ({{ totalProducts }} items)</h2> -->
     </div>
 
     <div class="product-grid-container">
@@ -21,6 +21,8 @@
                 <mat-card
                     *ngFor="let product of products" 
                     class="product-card mat-elevation-z2"
+                     style="cursor:pointer;"
+  (click)="goToProduct(product)"
                 >
                     <img 
                         mat-card-image 
@@ -48,7 +50,7 @@
                                 <p class="current-price">MRP ₹{{ product.mrp }}</p>
                             </div>
                             
-                            <button class="add-button" mat-button>ADD</button>
+                            <!-- <button class="add-button" mat-button>ADD</button> -->
                         </div>
                     </mat-card-content>
                 </mat-card>

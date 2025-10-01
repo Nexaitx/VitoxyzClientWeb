@@ -7,6 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator'; 
 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-category-products',
@@ -37,7 +38,8 @@ export class CategoryProductsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private router: Router
   ) { 
     this.products$ = new Observable<any[]>(); 
   }
@@ -153,4 +155,25 @@ export class CategoryProductsComponent implements OnInit {
     //  the URL format is "url1|url2|url3"
     return imageUrls.split('|')[0].trim();
   }
+
+goToProduct(product: any) {
+  const productId = product.id ?? product.productId;
+
+  if (!productId) {
+    console.error("Product ID missing", product);
+    return;
+  }
+
+  let type: string;
+  if (this.currentEndpoint.includes('otc')) {
+    type = 'otc';
+  } else {
+    type = 'otc';
+  }
+
+  this.router.navigate(['/medicine', productId], { queryParams: { type } });
+}
+
+
+  
 }
