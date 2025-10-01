@@ -3,6 +3,7 @@ import { Header } from './layouts/header/header';
 import { BillingDetailsComponent } from './core/toasts/billing-details/billing-details.component';
 import { UserOnboarding } from './pages/user-onboarding/user-onboarding';
 import { ViewMedicine } from './pages/medicines/view-medicine/view-medicine';
+import { SearchResultComponent } from '../app/pages/shared/search-result/search-result';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,8 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/medicines/category-products/category-products') // PATH ADJUST KAREIN
           .then(m => m.CategoryProductsComponent),
       },
+        { path: 'search', component: SearchResultComponent },
+
       {
         path: 'book-staff',
         loadComponent: () => import('./pages/book-staff-process/book-staff/book-staff').then(m => m.BookStaff),
