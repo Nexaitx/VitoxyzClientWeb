@@ -326,12 +326,17 @@
   </button>
 </div>
 
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Juice'" 
+  [title]="'Nature’s aloe, your daily boost.'">
+</app-common-filter-component>
 <!-- personal care -->
 
-
-<div class="category-section">
+<!-- future implementation -->
+<!-- <div class="category-section">
   <div class="category-section-header mat-elevation-z2">
-    <h2>Personal Care</h2>
+    <h2>Everyday Wellness</h2>
     </div>
 
   <div class="carousel-container">
@@ -362,25 +367,53 @@
       &gt; </button>
     
   </div>
-</div>
+</div> -->
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Biochemic Tablet'" 
+  [title]="'Small tablet, big relief.'">
+</app-common-filter-component>
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Jar'" 
+  [title]="'Your daily dose of health.'">
+</app-common-filter-component>
+
 
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Cream'" 
-  [title]="'Skin care products'">
+  [title]="'Care your skin deserves.'">
 </app-common-filter-component>
 
-<!-- <app-common-filter-component 
+
+
+<app-common-filter-component 
   [endpoint]="'products/filter'" 
-  [productForm]="'Lotion'" 
-  [title]="'Syrup Products'">
-</app-common-filter-component> -->
+  [productForm]="'Murabba'" 
+  [title]="'A sweet way to stay healthy'">
+</app-common-filter-component>
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Biscuit'" 
+  [title]="'Snack smart, live better.'">
+</app-common-filter-component>
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Cookie'" 
+  [title]="'Sweet moments, healthy choices.'">
+</app-common-filter-component>
+
 
 <!-- popular category -->
-
+<!-- 
 <div class="category-section">
   <div class="category-section-header mat-elevation-z2">
-    <h2>Popular Category</h2>
+    <h2>Trending Now</h2>
     </div>
 
   <div class="carousel-container">
@@ -411,13 +444,15 @@
       &gt; </button>
     
   </div>
-</div>
+</div> -->
+
+<!-- future implementation -->
 
 <!-- Syrup Products -->
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Diaper'" 
-  [title]="'Babycare Products'">
+  [title]="'Caring for every tiny move.'">
 </app-common-filter-component>
 
 <app-common-filter-component 
@@ -431,10 +466,32 @@
   <p *ngIf="!isLoaded">Loading…</p>
   <p *ngIf="isLoaded && hasError">Error loading medicine data.</p>
 </ng-template>
+
+
+
+
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
-  [productForm]="'Yoga Mat'" 
-  [title]="'Top deals of Yoga Mats '">
+  [productForm]="'Shampoo'" 
+  [title]="'Healthy Hair Starts Here '">
+</app-common-filter-component>
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Oil'" 
+  [title]="'Wellness you can feel'">
+</app-common-filter-component>
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Tablet'" 
+  [title]="' Power Up with Multivitamins '">
+</app-common-filter-component>
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Pillow'" 
+  [title]="'testing Products'">
 </app-common-filter-component>
 
 <app-common-filter-component 
@@ -445,18 +502,15 @@
 
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
-  [productForm]="'Shampoo'" 
-  [title]="'Healthy Hair Starts Here '">
+  [productForm]="'Nut'" 
+  [title]="' '">
 </app-common-filter-component>
 
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
-  [productForm]="'Tablet'" 
-  [title]="' Power Up with Multivitamins '">
+  [productForm]="'Yoga Mat'" 
+  [title]="' Support your every pose'">
 </app-common-filter-component>
-
-
-
 <!-- Content area -->
 <div class="container my-5">
   <h4>Welcome to Vitoxyz: Your Trusted Digital Pharmacy & Health Companion</h4>
