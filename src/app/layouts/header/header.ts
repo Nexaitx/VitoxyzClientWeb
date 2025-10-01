@@ -42,7 +42,7 @@ export class Header {
   isLoggedIn: boolean = false;
   isMobileMenuOpen = signal(false);
   menuItems = [
-    { label: 'Medecines', path: '/medicines' },
+    { label: 'Medicines', path: '/medicines' },
     {
       label: 'Book Staff',
       dropdown: true,
