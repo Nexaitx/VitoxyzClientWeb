@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./common-filter-component.scss']
 })
 export class CommonFilterComponent implements OnInit {
-  @Input() title: string = 'Explore Products';   // default value
+  @Input() title: string = '';   // default value
   @Input() endpoint: string = '';    
   @Input() productForm: string = ''; 
   @Input() page: number = 0;         
