@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { API_URL } from '@src/app/core/const';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-common-filter-component',
@@ -27,7 +28,9 @@ export class CommonFilterComponent implements OnInit {
   products$: Observable<any[]> = of([]); 
   API_BASE_URL: string = '';
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.API_BASE_URL = `${API_URL}/${this.endpoint}`;
@@ -66,4 +69,32 @@ export class CommonFilterComponent implements OnInit {
       }
     }
   }
+
+  goToProduct(product: any) {
+  // ID fallback
+  const productId = product.id ?? product.productId;
+
+  if (!productId) {
+    console.error("Product ID missing", product);
+    return;
+  }
+
+  if (this.endpoint.includes('otc')) {
+    this.router.navigate(['/medicine', productId], { queryParams: { type: 'otc' } });
+  } else {
+    this.router.navigate(['/medicine', productId], { queryParams: { type: 'otc' } });
+  }
+}
+
+
+
+seeAllProducts() {
+    this.router.navigate(['/products', this.productForm], { 
+      queryParams: { 
+        endpoint: this.endpoint 
+      }
+    });
+}
+
+  
 }

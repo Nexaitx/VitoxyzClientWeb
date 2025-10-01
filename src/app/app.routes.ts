@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Header } from './layouts/header/header';
 import { BillingDetailsComponent } from './core/toasts/billing-details/billing-details.component';
 import { UserOnboarding } from './pages/user-onboarding/user-onboarding';
+import { ViewMedicine } from './pages/medicines/view-medicine/view-medicine';
 
 export const routes: Routes = [
   {
@@ -12,10 +13,9 @@ export const routes: Routes = [
         path: '',
         loadComponent: () => import('./pages/book-staff-process/book-staff/book-staff').then(m => m.BookStaff),
       },
+
       {
-        // Jab URL '/products/Eldercare' hoga, yeh route match hoga
         path: 'products/:category', 
-        // Component ka sahi path den
         loadComponent: () => import('./pages/medicines/category-products/category-products') // PATH ADJUST KAREIN
           .then(m => m.CategoryProductsComponent),
       },
@@ -80,6 +80,10 @@ export const routes: Routes = [
         path: 'help',
         loadComponent: () => import('./pages/help/help').then(m => m.Help),
       },
+     { path: 'medicine/:id', component: ViewMedicine }, 
+
+
+
       {
         path: '',
         redirectTo: '',

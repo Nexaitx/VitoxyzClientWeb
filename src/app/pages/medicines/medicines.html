@@ -370,11 +370,11 @@
   [title]="'Skin care products'">
 </app-common-filter-component>
 
-<app-common-filter-component 
+<!-- <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Lotion'" 
   [title]="'Syrup Products'">
-</app-common-filter-component>
+</app-common-filter-component> -->
 
 <!-- popular category -->
 
@@ -416,8 +416,8 @@
 <!-- Syrup Products -->
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
-  [productForm]="'syrup'" 
-  [title]="'Syrup Products'">
+  [productForm]="'Diaper'" 
+  [title]="'Babycare Products'">
 </app-common-filter-component>
 
 <app-common-filter-component 
@@ -431,144 +431,31 @@
   <p *ngIf="!isLoaded">Loading…</p>
   <p *ngIf="isLoaded && hasError">Error loading medicine data.</p>
 </ng-template>
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Yoga Mat'" 
+  [title]="'Top deals of Yoga Mats '">
+</app-common-filter-component>
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Dry Fruit'" 
+  [title]="'Top deals of Dry Fruit '">
+</app-common-filter-component>
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Shampoo'" 
+  [title]="'Healthy Hair Starts Here '">
+</app-common-filter-component>
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Tablet'" 
+  [title]="' Power Up with Multivitamins '">
+</app-common-filter-component>
 
 
-
-
-<!-- papular category section -->
-
-
-<div class="container mt-4">
-  <h4 class="mb-4">Available Medicines</h4>
-
-  <div class="product-slider-wrapper">
-    <button class="slider-btn left" (click)="scrollLeft()">&#10094;</button>
-
-    <div class="product-slider" #slider>
-      <div
-        class="product-card"
-        *ngFor="let med of medicineList"
-        (click)="goToDetails(med.id)"
-      >
-    
-        <img
-          *ngIf="med.image"
-          [src]="med.image"
-          class="product-img"
-          alt="{{ med.name }}"
-        />
-        <div
-          *ngIf="!med.image"
-          class="product-img d-flex align-items-center justify-content-center text-muted"
-        >
-          <small>No Image</small>
-        </div>
-
-        <!-- Body -->
-        <div class="p-2">
-          <p class="prod-title">{{ med.name }}</p>
-          <p class="prod-sub">{{ med.form }} | {{ med.package }}</p>
-
-          <div class="price-row">
-            <span class="prod-price">₹{{ med.mrp }}</span>
-            <span class="prod-mrp">₹{{ med.originalPrice }}</span>
-            <span class="prod-discount">{{ med.discountPercentage }}% off</span>
-          </div>
-
-          <p class="delivery">Get in {{ med.deliveryTime }} mins</p>
-        </div>
-      </div>
-    </div>
-
-    <button class="slider-btn right" (click)="scrollRight()">&#10095;</button>
-  </div>
-</div>
-
-
-
-
-
-<div *ngIf="products$ | async as products">
-  <hr>
-  <h3>Products for Selected Category:</h3>
-  <div *ngIf="products.content && products.content.length > 0">
-    <ul>
-      <li *ngFor="let product of products.content">{{ product.name }}</li>
-    </ul>
-  </div>
-  <div *ngIf="!products.content || products.content.length === 0">
-    No products found for this category.
-  </div>
-</div>
-
-<!-- //otc filter for medicines -->
-
-<div class="container mt-5">
-  <h4 class="mb-4">Available OTC Medicines</h4>
-
- 
-  <div class="product-slider-wrapper">
-    <button class="slider-btn left" (click)="scrollLeft()">&#10094;</button>
-
-    <div class="product-slider" #slider>
-      <div
-        class="product-card"
-        *ngFor="let med of otcmedicineList"
-        (click)="goToOtcDetails(med.id)"
-      >
-               <img
-          *ngIf="med.image"
-          [src]="med.image"
-          class="product-img"
-          alt="{{ med.name }}"
-        />
-        <div
-          *ngIf="!med.image"
-          class="product-img d-flex align-items-center justify-content-center text-muted"
-        >
-          <small>No Image</small>
-        </div>
-
-        <!-- Body -->
-        <div class="p-2">
-          <p class="prod-title">{{ med.name }}</p>
-          <p class="prod-sub">{{ med.productForm }} | {{ med.packaging }}</p>
-
-          <div class="price-row">
-            <span class="prod-price">₹{{ med.mrp }}</span>
-          
-          </div>
-
-         
-        </div>
-      </div>
-    </div>
-
-    <button class="slider-btn right" (click)="scrollRight()">&#10095;</button>
-  </div>
-</div>
-
-<!-- personal care -->
-<div class="row w-100 container-fluid my-3">
-  <ng-container *ngFor="let med of filteredMedicines">
-    <!-- <mat-card class="medicine-card col-6 col-md-4 col-lg-3 my-2 p-0 col-xl-2">
-        <img mat-card-image src="../../../assets/dettol.png" alt="{{ med.description }}" />
-        <span class="bg-warning rounded text-white rating">4.4 <i class=" bi bi-star-fill"></i></span>
-        <mat-card-content class="bg-white">
-          <small class="description">{{ med.description }}</small><br>
-          <small class="text-muted">30 ml Shampoo</small><br>
-          <small class="text-muted">Get in <span class="text-primary bold">30 mins</span></small><br>
-          <div class="d-flex">
-            <h5>378</h5><span class="text-muted mx-2 strike">499</span>
-            <p class="text-primary bold">12% Off</p>
-          </div>
-          <button class="btn btn-primary rounded-pill btn-sm text-light w-100"
-            (click)="selectedMedicine = med; viewDetails()">Add</button>
-        </mat-card-content>
-      </mat-card> -->
-    <!-- Only show after data is loaded -->
-  </ng-container>
-</div>
 
 <!-- Content area -->
 <div class="container my-5">

@@ -14,13 +14,24 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  getProductsByCategory(categoryName: string): Observable<any> {
-        const fullApiUrl = `${API_URL}${this.FILTER_ENDPOINT}`;
+  // getProductsByCategory(categoryName: string): Observable<any> {
+  //       const fullApiUrl = `${API_URL}${this.FILTER_ENDPOINT}`;
 
-    // const url = `${this.fullApiUrl}?productForm=${categoryName}&page=0&size=10`;
-        const url = `${fullApiUrl}?productForm=${categoryName}&page=0&size=10`;
+  //   // const url = `${this.fullApiUrl}?productForm=${categoryName}&page=0&size=10`;
+  //       const url = `${fullApiUrl}?productForm=${categoryName}&page=0&size=10`;
 
     
+  //   console.log('CategoryProducts API Calling:', url);
+    
+  //   return this.http.get(url);
+  // }
+
+    getProductsByCategory(categoryName: string, page: number, size: number): Observable<any> {
+    const fullApiUrl = `${API_URL}${this.FILTER_ENDPOINT}`;
+
+    // Include page and size parameters in the URL
+    const url = `${fullApiUrl}?productForm=${categoryName}&page=${page}&size=${size}`;
+
     console.log('CategoryProducts API Calling:', url);
     
     return this.http.get(url);
@@ -37,5 +48,23 @@ getFilteredProducts(apiUrl: string, productForm: string, page: number, size: num
   const url = `${apiUrl}?productForm=${productForm}&page=${page}&size=${size}`;
   return this.http.get<any>(url);
 }
+
+getProductsForCategoryPage(
+        endpoint: string, 
+        productForm: string, 
+        page: number, 
+        size: number
+    ): Observable<any> {
+        const fullApiUrl = `${API_URL}/${endpoint}`;
+        
+        const url = `${fullApiUrl}?productForm=${productForm}&page=${page}&size=${size}`;
+        
+        console.log('Category Page API Calling (via See All):', url);
+        
+        return this.http.get(url);
+    }
+
+
+
 
 }
