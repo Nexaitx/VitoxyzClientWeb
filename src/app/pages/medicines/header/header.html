@@ -1,13 +1,13 @@
-<div class="container my-3 ">
+<div class="container my-3">
   <div class="row g-2">
     <!-- Location Dropdown -->
     <div class="col-12 col-md-3">
       <div class="form-group">
-        <select class="form-control">
-          <option value="">Chandigarh</option>
-          <option value="">Ludhiana</option>
-          <option value="">Chennai</option>
-          <option value="">Delhi</option>
+        <select class="form-control" [(ngModel)]="selectedLocation">
+          <option value="Chandigarh">Chandigarh</option>
+          <option value="Ludhiana">Ludhiana</option>
+          <option value="Chennai">Chennai</option>
+          <option value="Delhi">Delhi</option>
         </select>
       </div>
     </div>
@@ -15,13 +15,16 @@
     <!-- Search Input -->
     <div class="col-12 col-md-7">
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Search medicine">
+        <input type="text" class="form-control" [(ngModel)]="searchQuery" placeholder="Search medicine">
       </div>
     </div>
 
-    <!-- Optional Button (e.g., Search) -->
+    <!-- Search Button -->
     <div class="col-12 col-md-2">
-      <button class="btn btn-primary btn-sm rounded-pill text-light px-3 w-100">Search</button>
+      <button class="btn btn-primary btn-sm rounded-pill text-light px-3 w-100"
+              (click)="onSearch()">
+        Search
+      </button>
     </div>
   </div>
 </div>

@@ -1,0 +1,16 @@
+<div class="search-container">
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="onSearch($event)"
+    placeholder="Search products..."
+    class="search-input"
+  />
+
+  <ul *ngIf="results$ | async as results" class="results-list" [hidden]="!results.length">
+    <li *ngFor="let product of results" (click)="selectProduct(product)">
+      <img [src]="product.imageUrl?.split('|')[0] || 'assets/placeholder.png'" width="30" height="30" />
+      <span>{{ product.name }}</span>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,23 @@
+<div class="container my-4">
+  <h3>Search results for: <b>{{ query }}</b></h3>
+
+  <div *ngIf="loading">Loading...</div>
+
+  <div *ngIf="!loading && medicines.length === 0">
+    <p>No results found.</p>
+  </div>
+
+  <div class="row" *ngIf="medicines.length > 0">
+    <div class="col-12 col-md-4 mb-3" *ngFor="let med of medicines">
+      <div class="card h-100 shadow-sm">
+        <img [src]="getFirstImage(med.imageUrls)" class="card-img-top" alt="{{ med.productName }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ med.productName }}</h5>
+          <p class="card-text">Form: {{ med.productForm }}</p>
+          <p class="card-text">MRP: ₹{{ med.mrp }}</p>
+          <p class="card-text text-danger" *ngIf="med.prescriptionRequired">Prescription Required</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
