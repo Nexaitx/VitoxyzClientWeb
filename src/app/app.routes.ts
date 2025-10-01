@@ -11,7 +11,8 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./pages/book-staff-process/book-staff/book-staff').then(m => m.BookStaff),
+        loadChildren: () => import('./pages/medicines/medicines-module').then(m => m.MedicinesModule),
+
       },
 
       {
@@ -20,8 +21,9 @@ export const routes: Routes = [
           .then(m => m.CategoryProductsComponent),
       },
       {
-        path: 'medicines',
-        loadChildren: () => import('./pages/medicines/medicines-module').then(m => m.MedicinesModule),
+        path: 'book-staff',
+        loadComponent: () => import('./pages/book-staff-process/book-staff/book-staff').then(m => m.BookStaff),
+
       },
       {
         path: 'diet/user-onboarding',
