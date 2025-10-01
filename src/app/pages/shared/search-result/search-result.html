@@ -9,7 +9,7 @@
 
   <div class="row" *ngIf="medicines.length > 0">
     <div class="col-12 col-md-4 mb-3" *ngFor="let med of medicines">
-      <div class="card h-100 shadow-sm">
+      <div class="card h-100 shadow-sm" (click)="goToMedicine(med)" style="cursor:pointer;">
         <img [src]="getFirstImage(med.imageUrls)" class="card-img-top" alt="{{ med.productName }}">
         <div class="card-body">
           <h5 class="card-title">{{ med.productName }}</h5>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { API_URL } from '@src/app/core/const';
@@ -12,11 +12,11 @@ import { API_URL } from '@src/app/core/const';
   styleUrls: ['./search-result.scss']
 })
 export class SearchResultComponent implements OnInit {
-  query: string = '';
   medicines: any[] = [];
-  loading = false;
+  query: string = '';
+  loading = true;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -29,15 +29,10 @@ export class SearchResultComponent implements OnInit {
 
   fetchResults(query: string) {
     this.loading = true;
-    const url = `${API_URL}/search?q=${query}&type=combined&page=0&size=20`; 
-        // for testing
-
-
-    // const url = `http://localhost:8080/api/search?q=${query}&type=combined&page=0&size=20`;
-
+    const url = `${API_URL}/search?q=${query}&type=combined&page=0&size=20`;
     this.http.get<any>(url).subscribe({
       next: (res) => {
-        this.medicines = res.data?.medicines || [];
+        this.medicines = res?.data?.medicines || [];
         this.loading = false;
       },
       error: (err) => {
@@ -47,8 +42,15 @@ export class SearchResultComponent implements OnInit {
     });
   }
 
+  // ✅ navigate to detail
+  goToMedicine(med: any) {
+    this.router.navigate([`/medicine/${med.productId}`], {
+      queryParams: { type: 'health' } // yaa 'otc' depending on API response
+    });
+  }
+
   getFirstImage(images: string[]): string {
-    if (!images?.length) return 'https://via.placeholder.com/150';
+    if (!images || images.length === 0) return 'assets/img/default.png';
     return images[0].split('|')[0].trim();
   }
 }
