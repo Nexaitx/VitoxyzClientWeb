@@ -21,6 +21,8 @@
                 <mat-card
                     *ngFor="let product of products" 
                     class="product-card mat-elevation-z2"
+                     style="cursor:pointer;"
+  (click)="goToProduct(product)"
                 >
                     <img 
                         mat-card-image 

@@ -20,6 +20,7 @@ FORGOT_PASSWORD:'/user/email/forgot-password',
 RESET_PASSWORD:'/user/reset-password',
     
     LOGIN_EMAIL: '/user/loginWithEmail',
+    
     MEDICINES:'/medicines/getMedicine',
 
     MEDICINE_BY_ID:(id: string) => `/medicines/${id}`,
