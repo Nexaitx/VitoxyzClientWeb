@@ -177,31 +177,32 @@
     <p>Your cart is empty.</p>
   </div>
 
-  <div *ngFor="let item of cart" class="row cart-item border rounded p-3 my-3 align-items-center">
-    <div class="col-3 col-sm-2">
-      <img [src]="item.image" alt="{{ item.name }}" class="img-fluid rounded" />
+<div *ngFor="let item of cart" class="cart-item">
+  <div>
+    <img [src]="item.image" alt="{{ item.name }}" />
+  </div>
+
+  <div class="details">
+    <h6>{{ item.name }}</h6>
+    <small>{{ item.qty || '' }}</small>
+    <div class="remove" (click)="removeItem(item.id)">Remove</div>
+  </div>
+
+  <div class="text-end">
+    <div class="price">
+      ₹{{ item.price }}
+      <span *ngIf="item.mrp && item.mrp > item.price" class="strike">₹{{ item.mrp }}</span>
+      <span *ngIf="item.mrp && item.mrp > item.price" class="text-success"> {{ getDiscount(item) }}% off</span>
     </div>
 
-    <div class="col-6 col-sm-6">
-      <h6 class="fw-bold">{{ item.name }}</h6>
-      <small class="text-muted">{{ item.qty || '' }}</small>
-      <div class="text-danger mt-2" role="button" (click)="removeItem(item.id)">Remove</div>
-    </div>
-
-    <div class="col-3 col-sm-4 text-end">
-      <h6 class="price">
-        ₹{{ item.price }}
-        <span *ngIf="item.mrp && item.mrp > item.price" class="text-muted strike">₹{{ item.mrp }}</span>
-        <span *ngIf="item.mrp && item.mrp > item.price" class="text-success"> {{ getDiscount(item) }}% off</span>
-      </h6>
-
-      <div class="input-group qty-box mt-2 justify-content-end">
-        <button class="btn btn-outline-secondary" (click)="decreaseQty(item)">−</button>
-        <input type="text" class="form-control text-center" [value]="item.count" readonly />
-        <button class="btn btn-outline-secondary" (click)="increaseQty(item)">+</button>
-      </div>
+    <div class="qty-box">
+      <button (click)="decreaseQty(item)">−</button>
+      <input type="text" [value]="item.count" readonly />
+      <button (click)="increaseQty(item)">+</button>
     </div>
   </div>
+</div>
+
 
   <!-- Bill Summary -->
   <div class="bill-summary border rounded p-3 mt-4">
@@ -227,7 +228,7 @@
       </tbody>
     </table>
 
-    <button class="btn btn-primary w-100 rounded-pill">Continue</button>
+    <button class="btn btn-primary w-100 rounded-pill" (click)="onProceedToPayment()">Continue</button>
   </div>
 </div>
 <ng-template #emptyCart>

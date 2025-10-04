@@ -6,3 +6,53 @@ select {
 .form-control {
     font-size: small;
 }
+.search-bar {
+  background-color: #fff;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 50px;
+  margin-top: 12px;
+  padding: 5px 10px;
+
+  .form-select {
+    font-size: 0.95rem;
+    width: auto;
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    box-shadow: none;
+    cursor: pointer;
+
+    &:focus {
+      box-shadow: none;
+      border-color: transparent;
+    }
+  }
+
+  .form-control {
+    height: 42px;
+    border-radius: 50px;
+    border: 1px solid #e5e5e5;
+    background-color: #f9f9f9;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+
+    &:focus {
+      background-color: #fff;
+      border-color: #00bcd4;
+      box-shadow: 0 0 0 0.2rem rgba(0, 188, 212, 0.2);
+    }
+  }
+
+  .btn-danger {
+    background-color: #0BBBC1;
+    border: none;
+    &:hover {
+      background-color: #0BBBC1;
+    }
+  }
+
+  i.bi {
+    font-size: 1.1rem;
+  }
+}
+

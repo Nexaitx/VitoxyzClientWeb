@@ -166,38 +166,72 @@ export class ViewMedicine implements OnInit {
   }
 
  
+  // addToCart() {
+  //   if (!this.medicine) return;
+
+  //   const cartItem: Partial<CartItem> = {
+  //     id: this.medicine.id,
+  //     name: this.medicine.name,
+  //     price: Number(this.medicine.price ?? this.medicine.mrp ?? 0),
+  //     mrp: Number(this.medicine.mrp ?? this.medicine.price ?? 0),
+  //     qty: this.selectedQty,
+  //     image: (this.medicine.images && this.medicine.images[0]) || "assets/img/default.png",
+  //     count: 1,
+  //   };
+
+  //   this.cartService.addItem(cartItem);
+  //   alert(`${cartItem.name} added to cart!`);
+  // }
+
+  // addToCarOtc() {
+  //   if (!this.product) return;
+
+  //   const cartItem: Partial<CartItem> = {
+  //     id: this.product.id,
+  //     name: this.product.name,
+  //     price: Number(this.product.price ?? this.product.mrp ?? 0),
+  //     mrp: Number(this.product.mrp ?? this.product.price ?? 0),
+  //     qty: this.selectedQty,
+  //     image: (this.product.images && this.product.images[0]) || "assets/img/default.png",
+  //     count: 1,
+  //   };
+
+  //   this.cartService.addItem(cartItem);
+  //   alert(`${cartItem.name} added to cart!`);
+  // }
+
+
   addToCart() {
-    if (!this.medicine) return;
+  if (!this.medicine) return;
 
-    const cartItem: Partial<CartItem> = {
-      id: this.medicine.id,
-      name: this.medicine.name,
-      price: Number(this.medicine.price ?? this.medicine.mrp ?? 0),
-      mrp: Number(this.medicine.mrp ?? this.medicine.price ?? 0),
-      qty: this.selectedQty,
-      image: (this.medicine.images && this.medicine.images[0]) || "assets/img/default.png",
-      count: 1,
-    };
+  const payload = {
+    medicineId: this.medicine.id,
+    quantity: Number(this.selectedQty) || 1,
+    productType: 'health'
+  };
 
-    this.cartService.addItem(cartItem);
-    alert(`${cartItem.name} added to cart!`);
-  }
-  addToCarOtc() {
-    if (!this.product) return;
+  this.cartService.addItem(payload).subscribe({
+    next: () => alert(`${this.medicine.name} added to cart!`),
+    error: (err) => alert('Failed to add item to cart. Try again.')
+  });
+}
 
-    const cartItem: Partial<CartItem> = {
-      id: this.product.id,
-      name: this.product.name,
-      price: Number(this.product.price ?? this.product.mrp ?? 0),
-      mrp: Number(this.product.mrp ?? this.product.price ?? 0),
-      qty: this.selectedQty,
-      image: (this.product.images && this.product.images[0]) || "assets/img/default.png",
-      count: 1,
-    };
+addToCartOtc() {
+  if (!this.product) return;
 
-    this.cartService.addItem(cartItem);
-    alert(`${cartItem.name} added to cart!`);
-  }
+  const payload = {
+    medicineId: this.product.id,
+    quantity: Number(this.selectedQty) || 1,
+    productType: 'otc'
+  };
+
+  this.cartService.addItem(payload).subscribe({
+    next: () => alert(`${this.product.name} added to cart!`),
+    error: (err) => alert('Failed to add item to cart. Try again.')
+  });
+}
+
+  
 }
 
 
