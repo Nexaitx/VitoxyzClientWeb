@@ -50,11 +50,7 @@ getFilteredProducts(apiUrl: string, productForm: string, page: number, size: num
 }
 
 getProductsForCategoryPage(
-        endpoint: string, 
-        productForm: string, 
-        page: number, 
-        size: number
-    ): Observable<any> {
+endpoint: string, productForm: string, page: number, size: number, selectedBrands: string[] | never[]    ): Observable<any> {
         const fullApiUrl = `${API_URL}/${endpoint}`;
         
         const url = `${fullApiUrl}?productForm=${productForm}&page=${page}&size=${size}`;

@@ -1,236 +1,58 @@
-<app-header></app-header>
 <!-- Banner -->
-<div class="container-fluid w-100 px-0" style="margin-top: -60px">
+ <app-header></app-header>
+<div class="container-fluid w-100 px-0" style="margin-top: -70px ">
   <img src="../../../assets/banner.png" class="w-100" alt="" />
 </div>
 
-
 <!-- health conecerns -->
-<!-- <div class="container my-3">
-  <div>
-    <p class="fs-4 fw-bold">Shop by health concern</p>
-  </div>
 
-  <div
-    id="healthConcernCarousel"
-    class="carousel slide"
-    data-bs-ride="carousel"
-  >
 
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <div class="row g-2 w-100 mx-auto justify-content-center">
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div
-              class="border rounded d-flex flex-column justify-content-center"
-            >
-              <img
-                src="../../../assets/medicines/health-1.png"
-                class="img-fluid"
-                height="150"
-                alt="Diabetes"
-              />
-              <p class="text-center mt-2">Diabetes</p>
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div
-              class="border rounded d-flex flex-column align-items-center justify-content-center"
-            >
-              <img
-                src="../../../assets/medicines/health-2.png"
-                height="150"
-                class="img-fluid"
-                alt="Heart rate"
-              />
-              <p class="text-center mt-2">Heart rate</p>
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-md-block">
-            <div
-              class="border rounded d-flex flex-column align-items-center justify-content-center"
-            >
-              <img
-                src="../../../assets/medicines/health-3.png"
-                height="150"
-                class="img-fluid"
-                alt="Stomach care"
-              />
-              <p class="text-center mt-2">Stomach care</p>
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-lg-block">
-            <div
-              class="border rounded d-flex flex-column align-items-center justify-content-center"
-            >
-              <img
-                src="../../../assets/medicines/health-4.png"
-                height="150"
-                class="img-fluid"
-                alt="Liver care"
-              />
-              <p class="text-center mt-2">Liver care</p>
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-md-block">
-            <div
-              class="border rounded d-flex flex-column align-items-center justify-content-center"
-            >
-              <img
-                src="../../../assets/medicines/health-3.png"
-                height="150"
-                class="img-fluid"
-                alt="Stomach care"
-              />
-              <p class="text-center mt-2">Stomach care</p>
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-lg-block">
-            <div
-              class="border rounded d-flex flex-column align-items-center justify-content-center"
-            >
-              <img
-                src="../../../assets/medicines/health-4.png"
-                height="150"
-                class="img-fluid"
-                alt="Liver care"
-              />
-              <p class="text-center mt-2">Liver care</p>
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-lg-block">
-            <div
-              class="border rounded d-flex flex-column align-items-center justify-content-center"
-            >
-              <img
-                src="../../../assets/medicines/health-1.png"
-                height="150"
-                class="img-fluid"
-                alt="Eye care"
-              />
-              <p class="text-center mt-2">Eye care</p>
-            </div>
-          </div>
+
+
+
+
+<div class="mobile-quick-access-wrapper d-block d-lg-none">
+  <div class="container py-3">
+    <div class="row g-4 justify-content-between"> 
+      
+      <div class="col-3 quick-access-tile" (click)="goToPage('pharmacy')">
+        <div class="tile-icon-box">
+          <img src="../../../assets/icons/pharmacy-icon.png" alt="Pharmacy" class="img-fluid">
         </div>
+        <p class="tile-title">Pharmacy</p>
+        <p class="tile-subtitle">30 mins ⚡</p>
       </div>
 
-      <div class="carousel-item">
-        <div class="row g-2 w-100 mx-auto justify-content-center">
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div
-              class="border rounded d-flex flex-column align-items-center justify-content-center"
-            >
-              <img
-                src="../../../assets/medicines/health-5.png"
-                height="150"
-                class="img-fluid"
-                alt="Bone, Joints & Muscles Care"
-              />
-              <p class="text-center mt-2">Bone, Joints & Muscles Care</p>
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
-            <div
-              class="border rounded d-flex flex-column align-items-center justify-content-center"
-            >
-              <img
-                src="../../../assets/medicines/health-6.png"
-                height="150"
-                class="img-fluid"
-                alt="Kidney care"
-              />
-              <p class="text-center mt-2">Kidney care</p>
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-md-block">
-            <div
-              class="border rounded d-flex flex-column align-items-center justify-content-center"
-            >
-              <img
-                src="../../../assets/medicines/health-7.png"
-                height="150"
-                class="img-fluid"
-                alt="Derma care"
-              />
-              <p class="text-center mt-2">Derma care</p>
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-lg-block">
-            <div
-              class="border rounded d-flex flex-column align-items-center justify-content-center"
-            >
-              <img
-                src="../../../assets/medicines/health-1.png"
-                height="150"
-                class="img-fluid"
-                alt="Eye care"
-              />
-              <p class="text-center mt-2">Eye care</p>
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-md-block">
-            <div
-              class="border rounded d-flex flex-column align-items-center justify-content-center"
-            >
-              <img
-                src="../../../assets/medicines/health-3.png"
-                height="150"
-                class="img-fluid"
-                alt="Stomach care"
-              />
-              <p class="text-center mt-2">Stomach care</p>
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-lg-block">
-            <div
-              class="border rounded d-flex flex-column align-items-center justify-content-center"
-            >
-              <img
-                src="../../../assets/medicines/health-4.png"
-                height="150"
-                class="img-fluid"
-                alt="Liver care"
-              />
-              <p class="text-center mt-2">Liver care</p>
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3 col-xl-2 p-2 d-none d-lg-block">
-            <div
-              class="border rounded d-flex flex-column align-items-center justify-content-center"
-            >
-              <img
-                src="../../../assets/medicines/health-1.png"
-                height="150"
-                class="img-fluid"
-                alt="Eye care"
-              />
-              <p class="text-center mt-2">Eye care</p>
-            </div>
-          </div>
+      <div class="col-3 quick-access-tile" (click)="goToPage('lab-tests')">
+        <div class="tile-icon-box">
+          <img src="../../../assets/icons/lab-tests-icon.png" alt="Lab tests" class="img-fluid">
         </div>
+        <p class="tile-title">Lab tests</p>
+        <p class="tile-subtitle-illus">Home Sample Pickup</p>
       </div>
+
+      <div class="col-3 quick-access-tile" (click)="goToPage('consults')">
+        <div class="tile-icon-box">
+          <img src="../../../assets/icons/consults-icon.png" alt="Consults" class="img-fluid">
+        </div>
+        <p class="tile-title">Consults</p>
+        <p class="tile-subtitle-illus">Doctor Video Call</p>
+      </div>
+
+      <div class="col-3 quick-access-tile" (click)="goToPage('vaccines')">
+        <div class="tile-icon-box">
+          <img src="../../../assets/icons/vaccines-icon.png" alt="Adult Vaccines" class="img-fluid">
+        </div>
+        <p class="tile-title">Adult</p>
+        <p class="tile-subtitle">Vaccines</p>
+      </div>
+
     </div>
-
-    <button
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#healthConcernCarousel"
-      data-bs-slide="prev"
-    >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#healthConcernCarousel"
-      data-bs-slide="next"
-    >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
   </div>
-</div> -->
+</div>
+
+<app-health-carousel [items]="healthItems"></app-health-carousel>
+
 
 <!-- featured brands -->
 <div id="brandCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -322,11 +144,17 @@
     ...
   </button>
 </div>
+<!-- testing -->
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Powder'" 
+  [title]="'Testing product'">
+</app-common-filter-component>
 
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Juice'" 
-  [title]="'Nature’s aloe, your daily boost.'">
+  [title]="'Nature’s aloe, your daily boost'">
 </app-common-filter-component>
 <!-- personal care -->
 
@@ -396,13 +224,13 @@
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Biscuit'" 
-  [title]="'Snack smart, live better.'">
+  [title]="'Snack smart, live better'">
 </app-common-filter-component>
 
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Cookie'" 
-  [title]="'Sweet moments, healthy choices.'">
+  [title]="'Sweet moments, healthy choices'">
 </app-common-filter-component>
 
 

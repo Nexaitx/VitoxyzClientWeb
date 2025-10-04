@@ -18,7 +18,7 @@ export const routes: Routes = [
 
       {
         path: 'products/:category', 
-        loadComponent: () => import('./pages/medicines/category-products/category-products') // PATH ADJUST KAREIN
+        loadComponent: () => import('./pages/medicines/category-products/category-products') 
           .then(m => m.CategoryProductsComponent),
       },
         { path: 'search', component: SearchResultComponent },

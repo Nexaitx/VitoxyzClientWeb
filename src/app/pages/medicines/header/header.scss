@@ -1,58 +1,165 @@
-select {
-    font-size: small;
-    font-weight: 500;
-}
+@use "sass:color";
 
-.form-control {
-    font-size: small;
-}
+$primary-color: #0BBBC1;
+$danger-color: #f44336; // Keep a red for emphasis if needed, but use primary for main action
+$shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
+
 .search-bar {
   background-color: #fff;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: $shadow-light; /* Slightly softer shadow */
   border-radius: 50px;
   margin-top: 12px;
-  padding: 5px 10px;
+  padding: 5px 15px; /* Thoda zyada padding */
+  transition: all 0.3s ease; /* Smooth transition for resizing/hover */
+  margin-bottom: 50px; /* Use SCSS for structure, remove inline style */
 
-  .form-select {
-    font-size: 0.95rem;
-    width: auto;
-    padding: 0;
-    margin: 0;
-    background-color: transparent;
-    box-shadow: none;
-    cursor: pointer;
+  /* Location Section */
+  .location {
+    flex-shrink: 0; /* Ensures it doesn't shrink unnecessarily */
+    padding: 0 10px; /* Custom padding for better control */
 
-    &:focus {
-      box-shadow: none;
-      border-color: transparent;
+    i.bi {
+      font-size: 1.2rem; /* Thoda bada icon */
+      color: $primary-color;
+
+      &.bi-crosshair {
+        color: #999;
+        transition: color 0.2s;
+        
+        &:hover {
+          color: $primary-color; /* Hover effect */
+        }
+      }
     }
   }
 
+  /* Select Dropdown */
+  .form-select {
+    font-size: 0.95rem;
+    font-weight: 600; /* Bolder font */
+    width: auto;
+    cursor: pointer;
+    
+    // Custom focus state for accessibility
+    &:focus-visible {
+      outline: 2px solid $primary-color;
+      outline-offset: 1px;
+    }
+  }
+
+  /* Search Input */
   .form-control {
-    height: 42px;
+    height: 48px; /* Slightly taller for better touch target */
     border-radius: 50px;
     border: 1px solid #e5e5e5;
-    background-color: #f9f9f9;
-    font-size: 0.95rem;
-    transition: all 0.2s;
+    background-color: #f0f0f0; /* Thoda darker background */
+    font-size: 1rem; /* Bada font size for readability */
+    transition: all 0.3s;
+    padding-left: 1.5rem; /* Zada padding */
+    padding-right: 3rem; /* Zada padding */
 
     &:focus {
       background-color: #fff;
-      border-color: #00bcd4;
-      box-shadow: 0 0 0 0.2rem rgba(0, 188, 212, 0.2);
+      border-color: $primary-color;
+      box-shadow: 0 0 0 0.2rem rgba(3, 169, 244, 0.2);
     }
   }
 
-  .btn-danger {
-    background-color: #0BBBC1;
-    border: none;
+  /* Search Icon */
+  i.bi-search {
+    font-size: 1.2rem;
+    color: #666;
+    transition: color 0.2s;
+    
     &:hover {
-      background-color: #0BBBC1;
+      color: $primary-color;
     }
   }
 
-  i.bi {
-    font-size: 1.1rem;
+  /* Quick Order Button */
+  .btn-danger {
+    background-color: $primary-color;
+    border: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      // 🟢 FIX APPLIED: Replaced darken() with color.adjust() 🟢
+      background-color: color.adjust($primary-color, $lightness: -10%); /* Subtle hover shade */
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  /* Offer Text */
+  .small {
+    color: #444 !important;
+    
+    i.bi-lightning-charge {
+      color: $danger-color !important;
+    }
   }
 }
 
+
+/* ---------------------------------------------------- */
+/* 📱 RESPONSIVENESS (Mobile First) 📱                  */
+/* ---------------------------------------------------- */
+
+@media (max-width: 992px) {
+  .search-bar {
+    border-radius: 12px; /* Less rounded corners on tablet */
+    padding: 10px;
+    
+    .search-box {
+        margin: 0 5px; /* Thoda kam margin */
+    }
+  }
+  
+  /* Offer text hides earlier */
+  .d-md-inline {
+      display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .search-bar {
+    /* Main container ko vertical stacking ke liye change karein */
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  /* 1. Location Bar (Top) */
+  .location {
+    order: 1; /* Pehle location dikhega */
+    width: 100%;
+    justify-content: space-between;
+    padding: 0;
+
+    .form-select {
+        flex-grow: 1; /* Location dropdown puri space lega */
+    }
+  }
+
+  /* 2. Search Box (Middle) */
+  .search-box {
+    order: 2; /* Phir Search box */
+    width: 100%;
+    margin: 0;
+  }
+
+  /* 3. Offer & Button (Bottom) */
+  .d-flex.align-items-center:last-child {
+    order: 3; /* Sabse aakhir mein Quick Order */
+    width: 100%;
+    justify-content: center !important; /* Button ko center mein laayein */
+    
+    .btn-danger {
+        width: 100%;
+        padding: 12px 0; /* Button ko bada karein */
+        height: auto;
+    }
+  }
+}
