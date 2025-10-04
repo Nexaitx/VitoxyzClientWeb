@@ -1,0 +1,35 @@
+<div class="carousel-container position-relative overflow-hidden d-flex align-items-center">
+  <!-- Desktop View (Carousel) -->
+  <div *ngIf="!isMobile" class="d-flex w-100 justify-content-start">
+    <div class="card-wrapper me-2" *ngFor="let item of visibleItems">
+      <div class="card-content border rounded d-flex flex-column align-items-center justify-content-center p-2"
+           style="cursor: pointer;"
+           (click)="goToCategory(item.link)">
+        <img [src]="item.image" [alt]="item.label" class="carousel-image img-fluid" height="150"/>
+        <p class="carousel-title text-center ">{{ item.label }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile View (Scrollable with 2 items visible) -->
+  <div *ngIf="isMobile" class="carousel-track" #carouselTrack>
+    <div class="d-flex mobile-scroll-container">
+      <div class="card-wrapper-mobile" *ngFor="let item of visibleItems">
+        <div class="card-content border rounded d-flex flex-column align-items-center "
+             style="cursor: pointer;"
+             (click)="goToCategory(item.link)">
+          <img [src]="item.image" [alt]="item.label" class="carousel-image img-fluid" height="150"/>
+          <p class="carousel-title text-center">{{ item.label }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls - Only show on desktop -->
+  <button *ngIf="!isMobile" class="carousel-control-prev" (click)="prevSlide()">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  </button>
+  <button *ngIf="!isMobile" class="carousel-control-next" (click)="nextSlide()">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  </button>
+</div>

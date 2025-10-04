@@ -71,30 +71,44 @@ export class CommonFilterComponent implements OnInit {
   }
 
   goToProduct(product: any) {
-  // ID fallback
-  const productId = product.id ?? product.productId;
+    // ID fallback
+    const productId = product.id ?? product.productId;
 
-  if (!productId) {
-    console.error("Product ID missing", product);
-    return;
+    if (!productId) {
+      console.error("Product ID missing", product);
+      return;
+    }
+
+    if (this.endpoint.includes('otc')) {
+      this.router.navigate(['/medicine', productId], { queryParams: { type: 'otc' } });
+    } else {
+      this.router.navigate(['/medicine', productId], { queryParams: { type: 'otc' } });
+    }
   }
 
-  if (this.endpoint.includes('otc')) {
-    this.router.navigate(['/medicine', productId], { queryParams: { type: 'otc' } });
-  } else {
-    this.router.navigate(['/medicine', productId], { queryParams: { type: 'otc' } });
-  }
-}
-
-
-
-seeAllProducts() {
+  seeAllProducts() {
     this.router.navigate(['/products', this.productForm], { 
       queryParams: { 
         endpoint: this.endpoint 
       }
     });
-}
+  }
 
-  
+  // Add to Cart functionality
+  addToCart(product: any) {
+    // Implement your add to cart logic here
+    console.log('Adding to cart:', product);
+    
+    // Example implementation:
+    // this.cartService.addToCart(product).subscribe(
+    //   response => {
+    //     // Show success message
+    //     console.log('Product added to cart');
+    //   },
+    //   error => {
+    //     // Handle error
+    //     console.error('Error adding product to cart', error);
+    //   }
+    // );
+  }
 }

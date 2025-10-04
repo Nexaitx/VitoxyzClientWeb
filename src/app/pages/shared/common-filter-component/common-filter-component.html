@@ -1,63 +1,49 @@
 <div class="product-carousel-section">
-  
   <div class="section-header">
     <h2>{{ title }}</h2>
-      <button mat-button color="primary" (click)="seeAllProducts()">
+    <button mat-button color="primary" (click)="seeAllProducts()">
       See All
     </button>
   </div>
 
   <div class="carousel-container">
-    
-    <!-- <button
-      class="side-nav-button left-button mat-elevation-z4"
-      (click)="scrollCarousel('left')"
-    >
-      &lt; 
-    </button> -->
-
     <div #productCarouselWrapper class="carousel-wrapper">
-      
       <ng-container *ngIf="products$ | async as products">
-      <mat-card
-  *ngFor="let product of products" 
-  class="product-card mat-elevation-z4"
-  (click)="goToProduct(product)"
-  style="cursor: pointer;"
-
->
-  <img 
-    mat-card-image 
-    [src]="getFirstImageUrl(product.imageUrl)" 
-    [alt]="product.name" 
-  />
-  
-  <mat-card-content>
-    <h3 class="product-name">{{ product.name }}</h3>
-    <div class="product-details">
-      <div class="rating-info">
-        <span class="rating-value">4.4</span>
-        <span class="ratings-count">| {{ product.mrp }} reviews</span> 
-      </div>
-      
-      <div class="price-info">
-        <p class="current-price">MRP ₹{{ product.mrp }}</p>
-      </div>
-      
-    </div>
-  </mat-card-content>
-</mat-card>
-
+        <mat-card
+          *ngFor="let product of products" 
+          class="product-card mat-elevation-z4"
+          (click)="goToProduct(product)"
+          style="cursor: pointer;"
+        >
+          <img 
+            mat-card-image 
+            [src]="getFirstImageUrl(product.imageUrl)" 
+            [alt]="product.name" 
+          />
+          
+          <mat-card-content>
+            <h3 class="product-name">{{ product.name }}</h3>
+            <div class="product-details">
+              <div class="rating-info">
+                <span class="rating-value">4.4</span>
+                <span class="ratings-count">| {{ product.mrp }} reviews</span> 
+              </div>
+              
+              <!-- Price and Add to Cart Container -->
+              <div class="price-cart-container">
+                <div class="price-info">
+                  <p class="current-price">MRP ₹{{ product.mrp }}</p>
+                </div>
+                
+                <!-- Add to Cart Button - Mobile Only -->
+                <button class="add-button mobile-only" (click)="$event.stopPropagation(); addToCart(product)">
+                  Add
+                </button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </ng-container>
-      
     </div>
-
-    <!-- <button
-      class="side-nav-button right-button mat-elevation-z4"
-      (click)="scrollCarousel('right')"
-    >
-      &gt; 
-    </button> -->
-    
   </div>
 </div>

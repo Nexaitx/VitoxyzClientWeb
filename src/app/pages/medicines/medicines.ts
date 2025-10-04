@@ -20,6 +20,7 @@ import { API_URL, ENDPOINTS } from "@src/app/core/const";
 import { CartService } from "@src/app/core/cart.service";
 import { Observable } from "rxjs";
 import { CommonFilterComponent } from "../shared/common-filter-component/common-filter-component";
+import { HealthCarouselComponent } from "../shared/health-carousel/health-carousel";
 declare var bootstrap: any;
 export interface Medicine {
   id: string;
@@ -83,7 +84,8 @@ interface Category {
     MatInputModule,
     Header,
     Footer,
-    CommonFilterComponent
+    CommonFilterComponent,
+    HealthCarouselComponent
 ],
   templateUrl: "./medicines.html",
   styleUrls: ["./medicines.scss"],
@@ -460,4 +462,24 @@ export class Medicines implements AfterViewInit {
       }
     }
   }
+
+
+ 
+
+goToCategory(category: string) {
+  this.router.navigate(['/products', category], { queryParams: { endpoint: 'products/filter' } });
+}
+
+healthItems = [
+  { image: '../../../assets/medicines/1.png', label: 'Diabetes', link: '/products/Lancet' },
+  { image: '../../../assets/medicines/2.png', label: 'Heart Rate', link: '/products/HeartRate' },
+  { image: '../../../assets/medicines/3.png', label: 'Stomach Care', link: '/products/StomachCare' },
+  { image: '../../../assets/medicines/4.png', label: 'Liver Care', link: '/products/LiverCare' },
+  { image: '../../../assets/medicines/5.png', label: 'Eye Care', link: '/products/EyeCare' },
+  { image: '../../../assets/medicines/6.png', label: 'Bone & Joint', link: '/products/BoneJoint' },
+  { image: '../../../assets/medicines/7.png', label: 'Kidney Care', link: '/products/KidneyCare' },
+  { image: '../../../assets/medicines/8.png', label: 'Derma Care', link: '/products/DermaCare' },
+];
+
+
 }
