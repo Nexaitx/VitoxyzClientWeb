@@ -482,4 +482,13 @@ healthItems = [
 ];
 
 
+goToPage(url: string): void {
+    // Example: 'pharmacy' -> '/pharmacy' or 'lab-tests' -> '/lab-tests'
+    
+    // Safety check, although the router is robust
+    if (url) { 
+        this.router.navigate([`/${url}`]); 
+    }
+  }
+
 }

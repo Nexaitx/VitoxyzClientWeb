@@ -1,12 +1,54 @@
 <!-- Banner -->
-<div class="container-fluid w-100 px-0" style="margin-top: -70px">
+<div class="container-fluid w-100 px-0" style="margin-top: -70px ">
   <img src="../../../assets/banner.png" class="w-100" alt="" />
 </div>
 
-<app-header></app-header>
 <!-- health conecerns -->
 
 
+
+<app-header></app-header>
+
+
+<div class="mobile-quick-access-wrapper d-block d-lg-none">
+  <div class="container py-3">
+    <div class="row g-4 justify-content-between"> 
+      
+      <div class="col-3 quick-access-tile" (click)="goToPage('pharmacy')">
+        <div class="tile-icon-box">
+          <img src="../../../assets/icons/pharmacy-icon.png" alt="Pharmacy" class="img-fluid">
+        </div>
+        <p class="tile-title">Pharmacy</p>
+        <p class="tile-subtitle">30 mins ⚡</p>
+      </div>
+
+      <div class="col-3 quick-access-tile" (click)="goToPage('lab-tests')">
+        <div class="tile-icon-box">
+          <img src="../../../assets/icons/lab-tests-icon.png" alt="Lab tests" class="img-fluid">
+        </div>
+        <p class="tile-title">Lab tests</p>
+        <p class="tile-subtitle-illus">Home Sample Pickup</p>
+      </div>
+
+      <div class="col-3 quick-access-tile" (click)="goToPage('consults')">
+        <div class="tile-icon-box">
+          <img src="../../../assets/icons/consults-icon.png" alt="Consults" class="img-fluid">
+        </div>
+        <p class="tile-title">Consults</p>
+        <p class="tile-subtitle-illus">Doctor Video Call</p>
+      </div>
+
+      <div class="col-3 quick-access-tile" (click)="goToPage('vaccines')">
+        <div class="tile-icon-box">
+          <img src="../../../assets/icons/vaccines-icon.png" alt="Adult Vaccines" class="img-fluid">
+        </div>
+        <p class="tile-title">Adult</p>
+        <p class="tile-subtitle">Vaccines</p>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <app-health-carousel [items]="healthItems"></app-health-carousel>
 
@@ -102,11 +144,11 @@
   </button>
 </div>
 <!-- testing -->
-<!-- <app-common-filter-component 
+<app-common-filter-component 
   [endpoint]="'products/filter'" 
-  [productForm]="'Pill Box'" 
+  [productForm]="'Powder'" 
   [title]="'Testing product'">
-</app-common-filter-component> -->
+</app-common-filter-component>
 
 <app-common-filter-component 
   [endpoint]="'products/filter'" 

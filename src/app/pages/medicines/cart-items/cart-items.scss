@@ -41,34 +41,92 @@ td {
         }
     }
 }
+
+
 .cart-item {
+  display: flex;
   align-items: center;
-
-  h6 {
-    font-size: 1rem;
-  }
-
-  .price {
-    font-size: 1rem;
-  }
-
-  .strike {
-    text-decoration: line-through;
-    margin-left: 5px;
-  }
-
-  .qty-box {
-    max-width: 120px;
-
-    input {
-      font-size: 0.9rem;
-    }
-
-    button {
-      padding: 0 10px;
-    }
-  }
+  padding: 15px 0;
+  border-bottom: 1px solid #eee; // subtle separator instead of a box
 }
+
+.cart-item img {
+  max-width: 70px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.cart-item .details {
+  flex: 1;
+  margin-left: 15px;
+}
+
+.cart-item .details h6 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+}
+
+.cart-item .details small {
+  color: #6c757d;
+  font-size: 12px;
+}
+
+.cart-item .remove {
+  font-size: 13px;
+  color: #dc3545;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.cart-item .price {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.cart-item .price .strike {
+  text-decoration: line-through;
+  margin-left: 6px;
+  font-size: 13px;
+}
+
+.cart-item .price .text-success {
+  margin-left: 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.qty-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.qty-box button {
+  border: 1px solid #dc3545;
+  background: transparent;
+  color: #dc3545;
+  padding: 2px 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.qty-box button:hover {
+  background: #dc3545;
+  color: #fff;
+}
+
+.qty-box input {
+  width: 40px;
+  height: 32px;
+  text-align: center;
+  margin: 0 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
 
 .bill-summary {
   background: #fafafa;

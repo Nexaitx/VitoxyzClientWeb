@@ -54,7 +54,7 @@ export class Login implements OnInit, OnDestroy {
 
   private initForms(): void {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.email]],
+       username: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
         password: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(14)]],
       rememberMe: [true]
     });
@@ -118,7 +118,7 @@ export class Login implements OnInit, OnDestroy {
       this.isLoading = true;
       this.loadingChange.emit(true);
       const { username, password, rememberMe } = this.loginForm.value;
-      const apiUrl = API_URL + ENDPOINTS.LOGIN_EMAIL;
+      const apiUrl = API_URL + ENDPOINTS.LOGIN;
       const payload = { username, password };
       this.http.post(apiUrl, payload).subscribe((res: any) => {
         this.isLoading = false;
@@ -136,7 +136,7 @@ export class Login implements OnInit, OnDestroy {
           } else if (typeof error.error === 'string' && error.error.length > 0) {
             errorMessage = `Login failed: ${error.error}`;
           } else if (error.status === 401) {
-            errorMessage = 'Invalid credentials. Please check your email and password.';
+            errorMessage = 'Invalid credentials. Please check your phone number and password.';
           } else if (error.status === 0) {
             errorMessage = 'Could not connect to the server. Please check your internet connection.';
           }

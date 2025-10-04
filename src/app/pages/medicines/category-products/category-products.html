@@ -21,6 +21,18 @@
         (categorySelected)="filterByCategory($event)"  
         (brandSelected)="filterByBrands($event)">
       </app-sidebar-filter>
+<div class="category-page">
+    <div class="section-header">
+        <!-- <mat-paginator 
+            [length]="totalProducts"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[10, 30, 50, 100]"
+            (page)="handlePageEvent($event)"
+            aria-label="Select page"
+            class="product-paginator product-paginator-top"
+        ></mat-paginator> -->
+        
+        <!-- <h2>{{ categoryName }} Products ({{ totalProducts }} items)</h2> -->
     </div>
 
     <!-- Right Products Section -->

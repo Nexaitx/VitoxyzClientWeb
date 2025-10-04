@@ -41,7 +41,9 @@ export class Header {
   authMode: 'login' | 'signup' = 'login';
   isLoggedIn: boolean = false;
   isMobileMenuOpen = signal(false);
-  menuItems = [{
+  menuItems = [
+    { label: 'Medicines', path: '/medicines' },
+    {
       label: 'Book Staff',
       dropdown: true,
       dropdownItems: [
@@ -53,7 +55,7 @@ export class Header {
       ]
     },
     { label: 'Diet Plans', path: 'diet/user-onboarding' },
-    { label: 'Medecines', path: '/medicines' },
+    
     {
       label: 'Profile',
       icon: 'bi bi-person-circle',
