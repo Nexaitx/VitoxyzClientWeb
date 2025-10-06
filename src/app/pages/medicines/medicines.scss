@@ -468,14 +468,11 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
   .tile-subtitle {
     font-size: 12px;
     font-weight: 600;
-    color: #E65100;
+    color: #172B4D;
     margin-top: 2px;
     line-height: 1;
 
-    &::after {
-      content: ' ⚡';
-      color: #FFC107;
-    }
+    
   }
 
   .tile-subtitle-illus {

@@ -1,11 +1,20 @@
 <!-- Banner -->
-<div class="container-fluid w-100 px-0" style="margin-top: -70px ">
+ <div class="d-none d-md-block">
+  <div class="container-fluid w-100 px-0">
   <img src="../../../assets/banner.png" class="w-100" alt="" />
+</div>
 </div>
 
 <!-- health conecerns -->
 
 
+<app-text-banner
+  image="assets/medicines/banner2.png"
+  title="Welcome to Vitoxyz"
+  subtitle="Your trusted health partner"
+  buttonText="Shop Now"
+  buttonLink="/medicines">
+</app-text-banner>
 
 <app-header></app-header>
 
@@ -93,21 +102,21 @@
 <div class="d-block d-md-none">
 <app-banner-slider 
   [images]="[
-    'assets/.png',
-    'assets/.png',
-    'assets/.png'
+    'assets/medicines/banner.png',
+    '../../../assets/medicines/banner2.png',
+    '../../../assets/medicines/banner3.png',
   ]"
   [autoSlide]="true"
   [slideInterval]="4000">
 </app-banner-slider>
 
-<app-text-banner
-  image="assets/banners/.jpg"
+<!-- <app-text-banner
+  image="../../../assets/medicines"
   title="Welcome to Vitoxyz"
   subtitle="Your trusted health partner"
   buttonText="Shop Now"
   buttonLink="/medicines">
-</app-text-banner>
+</app-text-banner> -->
 </div>
 
 
