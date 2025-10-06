@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy,ElementRef,ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { 
   Observable, 
@@ -22,6 +22,10 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { SidebarFilterComponent } from "../../shared/sidebar-filter/sidebar-filter";
+import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
+import { Footer } from "../../footer/footer";
+import { BannerSliderComponent } from "@src/app/shared/banner-slider/banner-slider";
+import { TextBanner } from "@src/app/shared/text-banner/text-banner";
 
 @Component({
   selector: 'app-category-products',
@@ -32,11 +36,18 @@ import { SidebarFilterComponent } from "../../shared/sidebar-filter/sidebar-filt
     MatButtonModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
-    SidebarFilterComponent
-  ],
+    SidebarFilterComponent,
+    MobileFooterNavComponent,
+    Footer,
+    BannerSliderComponent,
+    TextBanner
+],
   templateUrl: './category-products.html', 
   styleUrls: ['./category-products.scss'] 
 })
+
+
+
 export class CategoryProductsComponent implements OnInit, OnDestroy {
   categoryName: string = '';
   currentEndpoint: string = 'products/filter';
@@ -249,7 +260,7 @@ export class CategoryProductsComponent implements OnInit, OnDestroy {
   clearFilters(): void {
     console.log('🔄 Clearing filters');
     
-    // ✅ IMMEDIATE LOADING TRIGGER
+    //  IMMEDIATE LOADING TRIGGER
     this.isLoading = true;
     
     this.selectedCategory$.next(null);
@@ -268,4 +279,8 @@ export class CategoryProductsComponent implements OnInit, OnDestroy {
     const brand = this.brandList.find(b => b.name === value);
     return brand ? brand.name : value;
   }
+
+
+  
+  
 }

@@ -5,29 +5,17 @@
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
   overflow: hidden;
+  display: block !important; /* Override d-flex to manage mobile grid flow */
 
-  .carousel-track {
-    width: 90%;
-    border-radius: 8px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; 
-    -ms-overflow-style: none; 
-    
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    
-    .mobile-scroll-container {
-      display: flex;
-      align-items: stretch;
-      flex-wrap: nowrap;
-      width: max-content;
-      gap: 10px;
-      padding: 0 8px;
-    }
+  /* Mobile Grid Container - Use this for a two-row grid on small screens */
+  .mobile-grid-container {
+    padding: 10px 0; /* Add vertical padding for the grid */
   }
+
+  /*
+   * REMOVED: All .carousel-track and .mobile-scroll-container styles
+   * were removed as they are no longer needed for the grid layout.
+   */
 
   .d-flex {
     display: flex;
@@ -59,31 +47,27 @@
     }
   }
 
-  // Mobile card wrapper - 2 items visible - FIXED
-  .card-wrapper-mobile {
-    flex: 0 0 calc(50vw - 30px) !important; /* 2 items with proper calculation */
-    width: calc(50vw - 30px) !important;
-    box-sizing: border-box;
-    padding: 0 6px;
-
-    .card-content {
-      background: #ffffff;
-      border: 1px solid #eaeaea;
-      border-radius: 10px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-      height: 80%;
-      text-align: center;
-      padding: 12px;
-      cursor: pointer;
-      min-height: 165px;
-      width: 90%;
-
-      &:active {
-        transform: scale(0.98);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
+  // Mobile card content - Used in the new grid layout
+  .card-content-mobile {
+    background: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    height: 100%;
+    text-align: center;
+    padding: 12px;
+    cursor: pointer;
+    min-height: 165px;
+    
+    &:active {
+      transform: scale(0.98);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
   }
+
+  /*
+   * REMOVED: .card-wrapper-mobile styles were removed.
+   */
 
   .carousel-image {
     height: 80%;
@@ -91,11 +75,11 @@
     object-fit: contain;
     border-radius: 6px;
     background: #fafafa;
-    // padding: 10px;
     transition: transform 0.3s ease, filter 0.3s ease;
   }
 
-  .card-content:hover .carousel-image {
+  .card-content:hover .carousel-image,
+  .card-content-mobile:hover .carousel-image {
     transform: scale(1.08);
     filter: brightness(1.05);
   }
@@ -108,11 +92,12 @@
     transition: color 0.3s ease;
   }
 
-  .card-content:hover .carousel-title {
+  .card-content:hover .carousel-title,
+  .card-content-mobile:hover .carousel-title {
     color: #0BBBC1;
   }
 
-  /* --- Controls --- */
+  /* --- Controls (Desktop Only) --- */
   .carousel-control-prev,
   .carousel-control-next {
     position: absolute;
@@ -162,70 +147,39 @@
     mask-image: url("data:image/svg+xml,%3Csvg fill='black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M4 7l3-3-3-3H3v1h2v4H3v1z'/%3E%3C/svg%3E");
   }
 
-  @media (max-width: 1200px) {
-    .card-wrapper { 
-      flex: 0 0 25%; /* 4 items on smaller desktop */
-    }
-  }
-
-  @media (max-width: 992px) {
-    .card-wrapper { 
-      flex: 0 0 33.33%; /* 3 items on tablet */
-    }
-  }
-
+  /* --- Media Queries (Desktop) --- */
   @media (max-width: 768px) {
     .carousel-container {
-      padding: 0 15px;
+      padding: 15px 10px; 
     }
     
-    // Mobile specific styles - FIXED
-    .carousel-track {
-      .mobile-scroll-container {
-        width: max-content;
-        gap: 8px;
-        padding: 0 4px;
-      }
+    // Mobile card content adjustment for 3 columns (col-4)
+    .card-content-mobile {
+      min-height: 140px; /* Increased height for better look */
+      padding: 10px;
     }
     
-    .card-wrapper-mobile {
-      flex: 0 0 calc(50vw - 20px) !important;
-      width: calc(50vw - 20px) !important;
-      min-width: calc(50vw - 20px);
-      padding: 0 4px;
+    .carousel-image {
+        // Image size can be slightly larger now
+        height: 70px;
+        width: 100%;
+    }
+    
+    .carousel-title {
+        font-size: 12px; /* Font size adjustment */
+        font-weight: 600;
+        margin-top: 5px;
     }
   }
 
   @media (max-width: 480px) {
-    .card-wrapper-mobile {
-      flex: 0 0 calc(50vw - 15px) !important;
-      width: calc(50vw - 15px) !important;
-      min-width: calc(50vw - 15px);
+    // Very small screens (like iPhone SE)
+    .card-content-mobile {
+      min-height: 120px;
+      padding: 8px;
     }
-    
-    // .carousel-image {
-    //   height: 100px;
-    // }
-    
-    .card-content {
-      min-height: 160px;
-      padding: 10px;
-    }
-    
     .carousel-title {
-      font-size: 12px;
+      font-size: 11px;
     }
   }
-
-  @media (max-width: 360px) {
-    .card-wrapper-mobile {
-      flex: 0 0 calc(50vw - 10px) !important;
-      width: calc(50vw - 10px) !important;
-      min-width: calc(50vw - 10px);
-    }
-  }
-}
-p.carousel-title.text-center {
-    padding-bottom: 0px !important;
-    margin-bottom: 0px;
 }

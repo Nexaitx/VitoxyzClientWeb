@@ -1,9 +1,29 @@
+<div class="d-block d-md-none">
+<app-banner-slider 
+  [images]="[
+    'assets/.png',
+    'assets/.png',
+    'assets/.png'
+  ]"
+  [autoSlide]="true"
+  [slideInterval]="4000">
+</app-banner-slider>
+</div>
+
+<app-text-banner
+  image="assets/banners/.jpg"
+  title="Welcome to Vitoxyz"
+  subtitle="Your trusted health partner"
+  buttonText="Shop Now"
+  buttonLink="/medicines">
+</app-text-banner>
+
 <div class="category-page" [class.blur-content]="isLoading">
   <!-- Full Screen Loader -->
   <div *ngIf="isLoading" class="full-screen-loader">
     <div class="loader-content">
       <mat-spinner diameter="50" color="primary"></mat-spinner>
-      <p>Products load ho rahe hain...</p>
+      <p>Products loadings...</p>
       <small>Category: {{ categoryName }}</small>
       <div class="loading-details">
         <small>Filter/Pagination update in progress...</small>
@@ -21,18 +41,6 @@
         (categorySelected)="filterByCategory($event)"  
         (brandSelected)="filterByBrands($event)">
       </app-sidebar-filter>
-<div class="category-page">
-    <div class="section-header">
-        <!-- <mat-paginator 
-            [length]="totalProducts"
-            [pageSize]="pageSize"
-            [pageSizeOptions]="[10, 30, 50, 100]"
-            (page)="handlePageEvent($event)"
-            aria-label="Select page"
-            class="product-paginator product-paginator-top"
-        ></mat-paginator> -->
-        
-        <!-- <h2>{{ categoryName }} Products ({{ totalProducts }} items)</h2> -->
     </div>
 
     <!-- Right Products Section -->
@@ -64,7 +72,7 @@
           </div>
         </div>
 
-        <p class="product-count">{{ totalProducts }} products found</p>
+        <!-- <p class="product-count">{{ totalProducts }} products found</p> -->
         
         <!-- Loading Indicator in Header -->
         <div *ngIf="isLoading" class="header-loading">
@@ -154,3 +162,8 @@
     </div>
   </div>
 </div>
+
+<app-footer></app-footer>
+<app-mobile-footer-nav></app-mobile-footer-nav>
+
+<!-- add to cart button -->

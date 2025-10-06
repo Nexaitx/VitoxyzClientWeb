@@ -12,10 +12,11 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { API_URL, ENDPOINTS } from "@src/app/core/const";
 import { CartItem, CartService } from "@src/app/core/cart.service";
+import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 
 @Component({
   selector: "app-view-medicine",
-  imports: [CommonModule, FormsModule, Footer, Header],
+  imports: [CommonModule, FormsModule, Footer, Header, MobileFooterNavComponent],
   standalone: true,
   templateUrl: "./view-medicine.html",
   styleUrls: ["./view-medicine.scss"],

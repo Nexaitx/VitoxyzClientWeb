@@ -1,160 +1,129 @@
 <!-- Banner -->
  <app-header></app-header>
 <div class="container-fluid w-100 px-0" style="margin-top: -70px ">
-  <img src="../../../assets/banner.png" class="w-100" alt="" />
+ <div class="d-none d-md-block">
+  <div class="container-fluid w-100 px-0">
+  <img src="../../../assets/medicines/banner2.png" class="w-100" alt="" />
+</div>
 </div>
 
 <!-- health conecerns -->
 
+
+<!-- <app-text-banner
+  image="assets/medicines/banner2.png"
+  title="Welcome to Vitoxyz"
+  subtitle="Your trusted health partner"
+  buttonText="Shop Now"
+  buttonLink="/medicines">
+</app-text-banner> -->
+
+<!-- <app-header></app-header> -->
+
+
+<!-- show in mobile -->
 <div class="mobile-quick-access-wrapper d-block d-lg-none">
-  <div class="container py-3">
-    <div class="row g-4 justify-content-between"> 
+  <div class="container py-6">
+    <div class="row g-3 justify-content-between"> 
       
       <div class="col-3 quick-access-tile" (click)="goToPage('pharmacy')">
         <div class="tile-icon-box">
           <img src="../../../assets/icons/pharmacy-icon.png" alt="Pharmacy" class="img-fluid">
         </div>
         <p class="tile-title">Pharmacy</p>
-        <p class="tile-subtitle">30 mins ⚡</p>
+        <p class="tile-subtitle">Your Trusted Online Pharmacy </p>
       </div>
 
-      <div class="col-3 quick-access-tile" (click)="goToPage('lab-tests')">
+      <div class="col-3 quick-access-tile" (click)="goToPage('book-staff')">
         <div class="tile-icon-box">
-          <img src="../../../assets/icons/lab-tests-icon.png" alt="Lab tests" class="img-fluid">
+          <img src="../../../assets/icons/lab-tests-icon.png" alt="book staff" class="img-fluid">
         </div>
-        <p class="tile-title">Lab tests</p>
-        <p class="tile-subtitle-illus">Home Sample Pickup</p>
+        <p class="tile-title">Book Staff</p>
+        <p class="tile-subtitle-illus">Your Help, On Demand</p>
       </div>
 
-      <div class="col-3 quick-access-tile" (click)="goToPage('consults')">
+      <div class="col-3 quick-access-tile" (click)="goToPage('subscription-plans')">
         <div class="tile-icon-box">
-          <img src="../../../assets/icons/consults-icon.png" alt="Consults" class="img-fluid">
+          <img src="../../../assets/icons/consults-icon.png" alt="subscription-plans" class="img-fluid">
         </div>
-        <p class="tile-title">Consults</p>
-        <p class="tile-subtitle-illus">Doctor Video Call</p>
+        <p class="tile-title">Dieticiean</p>
+        <p class="tile-subtitle-illus">Your Nutrition, Our Mission</p>
       </div>
 
-      <div class="col-3 quick-access-tile" (click)="goToPage('vaccines')">
+      <!-- <div class="col-3 quick-access-tile" (click)="goToPage('vaccines')">
         <div class="tile-icon-box">
-          <img src="../../../assets/icons/vaccines-icon.png" alt="Adult Vaccines" class="img-fluid">
+          <img src="../../../assets/icons/vaccines-icon.png" alt="Doctor" class="img-fluid">
         </div>
-        <p class="tile-title">Adult</p>
-        <p class="tile-subtitle">Vaccines</p>
-      </div>
+        <p class="tile-title">Doctor</p>
+        <p class="tile-subtitle">Doctor Consuts</p>
+      </div> -->
 
     </div>
   </div>
 </div>
 
-<app-health-carousel [items]="healthItems"></app-health-carousel>
 
 
-<!-- featured brands -->
-<div id="brandCarousel" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <div class="row justify-content-center g-2">
-        <div class="col-6 col-md-3 col-lg-2 p-2">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 1" />
-          </div>
-        </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 2" />
-          </div>
-        </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-md-block">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 3" />
-          </div>
-        </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-md-block">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 4" />
-          </div>
-        </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-lg-block">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 5" />
-          </div>
-        </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-lg-block">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 6" />
-          </div>
-        </div>
-      </div>
+<div class="d-block d-md-none">
+  <div class="category-section ">
+  <!-- <div class="category-section-header mat-elevation-z2">
+    <h2>Everyday Wellness</h2>
+    </div> -->
+
+  <div class="carousel-container">
+    
+    <button
+      class="side-nav-button left-button mat-elevation-z4"
+      (click)="scrollCarousel('left')"
+    >
+      &lt; </button>
+
+    <div #categoryCarouselWrapper class="carousel-wrapper">
+      <mat-card
+        *ngFor="let category of categories3"
+        class="category-card mat-elevation-z4"
+        (click)="fetchProductsByCategory(category.apiValue)"
+      >
+        <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
+        <mat-card-content>
+          <h3>{{ category.name }}</h3>
+        </mat-card-content>
+      </mat-card>
     </div>
 
-    <div class="carousel-item">
-      <div class="row justify-content-center g-2">
-        <div class="col-6 col-md-3 col-lg-2 p-2">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 7" />
-          </div>
-        </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 8" />
-          </div>
-        </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-md-block">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 9" />
-          </div>
-        </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-md-block">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 10" />
-          </div>
-        </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-lg-block">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 11" />
-          </div>
-        </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-lg-block">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 12" />
-          </div>
-        </div>
-      </div>
-    </div>
+    <button
+      class="side-nav-button right-button mat-elevation-z4"
+      (click)="scrollCarousel('right')"
+    >
+      &gt; </button>
+    
   </div>
-  <button
-    class="carousel-control-prev"
-    type="button"
-    data-bs-target="#brandCarousel"
-    data-bs-slide="prev"
-  >
-    ...
-  </button>
-  <button
-    class="carousel-control-next"
-    type="button"
-    data-bs-target="#brandCarousel"
-    data-bs-slide="next"
-  >
-    ...
-  </button>
 </div>
-<!-- testing -->
-<app-common-filter-component 
-  [endpoint]="'products/filter'" 
-  [productForm]="'Powder'" 
-  [title]="'Testing product'">
-</app-common-filter-component>
+</div>
+<!-- visible in mobile -->
+<div class="d-block d-md-none">
+<app-banner-slider 
+  [images]="[
+    'assets/medicines/banner.png',
+    '../../../assets/medicines/banner2.png',
+    '../../../assets/medicines/banner3.png',
+  ]"
+  [autoSlide]="true"
+  [slideInterval]="4000">
+</app-banner-slider>
 
-<app-common-filter-component 
-  [endpoint]="'products/filter'" 
-  [productForm]="'Juice'" 
-  [title]="'Nature’s aloe, your daily boost'">
-</app-common-filter-component>
-<!-- personal care -->
+<!-- <app-text-banner
+  image="../../../assets/medicines"
+  title="Welcome to Vitoxyz"
+  subtitle="Your trusted health partner"
+  buttonText="Shop Now"
+  buttonLink="/medicines">
+</app-text-banner> -->
+</div>
 
-<!-- future implementation -->
-<!-- <div class="category-section">
+
+<!-- human implementation -->
+<div class="category-section">
   <div class="category-section-header mat-elevation-z2">
     <h2>Everyday Wellness</h2>
     </div>
@@ -187,8 +156,141 @@
       &gt; </button>
     
   </div>
-</div> -->
+</div>
 
+
+<div class="d-none d-md-block">
+    <app-health-carousel [items]="healthItems"></app-health-carousel>
+</div>
+
+<div class="d-block d-md-none">
+    <app-health-carousel [items]="healthItems1"></app-health-carousel>
+</div>
+
+
+<!-- featured brands -->
+<div id="brandCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    
+    <div class="carousel-item active">
+      <div class="row justify-content-center g-2">
+        
+        <div class="col-4 col-md-3 col-lg-2 p-2">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 1" />
+          </div>
+        </div>
+        <div class="col-4 col-md-3 col-lg-2 p-2">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 2" />
+          </div>
+        </div>
+        <div class="col-4 col-md-3 col-lg-2 p-2"> 
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 3" />
+          </div>
+        </div>
+        
+        <div class="col-4 col-md-3 col-lg-2 p-2">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 4" />
+          </div>
+        </div>
+        <div class="col-4 col-md-3 col-lg-2 p-2"> 
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 5" />
+          </div>
+        </div>
+        <div class="col-4 col-md-3 col-lg-2 p-2"> 
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 6" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <div class="row justify-content-center g-2">
+        
+        <div class="col-4 col-md-3 col-lg-2 p-2">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 7" />
+          </div>
+        </div>
+        <div class="col-4 col-md-3 col-lg-2 p-2">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 8" />
+          </div>
+        </div>
+        <div class="col-4 col-md-3 col-lg-2 p-2">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 9" />
+          </div>
+        </div>
+
+        <div class="col-4 col-md-3 col-lg-2 p-2">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 10" />
+          </div>
+        </div>
+        <div class="col-4 col-md-3 col-lg-2 p-2">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 11" />
+          </div>
+        </div>
+        <div class="col-4 col-md-3 col-lg-2 p-2">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/brand-1.png" alt="Brand 12" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#brandCarousel"
+    data-bs-slide="prev"
+  >
+    ...
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#brandCarousel"
+    data-bs-slide="next"
+  >
+    ...
+  </button>
+</div>
+<!-- testing -->
+<!-- <app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Walker'" 
+  [title]="'Testing product'">
+</app-common-filter-component> -->
+
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Paste'" 
+  [title]="'Testing product'">
+</app-common-filter-component>
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Juice'" 
+  [title]="'Nature’s aloe, your daily boost'">
+</app-common-filter-component>
+<!-- personal care -->
+
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Walker'" 
+  [title]="'Support that cares'">
+</app-common-filter-component>
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Biochemic Tablet'" 
@@ -387,3 +489,4 @@
 
 <!-- App footer -->
 <app-footer></app-footer>
+<app-mobile-footer-nav></app-mobile-footer-nav>

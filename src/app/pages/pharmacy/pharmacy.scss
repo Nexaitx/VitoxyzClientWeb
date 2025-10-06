@@ -1,0 +1,116 @@
+/* ---------------------------------------------------- */
+/* 🚀 MOBILE QUICK ACCESS TILES like tata 1mg for mobile 🚀        */
+/* ---------------------------------------------------- */
+
+
+$quick-access-bg: #F0F4F9; 
+$tile-radius: 16px; 
+$primary-text: #172B4D;
+$secondary-text: #6B778C;
+$brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
+.mobile-quick-access-wrapper {
+  padding: 15px 0 20px 0;
+  background-color: $quick-access-bg;
+
+  .row {
+    --bs-gutter-x: 0; // bootstrap gutter hata diya
+    --bs-gutter-y: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between; // evenly distribute
+  }
+
+  .col-3 {
+    flex: 0 0 calc(25% - 8px); // 4 items in one row with small gap
+    max-width: calc(25% - 8px);
+    padding: 0; // extra padding remove
+  }
+
+  .quick-access-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: #fff;
+    border-radius: $tile-radius;
+    padding: 8px 5px 10px;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+    height: 150px; // chhota kar diya
+    
+    &:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      transform: translateY(-3px);
+    }
+  }
+
+  .tile-icon-box {
+    width: 70px; // icon thoda chhota
+    height: 70px;
+    margin: 5px 0 4px;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .tile-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: $primary-text;
+    margin-bottom: 0;
+    line-height: 1.2;
+  }
+
+  .tile-subtitle {
+    font-size: 12px;
+    font-weight: 600;
+    color: #E65100;
+    margin-top: 2px;
+    line-height: 1;
+
+    &::after {
+      content: ' ⚡';
+      color: #FFC107;
+    }
+  }
+
+  .tile-subtitle-illus {
+    font-size: 11px;
+    color: $secondary-text;
+    margin-top: 4px;
+    line-height: 1;
+  }
+}
+
+/* Hide on desktops */
+@media (min-width: 992px) {
+  .mobile-quick-access-wrapper {
+    display: none !important;
+  }
+}
+
+/* Mobile-specific tweaks */
+@media (max-width: 576px) {
+  .quick-access-tile {
+    height: 135px;
+    padding: 6px 4px 10px;
+  }
+
+  .tile-icon-box {
+    width: 60px;
+    height: 60px;
+  }
+
+  .tile-title {
+    font-size: 13px;
+  }
+
+  .tile-subtitle,
+  .tile-subtitle-illus {
+    font-size: 11px;
+  }
+}
