@@ -1,0 +1,100 @@
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css'); // Example: Bootstrap Icons
+
+.footer-nav-container {
+  height: 65px;
+  padding: 5px 0;
+  z-index: 1000;
+  
+  // Ensure it's hidden on non-mobile devices (even if isMobile fails)
+  @media (min-width: 769px) {
+    display: none !important;
+  }
+}
+
+.nav-item {
+  flex: 1;
+  max-width: 20%;
+  color: #555; // Default text color
+  transition: color 0.3s ease;
+
+  &.active {
+    color: #000; // Active link color (Black/Dark)
+    font-weight: 600;
+  }
+  
+  // Styles for the standard icon wrapper (Home, Plans, Tests, Profile)
+  .icon-wrapper {
+    width: 24px;
+    height: 24px;
+    font-size: 24px; 
+    
+    // Icon color for standard items
+    .bi {
+      color: #555;
+    }
+  }
+
+  &.active .icon-wrapper .bi {
+    color: #000; // Active icon color
+  }
+}
+
+.nav-label {
+  font-size: 0.7rem;
+  margin-top: 3px;
+  line-height: 1;
+}
+
+
+// --- Special Middle Item Styling (Get Care Plan) ---
+.special-item {
+  flex: 0 0 20%; // Give it a fixed width
+  max-width: 20%;
+  position: relative;
+  top: -15px; // Push it up to make it stand out
+
+  .special-icon-wrapper {
+    // Large circular background
+    width: 60px; 
+    height: 60px;
+    border-radius: 50%;
+    background-color: #fce4b3; // Light orange/yellow color from image
+    border: 3px solid #fff; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+    
+    .bi {
+      display: none; // Hide the standard icon
+    }
+  }
+
+  .special-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    line-height: 1;
+    color: #3d3d3d; // Text color on the special button
+    font-size: 0.65rem;
+    font-weight: 600;
+    
+    .special-text {
+      margin: 0;
+      color: #7b4f3f; // Darker brown color
+      font-weight: 500;
+      font-size: 0.7rem;
+    }
+    .special-subtext {
+      margin: 0;
+      color: #7b4f3f;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+// Optional: Add a subtle animation on press
+.nav-item:active {
+  transform: scale(0.95);
+}

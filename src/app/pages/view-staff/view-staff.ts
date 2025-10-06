@@ -5,6 +5,7 @@ import { BookingResponseService } from '../../core/booking-response.service';
 import { API_URL, ENDPOINTS } from '@src/app/core/const';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Footer } from "../footer/footer";
+import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 
 
 declare var Razorpay: any;
@@ -13,7 +14,7 @@ declare var Razorpay: any;
   selector: 'app-view-staff',
   standalone: true,
   imports: [CommonModule,
-    ReactiveFormsModule, Footer],
+    ReactiveFormsModule, Footer, MobileFooterNavComponent],
   templateUrl: './view-staff.html',
   styleUrls: ['./view-staff.scss']
 })

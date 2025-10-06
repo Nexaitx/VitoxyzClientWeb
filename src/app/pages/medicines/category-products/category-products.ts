@@ -22,6 +22,8 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { SidebarFilterComponent } from "../../shared/sidebar-filter/sidebar-filter";
+import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
+import { Footer } from "../../footer/footer";
 
 @Component({
   selector: 'app-category-products',
@@ -32,8 +34,10 @@ import { SidebarFilterComponent } from "../../shared/sidebar-filter/sidebar-filt
     MatButtonModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
-    SidebarFilterComponent
-  ],
+    SidebarFilterComponent,
+    MobileFooterNavComponent,
+    Footer
+],
   templateUrl: './category-products.html', 
   styleUrls: ['./category-products.scss'] 
 })

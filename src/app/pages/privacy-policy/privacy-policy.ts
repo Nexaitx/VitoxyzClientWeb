@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { Header } from '@src/app/layouts/header/header';
+import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 
 @Component({
   selector: 'app-privacy-policy',
@@ -30,8 +31,8 @@ import { Header } from '@src/app/layouts/header/header';
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
-    MatInputModule
-    , Footer],
+    MatInputModule,
+    Footer, MobileFooterNavComponent],
   templateUrl: './privacy-policy.html',
   styleUrl: './privacy-policy.scss'
 })

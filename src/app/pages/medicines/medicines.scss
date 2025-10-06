@@ -239,7 +239,6 @@ h5 {
     right: 0px; 
   }
   
-  /* You can add a left button if you want both */
   .left-button {
     left: 0px;
   
@@ -321,33 +320,23 @@ $tile-radius: 16px;
 $primary-text: #172B4D;
 $secondary-text: #6B778C;
 $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
-
 .mobile-quick-access-wrapper {
-  padding: 15px 0 20px 0; // Padding adjust kiya
-  background-color: $quick-access-bg; 
-  
+  padding: 15px 0 20px 0;
+  background-color: $quick-access-bg;
 
   .row {
-    // Gutter ko 1.5rem (24px) set kiya gaya
-    --bs-gutter-x: 1.5rem; 
-    --bs-gutter-y: 1.5rem; 
-    margin-left: 0; // Margin reset
-    margin-right: 0; // Margin reset
+    --bs-gutter-x: 0; // bootstrap gutter hata diya
+    --bs-gutter-y: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between; // evenly distribute
   }
-  
-  // Custom padding for columns to ensure gap visibility on small screens
-  // col-3 ka default padding (jo gutter se aata hai) ko thoda adjust kiya
+
   .col-3 {
-    padding-right: calc(var(--bs-gutter-x) * .5); 
-    padding-left: calc(var(--bs-gutter-x) * .5); 
+    flex: 0 0 calc(25% - 8px); // 4 items in one row with small gap
+    max-width: calc(25% - 8px);
+    padding: 0; // extra padding remove
   }
-
-  .container {
-    // Container ko full width tak extend karne ke liye default Bootstrap padding hata diya
-    padding-left: calc(var(--bs-gutter-x) * .5); 
-    padding-right: calc(var(--bs-gutter-x) * .5); 
-  }
-
 
   .quick-access-tile {
     display: flex;
@@ -356,79 +345,84 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
     text-align: center;
     background: #fff;
     border-radius: $tile-radius;
-    padding: 10px 5px 15px; // Vertical padding adjust kiya
+    padding: 8px 5px 10px;
     cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+    height: 150px; // chhota kar diya
     
-    // 🎨 Attractive Shadow 🎨
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.03); 
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); // Smoother transition
-    height: 180px; 
-    
-    // 🌟 Lift on Hover 🌟
     &:hover {
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-        transform: translateY(-4px); 
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      transform: translateY(-3px);
     }
   }
 
-  /* Image/Illustration Box Styling */
   .tile-icon-box {
-    width: 85px; // Thoda bada icon area
-    height: 85px;
-    margin-bottom: 2px;
-    margin-top: 5px;
+    width: 70px; // icon thoda chhota
+    height: 70px;
+    margin: 5px 0 4px;
 
     img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-        transform: scale(1.05); // Icon ko halka zoom in kiya
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
   }
-  
-  /* Text Styling */
+
   .tile-title {
-    font-size: 15px;
-    font-weight: 700; // Thoda zyada bold
+    font-size: 14px;
+    font-weight: 700;
     color: $primary-text;
-    margin-bottom: 0; // Spacing kam kiya
-    line-height: 1.3;
+    margin-bottom: 0;
+    line-height: 1.2;
   }
-  
-  // "30 mins ⚡"
+
   .tile-subtitle {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
-    color: #E65100; /* Darker Orange for contrast */
+    color: #E65100;
     margin-top: 2px;
     line-height: 1;
 
     &::after {
-        content: ' ⚡'; 
-        color: #FFC107; // Bijli icon ko bright yellow color
+      content: ' ⚡';
+      color: #FFC107;
     }
   }
 
-  // Illustration based subtitles (Lab Tests/Consults)
   .tile-subtitle-illus {
-    font-size: 12px;
+    font-size: 11px;
     color: $secondary-text;
-    margin-top: 5px;
+    margin-top: 4px;
     line-height: 1;
   }
 }
 
-/* Ensure it's hidden on desktops */
+/* Hide on desktops */
 @media (min-width: 992px) {
   .mobile-quick-access-wrapper {
     display: none !important;
   }
 }
 
-/* Mobile-specific adjustments (Optional) */
+/* Mobile-specific tweaks */
 @media (max-width: 576px) {
   .quick-access-tile {
-    height: 155px;
-    padding: 8px 5px 12px;
+    height: 135px;
+    padding: 6px 4px 10px;
+  }
+
+  .tile-icon-box {
+    width: 60px;
+    height: 60px;
+  }
+
+  .tile-title {
+    font-size: 13px;
+  }
+
+  .tile-subtitle,
+  .tile-subtitle-illus {
+    font-size: 11px;
   }
 }

@@ -21,6 +21,9 @@ import { CartService } from "@src/app/core/cart.service";
 import { Observable } from "rxjs";
 import { CommonFilterComponent } from "../shared/common-filter-component/common-filter-component";
 import { HealthCarouselComponent } from "../shared/health-carousel/health-carousel";
+import { BannerSliderComponent } from "@src/app/shared/banner-slider/banner-slider";
+import { TextBanner } from "@src/app/shared/text-banner/text-banner";
+import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 declare var bootstrap: any;
 export interface Medicine {
   id: string;
@@ -85,7 +88,10 @@ interface Category {
     Header,
     Footer,
     CommonFilterComponent,
-    HealthCarouselComponent
+    HealthCarouselComponent,
+    BannerSliderComponent,
+    TextBanner,
+    MobileFooterNavComponent
 ],
   templateUrl: "./medicines.html",
   styleUrls: ["./medicines.scss"],
@@ -248,14 +254,14 @@ export class Medicines implements AfterViewInit {
 
   //copy this and make same others category
   categories: Category[] = [
-    { name: 'Skin Care', apiValue: 'Face Wash', cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/skincare.avif', altText: 'Skin Care Products' },
-    { name: 'Hair Care', apiValue: 'Shampoo', cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/haircare.avif', altText: 'Hair Care Products' },
-    { name: 'Sexual Wellness', apiValue: 'Condom', cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/sexcare.avif', altText: 'Sexual Wellness Products' },
-    { name: 'Oral Care', apiValue: 'Oral Gel', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/oralcare.avif', altText: 'Oral care Wellness Products' },
-        { name: 'Elder Care', apiValue: 'Mother Tincture', cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/eldercare.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Skin Care', apiValue: 'Face Wash', cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/skin care.png', altText: 'Skin Care Products' },
+    { name: 'Women Care', apiValue: 'Shampoo', cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/women care.png', altText: 'Hair Care Products' },
+    { name: 'Sexual Wellness', apiValue: 'Condom', cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/sexual wellness.png', altText: 'Sexual Wellness Products' },
+    { name: 'Oral Care', apiValue: 'Oral Gel', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/oral care.png', altText: 'Oral care Wellness Products' },
+    { name: 'Elder Care', apiValue: 'Mother Tincture', cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/eldercare.avif', altText: 'Oral care Wellness Products' },
     { name: 'Baby Care', apiValue: 'Nipple', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
-        { name: 'Men Care', apiValue: 'Mouth Wash', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/mencare.avif', altText: 'Oral care Wellness Products' },
-    { name: 'Women Care', apiValue: 'Face Pack', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/womencare.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Men Care', apiValue: 'Mouth Wash', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/mens care.png', altText: 'Oral care Wellness Products' },
+    { name: 'Ayurveda', apiValue: 'Face Pack', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.png', altText: 'Oral care Wellness Products' },
     { name: 'Pet Care', apiValue: 'Pet Food', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/petcare.avif', altText: 'Oral care Wellness Products' },
 
     // { name: 'Oral Care', apiValue: 'Oralcare', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
@@ -483,8 +489,7 @@ healthItems = [
 
 
 goToPage(url: string): void {
-    // Example: 'pharmacy' -> '/pharmacy' or 'lab-tests' -> '/lab-tests'
-    
+    console.log(`Navigating to /${url}`);    
     // Safety check, although the router is robust
     if (url) { 
         this.router.navigate([`/${url}`]); 

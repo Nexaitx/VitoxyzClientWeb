@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { SpinnerToastComponent } from "./core/toasts/spinner-toast/spinner-toast.component";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChatSupport } from './pages/chat-support/chat-support';
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet,

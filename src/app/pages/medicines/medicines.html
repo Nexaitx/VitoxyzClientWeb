@@ -10,6 +10,7 @@
 <app-header></app-header>
 
 
+<!-- show in mobile -->
 <div class="mobile-quick-access-wrapper d-block d-lg-none">
   <div class="container py-3">
     <div class="row g-4 justify-content-between"> 
@@ -22,33 +23,56 @@
         <p class="tile-subtitle">30 mins ⚡</p>
       </div>
 
-      <div class="col-3 quick-access-tile" (click)="goToPage('lab-tests')">
+      <div class="col-3 quick-access-tile" (click)="goToPage('book-staff')">
         <div class="tile-icon-box">
-          <img src="../../../assets/icons/lab-tests-icon.png" alt="Lab tests" class="img-fluid">
+          <img src="../../../assets/icons/lab-tests-icon.png" alt="book staff" class="img-fluid">
         </div>
-        <p class="tile-title">Lab tests</p>
+        <p class="tile-title">Book Staff</p>
         <p class="tile-subtitle-illus">Home Sample Pickup</p>
       </div>
 
-      <div class="col-3 quick-access-tile" (click)="goToPage('consults')">
+      <div class="col-3 quick-access-tile" (click)="goToPage('subscription-plans')">
         <div class="tile-icon-box">
-          <img src="../../../assets/icons/consults-icon.png" alt="Consults" class="img-fluid">
+          <img src="../../../assets/icons/consults-icon.png" alt="subscription-plans" class="img-fluid">
         </div>
-        <p class="tile-title">Consults</p>
-        <p class="tile-subtitle-illus">Doctor Video Call</p>
+        <p class="tile-title">Dieticiean</p>
+        <p class="tile-subtitle-illus">Dieticien Video Call</p>
       </div>
 
       <div class="col-3 quick-access-tile" (click)="goToPage('vaccines')">
         <div class="tile-icon-box">
-          <img src="../../../assets/icons/vaccines-icon.png" alt="Adult Vaccines" class="img-fluid">
+          <img src="../../../assets/icons/vaccines-icon.png" alt="Doctor" class="img-fluid">
         </div>
-        <p class="tile-title">Adult</p>
-        <p class="tile-subtitle">Vaccines</p>
+        <p class="tile-title">Doctor</p>
+        <p class="tile-subtitle">Doctor Consuts</p>
       </div>
 
     </div>
   </div>
 </div>
+
+<!-- visible in mobile -->
+
+<app-banner-slider 
+  [images]="[
+    'assets/banner.png',
+    'assets/banner.png',
+    'assets/banner.png'
+  ]"
+  [autoSlide]="true"
+  [slideInterval]="4000">
+</app-banner-slider>
+
+
+<app-text-banner
+  image="assets/banners/hero.jpg"
+  title="Welcome to Vitoxyz"
+  subtitle="Your trusted health partner"
+  buttonText="Shop Now"
+  buttonLink="/shop">
+</app-text-banner>
+
+
 
 <app-health-carousel [items]="healthItems"></app-health-carousel>
 
@@ -144,9 +168,16 @@
   </button>
 </div>
 <!-- testing -->
+<!-- <app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Walker'" 
+  [title]="'Testing product'">
+</app-common-filter-component> -->
+
+
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
-  [productForm]="'Powder'" 
+  [productForm]="'Paste'" 
   [title]="'Testing product'">
 </app-common-filter-component>
 
@@ -158,7 +189,7 @@
 <!-- personal care -->
 
 <!-- future implementation -->
-<!-- <div class="category-section">
+<div class="category-section">
   <div class="category-section-header mat-elevation-z2">
     <h2>Everyday Wellness</h2>
     </div>
@@ -191,8 +222,12 @@
       &gt; </button>
     
   </div>
-</div> -->
-
+</div>
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Walker'" 
+  [title]="'Support that cares'">
+</app-common-filter-component>
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Biochemic Tablet'" 
@@ -391,3 +426,4 @@
 
 <!-- App footer -->
 <app-footer></app-footer>
+<app-mobile-footer-nav></app-mobile-footer-nav>

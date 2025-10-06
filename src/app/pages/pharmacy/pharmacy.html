@@ -1,0 +1,83 @@
+<app-text-banner
+  image="assets/banners/hero.jpg"
+  title="Welcome to Vitoxyz"
+  subtitle="Your trusted health partner"
+  buttonText="Shop Now"
+  buttonLink="/shop">
+</app-text-banner>
+<app-banner-slider 
+  [images]="[
+    'assets/banner.png',
+    'assets/banner.png',
+    'assets/banner.png'
+  ]"
+  [autoSlide]="true"
+  [slideInterval]="4000">
+</app-banner-slider>
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Biochemic Tablet'" 
+  [title]="'Small tablet, big relief.'">
+</app-common-filter-component>
+
+
+<app-health-carousel [items]="healthItems"></app-health-carousel>
+
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Paste'" 
+  [title]="''">
+</app-common-filter-component>
+
+
+<!-- show in mobile -->
+<div class="mobile-quick-access-wrapper d-block d-lg-none">
+  <div class="container py-3">
+    <div class="row g-4 justify-content-between"> 
+      
+      <div class="col-3 quick-access-tile" (click)="goToPage('pharmacy')">
+        <div class="tile-icon-box">
+          <img src="../../../assets/icons/pharmacy-icon.png" alt="Pharmacy" class="img-fluid">
+        </div>
+        <p class="tile-title">Wellness Checkup</p>
+        <!-- <p class="tile-subtitle">30 mins ⚡</p> -->
+      </div>
+
+      <div class="col-3 quick-access-tile" (click)="goToPage('book-staff')">
+        <div class="tile-icon-box">
+          <img src="../../../assets/icons/lab-tests-icon.png" alt="book staff" class="img-fluid">
+        </div>
+        <p class="tile-title">PCOS</p>
+        <!-- <p class="tile-subtitle-illus">Home Sample Pickup</p> -->
+      </div>
+
+      <div class="col-3 quick-access-tile" (click)="goToPage('subscription-plans')">
+        <div class="tile-icon-box">
+          <img src="../../../assets/icons/consults-icon.png" alt="subscription-plans" class="img-fluid">
+        </div>
+        <p class="tile-title">Pregnancy</p>
+        <!-- <p class="tile-subtitle-illus">Dieticien Video Call</p> -->
+      </div>
+
+      <!-- <div class="col-3 quick-access-tile" (click)="goToPage('vaccines')">
+        <div class="tile-icon-box">
+          <img src="../../../assets/icons/vaccines-icon.png" alt="Doctor" class="img-fluid">
+        </div>
+        <p class="tile-title">Doctor</p>
+        <p class="tile-subtitle">Doctor Consuts</p>
+      </div> -->
+
+    </div>
+  </div>
+</div>
+
+
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Unit'" 
+  [title]="''">
+</app-common-filter-component>
+
+<app-footer></app-footer>
+<app-mobile-footer-nav></app-mobile-footer-nav>
