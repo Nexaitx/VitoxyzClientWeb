@@ -1,3 +1,23 @@
+<div class="d-block d-md-none">
+<app-banner-slider 
+  [images]="[
+    'assets/.png',
+    'assets/.png',
+    'assets/.png'
+  ]"
+  [autoSlide]="true"
+  [slideInterval]="4000">
+</app-banner-slider>
+</div>
+
+<app-text-banner
+  image="assets/banners/.jpg"
+  title="Welcome to Vitoxyz"
+  subtitle="Your trusted health partner"
+  buttonText="Shop Now"
+  buttonLink="/medicines">
+</app-text-banner>
+
 <div class="category-page" [class.blur-content]="isLoading">
   <!-- Full Screen Loader -->
   <div *ngIf="isLoading" class="full-screen-loader">
@@ -145,3 +165,5 @@
 
 <app-footer></app-footer>
 <app-mobile-footer-nav></app-mobile-footer-nav>
+
+<!-- add to cart button -->

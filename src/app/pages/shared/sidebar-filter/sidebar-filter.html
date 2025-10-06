@@ -1,47 +1,90 @@
-<div class="sidebar" [class.sidebar-disabled]="disabled">
-  <!-- Categories -->
-  <div class="section">
-    <h3 class="section-title">CATEGORIES</h3>
-    <ul class="category-list">
-      <li *ngFor="let category of categories"
-          (click)="onCategoryClick(category.value)"
-          [class.disabled-item]="disabled"
-          [class.clickable-item]="!disabled">
-        {{ category.label }}
-        <span *ngIf="disabled" class="loading-indicator">⟳</span>
-      </li>
-    </ul>
-  </div>
-
-  <!-- Brands -->
-  <div class="section">
-    <h3 class="section-title">FILTERS</h3>
-    <h4 class="sub-title">BRANDS</h4>
-
-    <input type="text" 
-           placeholder="Search Brands" 
-           class="search-box" 
-           [disabled]="disabled" />
-
-    <div class="brand-list">
-      <div *ngFor="let brand of brands" class="brand-item">
-        <input type="checkbox"
-               [id]="'brand-' + brand.name"
-               [disabled]="disabled"
-               (change)="onBrandToggle(brand.name, $event)" />
-        <label [for]="'brand-' + brand.name" 
-               [class.disabled-label]="disabled">
-          {{ brand.name }} 
-          <span class="brand-count">({{ brand.count }})</span>
-          <span *ngIf="disabled" class="loading-indicator">⟳</span>
-        </label>
-      </div>
+<div>
+    
+    <div class="mobile-filter-bar d-block d-md-none">
+        <button class="filter-toggle-btn" (click)="toggleFilterPanel()">
+            <span class="icon">⚙️</span>
+            Filter & Sort
+        </button>
     </div>
-  </div>
 
-  <!-- Loading Overlay -->
-  <div *ngIf="disabled" class="loading-overlay">
-    <div class="loading-spinner"></div>
-    <span>Loading...</span>
-  </div>
+    <div class="sidebar d-none d-md-block" [class.sidebar-disabled]="disabled">
+        <div class="section">
+            <h3 class="section-title">CATEGORIES</h3>
+            <ul class="category-list">
+                <li *ngFor="let category of categories"
+                    (click)="onCategoryClick(category.value)"
+                    [class.disabled-item]="disabled"
+                    [class.clickable-item]="!disabled">
+                    {{ category.label }}
+                    <span *ngIf="disabled" class="loading-indicator">⟳</span>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h3 class="section-title">FILTERS</h3>
+            <h4 class="sub-title">BRANDS</h4>
+            <input type="text" placeholder="Search Brands" class="search-box" [disabled]="disabled" />
+            <div class="brand-list">
+                <div *ngFor="let brand of brands" class="brand-item">
+                    <input type="checkbox" [id]="'brand-desk-' + brand.name" [disabled]="disabled" (change)="onBrandToggle(brand.name, $event)" />
+                    <label [for]="'brand-desk-' + brand.name" [class.disabled-label]="disabled">
+                        {{ brand.name }} 
+                        <span class="brand-count">({{ brand.count }})</span>
+                        <span *ngIf="disabled" class="loading-indicator">⟳</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <div *ngIf="disabled" class="loading-overlay">
+            <div class="loading-spinner"></div>
+            <span>Loading...</span>
+        </div>
+    </div>
+
+    <div class="mobile-filter-panel" [class.open]="isFilterPanelOpen">
+        <div class="mobile-filter-overlay" (click)="closeFilterPanel()"></div>
+        
+        <div class="panel-content">
+            <div class="panel-header">
+                <h3>Sort & Filter</h3>
+                <button class="close-btn" (click)="closeFilterPanel()">✕</button>
+            </div>
+
+            <div class="panel-filters-body">
+                <div class="section">
+                    <h3 class="section-title">CATEGORIES</h3>
+                    <ul class="category-list">
+                        <li *ngFor="let category of categories"
+                            (click)="onCategoryClick(category.value)"
+                            [class.disabled-item]="disabled"
+                            [class.clickable-item]="!disabled">
+                            {{ category.label }}
+                            <span *ngIf="disabled" class="loading-indicator">⟳</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- <div class="section">
+                    <h3 class="section-title">FILTERS</h3>
+                    <h4 class="sub-title">BRANDS</h4>
+                    <input type="text" placeholder="Search Brands" class="search-box" [disabled]="disabled" />
+                    <div class="brand-list">
+                        <div *ngFor="let brand of brands" class="brand-item">
+                            <input type="checkbox" [id]="'brand-mobile-' + brand.name" [disabled]="disabled" (change)="onBrandToggle(brand.name, $event)" />
+                            <label [for]="'brand-mobile-' + brand.name" [class.disabled-label]="disabled">
+                                {{ brand.name }} 
+                                <span class="brand-count">({{ brand.count }})</span>
+                            </label>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            
+            <div class="panel-actions">
+                <button class="apply-btn" (click)="closeFilterPanel()">Apply Filters</button>
+            </div>
+        </div>
+    </div>
 </div>

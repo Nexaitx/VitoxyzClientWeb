@@ -12,15 +12,15 @@
 
 <!-- show in mobile -->
 <div class="mobile-quick-access-wrapper d-block d-lg-none">
-  <div class="container py-3">
-    <div class="row g-4 justify-content-between"> 
+  <div class="container py-6">
+    <div class="row g-3 justify-content-between"> 
       
       <div class="col-3 quick-access-tile" (click)="goToPage('pharmacy')">
         <div class="tile-icon-box">
           <img src="../../../assets/icons/pharmacy-icon.png" alt="Pharmacy" class="img-fluid">
         </div>
         <p class="tile-title">Pharmacy</p>
-        <p class="tile-subtitle">30 mins ⚡</p>
+        <p class="tile-subtitle">Your Trusted Online Pharmacy </p>
       </div>
 
       <div class="col-3 quick-access-tile" (click)="goToPage('book-staff')">
@@ -28,7 +28,7 @@
           <img src="../../../assets/icons/lab-tests-icon.png" alt="book staff" class="img-fluid">
         </div>
         <p class="tile-title">Book Staff</p>
-        <p class="tile-subtitle-illus">Home Sample Pickup</p>
+        <p class="tile-subtitle-illus">Your Help, On Demand</p>
       </div>
 
       <div class="col-3 quick-access-tile" (click)="goToPage('subscription-plans')">
@@ -36,78 +36,161 @@
           <img src="../../../assets/icons/consults-icon.png" alt="subscription-plans" class="img-fluid">
         </div>
         <p class="tile-title">Dieticiean</p>
-        <p class="tile-subtitle-illus">Dieticien Video Call</p>
+        <p class="tile-subtitle-illus">Your Nutrition, Our Mission</p>
       </div>
 
-      <div class="col-3 quick-access-tile" (click)="goToPage('vaccines')">
+      <!-- <div class="col-3 quick-access-tile" (click)="goToPage('vaccines')">
         <div class="tile-icon-box">
           <img src="../../../assets/icons/vaccines-icon.png" alt="Doctor" class="img-fluid">
         </div>
         <p class="tile-title">Doctor</p>
         <p class="tile-subtitle">Doctor Consuts</p>
-      </div>
+      </div> -->
 
     </div>
   </div>
 </div>
 
-<!-- visible in mobile -->
 
+
+<div class="d-block d-md-none">
+  <div class="category-section ">
+  <!-- <div class="category-section-header mat-elevation-z2">
+    <h2>Everyday Wellness</h2>
+    </div> -->
+
+  <div class="carousel-container">
+    
+    <button
+      class="side-nav-button left-button mat-elevation-z4"
+      (click)="scrollCarousel('left')"
+    >
+      &lt; </button>
+
+    <div #categoryCarouselWrapper class="carousel-wrapper">
+      <mat-card
+        *ngFor="let category of categories3"
+        class="category-card mat-elevation-z4"
+        (click)="fetchProductsByCategory(category.apiValue)"
+      >
+        <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
+        <mat-card-content>
+          <h3>{{ category.name }}</h3>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <button
+      class="side-nav-button right-button mat-elevation-z4"
+      (click)="scrollCarousel('right')"
+    >
+      &gt; </button>
+    
+  </div>
+</div>
+</div>
+<!-- visible in mobile -->
+<div class="d-block d-md-none">
 <app-banner-slider 
   [images]="[
-    'assets/banner.png',
-    'assets/banner.png',
-    'assets/banner.png'
+    'assets/.png',
+    'assets/.png',
+    'assets/.png'
   ]"
   [autoSlide]="true"
   [slideInterval]="4000">
 </app-banner-slider>
 
-
 <app-text-banner
-  image="assets/banners/hero.jpg"
+  image="assets/banners/.jpg"
   title="Welcome to Vitoxyz"
   subtitle="Your trusted health partner"
   buttonText="Shop Now"
-  buttonLink="/shop">
+  buttonLink="/medicines">
 </app-text-banner>
+</div>
 
 
+<!-- human implementation -->
+<div class="category-section">
+  <div class="category-section-header mat-elevation-z2">
+    <h2>Everyday Wellness</h2>
+    </div>
 
-<app-health-carousel [items]="healthItems"></app-health-carousel>
+  <div class="carousel-container">
+    
+    <button
+      class="side-nav-button left-button mat-elevation-z4"
+      (click)="scrollCarousel('left')"
+    >
+      &lt; </button>
+
+    <div #categoryCarouselWrapper class="carousel-wrapper">
+      <mat-card
+        *ngFor="let category of categories"
+        class="category-card mat-elevation-z4"
+        (click)="fetchProductsByCategory(category.apiValue)"
+      >
+        <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
+        <mat-card-content>
+          <h3>{{ category.name }}</h3>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <button
+      class="side-nav-button right-button mat-elevation-z4"
+      (click)="scrollCarousel('right')"
+    >
+      &gt; </button>
+    
+  </div>
+</div>
+
+
+<div class="d-none d-md-block">
+    <app-health-carousel [items]="healthItems"></app-health-carousel>
+</div>
+
+<div class="d-block d-md-none">
+    <app-health-carousel [items]="healthItems1"></app-health-carousel>
+</div>
 
 
 <!-- featured brands -->
 <div id="brandCarousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
+    
     <div class="carousel-item active">
       <div class="row justify-content-center g-2">
-        <div class="col-6 col-md-3 col-lg-2 p-2">
+        
+        <div class="col-4 col-md-3 col-lg-2 p-2">
           <div class="brandBackground">
             <img src="../../../assets/medicines/brand-1.png" alt="Brand 1" />
           </div>
         </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2">
+        <div class="col-4 col-md-3 col-lg-2 p-2">
           <div class="brandBackground">
             <img src="../../../assets/medicines/brand-1.png" alt="Brand 2" />
           </div>
         </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-md-block">
+        <div class="col-4 col-md-3 col-lg-2 p-2"> 
           <div class="brandBackground">
             <img src="../../../assets/medicines/brand-1.png" alt="Brand 3" />
           </div>
         </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-md-block">
+        
+        <div class="col-4 col-md-3 col-lg-2 p-2">
           <div class="brandBackground">
             <img src="../../../assets/medicines/brand-1.png" alt="Brand 4" />
           </div>
         </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-lg-block">
+        <div class="col-4 col-md-3 col-lg-2 p-2"> 
           <div class="brandBackground">
             <img src="../../../assets/medicines/brand-1.png" alt="Brand 5" />
           </div>
         </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-lg-block">
+        <div class="col-4 col-md-3 col-lg-2 p-2"> 
           <div class="brandBackground">
             <img src="../../../assets/medicines/brand-1.png" alt="Brand 6" />
           </div>
@@ -117,32 +200,34 @@
 
     <div class="carousel-item">
       <div class="row justify-content-center g-2">
-        <div class="col-6 col-md-3 col-lg-2 p-2">
+        
+        <div class="col-4 col-md-3 col-lg-2 p-2">
           <div class="brandBackground">
             <img src="../../../assets/medicines/brand-1.png" alt="Brand 7" />
           </div>
         </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2">
+        <div class="col-4 col-md-3 col-lg-2 p-2">
           <div class="brandBackground">
             <img src="../../../assets/medicines/brand-1.png" alt="Brand 8" />
           </div>
         </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-md-block">
+        <div class="col-4 col-md-3 col-lg-2 p-2">
           <div class="brandBackground">
             <img src="../../../assets/medicines/brand-1.png" alt="Brand 9" />
           </div>
         </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-md-block">
+
+        <div class="col-4 col-md-3 col-lg-2 p-2">
           <div class="brandBackground">
             <img src="../../../assets/medicines/brand-1.png" alt="Brand 10" />
           </div>
         </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-lg-block">
+        <div class="col-4 col-md-3 col-lg-2 p-2">
           <div class="brandBackground">
             <img src="../../../assets/medicines/brand-1.png" alt="Brand 11" />
           </div>
         </div>
-        <div class="col-6 col-md-3 col-lg-2 p-2 d-none d-lg-block">
+        <div class="col-4 col-md-3 col-lg-2 p-2">
           <div class="brandBackground">
             <img src="../../../assets/medicines/brand-1.png" alt="Brand 12" />
           </div>
@@ -150,6 +235,7 @@
       </div>
     </div>
   </div>
+  
   <button
     class="carousel-control-prev"
     type="button"
@@ -188,41 +274,7 @@
 </app-common-filter-component>
 <!-- personal care -->
 
-<!-- future implementation -->
-<div class="category-section">
-  <div class="category-section-header mat-elevation-z2">
-    <h2>Everyday Wellness</h2>
-    </div>
 
-  <div class="carousel-container">
-    
-    <button
-      class="side-nav-button left-button mat-elevation-z4"
-      (click)="scrollCarousel('left')"
-    >
-      &lt; </button>
-
-    <div #categoryCarouselWrapper class="carousel-wrapper">
-      <mat-card
-        *ngFor="let category of categories"
-        class="category-card mat-elevation-z4"
-        (click)="fetchProductsByCategory(category.apiValue)"
-      >
-        <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
-        <mat-card-content>
-          <h3>{{ category.name }}</h3>
-        </mat-card-content>
-      </mat-card>
-    </div>
-
-    <button
-      class="side-nav-button right-button mat-elevation-z4"
-      (click)="scrollCarousel('right')"
-    >
-      &gt; </button>
-    
-  </div>
-</div>
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Walker'" 
