@@ -1,16 +1,34 @@
+
+
 <nav class="navbar fixed-top navbar-expand-lg bg-primary" data-bs-theme="dark">
-  <div class="container-fluid">
-    <a class="navbar-brand text-white" href="#">Vitoxyz</a>
-    <button class="navbar-toggler border-0" type="button" aria-controls="navbarNav" aria-expanded="false"
-      aria-label="Toggle navigation" (click)="toggleNavbar()">
-      <span class="bi " [class.bi-three-dots]="!isMobileMenuOpen()" [class.bi-x-lg]="isMobileMenuOpen()"></span>
-      <!-- <span class="bi"></span> -->
+  <div class="container-fluid d-flex align-items-center">
+
+    <button
+      class="btn border-0 d-lg-none me-2"
+      type="button"
+      aria-label="Open menu"
+      (click)="toggleSidebar()"
+      [attr.aria-expanded]="isSidebarOpen">
+      <i class="bi" [ngClass]="{ 'bi-list': !isSidebarOpen, 'bi-x-lg': isSidebarOpen, 'fs-3': true }"></i>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
+   
+    <a class="navbar-brand mx-auto mx-lg-0 fw-bold text-white" href="#">
+      Vitoxyz
+    </a>
+
+   
+    <div class="ms-auto d-flex align-items-center">
+      <button class="btn border-0" (click)="goToCart()" aria-label="Cart">
+        <i class="bi bi-cart fs-4 text-white"></i>
+      </button>
+    </div>
+
+   
+    <div class="collapse navbar-collapse d-none d-lg-flex justify-content-end destop-alignnment" id="navbarNav">
       <ul class="navbar-nav ms-auto align-items-center">
         <ng-container *ngFor="let item of menuItems; let i = index">
-
+         
           <li class="nav-item" *ngIf="item.label === 'Profile' && isLoggedIn">
             <button class="nav-link text-white" [cdkMenuTriggerFor]="profileMenu" type="button">
               <i class="bi bi-person-circle" style="font-size: large;"></i>
@@ -31,6 +49,7 @@
             </ng-template>
           </li>
 
+        
           <li class="nav-item" *ngIf="!item.dropdown && item.label !== 'Profile'">
             <a class="nav-link text-white" [ngClass]="{'active rounded-pill': rla.isActive}" [routerLink]="item.path"
               routerLinkActive #rla="routerLinkActive">
@@ -38,6 +57,7 @@
             </a>
           </li>
 
+       
           <li class="nav-item" *ngIf="item.label === 'Book Staff'">
             <button class="nav-link text-white" [cdkMenuTriggerFor]="bookStaffMenu" type="button">
               {{ item.label }}
@@ -52,21 +72,9 @@
               </div>
             </ng-template>
           </li>
-
-
-        
-
-
         </ng-container>
 
-        <li class="nav-item">
-          <a class="nav-link text-white" (click)="goToCart()">
-            <button type="button" class="btn nav-link text-white py-0" style="font-size: large;">
-              <i class="bi bi-cart"></i>
-            </button>
-          </a>
-        </li>
-
+       
         <ng-container *ngIf="!isLoggedIn">
           <li class="nav-item">
             <button type="button" class="btn nav-link text-white" data-bs-toggle="modal" data-bs-target="#authModal"
@@ -79,6 +87,60 @@
     </div>
   </div>
 </nav>
+
+
+<div class="sidebar d-lg-none" [class.open]="isSidebarOpen" role="dialog" aria-modal="true" aria-label="Mobile menu">
+  <div class="sidebar-header d-flex justify-content-between align-items-center p-3">
+    <h5 class="mb-0">Menu</h5>
+    <button class="btn border-0" (click)="closeSidebar()" aria-label="Close menu">
+      <i class="bi bi-x-lg close-menu"></i>
+    </button>
+  </div>
+
+  <ul class="list-unstyled px-3 pt-2 pb-3">
+    <li *ngFor="let item of menuItems; let i = index" class="mobile-menu-item">
+     
+      <ng-container *ngIf="!item.dropdown">
+        <a class="d-block py-2 ps-3" (click)="closeSidebar()" [routerLink]="item.path" routerLinkActive="active">
+          {{ item.label }}
+        </a>
+      </ng-container>
+
+     
+      <ng-container *ngIf="item.dropdown">
+        <button class="btn w-100 text-start py-2 d-flex justify-content-between align-items-center ps-3"
+                (click)="toggleSubmenu(i)" [attr.aria-expanded]="isSubmenuOpen(i)">
+          {{ item.label }}
+          <i class="bi close-menu" [ngClass]="{ 'bi-chevron-down': !isSubmenuOpen(i), 'bi-chevron-up': isSubmenuOpen(i) }"></i>
+        </button>
+
+        <ul *ngIf="isSubmenuOpen(i)" class="list-unstyled ps-4">
+          <li *ngFor="let s of item.dropdownItems">
+            <a class="d-block py-2 ps-2" (click)="closeSidebar()" [routerLink]="s.path" routerLinkActive="active">
+              {{ s.label }}
+            </a>
+          </li>
+        </ul>
+      </ng-container>
+    </li>
+  </ul>
+
+  <div class="sidebar-footer px-3 pb-3">
+    <button *ngIf="!isLoggedIn" type="button" class="btn btn-outline-primary w-100"
+            (click)="setAuthMode('login'); closeSidebar()" data-bs-toggle="modal" data-bs-target="#authModal">
+      Log In
+    </button>
+
+    <button *ngIf="isLoggedIn" type="button" class="btn btn-outline-danger w-100 mt-2"
+            (click)="logout(); closeSidebar()">
+      Logout
+    </button>
+  </div>
+</div>
+
+
+<div class="overlay d-lg-none" [class.show]="isSidebarOpen" (click)="closeSidebar()"></div>
+
 
 <app-authorization [authMode]="authMode" (loginSuccess)="checkLoginStatus()"></app-authorization>
 
