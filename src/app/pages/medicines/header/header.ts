@@ -27,7 +27,7 @@ ngOnInit() {
     this.router.navigate(['/search'], { queryParams: { q: this.searchQuery } });
   }
    onQuickOrder() {
-    alert('Quick order feature coming soon!');
+    this.router.navigate(['/order-prescription']);
   }
   async detectLocation() {
     if (!navigator.geolocation) {

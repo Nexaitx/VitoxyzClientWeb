@@ -106,7 +106,21 @@ export class Header implements OnInit, OnDestroy {
   goToCart() {
     this.router.navigate(['/cart']);
   }
+ handleMenuNavigation(path: string) {
+    this.closeSidebar();
 
+    if (!this.isLoggedIn) {
+      // Not logged in → open auth modal
+      const modalEl = document.getElementById('authModal');
+      if (modalEl) {
+        const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+        modal.show();
+      }
+    } else {
+      // Logged in → navigate normally
+      this.router.navigate([path]);
+    }
+  }
  
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;

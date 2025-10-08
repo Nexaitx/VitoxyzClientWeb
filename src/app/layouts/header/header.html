@@ -116,10 +116,13 @@
 
         <ul *ngIf="isSubmenuOpen(i)" class="list-unstyled ps-4">
           <li *ngFor="let s of item.dropdownItems">
-            <a class="d-block py-2 ps-2" (click)="closeSidebar()" [routerLink]="s.path" routerLinkActive="active">
-              {{ s.label }}
-            </a>
-          </li>
+  <a
+    class="d-block py-2 ps-2"
+    (click)="handleMenuNavigation(s.path)"
+    routerLinkActive="active">
+    {{ s.label }}
+  </a>
+</li>
         </ul>
       </ng-container>
     </li>

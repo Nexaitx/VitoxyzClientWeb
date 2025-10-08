@@ -1,8 +1,3 @@
-
-
-
-
-
 import { Component, inject, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Footer } from "../../footer/footer";
@@ -11,64 +6,93 @@ import { HttpClient } from "@angular/common/http";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { API_URL, ENDPOINTS } from "@src/app/core/const";
-import { CartItem, CartService } from "@src/app/core/cart.service";
+import { CartService } from "@src/app/core/cart.service";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 
 @Component({
   selector: "app-view-medicine",
-  imports: [CommonModule, FormsModule, Footer, Header, MobileFooterNavComponent],
   standalone: true,
+  imports: [CommonModule, FormsModule, Footer, Header, MobileFooterNavComponent],
   templateUrl: "./view-medicine.html",
   styleUrls: ["./view-medicine.scss"],
 })
 export class ViewMedicine implements OnInit {
   private http: HttpClient = inject(HttpClient);
   private cartService = inject(CartService);
+  private route: ActivatedRoute = inject(ActivatedRoute);
+
+  medicine: any;
+  product: any;
+  selectedImage!: string;
+  selectedQty!: string;
+  medicineType: string | null = null;
 
   isLoaded = false;
   hasError = false;
 
-  medicine: any;
-  product:any;
-  selectedImage!: string;
-  selectedQty!: string;
+  // Mobile carousel
+  currentIndex = 0;
+  isMobile = false;
 
+  ngOnInit() {
+    this.checkScreenWidth();
 
-    medicineType: string | null = null;
+    const id = this.route.snapshot.paramMap.get("id");
+    this.medicineType = this.route.snapshot.queryParamMap.get("type");
 
-  constructor(private route: ActivatedRoute) {}
-
- ngOnInit() {
-  const id = this.route.snapshot.paramMap.get("id");
-  this.medicineType = this.route.snapshot.queryParamMap.get("type"); 
-
-  if (id) {
-    console.log("this.medicineType",this.medicineType);
-    
-    if (this.medicineType === "otc") {
-      this.getOTCMedicineById(id);
+    if (id) {
+      if (this.medicineType === "otc") {
+        this.getOTCMedicineById(id);
+      } else {
+        this.getMedicineById(id);
+      }
     } else {
-     
-      this.getMedicineById(id);
+      this.hasError = true;
     }
-  } else {
-    this.hasError = true; 
+  }
+
+  // Detect mobile/tablet screens
+  checkScreenWidth() {
+    this.isMobile = window.innerWidth <= 768;
+    window.addEventListener("resize", () => {
+      this.isMobile = window.innerWidth <= 768;
+    });
+  }
+
+  // Slide controls for carousel
+  nextSlide() {
+    if (!this.medicine && !this.product) return;
+    const length = this.medicine ? this.medicine.images.length : this.product.images.length;
+    this.currentIndex = (this.currentIndex + 1) % length;
+  }
+
+  prevSlide() {
+    if (!this.medicine && !this.product) return;
+    const length = this.medicine ? this.medicine.images.length : this.product.images.length;
+    this.currentIndex = (this.currentIndex - 1 + length) % length;
+  }
+
+ goToSlide(index: number) {
+  this.currentIndex = index;
+  console.log("current index:", this.currentIndex);
+
+  if (this.medicineType === "health" && this.medicine?.images?.length) {
+    this.selectedImage = this.medicine.images[index];
+    console.log("selected image:", this.selectedImage);
+  } else if (this.medicineType === "otc" && this.product?.images?.length) {
+    this.selectedImage = this.product.images[index];
+    console.log("selected image:", this.selectedImage);
   }
 }
 
 
-  private getMedicineById(id: string) {
-        console.log("id234",id);
 
+  private getMedicineById(id: string) {
     this.http.get<any>(`${API_URL}${ENDPOINTS.MEDICINE_BY_ID(id)}`).subscribe({
       next: (res) => {
-        if (res && res.status && res.data) {
+        if (res?.status && res.data) {
           const data = res.data;
-
-          let images: string[] = [];
-          if (data.imageUrls && data.imageUrls.length > 0 && data.imageUrls[0]) {
-            images = data.imageUrls[0].split("|").map((img: string) => img.trim());
-          }
+          const images = data.imageUrls?.[0]?.split("|").map((img: string) => img.trim()) || [];
 
           this.medicine = {
             id: data.productId,
@@ -77,12 +101,7 @@ export class ViewMedicine implements OnInit {
             rating: 4.5,
             reviewsCount: 0,
             reviewTextCount: 0,
-            highlights: [
-              data.primaryUse,
-              data.saltComposition,
-              data.productForm,
-              data.medicineType,
-            ].filter(Boolean),
+            highlights: [data.primaryUse, data.saltComposition, data.productForm, data.medicineType].filter(Boolean),
             price: data.mrp,
             mrp: data.mrp,
             discount: 0,
@@ -104,29 +123,16 @@ export class ViewMedicine implements OnInit {
           this.hasError = true;
         }
       },
-      error: (err) => {
-        console.error("Error fetching medicine:", err);
-        this.hasError = true;
-      },
+      error: () => { this.hasError = true; },
     });
   }
 
- 
   private getOTCMedicineById(id: string) {
-    console.log("id",id);
-    
     this.http.get<any>(`${API_URL}${ENDPOINTS.OTC_MEDICINE_BY_ID(id)}`).subscribe({
       next: (res) => {
-        if (res && res.status && res.data) {
-                    console.log("datasdf",res);
-
+        if (res?.status && res.data) {
           const data = res.data;
-          console.log("data",data);
-          
-           let images: string[] = [];
-          if (data.imageUrls && data.imageUrls.length > 0 && data.imageUrls[0]) {
-            images = data.imageUrls[0].split("|").map((img: string) => img.trim());
-          }
+          const images = data.imageUrls?.[0]?.split("|").map((img: string) => img.trim()) || [];
 
           this.product = {
             id: data.id,
@@ -150,89 +156,44 @@ export class ViewMedicine implements OnInit {
             storage: "",
           };
 
-                    this.selectedImage = images[0] || "";
-
-          // this.selectedImage = this.product.images[0] || "";
+          this.selectedImage = images[0] || "";
           this.selectedQty = this.product.packSizes[0];
           this.isLoaded = true;
         } else {
           this.hasError = true;
         }
       },
-      error: (err) => {
-        console.error("Error fetching OTC medicine:", err);
-        this.hasError = true;
-      },
+      error: () => { this.hasError = true; },
     });
   }
 
- 
-  // addToCart() {
-  //   if (!this.medicine) return;
-
-  //   const cartItem: Partial<CartItem> = {
-  //     id: this.medicine.id,
-  //     name: this.medicine.name,
-  //     price: Number(this.medicine.price ?? this.medicine.mrp ?? 0),
-  //     mrp: Number(this.medicine.mrp ?? this.medicine.price ?? 0),
-  //     qty: this.selectedQty,
-  //     image: (this.medicine.images && this.medicine.images[0]) || "assets/img/default.png",
-  //     count: 1,
-  //   };
-
-  //   this.cartService.addItem(cartItem);
-  //   alert(`${cartItem.name} added to cart!`);
-  // }
-
-  // addToCarOtc() {
-  //   if (!this.product) return;
-
-  //   const cartItem: Partial<CartItem> = {
-  //     id: this.product.id,
-  //     name: this.product.name,
-  //     price: Number(this.product.price ?? this.product.mrp ?? 0),
-  //     mrp: Number(this.product.mrp ?? this.product.price ?? 0),
-  //     qty: this.selectedQty,
-  //     image: (this.product.images && this.product.images[0]) || "assets/img/default.png",
-  //     count: 1,
-  //   };
-
-  //   this.cartService.addItem(cartItem);
-  //   alert(`${cartItem.name} added to cart!`);
-  // }
-
-
   addToCart() {
-  if (!this.medicine) return;
+    if (!this.medicine) return;
 
-  const payload = {
-    medicineId: this.medicine.id,
-    quantity: Number(this.selectedQty) || 1,
-    productType: 'health'
-  };
+    const payload = {
+      medicineId: this.medicine.id,
+      quantity: Number(this.selectedQty) || 1,
+      productType: "health",
+    };
 
-  this.cartService.addItem(payload).subscribe({
-    next: () => alert(`${this.medicine.name} added to cart!`),
-    error: (err) => alert('Failed to add item to cart. Try again.')
-  });
+    this.cartService.addItem(payload).subscribe({
+      next: () => alert(`${this.medicine.name} added to cart!`),
+      error: () => alert("Failed to add item to cart. Try again."),
+    });
+  }
+
+  addToCartOtc() {
+    if (!this.product) return;
+
+    const payload = {
+      medicineId: this.product.id,
+      quantity: Number(this.selectedQty) || 1,
+      productType: "otc",
+    };
+
+    this.cartService.addItem(payload).subscribe({
+      next: () => alert(`${this.product.name} added to cart!`),
+      error: () => alert("Failed to add item to cart. Try again."),
+    });
+  }
 }
-
-addToCartOtc() {
-  if (!this.product) return;
-
-  const payload = {
-    medicineId: this.product.id,
-    quantity: Number(this.selectedQty) || 1,
-    productType: 'otc'
-  };
-
-  this.cartService.addItem(payload).subscribe({
-    next: () => alert(`${this.product.name} added to cart!`),
-    error: (err) => alert('Failed to add item to cart. Try again.')
-  });
-}
-
-  
-}
-
-

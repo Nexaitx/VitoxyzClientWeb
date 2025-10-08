@@ -30,7 +30,6 @@
                   </div>
                 </div>
 
-                <!-- Signup Form -->
                 <div *ngIf="authMode === 'signup'">
                   <app-sign-up [authMode]="authMode" (signupSuccess)="onLoginSuccess()"
                     (loadingChange)="handleLoadingChange($event)"></app-sign-up>

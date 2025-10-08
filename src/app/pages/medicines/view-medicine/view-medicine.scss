@@ -1,61 +1,29 @@
-.headings {
-    font-weight: 500 !important;
-}
+.headings { font-weight: 500 !important; }
+li, span, .description { font-weight: 400; font-size: 12px; }
 
-li, span, .description {
-    font-weight: 400;
-    font-size: 12px;
-}
-
-.boxes {
-    border-radius: 20px;
-}
-
-.progress {
-    height: 10px;
-}
 .product-detail {
-  .thumbs {
-    .thumb-img {
-      width: 50px;
-      margin-bottom: 8px;
-      border: 1px solid #ddd;
-      cursor: pointer;
-    }
-  }
+  .thumb-img { width: 60px; height: 60px; margin-bottom: 8px; border:1px solid #ddd; cursor:pointer; }
+  .main-img { width: 100%; height:400px; object-fit:contain; border:1px solid #ddd; border-radius:4px; }
+  .rating { margin: 8px 0; .badge { font-size: 14px; margin-right: 8px; } }
+  .price-box h4 { font-weight:600; small { text-decoration: line-through; } }
+  .quantity select { margin-left:6px; }
+  .delivery { font-size:14px; color:#007bff; }
+  .btnCls, .btn-primary { border:1px solid #0BBBC1; background-color:#0BBBC1; color:#fff; }
+  .btnCls:hover, .btn-primary:hover { background-color:rgb(48,197,202); border-color:rgb(35,194,199); }
+}
 
-  .main-img {
+/* MOBILE CAROUSEL */
+@media (max-width: 768px) {
+  .col-md-6.d-flex { display: none; }
+
+  .mobile-carousel {
     width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-
-  .rating {
-    margin: 8px 0;
-    .badge {
-      font-size: 14px;
-      margin-right: 8px;
-    }
-  }
-
-  .price-box {
-    h4 {
-      font-weight: 600;
-    }
-    small {
-      text-decoration: line-through;
-    }
-  }
-
-  .quantity {
-    margin: 12px 0;
-    select {
-      margin-left: 6px;
-    }
-  }
-
-  .delivery {
-    font-size: 14px;
-    color: #007bff;
+    .carousel-wrapper { overflow:hidden; position:relative; }
+    .carousel-track { display:flex; transition: transform 0.3s ease-in-out; }
+    .carousel-item { min-width:100%; display:flex; justify-content:center; }
+    .main-img-mobile { width:100%; max-width:300px; height:auto; object-fit:contain; border:1px solid #ddd; border-radius:4px; }
+    .dots { text-align:center; margin-top:8px; span { display:inline-block; width:8px; height:8px; border-radius:50%; background:#ccc; margin:0 4px; cursor:pointer; &.active{ background:#0BBBC1; } } }
+    .nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.7); border:none; font-size:24px; padding:4px 8px; cursor:pointer; }
+    .nav.prev { left:0; } .nav.next { right:0; }
   }
 }

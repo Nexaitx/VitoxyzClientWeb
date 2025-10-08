@@ -99,3 +99,51 @@
     }
   }
 }
+
+
+@media screen and (max-width: 576px) {
+  .login-screen {
+    padding: 0.5rem;
+
+    .right-panel {
+      padding: 0.5rem;
+
+      .form-container {
+        padding: 0.5rem;
+
+        form {
+          padding: 0;
+        }
+
+        .links {
+          font-size: 0.85rem;
+        }
+      }
+
+      h1.title {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  /* Reduce mat-tab padding */
+  .login-container.mat-elevation-z2 {
+    padding: 0.5rem;
+
+    .mat-tab-group {
+      .mat-tab-body {
+        padding: 0.5rem;
+      }
+    }
+
+    .auth-form {
+      padding: 0.5rem;
+    }
+  }
+
+  /* Toasts */
+  .toast-container {
+    right: 0.5rem;
+    bottom: 0.5rem;
+  }
+}
