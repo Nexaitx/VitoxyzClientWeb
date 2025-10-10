@@ -1,3 +1,16 @@
+<div *ngIf="showToast" class="custom-toast" [class]="'custom-toast--' + toastType">
+  <div class="toast-content">
+    <mat-icon class="toast-icon">
+      {{ toastType === 'success' ? 'check_circle' : 'error' }}
+    </mat-icon>
+    <span class="toast-message">{{ toastMessage }}</span>
+    <button class="toast-close" (click)="showToast = false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>
+
+<!-- template... -->
 <div class="d-block d-md-none">
 <app-banner-slider 
   [images]="[
@@ -18,12 +31,63 @@
   buttonLink="/medicines">
 </app-text-banner>
 
-<div class="category-page" [class.blur-content]="isLoading">
+<!-- ✅ NEW: Quantity Panel -->
+<div *ngIf="showQuantityPanel" class="quantity-panel-overlay" (click)="closeQuantityPanel()"></div>
+
+<div *ngIf="showQuantityPanel" class="quantity-panel">
+  <div class="panel-header">
+    <h4>Update Quantity</h4>
+    <button class="close-panel" (click)="closeQuantityPanel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  
+  <div class="quantity-controls">
+    <button class="quantity-btn" (click)="updateQuantity(-1)" [disabled]="quantity <= 1">−</button>
+    <div class="quantity-display">{{ quantity }}</div>
+    <button class="quantity-btn" (click)="updateQuantity(1)" [disabled]="quantity >= 10">+</button>
+  </div>
+  
+  <div class="unit-selection">
+    <h5>Unit Type</h5>
+    <div class="unit-buttons">
+      <button 
+        *ngFor="let unit of availableUnits" 
+        class="unit-btn" 
+        [class.active]="selectedUnit === unit"
+        (click)="selectUnit(unit)">
+        {{ unit }}
+      </button>
+    </div>
+  </div>
+  
+  <div class="strength-selection">
+    <h5>Strength</h5>
+    <div class="strength-buttons">
+      <button 
+        *ngFor="let strength of availableStrengths" 
+        class="strength-btn" 
+        [class.active]="selectedStrength === strength"
+        (click)="selectStrength(strength)">
+        {{ strength }}
+      </button>
+    </div>
+  </div>
+  
+  <div class="panel-actions">
+    <button class="cancel-btn" (click)="closeQuantityPanel()">Cancel</button>
+    <button class="update-btn" (click)="updateCart()">
+      Update Cart
+    </button>
+  </div>
+</div>
+
+<div class="category-page" [class.blur-content]="isLoading || showQuantityPanel">
   <!-- Full Screen Loader -->
   <div *ngIf="isLoading" class="full-screen-loader">
     <div class="loader-content">
       <mat-spinner diameter="50" color="primary"></mat-spinner>
-      <p>Products loadings...</p>
+      <p>Products loading...</p>
       <small>Category: {{ categoryName }}</small>
       <div class="loading-details">
         <small>Filter/Pagination update in progress...</small>
@@ -37,7 +101,7 @@
       <app-sidebar-filter
         [categories]="categoryList"
         [brands]="brandList"
-        [disabled]="isLoading"
+        [disabled]="isLoading || showQuantityPanel"
         (categorySelected)="filterByCategory($event)"  
         (brandSelected)="filterByBrands($event)">
       </app-sidebar-filter>
@@ -55,7 +119,7 @@
             <!-- Category Filter -->
             <span *ngIf="selectedCategory$ | async as selectedCategory" class="active-filter">
               Category: <strong>{{ getCategoryLabel(selectedCategory) }}</strong>
-              <button class="clear-filter-btn" (click)="clearFilters()" [disabled]="isLoading">
+              <button class="clear-filter-btn" (click)="clearFilters()" [disabled]="isLoading || showQuantityPanel">
                 ×
                 <span *ngIf="isLoading" class="button-loading"></span>
               </button>
@@ -64,7 +128,7 @@
             <!-- Brand Filters -->
             <span *ngFor="let brand of (selectedBrands$ | async) || []" class="active-filter">
               Brand: <strong>{{ getBrandLabel(brand) }}</strong>
-              <button class="clear-filter-btn" (click)="clearFilters()" [disabled]="isLoading">
+              <button class="clear-filter-btn" (click)="clearFilters()" [disabled]="isLoading || showQuantityPanel">
                 ×
                 <span *ngIf="isLoading" class="button-loading"></span>
               </button>
@@ -72,8 +136,6 @@
           </div>
         </div>
 
-        <!-- <p class="product-count">{{ totalProducts }} products found</p> -->
-        
         <!-- Loading Indicator in Header -->
         <div *ngIf="isLoading" class="header-loading">
           <mat-spinner diameter="20" color="primary"></mat-spinner>
@@ -122,6 +184,29 @@
                     <p *ngIf="product.mrpOld" class="mrp">MRP ₹{{ product.mrpOld }}</p>
                     <p class="current-price">MRP ₹{{ product.mrp }}</p>
                   </div>
+                  
+                  <!-- ✅ UPDATED: Add to Cart Button with Instant Feedback -->
+               <!-- ✅ UPDATED: Add to Cart Button with proper implementation -->
+
+
+<button 
+  class="add-to-cart-btn"
+  [class.adding]="isAddingToCart(product.id)"
+  [class.added]="isAddedToCart(product.id)"
+  (click)="addToCart(product, $event)"
+  [disabled]="isLoading || isAddingToCart(product.id) || showQuantityPanel"
+  mat-raised-button
+  color="primary"
+>
+  <mat-icon>
+    {{ isAddedToCart(product.id) ? 'check' : 
+        isAddingToCart(product.id) ? 'hourglass_empty' : 'add_shopping_cart' }}
+  </mat-icon>
+  <span>
+    {{ isAddingToCart(product.id) ? 'Adding...' : 
+        isAddedToCart(product.id) ? 'Added!' : 'Add' }}
+  </span>
+</button>
                 </div>
               </mat-card-content>
             </mat-card>
@@ -132,7 +217,7 @@
               <p class="no-products-message">
                 Sorry, {{ categoryName }} Product not found.
               </p>
-              <button class="clear-filter-btn-large" (click)="clearFilters()" [disabled]="isLoading">
+              <button class="clear-filter-btn-large" (click)="clearFilters()" [disabled]="isLoading || showQuantityPanel">
                 <span *ngIf="isLoading" class="button-spinner"></span>
                 Clear Filter
               </button>
@@ -165,5 +250,3 @@
 
 <app-footer></app-footer>
 <app-mobile-footer-nav></app-mobile-footer-nav>
-
-<!-- add to cart button -->

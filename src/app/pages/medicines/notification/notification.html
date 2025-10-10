@@ -1,0 +1,14 @@
+<!-- notification.html -->
+<div *ngIf="notificationService.notification$ | async as notification" 
+     class="notification"
+     [class]="'notification--' + notification.type">
+  <div class="notification-content">
+    <mat-icon class="notification-icon">
+      {{ getIcon(notification.type) }}
+    </mat-icon>
+    <span class="notification-message">{{ notification.message }}</span>
+    <button class="notification-close" (click)="clear()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>

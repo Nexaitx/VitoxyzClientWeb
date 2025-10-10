@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy,ElementRef,ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { 
   Observable, 
@@ -11,21 +11,24 @@ import {
   catchError, 
   startWith, 
   Subject,
-  takeUntil // ✅ ADD THIS IMPORT
+  takeUntil
 } from 'rxjs'; 
 import { of } from 'rxjs';
 import { ProductService } from '../../../core/product.service'; 
+import { CartService, CartItem } from '../../../core/cart.service'; // Import CartItem
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator'; 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { SidebarFilterComponent } from "../../shared/sidebar-filter/sidebar-filter";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 import { Footer } from "../../footer/footer";
 import { BannerSliderComponent } from "@src/app/shared/banner-slider/banner-slider";
 import { TextBanner } from "@src/app/shared/text-banner/text-banner";
+import { NotificationService } from '@src/app/core/notification.service';
 
 @Component({
   selector: 'app-category-products',
@@ -36,44 +39,61 @@ import { TextBanner } from "@src/app/shared/text-banner/text-banner";
     MatButtonModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatIconModule,
     SidebarFilterComponent,
     MobileFooterNavComponent,
     Footer,
     BannerSliderComponent,
     TextBanner
-],
+  ],
   templateUrl: './category-products.html', 
   styleUrls: ['./category-products.scss'] 
 })
-
-
-
 export class CategoryProductsComponent implements OnInit, OnDestroy {
   categoryName: string = '';
   currentEndpoint: string = 'products/filter';
-
+ showToast: boolean = false;
+  toastMessage: string = '';
+  toastType: 'success' | 'error' = 'success';
   // Products array for the current page
   products$: Observable<any[]>; 
   
   // Pagination State Variables
-  pageSize: number = 50; // Items per page
-  totalProducts: number = 0; // Total count from API response
-  currentPageIndex: number = 0; // Current page index (0-based)
+  pageSize: number = 50;
+  totalProducts: number = 0;
+  currentPageIndex: number = 0;
   
   // Loading state
   isLoading: boolean = false;
   
+  //  Quantity Panel State
+  showQuantityPanel: boolean = false;
+  selectedProduct: any = null;
+  quantity: number = 1;
+  selectedUnit: string = 'tablets';
+  selectedStrength: string = '500mg';
+  
+  // Available units and strengths
+  availableUnits: string[] = ['tablets', 'capsules', 'bottles', 'strips', 'pieces'];
+  availableStrengths: string[] = ['250mg', '500mg', '750mg', '1000mg', '5ml', '10ml'];
+  
+  // Button states
+  addingProducts: Set<string> = new Set();
+  addedProducts: Set<string> = new Set();
+  
   // Public subjects for template access
   currentPage$ = new BehaviorSubject<number>(0); 
   selectedCategory$ = new BehaviorSubject<string | null>(null);
-  selectedBrands$ = new BehaviorSubject<string[]>([]); // ✅ ADDED for brand filtering
-  
-  private destroy$ = new Subject<void>(); // ✅ ADDED for cleanup
+  selectedBrands$ = new BehaviorSubject<string[]>([]);
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private router: Router
+    private cartService: CartService,
+    private router: Router,
+    private notificationService: NotificationService
   ) { 
     this.products$ = new Observable<any[]>(); 
   }
@@ -87,23 +107,274 @@ export class CategoryProductsComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  /**
-   * Initialize the product data stream with loading states - ✅ FIXED
-   */
+  // ✅ UPDATED: Add to cart with proper implementation like CommonFilterComponent
+  // addToCart(product: any, event: Event) {
+  //   event.stopPropagation(); // Prevent navigation when clicking Add button
+    
+  //   const productId = product.id ?? product.productId;
+  //   if (!productId) {
+  //     console.error("Cannot add to cart: Product ID missing", product);
+  //     return;
+  //   }
+    
+  //   // Show instant feedback
+  //   this.addingProducts.add(productId);
+    
+  //   // Create cart item exactly like CommonFilterComponent
+  //   const cartItem: CartItem = {
+  //     id: productId.toString(),
+  //     name: product.name,
+  //     price: product.mrp, // Using mrp as price
+  //     mrp: product.mrpOld || product.mrp, // mrpOld as original price if available
+  //     image: this.getFirstImageUrl(product.imageUrl),
+  //     qty: product.packaging || '1',
+  //     count: 1,
+  //     productType: this.currentEndpoint.includes('otc') ? 'otc' : 'otc'
+  //   };
+
+  //   // Add to local cart
+  //   this.cartService.addToLocalCart(cartItem);
+    
+  //   // Show success feedback
+  //   this.addingProducts.delete(productId);
+  //   this.addedProducts.add(productId);
+    
+  //   // Show success message
+  //   console.log(`${product.name} added to cart successfully!`);
+    
+  //   // If user is logged in, also sync to backend
+  //   if (this.cartService.isLoggedIn()) {
+  //     this.cartService.addItem({
+  //       medicineId: productId.toString(),
+  //       quantity: 1,
+  //       productType: this.currentEndpoint.includes('otc') ? 'otc' : 'otc'
+  //     }).subscribe({
+  //       next: () => console.log('Item also added to backend'),
+  //       error: (err) => console.error('Failed to sync with backend:', err)
+  //     });
+  //   }
+
+  //   // Reset added state after 2 seconds
+  //   setTimeout(() => {
+  //     this.addedProducts.delete(productId);
+  //   }, 2000);
+  // }
+
+
+  private showNotification(message: string, type: 'success' | 'error' = 'success') {
+    this.toastMessage = message;
+    this.toastType = type;
+    this.showToast = true;
+    
+    setTimeout(() => {
+      this.showToast = false;
+    }, 3000);
+  }
+
+
+addToCart(product: any, event: Event) {
+  event.stopPropagation();
+  
+  const productId = product.id ?? product.productId;
+  if (!productId) {
+    console.error("Cannot add to cart: Product ID missing", product);
+    this.showNotification('Failed to add product to cart', 'error');
+    return;
+  }
+  
+  // Show instant feedback
+  this.addingProducts.add(productId);
+  
+  // Create cart item
+  const cartItem: CartItem = {
+    id: productId.toString(),
+    name: product.name,
+    price: product.mrp,
+    mrp: product.mrpOld || product.mrp,
+    image: this.getFirstImageUrl(product.imageUrl),
+    qty: product.packaging || '1',
+    count: 1,
+    productType: this.currentEndpoint.includes('otc') ? 'otc' : 'otc'
+  };
+
+  // Add to local cart
+  this.cartService.addToLocalCart(cartItem);
+  
+  //  custom toast instead of notification service
+  this.showNotification(`${product.name} added to cart successfully!`);
+  
+  // Show success feedback
+  this.addingProducts.delete(productId);
+  this.addedProducts.add(productId);
+  
+  // If user is logged in, also sync to backend
+  if (this.cartService.isLoggedIn()) {
+    this.cartService.addItem({
+      medicineId: productId.toString(),
+      quantity: 1,
+      productType: this.currentEndpoint.includes('otc') ? 'otc' : 'otc'
+    }).subscribe({
+      next: () => console.log('Item also added to backend'),
+      error: (err) => console.error('Failed to sync with backend:', err)
+    });
+  }
+
+  // Reset added state after 2 seconds
+  setTimeout(() => {
+    this.addedProducts.delete(productId);
+  }, 2000);
+}
+  //  Update cart with notification
+  updateCart() {
+    if (!this.selectedProduct) return;
+    
+    const productId = this.selectedProduct.id ?? this.selectedProduct.productId;
+    
+    console.log('🛒 Updating cart:', this.selectedProduct.name, 'Quantity:', this.quantity);
+    
+    this.addingProducts.add(productId);
+    
+    // Create updated cart item
+    const cartItem: CartItem = {
+      id: productId.toString(),
+      name: this.selectedProduct.name,
+      price: this.selectedProduct.mrp,
+      mrp: this.selectedProduct.mrpOld || this.selectedProduct.mrp,
+      image: this.getFirstImageUrl(this.selectedProduct.imageUrl),
+      qty: `${this.quantity} ${this.selectedUnit} - ${this.selectedStrength}`,
+      count: this.quantity,
+      productType: this.currentEndpoint.includes('otc') ? 'otc' : 'otc'
+    };
+
+    // Update in local cart
+    // this.cartService.updateLocalCartItem(cartItem);
+    
+    this.addingProducts.delete(productId);
+    this.closeQuantityPanel();
+    
+    // Show success notification
+    this.notificationService.showSuccess(`${this.selectedProduct.name} updated in cart successfully!`);
+    
+    // Show success feedback
+    this.addedProducts.add(productId);
+    setTimeout(() => {
+      this.addedProducts.delete(productId);
+    }, 2000);
+
+    // If user is logged in, sync with backend
+    if (this.cartService.isLoggedIn()) {
+      this.cartService.addItem({
+        medicineId: productId.toString(),
+        quantity: this.quantity,
+        productType: this.currentEndpoint.includes('otc') ? 'otc' : 'otc'
+      }).subscribe({
+        next: () => console.log('Cart updated on backend'),
+        error: (err) => console.error('Failed to sync with backend:', err)
+      });
+    }
+  }
+
+  //  Open quantity panel for existing items
+  openQuantityPanel(product: any, event: Event) {
+    event.stopPropagation();
+    this.selectedProduct = product;
+    this.quantity = 1; // Reset quantity
+    this.showQuantityPanel = true;
+  }
+
+  //  Close quantity panel
+  closeQuantityPanel() {
+    this.showQuantityPanel = false;
+    this.selectedProduct = null;
+  }
+
+  //  Update quantity
+  updateQuantity(change: number) {
+    const newQuantity = this.quantity + change;
+    if (newQuantity >= 1 && newQuantity <= 10) {
+      this.quantity = newQuantity;
+    }
+  }
+
+  //  Update cart with new quantity (for existing items)
+  // updateCart() {
+  //   if (!this.selectedProduct) return;
+    
+  //   const productId = this.selectedProduct.id ?? this.selectedProduct.productId;
+    
+  //   console.log('🛒 Updating cart:', this.selectedProduct.name, 'Quantity:', this.quantity);
+    
+  //   this.addingProducts.add(productId);
+    
+  //   // Create updated cart item
+  //   const cartItem: CartItem = {
+  //     id: productId.toString(),
+  //     name: this.selectedProduct.name,
+  //     price: this.selectedProduct.mrp,
+  //     mrp: this.selectedProduct.mrpOld || this.selectedProduct.mrp,
+  //     image: this.getFirstImageUrl(this.selectedProduct.imageUrl),
+  //     qty: `${this.quantity} ${this.selectedUnit} - ${this.selectedStrength}`,
+  //     count: this.quantity,
+  //     productType: this.currentEndpoint.includes('otc') ? 'otc' : 'otc'
+  //   };
+
+  //   // Update in local cart
+  //   // this.cartService.updateLocalCartItem(cartItem);
+    
+  //   this.addingProducts.delete(productId);
+  //   this.closeQuantityPanel();
+    
+  //   // Show success feedback
+  //   this.addedProducts.add(productId);
+  //   setTimeout(() => {
+  //     this.addedProducts.delete(productId);
+  //   }, 2000);
+
+  //   // If user is logged in, sync with backend
+  //   if (this.cartService.isLoggedIn()) {
+  //     this.cartService.addItem({
+  //       medicineId: productId.toString(),
+  //       quantity: this.quantity,
+  //       productType: this.currentEndpoint.includes('otc') ? 'otc' : 'otc'
+  //     }).subscribe({
+  //       next: () => console.log('Cart updated on backend'),
+  //       error: (err) => console.error('Failed to sync with backend:', err)
+  //     });
+  //   }
+  // }
+
+  //  Select unit
+  selectUnit(unit: string) {
+    this.selectedUnit = unit;
+  }
+
+  //  Select strength
+  selectStrength(strength: string) {
+    this.selectedStrength = strength;
+  }
+
+  //  Check button states
+  isAddingToCart(productId: string): boolean {
+    return this.addingProducts.has(productId);
+  }
+
+  isAddedToCart(productId: string): boolean {
+    return this.addedProducts.has(productId);
+  }
+
   private initializeProductStream(): void {
     const dataStream$ = combineLatest([
-      this.route.paramMap.pipe(startWith(new Map())), // ✅ FIX: Add startWith
-      this.route.queryParamMap.pipe(startWith(new Map())), // ✅ FIX: Add startWith
-      this.currentPage$.pipe(startWith(0)), // ✅ FIX: Add startWith
-      this.selectedCategory$.pipe(startWith(null)), // ✅ FIX: Add startWith
-      this.selectedBrands$.pipe(startWith([])) // ✅ FIX: Add startWith
+      this.route.paramMap.pipe(startWith(new Map())),
+      this.route.queryParamMap.pipe(startWith(new Map())),
+      this.currentPage$.pipe(startWith(0)),
+      this.selectedCategory$.pipe(startWith(null)),
+      this.selectedBrands$.pipe(startWith([]))
     ]).pipe(
-      takeUntil(this.destroy$) // ✅ NOW WORKING - no error
+      takeUntil(this.destroy$)
     );
 
     this.products$ = dataStream$.pipe(
       tap(() => {
-        // ✅ HAR FILTER/PAGINATION CHANGE PAR LOADING START - NOW WORKING
         console.log('🔄 Loading started - filter/pagination change');
         this.isLoading = true;
       }),
@@ -114,7 +385,6 @@ export class CategoryProductsComponent implements OnInit, OnDestroy {
           page: page
         });
         
-        // Path se category (default)
         const categoryFromPath = params.get('category') || 'Unknown Category';
         this.categoryName = selectedCategory || categoryFromPath;
         this.currentEndpoint = queryParams.get('endpoint') || 'products/filter';
@@ -125,9 +395,8 @@ export class CategoryProductsComponent implements OnInit, OnDestroy {
           this.categoryName,
           page,
           this.pageSize,
-          selectedBrands // ✅ NOW USING selectedBrands
+          selectedBrands
         ).pipe(
-          // ✅ API call complete hone par loading stop karein - RELIABLE
           finalize(() => {
             console.log('✅ Loading completed');
             this.isLoading = false;
@@ -154,13 +423,8 @@ export class CategoryProductsComponent implements OnInit, OnDestroy {
     );
   }
 
-  /**
-   * Pagination event handler - ✅ IMPROVED
-   */
   handlePageEvent(event: PageEvent): void {
     console.log('🔄 Pagination changed:', event);
-    
-    // ✅ IMMEDIATE LOADING TRIGGER
     this.isLoading = true;
     
     if (event.pageIndex !== this.currentPageIndex || event.pageSize !== this.pageSize) {
@@ -174,18 +438,15 @@ export class CategoryProductsComponent implements OnInit, OnDestroy {
     }
   }
   
-  /**
-   * Helper function to get the first image URL
-   */
   getFirstImageUrl(imageUrls: string): string {
     if (!imageUrls) return 'assets/placeholder.png'; 
     return imageUrls.split('|')[0].trim();
   }
 
   goToProduct(product: any) {
-    if (this.isLoading) {
+    if (this.isLoading || this.showQuantityPanel) {
       console.log('⏳ Loading in progress, product navigation blocked');
-      return; // ✅ Loading ke time navigation block
+      return;
     }
 
     const productId = product.id ?? product.productId;
@@ -222,52 +483,26 @@ export class CategoryProductsComponent implements OnInit, OnDestroy {
     { name: 'Zandu', count: 2 },
   ];
 
-  /**
-   * Category filter handler - ✅ NOW WORKING PROPERLY
-   */
   filterByCategory(category: string) {
     console.log('🔄 Category filter applied:', category);
-    
-    // ✅ IMMEDIATE LOADING TRIGGER
     this.isLoading = true;
-    
-    // ✅ Data stream update karo
     this.selectedCategory$.next(category); 
     this.currentPage$.next(0); 
-    
-    console.log('🎯 Loading state set to:', this.isLoading);
   }
 
-  /**
-   * Brand filter handler - ✅ NOW WORKING PROPERLY
-   */
   filterByBrands(brands: string[]) {
     console.log('🔄 Brands filter applied:', brands);
-    
-    // ✅ IMMEDIATE LOADING TRIGGER
     this.isLoading = true;
-    
-    // ✅ Data stream update karo
     this.selectedBrands$.next(brands);
     this.currentPage$.next(0);
-    
-    console.log('🎯 Loading state set to:', this.isLoading);
   }
 
-  /**
-   * Clear current filters and reset to default - ✅ NOW WORKING PROPERLY
-   */
   clearFilters(): void {
     console.log('🔄 Clearing filters');
-    
-    //  IMMEDIATE LOADING TRIGGER
     this.isLoading = true;
-    
     this.selectedCategory$.next(null);
     this.selectedBrands$.next([]);
     this.currentPage$.next(0);
-    
-    console.log('🎯 Loading state set to:', this.isLoading);
   }
 
   getCategoryLabel(value: string): string {
@@ -279,8 +514,4 @@ export class CategoryProductsComponent implements OnInit, OnDestroy {
     const brand = this.brandList.find(b => b.name === value);
     return brand ? brand.name : value;
   }
-
-
-  
-  
 }
