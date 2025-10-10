@@ -28,15 +28,15 @@
       
       <div class="col-3 quick-access-tile" (click)="goToPage('pharmacy')">
         <div class="tile-icon-box">
-          <img src="../../../assets/icons/pharmacy-icon.png" alt="Pharmacy" class="img-fluid">
+          <img src="../../../assets/medicines/pharmacy.png" alt="Pharmacy" class="img-fluid">
         </div>
         <p class="tile-title">Pharmacy</p>
-        <p class="tile-subtitle">Your Trusted Online Pharmacy </p>
+        <p class="tile-subtitle-illus">Your Trusted Online Pharmacy </p>
       </div>
 
       <div class="col-3 quick-access-tile" (click)="goToPage('book-staff')">
         <div class="tile-icon-box">
-          <img src="../../../assets/icons/lab-tests-icon.png" alt="book staff" class="img-fluid">
+          <img src="../../../assets/medicines/book staff.png" alt="book staff" class="img-fluid">
         </div>
         <p class="tile-title">Book Staff</p>
         <p class="tile-subtitle-illus">Your Help, On Demand</p>
@@ -44,7 +44,7 @@
 
       <div class="col-3 quick-access-tile" (click)="goToPage('subscription-plans')">
         <div class="tile-icon-box">
-          <img src="../../../assets/icons/consults-icon.png" alt="subscription-plans" class="img-fluid">
+          <img src="../../../assets/medicines/diet.png" alt="subscription-plans" class="img-fluid">
         </div>
         <p class="tile-title">Dieticiean</p>
         <p class="tile-subtitle-illus">Your Nutrition, Our Mission</p>
@@ -131,10 +131,10 @@
   <div class="carousel-container">
     
     <button
-      class="side-nav-button left-button mat-elevation-z4"
+      class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
       (click)="scrollCarousel('left')"
     >
-      &lt; </button>
+       </button>
 
     <div #categoryCarouselWrapper class="carousel-wrapper">
       <mat-card
@@ -150,10 +150,10 @@
     </div>
 
     <button
-      class="side-nav-button right-button mat-elevation-z4"
+      class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
       (click)="scrollCarousel('right')"
     >
-      &gt; </button>
+     </button>
     
   </div>
 </div>
