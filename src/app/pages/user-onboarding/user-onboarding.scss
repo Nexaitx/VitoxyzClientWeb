@@ -174,7 +174,7 @@ input.form-control:focus {
   border: none !important;
   color: #0BBBC1;
   font-size: 18px;
-  padding-top: 10px;
+  padding-top: 6px;
 }
 
 select.form-select {
@@ -191,10 +191,10 @@ select.form-select {
   left: 22px;
   color: #0BBBC1;
   font-size: 16px;
-  pointer-events: none; /* Prevent blocking clicks in input */
+  pointer-events: none !important; /* Prevent blocking clicks in input */
 }
 .input-with-icon {
-  position: relative;
+  position: relative !important;
   display: block;
 }
 
@@ -205,7 +205,7 @@ select.form-select {
   transform: translateY(-50%);
   color: #0BBBC1;
   font-size: 18px;
-  pointer-events: none; /* don’t block typing */
+  pointer-events: none !important; /* don’t block typing */
   z-index: 2;
 }
 
@@ -243,8 +243,13 @@ select.form-select {
   }
 
   .form-control.with-icon {
-    padding-left: 44px !important;  // always leave space for the icon
-  }
+  padding-left: 42px !important; /* space for icon */
+  border-radius: 50px;
+  background-color: #F9FAFC;
+  border: 1px solid #E5E7EB;
+  font-size: 14px;
+  color: #333;
+}
 
   .form-control.with-icon.is-invalid {
     padding-left: 44px !important;  // don’t shrink when invalid
@@ -434,8 +439,16 @@ input.form-control.with-icon:focus {
   border-right: 0;
 }
 
-
-
+.form-control.with-icon:focus {
+  border-color: #0BBBC1 !important;
+  box-shadow: none !important;
+}
+.address {
+    position: absolute;
+    left: 22px;
+    top: 37px;
+    color: #09b8c2;
+}
 .main-container {
   width: 100%;
   max-width: 900px;
@@ -555,7 +568,9 @@ input.form-control.with-icon:focus {
   input.form-control.with-icon {
     padding-left: 28px;
   }
-
+.form-control.with-icon {
+     padding-left: 36px !important;
+  }
   /* Radios stack */
   .form-check-inline {
     display: block !important;

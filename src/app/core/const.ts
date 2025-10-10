@@ -10,7 +10,7 @@ export const ENDPOINTS = {
   LOGIN: "/user/loginWithPasswordUser",
   SIGN_UP: "/user/signup",
   USER_PROFILE: "/user/profile",
-  BOOK_STAFF: "/user/create-booking",
+  BOOK_STAFF: "/user/complex-booking",
   CATEGORIES: "/categories",
   SUB_CATEGORIES: "/subcategories",
   SEND_OTP: "/user/otp",
@@ -32,7 +32,7 @@ export const ENDPOINTS = {
   BOOKING_RESPONSE: "/user/booking-response",
   SUBSCRIPTION_PLANS: "/user/subscription/plans",
   REMOVE_STAFF: "/user/remove-staff/{bookingId}",
-  BOOK_SINGLE_STAFF: "/user/create-booking",
+  BOOK_SINGLE_STAFF: "/user/complex-booking",
   UPDATE_PROFILE: "/user/update-profile",
   PRODUCT_FILTER: "/products/filter",
 };

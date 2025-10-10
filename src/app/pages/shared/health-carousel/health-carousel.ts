@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, ElementRef, ViewChild, HostListener } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ElementRef, ViewChild, HostListener, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -15,7 +15,7 @@ export interface HealthItem {
   templateUrl: './health-carousel.html',
   styleUrls: ['./health-carousel.scss']
 })
-export class HealthCarouselComponent implements OnInit, OnDestroy {
+export class HealthCarouselComponent implements AfterViewInit , OnDestroy {
   @Input() items: HealthItem[] = [];
   @ViewChild('carouselTrack', { static: true }) carouselTrack!: ElementRef;
   
@@ -32,7 +32,7 @@ export class HealthCarouselComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.checkMobileView();
     this.updateVisibleItems();
 
