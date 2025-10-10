@@ -79,7 +79,7 @@ export const routes: Routes = [
  { path: 'medicines/:id', loadComponent: () => import('./pages/medicines/view-medicine/view-medicine').then(m => m.ViewMedicine) },
       {
         path: 'orders',
-        loadComponent: () => import('./pages/orders/orders').then(m => m.Orders),
+        loadComponent: () => import('./pages/medicines/order-history/order-history').then(m => m.OrderHistoryComponent),
       },
       {
         path: 'help',
@@ -87,7 +87,10 @@ export const routes: Routes = [
       },
      { path: 'medicine/:id', component: ViewMedicine }, 
 
-
+ { 
+    path: 'order/:orderId', 
+    loadComponent: () => import('./pages/shared/order-details').then(c => c.OrderDetailsComponent)
+  },
 
       {
         path: '',

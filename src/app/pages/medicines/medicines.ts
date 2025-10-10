@@ -258,11 +258,11 @@ export class Medicines implements AfterViewInit {
     { name: 'Women Care', apiValue: 'Shampoo', cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/women care.png', altText: 'Hair Care Products' },
     { name: 'Sexual Wellness', apiValue: 'Condom', cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/sexual wellness.png', altText: 'Sexual Wellness Products' },
     { name: 'Oral Care', apiValue: 'Oral Gel', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/oral care.png', altText: 'Oral care Wellness Products' },
-    { name: 'Elder Care', apiValue: 'Mother Tincture', cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/', altText: 'Oral care Wellness Products' },
-    { name: 'Baby Care', apiValue: 'Nipple', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/', altText: 'Oral care Wellness Products' },
+    { name: 'Elder Care', apiValue: 'Mother Tincture', cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/eldercare.png', altText: 'Oral care Wellness Products' },
+    { name: 'Baby Care', apiValue: 'Nipple', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/Baby Care.png', altText: 'Oral care Wellness Products' },
     { name: 'Men Care', apiValue: 'Mouth Wash', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/mens care.png', altText: 'Oral care Wellness Products' },
     { name: 'Ayurveda', apiValue: 'Face Pack', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.png', altText: 'Oral care Wellness Products' },
-    { name: 'Pet Care', apiValue: 'Pet Food', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/', altText: 'Oral care Wellness Products' },
+    { name: 'Pet Care', apiValue: 'Pet Food', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/petcare.png', altText: 'Oral care Wellness Products' },
 
     // { name: 'Oral Care', apiValue: 'Oralcare', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
 
@@ -501,34 +501,34 @@ healthItems = [
 ];
 
 healthItems1 = [
-  { image: '../../../assets/medicines/1.png', label: 'Pet Care', link: '/products/Lancet' },
-  { image: '../../../assets/medicines/1.png', label: 'Vitamins & Supplements', link: '/products/HeartRate' },
+  { image: '../../../assets/medicines/petcare.png', label: 'Pet Care', link: '/products/Lancet' },
+  { image: '../../../assets/medicines/.png', label: 'Vitamins & Supplements', link: '/products/HeartRate' },
   { image: '../../../assets/medicines/ayurveda.png', label: 'Ayurvedic Wellness', link: '/products/StomachCare' },
-  { image: '../../../assets/medicines/1.png', label: 'Homeopathic Medicine', link: '/products/LiverCare' },
-  { image: '../../../assets/medicines/5.png', label: 'Monitoring Devices', link: '/products/EyeCare' },
+  { image: '../../../assets/medicines/homopathy.png', label: 'Homeopathic Medicine', link: '/products/LiverCare' },
+  { image: '../../../assets/medicines/.png', label: 'Monitoring Devices', link: '/products/EyeCare' },
   { image: '../../../assets/medicines/sexual wellness.png', label: 'Sexual Wellness', link: '/products/BoneJoint' },
   { image: '../../../assets/medicines/.png', label: 'Food & Nutrition', link: '/products/KidneyCare' },
-  { image: '../../../assets/medicines/.png', label: 'Fitness & Health', link: '/products/DermaCare' },
+  { image: '../../../assets/medicines/FItness And health.png', label: 'Fitness & Health', link: '/products/DermaCare' },
     { image: '../../../assets/medicines/skin care.png', label: 'Skin Care', link: '/products/KidneyCare' },
 
         { image: '../../../assets/medicines/mens care.png', label: 'Men Care', link: '/products/KidneyCare' },
 
-            { image: '../../../assets/medicines/.png', label: 'Pain Relief', link: '/products/KidneyCare' },
+            { image: '../../../assets/medicines/pain relief.png', label: 'Pain Relief', link: '/products/KidneyCare' },
 
                 { image: '../../../assets/medicines/.png', label: 'Cardiac Care', link: '/products/KidneyCare' },
     { image: '../../../assets/medicines/.png', label: 'Digestive HealthClean Environment Essentials ', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/.png', label: 'Diabetes', link: '/products/KidneyCare' },
+    { image: '../../../assets/medicines/daibities.png', label: 'Diabetes', link: '/products/KidneyCare' },
         { image: '../../../assets/medicines/hair care.png', label: 'Hair Care', link: '/products/KidneyCare' },
 
-            { image: '../../../assets/medicines/.png', label: 'Oral Care', link: '/products/KidneyCare' },
+            { image: '../../../assets/medicines/oral care.png', label: 'Oral Care', link: '/products/KidneyCare' },
                 { image: '../../../assets/medicines/.png', label: 'Respiratory Care', link: '/products/KidneyCare' },
     { image: '../../../assets/medicines/.png', label: 'Mental Wellness ', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/.png', label: 'Baby Care ', link: '/products/KidneyCare' },
+    { image: '../../../assets/medicines/Baby Care.png', label: 'Baby Care ', link: '/products/KidneyCare' },
 
     { image: '../../../assets/medicines/women care.png', label: 'Women Care', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/.png', label: 'First Aid', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/.png', label: 'Supports & Braces', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/.png', label: 'Cold, Cough & Fever ', link: '/products/KidneyCare' },
+    { image: '../../../assets/medicines/fiRST AID.png', label: 'First Aid', link: '/products/KidneyCare' },
+    { image: '../../../assets/medicines/Sup[port and braces.png', label: 'Supports & Braces', link: '/products/KidneyCare' },
+    { image: '../../../assets/medicines/Colds, cough , and fever.png', label: 'Cold, Cough & Fever ', link: '/products/KidneyCare' },
 
 
 

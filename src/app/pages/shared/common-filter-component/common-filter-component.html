@@ -1,46 +1,84 @@
+<div *ngIf="showToast" class="custom-toast" [class]="'custom-toast--' + toastType">
+  <div class="toast-content">
+    <span class="toast-icon">
+      {{ toastType === 'success' ? '✓' : '✕' }}
+    </span>
+    <span class="toast-message">{{ toastMessage }}</span>
+    <button class="toast-close" (click)="showToast = false">
+      ×
+    </button>
+  </div>
+</div>
+
 <div class="product-carousel-section">
   <div class="section-header">
     <h2>{{ title }}</h2>
-    <button mat-button color="primary" (click)="seeAllProducts()">
+    <span class="seebtncls" (click)="seeAllProducts()">
       See All
-    </button>
+    </span>
   </div>
 
   <div class="carousel-container">
+    <button class="side-nav-button left-button" (click)="scrollCarousel('left')">
+      &#10094;
+    </button>
+    <button class="side-nav-button right-button" (click)="scrollCarousel('right')">
+      &#10095;
+    </button>
+
     <div #productCarouselWrapper class="carousel-wrapper">
       <ng-container *ngIf="products$ | async as products">
         <mat-card
-          *ngFor="let product of products" 
+          *ngFor="let product of products"
           class="product-card mat-elevation-z4"
           (click)="goToProduct(product)"
           style="cursor: pointer;"
         >
-          <img 
-            mat-card-image 
-            [src]="getFirstImageUrl(product.imageUrl)" 
-            [alt]="product.name" 
+          <img
+            mat-card-image
+            [src]="getFirstImageUrl(product.imageUrl)"
+            [alt]="product.name"
+            class="product-image"
           />
-          
+
           <mat-card-content>
+            <div class="rating-badge">4.4 &#9733;</div>
+
             <h3 class="product-name">{{ product.name }}</h3>
-            <div class="product-details">
-              <div class="rating-info">
-                <span class="rating-value">4.4 review</span>
-                <!-- <span class="ratings-count">| {{ product.mrp }} </span>  -->
-              </div>
-              
-              <!-- Price and Add to Cart Container -->
-              <div class="price-cart-container">
+            <p class="product-form">{{ product.form }}</p>
+
+            <div class="price-details-group">
                 <div class="price-info">
-                  <p class="current-price">MRP ₹{{ product.mrp }}</p>
+                    <p class="current-price">{{ product.price | currency:'INR':'symbol':'1.0-0' }}</p>
+                    <div class="discount-mrp-group">
+                      <span class="mrp">{{ product.mrp | currency:'INR':'symbol':'1.0-0' }}</span>
+                      <span class="discount-percent" *ngIf="getDiscountPercent(product.price, product.mrp) > 0">
+                        {{ getDiscountPercent(product.price, product.mrp) }}% off
+                      </span>
+                    </div>
                 </div>
-                
-                <!-- Add to Cart Button - Mobile Only -->
-                <button class="add-button mobile-only" (click)="$event.stopPropagation(); addToCart(product)">
-                  Add
-                </button>
-              </div>
+                <!-- <p class="delivery-time">Get in 30 mins</p> -->
             </div>
+            
+            <!-- ✅ IMPROVED: Add button with loading indicator -->
+            <!-- <button 
+              class="add-button" 
+              (click)="addToCart(product, $event)"
+              [disabled]="isLoading(product.id || product.productId)"
+            >
+              <span *ngIf="!isLoading(product.id || product.productId)">Add</span>
+              <div *ngIf="isLoading(product.id || product.productId)" class="button-loading">
+                <mat-spinner diameter="16" strokeWidth="2"></mat-spinner>
+                <span>Adding...</span>
+              </div>
+            </button> -->
+
+              <button 
+              class="add-button" 
+              (click)="addToCart(product, $event)"
+            >
+              Add
+            </button>
           </mat-card-content>
         </mat-card>
       </ng-container>
