@@ -7,12 +7,7 @@
        routerLinkActive="active">
 
       <div class="icon-wrapper d-flex align-items-center justify-content-center" [class.special-icon-wrapper]="item.isSpecial">
-        <i class="bi" [class]="item.icon"></i>
-        
-        <div *ngIf="item.isSpecial" class="special-content">
-          <p class="special-text">Get</p>
-          <p class="special-subtext">Care Plan</p>
-        </div>
+        <i class="fa-solid " [class]="item.icon"></i>
       </div>
       
       <span class="nav-label" [class.d-none]="item.isSpecial">{{ item.label }}</span>

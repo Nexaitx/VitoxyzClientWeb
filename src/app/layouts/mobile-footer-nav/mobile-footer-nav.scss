@@ -18,24 +18,8 @@
   transition: color 0.3s ease;
 
   &.active {
-    color: #000; // Active link color (Black/Dark)
+    color: #0bbbc1; // Active link color (Black/Dark)
     font-weight: 600;
-  }
-  
-  // Styles for the standard icon wrapper (Home, Plans, Tests, Profile)
-  .icon-wrapper {
-    width: 24px;
-    height: 24px;
-    font-size: 24px; 
-    
-    // Icon color for standard items
-    .bi {
-      color: #555;
-    }
-  }
-
-  &.active .icon-wrapper .bi {
-    color: #000; // Active icon color
   }
 }
 
@@ -52,21 +36,6 @@
   max-width: 20%;
   position: relative;
   top: -15px; // Push it up to make it stand out
-
-  .special-icon-wrapper {
-    // Large circular background
-    width: 60px; 
-    height: 60px;
-    border-radius: 50%;
-    background-color: #fce4b3; // Light orange/yellow color from image
-    border: 3px solid #fff; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease;
-    
-    .bi {
-      display: none; // Hide the standard icon
-    }
-  }
 
   .special-content {
     position: absolute;

@@ -20,7 +20,7 @@
    
     <div class="ms-auto d-flex align-items-center">
       <button class="btn border-0" (click)="goToCart()" aria-label="Cart">
-        <i class="bi bi-cart-plus fs-4 text-white"></i>
+        <i class="fa fa-bag-shopping fs-4 text-white"></i>
       </button>
     </div>
    
@@ -112,7 +112,7 @@
   </div>
 
   <ul class="list-unstyled pt-2 pb-3">
-    <li *ngFor="let item of menuItems; let i = index" class="mobile-menu-item">
+    <li *ngFor="let item of menuItems; let i = index" class="mobile-menu-item py-0">
      
       <ng-container *ngIf="!item.dropdown">
         <a class="d-block py-2 ps-3" (click)="closeSidebar()" [routerLink]="item.path" routerLinkActive="active">
@@ -120,7 +120,6 @@
         </a>
       </ng-container>
 
-     
       <ng-container *ngIf="item.dropdown">
         <button class="btn w-100 text-start py-2 d-flex justify-content-between align-items-center ps-3"
                 (click)="toggleSubmenu(i)" [attr.aria-expanded]="isSubmenuOpen(i)">
