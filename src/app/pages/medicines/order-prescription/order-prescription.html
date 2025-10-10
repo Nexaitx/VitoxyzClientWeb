@@ -1,0 +1,160 @@
+<div class="order-prescription container py-4">
+  <div class="row gx-4">
+    <!-- LEFT column: Upload card -->
+    <div class="col-lg-6 mb-4">
+      <div class="card upload-card">
+        <div class="card-body">
+          <h4 class="title">Upload Prescription</h4>
+          <p class="muted">Please attach a prescription to proceed</p>
+
+          <div class="d-grid gap-3 mt-3">
+            <label for="fileInput" class="action-btn upload-new">
+              <div class="icon"><i class="bi bi-file-earmark-arrow-up"></i></div>
+              <div class="text">
+                <div class="label">UPLOAD NEW</div>
+                <div class="sub">Attach a photo or pdf of the prescription</div>
+              </div>
+            </label>
+            <input
+              id="fileInput"
+              type="file"
+              (change)="onFileSelected($event)"
+              hidden
+            />
+
+            <button
+              class="action-btn saved-btn"
+              type="button"
+              (click)="openSavedPrescriptions()"
+            >
+              <div class="icon"><i class="bi bi-folder2-open"></i></div>
+              <div class="text">
+                <div class="label">SAVED PRESCRIPTIONS</div>
+                <div class="sub">Choose from previously uploaded files</div>
+              </div>
+            </button>
+          </div>
+
+          <!-- Attached section -->
+          <div class="attached mt-4">
+            <h6 class="attached-title">Attached Prescription</h6>
+
+            <div *ngIf="!attachedFile" class="attached-placeholder">
+              <div class="placeholder-icon">
+                <i class="bi bi-file-earmark-text"></i>
+              </div>
+              <div class="placeholder-text muted">
+                Uploaded prescriptions will be shown here
+              </div>
+            </div>
+
+            <div *ngIf="attachedFile" class="attached-preview">
+              <div
+                class="preview-row d-flex align-items-center justify-content-between"
+              >
+                <div class="preview-name">{{ attachedFile.name }}</div>
+                <div class="preview-actions">
+                  <button
+                    class="btn btn-link p-0"
+                    (click)="removeAttachment()"
+                    aria-label="Remove"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+
+              <div class="image-wrap mt-3" *ngIf="attachedPreview">
+                <img [src]="attachedPreview" alt="Prescription preview" />
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex gap-2 mt-4">
+            <button class="btn btn-outline-secondary" (click)="goBack()">
+              Back
+            </button>
+            <button
+              class="btn btn-primary ms-auto continue-btn"
+              (click)="onContinue()"
+            >
+              CONTINUE
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT column: Guide card -->
+    <div class="col-lg-6 mb-4">
+      <div class="card guide-card">
+        <div class="card-body">
+          <h4 class="title">Guide for a valid prescription</h4>
+
+          <div class="guide-grid d-flex flex-column flex-lg-row gap-3 mt-3">
+            <div class="guide-art">
+              <div class="doc-sample">
+                <div class="doc-top">Dr. Varun, MBBS, MD</div>
+                <div class="doc-lines">
+                  <div class="line">
+                    Name of Patient ___________ Age __
+                  </div>
+                  <div class="line">
+                    Medicine Name • Strength • Dose • Duration
+                  </div>
+                </div>
+                <div class="doc-sign"></div>
+              </div>
+            </div>
+
+            <div class="guide-list">
+              <ul>
+                <li>Don't crop out any part of the image</li>
+                <li>Avoid blurred image</li>
+                <li>Include doctor & patient details + date</li>
+                <li>Medicines dispensed as per prescription</li>
+                <li>Supported files: jpeg, jpg, png, pdf</li>
+                <li>Max file size: 5MB</li>
+              </ul>
+            </div>
+          </div>
+
+          <p class="gov-note mt-3">
+            Government regulations require a valid prescription
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile bottom sheet -->
+<div class="mobile-sheet-backdrop" *ngIf="showMobileSheet" (click)="closeSheet()"></div>
+<div class="mobile-sheet" [class.active]="showMobileSheet">
+  <div class="sheet-header">
+    <h5>Upload prescriptions</h5>
+    <button class="close-btn" (click)="closeSheet()">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+  <div class="sheet-body">
+    <button class="sheet-action" (click)="triggerFileInput()">
+      <i class="bi bi-camera"></i> Take a photo
+    </button>
+    <button class="sheet-action" (click)="triggerFileInput()">
+      <i class="bi bi-image"></i> Choose from gallery
+    </button>
+    <button class="sheet-action" (click)="openSavedPrescriptions()">
+      <i class="bi bi-folder2-open"></i> Your prescriptions
+    </button>
+  </div>
+</div>
+
+<!-- Hidden file input for mobile -->
+<input
+  id="mobileFileInput"
+  type="file"
+  accept="image/*,.pdf"
+  (change)="onFileSelected($event)"
+  hidden
+/>

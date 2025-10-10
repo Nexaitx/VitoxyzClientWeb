@@ -51,12 +51,10 @@
 // .modal.show .modal-dialog {
 //     max-width: 800px !important
 // }
-.login-screen {
-  display: flex;
-  font-family: 'Segoe UI', sans-serif;
-  background: url('/assets/login/background.png') no-repeat center center;
-  height: 500px; /* Fixed height for consistency */
-}
+
+
+
+
 
 @media screen and (max-width: 768px) {
   .left-panel {
@@ -144,4 +142,58 @@ app-sign-up {
 
 .links:hover {
   color: #0BBBc1;
+}
+
+.login-screen {
+  display: flex;
+  font-family: 'Segoe UI', sans-serif;
+  background: url('/assets/login/background.png') no-repeat center center;
+  height: 500px;
+}
+
+/* ---------- MOBILE & TABLET RESPONSIVENESS ---------- */
+@media screen and (max-width: 992px) {
+  .login-screen {
+    flex-direction: column; /* Stack left & right panels */
+    height: auto; /* Let it grow naturally */
+
+    .left-panel {
+      display: none !important; /* Hide illustration for smaller screens */
+    }
+
+    .right-panel {
+      flex: unset;
+      width: 100%;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
+      .form-container {
+        max-width: 100%;
+        width: 100%;
+        padding: 4px;
+      }
+
+      h1.title {
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  /* Ensure modals don’t overflow on small screens */
+  .modal-dialog {
+    margin: 0.5rem;
+    max-width: 100% !important;
+  }
+
+  /* Adjust app-login/app-signup components height */
+  app-login,
+  app-sign-up,
+  app-forgot-password,
+  app-reset-password {
+    min-height: unset;
+  }
 }

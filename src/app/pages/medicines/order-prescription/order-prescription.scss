@@ -1,0 +1,229 @@
+/* Container */
+.order-prescription {
+  .card {
+    border-radius: 8px;
+    border: 1px solid #ececec;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+  }
+}
+
+/* Titles */
+.title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+.muted {
+  color: #6c757d;
+  margin: 0;
+}
+
+/* Upload card */
+.upload-card {
+  .action-btn {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 16px;
+    border-radius: 8px;
+    border: 1px solid #f0f0f0;
+    background: #fff;
+    cursor: pointer;
+    width: 100%;
+    .icon {
+      min-width: 44px;
+      min-height: 44px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+    .text .label {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .text .sub {
+      color: #8a8a8a;
+      font-size: 0.85rem;
+    }
+  }
+
+  .upload-new {
+    border-color: #efe6e6;
+    .icon {
+      color: #ef6b63;
+      background: #fff6f6;
+    }
+  }
+
+  .saved-btn {
+    border-color: #efe6e6;
+    background: #fafafa;
+    .icon {
+      color: #d35400;
+      background: #fff7f0;
+    }
+  }
+
+  .attached {
+    .attached-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .attached-placeholder {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 18px;
+      border-radius: 8px;
+      background: #fbfbfb;
+      border: 1px dashed #eee;
+      .placeholder-icon {
+        font-size: 1.4rem;
+        color: #bfc6c9;
+      }
+      .placeholder-text {
+        color: #9aa0a6;
+      }
+    }
+
+    .attached-preview {
+      .preview-row {
+        font-weight: 600;
+      }
+      .image-wrap img {
+        width: 100%;
+        max-height: 260px;
+        object-fit: contain;
+        border-radius: 6px;
+        border: 1px solid #f0f0f0;
+      }
+    }
+  }
+
+  .continue-btn {
+    background: #0bbbc1;
+    border-color: #0bbbc1;
+    color: #fff;
+    padding: 0.55rem 1.25rem;
+    border-radius: 6px;
+  }
+}
+
+/* Guide card */
+.guide-card {
+  .guide-grid {
+    gap: 16px;
+    .doc-sample {
+      width: 100%;
+      max-width: 320px;
+      min-height: 160px;
+      border: 1px solid #f2e8e8;
+      border-radius: 6px;
+      padding: 12px;
+      background: linear-gradient(180deg, #fff 0%, #fffaf8 100%);
+      .doc-top {
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .doc-lines {
+        color: #7a7a7a;
+        font-size: 0.9rem;
+      }
+    }
+
+    .guide-list ul {
+      padding-left: 18px;
+      margin: 0;
+      li {
+        margin-bottom: 8px;
+        color: #4d4d4d;
+        font-size: 0.95rem;
+      }
+    }
+  }
+
+  .gov-note {
+    color: #8a8a8a;
+    font-size: 0.9rem;
+  }
+}
+
+/* ---------- MOBILE SHEET ---------- */
+.mobile-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(1px);
+  z-index: 1040;
+  display: none;
+}
+
+.mobile-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: -100%;
+  background: #fff;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  z-index: 1050;
+  padding: 16px 20px;
+
+  .sheet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h5 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+    }
+  }
+
+  .sheet-body {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    .sheet-action {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      font-size: 0.95rem;
+      border: none;
+      background: #f8f8f8;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      text-align: left;
+    }
+  }
+
+  &.active {
+    bottom: 0;
+  }
+}
+
+/* Show popup only on mobile */
+@media (max-width: 767.98px) {
+  .order-prescription {
+    .row {
+      flex-direction: column;
+    }
+    .guide-card {
+      display: none;
+    }
+  }
+
+  .mobile-sheet-backdrop {
+    display: block;
+  }
+}

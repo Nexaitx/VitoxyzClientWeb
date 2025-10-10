@@ -56,7 +56,7 @@ export class CategoryProductsComponent implements OnInit, OnDestroy {
   products$: Observable<any[]>; 
   
   // Pagination State Variables
-  pageSize: number = 30; // Items per page
+  pageSize: number = 50; // Items per page
   totalProducts: number = 0; // Total count from API response
   currentPageIndex: number = 0; // Current page index (0-based)
   

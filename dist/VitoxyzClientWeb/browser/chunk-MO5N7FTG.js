@@ -1,1 +1,0 @@
-import{a}from"./chunk-MP5ISTNX.js";import"./chunk-AU2UZ6SR.js";import"./chunk-7RHT64GJ.js";import"./chunk-R46KFOJS.js";import"./chunk-QPED7LSZ.js";import"./chunk-BIW7B56T.js";import"./chunk-LYOH3LZA.js";import"./chunk-KSK4UUXF.js";import"./chunk-6LJ32Q7N.js";export{a as ViewMedicine};

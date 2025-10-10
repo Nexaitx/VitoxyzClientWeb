@@ -1,146 +1,121 @@
 <div class="login-container mat-elevation-z2">
   <mat-tab-group animationDuration="0ms" [(selectedIndex)]="selectedTabIndex">
-    <!-- <mat-tab label="Login with Email">
+
+    <mat-tab label="Login with Phone">
       <form [formGroup]="loginForm" (ngSubmit)="login()" class="auth-form p-4">
         <div class="form-group">
-          <label>Email</label>
-          <input class="form-control" formControlName="username" placeholder="Enter your email" required />
-          <span class="text-danger"
-            *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched">
-            Email is required.
+          <label>Phone Number</label>
+          <input
+            class="form-control"
+            formControlName="username"
+            placeholder="Enter your phone number"
+            maxlength="10"
+            required
+          />
+          <span
+            class="text-danger"
+            *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched"
+          >
+            Phone number is required.
           </span>
-          <span class="text-danger"
-            *ngIf="loginForm.get('username')?.hasError('username') && loginForm.get('username')?.touched">
-            Please enter a valid email address.
+          <span
+            class="text-danger"
+            *ngIf="loginForm.get('username')?.hasError('pattern') && loginForm.get('username')?.touched"
+          >
+            Please enter a valid 10-digit phone number.
           </span>
         </div>
 
         <div class="form-group my-2">
           <label>Password</label>
           <div class="input-group">
-            <input class="form-control" [type]="showPassword ? 'text' : 'password'" formControlName="password"
-              placeholder="Enter your password" required />
-            <button type="button" (click)="togglePasswordVisibility()"
-              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'" [attr.aria-pressed]="showPassword"
-              style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); border: none; background: transparent;">
-              <i class="bi" [ngClass]="showPassword ? 'bi-eye' : 'bi-eye-slash'"></i>
+            <input
+              class="form-control"
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Enter your password"
+              required
+            />
+            <button
+              type="button"
+              (click)="togglePasswordVisibility()"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+              [attr.aria-pressed]="showPassword"
+              style="
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                border: none;
+                background: transparent;
+              "
+            >
+              <i
+                class="bi"
+                [ngClass]="showPassword ? 'bi-eye' : 'bi-eye-slash'"
+              ></i>
             </button>
           </div>
-          <span class="text-danger"
-            *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+          <span
+            class="text-danger"
+            *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"
+          >
             Password is required.
           </span>
-          <span class="text-danger"
-            *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched">
+          <span
+            class="text-danger"
+            *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched"
+          >
             Password must be at least 6 characters long.
           </span>
         </div>
 
-          <div class="d-flex justify-content-between">
-                  <div class="form-check mb-3">
-                    <input type="checkbox" class="form-check-input" id="rememberMe" formControlName="rememberMe" />
-                    <label class="form-check-label" for="rememberMe">Remember Me</label>
-                  </div>
-                 <a class="links" (click)="goToForgotPassword()">Forgot Password?</a>
-                </div>
+        <div class="d-flex justify-content-between">
+          <div class="form-check mb-3">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="rememberMe"
+              formControlName="rememberMe"
+            />
+            <label class="form-check-label" for="rememberMe">Remember Me</label>
+          </div>
+          <a class="links" (click)="goToForgotPassword()">Forgot Password?</a>
+        </div>
 
-        <app-submission [buttonType]="'Login'" [disableButton]="isLoading"></app-submission>
+        <app-submission
+          [buttonType]="'Login'"
+          [disableButton]="isLoading"
+        ></app-submission>
       </form>
-    </mat-tab> -->
-
-<mat-tab label="Login with Phone">
-  <form [formGroup]="loginForm" (ngSubmit)="login()" class="auth-form p-4">
-    <div class="form-group">
-      <label>Phone Number</label>
-      <input
-        class="form-control"
-        formControlName="username"
-        placeholder="Enter your phone number"
-        maxlength="10"
-        required
-      />
-      <span
-        class="text-danger"
-        *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched"
-      >
-        Phone number is required.
-      </span>
-      <span
-        class="text-danger"
-        *ngIf="loginForm.get('username')?.hasError('pattern') && loginForm.get('username')?.touched"
-      >
-        Please enter a valid 10-digit phone number.
-      </span>
-    </div>
-
-    <div class="form-group my-2">
-      <label>Password</label>
-      <div class="input-group">
-        <input
-          class="form-control"
-          [type]="showPassword ? 'text' : 'password'"
-          formControlName="password"
-          placeholder="Enter your password"
-          required
-        />
-        <button
-          type="button"
-          (click)="togglePasswordVisibility()"
-          [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
-          [attr.aria-pressed]="showPassword"
-          style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); border: none; background: transparent;"
-        >
-          <i class="bi" [ngClass]="showPassword ? 'bi-eye' : 'bi-eye-slash'"></i>
-        </button>
-      </div>
-      <span
-        class="text-danger"
-        *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"
-      >
-        Password is required.
-      </span>
-      <span
-        class="text-danger"
-        *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched"
-      >
-        Password must be at least 6 characters long.
-      </span>
-    </div>
-
-    <div class="d-flex justify-content-between">
-      <div class="form-check mb-3">
-        <input
-          type="checkbox"
-          class="form-check-input"
-          id="rememberMe"
-          formControlName="rememberMe"
-        />
-        <label class="form-check-label" for="rememberMe">Remember Me</label>
-      </div>
-      <a class="links" (click)="goToForgotPassword()">Forgot Password?</a>
-    </div>
-
-    <app-submission
-      [buttonType]="'Login'"
-      [disableButton]="isLoading"
-    ></app-submission>
-  </form>
-</mat-tab>
-
+    </mat-tab>
 
     <mat-tab label="Login with Phone">
       <div class="p-4">
         @if(showPhoneInput) {
-        <form [formGroup]="phoneLoginForm" (ngSubmit)="sendOtp()" class="auth-form">
+        <form
+          [formGroup]="phoneLoginForm"
+          (ngSubmit)="sendOtp()"
+          class="auth-form"
+        >
           <div class="form-group mb-3">
             <label>Phone Number</label>
-            <input class="form-control" formControlName="phoneNumber" placeholder="e.g., +919876543210" required />
-            <span class="text-danger"
-              *ngIf="phoneLoginForm.get('phoneNumber')?.hasError('required') && phoneLoginForm.get('phoneNumber')?.touched">
+            <input
+              class="form-control"
+              formControlName="phoneNumber"
+              placeholder="e.g., +919876543210"
+              required
+            />
+            <span
+              class="text-danger"
+              *ngIf="phoneLoginForm.get('phoneNumber')?.hasError('required') && phoneLoginForm.get('phoneNumber')?.touched"
+            >
               Phone number is required.
             </span>
-            <span class="text-danger"
-              *ngIf="phoneLoginForm.get('phoneNumber')?.hasError('pattern') && phoneLoginForm.get('phoneNumber')?.touched">
+            <span
+              class="text-danger"
+              *ngIf="phoneLoginForm.get('phoneNumber')?.hasError('pattern') && phoneLoginForm.get('phoneNumber')?.touched"
+            >
               Please enter a valid phone number (e.g., +91XXXXXXXXXX).
             </span>
           </div>
@@ -149,26 +124,38 @@
         </form>
         } @else {
         <div>
-                  <form [formGroup]="phoneLoginForm" (ngSubmit)="verifyOtp()" class="auth-form">
+          <form
+            [formGroup]="phoneLoginForm"
+            (ngSubmit)="verifyOtp()"
+            class="auth-form"
+          >
+            <p class="otp-message">
+              Please enter the OTP we've shared to {{ maskedPhoneNumber }}
+            </p>
+            <div class="form-group mb-3">
+              <label>OTP</label>
+              <input
+                class="form-control"
+                formControlName="otpCode"
+                placeholder="Enter OTP"
+                required
+              />
+              <span
+                class="text-danger"
+                *ngIf="phoneLoginForm.get('otpCode')?.hasError('required') && phoneLoginForm.get('otpCode')?.touched"
+              >
+                OTP is required.
+              </span>
+              <span
+                class="text-danger"
+                *ngIf="phoneLoginForm.get('otpCode')?.hasError('pattern') && phoneLoginForm.get('otpCode')?.touched"
+              >
+                OTP must be 6 digits.
+              </span>
+            </div>
 
-          <p class="otp-message">Please enter the OTP we've shared to {{ maskedPhoneNumber }}</p>
-          <div class="form-group mb-3">
-            <label>OTP</label>
-            <input class="form-control" formControlName="otpCode" placeholder="Enter OTP" required />
-            <span class="text-danger"
-              *ngIf="phoneLoginForm.get('otpCode')?.hasError('required') && phoneLoginForm.get('otpCode')?.touched">
-              OTP is required.
-            </span>
-            <span class="text-danger"
-              *ngIf="phoneLoginForm.get('otpCode')?.hasError('pattern') && phoneLoginForm.get('otpCode')?.touched">
-              OTP must be 6 digits.
-            </span>
-          </div>
-
-
-          <app-submission [buttonType]="'Verify OTP'" >
-</app-submission>
-        </form>
+            <app-submission [buttonType]="'Verify OTP'"> </app-submission>
+          </form>
 
           <!-- <app-submission [buttonType]="'Verify OTP'" (submissionClick)="verifyOtp()">
           </app-submission> -->
@@ -179,7 +166,9 @@
             </ng-container>
 
             <ng-template #resendButton>
-              <button type="button" color="primary" (click)="resendOtp()">Resend OTP</button>
+              <button type="button" color="primary" (click)="resendOtp()">
+                Resend OTP
+              </button>
             </ng-template>
           </div>
         </div>
@@ -190,12 +179,21 @@
 </div>
 
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div id="loginToast" class="toast text-bg-success" role="alert" aria-live="assertive" aria-atomic="true">
+  <div
+    id="loginToast"
+    class="toast text-bg-success"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
     <div class="d-flex">
-      <div class="toast-body">
-        You're successfully logged in! 🎉
-      </div>
-      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      <div class="toast-body">You're successfully logged in! 🎉</div>
+      <button
+        type="button"
+        class="btn-close me-2 m-auto"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
     </div>
   </div>
 </div>

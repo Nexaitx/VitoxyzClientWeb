@@ -1,62 +1,43 @@
 @use "sass:color";
 
 $primary-color: #0BBBC1;
-$danger-color: #f44336; // Keep a red for emphasis if needed, but use primary for main action
+$danger-color: #f44336;
 $shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
-
+// .search-bar {
+//   margin-top: -68px; /* kept as in your original layout */
+//   margin-bottom: 68px;
+//   align-items: center;
+//   gap: 12px;
+// }
 .search-bar {
   background-color: #fff;
-  box-shadow: $shadow-light; /* Slightly softer shadow */
+  box-shadow: $shadow-light;
   border-radius: 50px;
   margin-top: 12px;
-  padding: 5px 15px; /* Thoda zyada padding */
-  transition: all 0.3s ease; /* Smooth transition for resizing/hover */
-  margin-bottom: 50px; /* Use SCSS for structure, remove inline style */
+  padding: 5px 15px;
+  transition: all 0.3s ease;
+  margin-bottom: 50px;
 
-  /* Location Section */
   .location {
-    flex-shrink: 0; /* Ensures it doesn't shrink unnecessarily */
-    padding: 0 10px; /* Custom padding for better control */
+    flex-shrink: 0;
+    padding: 0 10px;
 
-    i.bi {
-      font-size: 1.2rem; /* Thoda bada icon */
-      color: $primary-color;
+    i.bi { font-size: 1.2rem; color: $primary-color; }
 
-      &.bi-crosshair {
-        color: #999;
-        transition: color 0.2s;
-        
-        &:hover {
-          color: $primary-color; /* Hover effect */
-        }
-      }
-    }
+    & .bi-crosshair { color: #999; &:hover { color: $primary-color; } }
   }
-
-  /* Select Dropdown */
-  .form-select {
-    font-size: 0.95rem;
-    font-weight: 600; /* Bolder font */
-    width: auto;
-    cursor: pointer;
-    
-    // Custom focus state for accessibility
-    &:focus-visible {
-      outline: 2px solid $primary-color;
-      outline-offset: 1px;
-    }
-  }
-
-  /* Search Input */
+.location .location-action {
+  cursor: pointer;
+}
   .form-control {
-    height: 48px; /* Slightly taller for better touch target */
+    height: 48px;
     border-radius: 50px;
     border: 1px solid #e5e5e5;
-    background-color: #f0f0f0; /* Thoda darker background */
-    font-size: 1rem; /* Bada font size for readability */
+    background-color: #f0f0f0;
+    font-size: 1rem;
     transition: all 0.3s;
-    padding-left: 1.5rem; /* Zada padding */
-    padding-right: 3rem; /* Zada padding */
+    padding-left: 1.5rem;
+    padding-right: 3rem;
 
     &:focus {
       background-color: #fff;
@@ -65,101 +46,119 @@ $shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
   }
 
-  /* Search Icon */
-  i.bi-search {
-    font-size: 1.2rem;
-    color: #666;
-    transition: color 0.2s;
-    
-    &:hover {
-      color: $primary-color;
-    }
+  /* NEW: wrapper for the right-side area */
+  .quick-box {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
-  /* Quick Order Button */
-  .btn-danger {
+  /* Desktop big pill button (hidden on small screens via d-none d-md-*) */
+  .btn-quick {
     background-color: $primary-color;
     border: none;
     font-weight: 600;
-    transition: all 0.2s ease;
-    
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
     &:hover {
-      // 🟢 FIX APPLIED: Replaced darken() with color.adjust() 🟢
-      background-color: color.adjust($primary-color, $lightness: -10%); /* Subtle hover shade */
+      background-color: color.adjust($primary-color, $lightness: -10%);
       transform: translateY(-1px);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
   }
 
-  /* Offer Text */
+  /* MOBILE compact card */
+  .mobile-quick {
+    background: #efefef;
+    border-radius: 10px;
+    padding: 8px 10px;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 48px;
+    box-shadow: none;
+    width: auto;         /* stay compact */
+    align-self: center;  /* center when parent stacks vertically */
+
+    .mobile-quick-left { display: flex; align-items: center; gap: 0.5rem; }
+
+    .mobile-quick-icon {
+      background: #fff;
+      border-radius: 8px;
+      padding: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      i.bi { font-size: 1.1rem; color: $primary-color; }
+    }
+
+    .mobile-quick-label {
+      line-height: 1;
+      font-size: 0.95rem;
+      color: #222;
+    }
+
+    .btn-order-now {
+      background: #0BBBC1;
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 20px;
+      white-space: nowrap;
+      align-self: center;
+
+      &:hover {
+        opacity: 0.92;
+      }
+    }
+  }
+
   .small {
     color: #444 !important;
-    
-    i.bi-lightning-charge {
-      color: $danger-color !important;
-    }
+    i.bi-lightning-charge { color: $danger-color !important; }
   }
 }
 
+/* ------------ RESPONSIVENESS ------------ */
 
-/* ---------------------------------------------------- */
-/* 📱 RESPONSIVENESS (Mobile First) 📱                  */
-/* ---------------------------------------------------- */
-
+/* tablet-ish */
 @media (max-width: 992px) {
   .search-bar {
-    border-radius: 12px; /* Less rounded corners on tablet */
+    border-radius: 12px;
     padding: 10px;
-    
-    .search-box {
-        margin: 0 5px; /* Thoda kam margin */
-    }
+    .search-box { margin: 0 5px; }
   }
-  
-  /* Offer text hides earlier */
-  .d-md-inline {
-      display: none !important;
-  }
+  .d-md-inline { display: none !important; }
 }
 
+/* mobile */
 @media (max-width: 768px) {
   .search-bar {
-    /* Main container ko vertical stacking ke liye change karein */
     flex-direction: column;
     align-items: stretch !important;
     gap: 10px;
     padding: 15px;
   }
 
-  /* 1. Location Bar (Top) */
-  .location {
-    order: 1; /* Pehle location dikhega */
-    width: 100%;
-    justify-content: space-between;
-    padding: 0;
-
-    .form-select {
-        flex-grow: 1; /* Location dropdown puri space lega */
-    }
+  /* smaller screens spacing adjustments */
+@media (max-width: 575.98px) {
+  .search-bar {
+    margin-top: -40px;
+    margin-bottom: 40px;
   }
+}
+  /* ensure desktop large button stays hidden on mobile (bootstrap utility + fallback) */
+  .btn-quick { display: none !important; }
 
-  /* 2. Search Box (Middle) */
-  .search-box {
-    order: 2; /* Phir Search box */
-    width: 100%;
-    margin: 0;
-  }
+  /* override any legacy rule that forced .btn-danger to 100% width on mobile */
+  .btn-danger { width: auto !important; }
 
-  /* 3. Offer & Button (Bottom) */
-  .d-flex.align-items-center:last-child {
-    order: 3; /* Sabse aakhir mein Quick Order */
-    width: 100%;
-    justify-content: center !important; /* Button ko center mein laayein */
-    
-    .btn-danger {
-        width: 100%;
-        padding: 12px 0; /* Button ko bada karein */
-        height: auto;
-    }
-  }
+  /* keep the compact card small and centered */
+  .quick-box { width: 100%; justify-content: center; }
+  .mobile-quick { max-width: 360px; width: auto; }
 }

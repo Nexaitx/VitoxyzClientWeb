@@ -250,21 +250,21 @@
                               <label class="form-label">Shift Duration</label>
                               <select
                                 class="d-flex align-items-center counter-box mx-2"
-                                formControlName="shiftType"
+                                formControlName="preferredTimeSlot"
                                 [class.is-invalid]="
-                            shiftDetail.get('shiftType')?.invalid &&
-                            shiftDetail.get('shiftType')?.touched
+                            shiftDetail.get('preferredTimeSlot')?.invalid &&
+                            shiftDetail.get('preferredTimeSlot')?.touched
                           "
                               >
                                 <option
-                                  *ngFor="let type of shiftTypes"
+                                  *ngFor="let type of preferredTimeSlots"
                                   [value]="type"
                                 >
                                   {{ type }}
                                 </option>
                               </select>
-                              @if(shiftDetail.get('shiftType')?.invalid &&
-                              shiftDetail.get('shiftType')?.touched) {
+                              @if(shiftDetail.get('preferredTimeSlot')?.invalid &&
+                              shiftDetail.get('preferredTimeSlot')?.touched) {
                               <div class="invalid-feedback">
                                 Shift Type is required.
                               </div>

@@ -1,36 +1,36 @@
+
+
+
 .navbar {
   position: relative;
   z-index: 1055;
 }
-
-
+.navbcls{
+  margin-right: 174px;
+}
 .navbar-nav .nav-link.active.rounded-pill,
-.dropdown-item.active.rounded-pill, /* This styles the active dropdown item */
-.nav-item.dropdown.active.rounded-pill { /* Add this to style the parent dropdown */
-  background-color: #ffffff33; /* Light background for active pill */
+.dropdown-item.active.rounded-pill,
+.nav-item.dropdown.active.rounded-pill {
+  background-color: #ffffff33;
   padding-left: 1rem;
   padding-right: 1rem;
 }
 
-/* To ensure the last item doesn't have extra margin on the right */
 .navbar-nav .nav-item:last-child {
   margin-right: 0;
 }
 
 .separator-item {
-  color: white; /* Or your desired color */
-  padding: 0 0.2rem; /* Adjust as needed for less space */
-  display: flex; /* Use flexbox to align the content */
-  align-items: center; /* Vertically center the | */
+  color: white;
+  padding: 0 0.2rem;
+  display: flex;
+  align-items: center;
 }
 
 .dropdown-toggle::after {
-    border-top: none !important; 
-    border-right: none !important;
-    border-bottom: none !important;
-    border-left: none !important;
+  border: none !important;
 }
-.bi{
+.bi {
   color: #fff !important;
 }
 .main-content-area {
@@ -40,31 +40,129 @@
 
 .dropdown-menu {
   position: absolute;
-  z-index: 9999 !important; 
+  z-index: 9999 !important;
 }
 
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -280px; 
+  height: 100vh;
+  width: 280px;
+  background-color: #fff;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.2);
+  transition: left 0.28s cubic-bezier(.2,.9,.2,1);
+  z-index: 2000;
+  overflow-y: auto;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-header {
+  border-bottom: 1px solid #eee;
+}
+
+
+.sidebar .mobile-menu-item a,
+.sidebar .mobile-menu-item button {
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
+}
+.sidebar .mobile-menu-item a.active,
+.sidebar .mobile-menu-item button.active {
+  color: #0d6efd;
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  display: none;
+  z-index: 1999;
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+}
+
+.overlay.show {
+  display: block;
+  opacity: 1;
+}
+
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+
 @media (max-width: 991px) {
-  .dropdown-menu {
-    position: relative;
-    z-index: 1 !important;
+  .collapse.navbar-collapse {
+    display: none !important;
   }
 }
+
+.close-menu {
+    color:#333 !important;
+  }
+  
+
+
 
 .nav-item.dropdown,
 .navbar,
 .sidebar {
-  position: relative;
-  overflow: visible !important; 
+  overflow: visible !important;
+}
+
+.navbar .ms-auto.d-flex {
+  position: absolute;
+  right: 8px;
+}
+
+.destop-alignnment{
+  margin : 0px 32px;
 }
 
 
-.sidebar, .navbar, .nav-item {
-  overflow: visible !important; 
-  z-index: auto !important;     
+.sidebar ul {
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar ul li a,
+.sidebar ul li button {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.sidebar ul li button {
+  background: none;
+  border: none;
+  text-align: left;
+}
+
+.sidebar ul li a.active,
+.sidebar ul li button.active {
+  color: #0d6efd;
+}
+
+.sidebar ul li button i {
+  font-size: 0.9rem;
 }
 
 
-
+.sidebar {
+  padding-top: 0;
+}
 
 
 

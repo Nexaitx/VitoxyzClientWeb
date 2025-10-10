@@ -1,8 +1,9 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common'; // For NgFor
+
+
+import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
+import { CommonModule } from '@angular/common'; 
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { CdkMenuModule } from '@angular/cdk/menu';
-// Angular Material Imports
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +15,9 @@ declare var bootstrap: any;
 
 @Component({
   selector: 'app-header',
-  imports: [MatButtonModule,
+  
+  imports: [
+    MatButtonModule,
     CommonModule,
     RouterModule,
     FormsModule,
@@ -28,34 +31,39 @@ declare var bootstrap: any;
     RouterLink
   ],
   templateUrl: './header.html',
-  styleUrl: './header.scss'
+  styleUrls: ['./header.scss']
 })
-export class Header {
-  aadhaarNumber !: string;
-  otp !: string;
-  refId !: string;
+export class Header implements OnInit, OnDestroy {
+  aadhaarNumber!: string;
+  otp!: string;
+  refId!: string;
   verificationResult: any;
 
-  private profileService = inject(ProfileService)
+  private profileService = inject(ProfileService);
   public router = inject(Router);
   authMode: 'login' | 'signup' = 'login';
   isLoggedIn: boolean = false;
+  isSidebarOpen = false;
   isMobileMenuOpen = signal(false);
+
+  
+  openSubmenus = new Set<number>();
+
   menuItems = [
     { label: 'Medicines', path: '/medicines' },
     {
       label: 'Book Staff',
       dropdown: true,
       dropdownItems: [
-        { label: 'Nurse', path: '' },
-        { label: 'Physiotherapist', path: '' },
-        { label: 'Baby-Sitter', path: '' },
-        { label: 'Security Guard', path: '' },
-        { label: 'Psychiatrist', path: '' },
+        { label: 'Nurse', path: '/book-staff' },
+        { label: 'Physiotherapist', path: '/book-staff' },
+        { label: 'Baby-Sitter', path: '/book-staff' },
+        { label: 'Security Guard', path: '/book-staff' },
+        { label: 'Psychiatrist', path: '/book-staff' },
       ]
     },
     { label: 'Diet Plans', path: 'diet/user-onboarding' },
-    
+
     {
       label: 'Profile',
       icon: 'bi bi-person-circle',
@@ -69,14 +77,15 @@ export class Header {
       ]
     },
     { label: 'Need Help?', path: '/help' },
-  
   ];
 
-
-
   ngOnInit(): void {
-
     this.checkLoginStatus();
+  }
+
+  ngOnDestroy(): void {
+   
+    document.body.classList.remove('no-scroll');
   }
 
   checkLoginStatus(): void {
@@ -95,14 +104,54 @@ export class Header {
   }
 
   goToCart() {
-    console.log("go to cart");
-    
     this.router.navigate(['/cart']);
+  }
+ handleMenuNavigation(path: string) {
+    this.closeSidebar();
+
+    if (!this.isLoggedIn) {
+      // Not logged in → open auth modal
+      const modalEl = document.getElementById('authModal');
+      if (modalEl) {
+        const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+        modal.show();
+      }
+    } else {
+      // Logged in → navigate normally
+      this.router.navigate([path]);
+    }
+  }
+ 
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+    this.isMobileMenuOpen.update(m => !m);
+
+    if (this.isSidebarOpen) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+  }
+
+  closeSidebar() {
+    this.isSidebarOpen = false;
+    this.isMobileMenuOpen.set(false);
+    document.body.classList.remove('no-scroll');
+    this.openSubmenus.clear();
+  }
+
+  toggleSubmenu(idx: number) {
+    if (this.openSubmenus.has(idx)) this.openSubmenus.delete(idx);
+    else this.openSubmenus.add(idx);
+  }
+
+  isSubmenuOpen(idx: number): boolean {
+    return this.openSubmenus.has(idx);
   }
 
   toggleNavbar() {
     const navbar = document.getElementById('navbarNav');
-    this.isMobileMenuOpen.update((menu) => !menu);
+    this.isMobileMenuOpen.update(menu => !menu);
     if (!navbar) return;
     try {
       const instance = bootstrap.Collapse.getOrCreateInstance(navbar);

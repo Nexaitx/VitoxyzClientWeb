@@ -9,7 +9,7 @@ import { Router, RouterModule } from "@angular/router";
 
 @Component({
   selector: 'app-pharmacy',
-  imports: [CommonFilterComponent, BannerSliderComponent, TextBanner, HealthCarouselComponent, MobileFooterNavComponent, Footer],
+  imports: [CommonFilterComponent, BannerSliderComponent,  HealthCarouselComponent, MobileFooterNavComponent, Footer],
   templateUrl: './pharmacy.html',
   styleUrl: './pharmacy.scss'
 })

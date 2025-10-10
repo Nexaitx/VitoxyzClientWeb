@@ -90,7 +90,7 @@ interface Category {
     CommonFilterComponent,
     HealthCarouselComponent,
     BannerSliderComponent,
-    TextBanner,
+   
     MobileFooterNavComponent
 ],
   templateUrl: "./medicines.html",
