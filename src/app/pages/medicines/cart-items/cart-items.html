@@ -1,211 +1,70 @@
+<!-- cart-items.html (UPDATED with Payment Method Selection) -->
 <app-header></app-header>
 
-<!-- <div class="container">
-  <p class="text-muted my-2">
-    Home |
-    <span class="text-primary link" (click)="goToMedicines()">Medicine</span> |
-    <span class="text-primary link" (click)="goToViewMedicines()"
-      >View Medicine </span
-    >| Add to Cart
-  </p>
-
-  <div class="my-4">
-    <h5>1 Item Added</h5>
-    <small>Items not requiring prescriptions</small>
-  </div>
-
-  <div class="row">
-    <div class="col-4 col-sm-2 col-md-2 col-lg-1">
-      <img
-        src="../../../../assets/dettol.png"
-        alt="small-preview"
-        class="img-fluid"
-      />
-    </div>
-
-    <div class="col-8 col-sm-8 col-md-8 col-lg-5">
-      <h6>
-        Pain Relief Gel for Lower Back Pain, Joint Pain, Neck Pain & Sprain | by
-        Vitoxyz
-      </h6>
-      <small>Supports Energy Levels, Stamina & Vitality</small>
-
-      <div class="text-primary mt-3 mb-2"><u>Remove</u></div>
-    </div>
-
-    <div class="col-8 col-sm-2 col-md-3 col-lg-2">
-      <div class="quantity">
-        <h6>
-          <span>399</span><span class="text-muted strike">&nbsp;499</span
-          ><span class="text-primary">&nbsp;40%&nbsp;Off</span>
-        </h6>
-        <div class="input-group w-50 d-flex align-items-center">
-          <button
-            class="btn btn-outline-secondary action border-0 py-1"
-            type="button"
-          >
-            −
-          </button>
-          <input
-            type="text"
-            class="form-control measure text-center py-1"
-            value="00"
-          />
-          <button
-            class="btn btn-outline-secondary action-add border-0 py-1"
-            type="button"
-          >
-            +
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-12 col-sm-4 col-md-4 col-lg-4">
-      <h6>You can save extra ₹12 on this order</h6>
-      <small class="text-primary">Become a careplan member</small>
-
-      <div class="mt-2">
-        <p class="mb-1">
-          3 months membership for only <strong>&nbsp;165</strong>
-        </p>
-      </div>
-      <div class="row mb-2">
-        <button
-          class="col-12 col-lg-4 btn btn-sm btn-outline-primary rounded-pill me-2 px-3 mb-1"
-        >
-          Know&nbsp;more
-        </button>
-        <button
-          class="col-12 col-lg-5 btn btn-sm btn-primary rounded-pill text-light mb-1"
-        >
-          Add&nbsp;Membership
-        </button>
-      </div>
-      <small class="strong mb-2">Check the health of your vital organs</small>
-      <p><small>Book Good Health Silver Package for just ₹649</small></p>
-      <p>
-        <small
-          >Get the tests done easily from your home. This package will help you
-          in identifying potential disorders and deficiencies at an early
-          stage.</small
-        >
-      </p>
-      <p class="strong mb-2">Bill summary</p>
-      <table>
-        <tbody>
-          <tr>
-            <td class="w-100">Item Total</td>
-            <td>399</td>
-          </tr>
-          <tr>
-            <td class="w-100">Total Discount</td>
-            <td>99</td>
-          </tr>
-          <tr>
-            <td class="w-100">Shipping Feee</td>
-            <td>70</td>
-          </tr>
-          <tr class="border-top">
-            <td class="w-100 strong">To be Paid</td>
-            <td class="strong">799</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="mt-4">
-        <p class="mb-2 strong">Delivery Address</p>
-        <p class="d-flex">
-          <small>Chandigarh</small>
-          <span class="text-primary ms-auto"><u>Change</u></span>
-        </p>
-        <button class="btn btn-sm btn-primary rounded-pill text-light w-100">
-          Continue
-        </button>
-      </div>
-    </div>
-  </div>
-</div> -->
-<!-- <div class="container" *ngIf="items.length > 0; else emptyCart">
-  <div class="my-4">
-    <h5>{{ items.length }} Item(s) Added</h5>
-  </div>
-
-  <div class="row mb-3" *ngFor="let item of items">
-    <div class="col-4 col-sm-2">
-      <img [src]="item.image || 'assets/no-image.png'" alt="preview" class="img-fluid">
-    </div>
-    <div class="col-8 col-sm-6">
-      <h6>{{ item.name }}</h6>
-      <div class="text-primary mt-2" (click)="removeItem(item.id)"><u>Remove</u></div>
-    </div>
-    <div class="col-12 col-sm-4">
-      <h6>₹{{ item.mrp }}</h6>
-      <small>Qty: {{ item.quantity }}</small>
-    </div>
-  </div>
-</div> -->
-
-<!-- <div class="container">
-  <h4>My Cart ({{ cart.length }} items)</h4>
-
-  <div *ngIf="cart.length === 0">
-    <p>Your cart is empty.</p>
-  </div>
-
-  <div *ngFor="let item of cart" class="row my-3 border rounded p-2">
-    <div class="col-3">
-      <img [src]="item.image" alt="{{ item.name }}" class="img-fluid" />
-    </div>
-    
-    <div class="col-6">
-      <h6>{{ item.name }}</h6>
-      <p>Quantity: {{ item.qty }}</p>
-    </div>
-    <div class="col-3 text-end">
-      <p class="text-primary">₹{{ item.price }}</p>
-    </div>
-  </div>
-</div> -->
-
 <div class="container my-4">
+  <!-- Debug Info -->
+  <div class="alert alert-info" *ngIf="debugInfo">
+    <small>Debug: {{ debugInfo }}</small>
+    <button class="btn btn-sm btn-outline-primary ms-2" (click)="checkLocalStorage()">
+      Check Storage
+    </button>
+    <button class="btn btn-sm btn-outline-warning ms-1" (click)="manualSync()">
+      Manual Sync
+    </button>
+  </div>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="isLoading" class="text-center my-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-2">Loading cart...</p>
+  </div>
+
   <div class="my-4">
-    <h5>{{ cart.length }} Item(s) added</h5>
+    <h5>{{ cart.length }} Item(s) in Cart</h5>
     <small>Items not requiring prescription</small>
   </div>
 
-  <div *ngIf="cart.length === 0" class="text-center my-4">
+  <!-- Empty Cart Message -->
+  <div *ngIf="cart.length === 0 && !isLoading" class="text-center my-4">
     <p>Your cart is empty.</p>
+    <button class="btn btn-primary mt-2" (click)="continueShopping()">
+      Continue Shopping
+    </button>
   </div>
 
-<div *ngFor="let item of cart" class="cart-item">
-  <div>
-    <img [src]="item.image" alt="{{ item.name }}" />
-  </div>
-
-  <div class="details">
-    <h6>{{ item.name }}</h6>
-    <small>{{ item.qty || '' }}</small>
-    <div class="remove" (click)="removeItem(item.id)">Remove</div>
-  </div>
-
-  <div class="text-end">
-    <div class="price">
-      ₹{{ item.price }}
-      <span *ngIf="item.mrp && item.mrp > item.price" class="strike">₹{{ item.mrp }}</span>
-      <span *ngIf="item.mrp && item.mrp > item.price" class="text-success"> {{ getDiscount(item) }}% off</span>
+  <!-- Cart Items -->
+  <div *ngFor="let item of cart" class="cart-item">
+    <div>
+      <img [src]="item.image" alt="{{ item.name }}" class="cart-item-image" />
     </div>
 
-    <div class="qty-box">
-      <button (click)="decreaseQty(item)">−</button>
-      <input type="text" [value]="item.count" readonly />
-      <button (click)="increaseQty(item)">+</button>
+    <div class="details">
+      <h6>{{ item.name }}</h6>
+      <small>{{ item.qty || '' }}</small>
+      <div class="remove" (click)="removeItem(item.id)">Remove</div>
+    </div>
+
+    <div class="text-end">
+      <div class="price">
+        ₹{{ item.price }}
+        <span *ngIf="item.mrp && item.mrp > item.price" class="strike">₹{{ item.mrp }}</span>
+        <span *ngIf="item.mrp && item.mrp > item.price" class="text-success"> 
+          {{ getDiscount(item) }}% off
+        </span>
+      </div>
+
+      <div class="qty-box">
+        <button (click)="decreaseQty(item)" [disabled]="isItemLoading(item.id)">−</button>
+        <input type="text" [value]="item.count" readonly />
+        <button (click)="increaseQty(item)" [disabled]="isItemLoading(item.id)">+</button>
+      </div>
     </div>
   </div>
-</div>
-
 
   <!-- Bill Summary -->
-  <div class="bill-summary border rounded p-3 mt-4">
+  <div *ngIf="cart.length > 0" class="bill-summary border rounded p-3 mt-4">
     <h6 class="fw-bold mb-3">Bill Summary</h6>
     <table class="table table-borderless">
       <tbody>
@@ -228,11 +87,396 @@
       </tbody>
     </table>
 
-    <button class="btn btn-primary w-100 rounded-pill" (click)="onProceedToPayment()">Continue</button>
+    <!-- Selected Address Preview -->
+    <div *ngIf="selectedAddress" class="selected-address mb-3 p-2 border rounded bg-light">
+      <small class="text-muted">Delivery to:</small>
+      <div class="fw-bold">{{ selectedAddress.fullName }}</div>
+      <div class="small">{{ selectedAddress.addressLine1 }}, {{ selectedAddress.city }}, {{ selectedAddress.pincode }}</div>
+      <div class="small text-muted">{{ selectedAddress.phoneNumber }}</div>
+    </div>
+
+    <!-- Selected Payment Method Preview -->
+    <div *ngIf="selectedPaymentMethod" class="selected-payment mb-3 p-2 border rounded bg-light">
+      <small class="text-muted">Payment Method:</small>
+      <div class="fw-bold">
+        <span *ngIf="selectedPaymentMethod === 'ONLINE'">💳 Online Payment</span>
+        <span *ngIf="selectedPaymentMethod === 'CASH_ON_DELIVERY'">💰 Cash on Delivery</span>
+      </div>
+    </div>
+
+    <button 
+      class="btn btn-primary w-100 rounded-pill" 
+      (click)="onProceedToPayment()"
+      [disabled]="isLoading || isPaymentLoading"
+    >
+      <span *ngIf="isPaymentLoading" class="spinner-border spinner-border-sm me-2"></span>
+      {{ isPaymentLoading ? 'Processing...' : 'Continue to Pay' }}
+    </button>
+
+    <button 
+      class="btn btn-outline-secondary w-100 rounded-pill mt-2"
+      (click)="continueShopping()"
+      [disabled]="isLoading"
+    >
+      Continue Shopping
+    </button>
   </div>
 </div>
-<ng-template #emptyCart>
-  <p class="text-center text-muted my-4">Your cart is empty</p>
-</ng-template>
+
+<!-- Login Modal -->
+@if (showAuthPopup) {
+  <app-authorization
+    [showAuthModal]="showAuthPopup"
+    [authMode]="'login'"
+    (loginSuccess)="onAuthSuccess()"
+    (close)="onAuthClose()"
+  ></app-authorization>
+}
+
+<!-- Address Selection Modal (UPDATED with Edit/Delete) -->
+@if (showAddressModal) {
+<div class="modal fade show d-block" style="background: rgba(0,0,0,0.5)">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{ isEditingAddress ? 'Edit Address' : 'Select Delivery Address' }}
+        </h5>
+        <button type="button" class="btn-close" (click)="onCloseAddressModal()"></button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Existing Addresses (when not editing) -->
+        <div *ngIf="!showNewAddressForm && !isEditingAddress">
+          <div *ngIf="addresses.length === 0" class="text-center py-4">
+            <p>No addresses found. Please add a delivery address.</p>
+          </div>
+
+          <div *ngFor="let address of addresses" 
+               class="address-card border rounded p-3 mb-3"
+               [class.border-primary]="selectedAddress?.id === address.id">
+            
+            <div class="d-flex justify-content-between align-items-start">
+              <div class="flex-grow-1">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" 
+                         [checked]="selectedAddress?.id === address.id"
+                         (click)="onSelectAddress(address)">
+                  <label class="form-check-label fw-bold">
+                    {{ address.fullName }}
+                    <span class="badge bg-secondary ms-2" *ngIf="address.isDefault">Default</span>
+                  </label>
+                </div>
+                <div class="small mt-1">
+                  {{ address.addressLine1 }}<br>
+                  <span *ngIf="address.addressLine2">{{ address.addressLine2 }}<br></span>
+                  <span *ngIf="address.landmark">{{ address.landmark }}<br></span>
+                  {{ address.city }}, {{ address.state }} - {{ address.pincode }}<br>
+                  Phone: {{ address.phoneNumber }}
+                </div>
+                <div class="small text-muted mt-1">{{ address.addressType }}</div>
+              </div>
+              
+              <!-- ✅ NEW: Edit/Delete Buttons -->
+              <div class="btn-group btn-group-sm ms-3">
+                <button class="btn btn-outline-primary" 
+                        (click)="onEditAddress(address)"
+                        title="Edit Address">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-outline-danger" 
+                        (click)="onDeleteAddress(address)"
+                        [disabled]="address.isDefault"
+                        title="Delete Address">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <button class="btn btn-outline-primary w-100 mt-3" (click)="onAddNewAddress()">
+            + Add New Address
+          </button>
+        </div>
+
+        <!-- New Address Form -->
+        <div *ngIf="showNewAddressForm && !isEditingAddress">
+          <h6>Add New Address</h6>
+          <form>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Full Name *</label>
+                  <input type="text" class="form-control" 
+                         [(ngModel)]="newAddress.fullName" 
+                         name="fullName" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Phone Number *</label>
+                  <input type="tel" class="form-control" 
+                         [(ngModel)]="newAddress.phoneNumber" 
+                         name="phoneNumber" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Address Line 1 *</label>
+              <input type="text" class="form-control" 
+                     [(ngModel)]="newAddress.addressLine1" 
+                     name="addressLine1" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Address Line 2</label>
+              <input type="text" class="form-control" 
+                     [(ngModel)]="newAddress.addressLine2" 
+                     name="addressLine2">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Landmark</label>
+              <input type="text" class="form-control" 
+                     [(ngModel)]="newAddress.landmark" 
+                     name="landmark">
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">City *</label>
+                  <input type="text" class="form-control" 
+                         [(ngModel)]="newAddress.city" 
+                         name="city" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">State *</label>
+                  <input type="text" class="form-control" 
+                         [(ngModel)]="newAddress.state" 
+                         name="state" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Pincode *</label>
+                  <input type="text" class="form-control" 
+                         [(ngModel)]="newAddress.pincode" 
+                         name="pincode" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Address Type</label>
+              <select class="form-select" [(ngModel)]="newAddress.addressType" name="addressType">
+                <option value="HOME">Home</option>
+                <option value="OFFICE">Office</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" 
+                     [(ngModel)]="newAddress.isDefault" 
+                     name="isDefault" id="setAsDefault">
+              <label class="form-check-label" for="setAsDefault">
+                Set as default address
+              </label>
+            </div>
+
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-primary flex-fill" (click)="onSaveNewAddress()">
+                Save Address
+              </button>
+              <button type="button" class="btn btn-outline-secondary" (click)="onCancelNewAddress()">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- ✅ NEW: Edit Address Form -->
+        <div *ngIf="isEditingAddress">
+          <h6>Edit Address</h6>
+          <form>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Full Name *</label>
+                  <input type="text" class="form-control" 
+                         [(ngModel)]="editingAddress.fullName" 
+                         name="fullName" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Phone Number *</label>
+                  <input type="tel" class="form-control" 
+                         [(ngModel)]="editingAddress.phoneNumber" 
+                         name="phoneNumber" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Address Line 1 *</label>
+              <input type="text" class="form-control" 
+                     [(ngModel)]="editingAddress.addressLine1" 
+                     name="addressLine1" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Address Line 2</label>
+              <input type="text" class="form-control" 
+                     [(ngModel)]="editingAddress.addressLine2" 
+                     name="addressLine2">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Landmark</label>
+              <input type="text" class="form-control" 
+                     [(ngModel)]="editingAddress.landmark" 
+                     name="landmark">
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">City *</label>
+                  <input type="text" class="form-control" 
+                         [(ngModel)]="editingAddress.city" 
+                         name="city" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">State *</label>
+                  <input type="text" class="form-control" 
+                         [(ngModel)]="editingAddress.state" 
+                         name="state" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Pincode *</label>
+                  <input type="text" class="form-control" 
+                         [(ngModel)]="editingAddress.pincode" 
+                         name="pincode" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Address Type</label>
+              <select class="form-select" [(ngModel)]="editingAddress.addressType" name="addressType">
+                <option value="HOME">Home</option>
+                <option value="OFFICE">Office</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" 
+                     [(ngModel)]="editingAddress.isDefault" 
+                     name="isDefault" id="editSetAsDefault">
+              <label class="form-check-label" for="editSetAsDefault">
+                Set as default address
+              </label>
+            </div>
+
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-primary flex-fill" (click)="onUpdateAddress()">
+                Update Address
+              </button>
+              <button type="button" class="btn btn-outline-secondary" (click)="onCancelEdit()">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+      <div class="modal-footer" *ngIf="!showNewAddressForm && !isEditingAddress">
+        <button type="button" class="btn btn-secondary" (click)="onCloseAddressModal()">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-primary" 
+                (click)="onProceedWithAddress()"
+                [disabled]="!selectedAddress">
+          Deliver to this Address
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+}
+
+<!-- Payment Method Selection Modal -->
+  <!-- Payment Method Selection Modal -->
+  @if (showPaymentMethodModal) {
+  <div class="modal fade show d-block" style="background: rgba(0,0,0,0.5)">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Select Payment Method</h5>
+          <button type="button" class="btn-close" (click)="onCancelPaymentMethod()"></button>
+        </div>
+        <div class="modal-body">
+          
+          <div class="payment-methods">
+            <!-- ✅ FIXED: Use method.value directly which is already PaymentMethod type -->
+            <div *ngFor="let method of paymentMethods" 
+                 class="payment-method-card border rounded p-3 mb-3 cursor-pointer"
+                 [class.border-primary]="selectedPaymentMethod === method.value"
+                 (click)="onSelectPaymentMethod(method.value)">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" 
+                       [checked]="selectedPaymentMethod === method.value"
+                       (click)="onSelectPaymentMethod(method.value)">
+                <label class="form-check-label fw-bold">
+                  {{ method.icon }} {{ method.label }}
+                </label>
+              </div>
+              <div class="small text-muted mt-1">{{ method.description }}</div>
+            </div>
+          </div>
+
+          <!-- Order Summary -->
+          <div class="order-summary border-top pt-3 mt-3">
+            <h6 class="fw-bold">Order Summary</h6>
+            <div class="d-flex justify-content-between">
+              <span>Items Total:</span>
+              <span>₹{{ getItemTotal() }}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Shipping:</span>
+              <span>₹{{ shippingFee }}</span>
+            </div>
+            <div class="d-flex justify-content-between fw-bold border-top pt-2 mt-2">
+              <span>Total Amount:</span>
+              <span>₹{{ getFinalAmount() }}</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="onCancelPaymentMethod()">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-primary" 
+                  (click)="onConfirmPaymentMethod()"
+                  [disabled]="!selectedPaymentMethod">
+            Confirm & Place Order
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
 
 <app-footer></app-footer>

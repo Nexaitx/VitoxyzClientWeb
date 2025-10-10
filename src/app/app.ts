@@ -3,15 +3,24 @@ import { RouterOutlet } from '@angular/router';
 import { SpinnerToastComponent } from "./core/toasts/spinner-toast/spinner-toast.component";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChatSupport } from './pages/chat-support/chat-support';
+import { NotificationComponent } from './pages/medicines/notification/notification';
 
 @Component({
   selector: 'app-root',
+    standalone: true,
+
   imports: [RouterOutlet,
     FormsModule,
     ReactiveFormsModule,
-    ChatSupport],
+    ChatSupport,RouterOutlet, NotificationComponent],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
+  template: `
+      <router-outlet></router-outlet>
+
+      <app-notification></app-notification>
+
+  `
 })
 export class App {
   protected title = 'VitoxyzAdmin';
