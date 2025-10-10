@@ -13,22 +13,24 @@
   padding: 0 10px; 
 
   h2 {
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 18px;
     margin: 0; 
+  margin-bottom: 15px;
   }
-
+.seebtncls{font-weight: 500;
+    font-size: medium;
+    border-radius: 4px;
+    padding: 3px;
+    color: #e95236;
+    background-color: #e4e1e1;
+}
   .mat-button {
     font-weight: 600;
     text-transform: uppercase;
   }
 }
 
-.section-header h2 {
-  font-size: 24px;
-  margin-bottom: 15px;
-  font-weight: 600;
-}
+
 
 .carousel-container {
   position: relative;

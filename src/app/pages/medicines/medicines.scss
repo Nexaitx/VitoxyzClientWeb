@@ -312,12 +312,22 @@ h5 {
     border-radius: 50%;
     // ... (rest of the button styles) ...
   }
-
+ 
   .right-button {
     right: 0px;
+      color: #0bbbc1;
+    background: none;
+    font-weight: 600;
+    font-size: 24px;
+    border: none;
   }
   .left-button {
     left: 0px;
+      color: #0bbbc1;
+    background: none;
+    font-weight: 600;
+    font-size: 24px;
+    border: none;
   }
 
   // --- Mobile Specific Styles (Max Width 768px) ---
@@ -482,7 +492,13 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
     line-height: 1;
   }
 }
-
+ .bynsclsleft{
+    color: #0bbbc1;
+    background: none;
+    font-weight: 600;
+    font-size: 24px;
+    border: none;
+ }
 /* Hide on desktops */
 @media (min-width: 992px) {
   .mobile-quick-access-wrapper {
