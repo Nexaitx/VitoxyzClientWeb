@@ -7,45 +7,13 @@
   background-size: cover;
   padding: 20px;
   box-sizing: border-box;
-      margin-top: -76px;
+  margin-top: -76px;
 }
 
-.plan-card mat-card-title,
-.plan-card mat-card-subtitle {
-  text-align: center;
-  margin-bottom: 20px;
-}
 
-.plans-content {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
 
-.plan-item:hover,
-.plan-item:hover h3 {
-  color: #fff;
-  background: #0AB8C2;
-  cursor: pointer;
-}
-
-.plan-item:hover .bi-check2 , .plan-item:hover .planBtn{
-  background: #fff;
-  color: #0AB8C2;
-}
-
-.bi-check2 {
-  border-radius: 100%;
-  color: white;
-  padding: 2px 4px 2px 4px;
-  margin-right: 5px;
-  background: #0bbbc1;
-}
-
+/* ----- CARD BASE STYLING ----- */
 .plan-item {
-
-  
   border: 1px solid #0AB8C2;
   border-radius: 26px;
   padding: 25px;
@@ -55,6 +23,28 @@
   background: #fff;
   width: 100%;
   max-width: 295px;
+  transition: all 0.3s ease;
+}
+
+.plan-item:hover,
+.plan-item:hover h3 {
+  color: #fff;
+  background: #0AB8C2;
+  cursor: pointer;
+}
+
+.plan-item:hover .bi-check2,
+.plan-item:hover .planBtn {
+  background: #fff;
+  color: #0AB8C2;
+}
+
+.bi-check2 {
+  border-radius: 100%;
+  color: white;
+  padding: 2px 4px;
+  margin-right: 5px;
+  background: #0BBBC1;
 }
 
 .plan-item h3 {
@@ -74,7 +64,6 @@
   padding: 0;
   margin: 15px 0;
   text-align: left;
-
 }
 
 .plan-item ul li {
@@ -82,29 +71,96 @@
 }
 
 .plan-item h4 {
-
   font-size: 1.8em;
   margin: 15px 0;
 }
 
 .plan-item button {
   margin-top: auto;
-  
-  
   width: 100%;
+}
+
+/* Desktop layout remains untouched */
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .plans-content {
+    flex-wrap: nowrap; /* Prevent wrapping */
+    overflow-x: auto; /* Enable horizontal scroll */
+    -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
+    gap: 15px;
+    padding-bottom: 10px;
+  }
+
+  .plan-item {
+    flex: 0 0 auto; /* Keep width fixed for horizontal scroll */
+    max-width: 250px; /* Optional: control card width on mobile */
+  }
+
+  /* Optional: remove vertical margin on mobile */
+  .plans-container {
+    margin-top: 0;
+    padding: 15px;
+  }
+}
+
+
+
+/* Desktop layout remains untouched */
+/* Desktop layout remains untouched */
+.plans-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 @media (max-width: 768px) {
   .plans-content {
-    flex-direction: column;
-    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;               /* prevent wrapping */
+    overflow-x: auto;                /* horizontal scroll only */
+    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+    gap: 15px;
+    padding: 0;                       /* no extra padding; spacers handle it */
+    scroll-snap-type: x mandatory;   /* snap cards */
+    width: 100vw;                     /* full viewport width */
+    box-sizing: border-box;
+    -ms-overflow-style: none;        /* hide scrollbar IE/Edge */
+    scrollbar-width: none;           /* hide scrollbar Firefox */
+  }
+
+  .plans-content::-webkit-scrollbar {
+    display: none;                   /* hide scrollbar Chrome/Safari */
   }
 
   .plan-item {
-    max-width: 90%;
+    flex: 0 0 auto;                  /* prevent shrinking */
+    width: 250px;                     /* fixed card width for mobile */
+    scroll-snap-align: start;        /* snap each card */
+  }
+
+  /* Spacer to allow full scroll on left and right */
+  .scroll-spacer {
+    flex: 0 0 15px;
+  }
+
+  /* Make page sticky; only cards scroll */
+  .plans-container {
+    overflow-x: hidden;
+    width: 100%;
+    padding: 0;
+    margin-top: 0;
   }
 }
 
+
+
+
+
+
+
+
+/* ----- COLOR CLASSES ----- */
 .primary {
   background: #0BBBC1;
   color: #fff;

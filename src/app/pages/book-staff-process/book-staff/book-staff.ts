@@ -35,7 +35,7 @@ export class BookStaff {
   button = 'Search for staff';
   staffCategories: { id: number; name: string }[] = [];
   staffSubCategories: { [index: number]: { label: string; value: string }[] } = {};
-  shiftTypes = ['2 Hours', '8 Hours', '12 Hours', '24 Hours'];
+  preferredTimeSlots = ['2 Hours', '8 Hours', '12 Hours', '24 Hours'];
   tenure = [
     { label: '1 Day', value: '1' }, { label: '3 Days', value: '2' }, { label: '1 Week', value: '3' }, { label: '2 Weeks', value: '4' }, { label: '1 Month', value: '5' }
   ]
@@ -220,7 +220,7 @@ export class BookStaff {
     if (currentHour === 0) currentHour = 12;
     else if (currentHour > 12) currentHour -= 12;
     const group = this.fb.group({
-      shiftType: ['', Validators.required],
+      preferredTimeSlot: ['', Validators.required],
       timeSlot: [''],
       tenure: [''],
       dutyStartDate: [new Date().toISOString().substring(0, 10)],
@@ -368,8 +368,8 @@ export class BookStaff {
         const staffDetailsControl = (staffGroup.get('staffDetails') as FormArray).at(0);
         const { typeOfStaff, typeOfSubStaff } = staffDetailsControl.value;
         const shiftDetailsArray = (staffGroup.get('shiftDetails') as FormArray).controls.map((shiftGroup: AbstractControl) => {
-          const { shiftType, timeSlot, tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate } = shiftGroup.value;
-          return { shiftType, timeSlot, tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate };
+          const { preferredTimeSlot, timeSlot, tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate } = shiftGroup.value;
+          return { preferredTimeSlot, timeSlot, tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate };
         });
         return {
           typeOfStaff,

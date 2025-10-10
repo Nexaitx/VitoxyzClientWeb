@@ -24,7 +24,7 @@
         <div class="col-md-12 mb-3 position-relative">
           <label class="form-label">Full Name</label>
 
-           <i class="bi bi-person input-icon" aria-hidden="true"></i>
+           <i class="bi bi-person address"></i>
             <input type="text" class="form-control with-icon" placeholder="Enter Full Name" formControlName="fullName"
               [class.is-invalid]="firstFormGroup.get('fullName')?.invalid && firstFormGroup.get('fullName')?.touched">
             <div *ngIf="firstFormGroup.get('fullName')?.invalid && firstFormGroup.get('fullName')?.touched"
@@ -40,7 +40,7 @@
             <!-- <span class="input-group-text"> -->
               <!-- <i class="bi bi-person"></i> -->
             <!-- </span> -->
-                        <i class="bi bi-person input-icon" aria-hidden="true"></i>
+             <i class="bi bi-person address"></i>
 
             <input type="number" class="form-control with-icon" placeholder="Enter your age" formControlName="age"
               [class.is-invalid]="firstFormGroup.get('age')?.invalid && firstFormGroup.get('age')?.touched">

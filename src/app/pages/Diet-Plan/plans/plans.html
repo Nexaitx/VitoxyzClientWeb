@@ -1,21 +1,14 @@
+
 <div class="plans-container">
   <mat-card class="plan-card">
     <div class="text-center">
       <h3>Choose Your Plan</h3>
       <p>Select the best plan that fits your needs.</p>
-      <div class="btn-group" role="group" aria-label="Toggle options">
-        <!-- <input type="radio" class="btn-check" name="options" id="yearlyOption" autocomplete="off"
-          [(ngModel)]="selectedPlan" value="yearly">
-        <label class="btn" [ngClass]="selectedPlan === 'yearly' ? 'primary' : 'secondary'"
-          for="yearlyOption">Yearly</label> -->
-
-        <!-- <input type="radio" class="btn-check" name="options" id="monthlyOption" autocomplete="off"
-          [(ngModel)]="selectedPlan" value="monthly" checked>
-        <label class="btn" [ngClass]="selectedPlan === 'monthly' ? 'primary' : 'secondary'"
-          for="monthlyOption">Monthly</label> -->
-      </div>
     </div>
-    <mat-card-content class="plans-content mt-3">
+
+    <!-- Horizontal scroll container -->
+       <mat-card-content class="plans-content mt-3">
+        <div class="scroll-spacer"></div>
       <div class="plan-item" (click)="goToPayment()">
         <h3>Basic Wellness</h3>
         <p>Access to basic dietary advice and meal plans.</p>
@@ -58,9 +51,8 @@
         </div>
         <button class="btn rounded-pill planBtn">Select Plan</button>
       </div>
+      <div class="scroll-spacer"></div>
     </mat-card-content>
   </mat-card>
 </div>
-<div>
-  <app-footer></app-footer>
-</div>
+<app-footer></app-footer>

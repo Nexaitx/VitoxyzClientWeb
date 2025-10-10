@@ -1,9 +1,10 @@
-
-
-
 .navbar {
   position: relative;
   z-index: 1055;
+}
+
+.navbcls {
+  margin-right: 174px;
 }
 
 .navbar-nav .nav-link.active.rounded-pill,
@@ -28,9 +29,11 @@
 .dropdown-toggle::after {
   border: none !important;
 }
+
 .bi {
   color: #fff !important;
 }
+
 .main-content-area {
   margin-top: 70px;
 }
@@ -44,12 +47,12 @@
 .sidebar {
   position: fixed;
   top: 0;
-  left: -280px; 
+  left: -280px;
   height: 100vh;
   width: 280px;
   background-color: #fff;
   box-shadow: 2px 0 12px rgba(0, 0, 0, 0.2);
-  transition: left 0.28s cubic-bezier(.2,.9,.2,1);
+  transition: left 0.28s cubic-bezier(.2, .9, .2, 1);
   z-index: 2000;
   overflow-y: auto;
 }
@@ -66,12 +69,12 @@
 .sidebar .mobile-menu-item a,
 .sidebar .mobile-menu-item button {
   color: #333;
-  font-weight: 500;
   text-decoration: none;
 }
+
 .sidebar .mobile-menu-item a.active,
 .sidebar .mobile-menu-item button.active {
-  color: #0d6efd;
+  color: #0bbbc1;
 }
 
 
@@ -106,16 +109,16 @@ body.no-scroll {
 }
 
 .close-menu {
-    color:#333 !important;
-  }
-  
+  color: #333 !important;
+}
+
 
 
 
 .nav-item.dropdown,
 .navbar,
 .sidebar {
-  overflow: visible !important;
+  overflow: auto !important;
 }
 
 .navbar .ms-auto.d-flex {
@@ -123,8 +126,8 @@ body.no-scroll {
   right: 8px;
 }
 
-.destop-alignnment{
-  margin : 0px 32px;
+.destop-alignnment {
+  margin: 0px 32px;
 }
 
 
@@ -139,18 +142,18 @@ body.no-scroll {
   width: 100%;
   text-decoration: none;
   color: #333;
-  font-weight: 500;
 }
 
 .sidebar ul li button {
   background: none;
   border: none;
   text-align: left;
+  font-size: 14px;
 }
 
 .sidebar ul li a.active,
 .sidebar ul li button.active {
-  color: #0d6efd;
+  color: #0bbbc1;
 }
 
 .sidebar ul li button i {
@@ -162,5 +165,7 @@ body.no-scroll {
   padding-top: 0;
 }
 
-
-
+.list-unstyled li {
+  border-bottom: 1px solid #eee;
+  padding: 10px;
+}

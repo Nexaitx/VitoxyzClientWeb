@@ -18,16 +18,13 @@ interface NavItem {
 })
 export class MobileFooterNavComponent implements OnInit {
   
-  // Mobile breakpoint (768px is standard for mobile/tablet)
   mobileBreakpoint = 768; 
   isMobile = false; 
-
   navItems: NavItem[] = [
-    { label: 'Home', icon: 'bi-house-door', link: '' },
-    { label: 'Health Plans', icon: 'bi-file-text', link: '/plans' },
-    { label: 'Get Care Plan', icon: 'bi-plus-circle-fill', link: '/care-plan', isSpecial: true }, // Special item
-    { label: 'Book Staff', icon: 'bi-people', link: '/tests' },
-    { label: 'Profile', icon: 'bi-person', link: '/profile' }
+    { label: 'Pharmacy', icon: 'fa-suitcase-medical', link: '' },
+    { label: 'Book Staff', icon: 'fa-user-nurse', link: '/book-staff' },
+    { label: 'Diet Plans', icon: 'fa-heart-circle-check', link: '/diet/user-onboarding' },
+    { label: 'Profile', icon: 'fa-circle-user', link: '/user-profile' }
   ];
 
   constructor() { }
