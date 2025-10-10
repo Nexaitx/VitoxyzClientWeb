@@ -50,9 +50,10 @@ export class Header implements OnInit, OnDestroy {
   openSubmenus = new Set<number>();
 
   menuItems = [
-    { label: 'Medicines', path: '/medicines' },
+    { label: 'Medicines', icon: 'fa-stethoscope' , path: '/medicines' },
     {
       label: 'Book Staff',
+      icon: 'fa-user-nurse',
       dropdown: true,
       dropdownItems: [
         { label: 'Nurse', path: '/book-staff' },
@@ -62,11 +63,11 @@ export class Header implements OnInit, OnDestroy {
         { label: 'Psychiatrist', path: '/book-staff' },
       ]
     },
-    { label: 'Diet Plans', path: 'diet/user-onboarding' },
+    { label: 'Diet Plans', icon: 'fa-heart-circle-check',  path: 'diet/user-onboarding' },
 
     {
       label: 'Profile',
-      icon: 'bi bi-person-circle',
+      icon: 'fa-circle-user',
       dropdown: true,
       dropdownItems: [
         { label: 'My Profile', path: '/user-profile' },
