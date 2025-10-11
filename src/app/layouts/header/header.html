@@ -117,14 +117,15 @@
      
       <ng-container *ngIf="!item.dropdown">
         <a class="d-block py-2 ps-3" (click)="closeSidebar()" [routerLink]="item.path" routerLinkActive="active">
-          {{ item.label }}
+         <i class="fa {{ item.icon }}"></i>  &nbsp;{{ item.label }}
         </a>
       </ng-container>
 
       <ng-container *ngIf="item.dropdown">
+        
         <button class="btn w-100 text-start py-2 d-flex justify-content-between align-items-center ps-3"
                 (click)="toggleSubmenu(i)" [attr.aria-expanded]="isSubmenuOpen(i)">
-          {{ item.label }}
+          <span><i class="fa {{ item.icon }}"></i> &nbsp;{{ item.label }}</span>
           <i class="bi close-menu" [ngClass]="{ 'bi-chevron-down': !isSubmenuOpen(i), 'bi-chevron-up': isSubmenuOpen(i) }"></i>
         </button>
 
