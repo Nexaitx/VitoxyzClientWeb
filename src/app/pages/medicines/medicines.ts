@@ -505,9 +505,9 @@ healthItems1 = [
   { image: '../../../assets/medicines/vitamins.avif', label: 'Vitamins & Supplements', link: '/products/HeartRate' },
   { image: '../../../assets/medicines/ayurveda.png', label: 'Ayurvedic Wellness', link: '/products/StomachCare' },
   { image: '../../../assets/medicines/homopathy.png', label: 'Homeopathic Medicine', link: '/products/LiverCare' },
-  { image: '../../../assets/medicines/.png', label: 'Monitoring Devices', link: '/products/EyeCare' },
+  { image: '../../../assets/medicines/monitoring-devices.png', label: 'Monitoring Devices', link: '/products/EyeCare' },
   { image: '../../../assets/medicines/sexual wellness.png', label: 'Sexual Wellness', link: '/products/BoneJoint' },
-  { image: '../../../assets/medicines/.png', label: 'Food & Nutrition', link: '/products/KidneyCare' },
+  { image: '../../../assets/medicines/drinks.png', label: 'Food & Nutrition', link: '/products/KidneyCare' },
   { image: '../../../assets/medicines/FItness And health.png', label: 'Fitness & Health', link: '/products/DermaCare' },
     { image: '../../../assets/medicines/skin care.png', label: 'Skin Care', link: '/products/KidneyCare' },
 
@@ -515,14 +515,14 @@ healthItems1 = [
 
             { image: '../../../assets/medicines/pain relief.png', label: 'Pain Relief', link: '/products/KidneyCare' },
 
-                { image: '../../../assets/medicines/.png', label: 'Cardiac Care', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/.png', label: 'Digestive HealthClean Environment Essentials ', link: '/products/KidneyCare' },
+                { image: '../../../assets/medicines/cardiaccare.png', label: 'Cardiac Care', link: '/products/KidneyCare' },
+    { image: '../../../assets/medicines/didestive and health.png', label: 'Digestive HealthClean Environment Essentials ', link: '/products/KidneyCare' },
     { image: '../../../assets/medicines/daibities.png', label: 'Diabetes', link: '/products/KidneyCare' },
         { image: '../../../assets/medicines/hair care.png', label: 'Hair Care', link: '/products/KidneyCare' },
 
             { image: '../../../assets/medicines/oral care.png', label: 'Oral Care', link: '/products/KidneyCare' },
-                { image: '../../../assets/medicines/.png', label: 'Respiratory Care', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/.png', label: 'Mental Wellness ', link: '/products/KidneyCare' },
+                { image: '../../../assets/medicines/didestive and health.png', label: 'Respiratory Care', link: '/products/KidneyCare' },
+    { image: '../../../assets/medicines/cardiaccare.png', label: 'Mental Wellness ', link: '/products/KidneyCare' },
     { image: '../../../assets/medicines/Baby Care.png', label: 'Baby Care ', link: '/products/KidneyCare' },
 
     { image: '../../../assets/medicines/women care.png', label: 'Women Care', link: '/products/KidneyCare' },

@@ -3,7 +3,16 @@
 <div class="container-fluid w-100 px-0" style="margin-top: -70px ">
  <div class="d-none d-md-block">
   <div class="container-fluid w-100 px-0">
-  <img src="../../../assets/medicines/banner2.png" class="w-100" alt="" />
+    <app-banner-slider 
+  [images]="[
+    'assets/medicines/new banner1 desk.png',
+    '../../../assets/medicines/new banner2 desk.png',
+    '../../../assets/medicines/new banner3 desk.png',
+  ]"
+  [autoSlide]="true"
+  [slideInterval]="4000">
+</app-banner-slider>
+  <!-- <img src="../../../assets/medicines/banner2.png" class="w-100" alt="" /> -->
 </div>
 </div>
 
@@ -66,9 +75,9 @@
 <div class="d-block d-md-none">
 <app-banner-slider 
   [images]="[
-    'assets/medicines/banner.png',
-    '../../../assets/medicines/banner2.png',
-    '../../../assets/medicines/banner3.png',
+    'assets/medicines/new banner 1 mob.png',
+    '../../../assets/medicines/new banner2 mob.png',
+    '../../../assets/medicines/new banner3 mob.png',
   ]"
   [autoSlide]="true"
   [slideInterval]="4000">

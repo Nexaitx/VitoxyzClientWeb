@@ -1,13 +1,13 @@
 <footer *ngIf="isMobile" class="footer-nav-container fixed-bottom d-flex justify-content-around align-items-center bg-white border-top">
   
   <ng-container *ngFor="let item of navItems">
-    <a [routerLink]="item.link" 
+    <a (click)="navigate(item)"
        class="nav-item d-flex flex-column align-items-center justify-content-center text-decoration-none"
        [class.special-item]="item.isSpecial"
-       routerLinkActive="active">
+       [class.active]="isActive(item.link)">
 
       <div class="icon-wrapper d-flex align-items-center justify-content-center" [class.special-icon-wrapper]="item.isSpecial">
-        <i class="fa-solid " [class]="item.icon"></i>
+        <i class="fa-solid" [class]="item.icon"></i>
       </div>
       
       <span class="nav-label" [class.d-none]="item.isSpecial">{{ item.label }}</span>
@@ -15,3 +15,5 @@
   </ng-container>
 
 </footer>
+
+<app-authorization [authMode]="authMode" (loginSuccess)="onLoginSuccess()"></app-authorization>
