@@ -431,8 +431,8 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
   }
 
   .col-3 {
-    flex: 0 0 calc(25% - 8px); // 4 items in one row with small gap
-    max-width: calc(25% - 8px);
+    flex: 0 0 calc(33% - 8px); // 4 items in one row with small gap
+    max-width: calc(33% - 8px);
     padding: 0; // extra padding remove
   }
 
@@ -443,7 +443,7 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
     text-align: center;
     background: #fff;
     border-radius: $tile-radius;
-    padding: 8px 5px 10px;
+    padding: 5px 4px 10px;
     cursor: pointer;
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.03);
     transition: all 0.3s ease;

@@ -284,10 +284,10 @@ export class Medicines implements AfterViewInit {
   // ];
 
    categories3: Category[] = [
-    { name: 'Pet Medicine', apiValue: 'Face Wash', cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/.png', altText: 'Skin Care Products' },
+    { name: 'Pet Medicine', apiValue: 'Face Wash', cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/petcare.png', altText: 'Skin Care Products' },
     { name: 'Pet Supplements', apiValue: 'Shampoo', cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/.png', altText: 'Hair Care Products' },
-    { name: 'Prescription Diet', apiValue: 'Condom', cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/.png', altText: 'Sexual Wellness Products' },
-    { name: 'Pet Food', apiValue: 'Oral Gel', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/.png', altText: 'Oral care Wellness Products' },
+    { name: 'Prescription Diet', apiValue: 'Condom', cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/petcare.png', altText: 'Sexual Wellness Products' },
+    { name: 'Pet Food', apiValue: 'Oral Gel', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/petcare.png', altText: 'Oral care Wellness Products' },
     { name: 'Pet Treats', apiValue: 'Mother Tincture', cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/.avif', altText: 'Oral care Wellness Products' },
    
     { name: 'Pet Care', apiValue: 'Pet Food', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/petcare.avif', altText: 'Oral care Wellness Products' },
@@ -502,7 +502,7 @@ healthItems = [
 
 healthItems1 = [
   { image: '../../../assets/medicines/petcare.png', label: 'Pet Care', link: '/products/Lancet' },
-  { image: '../../../assets/medicines/.png', label: 'Vitamins & Supplements', link: '/products/HeartRate' },
+  { image: '../../../assets/medicines/vitamins.avif', label: 'Vitamins & Supplements', link: '/products/HeartRate' },
   { image: '../../../assets/medicines/ayurveda.png', label: 'Ayurvedic Wellness', link: '/products/StomachCare' },
   { image: '../../../assets/medicines/homopathy.png', label: 'Homeopathic Medicine', link: '/products/LiverCare' },
   { image: '../../../assets/medicines/.png', label: 'Monitoring Devices', link: '/products/EyeCare' },

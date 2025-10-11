@@ -33,14 +33,21 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6 form-group mb-3">
-  <label>Address</label>
-  <input 
-    type="text" 
-    class="form-control" 
-    placeholder="Enter address" 
-    formControlName="address" style="width: 200%;">
-</div>
+              <div class="row my-3">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-label">Address</label>
+                    <i class="bi bi-geo-alt address"></i>
+                    <input
+                      type="text"
+                      class="form-control ps-4"
+                      placeholder="Enter address"
+                      formControlName="address"
+                     
+                    />
+                  </div>
+                </div>
+              </div>
               <div formArrayName="staffForms" class="staff-list">
                 <div
                   class="pe-2"
@@ -263,8 +270,9 @@
                                   {{ type }}
                                 </option>
                               </select>
-                              @if(shiftDetail.get('preferredTimeSlot')?.invalid &&
-                              shiftDetail.get('preferredTimeSlot')?.touched) {
+                              @if(shiftDetail.get('preferredTimeSlot')?.invalid
+                              && shiftDetail.get('preferredTimeSlot')?.touched)
+                              {
                               <div class="invalid-feedback">
                                 Shift Type is required.
                               </div>
@@ -459,7 +467,10 @@
                 </button>
               </div>
               <div class="submission-fixed d-flex justify-content-end">
-                <app-submission [buttonType]="button" [disableButton]="isSubmitting"></app-submission>
+                <app-submission
+                  [buttonType]="button"
+                  [disableButton]="isSubmitting"
+                ></app-submission>
               </div>
             </ng-container>
             }
@@ -479,12 +490,12 @@
 <!-- Remove this -->
 
 @if (showAuthPopup) {
-  <app-authorization
-    [showAuthModal]="showAuthPopup"
-    [authMode]="'login'"
-    (loginSuccess)="onAuthSuccess()"
-    (close)="onAuthClose()"
-  ></app-authorization>
+<app-authorization
+  [showAuthModal]="showAuthPopup"
+  [authMode]="'login'"
+  (loginSuccess)="onAuthSuccess()"
+  (close)="onAuthClose()"
+></app-authorization>
 }
 
 <!-- @if(showAuthPopup) {
