@@ -11,7 +11,7 @@
 .title {
   margin: 0;
   font-size: 1.125rem;
-  font-weight: 700;
+  font-weight: 500;
 }
 .muted {
   color: #6c757d;
@@ -40,7 +40,7 @@
       font-size: 1.25rem;
     }
     .text .label {
-      font-weight: 700;
+      font-weight: 500;
       font-size: 0.95rem;
     }
     .text .sub {
@@ -68,7 +68,7 @@
 
   .attached {
     .attached-title {
-      font-weight: 600;
+      font-weight: 500;
       margin-bottom: 10px;
     }
     .attached-placeholder {
@@ -124,7 +124,7 @@
       padding: 12px;
       background: linear-gradient(180deg, #fff 0%, #fffaf8 100%);
       .doc-top {
-        font-weight: 700;
+        font-weight: 500;
         margin-bottom: 6px;
       }
       .doc-lines {
@@ -179,7 +179,7 @@
     align-items: center;
     h5 {
       margin: 0;
-      font-weight: 700;
+      font-weight: 500;
       font-size: 1rem;
     }
     .close-btn {
