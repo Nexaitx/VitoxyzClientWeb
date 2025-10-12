@@ -45,35 +45,27 @@
             <div class="rating-badge">4.4 &#9733;</div>
 
             <h3 class="product-name">{{ product.name }}</h3>
-            <p class="product-form">{{ product.form }}</p>
-
+            
+            <!-- Show actual product form from backend, hide if not available -->
+            <p class="product-form" *ngIf="product.packaging">{{ product.packaging }}</p>
+            
+            <!-- Show actual prices and discount from backend -->
             <div class="price-details-group">
                 <div class="price-info">
-                    <p class="current-price">{{ product.price | currency:'INR':'symbol':'1.0-0' }}</p>
-                    <div class="discount-mrp-group">
-                      <span class="mrp">{{ product.mrp | currency:'INR':'symbol':'1.0-0' }}</span>
-                      <span class="discount-percent" *ngIf="getDiscountPercent(product.price, product.mrp) > 0">
-                        {{ getDiscountPercent(product.price, product.mrp) }}% off
-                      </span>
-                    </div>
+                    <!-- Actual price from backend -->
+                    <p class="current-price" *ngIf="product.mrp">
+                      {{ product.mrp | currency:'INR':'symbol':'1.0-0' }}
+                    </p>
+                    
+                    <!-- Show message if price not available -->
+                    <p class="current-price no-price" *ngIf="!product.mrp">
+                      Price not available
+                    </p>
+                 
                 </div>
-                <!-- <p class="delivery-time">Get in 30 mins</p> -->
             </div>
             
-            <!-- ✅ IMPROVED: Add button with loading indicator -->
-            <!-- <button 
-              class="add-button" 
-              (click)="addToCart(product, $event)"
-              [disabled]="isLoading(product.id || product.productId)"
-            >
-              <span *ngIf="!isLoading(product.id || product.productId)">Add</span>
-              <div *ngIf="isLoading(product.id || product.productId)" class="button-loading">
-                <mat-spinner diameter="16" strokeWidth="2"></mat-spinner>
-                <span>Adding...</span>
-              </div>
-            </button> -->
-
-              <button 
+            <button 
               class="add-button" 
               (click)="addToCart(product, $event)"
             >

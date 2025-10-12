@@ -29,13 +29,14 @@ export class CommonFilterComponent implements OnInit {
   @Input() productForm: string = ''; 
   @Input() page: number = 0;         
   @Input() size: number = 10;        
-showToast: boolean = false;
+  
+  showToast: boolean = false;
   toastMessage: string = '';
   toastType: 'success' | 'error' = 'success';
   products$: Observable<any[]> = of([]); 
   API_BASE_URL: string = '';
   
-  //  Track loading states for each product
+  // Track loading states for each product
   loadingStates: {[key: string]: boolean} = {};
 
   private cartService = inject(CartService);
@@ -53,11 +54,10 @@ showToast: boolean = false;
       .pipe(
         map(response => {
           if (response && response.data && Array.isArray(response.data.content)) {
+            // Use ONLY actual data from backend, no hardcoded defaults
             return response.data.content.map((product: any) => ({
-              ...product,
-              price: product.price ?? 378,
-              mrp: product.mrp ?? 429,
-              form: product.form ?? '30 ml Shampoo'
+              ...product
+              // Removed hardcoded defaults: price, mrp, form
             }));
           }
           return [];
@@ -111,54 +111,7 @@ showToast: boolean = false;
     });
   }
 
-  // //  Add to Cart with loading and alerts
-  // addToCart(product: any, event: Event) {
-  //   event.stopPropagation(); 
-    
-  //   const productId = product.id ?? product.productId;
-  //   if (!productId) {
-  //     console.error("Cannot add to cart: Product ID missing", product);
-  //     alert('❌ Product ID missing. Cannot add to cart.');
-  //     return;
-  //   }
-    
-  //   console.log('🛒 Adding product to cart, ID:', productId);
-    
-  //   // Set loading state for this product
-  //   this.loadingStates[productId] = true;
-    
-  //   // Create complete product object for cart service
-  //   const productForCart = {
-  //     id: productId.toString(),
-  //     productId: productId.toString(),
-  //     name: product.name,
-  //     price: product.price,
-  //     mrp: product.mrp,
-  //     image: this.getFirstImageUrl(product.imageUrl),
-  //     imageUrl: product.imageUrl,
-  //     form: product.form,
-  //     packaging: product.packaging,
-  //     productType: this.endpoint.includes('otc') ? 'otc' : 'otc'
-  //   };
-
-  //   console.log('📦 Product object for cart:', productForCart);
-
-  //   // Use cartService.addItem
-  //   this.cartService.addItem(productForCart, 1).subscribe({
-  //     next: (response) => {
-  //       console.log('✅ Item added successfully:', response);
-  //       this.loadingStates[productId] = false;
-  //       // Alert will be shown by cart service success notification
-  //     },
-  //     error: (err) => {
-  //       console.error('❌ Failed to add item:', err);
-  //       this.loadingStates[productId] = false;
-  //       alert('❌ Failed to add item to cart. Please try again.');
-  //     }
-  //   });
-  // }
-
- addToCart(product: any, event: Event) {
+  addToCart(product: any, event: Event) {
     event.stopPropagation(); 
     
     const productId = product.id ?? product.productId;
@@ -170,16 +123,16 @@ showToast: boolean = false;
     
     console.log('🛒 Adding product to cart, ID:', productId);
     
-    // Create complete product object for cart service
+    // Create complete product object for cart service using actual backend data
     const productForCart = {
       id: productId.toString(),
       productId: productId.toString(),
       name: product.name,
-      price: product.price,
-      mrp: product.mrp,
+      price: product.price, // Actual price from backend
+      mrp: product.mrp, // Actual MRP from backend
       image: this.getFirstImageUrl(product.imageUrl),
       imageUrl: product.imageUrl,
-      form: product.form,
+      form: product.form, // Actual form from backend
       packaging: product.packaging,
       productType: this.endpoint.includes('otc') ? 'otc' : 'otc'
     };
@@ -187,12 +140,11 @@ showToast: boolean = false;
     // Use cartService.addItem
     this.cartService.addItem(productForCart, 1);
     
-    // ✅ Show success toast
+    // Show success toast
     this.showCustomToast(`${product.name} added to cart successfully!`, 'success');
   }
 
-
-  //  Custom toast function
+  // Custom toast function
   private showCustomToast(message: string, type: 'success' | 'error' = 'success') {
     this.toastMessage = message;
     this.toastType = type;
@@ -203,7 +155,7 @@ showToast: boolean = false;
     }, 3000);
   }
 
-  //  Check if product is currently loading
+  // Check if product is currently loading
   isLoading(productId: string): boolean {
     return this.loadingStates[productId] || false;
   }
