@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, inject } from '@angular/core';
-import { Observable, map, of } from 'rxjs'; 
+import { Observable, finalize, map, of } from 'rxjs'; 
 import { ProductService } from '../../../core/product.service'; 
 import { CartService, CartItem } from '../../../core/cart.service';
 import { CommonModule } from '@angular/common';
@@ -30,11 +30,14 @@ export class CommonFilterComponent implements OnInit {
   @Input() page: number = 0;         
   @Input() size: number = 10;        
   
+ isLoadingData: boolean = true; 
+
   showToast: boolean = false;
   toastMessage: string = '';
   toastType: 'success' | 'error' = 'success';
   products$: Observable<any[]> = of([]); 
   API_BASE_URL: string = '';
+  
   
   // Track loading states for each product
   loadingStates: {[key: string]: boolean} = {};
@@ -48,16 +51,17 @@ export class CommonFilterComponent implements OnInit {
 
   ngOnInit(): void {
     this.API_BASE_URL = `${API_URL}/${this.endpoint}`;
-
-    this.products$ = this.productService
+ this.products$ = this.productService
       .getFilteredProducts(this.API_BASE_URL, this.productForm, this.page, this.size)
       .pipe(
+        // Set loading to false once the observable completes or errors
+        finalize(() => {
+          this.isLoadingData = false;
+        }),
         map(response => {
           if (response && response.data && Array.isArray(response.data.content)) {
-            // Use ONLY actual data from backend, no hardcoded defaults
             return response.data.content.map((product: any) => ({
               ...product
-              // Removed hardcoded defaults: price, mrp, form
             }));
           }
           return [];
@@ -65,17 +69,18 @@ export class CommonFilterComponent implements OnInit {
       );
   }
 
+
+
+
+
+
+
   @ViewChild("productCarouselWrapper", { static: false }) 
   carouselWrapper!: ElementRef<HTMLDivElement>;
 
   getFirstImageUrl(imageUrls: string): string {
     if (!imageUrls) return 'assets/placeholder.png'; 
     return imageUrls.split('|')[0].trim();
-  }
-
-  getDiscountPercent(price: number, mrp: number): number {
-    if (!mrp || !price || mrp <= price) return 0;
-    return Math.floor(((mrp - price) / mrp) * 100);
   }
 
   scrollCarousel(direction: 'left' | 'right'): void {
@@ -123,28 +128,24 @@ export class CommonFilterComponent implements OnInit {
     
     console.log('🛒 Adding product to cart, ID:', productId);
     
-    // Create complete product object for cart service using actual backend data
     const productForCart = {
       id: productId.toString(),
       productId: productId.toString(),
       name: product.name,
-      price: product.price, // Actual price from backend
-      mrp: product.mrp, // Actual MRP from backend
+      price: product.price, // Assuming actual discounted price is here
+      mrp: product.mrp, 
       image: this.getFirstImageUrl(product.imageUrl),
       imageUrl: product.imageUrl,
-      form: product.form, // Actual form from backend
+      form: product.form, 
       packaging: product.packaging,
       productType: this.endpoint.includes('otc') ? 'otc' : 'otc'
     };
 
-    // Use cartService.addItem
     this.cartService.addItem(productForCart, 1);
     
-    // Show success toast
     this.showCustomToast(`${product.name} added to cart successfully!`, 'success');
   }
 
-  // Custom toast function
   private showCustomToast(message: string, type: 'success' | 'error' = 'success') {
     this.toastMessage = message;
     this.toastType = type;
@@ -155,8 +156,10 @@ export class CommonFilterComponent implements OnInit {
     }, 3000);
   }
 
-  // Check if product is currently loading
   isLoading(productId: string): boolean {
     return this.loadingStates[productId] || false;
   }
+
+
+  
 }
