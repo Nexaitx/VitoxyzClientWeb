@@ -6,6 +6,13 @@
   align-items: end;
 }
 
+h2 {
+  font-size: 18px;
+  margin: 0;
+  margin-bottom: 15px;
+  padding-left: 15px;
+}
+
 .city-selector {
   width: 200px;
 }
@@ -55,41 +62,47 @@ h5 {
     width: 100px;
   }
 }
- .card-img-top {
-    height: 180px !important;
-    object-fit: cover;
-  }
+
+.card-img-top {
+  height: 180px !important;
+  object-fit: cover;
+}
+
 .rating {
-    position: absolute;
-    top: 40%;
-    left: 20px;
-    padding: 2px 5px;
-    font-weight: 500;
+  position: absolute;
+  top: 40%;
+  left: 20px;
+  padding: 2px 5px;
+  font-weight: 500;
 }
 
 .fixed-img {
   width: 100%;
-  height: 160px;   // fixed height for image space
+  height: 160px; // fixed height for image space
   object-fit: contain;
   background-color: #fff; // light gray placeholder
   border-bottom: 1px solid #fff;
 }
-.medilistcls{
-          flex: 0 0 auto;
-        width: 19.333333%;
-        margin: 4px;
+
+.medilistcls {
+  flex: 0 0 auto;
+  width: 19.333333%;
+  margin: 4px;
 }
-.addbtnscls{
- border-radius: 13px;
-    color: white;
+
+.addbtnscls {
+  border-radius: 13px;
+  color: white;
 }
 
 .product-slider-wrapper {
   position: relative;
 }
-.m-5{
+
+.m-5 {
   margin-top: 4.5rem !important;
 }
+
 .product-slider {
   display: flex;
   gap: 12px;
@@ -184,6 +197,7 @@ h5 {
   &.left {
     left: -15px;
   }
+
   &.right {
     right: -15px;
   }
@@ -193,57 +207,64 @@ h5 {
 
 .brandBackground {
   background: #fff;
-  width: 148px; /* Desktop Size */
-  height: 142px; /* Desktop Size */
+  width: 148px;
+  /* Desktop Size */
+  height: 142px;
+  /* Desktop Size */
   border-radius: 100%;
   position: relative;
   box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
 
   img {
     position: absolute;
-    left: 25px; 
+    left: 25px;
     top: 20%;
     border-radius: 100%;
-    width: 100px; /* Desktop Image Width */
+    width: 100px;
+    /* Desktop Image Width */
   }
 }
 
 
 /* --- Media Queries (Mobile Specific: <= 768px) --- */
 @media (max-width: 768px) {
-  
+
   // 1. Hide Carousel Controls completely on mobile
   .carousel-control-prev,
   .carousel-control-next {
     display: none !important;
   }
-  
+
   // 2. Adjust the Brand Background for the 3-column mobile grid
   .brandBackground {
     /* Smaller, responsive circle/box for mobile */
-    width: 70%; 
-    height: 80px; /* Reduced height on mobile */
+    width: 70%;
+    height: 80px;
+    /* Reduced height on mobile */
     padding: 5px;
-    
+
     // Clean up desktop-specific styles
     box-shadow: none;
     border: 1px solid #f0f0f0;
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     img {
-      position: static; /* Remove absolute positioning */
-      max-width: 70%; /* Smaller image inside */
+      position: static;
+      /* Remove absolute positioning */
+      max-width: 70%;
+      /* Smaller image inside */
       max-height: 70%;
       height: auto;
       width: auto;
-      border-radius: 0; /* No need for 100% border-radius on image if container is a circle */
+      border-radius: 0;
+      /* No need for 100% border-radius on image if container is a circle */
     }
   }
-  
-  
+
+
 }
 
 // for personal care section
@@ -266,11 +287,12 @@ h5 {
     scroll-behavior: smooth;
     gap: 16px;
     padding: 10px 10px 10px 10px; // Inner padding for scrollable area
-    
+
     // Hide Scrollbar
     &::-webkit-scrollbar {
       display: none;
     }
+
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
@@ -300,7 +322,7 @@ h5 {
       font-weight: 500;
     }
   }
-  
+
   // --- Navigation Buttons (Desktop Only) ---
   .side-nav-button {
     position: absolute;
@@ -312,18 +334,19 @@ h5 {
     border-radius: 50%;
     // ... (rest of the button styles) ...
   }
- 
+
   .right-button {
     right: 0px;
-      color: #0bbbc1;
+    color: #0bbbc1;
     background: none;
     font-weight: 600;
     font-size: 24px;
     border: none;
   }
+
   .left-button {
     left: 0px;
-      color: #0bbbc1;
+    color: #0bbbc1;
     background: none;
     font-weight: 600;
     font-size: 24px;
@@ -332,16 +355,16 @@ h5 {
 
   // --- Mobile Specific Styles (Max Width 768px) ---
   @media (max-width: 768px) {
-    
+
     // 1. Hide Navigation Buttons on Mobile
     .side-nav-button {
       display: none !important;
     }
 
     .carousel-container {
-        padding: 8px 0; // Reset padding for full width
+      padding: 8px 0; // Reset padding for full width
     }
-    
+
     // 2. Transform Scrollable Wrapper into a Responsive Grid
     .carousel-wrapper {
       // OVERRIDE CAROUSEL STYLES
@@ -358,13 +381,13 @@ h5 {
       // 3 items per row, considering the gap: (100% - 2*gap) / 3
       // Since gap is 8px, and there are two gaps in between 3 items:
       // We will use 32% to account for gaps and padding easily.
-      width: 31%; 
+      width: 31%;
       min-width: 31%; // Ensure 3 items fit
       max-width: 31%;
-      
+
       // Reduce shadow and hover effects for mobile performance
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      
+
       &:hover {
         transform: none; // Disable desktop hover shift
       }
@@ -372,7 +395,7 @@ h5 {
       img {
         height: 120px; // Reduced image height for mobile
       }
-      
+
       h3 {
         font-size: 12px;
       }
@@ -380,7 +403,7 @@ h5 {
   }
 }
 
-  
+
 
 //   .category-card {
 //     min-width: 180px;
@@ -406,20 +429,21 @@ h5 {
 //       text-align: center;
 //       font-weight: 500;
 //     }
-  
+
 // }
 /* ---------------------------------------------------- */
 /* 🚀 MOBILE QUICK ACCESS TILES like tata 1mg for mobile 🚀        */
 /* ---------------------------------------------------- */
 
 
-$quick-access-bg: #F0F4F9; 
-$tile-radius: 16px; 
+$quick-access-bg: #F0F4F9;
+$tile-radius: 16px;
 $primary-text: #172B4D;
 $secondary-text: #6B778C;
 $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
+
 .mobile-quick-access-wrapper {
-  padding:20px;
+  padding: 20px;
   background-color: $quick-access-bg;
 
   .row {
@@ -448,7 +472,7 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.03);
     transition: all 0.3s ease;
     height: 150px; // chhota kar diya
-    
+
     &:hover {
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
       transform: translateY(-3px);
@@ -482,7 +506,7 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
     margin-top: 2px;
     line-height: 1;
 
-    
+
   }
 
   .tile-subtitle-illus {
@@ -492,13 +516,15 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
     line-height: 1;
   }
 }
- .bynsclsleft{
-    color: #0bbbc1;
-    background: none;
-    font-weight: 600;
-    font-size: 24px;
-    border: none;
- }
+
+.bynsclsleft {
+  color: #0bbbc1;
+  background: none;
+  font-weight: 600;
+  font-size: 24px;
+  border: none;
+}
+
 /* Hide on desktops */
 @media (min-width: 992px) {
   .mobile-quick-access-wrapper {

@@ -4,7 +4,7 @@
   height: 65px;
   padding: 5px 0;
   z-index: 1000;
-  
+
   // Ensure it's hidden on non-mobile devices (even if isMobile fails)
   @media (min-width: 769px) {
     display: none !important;
@@ -14,7 +14,7 @@
 .nav-item {
   flex: 1;
   max-width: 20%;
-  color: #555; // Default text color
+  color: #343a40; // Default text color
   transition: color 0.3s ease;
 
   &.active {
@@ -47,13 +47,14 @@
     color: #3d3d3d; // Text color on the special button
     font-size: 0.65rem;
     font-weight: 600;
-    
+
     .special-text {
       margin: 0;
       color: #7b4f3f; // Darker brown color
       font-weight: 500;
       font-size: 0.7rem;
     }
+
     .special-subtext {
       margin: 0;
       color: #7b4f3f;
@@ -66,7 +67,12 @@
 // Optional: Add a subtle animation on press
 .nav-item:active {
   transform: scale(0.95);
+  color: #0bbbc1;
+  padding: 5px;
+  background: #f8f9fa;
+  border-radius: 2px;
 }
+
 .fa-solid {
-  font-size: larger;
+  font-size: 30px;
 }
