@@ -1,11 +1,11 @@
 <app-header></app-header>
 
-<ng-container *ngIf="medicineType === 'health' && isLoaded && !hasError; else loadingOrError">
+<!-- <ng-container *ngIf="medicineType === 'health' && isLoaded && !hasError; else loadingOrError">
 
   <div class="container mt-4 product-detail">
     <div class="row">
 
-      <!-- DESKTOP LEFT SECTION -->
+      
       <div class="col-md-6 d-flex" *ngIf="!isMobile">
         <div class="d-flex flex-column me-3">
           <img *ngFor="let img of medicine.images"
@@ -18,7 +18,7 @@
         </div>
       </div>
 
-      <!-- MOBILE CAROUSEL -->
+      
       <div *ngIf="isMobile" class="mobile-carousel">
         <div class="carousel-wrapper">
           <div class="carousel-track" [style.transform]="'translateX(-' + currentIndex*100 + '%)'">
@@ -36,7 +36,7 @@
         </div>
       </div>
 
-      <!-- RIGHT SECTION DETAILS -->
+      
       <div class="col mt-3">
         <h3>{{ medicine.name }}</h3>
         <p class="manufacturer">{{ medicine.manufacturer }}</p>
@@ -71,7 +71,7 @@
       </div>
     </div>
 
-    <!-- EXTRA INFO -->
+   
     <div class="description my-4">
       <p class="mb-1">{{ medicine.introduction }}</p>
       <p class="headings mb-1">{{ medicine.description }}</p>
@@ -85,7 +85,7 @@
       <p class="mb-1">{{ medicine.storage }}</p>
     </div>
   </div>
-</ng-container>
+</ng-container> -->
 
 <ng-container *ngIf="medicineType === 'otc' && isLoaded && !hasError; else loadingOrError">
   <div class="container mt-4 product-detail">
@@ -125,7 +125,7 @@
         <p class="manufacturer">{{ product.manufacturer }}</p>
 
         <div class="rating mb-2">
-          <span class="badge bg-warning text-dark">{{ product.rating }}★</span>
+          <span class="badge bg-warning text-light">{{ product.rating }}★</span>
           <small>{{ product.reviewsCount }} Ratings & {{ product.reviewTextCount }} Reviews</small>
         </div>
 
@@ -148,9 +148,9 @@
 
         <button class="btn btnCls btn-lg mt-3" (click)="addToCartOtc()">Add to cart</button>
 
-        <div class="delivery mt-3">
+        <!-- <div class="delivery mt-3">
           <strong>Get by {{ product.deliveryTime }}</strong>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -169,10 +169,19 @@
   </div>
 </ng-container>
 
-<ng-template #loadingOrError>
+<!-- <ng-template #loadingOrError>
   <p *ngIf="!isLoaded">Loading medicine details…</p>
   <p *ngIf="isLoaded && hasError">Could not load medicine details.</p>
-</ng-template>
+</ng-template> -->
+<ng-template #loadingOrError>
+  <div *ngIf="!isLoaded" class="vm-loading" role="status" aria-live="polite">
+    <div class="vm-spinner" aria-hidden="true"></div>
+    <div class="vm-loading-text">Loading medicine details…</div>
+  </div>
 
+  <p *ngIf="isLoaded && hasError" class="vm-error">
+    Could not load medicine details.
+  </p>
+</ng-template>
 <app-footer></app-footer>
 <app-mobile-footer-nav></app-mobile-footer-nav>

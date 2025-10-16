@@ -373,7 +373,7 @@ h5 {
       overflow-x: hidden; // CRITICAL: Disable horizontal scrolling
       justify-content: space-between; // Distribute cards evenly
       gap: 8px; // Smaller gap on mobile
-      padding: 0 10px; // Add back horizontal padding for content alignment
+      padding: 0 10px 10px; // Add back horizontal padding for content alignment
     }
 
     // 3. Set Card Width for 3 items per Row

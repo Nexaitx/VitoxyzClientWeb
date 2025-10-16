@@ -118,7 +118,7 @@
     .doc-sample {
       width: 100%;
       max-width: 320px;
-      min-height: 160px;
+      min-height: 320px;
       border: 1px solid #f2e8e8;
       border-radius: 6px;
       padding: 12px;
@@ -134,14 +134,28 @@
     }
 
     .guide-list ul {
-      padding-left: 18px;
-      margin: 0;
-      li {
-        margin-bottom: 8px;
-        color: #4d4d4d;
-        font-size: 0.95rem;
+    padding-left: 0;
+    margin: 0;
+    list-style: none; /* remove default dots */
+
+    li {
+      position: relative;
+      padding-left: 28px; /* space for icon */
+      margin-bottom: 8px;
+      color: #4d4d4d;
+      font-size: 0.95rem;
+
+      &::before {
+        content: "\f280"; /* bi-check-circle icon */
+        font-family: "bootstrap-icons";
+        position: absolute;
+        left: 0;
+        top: 2px;
+        font-size: 1rem;
+        color: #0bbbc1; /* matches your theme */
       }
     }
+  }
   }
 
   .gov-note {

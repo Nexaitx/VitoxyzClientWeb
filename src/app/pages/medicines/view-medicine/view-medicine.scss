@@ -8,7 +8,7 @@ li, span, .description { font-weight: 400; font-size: 12px; }
   .price-box h4 { font-weight:600; small { text-decoration: line-through; } }
   .quantity select { margin-left:6px; }
   .delivery { font-size:14px; color:#007bff; }
-  .btnCls, .btn-primary { border:1px solid #0BBBC1; background-color:#0BBBC1; color:#fff; }
+  .btnCls, .btn-primary { border:1px solid #0BBBC1; background-color:#0BBBC1; color:#fff; border-radius:27px ;}
   .btnCls:hover, .btn-primary:hover { background-color:rgb(48,197,202); border-color:rgb(35,194,199); }
 }
 
@@ -25,5 +25,45 @@ li, span, .description { font-weight: 400; font-size: 12px; }
     .dots { text-align:center; margin-top:8px; span { display:inline-block; width:8px; height:8px; border-radius:50%; background:#ccc; margin:0 4px; cursor:pointer; &.active{ background:#0BBBC1; } } }
     .nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.7); border:none; font-size:24px; padding:4px 8px; cursor:pointer; }
     .nav.prev { left:0; } .nav.next { right:0; }
+  }
+   .btnCls, .btn-primary { border:1px solid #0BBBC1; background-color:#0BBBC1; color:#fff; border-radius:27px ;font-weight: 400;font-size: medium;} 
+  .btnCls:hover, .btn-primary:hover { background-color:rgb(48,197,202); border-color:rgb(35,194,199); }
+}
+/* Loading spinner + text (minimal, self-contained) */
+.vm-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 0;
+  gap: 8px;
+}
+
+/* Simple circular spinner */
+.vm-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.08); /* subtle track */
+  border-top-color: rgb(48,197,202); /* blue head - similar to bootstrap primary */
+  border-radius: 50%;
+  animation: vm-spin 0.9s linear infinite;
+}
+
+/* Loading text */
+.vm-loading-text {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Error text styling (optional and minimal) */
+.vm-error {
+  color: #b00020;
+  padding: 12px 0;
+}
+
+/* Spinner animation */
+@keyframes vm-spin {
+  to {
+    transform: rotate(360deg);
   }
 }

@@ -51,6 +51,10 @@ export const routes: Routes = [
         path: 'termsandconditions',
         loadComponent: () => import('./pages/termsandconditions/termsandconditions').then(m => m.Termsandconditions),
       },
+       {
+        path: 'return-refund',
+        loadComponent: () => import('./pages/return-refund/return-refund').then(m => m.ReturnRefund),
+      },
       {
         path: 'subscription-plans',
         loadComponent: () => import('./pages/Diet-Plan/plans/plans').then(m => m.Plans),

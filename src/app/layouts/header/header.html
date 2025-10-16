@@ -14,13 +14,19 @@
 
    
     <a href="#">
-      <img src="../../../assets/logo.png" alt="">
+      <img src="../../../assets/Vitoxyzlogo white.png
+      " alt="" style="height: 42px;">
     </a>
 
    
     <div class="ms-auto d-flex align-items-center">
-      <button class="btn border-0" (click)="goToCart()" aria-label="Cart">
+      <button class="btn border-0 " (click)="goToCart()" aria-label="Cart">
         <i class="fa fa-bag-shopping fs-4 text-white"></i>
+         <span 
+    *ngIf="cartCount > 0" 
+    class=" top-0 start-100 translate-middle text-light rounded-pill bg-danger">
+    {{ cartCount }}
+  </span>
       </button>
     </div>
    

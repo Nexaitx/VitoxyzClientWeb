@@ -14,22 +14,22 @@
 <div class="d-block d-md-none">
 <app-banner-slider 
   [images]="[
-    'assets/.png',
-    'assets/.png',
-    'assets/.png'
+    'assets/1.png',
+    'assets/2.png',
+    'assets/3.png'
   ]"
   [autoSlide]="true"
   [slideInterval]="4000">
 </app-banner-slider>
 </div>
 
-<app-text-banner
-  image="assets/banners/.jpg"
+<!-- <app-text-banner
+  image="assets/medicines/new banner1 desk.png"
   title="Welcome to Vitoxyz"
   subtitle="Your trusted health partner"
   buttonText="Shop Now"
   buttonLink="/medicines">
-</app-text-banner>
+</app-text-banner> -->
 
 <!-- ✅ NEW: Quantity Panel -->
 <div *ngIf="showQuantityPanel" class="quantity-panel-overlay" (click)="closeQuantityPanel()"></div>
@@ -227,13 +227,17 @@
 
         <!-- Initial Loading Template -->
         <ng-template #loadingOrNoProducts>
-          <div class="loading-container" *ngIf="!isLoading">
+          <!-- <div class="loading-container" *ngIf="!isLoading">
             <mat-spinner diameter="40"></mat-spinner>
-            <p>Products loading...</p>
-          </div>
+            <p>Products loading1...</p>
+          </div> -->
+<div *ngIf="!isLoading" class="vm-loading" role="status" aria-live="polite">
+    <div class="vm-spinner" aria-hidden="true"></div>
+    <div class="vm-loading-text">Products loading...</div>
+  </div>
         </ng-template>
       </div>
-
+  
       <!-- Paginator -->
       <!-- <mat-paginator
         [length]="totalProducts"
