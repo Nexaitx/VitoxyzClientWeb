@@ -86,9 +86,13 @@
 
 
 <div class="signup-container mat-elevation-z2 ">
+  
+
+
   <mat-tab-group animationDuration="0ms" [(selectedIndex)]="selectedTabIndex">
     <!-- Personal Signup -->
     <mat-tab label="Personal">
+      <div class="scroll-wrapper">
       <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="auth-form p-4 tabContainer">
         <h2 class="mb-3">Create Account</h2>
 
@@ -196,10 +200,12 @@
           <a class="links">Terms of Use</a> and <a class="links">Privacy Policy</a>.
         </div>
       </form>
+      </div>
     </mat-tab>
 
   
     <mat-tab label="Organization">
+      <div class="scroll-wrapper">
       <form [formGroup]="orgSignupForm" (ngSubmit)="onSubmitOrg()" class="auth-form p-4 tabContainer">
         <h2 class="mb-3">Create Account</h2>
 
@@ -291,6 +297,8 @@
 
         <app-submission [buttonType]="'Create Account'" [disableButton]="isLoading"></app-submission>
       </form>
+      </div>
     </mat-tab>
   </mat-tab-group>
+
 </div>

@@ -91,7 +91,7 @@
   buttonLink="/medicines">
 </app-text-banner> -->
 </div>
-
+<!-- Brand Carousel Section -->
 
 <!-- human implementation -->
 <div class="category-section">
@@ -129,19 +129,28 @@
   </div>
 </div>
 
+<!-- <div class="carousel-container ">
+  <button
+    class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
+    (click)="scrollBrandCarousel('left')"
+  ></button>
 
-<div class="d-none d-md-block">
-    <app-health-carousel [items]="healthItems"></app-health-carousel>
-</div>
+  <div #brandCarouselWrapper class="carousel-wrapper">
+    <div
+      class="brand-card mat-elevation-z4"
+      *ngFor="let brand of brandImages"
+    >
+      <img [src]="brand.imageUrl" [alt]="brand.altText" />
+    </div>
+  </div>
 
-<div class="d-block d-md-none">
-    <app-health-carousel [items]="healthItems1"></app-health-carousel>
-</div>
+  <button
+    class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
+    (click)="scrollBrandCarousel('right')"
+  ></button>
+</div> -->
 
-
-<!-- featured brands -->
- <!-- It is for branding purpose only, will implement later -->
-<div id="brandCarousel" class="carousel slide d-none" data-bs-ride="carousel">
+<div id="brandCarousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
     
     <div class="carousel-item active">
@@ -149,33 +158,33 @@
         
         <div class="col-4 col-md-3 col-lg-2 p-2">
           <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 1" />
+            <img src="../../../assets/medicines/cetaphil-brand.png" alt="Brand 1" />
           </div>
         </div>
         <div class="col-4 col-md-3 col-lg-2 p-2">
           <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 2" />
+            <img src="../../../assets/medicines/dabur-brand.png" alt="Brand 2" />
           </div>
         </div>
         <div class="col-4 col-md-3 col-lg-2 p-2"> 
           <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 3" />
+            <img src="../../../assets/medicines/morepen-brand.png" alt="Brand 3" />
           </div>
         </div>
         
         <div class="col-4 col-md-3 col-lg-2 p-2">
           <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 4" />
+            <img src="../../../assets/medicines/organic-brand.png" alt="Brand 4" />
           </div>
         </div>
         <div class="col-4 col-md-3 col-lg-2 p-2"> 
           <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 5" />
+            <img src="../../../assets/medicines/minimalist-brand.png" alt="Brand 5" />
           </div>
         </div>
         <div class="col-4 col-md-3 col-lg-2 p-2"> 
           <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 6" />
+            <img src="../../../assets/medicines/on-brand.png" alt="Brand 6" />
           </div>
         </div>
       </div>
@@ -225,17 +234,33 @@
     data-bs-target="#brandCarousel"
     data-bs-slide="prev"
   >
-    ...
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
   </button>
+  
   <button
     class="carousel-control-next"
     type="button"
     data-bs-target="#brandCarousel"
     data-bs-slide="next"
   >
-    ...
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
   </button>
 </div>
+
+<div class="d-none d-md-block">
+    <app-health-carousel [items]="healthItems"></app-health-carousel>
+</div>
+
+<div class="d-block d-md-none">
+    <app-health-carousel [items]="healthItems1"></app-health-carousel>
+</div>
+
+
+<!-- featured brands -->
+ <!-- It is for branding purpose only, will implement later -->
+
 <!-- testing -->
 <!-- <app-common-filter-component 
   [endpoint]="'products/filter'" 
@@ -244,37 +269,54 @@
 </app-common-filter-component> -->
 
 
-<app-common-filter-component 
-  [endpoint]="'products/filter'" 
-  [productForm]="'Paste'" 
-  [title]="'Testing product'">
-</app-common-filter-component>
 
 <app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Tablet'" 
+  [title]="' Power Up with Multivitamins '">
+</app-common-filter-component>
+
+<!-- <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Juice'" 
   [title]="'Nature’s aloe, your daily boost'">
-</app-common-filter-component>
+</app-common-filter-component> -->
+
 <!-- personal care -->
+<div class="category-section">
+  <div class="category-section-header mat-elevation-z2">
+    <h2>Popular categories</h2>
+    </div>
 
+  <div class="carousel-container">
+    
+    <button
+      class="side-nav-button left-button mat-elevation-z4"
+      (click)="scrollCarousel('left')"
+    >
+      &lt; </button>
 
-<app-common-filter-component 
-  [endpoint]="'products/filter'" 
-  [productForm]="'Walker'" 
-  [title]="'Support that cares'">
-</app-common-filter-component>
-<app-common-filter-component 
-  [endpoint]="'products/filter'" 
-  [productForm]="'Biochemic Tablet'" 
-  [title]="'Small tablet, big relief.'">
-</app-common-filter-component>
+    <div #categoryCarouselWrapper class="carousel-wrapper">
+      <mat-card
+        *ngFor="let category of categories2"
+        class="category-card mat-elevation-z4"
+        (click)="fetchProductsByCategory(category.apiValue)"
+      >
+        <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
+        <mat-card-content>
+          <h3>{{ category.name }}</h3>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-<app-common-filter-component 
-  [endpoint]="'products/filter'" 
-  [productForm]="'Jar'" 
-  [title]="'Your daily dose of health.'">
-</app-common-filter-component>
-
+    <button
+      class="side-nav-button right-button mat-elevation-z4"
+      (click)="scrollCarousel('right')"
+    >
+      &gt; </button>
+    
+  </div>
+</div>
 
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
@@ -282,19 +324,75 @@
   [title]="'Care your skin deserves.'">
 </app-common-filter-component>
 
+<!-- <app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Biochemic Tablet'" 
+  [title]="'Small tablet, big relief.'">
+</app-common-filter-component> -->
 
+<!-- <app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Jar'" 
+  [title]="'Your daily dose of health.'">
+</app-common-filter-component> -->
 
-<app-common-filter-component 
+<!-- <app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Walker'" 
+  [title]="'Support that cares'">
+</app-common-filter-component> -->
+
+<div class="category-section">
+  <div class="category-section-header mat-elevation-z2">
+    <h2>Super saving deals</h2>
+    </div>
+
+  <div class="carousel-container">
+    
+    <button
+      class="side-nav-button left-button mat-elevation-z4"
+      (click)="scrollCarousel('left')"
+    >
+      &lt; </button>
+
+    <div #categoryCarouselWrapper class="carousel-wrapper">
+      <mat-card
+        *ngFor="let category of categories4"
+        class="category-card mat-elevation-z4"
+        (click)="fetchProductsByCategory(category.apiValue)"
+      >
+        <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
+        <mat-card-content>
+          <h3>{{ category.name }}</h3>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <button
+      class="side-nav-button right-button mat-elevation-z4"
+      (click)="scrollCarousel('right')"
+    >
+      &gt; </button>
+    
+  </div>
+</div>
+<!-- <app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Paste'" 
+  [title]="'Testing product'">
+</app-common-filter-component> -->
+
+<!-- <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Murabba'" 
   [title]="'A sweet way to stay healthy'">
-</app-common-filter-component>
+</app-common-filter-component> -->
 
-<app-common-filter-component 
+<!-- <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Biscuit'" 
   [title]="'Snack smart, live better'">
-</app-common-filter-component>
+</app-common-filter-component> -->
 
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
@@ -343,17 +441,17 @@
 <!-- future implementation -->
 
 <!-- Syrup Products -->
-<app-common-filter-component 
+<!-- <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Diaper'" 
   [title]="'Caring for every tiny move.'">
-</app-common-filter-component>
+</app-common-filter-component> -->
 
-<app-common-filter-component 
+<!-- <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Spray'" 
   [title]="'Top deals of Spray '">
-</app-common-filter-component>
+</app-common-filter-component> -->
 
 
 <ng-template #loadingOrError>
@@ -376,29 +474,25 @@
   [title]="'Wellness you can feel'">
 </app-common-filter-component>
 
-<app-common-filter-component 
-  [endpoint]="'products/filter'" 
-  [productForm]="'Tablet'" 
-  [title]="' Power Up with Multivitamins '">
-</app-common-filter-component>
 
-<app-common-filter-component 
+
+<!-- <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Pillow'" 
   [title]="'testing Products'">
-</app-common-filter-component>
+</app-common-filter-component> -->
 
-<app-common-filter-component 
+<!-- <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Dry Fruit'" 
   [title]="'Top deals of Dry Fruit '">
-</app-common-filter-component>
+</app-common-filter-component> -->
 
-<app-common-filter-component 
+<!-- <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Nut'" 
-  [title]="' '">
-</app-common-filter-component>
+  [title]="' Top deals of nut& Dry Fruit'">
+</app-common-filter-component> -->
 
 <app-common-filter-component 
   [endpoint]="'products/filter'" 

@@ -13,7 +13,7 @@
   <div *ngIf="isMobile" class="mobile-grid-container w-100">
     <div class="row g-2"> 
       <div class="col-4" *ngFor="let item of items"> 
-        <div class="card-content-mobile border rounded d-flex flex-column align-items-center"
+        <div class="card-content-mobile "
               style="cursor: pointer;"
               (click)="goToCategory(item.link)">
           <img [src]="item.image" [alt]="item.label" class="carousel-image img-fluid" height="150"/>

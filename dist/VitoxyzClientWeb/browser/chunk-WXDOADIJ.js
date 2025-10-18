@@ -1,1 +1,0 @@
-import{Pb as o,Qb as n,ob as r,oc as i}from"./chunk-VVX2ZSCF.js";var s=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=r({type:t,selectors:[["app-order"]],decls:2,vars:0,template:function(e,d){e&1&&(o(0,"p"),i(1,"order works!"),n())},encapsulation:2})};export{s as Order};

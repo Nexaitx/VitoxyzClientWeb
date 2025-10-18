@@ -44,9 +44,8 @@ export class CartItems implements OnInit, OnDestroy {
   isLoading = false;
   debugInfo: string = '';
   itemLoadingStates: {[key: string]: boolean} = {};
-  
   //  Address related properties
-    isEditingAddress = false;
+  isEditingAddress = false;
   editingAddress: Address = this.getEmptyAddress();
   addresses: Address[] = [];
   selectedAddress: Address | null = null;
@@ -62,6 +61,9 @@ export class CartItems implements OnInit, OnDestroy {
   // Success notification message
   successMessage: string = '';
 
+
+
+
   private readonly razorpayKeyId = 'rzp_test_RARA6BGk8D2Y2o';
   private router = inject(Router);
   private cartService = inject(CartService);
@@ -75,8 +77,10 @@ export class CartItems implements OnInit, OnDestroy {
   private itemLoadingSubscription!: Subscription;
   private notificationSubscription!: Subscription;
   private addressesSubscription!: Subscription;
-
+ 
   ngOnInit() {
+       console.log("item",this.cart);
+
     console.log('🛒 Cart component initialized');
     this.updateDebugInfo('Component initialized');
     
@@ -84,6 +88,7 @@ export class CartItems implements OnInit, OnDestroy {
     this.cartSubscription = this.cartService.cart$.subscribe(cart => {
       console.log('🔄 Cart updated in component:', cart);
       this.cart = cart;
+
       this.updateDebugInfo(`Cart updated: ${cart.length} items`);
     });
 
@@ -814,7 +819,13 @@ onAuthSuccess() {
     return 0;
   }
 
-  getItemTotal(): number {
+  // getItemTotal(): number {
+  //   return this.cart.reduce((sum, i) => sum + (i.price * i.count), 0);
+  // }
+
+    getItemTotal(): number {
+      console.log("hdgdgdh",this.cart);
+      
     return this.cart.reduce((sum, i) => sum + (i.price * i.count), 0);
   }
 

@@ -54,8 +54,6 @@
 
 
 
-
-
 @media screen and (max-width: 768px) {
   .left-panel {
     display: none !important;
@@ -71,15 +69,18 @@
   justify-content: center;
   color: white;
   padding: 2rem;
-  height: 100%; /* Match the login-screen height */
+  height: 100%;
+  /* Match the login-screen height */
 }
 
 .left-panel .overlay-content {
   text-align: center;
+
   h2 {
     font-size: 2rem;
     font-weight: 600;
   }
+
   p {
     font-size: 1rem;
     margin-top: 0.8rem;
@@ -91,17 +92,29 @@
 .right-panel {
   flex: 1;
   padding: 2rem;
-  height: 100%; /* Match the login-screen height */
+  height: 100%;
+  /* Match the login-screen height */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.logcls {
+  
+  height: 42px;
+  margin-left: 72px;
+      margin-bottom: 10px;
+  padding: 0px 12px;
+
+}
+
 .form-container {
   width: 100%;
   border-radius: 12px;
-  max-height: 100%; /* Ensure it fits within right-panel */
-  overflow-y: auto; /* Handle overflow if form content is too long */
+  max-height: 100%;
+  /* Ensure it fits within right-panel */
+  overflow-y: auto;
+  /* Handle overflow if form content is too long */
 }
 
 .modal-close {
@@ -119,7 +132,8 @@ app-login,
 app-sign-up {
   display: flex;
   flex-direction: column;
-  min-height: 350px; /* Adjust based on content needs */
+  min-height: 350px;
+  /* Adjust based on content needs */
 }
 
 /* Style for form fields to ensure consistency */
@@ -132,12 +146,14 @@ app-sign-up {
 }
 
 .form-control {
-  padding-right: 40px; /* Space for password icon */
+  padding-right: 40px;
+  /* Space for password icon */
 }
 
 .links {
   cursor: pointer;
-  color: #0BBBc1; /* optional: make it look like a link */
+  color: #0BBBc1;
+  /* optional: make it look like a link */
 }
 
 .links:hover {
@@ -154,12 +170,20 @@ app-sign-up {
 /* ---------- MOBILE & TABLET RESPONSIVENESS ---------- */
 @media screen and (max-width: 992px) {
   .login-screen {
-    flex-direction: column; /* Stack left & right panels */
-    height: auto; /* Let it grow naturally */
+    flex-direction: column;
+    /* Stack left & right panels */
+    height: auto;
+    /* Let it grow naturally */
 
     .left-panel {
-      display: none !important; /* Hide illustration for smaller screens */
+      display: none !important;
+      /* Hide illustration for smaller screens */
     }
+
+    .logcls {
+  margin-left: 40px;
+
+}
 
     .right-panel {
       flex: unset;
