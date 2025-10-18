@@ -266,6 +266,142 @@ h5 {
 
 
 }
+/* Section wrapper */
+.featured-brands-section {
+  background: #fff;
+  padding: 10px 0 30px 0;
+}
+
+/* Heading above carousel */
+.featured-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 26px 10px 26px;
+}
+
+.featured-header h2 {
+  font-size: 21px;
+  font-weight: 405;
+  color: #000;
+  margin: 0;
+}
+
+/* container */
+.brand-carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 30px 0;
+  padding: 20px 0; /* vertical spacing like reference */
+  background: #fff;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* horizontal scroll wrapper */
+.brand-carousel-wrapper {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 28px;           /* space between badges — tuned to reference */
+  padding: 10px 26px;  /* left/right padding so first/last don't touch edges */
+  align-items: center;
+  width: 100%;
+}
+
+/* hide default scrollbar */
+.brand-carousel-wrapper::-webkit-scrollbar {
+  display: none;
+}
+.brand-carousel-wrapper {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Each item */
+.brand-card {
+  flex: 0 0 auto;
+  width: 140px;        /* exact circle container footprint */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Circular badge containing the logo */
+.brandBackground {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  /* Outer soft shadow + subtle inner shading for embossed look */
+  box-shadow:
+    0 10px 22px rgba(0,0,0,0.08),     /* outer soft shadow */
+    inset 0 10px 18px rgba(0,0,0,0.03);/* subtle inner shade */
+}
+
+/* logo sizing — keeps different aspect ratios balanced inside badge */
+.brandBackground img {
+  display: block;
+  max-width: 62%;
+  max-height: 62%;
+  object-fit: contain;
+}
+
+/* Side nav buttons (placed over the edges) */
+.side-nav-button {
+  position: relative; /* keep flow for small screens; absolute below via modifiers */
+  background: #ffffff;
+  border: none;
+  font-size: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  color: #0BBBc1; /* coral arrow color like reference */
+  border: 1px solid rgba(0,0,0,0.06);
+  z-index: 20;
+}
+
+/* Position them overlapping the carousel edges (absolute on wide screens) */
+.left-button, .right-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* left and right offset */
+.left-button { left: 8px; }
+.right-button { right: 8px; }
+
+/* Slight hover feedback */
+.side-nav-button:hover {
+  transform: translateY(-50%) scale(1.03);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .brandBackground { width: 110px; height: 110px; }
+  .brand-card { width: 110px; }
+  .brandBackground img { max-width: 58%; max-height: 58%; }
+  .brand-carousel-wrapper { gap: 18px; padding: 8px 12px; }
+  .left-button { left: 4px; }
+  .right-button { right: 4px; }
+}
+
+@media (min-width: 1200px) {
+  /* on very wide screens keep items in one visual row feel */
+  .brand-carousel-wrapper { gap: 32px; padding: 18px 40px; }
+}
+
 
 // for personal care section
 
@@ -338,7 +474,7 @@ h5 {
   .right-button {
     right: 0px;
     color: #0bbbc1;
-    background: none;
+    background: white;
     font-weight: 600;
     font-size: 24px;
     border: none;
@@ -347,7 +483,7 @@ h5 {
   .left-button {
     left: 0px;
     color: #0bbbc1;
-    background: none;
+    background: white;
     font-weight: 600;
     font-size: 24px;
     border: none;

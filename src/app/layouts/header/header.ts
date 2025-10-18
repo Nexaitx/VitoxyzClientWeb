@@ -82,13 +82,16 @@ cartCount: number = 0;
     { label: 'Need Help?', path: '/help' },
   ];
 
-  ngOnInit(): void {
-    this.checkLoginStatus();
-      // 👇 Subscribe to cart updates
+ngOnInit(): void {
+  this.checkLoginStatus();
+
+  // Count only distinct products in the cart
   this.cartService.cart$.subscribe(cart => {
-    this.cartCount = cart.reduce((total, item) => total + item.count, 0);
+    const uniqueProducts = new Set(cart.map(item => item.id));
+    this.cartCount = uniqueProducts.size;
   });
-  }
+}
+
 
   ngOnDestroy(): void {
    

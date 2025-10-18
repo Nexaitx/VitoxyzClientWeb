@@ -254,14 +254,15 @@ export class Medicines implements AfterViewInit {
 
   //copy this and make same others category
   categories: Category[] = [
-    { name: 'Skin Care', apiValue: 'Skin Care', cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/skin care.png', altText: 'Skin Care Products' },
-    { name: 'Women Care', apiValue: 'Women Care', cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/women care.png', altText: 'Hair Care Products' },
-    { name: 'Sexual Wellness', apiValue: 'Sexual Wellness', cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/sexual wellness.png', altText: 'Sexual Wellness Products' },
+    { name: 'Skin Care', apiValue: 'Face Wash', cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/skin care.png', altText: 'Skin Care Products' },
+    { name: 'Women Care', apiValue: 'Shampoo', cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/women care.png', altText: 'Hair Care Products' },
+    { name: 'Sexual Wellness', apiValue: 'Condom', cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/sexual wellness.png', altText: 'Sexual Wellness Products' },
     { name: 'Oral Care', apiValue: 'Oral Gel', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/oral care.png', altText: 'Oral care Wellness Products' },
-    { name: 'Elder Care', apiValue: 'Elder Care', cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/eldercare.png', altText: 'Oral care Wellness Products' },
+    { name: 'Elder Care', apiValue: 'Mother Tincture', cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/eldercare.png', altText: 'Oral care Wellness Products' },
     { name: 'Baby Care', apiValue: 'Nipple', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/Baby Care.png', altText: 'Oral care Wellness Products' },
-    { name: 'daily dose of health', apiValue: 'Jar', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/jarsdose.png', altText: 'Oral care Wellness Products' },
-    { name: 'Men Care', apiValue: 'Men Care', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/mens care.png', altText: 'Oral care Wellness Products' },
+    // { name: 'daily dose of health', apiValue: 'Jar', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/jarsdose.png', altText: 'Oral care Wellness Products' },
+        { name: 'Nutritional Drinks', apiValue: 'Juice', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/FItness And health.png', altText: 'Oral care Wellness Products' },
+    { name: 'Men Care', apiValue: 'Mouth Wash', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/mens care.png', altText: 'Oral care Wellness Products' },
     { name: 'Ayurveda', apiValue: 'Face Pack', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.png', altText: 'Oral care Wellness Products' },
     { name: 'Pet Care', apiValue: 'Pet Food', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/petcare.png', altText: 'Oral care Wellness Products' },
 
@@ -302,24 +303,26 @@ export class Medicines implements AfterViewInit {
 brandCarouselWrapper!: ElementRef<HTMLDivElement>;
 
 brandsone = [
-  { image: '../../../assets/medicines/brand-1.png', name: 'Brand 1' },
-  { image: '../../../assets/medicines/brand-1.png', name: 'Brand 2' },
-  { image: '../../../assets/medicines/brand-1.png', name: 'Brand 3' },
-  { image: '../../../assets/medicines/brand-1.png', name: 'Brand 4' },
-  { image: '../../../assets/medicines/brand-1.png', name: 'Brand 5' },
-  { image: '../../../assets/medicines/brand-1.png', name: 'Brand 6' },
-  { image: '../../../assets/medicines/brand-1.png', name: 'Brand 7' },
-  { image: '../../../assets/medicines/brand-1.png', name: 'Brand 8' },
-  { image: '../../../assets/medicines/brand-1.png', name: 'Brand 9' },
-  { image: '../../../assets/medicines/brand-1.png', name: 'Brand 10' },
-  { image: '../../../assets/medicines/brand-1.png', name: 'Brand 11' },
-  { image: '../../../assets/medicines/brand-1.png', name: 'Brand 12' }
+  { image: '../../../assets/medicines/cetaphil-brand.png', name: 'Brand 1' },
+  { image: '../../../assets/medicines/dabur-brand.png', name: 'Brand 2' },
+  { image: '../../../assets/medicines/morepen-brand.png', name: 'Brand 3' },
+  { image: '../../../assets/medicines/organic-brand.png', name: 'Brand 4' },
+  { image: '../../../assets/medicines/minimalist-brand.png', name: 'Brand 5' },
+  { image: '../../../assets/medicines/on-brand.png', name: 'Brand 6' },
+  { image: '../../../assets/medicines/protinex-brand.png', name: 'Brand 7' },
+  { image: '../../../assets/medicines/dettol-brand.png', name: 'Brand 8' },
+  { image: '../../../assets/medicines/himalaya.png', name: 'Brand 9' },
+  { image: '../../../assets/medicines/healthkart.png', name: 'Brand 10' },
+  { image: '../../../assets/medicines/mamaearth.png', name: 'Brand 11' },
+  { image: '../../../assets/medicines/nivea.png', name: 'Brand 12' },
+  { image: '../../../assets/medicines/pilgrim.png', name: 'Brand 12' }
 ];
 
 scrollBrandCarousel(direction: 'left' | 'right'): void {
   if (this.brandCarouselWrapper) {
     const element = this.brandCarouselWrapper.nativeElement;
-    const scrollAmount = 180 * 4; // adjust for how many items move per click
+    // Scroll by the visible width minus a little gap so items align nicely
+    const scrollAmount = Math.max(element.clientWidth - 80, 180);
     if (direction === 'left') {
       element.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
     } else {
@@ -527,8 +530,36 @@ scrollBrandCarousel(direction: 'left' | 'right'): void {
       }
     }
   }
+ @ViewChild("categoryCarouselWrapper2", { static: false }) 
+  carouselWrapper2!: ElementRef<HTMLDivElement>;
 
+   scrollCarousel2(direction: 'left' | 'right'): void {
+    if (this.carouselWrapper2) {
+      const element = this.carouselWrapper2.nativeElement;
+      const scrollAmount = 180 * 4; 
+      
+      if (direction === 'left') {
+        element.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        element.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  }
+ @ViewChild("categoryCarouselWrapper3", { static: false }) 
+  carouselWrapper3!: ElementRef<HTMLDivElement>;
 
+   scrollCarousel3(direction: 'left' | 'right'): void {
+    if (this.carouselWrapper3) {
+      const element = this.carouselWrapper3.nativeElement;
+      const scrollAmount = 180 * 4; 
+      
+      if (direction === 'left') {
+        element.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        element.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  }
  
 
 goToCategory(category: string) {

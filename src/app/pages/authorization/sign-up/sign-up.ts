@@ -237,7 +237,9 @@ export class SignUp implements OnInit {
     });
   }
 
-  onSubmit(): void {
+  onSignupSubmit(): void {
+     console.log("personal created ");
+        console.log("signup to login");
     if (this.signupForm.invalid) {
       this.signupForm.markAllAsTouched();
       return;
@@ -256,7 +258,12 @@ export class SignUp implements OnInit {
         if (toastElement) new Toast(toastElement).show();
 
         this.signupSuccess.emit();
-this.authModeChange.emit('login');
+        console.log("personal created ");
+        this.showToastMessage('Account created successfully! Please log in.');
+       console.log("✅ Signup successful, switching to login view...");
+        this.authModeChange.emit('login');
+                console.log("loginmode activated ");
+
       },
       error: (err) => {
         this.isLoading = false;
@@ -266,38 +273,55 @@ this.authModeChange.emit('login');
     });
   }
 
-  onSubmitOrg(): void {
-    if (this.orgSignupForm.invalid) {
-      this.orgSignupForm.markAllAsTouched();
-      return;
+ onHandleSubmitOrg(): void {
+  if (this.orgSignupForm.invalid) {
+    this.orgSignupForm.markAllAsTouched();
+    return;
+  }
+
+  this.isLoading = true;
+  this.loadingChange.emit(true);
+
+  const apiUrl = API_URL + ENDPOINTS.SIGN_UP;
+
+  this.http.post(apiUrl, this.orgSignupForm.value).subscribe({
+    next: (res) => {
+      this.isLoading = false;
+      this.loadingChange.emit(false);
+
+      const toastElement = document.getElementById('loginToast');
+      if (toastElement) {
+        new Toast(toastElement).show();
+      }
+this.showToastMessage('Account created successfully! Please log in.');
+      // Navigate to login page or emit mode change
+      this.signupSuccess.emit();
+      console.log("✅ Signup successful, switching to login view...");
+  // ✅ corrected method call (added 'this.')
+      this.authModeChange.emit('login');
+    },
+    error: (err) => {
+      this.isLoading = false;
+      this.loadingChange.emit(false);
+      alert(err.error?.message || 'Signup failed');
     }
+  });
+}
 
-    this.isLoading = true;
-    this.loadingChange.emit(true);
-    const apiUrl = API_URL + ENDPOINTS.SIGN_UP;
-
-    this.http.post(apiUrl, this.orgSignupForm.value).subscribe({
-      next: (res) => {
-        this.isLoading = false;
-        this.loadingChange.emit(false);
-
-        const toastElement = document.getElementById('loginToast');
-        if (toastElement) new Toast(toastElement).show();
-
-        this.signupSuccess.emit();
-this.authModeChange.emit('login');
-      },
-      error: (err) => {
-        this.isLoading = false;
-        this.loadingChange.emit(false);
-        alert(err.error?.message || 'Signup failed');
-      }
-    });
+ private showToastMessage(message: string): void {
+    const toastElement = document.getElementById('loginToast');
+    if (toastElement) {
+      toastElement.querySelector('.toast-body')!.textContent = message;
+      new Toast(toastElement).show();
+    } else {
+      alert(message); // fallback if toast not available
+    }
   }
-
-
   goToLogin(): void {
+                        console.log("login naviagation ");
+
     this.router.navigate(['/login']);
+
   }
 
 

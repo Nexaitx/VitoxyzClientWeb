@@ -5,9 +5,9 @@
   <div class="container-fluid w-100 px-0">
     <app-banner-slider 
   [images]="[
-    'assets/medicines/new banner1 desk.png',
-    '../../../assets/medicines/new banner2 desk.png',
-    '../../../assets/medicines/new banner3 desk.png',
+    'assets/medicines/updateBanner1.png',
+    '../../../assets/medicines/updateBanner2.png',
+    '../../../assets/medicines/updateBanner3.png',
   ]"
   [autoSlide]="true"
   [slideInterval]="4000">
@@ -75,9 +75,9 @@
 <div class="d-block d-md-none">
 <app-banner-slider 
   [images]="[
-    'assets/medicines/new banner 1 mob.png',
-    '../../../assets/medicines/new banner2 mob.png',
-    '../../../assets/medicines/new banner3 mob.png',
+    'assets/medicines/updateBanner1.png',
+    '../../../assets/medicines/updateBanner2.png',
+    '../../../assets/medicines/updateBanner3.png',
   ]"
   [autoSlide]="true"
   [slideInterval]="4000">
@@ -129,28 +129,42 @@
   </div>
 </div>
 
-<!-- <div class="carousel-container ">
-  <button
-    class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
-    (click)="scrollBrandCarousel('left')"
-  ></button>
-
-  <div #brandCarouselWrapper class="carousel-wrapper">
-    <div
-      class="brand-card mat-elevation-z4"
-      *ngFor="let brand of brandImages"
-    >
-      <img [src]="brand.imageUrl" [alt]="brand.altText" />
-    </div>
+<!-- Brand Carousel (Manual Scroll Version) -->
+<div class="featured-brands-section">
+  <div class="featured-header">
+    <h2>Featured brands</h2>
   </div>
 
-  <button
-    class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
-    (click)="scrollBrandCarousel('right')"
-  ></button>
-</div> -->
+  <div class="brand-carousel-container">
+    <!-- Left Scroll Button -->
+   <button
+      class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
+      (click)="scrollBrandCarousel('left')"
+    >
+       </button>
 
-<div id="brandCarousel" class="carousel slide" data-bs-ride="carousel">
+    <!-- Scrollable Wrapper -->
+    <div #brandCarouselWrapper class="brand-carousel-wrapper">
+      <div class="brand-card" *ngFor="let brand of brandsone">
+        <div class="brandBackground">
+          <img [src]="brand.image" [alt]="brand.name" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Scroll Button -->
+    <button
+      class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
+      (click)="scrollBrandCarousel('right')"
+    >
+     </button>
+  </div>
+</div>
+
+
+
+
+<!-- <div id="brandCarousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
     
     <div class="carousel-item active">
@@ -187,67 +201,26 @@
             <img src="../../../assets/medicines/on-brand.png" alt="Brand 6" />
           </div>
         </div>
+        <div class="col-4 col-md-3 col-lg-2 p-2">
+          <div class="brandBackground">
+            <img src="../../../assets/medicines/protinex-brand.png" alt="Brand 7" />
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="carousel-item">
+     <div class="carousel-item">
       <div class="row justify-content-center g-2">
         
-        <div class="col-4 col-md-3 col-lg-2 p-2">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 7" />
-          </div>
-        </div>
-        <div class="col-4 col-md-3 col-lg-2 p-2">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 8" />
-          </div>
-        </div>
-        <div class="col-4 col-md-3 col-lg-2 p-2">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 9" />
-          </div>
-        </div>
-
-        <div class="col-4 col-md-3 col-lg-2 p-2">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 10" />
-          </div>
-        </div>
-        <div class="col-4 col-md-3 col-lg-2 p-2">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 11" />
-          </div>
-        </div>
-        <div class="col-4 col-md-3 col-lg-2 p-2">
-          <div class="brandBackground">
-            <img src="../../../assets/medicines/brand-1.png" alt="Brand 12" />
-          </div>
-        </div>
+        
+       
+   
       </div>
-    </div>
+    </div> 
   </div>
   
-  <button
-    class="carousel-control-prev"
-    type="button"
-    data-bs-target="#brandCarousel"
-    data-bs-slide="prev"
-  >
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
   
-  <button
-    class="carousel-control-next"
-    type="button"
-    data-bs-target="#brandCarousel"
-    data-bs-slide="next"
-  >
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
+</div> -->
 
 <div class="d-none d-md-block">
     <app-health-carousel [items]="healthItems"></app-health-carousel>
@@ -291,12 +264,12 @@
   <div class="carousel-container">
     
     <button
-      class="side-nav-button left-button mat-elevation-z4"
-      (click)="scrollCarousel('left')"
+      class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
+      (click)="scrollCarousel2('left')"
     >
-      &lt; </button>
+     </button>
 
-    <div #categoryCarouselWrapper class="carousel-wrapper">
+    <div #categoryCarouselWrapper2 class="carousel-wrapper">
       <mat-card
         *ngFor="let category of categories2"
         class="category-card mat-elevation-z4"
@@ -310,10 +283,10 @@
     </div>
 
     <button
-      class="side-nav-button right-button mat-elevation-z4"
-      (click)="scrollCarousel('right')"
+      class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
+      (click)="scrollCarousel2('right')"
     >
-      &gt; </button>
+   </button>
     
   </div>
 </div>
@@ -350,12 +323,12 @@
   <div class="carousel-container">
     
     <button
-      class="side-nav-button left-button mat-elevation-z4"
-      (click)="scrollCarousel('left')"
+      class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
+      (click)="scrollCarousel3('left')"
     >
-      &lt; </button>
+       </button>
 
-    <div #categoryCarouselWrapper class="carousel-wrapper">
+    <div #categoryCarouselWrapper3 class="carousel-wrapper">
       <mat-card
         *ngFor="let category of categories4"
         class="category-card mat-elevation-z4"
@@ -369,10 +342,10 @@
     </div>
 
     <button
-      class="side-nav-button right-button mat-elevation-z4"
-      (click)="scrollCarousel('right')"
+       class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
+      (click)="scrollCarousel3('right')"
     >
-      &gt; </button>
+     </button>
     
   </div>
 </div>

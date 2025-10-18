@@ -12,15 +12,12 @@
 
 <!-- template... -->
 <div class="d-block d-md-none">
-<app-banner-slider 
-  [images]="[
+  <app-banner-slider [images]="[
     'assets/1.png',
     'assets/2.png',
     'assets/3.png'
-  ]"
-  [autoSlide]="true"
-  [slideInterval]="4000">
-</app-banner-slider>
+  ]" [autoSlide]="true" [slideInterval]="4000">
+  </app-banner-slider>
 </div>
 
 <!-- <app-text-banner
@@ -41,39 +38,33 @@
       <mat-icon>close</mat-icon>
     </button>
   </div>
-  
+
   <div class="quantity-controls">
     <button class="quantity-btn" (click)="updateQuantity(-1)" [disabled]="quantity <= 1">−</button>
     <div class="quantity-display">{{ quantity }}</div>
     <button class="quantity-btn" (click)="updateQuantity(1)" [disabled]="quantity >= 10">+</button>
   </div>
-  
+
   <div class="unit-selection">
     <h5>Unit Type</h5>
     <div class="unit-buttons">
-      <button 
-        *ngFor="let unit of availableUnits" 
-        class="unit-btn" 
-        [class.active]="selectedUnit === unit"
+      <button *ngFor="let unit of availableUnits" class="unit-btn" [class.active]="selectedUnit === unit"
         (click)="selectUnit(unit)">
         {{ unit }}
       </button>
     </div>
   </div>
-  
+
   <div class="strength-selection">
     <h5>Strength</h5>
     <div class="strength-buttons">
-      <button 
-        *ngFor="let strength of availableStrengths" 
-        class="strength-btn" 
-        [class.active]="selectedStrength === strength"
-        (click)="selectStrength(strength)">
+      <button *ngFor="let strength of availableStrengths" class="strength-btn"
+        [class.active]="selectedStrength === strength" (click)="selectStrength(strength)">
         {{ strength }}
       </button>
     </div>
   </div>
-  
+
   <div class="panel-actions">
     <button class="cancel-btn" (click)="closeQuantityPanel()">Cancel</button>
     <button class="update-btn" (click)="updateCart()">
@@ -98,12 +89,8 @@
   <div class="category-layout">
     <!-- Left Sidebar -->
     <div class="sidebar-section" [class.sidebar-loading]="isLoading">
-      <app-sidebar-filter
-        [categories]="categoryList"
-        [brands]="brandList"
-        [disabled]="isLoading || showQuantityPanel"
-        (categorySelected)="filterByCategory($event)"  
-        (brandSelected)="filterByBrands($event)">
+      <app-sidebar-filter [categories]="categoryList" [brands]="brandList" [disabled]="isLoading || showQuantityPanel"
+        (categorySelected)="filterByCategory($event)" (brandSelected)="filterByBrands($event)">
       </app-sidebar-filter>
     </div>
 
@@ -112,9 +99,10 @@
       <!-- Section Header with Active Filters -->
       <div class="section-header">
         <h2>{{ categoryName }}</h2>
-        
+
         <!-- Active Filter Display -->
-        <div class="filter-info" *ngIf="(selectedCategory$ | async) || ((selectedBrands$ | async) && (selectedBrands$ | async)!.length > 0)">
+        <div class="filter-info"
+          *ngIf="(selectedCategory$ | async) || ((selectedBrands$ | async) && (selectedBrands$ | async)!.length > 0)">
           <div class="active-filters-container">
             <!-- Category Filter -->
             <span *ngIf="selectedCategory$ | async as selectedCategory" class="active-filter">
@@ -124,7 +112,7 @@
                 <span *ngIf="isLoading" class="button-loading"></span>
               </button>
             </span>
-            
+
             <!-- Brand Filters -->
             <span *ngFor="let brand of (selectedBrands$ | async) || []" class="active-filter">
               Brand: <strong>{{ getBrandLabel(brand) }}</strong>
@@ -146,26 +134,16 @@
       <div class="product-grid-container">
         <!-- Products Grid -->
         <div *ngIf="products$ | async as products; else loadingOrNoProducts" class="product-grid">
-          
+
           <ng-container *ngIf="products.length > 0; else noProducts">
-            <mat-card
-              *ngFor="let product of products"
-              class="product-card mat-elevation-z2"
-              style="cursor:pointer;"
-              (click)="goToProduct(product)"
-              [class.card-loading]="isLoading"
-            >
+            <mat-card *ngFor="let product of products" class="product-card mat-elevation-z2" style="cursor:pointer;"
+              (click)="goToProduct(product)" [class.card-loading]="isLoading">
               <div class="card-loading-overlay" *ngIf="isLoading">
                 <mat-spinner diameter="30"></mat-spinner>
               </div>
 
-              <img
-                mat-card-image
-                [src]="getFirstImageUrl(product.imageUrl)"
-                [alt]="product.name"
-                class="product-image"
-                [class.image-loading]="isLoading"
-              />
+              <img mat-card-image [src]="getFirstImageUrl(product.imageUrl)" [alt]="product.name" class="product-image"
+                [class.image-loading]="isLoading" />
 
               <mat-card-content class="product-info-content">
                 <h3 class="product-name">{{ product.name }}</h3>
@@ -181,32 +159,23 @@
 
                 <div class="price-action-row">
                   <div class="price-info">
-                    <p *ngIf="product.mrpOld" class="mrp">MRP ₹{{ product.mrpOld }}</p>
+                    <p *ngIf="product.mrpOld" class="mrp">MRP₹{{ product.mrpOld }}</p>
                     <p class="current-price">MRP ₹{{ product.mrp }}</p>
                   </div>
-                  
+
                   <!-- ✅ UPDATED: Add to Cart Button with Instant Feedback -->
-               <!-- ✅ UPDATED: Add to Cart Button with proper implementation -->
+                  <!-- ✅ UPDATED: Add to Cart Button with proper implementation -->
 
 
-<button 
-  class="add-to-cart-btn"
-  [class.adding]="isAddingToCart(product.id)"
-  [class.added]="isAddedToCart(product.id)"
-  (click)="addToCart(product, $event)"
-  [disabled]="isLoading || isAddingToCart(product.id) || showQuantityPanel"
-  mat-raised-button
-  color="primary"
->
-  <mat-icon>
-    {{ isAddedToCart(product.id) ? 'check' : 
-        isAddingToCart(product.id) ? 'hourglass_empty' : 'add_shopping_cart' }}
-  </mat-icon>
-  <span>
-    {{ isAddingToCart(product.id) ? 'Adding...' : 
-        isAddedToCart(product.id) ? 'Added!' : 'Add' }}
-  </span>
-</button>
+                  <button   class="add-to-cart-btn"    [class.adding]="isAddingToCart(product.id)"  
+                    [class.added]="isAddedToCart(product.id)"   (click)="addToCart(product, $event)"  
+                    [disabled]="isLoading || isAddingToCart(product.id) || showQuantityPanel"   mat-raised-button  
+                    color="primary">
+                      <span>
+                          {{ isAddingToCart(product.id) ? 'Adding...' :
+                              isAddedToCart(product.id) ? 'Added!' : 'Add' }}
+                        </span>
+                  </button>
                 </div>
               </mat-card-content>
             </mat-card>
@@ -217,7 +186,8 @@
               <p class="no-products-message">
                 Sorry, {{ categoryName }} Product not found.
               </p>
-              <button class="clear-filter-btn-large" (click)="clearFilters()" [disabled]="isLoading || showQuantityPanel">
+              <button class="clear-filter-btn-large" (click)="clearFilters()"
+                [disabled]="isLoading || showQuantityPanel">
                 <span *ngIf="isLoading" class="button-spinner"></span>
                 Clear Filter
               </button>
@@ -231,13 +201,13 @@
             <mat-spinner diameter="40"></mat-spinner>
             <p>Products loading1...</p>
           </div> -->
-<div *ngIf="!isLoading" class="vm-loading" role="status" aria-live="polite">
-    <div class="vm-spinner" aria-hidden="true"></div>
-    <div class="vm-loading-text">Products loading...</div>
-  </div>
+          <div *ngIf="!isLoading" class="vm-loading" role="status" aria-live="polite">
+            <div class="vm-spinner" aria-hidden="true"></div>
+            <div class="vm-loading-text">Products loading...</div>
+          </div>
         </ng-template>
       </div>
-  
+
       <!-- Paginator -->
       <!-- <mat-paginator
         [length]="totalProducts"
