@@ -237,7 +237,7 @@ export class SignUp implements OnInit {
     });
   }
 
-  onSubmit(): void {
+  onSignupSubmit(): void {
      console.log("personal created ");
         console.log("signup to login");
     if (this.signupForm.invalid) {
@@ -259,8 +259,8 @@ export class SignUp implements OnInit {
 
         this.signupSuccess.emit();
         console.log("personal created ");
-        
-        this.goToLogin();
+        this.showToastMessage('Account created successfully! Please log in.');
+       console.log("✅ Signup successful, switching to login view...");
         this.authModeChange.emit('login');
                 console.log("loginmode activated ");
 
@@ -273,7 +273,7 @@ export class SignUp implements OnInit {
     });
   }
 
- onSubmitOrg(): void {
+ onHandleSubmitOrg(): void {
   if (this.orgSignupForm.invalid) {
     this.orgSignupForm.markAllAsTouched();
     return;
@@ -293,10 +293,11 @@ export class SignUp implements OnInit {
       if (toastElement) {
         new Toast(toastElement).show();
       }
-
+this.showToastMessage('Account created successfully! Please log in.');
       // Navigate to login page or emit mode change
       this.signupSuccess.emit();
-      this.goToLogin(); // ✅ corrected method call (added 'this.')
+      console.log("✅ Signup successful, switching to login view...");
+  // ✅ corrected method call (added 'this.')
       this.authModeChange.emit('login');
     },
     error: (err) => {
@@ -307,7 +308,15 @@ export class SignUp implements OnInit {
   });
 }
 
-
+ private showToastMessage(message: string): void {
+    const toastElement = document.getElementById('loginToast');
+    if (toastElement) {
+      toastElement.querySelector('.toast-body')!.textContent = message;
+      new Toast(toastElement).show();
+    } else {
+      alert(message); // fallback if toast not available
+    }
+  }
   goToLogin(): void {
                         console.log("login naviagation ");
 

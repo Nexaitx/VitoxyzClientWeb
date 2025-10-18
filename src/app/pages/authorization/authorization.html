@@ -34,7 +34,7 @@
 
                 <div *ngIf="authMode === 'signup'">
                   
-                  <app-sign-up [authMode]="authMode" (signupSuccess)="onLoginSuccess()"
+                  <app-sign-up [authMode]="authMode"(authModeChange)="authMode = $event"   (signupSuccess)="onSignupSuccess()"
                     (loadingChange)="handleLoadingChange($event)"></app-sign-up>
                   <div class="text-center pb-3">
                     Already have an account? <span class="links" (click)="authMode = 'login'">Login</span>
