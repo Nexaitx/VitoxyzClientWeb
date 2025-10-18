@@ -19,13 +19,17 @@
   </div>
 
   <div class="carousel-container">
-    <button class="side-nav-button left-button fa fa-chevron-left" (click)="scrollCarousel('left')">
-
-    </button>
-    <button class="side-nav-button right-button fa fa-chevron-right" (click)="scrollCarousel('right')">
-
-    </button>
-
+    <button
+      class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
+      (click)="scrollCarousel('left')"
+    >
+       </button>
+   
+  <button
+      class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
+      (click)="scrollCarousel('right')"
+    >
+     </button>
     <div #productCarouselWrapper class="carousel-wrapper">
 
       <div class="carousel-loading-overlay" *ngIf="isLoadingData">

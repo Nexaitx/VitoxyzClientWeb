@@ -1,7 +1,7 @@
 .banner-slider {
   position: relative;
   max-width: 100%;
-  height: 250px;
+ // height: 250px;
   overflow: hidden;
 
   .slides {
@@ -9,7 +9,7 @@
     height: 100%;
 
     img {
-      width: 100%;
+       width: 100%;
       height: 100%;
       object-fit: cover;
       display: none;
@@ -105,6 +105,6 @@
 /* Large Screens */
 @media (min-width: 1200px) {
   .banner-slider {
-    height: 350px; // Desktop me banner bada
+    height: 430px; // Desktop me banner bada
   }
 }

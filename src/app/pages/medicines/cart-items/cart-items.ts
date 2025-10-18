@@ -823,11 +823,20 @@ onAuthSuccess() {
   //   return this.cart.reduce((sum, i) => sum + (i.price * i.count), 0);
   // }
 
-    getItemTotal(): number {
-      console.log("hdgdgdh",this.cart);
-      
-    return this.cart.reduce((sum, i) => sum + (i.price * i.count), 0);
+getItemTotal(): number {
+  console.log("Cart data:", this.cart);
+
+  if (!this.cart || !Array.isArray(this.cart)) {
+    return 0;
   }
+
+  return this.cart.reduce((sum, item) => {
+    const mrp = Number(item.mrp) || 0;
+    const count = Number(item.count) || 0;
+    return sum + mrp * count;
+  }, 0);
+}
+
 
   getTotalDiscount(): number {
     return this.cart.reduce((sum, i) => sum + ((i.mrp ? i.mrp - i.price : 0) * i.count), 0);

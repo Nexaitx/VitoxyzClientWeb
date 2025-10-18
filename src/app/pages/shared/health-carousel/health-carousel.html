@@ -1,14 +1,48 @@
 <div class="carousel-container position-relative overflow-hidden d-flex align-items-center">
-  <div *ngIf="!isMobile" class="d-flex w-100 justify-content-start">
+   <!-- <button class="carousel-control-prev" type="button" (click)="scrollCarousel('left')">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  </button> -->
+  <div *ngIf="!isMobile" class="carousel-container d-flex w-100 justify-content-center align-items-center">
+  <!-- Left control (keeps same class as your SCSS) -->
+  <!-- <button class="carousel-control-prev" type="button" (click)="scrollCarousel('left')" aria-label="previous">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  </button> -->
+
+    <button
+      class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
+      (click)="scrollCarousel('left')"
+    >
+       </button>
+
+  <!-- Items row (note the #carouselTrack ref) -->
+  <div #carouselTrack class="d-flex w-100 justify-content-start align-items-start"  style="
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding: 6px 12px;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  ">
     <div class="card-wrapper me-2" *ngFor="let item of visibleItems">
       <div class="card-content border rounded d-flex flex-column align-items-center justify-content-center p-2"
            style="cursor: pointer;"
            (click)="goToCategory(item.link)">
-        <img [src]="item.image" [alt]="item.label" class="carousel-image img-fluid" height="150"/>
-        <!-- <p class="carousel-title text-center ">{{ item.label }}</p> -->
+        <img [src]="item.image" [alt]="item.label" class="carousel-image img-fluid" />
+        <!-- <div class="carousel-title text-center mt-2">{{ item.label }}</div> -->
       </div>
     </div>
   </div>
+
+  <!-- Right control -->
+  <button
+      class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
+      (click)="scrollCarousel('right')"
+    ></button>
+</div>
+
+   <!-- <button class="carousel-control-next" type="button" (click)="scrollCarousel('right')">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  </button> -->
 
   <div *ngIf="isMobile" class="mobile-grid-container w-100">
     <div class="row g-2"> 
