@@ -44,7 +44,6 @@
       font-size: 0.95rem;
     }
     .text .sub {
-      color: #8a8a8a;
       font-size: 0.85rem;
     }
   }
@@ -103,8 +102,8 @@
   }
 
   .continue-btn {
-    background: #0bbbc1;
-    border-color: #0bbbc1;
+    background: #db9280;
+    border-color: #db9280;
     color: #fff;
     padding: 0.55rem 1.25rem;
     border-radius: 6px;
@@ -152,7 +151,7 @@
         left: 0;
         top: 2px;
         font-size: 1rem;
-        color: #0bbbc1; /* matches your theme */
+        color: #db9280; /* matches your theme */
       }
     }
   }
@@ -240,4 +239,8 @@
   .mobile-sheet-backdrop {
     display: block;
   }
+}
+
+.card {
+  background-color: #fbf8eb;
 }

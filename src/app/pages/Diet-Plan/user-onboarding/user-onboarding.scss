@@ -21,30 +21,30 @@
 /* Upcoming step (number) */
 ::ng-deep .custom-stepper .mat-step-icon-state-number {
   background-color: transparent !important;
-  border: 2px solid #0BBBC1 !important;
-  color: #0BBBC1 !important;
+  border: 2px solid #db9280 !important;
+  color: #db9280 !important;
 }
 
 /* Current step (edit) */
 ::ng-deep .custom-stepper .mat-step-icon-state-edit {
-  background-color: #0BBBC1 !important;
+  background-color: #db9280 !important;
   color: #fff !important;
-  border: 2px solid #0BBBC1 !important;
+  border: 2px solid #db9280 !important;
 }
 
 /* Completed step (done) */
 ::ng-deep .custom-stepper .mat-step-icon-state-done {
-  background-color: #0BBBC1 !important;
+  background-color: #db9280 !important;
   color: #fff !important;
-  border: 2px solid #0BBBC1 !important;
+  border: 2px solid #db9280 !important;
 }
 
 ::ng-deep .custom-stepper .mat-step-icon-state-edit,
 ::ng-deep .custom-stepper .mat-step-icon-state-done {
-  background-color: #0BBBC1 !important;
+  background-color: #db9280 !important;
   color: #fff !important;
   border-radius: 50%;
-  border: 2px solid #0BBBC1 !important;
+  border: 2px solid #db9280 !important;
 }
 
 
@@ -172,7 +172,7 @@ input.no-arrows {
 .rounded-input-group button {
   font-size: 20px;
   font-weight: bold;
-  color: #0bbbc1; /* teal color for icons */
+  color: #db9280; /* teal color for icons */
   cursor: pointer;
 }
 

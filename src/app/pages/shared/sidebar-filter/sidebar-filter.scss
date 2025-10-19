@@ -50,7 +50,7 @@
       justify-content: space-between;
 
       &:hover:not(.category-item-disabled) {
-        color: #0BBBC1;
+        color: #db9280;
         font-weight: 600;
       }
 
@@ -59,7 +59,7 @@
         cursor: not-allowed;
         
         .loading-dot {
-          color: #0BBBC1;
+          color: #db9280;
           animation: pulse 1.5s infinite;
         }
       }
@@ -107,7 +107,7 @@
         flex: 1;
 
         &:hover:not(.label-disabled) {
-          color: #0BBBC1;
+          color: #db9280;
         }
 
         &.label-disabled {
@@ -123,7 +123,7 @@
 
         .loading-indicator {
           margin-left: 8px;
-          color: #0BBBC1;
+          color: #db9280;
           animation: spin 1s linear infinite;
         }
       }
@@ -193,7 +193,7 @@
 .filter-toggle-btn {
     width: 100%;
     padding: 10px;
-    background-color: #0BBBC1;
+    background-color: #db9280;
     color: white;
     border: none;
     border-radius: 8px;

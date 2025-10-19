@@ -20,9 +20,9 @@ export class Pharmacy {
   constructor(private router: Router = inject(Router)) {}
 
   healthItems = [
-  { image: '../../../assets/medicines/1.png', label: 'Diabetes', link: '/products/Lancet' },
+  { image: '../../../assets/medicines/1.png', label: 'Diabetes', link: '/products/StomachCare' },
   { image: '../../../assets/medicines/2.png', label: 'Heart Rate', link: '/products/HeartRate' },
-  { image: '../../../assets/medicines/3.png', label: 'Stomach Care', link: '/products/StomachCare' },
+  { image: '../../../assets/medicines/3.jpg', label: 'Stomach Care', link: '/products/Lancet' },
   { image: '../../../assets/medicines/4.png', label: 'Liver Care', link: '/products/LiverCare' },
   { image: '../../../assets/medicines/5.png', label: 'Eye Care', link: '/products/EyeCare' },
   { image: '../../../assets/medicines/6.png', label: 'Bone & Joint', link: '/products/BoneJoint' },

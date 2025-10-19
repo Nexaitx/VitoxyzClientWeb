@@ -8,7 +8,7 @@
 //   .price-box h4 { font-weight:00; small { text-decoration: line-through; } }
 //   .quantity select { margin-left:6px; }
 //   .delivery { font-size:14px; color:#007bff; }
-//   .btnCls, .btn-primary { border:1px solid #0BBBC1; background-color:#0BBBC1; color:#fff; border-radius:27px ;}
+//   .btnCls, .btn-primary { border:1px solid #db9280; background-color:#db9280; color:#fff; border-radius:27px ;}
 //   .btnCls:hover, .btn-primary:hover { background-color:rgb(48,197,202); border-color:rgb(35,194,199); }
 // }
 
@@ -22,11 +22,11 @@
 //     .carousel-track { display:flex; transition: transform 0.3s ease-in-out; }
 //     .carousel-item { min-width:100%; display:flex; justify-content:center; }
 //     .main-img-mobile { width:100%; max-width:300px; height:auto; object-fit:contain; border:1px solid #ddd; border-radius:4px; }
-//     .dots { text-align:center; margin-top:8px; span { display:inline-block; width:8px; height:8px; border-radius:50%; background:#ccc; margin:0 4px; cursor:pointer; &.active{ background:#0BBBC1; } } }
+//     .dots { text-align:center; margin-top:8px; span { display:inline-block; width:8px; height:8px; border-radius:50%; background:#ccc; margin:0 4px; cursor:pointer; &.active{ background:#db9280; } } }
 //     .nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.7); border:none; font-size:24px; padding:4px 8px; cursor:pointer; }
 //     .nav.prev { left:0; } .nav.next { right:0; }
 //   }
-//    .btnCls, .btn-primary { border:1px solid #0BBBC1; background-color:#0BBBC1; color:#fff; border-radius:27px ;font-weight: 400;font-size: medium;} 
+//    .btnCls, .btn-primary { border:1px solid #db9280; background-color:#db9280; color:#fff; border-radius:27px ;font-weight: 400;font-size: medium;} 
 //   .btnCls:hover, .btn-primary:hover { background-color:rgb(48,197,202); border-color:rgb(35,194,199); }
 // }
 // /* Loading spinner + text (minimal, self-contained) */
@@ -169,7 +169,7 @@ li, span, .description {
     transition: border-color 0.2s ease;
 
     &:hover {
-      border-color: #0BBBC1;
+      border-color: #db9280;
     }
   }
 
@@ -210,8 +210,8 @@ li, span, .description {
 
   .btnCls, 
   .btn-primary {
-    border: 1px solid #0BBBC1;
-    background-color: #0BBBC1;
+    border: 1px solid #db9280;
+    background-color: #db9280;
     color: #fff;
     border-radius: 27px;
     font-weight: 400;
@@ -374,10 +374,10 @@ li, span, .description {
     .carousel-track { display:flex; transition: transform 0.3s ease-in-out; }
     .carousel-item { min-width:100%; display:flex; justify-content:center; }
     .main-img-mobile { width:100%; max-width:300px; height:auto; object-fit:contain; border:1px solid #ddd; border-radius:4px; }
-    .dots { text-align:center; margin-top:8px; span { display:inline-block; width:8px; height:8px; border-radius:50%; background:#ccc; margin:0 4px; cursor:pointer; &.active{ background:#0BBBC1; } } }
+    .dots { text-align:center; margin-top:8px; span { display:inline-block; width:8px; height:8px; border-radius:50%; background:#ccc; margin:0 4px; cursor:pointer; &.active{ background:#db9280; } } }
     .nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.7); border:none; font-size:24px; padding:4px 8px; cursor:pointer; }
     .nav.prev { left:0; } .nav.next { right:0; }
   }
-   .btnCls, .btn-primary { border:1px solid #0BBBC1; background-color:#0BBBC1; color:#fff; border-radius:27px ;font-weight: 400;font-size: medium;} 
+   .btnCls, .btn-primary { border:1px solid #db9280; background-color:#db9280; color:#fff; border-radius:27px ;font-weight: 400;font-size: medium;} 
   .btnCls:hover, .btn-primary:hover { background-color:rgb(48,197,202); border-color:rgb(35,194,199); }
 }

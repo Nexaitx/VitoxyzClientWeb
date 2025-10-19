@@ -1,6 +1,7 @@
 .navbar {
   position: relative;
   z-index: 1055;
+  background: linear-gradient(to right, #f5a38f, #feb47b);
 }
 
 .navbcls {
@@ -84,7 +85,7 @@
 
 .sidebar .mobile-menu-item a.active,
 .sidebar .mobile-menu-item button.active {
-  color: #0bbbc1;
+  color: #db9280;
 }
 
 
@@ -163,7 +164,7 @@ body.no-scroll {
 
 .sidebar ul li a.active,
 .sidebar ul li button.active {
-  color: #0bbbc1;
+  color: #db9280;
 }
 
 .sidebar ul li button i {

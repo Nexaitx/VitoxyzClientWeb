@@ -22,10 +22,10 @@ export class MobileFooterNavComponent implements OnInit {
   mobileBreakpoint = 768; 
   isMobile = false; 
   navItems: NavItem[] = [
-    { label: 'Pharmacy', icon: 'fa-suitcase-medical', link: '/medicines' },
-    { label: 'Book Staff', icon: 'fa-user-nurse', link: '/book-staff' },
-    { label: 'Diet Plans', icon: 'fa-heart-circle-check', link: '/diet/user-onboarding' },
-    { label: 'Profile', icon: 'fa-circle-user', link: '/user-profile' }
+    { label: 'Pharmacy', icon: 'fi-rr-medicine', link: '/medicines' },
+    { label: 'Book Staff', icon: 'fi-rr-together-people', link: '/book-staff' },
+    { label: 'Diet Plans', icon: 'fi-rr-salad', link: '/diet/user-onboarding' },
+    { label: 'Profile', icon: 'fi-rr-user-pen', link: '/user-profile' }
   ];
 authMode: 'login' | 'signup' | 'forgotPassword' = 'login';
   constructor(private router: Router) {}

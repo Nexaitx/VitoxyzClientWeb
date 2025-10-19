@@ -20,6 +20,7 @@
     "@angular/material": "^20.1.6",
     "@angular/platform-browser": "^20.1.7",
     "@angular/router": "^20.1.7",
+    "@flaticon/flaticon-uicons": "^3.3.1",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.7",
     "bootstrap-icons": "^1.13.1",

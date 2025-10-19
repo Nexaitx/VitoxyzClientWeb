@@ -666,7 +666,7 @@
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
-  background-color: #0BBBC1 !important;
+  background-color: #db9280 !important;
   color: #fff !important;
   transition: all 0.2s ease-in-out;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -680,17 +680,17 @@
   }
 
   &:hover {
-    background-color: #0BBBC1 !important;
+    background-color: #db9280 !important;
   }
 
   &.adding {
-    background-color: #0BBBC1 !important;
+    background-color: #db9280 !important;
     color: #212121 !important;
     padding: 8px 24px 8px 16px !important;
   }
 
   &.added {
-    background-color: #0BBBC1 !important;
+    background-color: #db9280 !important;
     color: white !important;
     padding: 8px 24px 8px 16px !important;
   }
@@ -710,7 +710,7 @@
 
 
     &:hover:not(:disabled) {
-      background-color: var(--mat-primary-600, #0BBBC1) !important;
+      background-color: var(--mat-primary-600, #db9280) !important;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
     

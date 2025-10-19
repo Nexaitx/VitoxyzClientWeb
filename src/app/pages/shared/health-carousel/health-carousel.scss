@@ -1,205 +1,4 @@
-// .carousel-container {
-//   padding: 10px 20px;
-//   position: relative;
-//   background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
-//   border-radius: 12px;
-//   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-//   overflow: hidden;
-//   display: block !important; /* Override d-flex to manage mobile grid flow */
 
-//   /* Mobile Grid Container - Use this for a two-row grid on small screens */
-//   .mobile-grid-container {
-//     padding: 10px 0; /* Add vertical padding for the grid */
-//   }
-
-//   /*
-//    * REMOVED: All .carousel-track and .mobile-scroll-container styles
-//    * were removed as they are no longer needed for the grid layout.
-//    */
-
-//   .d-flex {
-//     display: flex;
-//     align-items: stretch;
-//   }
-
-//   // Desktop card wrapper
-//   .card-wrapper {
-//     flex: 0 0 16.66%; /* 6 items on desktop */
-//     padding: 0 5px;
-//     box-sizing: border-box;
-
-//     .card-content {
-//       background: #ffffff;
-//       border: 1px solid #eaeaea;
-//       border-radius: 10px;
-//       transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-//       height: 80%;
-//       text-align: center;
-//       padding: 15px;
-//       cursor: pointer;
-//       min-height: 200px;
-
-//       &:hover {
-//         transform: translateY(-10px) scale(1.04);
-//         box-shadow: 0 14px 32px rgba(0, 0, 0, 0.15);
-//         border-color: #d1d1d1;
-//       }
-//     }
-//   }
-
-//   // Mobile card content - Used in the new grid layout
-//    .card-content-mobile {
-//     background: #fff;
-//     border: 1px solid transparent;
-//     border-radius: 10px;
-//     text-align: center;
-//     padding: 10px;
-//     cursor: pointer;
-//     min-height: 160px;
-//     transition: all 0.3s ease;
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     justify-content: space-between;
-
-//     &:hover {
-//       border-color: #eaeaea;
-//       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-//       transform: translateY(-3px);
-//     }
-
-//     &:active {
-//       transform: scale(0.98);
-//       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-//     }
-//   }
-
-//   /*
-//    * REMOVED: .card-wrapper-mobile styles were removed.
-//    */
-
-//     .carousel-image {
-//     width: 100%;
-//     height: 90px;
-//     object-fit: contain;
-//     background: #fafafa;
-//     border-radius: 6px;
-//     transition: transform 0.3s ease, filter 0.3s ease;
-//   }
-
-//   .card-content:hover .carousel-image,
-//   .card-content-mobile:hover .carousel-image {
-//     transform: scale(1.08);
-//     filter: brightness(1.05);
-//   }
-
-//  /* ✅ Updated title style */
-//   .carousel-title {
-//     margin-top: 8px;
-//     font-size: 13px;
-//     font-weight: 600;
-//     color: #333;
-//     text-align: center;
-//     white-space: nowrap;
-//     overflow: hidden;
-//     text-overflow: ellipsis;
-//     width: 100%;
-//     transition: color 0.3s ease;
-//   }
-
-//   .card-content:hover .carousel-title,
-//   .card-content-mobile:hover .carousel-title {
-//     color: #0BBBC1;
-//   }
-
-//   /* --- Controls (Desktop Only) --- */
-//   .carousel-control-prev,
-//   .carousel-control-next {
-//     position: absolute;
-//     top: 50%;
-//     transform: translateY(-50%);
-//     background: linear-gradient(135deg, #0BBBC1, #8ff0fb);
-//     border: none;
-//     width: 42px;
-//     height: 42px;
-//     border-radius: 50%;
-//     z-index: 10;
-//     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-//     transition: all 0.3s ease;
-
-//     &:hover {
-//       background: linear-gradient(135deg, #0BBBC1, #4ea7c8);
-//       transform: translateY(-50%) scale(1.15);
-//       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-//     }
-//   }
-
-//   .carousel-control-prev {
-//     left: 10px;
-//   }
-
-//   .carousel-control-next {
-//     right: 10px;
-//   }
-
-//   .carousel-control-prev-icon,
-//   .carousel-control-next-icon {
-//     display: block;
-//     width: 16px;
-//     height: 16px;
-//     background-color: white;
-//     mask-size: cover;
-//     mask-repeat: no-repeat;
-//     mask-position: center;
-//     margin: 0 auto;
-//   }
-
-//   .carousel-control-prev-icon {
-//     mask-image: url("data:image/svg+xml,%3Csvg fill='black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M4 1L1 4l3 3h1V6H3V2h2V1z'/%3E%3C/svg%3E");
-//   }
-
-//   .carousel-control-next-icon {
-//     mask-image: url("data:image/svg+xml,%3Csvg fill='black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M4 7l3-3-3-3H3v1h2v4H3v1z'/%3E%3C/svg%3E");
-//   }
-
-//   /* --- Media Queries (Desktop) --- */
-//   @media (max-width: 768px) {
-//     .carousel-container {
-//       padding: 15px 10px; 
-//     }
-    
-//     // Mobile card content adjustment for 3 columns (col-4)
-//     .card-content-mobile {
-//       min-height: 140px; /* Increased height for better look */
-//       padding: 10px;
-//     }
-    
-//     .carousel-image {
-//         // Image size can be slightly larger now
-//         height: 100px;
-//         width: 100%;
-//     }
-    
-//     .carousel-title {
-//         font-size: 12px; /* Font size adjustment */
-//         font-weight: 600;
-//         margin-top: 5px;
-//     }
-//   }
-
-//   @media (max-width: 480px) {
-//     // Very small screens (like iPhone SE)
-//     .card-content-mobile {
-//       min-height: 120px;
-//       padding: 10px 0px 0px;
-//     }
-//     .carousel-title {
-//       font-size: 11px;
-//     }
-//   }
-// }
-
-/* Container */
 .carousel-container {
   padding: 10px 20px;
   position: relative;
@@ -224,21 +23,35 @@
 
 
     .right-button {
-    right: 0px;
-    color: #0bbbc1;
-    background: white;
-    font-weight: 600;
-    font-size: 24px;
+    z-index: 11;
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
     border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s;
   }
 
   .left-button {
-    left: 0px;
-    color: #0bbbc1;
-    background: white;
-    font-weight: 600;
-    font-size: 24px;
+    z-index: 11;
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
     border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s;
   }
 
   /* Desktop card wrapper — fixed thumbnail look like screenshot 2 */
@@ -335,7 +148,7 @@
     display: block;
     width: 16px;
     height: 16px;
-    background-color: #0BBBC1;
+    background-color: #db9280;
     mask-size: cover;
     mask-repeat: no-repeat;
     mask-position: center;

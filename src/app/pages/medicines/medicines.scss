@@ -55,10 +55,6 @@ h5 {
   box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
 
   img {
-    position: absolute;
-    left: 25px;
-    top: 20%;
-    border-radius: 100%;
     width: 100px;
   }
 }
@@ -216,12 +212,7 @@ h5 {
   box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
 
   img {
-    position: absolute;
-    left: 25px;
-    top: 20%;
-    border-radius: 100%;
-    width: 100px;
-    /* Desktop Image Width */
+    
   }
 }
 
@@ -345,17 +336,10 @@ h5 {
 }
 
 /* logo sizing — keeps different aspect ratios balanced inside badge */
-.brandBackground img {
-  display: block;
-  max-width: 62%;
-  max-height: 62%;
-  object-fit: contain;
-}
 
 /* Side nav buttons (placed over the edges) */
 .side-nav-button {
   position: relative; /* keep flow for small screens; absolute below via modifiers */
-  background: #ffffff;
   border: none;
   font-size: 24px;
   width: 48px;
@@ -366,7 +350,7 @@ h5 {
   align-items: center;
   justify-content: center;
   box-shadow: 0 6px 14px rgba(0,0,0,0.08);
-  color: #0BBBc1; /* coral arrow color like reference */
+  color: #fff;
   border: 1px solid rgba(0,0,0,0.06);
   z-index: 20;
 }
@@ -473,8 +457,7 @@ h5 {
 
   .right-button {
     right: 0px;
-    color: #0bbbc1;
-    background: white;
+    color: #fff;
     font-weight: 600;
     font-size: 24px;
     border: none;
@@ -482,8 +465,7 @@ h5 {
 
   .left-button {
     left: 0px;
-    color: #0bbbc1;
-    background: white;
+    color: #fff;
     font-weight: 600;
     font-size: 24px;
     border: none;
@@ -580,7 +562,6 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
 
 .mobile-quick-access-wrapper {
   padding: 20px;
-  background-color: $quick-access-bg;
 
   .row {
     --bs-gutter-x: 0; // bootstrap gutter hata diya
@@ -605,8 +586,7 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
     border-radius: $tile-radius;
     padding: 5px 4px 10px;
     cursor: pointer;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.03);
-    transition: all 0.3s ease;
+    background: linear-gradient(180deg, #fff7e9, #ffcfb8);
     height: 150px; // chhota kar diya
 
     &:hover {
@@ -654,7 +634,7 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
 }
 
 .bynsclsleft {
-  color: #0bbbc1;
+  color: #db9280;
   background: none;
   font-weight: 600;
   font-size: 24px;

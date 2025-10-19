@@ -1,5 +1,4 @@
-// @use './custom-theme' as *;
-
+@import "node_modules/@flaticon/flaticon-uicons/css/all/all.css";
 
 html,
 body {
@@ -47,6 +46,15 @@ body {
     }
 }
 
+button {
+    background: linear-gradient(to right, #f5a38f, #feb47b) !important;
+}
+
+
+.bg-none {
+    background: none !important;
+}
+
 .addNewBtn {
     border: 1px dashed #14bbc1;
 }
@@ -65,7 +73,7 @@ a {
 }
 
 .cartBoxes {
-    border: 1.35px solid #0BBBC1 !important;
+    border: 1.35px solid #db9280 !important;
 }
 
 .strong {
@@ -91,15 +99,22 @@ a {
 }
 
 .cards {
-  box-shadow: 1px 2px 7px #e0e2e2;
-  border-radius: 10px
+    box-shadow: 1px 2px 7px #e0e2e2;
+    border-radius: 10px
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 ::ng-deep .custom-dialog .mat-mdc-dialog-container {
-  padding: 0;
-  border-radius: 15px;
-  overflow: hidden;
+    padding: 0;
+    border-radius: 15px;
+    overflow: hidden;
 }

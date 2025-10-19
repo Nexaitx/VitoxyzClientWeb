@@ -52,10 +52,10 @@ cartCount: number = 0;
   openSubmenus = new Set<number>();
 
   menuItems = [
-    { label: 'Medicines', icon: 'fa-stethoscope' , path: '/medicines' },
+    { label: 'Medicines', icon: 'fi-rr-medicine' , path: '/medicines' },
     {
       label: 'Book Staff',
-      icon: 'fa-user-nurse',
+      icon: 'fi-rr-together-people',
       dropdown: true,
       dropdownItems: [
         { label: 'Nurse', path: '/book-staff' },
@@ -65,11 +65,11 @@ cartCount: number = 0;
         { label: 'Psychiatrist', path: '/book-staff' },
       ]
     },
-    { label: 'Diet Plans', icon: 'fa-heart-circle-check',  path: 'diet/user-onboarding' },
+    { label: 'Diet Plans', icon: 'fi-rr-salad',  path: 'diet/user-onboarding' },
 
     {
       label: 'Profile',
-      icon: 'fa-circle-user',
+      icon: 'fi-rr-user-pen',
       dropdown: true,
       dropdownItems: [
         { label: 'My Profile', path: '/user-profile' },
@@ -79,7 +79,7 @@ cartCount: number = 0;
         { label: 'Logout', path: '/logout' }
       ]
     },
-    { label: 'Need Help?', path: '/help' },
+    { label: 'Need Help?', icon: 'fi-rr-exclamation', path: '/help' },
   ];
 
 ngOnInit(): void {

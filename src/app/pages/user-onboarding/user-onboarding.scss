@@ -20,36 +20,36 @@
 /* Upcoming step (number) */
 ::ng-deep .custom-stepper .mat-step-icon-state-number {
   background-color: transparent !important;
-  border: 2px solid #0BBBC1 !important;
-  color: #0BBBC1 !important;
+  border: 2px solid #db9280 !important;
+  color: #db9280 !important;
 }
 
 /* Current step (edit) */
 ::ng-deep .custom-stepper .mat-step-icon-state-edit {
-  background-color: #0BBBC1 !important;
+  background-color: #db9280 !important;
   color: #fff !important;
-  border: 2px solid #0BBBC1 !important;
+  border: 2px solid #db9280 !important;
 }
 
 /* Completed step (done) */
 ::ng-deep .custom-stepper .mat-step-icon-state-done {
-  background-color: #0BBBC1 !important;
+  background-color: #db9280 !important;
   color: #fff !important;
-  border: 2px solid #0BBBC1 !important;
+  border: 2px solid #db9280 !important;
 }
 
 ::ng-deep .custom-stepper .mat-step-icon-state-edit,
 ::ng-deep .custom-stepper .mat-step-icon-state-done {
-  background-color: #0BBBC1 !important;
+  background-color: #db9280 !important;
   color: #fff !important;
   border-radius: 50%;
-  border: 2px solid #0BBBC1 !important;
+  border: 2px solid #db9280 !important;
 }
 
 
 // ::ng-deep .custom-stepper .mat-step-header[aria-selected="true"] ~ .mat-stepper-horizontal-line,
 // ::ng-deep .custom-stepper .mat-step-header.mat-step-header-state-done ~ .mat-stepper-horizontal-line {
-//   border-top-color: #0BBBC1 !important; /* teal for progress */
+//   border-top-color: #db9280 !important; /* teal for progress */
 // }
 
 /* Step labels */
@@ -70,7 +70,7 @@
 // }
 
 // .next-button{
-// background-color: #0BBBC1;
+// background-color: #db9280;
 //   color: #f8f9fa;
 
 // }
@@ -98,7 +98,7 @@ input.form-control::placeholder {
 }
 
 input.form-control:focus {
-  border: 1px solid #0BBBC1 !important;
+  border: 1px solid #db9280 !important;
   outline: none !important;
   box-shadow: none !important;
 }
@@ -107,7 +107,7 @@ input.form-control:focus {
 .input-group i {
   background: transparent !important;
   border: none !important;
-  color: #0BBBC1;
+  color: #db9280;
   font-size: 16px;
   margin-right: 6px;
 }
@@ -130,14 +130,14 @@ input.form-control {
 .form-check-input[type="radio"] {
   width: 18px;
   height: 18px;
-  border: 2px solid #0BBBC1;
-  accent-color: #0BBBC1;
+  border: 2px solid #db9280;
+  accent-color: #db9280;
   margin-right: 6px;
 }
 
 .form-check-input[type="radio"]:checked {
-  background-color: #0BBBC1;
-  border-color: #0BBBC1;
+  background-color: #db9280;
+  border-color: #db9280;
 }
 
 
@@ -156,7 +156,7 @@ input.form-control {
 }
 
 input.form-control:focus {
-  border: 1px solid #0BBBC1 !important;
+  border: 1px solid #db9280 !important;
   box-shadow: none !important;
   outline: none !important;
 }
@@ -172,7 +172,7 @@ input.form-control:focus {
 .input-group button {
   background-color: transparent !important;
   border: none !important;
-  color: #0BBBC1;
+  color: #db9280;
   font-size: 18px;
   padding-top: 6px;
 }
@@ -189,7 +189,7 @@ select.form-select {
   position: absolute;
   top: 50%;
   left: 22px;
-  color: #0BBBC1;
+  color: #db9280;
   font-size: 16px;
   pointer-events: none !important; /* Prevent blocking clicks in input */
 }
@@ -203,7 +203,7 @@ select.form-select {
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: #0BBBC1;
+  color: #db9280;
   font-size: 18px;
   pointer-events: none !important; /* don’t block typing */
   z-index: 2;
@@ -220,7 +220,7 @@ select.form-select {
 }
 
 .input-with-icon .with-icon:focus {
-  border-color: #0BBBC1 !important;
+  border-color: #db9280 !important;
   box-shadow: none !important;
 }
 
@@ -236,7 +236,7 @@ select.form-select {
     top: 50%;
     left: 14px;
     transform: translateY(-50%);
-    color: #0BBBC1;
+    color: #db9280;
     font-size: 18px;
     pointer-events: none;
     z-index: 2;
@@ -267,7 +267,7 @@ input.form-control.with-icon {
 }
 
 input.form-control.with-icon:focus {
-  border-color: #0BBBC1;
+  border-color: #db9280;
   box-shadow: none;
 }
 
@@ -278,7 +278,7 @@ input.form-control.with-icon:focus {
 //     top: 50%;
 //     left: 14px; /* Adjust icon distance */
 //     transform: translateY(-50%);
-//     color: #0BBBC1;
+//     color: #db9280;
 //     font-size: 16px;
 //     pointer-events: none; /* Don’t block clicks */
 //   }
@@ -293,7 +293,7 @@ input.form-control.with-icon:focus {
 //   }
 
 //   .form-control.with-icon:focus {
-//     border-color: #0BBBC1 !important;
+//     border-color: #db9280 !important;
 //     box-shadow: none !important;
 //   }
 
@@ -304,7 +304,7 @@ input.form-control.with-icon:focus {
 // }
 /* Next Button */
 .next-button {
-  background-color: #0BBBC1 !important;
+  background-color: #db9280 !important;
   color: #fff !important;
   border-radius: 50px !important;
   font-weight: 500;
@@ -440,7 +440,7 @@ input.form-control.with-icon:focus {
 }
 
 .form-control.with-icon:focus {
-  border-color: #0BBBC1 !important;
+  border-color: #db9280 !important;
   box-shadow: none !important;
 }
 .address {
