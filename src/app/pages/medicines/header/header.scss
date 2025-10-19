@@ -5,9 +5,6 @@ $danger-color: #f44336;
 $shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
 
 .search-bar {
-  background-color: #fff;
-  box-shadow: $shadow-light;
-  border-radius: 50px;
   margin-top: 12px;
   padding: 5px 15px;
   transition: all 0.3s ease;
@@ -184,6 +181,9 @@ $shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
   .quick-box {
     width: 100%;
     justify-content: center;
+    border-radius: 5px;
+    background: #fbf8eb;
+    padding: 5px 0;
   }
 
   .mobile-quick {
