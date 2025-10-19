@@ -2,139 +2,119 @@
 <app-header></app-header>
 
 <div class="container CONSCls">
-   <div class="cart-scroll-container">
-  <!-- Debug Info -->
-  <div class="alert alert-info" *ngIf="debugInfo">
-    <small>Debug: {{ debugInfo }}</small>
-    <button class="btn btn-sm btn-outline-primary ms-2" (click)="checkLocalStorage()">
-      Check Storage
-    </button>
-    <button class="btn btn-sm btn-outline-warning ms-1" (click)="manualSync()">
-      Manual Sync
-    </button>
-  </div>
-
-  <!-- Loading Indicator -->
-  <div *ngIf="isLoading" class="text-center my-4">
-    <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-    <p class="mt-2">Loading cart...</p>
-  </div>
-
-  <div class="my-4">
-    <h5>{{ cart.length }} Item(s) in Cart</h5>
-    <small>Items not requiring prescription</small>
-  </div>
-
-  <!-- Empty Cart Message -->
-  <div *ngIf="cart.length === 0 && !isLoading" class="text-center my-4">
-    <p>Your cart is empty.</p>
-    <button class="btn btn-primary mt-2" (click)="continueShopping()">
-      Continue Shopping
-    </button>
-  </div>
-
-  <!-- Cart Items -->
-  <div *ngFor="let item of cart" class="cart-item">
-    <div>
-      <img [src]="item.image" alt="{{ item.name }}" class="cart-item-image" />
+  <div class="cart-scroll-container">
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="text-center my-4">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2">Loading cart...</p>
     </div>
 
-    <div class="details">
-      <h6>{{ item.name }}</h6>
-      <small>{{ item.qty || '' }}</small>
-      <div class="remove" (click)="removeItem(item.id)">Remove</div>
+    <div class="my-4">
+      <h5>{{ cart.length }} Item(s) in Cart</h5>
+      <small>Items not requiring prescription</small>
     </div>
 
-    <div class="text-end">
-      <div class="price">
-        <!-- ₹{{ item.price }} -->
-                ₹{{ item.mrp }}
+    <!-- Empty Cart Message -->
+    <div *ngIf="cart.length === 0 && !isLoading" class="text-center my-4">
+      <p>Your cart is empty.</p>
+      <button class="btn btn-primary mt-2" (click)="continueShopping()">
+        Continue Shopping
+      </button>
+    </div>
 
-        <span *ngIf="item.mrp && item.mrp > item.price" class="strike">₹{{ item.mrp }}</span>
-        <span *ngIf="item.mrp && item.mrp > item.price" class="text-success"> 
-          {{ getDiscount(item) }}% off
-        </span>
+    <!-- Cart Items -->
+    <div *ngFor="let item of cart" class="cart-item">
+      <div>
+        <img [src]="item.image" alt="{{ item.name }}" class="cart-item-image" />
       </div>
 
-      <div class="qty-box">
-        <button (click)="decreaseQty(item)" [disabled]="isItemLoading(item.id)">−</button>
-        <input type="text" [value]="item.count" readonly />
-        <button (click)="increaseQty(item)" [disabled]="isItemLoading(item.id)">+</button>
+      <div class="details">
+        <h6>{{ item.name }}</h6>
+        <small>{{ item.qty || '' }}</small>
+        <div class="remove" (click)="removeItem(item.id)">Remove</div>
       </div>
-    </div>
-  </div>
 
-  <!-- Bill Summary -->
-  <div *ngIf="cart.length > 0" class="bill-summary border rounded p-3 mt-4">
-    <h6 class="fw-bold mb-3">Bill Summary</h6>
-    <table class="table table-borderless">
-      <tbody>
-        <tr>
-          <td>Item Total</td>
-          <td class="text-end">₹{{ getItemTotal() }}</td>
-        </tr>
-        <tr>
-          <td>Total Discount</td>
-          <td class="text-end text-success">− ₹{{ getTotalDiscount() }}</td>
-        </tr>
-        <tr>
-          <td>Shipping Fee</td>
-          <td class="text-end">₹{{ shippingFee }}</td>
-        </tr>
-        <tr class="border-top ">
-          <td>To be Paid</td>
-          <td class="text-end">₹{{ getFinalAmount() }}</td>
-        </tr>
-      </tbody>
-    </table>
+      <div class="text-end">
+        <div class="price">
+          <!-- ₹{{ item.price }} -->
+          ₹{{ item.mrp }}
 
-    <!-- Selected Address Preview -->
-    <div *ngIf="selectedAddress" class="selected-address mb-3 p-2 border rounded bg-light">
-      <small class="text-">Delivery to:</small>
-      <div class="fw-bold">{{ selectedAddress.fullName }}</div>
-      <div class="small">{{ selectedAddress.addressLine1 }}, {{ selectedAddress.city }}, {{ selectedAddress.pincode }}</div>
-      <div class="small text-muted">{{ selectedAddress.phoneNumber }}</div>
-    </div>
+          <span *ngIf="item.mrp && item.mrp > item.price" class="strike">₹{{ item.mrp }}</span>
+          <span *ngIf="item.mrp && item.mrp > item.price" class="text-success">
+            {{ getDiscount(item) }}% off
+          </span>
+        </div>
 
-    <!-- Selected Payment Method Preview -->
-    <div *ngIf="selectedPaymentMethod" class="selected-payment mb-3 p-2 border rounded bg-light">
-      <small class="text-muted">Payment Method:</small>
-      <div class="">
-        <span *ngIf="selectedPaymentMethod === 'ONLINE'">💳 Online Payment</span>
-        <span *ngIf="selectedPaymentMethod === 'CASH_ON_DELIVERY'">💰 Cash on Delivery</span>
+        <button class="btn rounded-pill btn w-50">
+          <button class="text-white btn bg-none" (click)="decreaseQty(item)">−</button>
+          <input type="text" [value]="item.count" class="w-25 text-white text-center" readonly />
+          <button class="text-white btn bg-none" (click)="increaseQty(item)">+</button>
+        </button>
       </div>
     </div>
 
-    <button 
-      class="btn btn-primary w-100 text-light rounded-pill" 
-      (click)="onProceedToPayment()"
-      [disabled]="isLoading || isPaymentLoading"
-    >
-      <span *ngIf="isPaymentLoading" class="spinner-border spinner-border-sm me-2"></span>
-      {{ isPaymentLoading ? 'Processing...' : 'Continue to Pay' }}
-    </button>
+    <!-- Bill Summary -->
+    <div *ngIf="cart.length > 0" class="bill-summary border rounded p-3 mt-4">
+      <h6 class="fw-bold mb-3">Bill Summary</h6>
+      <table class="table table-borderless">
+        <tbody>
+          <tr>
+            <td>Item Total</td>
+            <td class="text-end">₹{{ getItemTotal() }}</td>
+          </tr>
+          <tr>
+            <td>Total Discount</td>
+            <td class="text-end text-success">− ₹{{ getTotalDiscount() }}</td>
+          </tr>
+          <tr>
+            <td>Shipping Fee</td>
+            <td class="text-end">₹{{ shippingFee }}</td>
+          </tr>
+          <tr class="border-top ">
+            <td>To be Paid</td>
+            <td class="text-end">₹{{ getFinalAmount() }}</td>
+          </tr>
+        </tbody>
+      </table>
 
-    <button 
-      class="btn btn-outline-secondary text-light w-100 rounded-pill mt-2"
-      (click)="continueShopping()"
-      [disabled]="isLoading"
-    >
-      Continue Shopping
-    </button>
-  </div>
+      <!-- Selected Address Preview -->
+      <div *ngIf="selectedAddress" class="selected-address mb-3 p-2 border rounded bg-light">
+        <small class="text-">Delivery to:</small>
+        <div class="fw-bold">{{ selectedAddress.fullName }}</div>
+        <div class="small">{{ selectedAddress.addressLine1 }}, {{ selectedAddress.city }}, {{ selectedAddress.pincode }}
+        </div>
+        <div class="small text-muted">{{ selectedAddress.phoneNumber }}</div>
+      </div>
+
+      <!-- Selected Payment Method Preview -->
+      <div *ngIf="selectedPaymentMethod" class="selected-payment mb-3 p-2 border rounded bg-light">
+        <small class="text-muted">Payment Method:</small>
+        <div class="">
+          <span *ngIf="selectedPaymentMethod === 'ONLINE'">💳 Online Payment</span>
+          <span *ngIf="selectedPaymentMethod === 'CASH_ON_DELIVERY'">💰 Cash on Delivery</span>
+        </div>
+      </div>
+
+      <button class="btn btn-primary w-100 text-light rounded-pill" (click)="onProceedToPayment()"
+        [disabled]="isLoading || isPaymentLoading">
+        <span *ngIf="isPaymentLoading" class="spinner-border spinner-border-sm me-2"></span>
+        {{ isPaymentLoading ? 'Processing...' : 'Continue to Pay' }}
+      </button>
+
+      <button class="btn btn-outline-secondary text-light w-100 rounded-pill mt-2" (click)="continueShopping()"
+        [disabled]="isLoading">
+        Continue Shopping
+      </button>
+    </div>
   </div>
 </div>
 
 <!-- Login Modal -->
 @if (showAuthPopup) {
-  <app-authorization
-    [showAuthModal]="showAuthPopup"
-    [authMode]="'login'"
-    (loginSuccess)="onAuthSuccess()"
-    (close)="onAuthClose()"
-  ></app-authorization>
+<app-authorization [showAuthModal]="showAuthPopup" [authMode]="'login'" (loginSuccess)="onAuthSuccess()"
+  (close)="onAuthClose()"></app-authorization>
 }
 
 <!-- Address Selection Modal (UPDATED with Edit/Delete) -->
@@ -149,23 +129,21 @@
         <button type="button" class="btn-close" (click)="onCloseAddressModal()"></button>
       </div>
       <div class="modal-body">
-        
+
         <!-- Existing Addresses (when not editing) -->
         <div *ngIf="!showNewAddressForm && !isEditingAddress">
           <div *ngIf="addresses.length === 0" class="text-center py-4">
             <p>No addresses found. Please add a delivery address.</p>
           </div>
 
-          <div *ngFor="let address of addresses" 
-               class="address-card border rounded p-3 mb-3"
-               [class.border-primary]="selectedAddress?.id === address.id">
-            
+          <div *ngFor="let address of addresses" class="address-card border rounded p-3 mb-3"
+            [class.border-primary]="selectedAddress?.id === address.id">
+
             <div class="d-flex justify-content-between align-items-start">
               <div class="flex-grow-1">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" 
-                         [checked]="selectedAddress?.id === address.id"
-                         (click)="onSelectAddress(address)">
+                  <input class="form-check-input" type="radio" [checked]="selectedAddress?.id === address.id"
+                    (click)="onSelectAddress(address)">
                   <label class="form-check-label fw-bold">
                     {{ address.fullName }}
                     <span class="badge bg-secondary ms-2" *ngIf="address.isDefault">Default</span>
@@ -180,18 +158,14 @@
                 </div>
                 <div class="small text-muted mt-1">{{ address.addressType }}</div>
               </div>
-              
+
               <!-- ✅ NEW: Edit/Delete Buttons -->
               <div class="btn-group btn-group-sm ms-3">
-                <button class="btn btn-outline-primary" 
-                        (click)="onEditAddress(address)"
-                        title="Edit Address">
+                <button class="btn btn-outline-primary" (click)="onEditAddress(address)" title="Edit Address">
                   <i class="bi bi-pencil"></i>
                 </button>
-                <button class="btn btn-outline-danger" 
-                        (click)="onDeleteAddress(address)"
-                        [disabled]="address.isDefault"
-                        title="Delete Address">
+                <button class="btn btn-outline-danger" (click)="onDeleteAddress(address)" [disabled]="address.isDefault"
+                  title="Delete Address">
                   <i class="bi bi-trash"></i>
                 </button>
               </div>
@@ -212,65 +186,51 @@
               <div class="col-md-6">
                 <div class="mb-3">
                   <label class="form-label">Full Name *</label>
-                  <input type="text" class="form-control" 
-                         [(ngModel)]="newAddress.fullName" 
-                         name="fullName" required>
+                  <input type="text" class="form-control" [(ngModel)]="newAddress.fullName" name="fullName" required>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="mb-3">
                   <label class="form-label">Phone Number *</label>
-                  <input type="tel" class="form-control" 
-                         [(ngModel)]="newAddress.phoneNumber" 
-                         name="phoneNumber" required>
+                  <input type="tel" class="form-control" [(ngModel)]="newAddress.phoneNumber" name="phoneNumber"
+                    required>
                 </div>
               </div>
             </div>
 
             <div class="mb-3">
               <label class="form-label">Address Line 1 *</label>
-              <input type="text" class="form-control" 
-                     [(ngModel)]="newAddress.addressLine1" 
-                     name="addressLine1" required>
+              <input type="text" class="form-control" [(ngModel)]="newAddress.addressLine1" name="addressLine1"
+                required>
             </div>
 
             <div class="mb-3">
               <label class="form-label">Address Line 2</label>
-              <input type="text" class="form-control" 
-                     [(ngModel)]="newAddress.addressLine2" 
-                     name="addressLine2">
+              <input type="text" class="form-control" [(ngModel)]="newAddress.addressLine2" name="addressLine2">
             </div>
 
             <div class="mb-3">
               <label class="form-label">Landmark</label>
-              <input type="text" class="form-control" 
-                     [(ngModel)]="newAddress.landmark" 
-                     name="landmark">
+              <input type="text" class="form-control" [(ngModel)]="newAddress.landmark" name="landmark">
             </div>
 
             <div class="row">
               <div class="col-md-4">
                 <div class="mb-3">
                   <label class="form-label">City *</label>
-                  <input type="text" class="form-control" 
-                         [(ngModel)]="newAddress.city" 
-                         name="city" required>
+                  <input type="text" class="form-control" [(ngModel)]="newAddress.city" name="city" required>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="mb-3">
                   <label class="form-label">State *</label>
-                  <input type="text" class="form-control" 
-                         [(ngModel)]="newAddress.state" 
-                         name="state" required>
+                  <input type="text" class="form-control" [(ngModel)]="newAddress.state" name="state" required>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="mb-3">
                   <label class="form-label">Pincode *</label>
-                  <input type="text" class="form-control" 
-                         [(ngModel)]="newAddress.pincode" 
-                         name="pincode" required>
+                  <input type="text" class="form-control" [(ngModel)]="newAddress.pincode" name="pincode" required>
                 </div>
               </div>
             </div>
@@ -285,9 +245,8 @@
             </div>
 
             <div class="form-check mb-3">
-              <input class="form-check-input" type="checkbox" 
-                     [(ngModel)]="newAddress.isDefault" 
-                     name="isDefault" id="setAsDefault">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="newAddress.isDefault" name="isDefault"
+                id="setAsDefault">
               <label class="form-check-label" for="setAsDefault">
                 Set as default address
               </label>
@@ -312,65 +271,52 @@
               <div class="col-md-6">
                 <div class="mb-3">
                   <label class="form-label">Full Name *</label>
-                  <input type="text" class="form-control" 
-                         [(ngModel)]="editingAddress.fullName" 
-                         name="fullName" required>
+                  <input type="text" class="form-control" [(ngModel)]="editingAddress.fullName" name="fullName"
+                    required>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="mb-3">
                   <label class="form-label">Phone Number *</label>
-                  <input type="tel" class="form-control" 
-                         [(ngModel)]="editingAddress.phoneNumber" 
-                         name="phoneNumber" required>
+                  <input type="tel" class="form-control" [(ngModel)]="editingAddress.phoneNumber" name="phoneNumber"
+                    required>
                 </div>
               </div>
             </div>
 
             <div class="mb-3">
               <label class="form-label">Address Line 1 *</label>
-              <input type="text" class="form-control" 
-                     [(ngModel)]="editingAddress.addressLine1" 
-                     name="addressLine1" required>
+              <input type="text" class="form-control" [(ngModel)]="editingAddress.addressLine1" name="addressLine1"
+                required>
             </div>
 
             <div class="mb-3">
               <label class="form-label">Address Line 2</label>
-              <input type="text" class="form-control" 
-                     [(ngModel)]="editingAddress.addressLine2" 
-                     name="addressLine2">
+              <input type="text" class="form-control" [(ngModel)]="editingAddress.addressLine2" name="addressLine2">
             </div>
 
             <div class="mb-3">
               <label class="form-label">Landmark</label>
-              <input type="text" class="form-control" 
-                     [(ngModel)]="editingAddress.landmark" 
-                     name="landmark">
+              <input type="text" class="form-control" [(ngModel)]="editingAddress.landmark" name="landmark">
             </div>
 
             <div class="row">
               <div class="col-md-4">
                 <div class="mb-3">
                   <label class="form-label">City *</label>
-                  <input type="text" class="form-control" 
-                         [(ngModel)]="editingAddress.city" 
-                         name="city" required>
+                  <input type="text" class="form-control" [(ngModel)]="editingAddress.city" name="city" required>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="mb-3">
                   <label class="form-label">State *</label>
-                  <input type="text" class="form-control" 
-                         [(ngModel)]="editingAddress.state" 
-                         name="state" required>
+                  <input type="text" class="form-control" [(ngModel)]="editingAddress.state" name="state" required>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="mb-3">
                   <label class="form-label">Pincode *</label>
-                  <input type="text" class="form-control" 
-                         [(ngModel)]="editingAddress.pincode" 
-                         name="pincode" required>
+                  <input type="text" class="form-control" [(ngModel)]="editingAddress.pincode" name="pincode" required>
                 </div>
               </div>
             </div>
@@ -385,9 +331,8 @@
             </div>
 
             <div class="form-check mb-3">
-              <input class="form-check-input" type="checkbox" 
-                     [(ngModel)]="editingAddress.isDefault" 
-                     name="isDefault" id="editSetAsDefault">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="editingAddress.isDefault" name="isDefault"
+                id="editSetAsDefault">
               <label class="form-check-label" for="editSetAsDefault">
                 Set as default address
               </label>
@@ -409,9 +354,8 @@
         <button type="button" class="btn btn-secondary text-white" (click)="onCloseAddressModal()">
           Cancel
         </button>
-        <button type="button" class="btn btn-primary text-white" 
-                (click)="onProceedWithAddress()"
-                [disabled]="!selectedAddress">
+        <button type="button" class="btn btn-primary text-white" (click)="onProceedWithAddress()"
+          [disabled]="!selectedAddress">
           Deliver to this Address
         </button>
       </div>
@@ -421,66 +365,63 @@
 }
 
 <!-- Payment Method Selection Modal -->
-  <!-- Payment Method Selection Modal -->
-  @if (showPaymentMethodModal) {
-  <div class="modal fade show d-block" style="background: rgba(0,0,0,0.5)">
-    <div class="modal-dialog modal-md">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Select Payment Method</h5>
-          <button type="button" class="btn-close" (click)="onCancelPaymentMethod()"></button>
-        </div>
-        <div class="modal-body">
-          
-          <div class="payment-methods">
-            <!-- ✅ FIXED: Use method.value directly which is already PaymentMethod type -->
-            <div *ngFor="let method of paymentMethods" 
-                 class="payment-method-card border rounded p-3 mb-3 cursor-pointer"
-                 [class.border-primary]="selectedPaymentMethod === method.value"
-                 (click)="onSelectPaymentMethod(method.value)">
-              <div class="form-check">
-                <input class="form-check-input" type="radio" 
-                       [checked]="selectedPaymentMethod === method.value"
-                       (click)="onSelectPaymentMethod(method.value)">
-                <label class="form-check-label fw-bold">
-                  {{ method.icon }} {{ method.label }}
-                </label>
-              </div>
-              <div class="small text-muted mt-1">{{ method.description }}</div>
-            </div>
-          </div>
+<!-- Payment Method Selection Modal -->
+@if (showPaymentMethodModal) {
+<div class="modal fade show d-block" style="background: rgba(0,0,0,0.5)">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Select Payment Method</h5>
+        <button type="button" class="btn-close" (click)="onCancelPaymentMethod()"></button>
+      </div>
+      <div class="modal-body">
 
-          <!-- Order Summary -->
-          <div class="order-summary border-top pt-3 mt-3">
-            <h6 class="fw-bold">Order Summary</h6>
-            <div class="d-flex justify-content-between">
-              <span>Items Total:</span>
-              <span>₹{{ getItemTotal() }}</span>
+        <div class="payment-methods">
+          <!-- ✅ FIXED: Use method.value directly which is already PaymentMethod type -->
+          <div *ngFor="let method of paymentMethods" class="payment-method-card border rounded p-3 mb-3 cursor-pointer"
+            [class.border-primary]="selectedPaymentMethod === method.value"
+            (click)="onSelectPaymentMethod(method.value)">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" [checked]="selectedPaymentMethod === method.value"
+                (click)="onSelectPaymentMethod(method.value)">
+              <label class="form-check-label fw-bold">
+                {{ method.icon }} {{ method.label }}
+              </label>
             </div>
-            <div class="d-flex justify-content-between">
-              <span>Shipping:</span>
-              <span>₹{{ shippingFee }}</span>
-            </div>
-            <div class="d-flex justify-content-between fw-bold border-top pt-2 mt-2">
-              <span>Total Amount:</span>
-              <span>₹{{ getFinalAmount() }}</span>
-            </div>
+            <div class="small text-muted mt-1">{{ method.description }}</div>
           </div>
+        </div>
 
+        <!-- Order Summary -->
+        <div class="order-summary border-top pt-3 mt-3">
+          <h6 class="fw-bold">Order Summary</h6>
+          <div class="d-flex justify-content-between">
+            <span>Items Total:</span>
+            <span>₹{{ getItemTotal() }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Shipping:</span>
+            <span>₹{{ shippingFee }}</span>
+          </div>
+          <div class="d-flex justify-content-between fw-bold border-top pt-2 mt-2">
+            <span>Total Amount:</span>
+            <span>₹{{ getFinalAmount() }}</span>
+          </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="onCancelPaymentMethod()">
-            Cancel
-          </button>
-          <button type="button" class="btn btn-primary" 
-                  (click)="onConfirmPaymentMethod()"
-                  [disabled]="!selectedPaymentMethod">
-            Confirm & Place Order
-          </button>
-        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="onCancelPaymentMethod()">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-primary" (click)="onConfirmPaymentMethod()"
+          [disabled]="!selectedPaymentMethod">
+          Confirm & Place Order
+        </button>
       </div>
     </div>
   </div>
-  }
+</div>
+}
 
 <app-footer></app-footer>

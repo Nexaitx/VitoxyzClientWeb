@@ -48,17 +48,6 @@
     }
   }
 
-  /* Blur effect for background content when loading */
-  .blur-content {
-    filter: blur(2px);
-    pointer-events: none;
-    user-select: none;
-    
-    .sidebar-section,
-    .products-section {
-      opacity: 0.7;
-    }
-  }
 
   /* ---- Layout wrapper ---- */
   .category-layout {
@@ -70,12 +59,7 @@
 
   /* ---- Sidebar ---- */
   .sidebar-section {
-    flex: 0 0 250px;
-    background: #fff;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    height: fit-content;
+  
     position: sticky;
     top: 80px;
     

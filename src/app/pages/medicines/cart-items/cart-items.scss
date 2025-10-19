@@ -20,8 +20,16 @@
 
 input {
     border-radius: 20px !important;
+    outline: none !important;
+    border: none !important;
+    background-color: transparent !important;
 }
-
+input:focus-visible {
+    background-color: transparent !important;
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
 td {
     font-size: 12px;
 }
@@ -81,7 +89,6 @@ td {
 
 .cart-item .price {
   font-size: 14px;
-  font-weight: 600;
   margin-bottom: 8px;
 }
 

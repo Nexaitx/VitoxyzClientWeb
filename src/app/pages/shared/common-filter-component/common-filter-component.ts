@@ -70,7 +70,25 @@ export class CommonFilterComponent implements OnInit {
   }
 
 
+ @Input() product: any;
 
+  qty: number = 0;
+
+  increment() {
+    this.qty++;
+    // optionally update cart
+  }
+
+  decrement() {
+    if (this.qty > 1) {
+      this.qty--;
+      // optionally update cart
+    } else {
+      // If you want to remove product when quantity drops to zero:
+      this.qty = 0;
+      // optionally remove from cart
+    }
+  }
 
 
 
@@ -142,6 +160,11 @@ export class CommonFilterComponent implements OnInit {
     };
 
     this.cartService.addItem(productForCart, 1);
+     event.stopPropagation();
+    event.preventDefault();
+
+    // Set initial quantity
+    this.qty = 1;
     
     this.showCustomToast(`${product.name} added to cart successfully!`, 'success');
   }
