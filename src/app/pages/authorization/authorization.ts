@@ -66,7 +66,10 @@ export class Authorization implements AfterViewInit, OnChanges, OnDestroy {
   handleLoadingChange(isLoading: boolean) {
     this.isChildLoading = isLoading;
   }
-
+onSignupSuccess() {
+  console.log("Signup completed → switching to login...");
+  this.authMode = 'login';
+}
   onLoginSuccess() {
     const modalEl = document.getElementById('authModal');
     if (modalEl) {

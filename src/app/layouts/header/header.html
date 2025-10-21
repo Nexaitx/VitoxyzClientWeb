@@ -14,15 +14,23 @@
 
    
     <a href="#">
-      <img src="../../../assets/logo.png" alt="">
+      <img src="../../../assets/Vitoxyzlogo white.png
+      " alt="" style="height: 42px;">
     </a>
 
-   
-    <div class="ms-auto d-flex align-items-center">
-      <button class="btn border-0" (click)="goToCart()" aria-label="Cart">
-        <i class="fa fa-bag-shopping fs-4 text-white"></i>
-      </button>
-    </div>
+<div class="ms-auto d-flex align-items-center ">
+  <button class="btn border-0 position-relative" (click)="goToCart()" aria-label="Cart">
+    <i class="fa fa-bag-shopping fs-4 text-white"></i>
+    <span
+      *ngIf="cartCount > 0"
+      class="cart-badge position-absolute translate-middle badge rounded-circle bg-danger"
+    >
+      {{ cartCount }}
+    </span>
+  </button>
+</div>
+
+
    
    
     <div class="collapse navbar-collapse d-none d-lg-flex justify-content-center destop-alignnment w-100" id="navbarNav">

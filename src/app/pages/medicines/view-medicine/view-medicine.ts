@@ -15,6 +15,7 @@ import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mob
   imports: [CommonModule, FormsModule, Footer, Header, MobileFooterNavComponent],
   templateUrl: "./view-medicine.html",
   styleUrls: ["./view-medicine.scss"],
+  
 })
 export class ViewMedicine implements OnInit {
   private http: HttpClient = inject(HttpClient);
@@ -33,7 +34,12 @@ export class ViewMedicine implements OnInit {
   // Mobile carousel
   currentIndex = 0;
   isMobile = false;
-
+isHovering = false;
+zoomX = 0;
+zoomY = 0;
+lensX = 0;
+lensY = 0;
+zoomScale = 2;
   ngOnInit() {
     this.checkScreenWidth();
 
@@ -50,7 +56,30 @@ export class ViewMedicine implements OnInit {
       this.hasError = true;
     }
   }
+  onMouseEnter() {
+  this.isHovering = true;
+}
 
+onMouseLeave() {
+  this.isHovering = false;
+}
+onMouseMove(event: MouseEvent) {
+  const container = (event.target as HTMLElement).closest('.zoom-container') as HTMLElement;
+  if (!container) return;
+
+  const rect = container.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  // clamp lens position inside the image
+  const lensSize = 100;
+  this.lensX = Math.max(0, Math.min(x - lensSize / 2, rect.width - lensSize));
+  this.lensY = Math.max(0, Math.min(y - lensSize / 2, rect.height - lensSize));
+
+  // relative position for zoom
+  this.zoomX = x / rect.width * rect.width;
+  this.zoomY = y / rect.height * rect.height;
+}
   // Detect mobile/tablet screens
   checkScreenWidth() {
     this.isMobile = window.innerWidth <= 768;

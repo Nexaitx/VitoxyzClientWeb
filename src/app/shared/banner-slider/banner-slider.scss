@@ -1,17 +1,16 @@
 .banner-slider {
   position: relative;
   max-width: 100%;
-  height: 250px;
+ // height: 250px;
   overflow: hidden;
-  border-radius: 12px;
 
   .slides {
     position: relative;
     height: 100%;
 
     img {
-      width: 100%;
-      height: 70%;
+       width: 100%;
+      height: 100%;
       object-fit: cover;
       display: none;
       transition: opacity 0.5s ease-in-out;
@@ -75,8 +74,8 @@
 /* Small Mobiles */
 @media (max-width: 576px) {
   .banner-slider {
-    height: 160px;
-
+    height: 120px !important;
+    padding: 10px 0px 14px;
     .prev,
     .next {
       font-size: 16px;
@@ -106,6 +105,6 @@
 /* Large Screens */
 @media (min-width: 1200px) {
   .banner-slider {
-    height: 350px; // Desktop me banner bada
+    height: 430px; // Desktop me banner bada
   }
 }

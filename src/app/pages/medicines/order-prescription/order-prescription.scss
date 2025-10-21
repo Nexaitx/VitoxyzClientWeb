@@ -11,7 +11,7 @@
 .title {
   margin: 0;
   font-size: 1.125rem;
-  font-weight: 700;
+  font-weight: 500;
 }
 .muted {
   color: #6c757d;
@@ -40,7 +40,7 @@
       font-size: 1.25rem;
     }
     .text .label {
-      font-weight: 700;
+      font-weight: 500;
       font-size: 0.95rem;
     }
     .text .sub {
@@ -68,7 +68,7 @@
 
   .attached {
     .attached-title {
-      font-weight: 600;
+      font-weight: 500;
       margin-bottom: 10px;
     }
     .attached-placeholder {
@@ -118,13 +118,13 @@
     .doc-sample {
       width: 100%;
       max-width: 320px;
-      min-height: 160px;
+      min-height: 320px;
       border: 1px solid #f2e8e8;
       border-radius: 6px;
       padding: 12px;
       background: linear-gradient(180deg, #fff 0%, #fffaf8 100%);
       .doc-top {
-        font-weight: 700;
+        font-weight: 500;
         margin-bottom: 6px;
       }
       .doc-lines {
@@ -134,14 +134,28 @@
     }
 
     .guide-list ul {
-      padding-left: 18px;
-      margin: 0;
-      li {
-        margin-bottom: 8px;
-        color: #4d4d4d;
-        font-size: 0.95rem;
+    padding-left: 0;
+    margin: 0;
+    list-style: none; /* remove default dots */
+
+    li {
+      position: relative;
+      padding-left: 28px; /* space for icon */
+      margin-bottom: 8px;
+      color: #4d4d4d;
+      font-size: 0.95rem;
+
+      &::before {
+        content: "\f280"; /* bi-check-circle icon */
+        font-family: "bootstrap-icons";
+        position: absolute;
+        left: 0;
+        top: 2px;
+        font-size: 1rem;
+        color: #0bbbc1; /* matches your theme */
       }
     }
+  }
   }
 
   .gov-note {
@@ -179,7 +193,7 @@
     align-items: center;
     h5 {
       margin: 0;
-      font-weight: 700;
+      font-weight: 500;
       font-size: 1rem;
     }
     .close-btn {

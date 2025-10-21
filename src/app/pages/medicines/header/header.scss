@@ -3,12 +3,7 @@
 $primary-color: #0BBBC1;
 $danger-color: #f44336;
 $shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
-// .search-bar {
-//   margin-top: -68px; /* kept as in your original layout */
-//   margin-bottom: 68px;
-//   align-items: center;
-//   gap: 12px;
-// }
+
 .search-bar {
   background-color: #fff;
   box-shadow: $shadow-light;
@@ -22,27 +17,32 @@ $shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
     flex-shrink: 0;
     padding: 0 10px;
 
-    i.bi { font-size: 1.2rem; color: $primary-color; }
+    i.bi {
+      font-size: 1.2rem;
+      color: $primary-color;
+    }
 
-    & .bi-crosshair { color: #999; &:hover { color: $primary-color; } }
+    & .bi-crosshair {
+      color: #999;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
   }
-.location .location-action {
-  cursor: pointer;
-}
+
+  .location .location-action {
+    cursor: pointer;
+  }
+
   .form-control {
-    height: 48px;
-    border-radius: 50px;
-    border: 1px solid #e5e5e5;
-    background-color: #f0f0f0;
+    height: 40px;
     font-size: 1rem;
-    transition: all 0.3s;
-    padding-left: 1.5rem;
     padding-right: 3rem;
 
     &:focus {
       background-color: #fff;
       border-color: $primary-color;
-      box-shadow: 0 0 0 0.2rem rgba(3, 169, 244, 0.2);
     }
   }
 
@@ -58,7 +58,6 @@ $shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
   .btn-quick {
     background-color: $primary-color;
     border: none;
-    font-weight: 600;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -79,10 +78,16 @@ $shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
     gap: 0.75rem;
     min-height: 48px;
     box-shadow: none;
-    width: auto;         /* stay compact */
-    align-self: center;  /* center when parent stacks vertically */
+    width: auto;
+    /* stay compact */
+    align-self: center;
+    /* center when parent stacks vertically */
 
-    .mobile-quick-left { display: flex; align-items: center; gap: 0.5rem; }
+    .mobile-quick-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
     .mobile-quick-icon {
       background: #fff;
@@ -91,8 +96,12 @@ $shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      i.bi { font-size: 1.1rem; color: $primary-color; }
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+      i.bi {
+        font-size: 1.1rem;
+        color: $primary-color;
+      }
     }
 
     .mobile-quick-label {
@@ -107,7 +116,6 @@ $shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
       border: none;
       padding: 6px 12px;
       font-size: 0.9rem;
-      font-weight: 600;
       border-radius: 20px;
       white-space: nowrap;
       align-self: center;
@@ -120,7 +128,10 @@ $shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
 
   .small {
     color: #444 !important;
-    i.bi-lightning-charge { color: $danger-color !important; }
+
+    i.bi-lightning-charge {
+      color: $danger-color !important;
+    }
   }
 }
 
@@ -131,9 +142,15 @@ $shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
   .search-bar {
     border-radius: 12px;
     padding: 10px;
-    .search-box { margin: 0 5px; }
+
+    .search-box {
+      margin: 0 5px;
+    }
   }
-  .d-md-inline { display: none !important; }
+
+  .d-md-inline {
+    display: none !important;
+  }
 }
 
 /* mobile */
@@ -146,19 +163,31 @@ $shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 
   /* smaller screens spacing adjustments */
-@media (max-width: 575.98px) {
-  .search-bar {
-    margin-top: -40px;
-    margin-bottom: 40px;
+  @media (max-width: 575.98px) {
+    .search-bar {
+      margin-top: -40px;
+      margin-bottom: 40px;
+    }
   }
-}
+
   /* ensure desktop large button stays hidden on mobile (bootstrap utility + fallback) */
-  .btn-quick { display: none !important; }
+  .btn-quick {
+    display: none !important;
+  }
 
   /* override any legacy rule that forced .btn-danger to 100% width on mobile */
-  .btn-danger { width: auto !important; }
+  .btn-danger {
+    width: auto !important;
+  }
 
   /* keep the compact card small and centered */
-  .quick-box { width: 100%; justify-content: center; }
-  .mobile-quick { max-width: 360px; width: auto; }
+  .quick-box {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .mobile-quick {
+    max-width: 360px;
+    width: auto;
+  }
 }

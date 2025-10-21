@@ -95,7 +95,7 @@ export class CartService {
 
   // Add item to local cart
   addToLocalCart(item: CartItem) {
-    console.log('➕ Adding to local cart:', item);
+    console.log('Adding to local cart:', item);
     const currentCart = this._cart$.value;
     const existingItemIndex = currentCart.findIndex(cartItem => cartItem.id === item.id);
 

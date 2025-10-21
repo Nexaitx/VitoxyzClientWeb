@@ -49,6 +49,17 @@ export class HealthCarouselComponent implements AfterViewInit , OnDestroy {
     }
   }
 
+ scrollCarousel(direction: 'left' | 'right'): void {
+    const el = this.carouselTrack?.nativeElement;
+    if (!el) return;
+
+    const cardWidth = el.querySelector('.card-wrapper')?.clientWidth ?? 140;
+    const gap = 16; // spacing, roughly matches SCSS gap
+    const scrollAmount = cardWidth + gap; // scroll exactly one card
+
+    const target = direction === 'left' ? el.scrollLeft - scrollAmount : el.scrollLeft + scrollAmount;
+    el.scrollTo({ left: target, behavior: 'smooth' });
+  }
   ngOnDestroy(): void {
     if (this.slideInterval) {
       clearInterval(this.slideInterval);

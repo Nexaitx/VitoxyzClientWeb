@@ -260,28 +260,77 @@ export class Medicines implements AfterViewInit {
     { name: 'Oral Care', apiValue: 'Oral Gel', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/oral care.png', altText: 'Oral care Wellness Products' },
     { name: 'Elder Care', apiValue: 'Mother Tincture', cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/eldercare.png', altText: 'Oral care Wellness Products' },
     { name: 'Baby Care', apiValue: 'Nipple', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/Baby Care.png', altText: 'Oral care Wellness Products' },
+    // { name: 'daily dose of health', apiValue: 'Jar', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/jarsdose.png', altText: 'Oral care Wellness Products' },
+        { name: 'Nutritional Drinks', apiValue: 'Juice', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/FItness And health.png', altText: 'Oral care Wellness Products' },
     { name: 'Men Care', apiValue: 'Mouth Wash', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/mens care.png', altText: 'Oral care Wellness Products' },
     { name: 'Ayurveda', apiValue: 'Face Pack', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.png', altText: 'Oral care Wellness Products' },
     { name: 'Pet Care', apiValue: 'Pet Food', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/petcare.png', altText: 'Oral care Wellness Products' },
 
-    // { name: 'Oral Care', apiValue: 'Oralcare', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
+    // { name: 'Caring for every tiny move', apiValue: 'Diaper', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
 
   ];
 
-  //  categories2: Category[] = [
-  //   { name: 'Best offers', apiValue: 'Butter', cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/bestoffer.avif', altText: 'Skin Care Products' },
-  //   { name: 'Vitamins & Supplements', apiValue: 'Powder', cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/vitamins.avif', altText: 'Hair Care Products' },
-  //   { name: 'Nutritional Drinks', apiValue: 'Juice', cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/drinks.avif', altText: 'Sexual Wellness Products' },
-  //   { name: 'Skin Care', apiValue: 'Body Wash', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/skin1.avif', altText: 'Oral care Wellness Products' },
-  //       { name: 'Hair Care', apiValue: 'Hair Mask', cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/hair1.avif', altText: 'Oral care Wellness Products' },
-  //   { name: 'Sexual Wellness', apiValue: 'Condom', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/sexual.avif', altText: 'Oral care Wellness Products' },
-  //       { name: 'Ayurveda Products', apiValue: 'Mouth Wash', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.avif', altText: 'Oral care Wellness Products' },
-  //   { name: 'Pain Relief', apiValue: 'Spray', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/pain.avif', altText: 'Oral care Wellness Products' },
-  //   { name: 'Homeopathy', apiValue: 'Flower', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/homopathy.avif', altText: 'Oral care Wellness Products' },
+   categories2: Category[] = [
+    { name: 'Best offers', apiValue: 'Butter', cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/bestoffer.avif', altText: 'Skin Care Products' },
+    { name: 'Vitamins & Supplements', apiValue: 'Powder', cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/vitamins.avif', altText: 'Hair Care Products' },
+    { name: 'Nutritional Drinks', apiValue: 'Juice', cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/drinks.png', altText: 'Sexual Wellness Products' },
+    { name: 'Skin Care', apiValue: 'Body Wash', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/skin1.avif', altText: 'Oral care Wellness Products' },
+        { name: 'Hair Care', apiValue: 'Hair Mask', cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/hair1.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Sexual Wellness', apiValue: 'Condom', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/sexual wellness.png', altText: 'Oral care Wellness Products' },
+        { name: 'Ayurveda Products', apiValue: 'Mouth Wash', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.png', altText: 'Oral care Wellness Products' },
+    { name: 'Pain Relief', apiValue: 'Spray', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/pain.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Homeopathy', apiValue: 'Flower', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/homopathy.png', altText: 'Oral care Wellness Products' },
+    { name: 'Ayurveda', apiValue: 'Face Pack', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.png', altText: 'Oral care Wellness Products' },
+     { name: 'Caring for every tiny move', apiValue: 'Diaper', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/diapper-pants.png', altText: 'Oral care Wellness Products' },
+     { name: 'Top deals of nut& Dry Fruit', apiValue: 'Nut', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/high-muesli.png', altText: 'Oral care Wellness Products' },
 
-  //   // { name: 'Oral Care', apiValue: 'Oralcare', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
+  ];
+  categories4: Category[] = [
+    { name: 'Top deals of Spray', apiValue: 'Spray', cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/top-spray.png', altText: 'Skin Care Products' },
+    { name: 'Small tablet, big relief', apiValue: 'Biochemic Tablet', cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/tablets-catagery.png', altText: 'Hair Care Products' },
+    { name: 'Testing product', apiValue: 'Paste', cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/again-raw.png', altText: 'Sexual Wellness Products' },
+    { name: 'Nature’s aloe, your daily boost', apiValue: 'Juice', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/juice.png', altText: 'Oral care Wellness Products' },
+        { name: 'Support that cares', apiValue: 'Walker', cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/support-care.png', altText: 'Oral care Wellness Products' },
+    { name: 'A sweet way to stay healthy', apiValue: 'Murabba', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/dhampuramala.png', altText: 'Oral care Wellness Products' },
+        { name: 'Snack smart, live better', apiValue: 'Biscuit', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/sncaksmart.png', altText: 'Oral care Wellness Products' },
+    { name: 'testing Products', apiValue: 'Pillow', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/pillowfit.png', altText: 'Oral care Wellness Products' },
+    { name: 'Top deals of Dry Fruit', apiValue: 'Dry Fruit', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/nutsfood.png', altText: 'Oral care Wellness Products' },
 
-  // ];
+    // { name: 'Oral Care', apiValue: 'Oralcare', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
+
+  ];
+@ViewChild('brandCarouselWrapper', { static: false })
+brandCarouselWrapper!: ElementRef<HTMLDivElement>;
+
+brandsone = [
+  { image: '../../../assets/medicines/cetaphil-brand.png', name: 'Brand 1' },
+  { image: '../../../assets/medicines/dabur-brand.png', name: 'Brand 2' },
+  { image: '../../../assets/medicines/morepen-brand.png', name: 'Brand 3' },
+  { image: '../../../assets/medicines/organic-brand.png', name: 'Brand 4' },
+  { image: '../../../assets/medicines/minimalist-brand.png', name: 'Brand 5' },
+  { image: '../../../assets/medicines/on-brand.png', name: 'Brand 6' },
+  { image: '../../../assets/medicines/protinex-brand.png', name: 'Brand 7' },
+  { image: '../../../assets/medicines/dettol-brand.png', name: 'Brand 8' },
+  { image: '../../../assets/medicines/himalaya.png', name: 'Brand 9' },
+  { image: '../../../assets/medicines/healthkart.png', name: 'Brand 10' },
+  { image: '../../../assets/medicines/mamaearth.png', name: 'Brand 11' },
+  { image: '../../../assets/medicines/nivea.png', name: 'Brand 12' },
+  { image: '../../../assets/medicines/pilgrim.png', name: 'Brand 12' }
+];
+
+scrollBrandCarousel(direction: 'left' | 'right'): void {
+  if (this.brandCarouselWrapper) {
+    const element = this.brandCarouselWrapper.nativeElement;
+    // Scroll by the visible width minus a little gap so items align nicely
+    const scrollAmount = Math.max(element.clientWidth - 80, 180);
+    if (direction === 'left') {
+      element.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else {
+      element.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  }
+}
+
 
    categories3: Category[] = [
     { name: 'Pet Medicine', apiValue: 'Face Wash', cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/petcare.png', altText: 'Skin Care Products' },
@@ -481,8 +530,36 @@ export class Medicines implements AfterViewInit {
       }
     }
   }
+ @ViewChild("categoryCarouselWrapper2", { static: false }) 
+  carouselWrapper2!: ElementRef<HTMLDivElement>;
 
+   scrollCarousel2(direction: 'left' | 'right'): void {
+    if (this.carouselWrapper2) {
+      const element = this.carouselWrapper2.nativeElement;
+      const scrollAmount = 180 * 4; 
+      
+      if (direction === 'left') {
+        element.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        element.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  }
+ @ViewChild("categoryCarouselWrapper3", { static: false }) 
+  carouselWrapper3!: ElementRef<HTMLDivElement>;
 
+   scrollCarousel3(direction: 'left' | 'right'): void {
+    if (this.carouselWrapper3) {
+      const element = this.carouselWrapper3.nativeElement;
+      const scrollAmount = 180 * 4; 
+      
+      if (direction === 'left') {
+        element.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        element.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  }
  
 
 goToCategory(category: string) {

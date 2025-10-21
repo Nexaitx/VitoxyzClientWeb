@@ -11,6 +11,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { Authorization } from '../../pages/authorization/authorization';
 import { ProfileService } from '@src/app/core/services/profile.service';
 import { FormsModule } from '@angular/forms';
+import { CartService } from '@src/app/core/cart.service';
 declare var bootstrap: any;
 
 @Component({
@@ -40,12 +41,13 @@ export class Header implements OnInit, OnDestroy {
   verificationResult: any;
 
   private profileService = inject(ProfileService);
+   private cartService = inject(CartService);
   public router = inject(Router);
   authMode: 'login' | 'signup' = 'login';
   isLoggedIn: boolean = false;
   isSidebarOpen = false;
   isMobileMenuOpen = signal(false);
-
+cartCount: number = 0;
   
   openSubmenus = new Set<number>();
 
@@ -80,9 +82,16 @@ export class Header implements OnInit, OnDestroy {
     { label: 'Need Help?', path: '/help' },
   ];
 
-  ngOnInit(): void {
-    this.checkLoginStatus();
-  }
+ngOnInit(): void {
+  this.checkLoginStatus();
+
+  // Count only distinct products in the cart
+  this.cartService.cart$.subscribe(cart => {
+    const uniqueProducts = new Set(cart.map(item => item.id));
+    this.cartCount = uniqueProducts.size;
+  });
+}
+
 
   ngOnDestroy(): void {
    
