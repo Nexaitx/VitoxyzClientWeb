@@ -343,3 +343,19 @@
     max-width: none;
   }
 }
+
+.quantity-control span {
+  background-color: #fbf8eb;
+}
+
+.quantity-control span:hover {
+  color: black !important
+}
+
+.quantity-control .left {
+  border-radius: 20px 0 0 20px;
+}
+
+.quantity-control .right {
+  border-radius: 0 20px 20px 0;
+}

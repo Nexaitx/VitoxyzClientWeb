@@ -21,36 +21,30 @@
   <div class="carousel-container">
     <button class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4" (click)="scrollCarousel('left')">
     </button>
-
     <button class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4" (click)="scrollCarousel('right')">
     </button>
     <div #productCarouselWrapper class="carousel-wrapper">
-
       <div class="carousel-loading-overlay" *ngIf="isLoadingData">
         <mat-spinner diameter="50"></mat-spinner>
       </div>
 
       <ng-container *ngIf="products$ | async as products">
-
         <ng-container *ngIf="!isLoadingData && (products$ | async) as products">
           <div *ngIf="products.length === 0" class="no-products-message">
             <p>No products found for this category.</p>
           </div>
 
-          <mat-card *ngFor="let product of products" class="product-card mat-elevation-z4"
-             style="cursor: pointer;">
+          <mat-card *ngFor="let product of products" class="product-card mat-elevation-z4" style="cursor: pointer;">
             @if(product.imageUrl) {
-            <img (click)="goToProduct(product)" mat-card-image [src]="getFirstImageUrl(product.imageUrl) || '../../../../assets/default.png'"
-              [alt]="product.name" class="product-image" /> }
-            @else {
-            <img src="../../../../assets/default.png" alt="">
+              <img (click)="goToProduct(product)" mat-card-image [src]="getFirstImageUrl(product.imageUrl) || '../../../../assets/default.png'"
+                   [alt]="product.name" class="product-image" />
+            } @else {
+              <img src="../../../../assets/default.png" alt="">
             }
             <mat-card-content>
               <div class="rating-badge">4.4 ★</div>
-
               <h3 class="product-name">{{ product.name }}</h3>
               <p class="product-form" *ngIf="product.packaging">{{ product.packaging }}</p>
-
               <div class="price-details-group">
                 <div class="price-info">
                   <p class="current-price" *ngIf="product.mrp">
@@ -61,46 +55,19 @@
                   </p>
                 </div>
               </div>
-
-              <!-- New logic -->
-              <ng-container *ngIf="qty === 0; else quantityTemplate">
+              <ng-container *ngIf="quantities[product.id ?? product.productId] === 0; else quantityTemplate">
                 <button class="btn btn-sm rounded-pill btn-primary text-light" (click)="addToCart(product, $event)">
                   Add
                 </button>
               </ng-container>
-
               <ng-template #quantityTemplate>
-                <div class="quantity-control btn-group rounded-pill bg-primary text-white btn-group-sm" role="group">
-                  <button class="btn text-white" (click)="decrement()">−</button>
-                  <span class="btn text-white">{{ qty }}</span>
-                  <button class="btn text-white" (click)="increment()">+</button>
+                <div class="quantity-control btn-group rounded-pill text-white btn-group-sm" role="group">
+                  <button class="btn text-white left" (click)="decrement(product)">−</button>
+                  <span class="btn">{{ quantities[product.id ?? product.productId] }}</span>
+                  <button class="btn text-white right" (click)="increment(product)">+</button>
                 </div>
               </ng-template>
             </mat-card-content>
-
-            <!-- <mat-card-content>
-              <div class="rating-badge">4.4 &#9733;</div>
-
-              <h3 class="product-name">{{ product.name }}</h3>
-
-              <p class="product-form" *ngIf="product.packaging">{{ product.packaging }}</p>
-
-              <div class="price-details-group">
-                <div class="price-info">
-                  <p class="current-price" *ngIf="product.mrp">
-                    <small class="text-muted"> MRP </small>{{ product.mrp | currency:'INR':'symbol':'1.0-0' }}
-                  </p>
-
-                  <p class="current-price no-price" *ngIf="!product.mrp">
-                    Price not available
-                  </p>
-                </div>
-              </div>
-
-              <button class="btn btn-sm rounded-pill btn-primary text-light" (click)="addToCart(product, $event)">
-                Add
-              </button>
-            </mat-card-content> -->
           </mat-card>
         </ng-container>
       </ng-container>
