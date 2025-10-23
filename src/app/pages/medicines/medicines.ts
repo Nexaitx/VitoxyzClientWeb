@@ -577,6 +577,8 @@ export class Medicines implements AfterViewInit {
     { image: '../../../assets/medicines/8.png', label: 'Derma Care', link: '/products/DermaCare' },
   ];
 
+  //testing working 
+
   healthItems1 = [
     { image: '../../../assets/medicines/petcare.png', label: 'Pet Care', link: '/products/Pet Food' },
     { image: '../../../assets/medicines/vitamins.avif', label: 'Vitamins & Supplements', link: '/products/Powder' },
