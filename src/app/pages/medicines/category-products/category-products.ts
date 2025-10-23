@@ -419,8 +419,8 @@ addToCart(product: any, event: Event) {
 
   private initializeProductStream(): void {
     const dataStream$ = combineLatest([
-      this.route.paramMap.pipe(startWith(new Map())),
-      this.route.queryParamMap.pipe(startWith(new Map())),
+      this.route.paramMap.pipe(startWith(null)),
+      this.route.queryParamMap.pipe(startWith(null)),
       this.currentPage$.pipe(startWith(0)),
       this.selectedCategory$.pipe(startWith(null)),
       this.selectedBrands$.pipe(startWith([]))
@@ -429,9 +429,10 @@ addToCart(product: any, event: Event) {
     );
 
     this.products$ = dataStream$.pipe(
-      tap(() => {
+      tap(([params, queryParams, page]) => {
         console.log('🔄 Loading started - filter/pagination change');
         this.isLoading = true;
+        this.currentPageIndex = page;
       }),
       switchMap(([params, queryParams, page, selectedCategory, selectedBrands]) => {
         console.log('📡 API call triggered:', {
@@ -440,15 +441,15 @@ addToCart(product: any, event: Event) {
           page: page
         });
         
-        const categoryFromPath = params.get('category') || 'Unknown Category';
+        const categoryFromPath = params?.get('category') || 'Unknown Category';
         this.categoryName = selectedCategory || categoryFromPath;
-        this.currentEndpoint = queryParams.get('endpoint') || 'products/filter';
+        this.currentEndpoint = queryParams?.get('endpoint') || 'products/filter';
         this.currentPageIndex = page;
 
         return this.productService.getProductsForCategoryPage(
           this.currentEndpoint,
           this.categoryName,
-          page,
+          page + 1,
           this.pageSize,
           selectedBrands
         ).pipe(
@@ -465,9 +466,9 @@ addToCart(product: any, event: Event) {
       }),
       tap(response => {
         this.totalProducts = response?.data?.totalElements || 0;
-        if (this.totalProducts === 0) {
-          this.currentPageIndex = 0;
-        }
+        // if (this.totalProducts === 0) {
+        //   this.currentPageIndex = 0;
+        // }
       }),
     map(response => {
   if (response && response.data && Array.isArray(response.data.content)) {
@@ -488,21 +489,36 @@ addToCart(product: any, event: Event) {
     );
   }
 
-  handlePageEvent(event: PageEvent): void {
-    console.log('🔄 Pagination changed:', event);
-    this.isLoading = true;
+  // handlePageEvent(event: PageEvent): void {
+  //   console.log('🔄 Pagination changed:', event);
     
-    if (event.pageIndex !== this.currentPageIndex || event.pageSize !== this.pageSize) {
-      if (event.pageSize !== this.pageSize) {
-        this.pageSize = event.pageSize;
-        this.currentPage$.next(0); 
-      } else {
-        this.currentPage$.next(event.pageIndex);
-      }
-      window.scrollTo(0, 0); 
-    }
+    
+  //   if (event.pageIndex !== this.currentPageIndex || event.pageSize !== this.pageSize) {
+  //     this.isLoading = true;
+  //     if (event.pageSize !== this.pageSize) {
+  //       this.pageSize = event.pageSize;
+  //       this.currentPage$.next(0); 
+  //     } else {
+  //       this.currentPage$.next(event.pageIndex);
+  //     }
+  //     window.scrollTo({ top: 0, behavior: 'smooth' }); 
+  //   }
+  // }
+  handlePageEvent(event: PageEvent): void {
+  console.log('🔄 Pagination changed:', event);
+
+  if (event.pageSize !== this.pageSize) {
+    this.pageSize = event.pageSize;
+    this.currentPageIndex = 0;
+    this.currentPage$.next(0);
+  } else {
+    this.currentPageIndex = event.pageIndex;
+    this.currentPage$.next(event.pageIndex);
   }
-  
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
   getFirstImageUrl(imageUrls: string): string {
     if (!imageUrls) return 'assets/default.png'; 
     return imageUrls.split('|')[0].trim();

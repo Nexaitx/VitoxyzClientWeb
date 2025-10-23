@@ -262,7 +262,7 @@ export class Medicines implements AfterViewInit {
     { name: 'Baby Care', apiValue: 'Nipple', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/Baby Care.png', altText: 'Oral care Wellness Products' },
     // { name: 'daily dose of health', apiValue: 'Jar', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/jarsdose.png', altText: 'Oral care Wellness Products' },
     { name: 'Nutritional Drinks', apiValue: 'Juice', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/FItness And health.png', altText: 'Oral care Wellness Products' },
-    { name: 'Men Care', apiValue: 'Mouth Wash', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/mens care.png', altText: 'Oral care Wellness Products' },
+    { name: 'Men Care', apiValue: 'Body Wash', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/mens care.png', altText: 'Oral care Wellness Products' },
     { name: 'Ayurveda', apiValue: 'Face Pack', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.png', altText: 'Oral care Wellness Products' },
     { name: 'Pet Care', apiValue: 'Pet Food', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/petcare.png', altText: 'Oral care Wellness Products' },
 
