@@ -594,7 +594,7 @@ export class Medicines implements AfterViewInit {
     { image: '../../../assets/medicines/cardiaccare.png', label: 'Cardiac Care', link: '/products/Tablet' },
     { image: '../../../assets/medicines/didestive and health.png', label: 'Digestive HealthClean Environment Essentials ', link: '/products/Tablet' },
     { image: '../../../assets/medicines/daibities.png', label: 'Diabetes', link: '/products/Granule' },
-    { image: '../../../assets/medicines/hair care.png', label: 'Hair Care', link: '/products/Oil' },
+    { image: '../../../assets/medicines/hair care.png', label: 'Hair Care', link: '/products/Hair Mask' },
     { image: '../../../assets/medicines/oral care.png', label: 'Oral Care', link: '/products/Oral Gel' },
     { image: '../../../assets/medicines/didestive and health.png', label: 'Respiratory Care', link: '/products/Tablet' },
     { image: '../../../assets/medicines/cardiaccare.png', label: 'Mental Wellness ', link: '/products/Tablet' },

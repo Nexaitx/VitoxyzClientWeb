@@ -442,7 +442,7 @@ addToCart(product: any, event: Event) {
         
         const categoryFromPath = params.get('category') || 'Unknown Category';
         this.categoryName = selectedCategory || categoryFromPath;
-        this.currentEndpoint = queryParams.get('endpoint') || 'products/filter/multiple-forms';
+        this.currentEndpoint = queryParams.get('endpoint') || 'products/filter';
         this.currentPageIndex = page;
 
         return this.productService.getProductsForCategoryPage(
