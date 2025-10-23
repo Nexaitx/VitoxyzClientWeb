@@ -1,4 +1,4 @@
-<div class="container  main-container" style="margin-top:-70px;">
+<div class="container  main-container" style="margin-top:-70px; background: linear-gradient(147deg, #f6e4ca 2%, #fbdee7 240%);">
 
 
 <mat-stepper class="custom-stepper" labelPosition="bottom" #stepper>
@@ -56,12 +56,12 @@
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" name="gender" id="male" value="Male"
                 formControlName="gender">
-              <label class="form-check-label" for="male">Male</label>
+              <label class="pt-1 form-check-label" for="male">Male</label>
             </div>
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" name="gender" id="female" value="Female"
                 formControlName="gender">
-              <label class="form-check-label" for="female">Female</label>
+              <label class="pt-1 form-check-label" for="female">Female</label>
             </div>
             <div *ngIf="firstFormGroup.get('gender')?.invalid && firstFormGroup.get('gender')?.touched"
               class="invalid-feedback d-block">
@@ -122,7 +122,7 @@
 
   <mat-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>Health & Goals</ng-template>
+        <ng-template matStepLabel>Health & Goals</ng-template>
       <div class="row">
         <h3>Tell Us About Your Goals</h3>
         <div class="col-md-12 mb-3">
@@ -197,13 +197,13 @@
       </div>
 
       <div class="text-end mt-3">
-        <button matButton matStepperPrevious class="btn px-4 rounded-pill me-2">Back</button>
+        <button matButton matStepperPrevious class="btn px-4 rounded-pill me-2 text-light">Back</button>
         <button matStepperNext class="btn px-4 rounded-pill submission next-button" [disabled]="secondFormGroup.invalid">Next</button>
       </div>
     </form>
   </mat-step>
 
-  <!-- Step 3: Food Preferences -->
+  <!-- Step 3: Food Preferences background: linear-gradient(147deg, #f5ede2 78%, #fbdee7 240%);-->
   <mat-step [stepControl]="thirdFormGroup">
     <form [formGroup]="thirdFormGroup">
       <ng-template matStepLabel>Food Preferences</ng-template>
@@ -254,7 +254,7 @@
         </div>
       </div>
       <div class="text-end mt-3">
-        <button matButton matStepperPrevious class="btn px-4 rounded-pill me-2">Back</button>
+        <button matButton matStepperPrevious class="btn px-4 rounded-pill text-light me-2">Back</button>
         <button matStepperNext class="btn px-4 rounded-pill submission next-button" [disabled]="thirdFormGroup.invalid">Next</button>
       </div>
     </form>
@@ -328,7 +328,7 @@
         </div>
       </div>
       <div class="text-end mt-3">
-        <button matButton matStepperPrevious class="btn px-4 rounded-pill me-2">Back</button>
+        <button matButton matStepperPrevious class="btn px-4 rounded-pill text-light me-2">Back</button>
         <button type="button" class="btn px-4 rounded-pill submission next-button" (click)="goToPlans()">Submit</button>
       </div>
     </form>

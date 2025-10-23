@@ -85,7 +85,10 @@ export class CategoryProductsComponent implements OnInit, OnDestroy {
   currentPage$ = new BehaviorSubject<number>(0); 
   selectedCategory$ = new BehaviorSubject<string | null>(null);
   selectedBrands$ = new BehaviorSubject<string[]>([]);
+   quantities: { [key: string]: number } = {};
 
+  // Track loading states for each product (if needed)
+  loadingStates: { [key: string]: boolean } = {};
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -184,7 +187,7 @@ addToCart(product: any, event: Event) {
   
   // Show instant feedback
   this.addingProducts.add(productId);
-  
+   this.quantities[productId] = 1;
   // Create cart item
   const cartItem: CartItem = {
     id: productId.toString(),
@@ -224,7 +227,59 @@ addToCart(product: any, event: Event) {
     this.addedProducts.delete(productId);
   }, 2000);
 }
+
+
+
   //  Update cart with notification
+  //  addToCart(product: any, event: Event) {
+  //   event.stopPropagation();
+  //   event.preventDefault();
+
+  //   const productId = (product.id ?? product.productId).toString();
+  //   this.loadingStates[productId] = true;
+  //   if (!productId) {
+  //     console.error('Cannot add to cart: Product ID missing', product);
+  //     this.showCustomToast('❌ Product ID missing. Cannot add to cart.', 'error');
+  //     return;
+  //   }
+
+  //   console.log('🛒 Adding product to cart, ID:', productId);
+
+  //   // Set initial quantity to 1 when adding to cart
+  //   this.quantities[productId] = 1;
+
+  //   this.showCustomToast(`${product.name} added to cart successfully!`, 'success');
+  // }
+
+  increment(product: any) {
+    const productId = (product.id ?? product.productId).toString();
+    this.quantities[productId] = (this.quantities[productId] || 0) + 1;
+    console.log(`Incremented quantity for product ${productId}: ${this.quantities[productId]}`);
+  }
+
+  decrement(product: any) {
+    const productId = (product.id ?? product.productId).toString();
+    const current = this.quantities[productId] || 0;
+    if (current > 1) {
+      this.quantities[productId] = current - 1;
+      console.log(`Decremented quantity for product ${productId}: ${this.quantities[productId]}`);
+    } else {
+      this.quantities[productId] = 0; // Reset to 0 to show "Add" button
+      console.log(`Removed product ${productId} from cart`);
+    }
+  }
+
+  private showCustomToast(message: string, type: 'success' | 'error' = 'success') {
+    this.toastMessage = message;
+    this.toastType = type;
+    this.showToast = true;
+
+    setTimeout(() => {
+      
+      this.showToast = false;
+    }, 3000);
+  }
+  
   updateCart() {
     if (!this.selectedProduct) return;
     
@@ -387,7 +442,7 @@ addToCart(product: any, event: Event) {
         
         const categoryFromPath = params.get('category') || 'Unknown Category';
         this.categoryName = selectedCategory || categoryFromPath;
-        this.currentEndpoint = queryParams.get('endpoint') || 'products/filter';
+        this.currentEndpoint = queryParams.get('endpoint') || 'products/filter/multiple-forms';
         this.currentPageIndex = page;
 
         return this.productService.getProductsForCategoryPage(
@@ -414,12 +469,22 @@ addToCart(product: any, event: Event) {
           this.currentPageIndex = 0;
         }
       }),
-      map(response => {
-        if (response && response.data && Array.isArray(response.data.content)) {
-          return response.data.content;
-        }
-        return [];
-      })
+    map(response => {
+  if (response && response.data && Array.isArray(response.data.content)) {
+    const products = response.data.content;
+
+    // Initialize quantities for each product
+    products.forEach((product: any) => {
+      const productId = (product.id ?? product.productId).toString();
+      if (!(productId in this.quantities)) {
+        this.quantities[productId] = 0;
+      }
+    });
+
+    return products;
+  }
+  return [];
+})
     );
   }
 
@@ -439,7 +504,7 @@ addToCart(product: any, event: Event) {
   }
   
   getFirstImageUrl(imageUrls: string): string {
-    if (!imageUrls) return 'assets/placeholder.png'; 
+    if (!imageUrls) return 'assets/default.png'; 
     return imageUrls.split('|')[0].trim();
   }
 
