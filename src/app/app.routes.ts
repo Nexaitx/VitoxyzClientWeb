@@ -4,6 +4,7 @@ import { BillingDetailsComponent } from './core/toasts/billing-details/billing-d
 import { UserOnboarding } from './pages/user-onboarding/user-onboarding';
 import { ViewMedicine } from './pages/medicines/view-medicine/view-medicine';
 import { SearchResultComponent } from '../app/pages/shared/search-result/search-result';
+import { MultiproductsformComponent } from './pages/medicines/multiproductsform/multiproductsform';
 
 export const routes: Routes = [
   {
@@ -15,6 +16,8 @@ export const routes: Routes = [
         loadChildren: () => import('./pages/medicines/medicines-module').then(m => m.MedicinesModule),
 
       },
+        { path: 'products', component: MultiproductsformComponent },
+
 
       {
         path: 'products/:category', 

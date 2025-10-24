@@ -27,8 +27,9 @@ import { SidebarFilterComponent } from "../../shared/sidebar-filter/sidebar-filt
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 import { Footer } from "../../footer/footer";
 import { BannerSliderComponent } from "@src/app/shared/banner-slider/banner-slider";
-import { TextBanner } from "@src/app/shared/text-banner/text-banner";
+// import { TextBanner } from "@src/app/shared/text-banner/text-banner";
 import { NotificationService } from '@src/app/core/notification.service';
+import { TextBanner } from '@src/app/shared/text-banner/text-banner';
 
 @Component({
   selector: 'app-category-products',
@@ -65,7 +66,7 @@ export class CategoryProductsComponent implements OnInit, OnDestroy {
   
   // Loading state
   isLoading: boolean = false;
-  
+   quantities: { [key: string]: number } = {};
   //  Quantity Panel State
   showQuantityPanel: boolean = false;
   selectedProduct: any = null;
@@ -85,7 +86,6 @@ export class CategoryProductsComponent implements OnInit, OnDestroy {
   currentPage$ = new BehaviorSubject<number>(0); 
   selectedCategory$ = new BehaviorSubject<string | null>(null);
   selectedBrands$ = new BehaviorSubject<string[]>([]);
-   quantities: { [key: string]: number } = {};
 
   // Track loading states for each product (if needed)
   loadingStates: { [key: string]: boolean } = {};

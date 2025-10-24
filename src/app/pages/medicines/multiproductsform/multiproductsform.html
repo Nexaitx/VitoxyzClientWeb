@@ -20,15 +20,6 @@
   </app-banner-slider>
 </div>
 
-<!-- <app-text-banner
-  image="assets/medicines/new banner1 desk.png"
-  title="Welcome to Vitoxyz"
-  subtitle="Your trusted health partner"
-  buttonText="Shop Now"
-  buttonLink="/medicines">
-</app-text-banner> -->
-
-<!-- ✅ NEW: Quantity Panel -->
 <div *ngIf="showQuantityPanel" class="quantity-panel-overlay" (click)="closeQuantityPanel()"></div>
 
 <div *ngIf="showQuantityPanel" class="quantity-panel">
@@ -74,34 +65,78 @@
 </div>
 
 <div class="category-page" [class.blur-content]="isLoading || showQuantityPanel">
-  <!-- Full Screen Loader -->
-  <div *ngIf="isLoading" class="full-screen-loader">
-    <div class="loader-content">
-      <mat-spinner diameter="50" color="primary"></mat-spinner>
-      <p>Products loading...</p>
-      <small>Category: {{ categoryName }}</small>
-      <div class="loading-details">
-        <small>Filter/Pagination update in progress...</small>
-      </div>
-    </div>
+  <!-- Debug Info (remove in production) -->
+  <div style="background: #f0f0f0; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+    <small>Debug: {{ products.length }} products loaded | Forms: {{ productForms.join(', ') }} | Page: {{ currentPage }}
+      | Total: {{ totalProducts }}</small>
   </div>
 
+  <!-- Page Header -->
+  <header class="page-header">
+    <button class="back-btn" (click)="goBack()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+      Back
+    </button>
+    <!-- <h1 class="page-title">{{ categoryName }}</h1>
+    <div class="product-forms">
+      <span class="forms-label">Filters: </span>
+      <span class="form-tags">
+        {{ productForms.join(', ') }}
+      </span>
+    </div>
+    <div class="total-products" *ngIf="products.length > 0">
+      {{ totalProducts }} products found
+    </div> -->
+    <div *ngIf="isLoading" class="full-screen-loader">
+      <div class="loader-content">
+        <mat-spinner diameter="50" color="primary"></mat-spinner>
+        <p>Products loading...</p>
+        <small>Category: {{ categoryName }}</small>
+        <div class="loading-details">
+          <small>Filter/Pagination update in progress...</small>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
   <div class="category-layout">
-    <!-- Left Sidebar -->
+
     <div class="sidebar-section" [class.sidebar-loading]="isLoading">
       <app-sidebar-filter [categories]="categoryList" [brands]="brandList" [disabled]="isLoading || showQuantityPanel"
         (categorySelected)="filterByCategory($event)" (brandSelected)="filterByBrands($event)">
       </app-sidebar-filter>
     </div>
 
-    <!-- Right Products Section -->
     <div class="products-section">
-      <!-- Section Header with Active Filters -->
+     
       <div class="section-header">
-        <h2>{{ categoryName }}</h2>
+         <div *ngIf="isLoading" class="state-container loading-state">
+          <div class="loader-content">
+            <mat-spinner diameter="50" color="primary"></mat-spinner>
+            <p>Products loading...</p>
+            <small>Category: {{ categoryName }}</small>
+          </div>
+        </div>
+         <div *ngIf="error && !isLoading" class="state-container error-state">
+          <div class="error-icon">⚠️</div>
+          <h3>Something went wrong</h3>
+          <p>{{ error }}</p>
+          <button class="retry-btn" (click)="fetchProducts(productForms, 0, true)">Try Again</button>
+        </div>
 
-        <!-- Active Filter Display -->
-        <div class="filter-info"
+        <!-- Empty State -->
+        <div *ngIf="!isLoading && !error && products.length === 0" class="state-container empty-state">
+          <div class="empty-icon">📦</div>
+          <h3>No Products Found</h3>
+          <p>We couldn't find any products matching "{{ productForms.join(', ') }}".</p>
+          <button class="back-home-btn" (click)="goBack()">Browse Other Categories</button>
+        </div>
+
+         <div class="filter-info"
           *ngIf="(selectedCategory$ | async) || ((selectedBrands$ | async) && (selectedBrands$ | async)!.length > 0)">
           <div class="active-filters-container">
             <!-- Category Filter -->
@@ -123,22 +158,19 @@
             </span>
           </div>
         </div>
-
-        <!-- Loading Indicator in Header  <ng-container *ngIf="products.length > 0; else noProducts"> -->
-        <div *ngIf="isLoading" class="header-loading">
+         <div *ngIf="isLoading" class="header-loading">
           <mat-spinner diameter="20" color="primary"></mat-spinner>
           <span>Updating products...</span>
         </div>
       </div>
-
+      
       <div class="product-grid-container">
-        <!-- Products Grid -->
-        <div *ngIf="products$ | async as products; else loadingOrNoProducts" class="product-grid">
+        <div *ngIf="!isLoading && !error && products.length > 0" class="product-grid">
 
           <ng-container *ngIf="products.length > 0; else noProducts">
            <mat-card *ngFor="let product of products" class="product-card mat-elevation-z4" style="cursor: pointer;">
             @if(product.imageUrl) {
-              <img (click)="goToProduct(product)" mat-card-image [src]="getFirstImageUrl(product.imageUrl) || '../../../../assets/default.png'"
+              <img (click)="goToProduct(product)" mat-card-image [src]="getFirstImage(product.imageUrl) || '../../../../assets/default.png'"
                    [alt]="product.name" class="product-image" />
             } @else {
               <img src="../../../../assets/default.png" alt="">
@@ -187,8 +219,6 @@
             </div>
           </ng-template>
         </div>
-
-        <!-- Initial Loading Template -->
         <ng-template #loadingOrNoProducts>
           <!-- <div class="loading-container" *ngIf="!isLoading">
             <mat-spinner diameter="40"></mat-spinner>
@@ -199,12 +229,68 @@
             <div class="vm-loading-text">Products loading...</div>
           </div>
         </ng-template>
+        
       </div>
+       
 
-      <!-- Paginator -->
+        <!-- Product Grid -->
+        <!-- <div *ngIf="!isLoading && !error && products.length > 0" class="products-section">
+          <div class="products-meta">
+            <p class="products-count">Showing {{ products.length }} of {{ totalProducts }} products</p>
+          </div>
+
+          <div class="products-grid">
+            <div *ngFor="let product of products; trackBy: trackByProductId" class="product-card"
+              (click)="viewProductDetails(product)">
+              <div class="product-image-container">
+                <img [src]="getFirstImage(product.imageUrl)" [alt]="product.name"
+                  (error)="product.imageUrl = 'assets/medicines/placeholder.png'" />
+                <div *ngIf="hasDiscount(product)" class="discount-badge">{{ product.discountPercentage }}% OFF</div>
+                <div *ngIf="!product.isAvailable" class="out-of-stock-badge">Out of Stock</div>
+              </div>
+
+              <div class="product-info">
+                <h3 class="product-name">{{ product.name }}</h3>
+                <p class="product-brand">{{ product.manufacturers }}</p>
+                <p class="product-packaging">{{ getPackagingInfo(product) }}</p>
+                <div class="product-form">{{ product.productForm }}</div>
+
+                <div class="product-pricing">
+                  <span class="current-price">₹{{ getDisplayPrice(product) }}</span>
+                  <span *ngIf="hasDiscount(product)" class="original-price">₹{{ product.mrp }}</span>
+                </div>
+
+                <button class="add-to-cart-btn" (click)="addToCart(product, $event)" [disabled]="!product.isAvailable">
+                  {{ product.isAvailable ? 'Add to Cart' : 'Out of Stock' }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          
+
+          
+          <div class="load-more-section" *ngIf="hasMoreProducts">
+            <button class="load-more-btn" (click)="loadMore()" [disabled]="isLoadMoreLoading">
+              <span *ngIf="!isLoadMoreLoading">Load More Products ({{ getRemainingProductsCount() }} more
+                available)</span>
+              <span *ngIf="isLoadMoreLoading" class="loading-text">
+                <div class="small-spinner"></div>Loading...
+              </span>
+            </button>
+          </div>
+        </div> -->
+      
     
-    </div>
-  </div>
+
+
+ 
+
+
+     </div> <!-- Error State -->
+
+ </div>
 </div>
 
 <app-footer></app-footer>

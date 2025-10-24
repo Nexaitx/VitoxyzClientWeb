@@ -256,7 +256,7 @@
 </app-common-filter-component> -->
 
 <!-- personal care -->
-<div class="category-section">
+<!-- <div class="category-section">
   <div class="category-section-header mat-elevation-z2">
     <h2>Popular categories</h2>
     </div>
@@ -289,7 +289,7 @@
    </button>
     
   </div>
-</div>
+</div> -->
 
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
@@ -315,6 +315,7 @@
   [title]="'Support that cares'">
 </app-common-filter-component> -->
 
+<!-- //also uncommited -->
 <div class="category-section">
   <div class="category-section-header mat-elevation-z2">
     <h2>Super saving deals</h2>
@@ -375,7 +376,7 @@
 
 
 <!-- popular category -->
-<!-- 
+
 <div class="category-section">
   <div class="category-section-header mat-elevation-z2">
     <h2>Trending Now</h2>
@@ -384,12 +385,12 @@
   <div class="carousel-container">
     
     <button
-      class="side-nav-button left-button mat-elevation-z4"
-      (click)="scrollCarousel('left')"
+      class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
+      (click)="scrollCarousel2('left')"
     >
-      &lt; </button>
-
-    <div #categoryCarouselWrapper class="carousel-wrapper">
+     </button>
+  
+    <div #categoryCarouselWrapper2 class="carousel-wrapper">
       <mat-card
         *ngFor="let category of categories2"
         class="category-card mat-elevation-z4"
@@ -403,13 +404,13 @@
     </div>
 
     <button
-      class="side-nav-button right-button mat-elevation-z4"
-      (click)="scrollCarousel('right')"
+      class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
+      (click)="scrollCarousel2('right')"
     >
-      &gt; </button>
+    </button>
     
   </div>
-</div> -->
+</div>
 
 <!-- future implementation -->
 
