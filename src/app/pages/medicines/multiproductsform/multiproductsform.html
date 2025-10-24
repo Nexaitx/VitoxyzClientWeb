@@ -26,12 +26,22 @@
 
   <!-- Main Content -->
   <main class="main-content">
+     <div class="sidebar-section" [class.sidebar-loading]="isLoading">
+      <app-sidebar-filter [categories]="categoryList" [brands]="brandList" [disabled]="isLoading || showQuantityPanel"
+        (categorySelected)="filterByCategory($event)" (brandSelected)="filterByBrands($event)">
+      </app-sidebar-filter>
+    </div>
     <!-- Loading State -->
     <div *ngIf="isLoading" class="state-container loading-state">
-      <div class="spinner"></div>
-      <p>Loading products...</p>
+      <div class="loader-content">
+        <mat-spinner diameter="50" color="primary"></mat-spinner>
+        <p>Products loading...</p>
+        <small>Category: {{ categoryName }}</small>
+        <div class="loading-details">
+          <small>Filter/Pagination update in progress...</small>
+        </div>
+      </div>
     </div>
-
     <!-- Error State -->
     <div *ngIf="error && !isLoading" class="state-container error-state">
       <div class="error-icon">⚠️</div>

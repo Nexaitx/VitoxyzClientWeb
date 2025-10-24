@@ -66,7 +66,7 @@ export class CategoryProductsComponent implements OnInit, OnDestroy {
   
   // Loading state
   isLoading: boolean = false;
-  
+   quantities: { [key: string]: number } = {};
   //  Quantity Panel State
   showQuantityPanel: boolean = false;
   selectedProduct: any = null;
@@ -185,7 +185,7 @@ addToCart(product: any, event: Event) {
   
   // Show instant feedback
   this.addingProducts.add(productId);
-  
+   this.quantities[productId] = 1;
   // Create cart item
   const cartItem: CartItem = {
     id: productId.toString(),
@@ -225,6 +225,23 @@ addToCart(product: any, event: Event) {
     this.addedProducts.delete(productId);
   }, 2000);
 }
+ increment(product: any) {
+    const productId = (product.id ?? product.productId).toString();
+    this.quantities[productId] = (this.quantities[productId] || 0) + 1;
+    console.log(`Incremented quantity for product ${productId}: ${this.quantities[productId]}`);
+  }
+
+  decrement(product: any) {
+    const productId = (product.id ?? product.productId).toString();
+    const current = this.quantities[productId] || 0;
+    if (current > 1) {
+      this.quantities[productId] = current - 1;
+      console.log(`Decremented quantity for product ${productId}: ${this.quantities[productId]}`);
+    } else {
+      this.quantities[productId] = 0; // Reset to 0 to show "Add" button
+      console.log(`Removed product ${productId} from cart`);
+    }
+  }
   //  Update cart with notification
   updateCart() {
     if (!this.selectedProduct) return;
@@ -415,12 +432,22 @@ addToCart(product: any, event: Event) {
           this.currentPageIndex = 0;
         }
       }),
-      map(response => {
-        if (response && response.data && Array.isArray(response.data.content)) {
-          return response.data.content;
-        }
-        return [];
-      })
+       map(response => {
+          if (response && response.data && Array.isArray(response.data.content)) {
+            const products = response.data.content.map((product: any) => ({
+              ...product,
+            }));
+            // Initialize quantities for each product to 0
+            products.forEach((product: any) => {
+              const productId = (product.id ?? product.productId).toString();
+              if (!(productId in this.quantities)) {
+                this.quantities[productId] = 0;
+              }
+            });
+            return products;
+          }
+          return [];
+        })
     );
   }
 

@@ -60,8 +60,8 @@
 
               <button type="button" (click)="togglePasswordVisibility('password')"
                 [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'" [attr.aria-pressed]="showPassword"
-                class="btn btn-link p-0  bg-none text-primary">
-                <i class="fi" [ngClass]="showPassword ? 'fi-rr-eye' : 'fi-rr-eye-crossed'"></i>
+                class="btn btn-link p-0   eye-btn">
+                 <i class="bi" [ngClass]="showConfirmPassword ? 'bi-eye' : 'bi-eye-slash'"></i>
               </button>
             </div>
             <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid" class="text-danger">

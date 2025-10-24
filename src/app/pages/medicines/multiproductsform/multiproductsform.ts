@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { SidebarFilterComponent } from "../../shared/sidebar-filter/sidebar-filter";
+import { API_URL } from '@src/app/core/const';
+import { BehaviorSubject } from 'rxjs';
+import { MatProgressSpinner } from "@angular/material/progress-spinner";
 
 // Product interface based on your API response
 interface Product {
@@ -39,7 +43,8 @@ interface ApiResponse {
 @Component({
   selector: 'app-multiproductsform',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule],
+  imports: [CommonModule, HttpClientModule,
+    SidebarFilterComponent, RouterModule, MatProgressSpinner],
   templateUrl: './multiproductsform.html',
   styleUrls: ['./multiproductsform.scss']
 })
@@ -51,12 +56,14 @@ export class MultiproductsformComponent implements OnInit {
   error: string = '';
   productForms: string[] = [];
   totalProducts: number = 0;
-  
+   showQuantityPanel: boolean = false;
   // Pagination variables
   currentPage: number = 0;
   pageSize: number = 12;
   hasMoreProducts: boolean = true;
-
+currentPage$ = new BehaviorSubject<number>(0);
+selectedCategory$ = new BehaviorSubject<string | null>(null);
+  selectedBrands$ = new BehaviorSubject<string[]>([]);
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -106,7 +113,7 @@ export class MultiproductsformComponent implements OnInit {
       `productForms=${encodeURIComponent(form.trim())}`
     ).join('&');
     
-    const apiUrl = `http://localhost:8080/api/products/filter/multiple-forms?${queryParams}&page=${page}&size=${this.pageSize}`;
+    const apiUrl = `${API_URL}/products/filter/multiple-forms?${queryParams}&page=${page}&size=${this.pageSize}`;
 
     console.log('API URL:', apiUrl);
 
@@ -214,4 +221,33 @@ export class MultiproductsformComponent implements OnInit {
 trackByProductId(index: number, product: Product): string {
   return product.productId || index.toString();
 }
+  categoryList = [
+    { label: 'Syrups & Tonics', value: 'syrup' },
+    { label: 'Chest Rubs & Balms', value: 'chest_rubs' },
+    { label: 'Cough Syrups', value: 'cough_syrup' },
+    { label: 'Herbal Juices & Teas', value: 'herbal_juices' },
+    { label: 'Candy & Lozenges', value: 'lozenges' }
+  ];
+
+  brandList = [
+    { name: 'Volini', count: 21 },
+    { name: 'Cofsils', count: 9 },
+    { name: 'Saridon', count: 9 },
+    { name: 'Moov', count: 6 },
+    { name: 'Zandu', count: 2 },
+  ];
+
+  filterByCategory(category: string) {
+    console.log('🔄 Category filter applied:', category);
+    this.isLoading = true;
+    this.selectedCategory$.next(category); 
+    this.currentPage$.next(0); 
+  }
+
+  filterByBrands(brands: string[]) {
+    console.log('🔄 Brands filter applied:', brands);
+    this.isLoading = true;
+    this.selectedBrands$.next(brands);
+    this.currentPage$.next(0);
+  }
 }
