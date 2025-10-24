@@ -368,10 +368,7 @@ onAuthSuccess() {
     const item = this.cart.find(item => item.id === id);
     if (!item) return;
 
-    if (!confirm(`Are you sure you want to remove "${item.name}" from cart?`)) {
-      return;
-    }
-
+   
     console.log('🗑️ Removing item from cart:', id);
     this.updateDebugInfo(`Removing item: ${id}`);
     

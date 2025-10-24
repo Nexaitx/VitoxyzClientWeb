@@ -172,7 +172,7 @@ input.form-control:focus {
 .input-group button {
   background-color: transparent !important;
   border: none !important;
-  color: #db9280;
+  color: white;
   font-size: 18px;
   padding-top: 6px;
 }
@@ -321,7 +321,8 @@ input.form-control.with-icon:focus {
 }
 .action-add{
   position: absolute;
-  right: 5px;
+  right: 0px;
+  border-radius: 1px;
 }
 
 
@@ -359,7 +360,7 @@ input.form-control.with-icon:focus {
 }
 
 .step-indicator.active .step-number {
-  background-color: #20c997; /* Teal for active */
+  background-color: #db9280; /* Teal for active */
   color: white;
 }
 
@@ -447,7 +448,7 @@ input.form-control.with-icon:focus {
     position: absolute;
     left: 22px;
     top: 37px;
-    color: #09b8c2;
+    color:#db9280;
 }
 .main-container {
   width: 100%;
@@ -456,19 +457,34 @@ input.form-control.with-icon:focus {
   padding: 0 16px;
 }
 
-/* Stepper container */
-::ng-deep .custom-stepper .mat-horizontal-stepper-header-container {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-}
 
-::ng-deep .custom-stepper .mat-step-header {
-  flex: 1 1 0;
-  min-width: 0;
-}
+  ::ng-deep .custom-stepper .mat-step-label {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    display: block !important;
+    line-height: 1.3;
+    word-wrap: break-word;
+  }
+
+  ::ng-deep .custom-stepper .mat-horizontal-stepper-header-container {
+    max-width: 800px !important;
+    justify-content: space-between !important;
+  }
+
+// /* Stepper container */
+// ::ng-deep .custom-stepper .mat-horizontal-stepper-header-container {
+//   width: 100%;
+//   max-width: 600px;
+//   margin: 0 auto;
+//   justify-content: space-between;
+//   flex-wrap: nowrap;
+// }
+
+// ::ng-deep .custom-stepper .mat-step-header {
+//   flex: 1 1 0;
+//   min-width: 0;
+// }
 
 ::ng-deep .custom-stepper .mat-step-label {
   font-size: 14px;
@@ -510,10 +526,22 @@ input.form-control.with-icon:focus {
   .main-container {
     padding: 0 14px;
   }
+  
+ ::ng-deep .custom-stepper .mat-step-label {
+    font-size: 12px !important;
+    text-align: center;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    display: block !important;
+    max-width: 70px; /* Adjust width to control how much text shows */
+  }
 
   ::ng-deep .custom-stepper .mat-horizontal-stepper-header-container {
-    max-width: 100%;
+    max-width: 100% !important;
+    justify-content: space-between !important;
   }
+  
 
   .form-label {
     font-size: 14px;
