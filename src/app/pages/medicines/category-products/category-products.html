@@ -124,7 +124,7 @@
           </div>
         </div>
 
-        <!-- Loading Indicator in Header -->
+        <!-- Loading Indicator in Header  <ng-container *ngIf="products.length > 0; else noProducts"> -->
         <div *ngIf="isLoading" class="header-loading">
           <mat-spinner diameter="20" color="primary"></mat-spinner>
           <span>Updating products...</span>
@@ -173,6 +173,7 @@
           </mat-card>
           </ng-container>
 
+          
           <ng-template #noProducts>
             <div class="no-products-container">
               <p class="no-products-message">
@@ -201,7 +202,7 @@
       </div>
 
       <!-- Paginator -->
-      <!-- <mat-paginator
+      <mat-paginator
         [length]="totalProducts"
         [pageSize]="pageSize"
         [pageSizeOptions]="[10, 30, 50, 100]"
@@ -209,7 +210,7 @@
         aria-label="Select page"
         class="product-paginator product-paginator-bottom"
         [disabled]="isLoading"
-      ></mat-paginator> -->
+      ></mat-paginator>
     </div>
   </div>
 </div>

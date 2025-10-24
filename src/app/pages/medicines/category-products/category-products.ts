@@ -87,6 +87,8 @@ export class CategoryProductsComponent implements OnInit, OnDestroy {
   selectedCategory$ = new BehaviorSubject<string | null>(null);
   selectedBrands$ = new BehaviorSubject<string[]>([]);
 
+  // Track loading states for each product (if needed)
+  loadingStates: { [key: string]: boolean } = {};
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -225,7 +227,31 @@ addToCart(product: any, event: Event) {
     this.addedProducts.delete(productId);
   }, 2000);
 }
- increment(product: any) {
+
+
+
+  //  Update cart with notification
+  //  addToCart(product: any, event: Event) {
+  //   event.stopPropagation();
+  //   event.preventDefault();
+
+  //   const productId = (product.id ?? product.productId).toString();
+  //   this.loadingStates[productId] = true;
+  //   if (!productId) {
+  //     console.error('Cannot add to cart: Product ID missing', product);
+  //     this.showCustomToast('❌ Product ID missing. Cannot add to cart.', 'error');
+  //     return;
+  //   }
+
+  //   console.log('🛒 Adding product to cart, ID:', productId);
+
+  //   // Set initial quantity to 1 when adding to cart
+  //   this.quantities[productId] = 1;
+
+  //   this.showCustomToast(`${product.name} added to cart successfully!`, 'success');
+  // }
+
+  increment(product: any) {
     const productId = (product.id ?? product.productId).toString();
     this.quantities[productId] = (this.quantities[productId] || 0) + 1;
     console.log(`Incremented quantity for product ${productId}: ${this.quantities[productId]}`);
@@ -242,7 +268,18 @@ addToCart(product: any, event: Event) {
       console.log(`Removed product ${productId} from cart`);
     }
   }
-  //  Update cart with notification
+
+  private showCustomToast(message: string, type: 'success' | 'error' = 'success') {
+    this.toastMessage = message;
+    this.toastType = type;
+    this.showToast = true;
+
+    setTimeout(() => {
+      
+      this.showToast = false;
+    }, 3000);
+  }
+  
   updateCart() {
     if (!this.selectedProduct) return;
     
@@ -405,7 +442,7 @@ addToCart(product: any, event: Event) {
         
         const categoryFromPath = params.get('category') || 'Unknown Category';
         this.categoryName = selectedCategory || categoryFromPath;
-        this.currentEndpoint = queryParams.get('endpoint') || 'products/filter';
+        this.currentEndpoint = queryParams.get('endpoint') || 'products/filter/multiple-forms';
         this.currentPageIndex = page;
 
         return this.productService.getProductsForCategoryPage(
@@ -432,22 +469,22 @@ addToCart(product: any, event: Event) {
           this.currentPageIndex = 0;
         }
       }),
-       map(response => {
-          if (response && response.data && Array.isArray(response.data.content)) {
-            const products = response.data.content.map((product: any) => ({
-              ...product,
-            }));
-            // Initialize quantities for each product to 0
-            products.forEach((product: any) => {
-              const productId = (product.id ?? product.productId).toString();
-              if (!(productId in this.quantities)) {
-                this.quantities[productId] = 0;
-              }
-            });
-            return products;
-          }
-          return [];
-        })
+    map(response => {
+  if (response && response.data && Array.isArray(response.data.content)) {
+    const products = response.data.content;
+
+    // Initialize quantities for each product
+    products.forEach((product: any) => {
+      const productId = (product.id ?? product.productId).toString();
+      if (!(productId in this.quantities)) {
+        this.quantities[productId] = 0;
+      }
+    });
+
+    return products;
+  }
+  return [];
+})
     );
   }
 
@@ -467,7 +504,7 @@ addToCart(product: any, event: Event) {
   }
   
   getFirstImageUrl(imageUrls: string): string {
-    if (!imageUrls) return 'assets/placeholder.png'; 
+    if (!imageUrls) return 'assets/default.png'; 
     return imageUrls.split('|')[0].trim();
   }
 

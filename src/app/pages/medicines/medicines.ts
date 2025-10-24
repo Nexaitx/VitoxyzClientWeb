@@ -548,23 +548,6 @@ export class Medicines implements AfterViewInit {
 
   //here new slider code
   // personal care
-  //  fetchProductsByCategory(categoryApiValue: string): void {
-  //       const fullApiUrl = `${API_URL}${ENDPOINTS.PRODUCT_FILTER}`;
-
-  //   // const url = `${this.API_BASE_URL}?productForm=${categoryApiValue}&page=0&size=10`;
-  //       const url = `${fullApiUrl}?productForm=${categoryApiValue}&page=0&size=10`;
-
-
-  //   console.log('Calling API:', url); // Check karne ke liye
-
-  //   // this.products$ = this.http.get(url);
-  //   this.router.navigate(['/products', categoryApiValue]);
-
-  //       console.log(`Redirecting to category page for: ${categoryApiValue}`);
-
-
-
-  // }
 
   fetchProductsByCategory(categoryApiValues: string[]): void {
     const categoryName = this.getCategoryNameByApiValues(categoryApiValues);
@@ -643,45 +626,42 @@ export class Medicines implements AfterViewInit {
   }
 
   healthItems = [
-    { image: '../../../assets/medicines/1.png', label: 'Diabetes', link: '/products/StomachCare' },
-    { image: '../../../assets/medicines/2.png', label: 'Heart Rate', link: '/products/HeartRate' },
+    { image: '../../../assets/medicines/1.png', label: 'Diabetes', link: '/products/Granule' },
+    { image: '../../../assets/medicines/2.png', label: 'Heart Rate', link: '/products/Tablet SR' },
     { image: '../../../assets/medicines/3.jpg', label: 'Stomach Care', link: '/products/Lancet' },
     { image: '../../../assets/medicines/4.png', label: 'Liver Care', link: '/products/LiverCare' },
     { image: '../../../assets/medicines/5.png', label: 'Eye Care', link: '/products/EyeCare' },
     { image: '../../../assets/medicines/6.png', label: 'Bone & Joint', link: '/products/BoneJoint' },
-    { image: '../../../assets/medicines/7.png', label: 'Kidney Care', link: '/products/KidneyCare' },
+    { image: '../../../assets/medicines/7.png', label: 'Kidney Care', link: '/products/Capsule' },
     { image: '../../../assets/medicines/8.png', label: 'Derma Care', link: '/products/DermaCare' },
   ];
 
+  //testing working 
+
   healthItems1 = [
-    { image: '../../../assets/medicines/petcare.png', label: 'Pet Care', link: '/products/Lancet' },
-    { image: '../../../assets/medicines/vitamins.avif', label: 'Vitamins & Supplements', link: '/products/HeartRate' },
-    { image: '../../../assets/medicines/ayurveda.png', label: 'Ayurvedic Wellness', link: '/products/StomachCare' },
-    { image: '../../../assets/medicines/homopathy.png', label: 'Homeopathic Medicine', link: '/products/LiverCare' },
+    { image: '../../../assets/medicines/petcare.png', label: 'Pet Care', link: '/products/Pet Food' },
+    { image: '../../../assets/medicines/vitamins.avif', label: 'Vitamins & Supplements', link: '/products/Powder' },
+    { image: '../../../assets/medicines/ayurveda.png', label: 'Ayurvedic Wellness', link: '/products/Face Pack' },
+    { image: '../../../assets/medicines/homopathy.png', label: 'Homeopathic Medicine', link: '/products/Flower' },
     { image: '../../../assets/medicines/monitoring-devices.png', label: 'Monitoring Devices', link: '/products/EyeCare' },
-    { image: '../../../assets/medicines/sexual wellness.png', label: 'Sexual Wellness', link: '/products/BoneJoint' },
-    { image: '../../../assets/medicines/drinks.png', label: 'Food & Nutrition', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/FItness And health.png', label: 'Fitness & Health', link: '/products/DermaCare' },
-    { image: '../../../assets/medicines/skin care.png', label: 'Skin Care', link: '/products/KidneyCare' },
-
-    { image: '../../../assets/medicines/mens care.png', label: 'Men Care', link: '/products/KidneyCare' },
-
-    { image: '../../../assets/medicines/pain relief.png', label: 'Pain Relief', link: '/products/KidneyCare' },
-
-    { image: '../../../assets/medicines/cardiaccare.png', label: 'Cardiac Care', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/didestive and health.png', label: 'Digestive HealthClean Environment Essentials ', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/daibities.png', label: 'Diabetes', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/hair care.png', label: 'Hair Care', link: '/products/KidneyCare' },
-
-    { image: '../../../assets/medicines/oral care.png', label: 'Oral Care', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/didestive and health.png', label: 'Respiratory Care', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/cardiaccare.png', label: 'Mental Wellness ', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/Baby Care.png', label: 'Baby Care ', link: '/products/KidneyCare' },
-
-    { image: '../../../assets/medicines/women care.png', label: 'Women Care', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/fiRST AID.png', label: 'First Aid', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/Sup[port and braces.png', label: 'Supports & Braces', link: '/products/KidneyCare' },
-    { image: '../../../assets/medicines/Colds, cough , and fever.png', label: 'Cold, Cough & Fever ', link: '/products/KidneyCare' },
+    { image: '../../../assets/medicines/sexual wellness.png', label: 'Sexual Wellness', link: '/products/Condom' },
+    { image: '../../../assets/medicines/drinks.png', label: 'Food & Nutrition', link: '/products/Juice' },
+    { image: '../../../assets/medicines/FItness And health.png', label: 'Fitness & Health', link: '/products/Juice' },
+    { image: '../../../assets/medicines/skin care.png', label: 'Skin Care', link: '/products/Cream' },
+    { image: '../../../assets/medicines/mens care.png', label: 'Men Care', link: '/products/Body Wash' },
+    { image: '../../../assets/medicines/pain relief.png', label: 'Pain Relief', link: '/products/Spray' },
+    { image: '../../../assets/medicines/cardiaccare.png', label: 'Cardiac Care', link: '/products/Tablet' },
+    { image: '../../../assets/medicines/didestive and health.png', label: 'Digestive HealthClean Environment Essentials ', link: '/products/Tablet' },
+    { image: '../../../assets/medicines/daibities.png', label: 'Diabetes', link: '/products/Granule' },
+    { image: '../../../assets/medicines/hair care.png', label: 'Hair Care', link: '/products/Oil' },
+    { image: '../../../assets/medicines/oral care.png', label: 'Oral Care', link: '/products/Oral Gel' },
+    { image: '../../../assets/medicines/didestive and health.png', label: 'Respiratory Care', link: '/products/Tablet' },
+    { image: '../../../assets/medicines/cardiaccare.png', label: 'Mental Wellness ', link: '/products/Tablet' },
+    { image: '../../../assets/medicines/Baby Care.png', label: 'Baby Care ', link: '/products/Diaper' },
+    { image: '../../../assets/medicines/women care.png', label: 'Women Care', link: '/products/Vaginal Cream' },
+    { image: '../../../assets/medicines/fiRST AID.png', label: 'First Aid', link: '/products/Tablet' },
+    { image: '../../../assets/medicines/Sup[port and braces.png', label: 'Supports & Braces', link: '/products/Walker' },
+    { image: '../../../assets/medicines/Colds, cough , and fever.png', label: 'Cold, Cough & Fever ', link: '/products/Tablet' },
 
 
 
