@@ -171,13 +171,15 @@
 
   @media (max-width: 992px) {
     .card-content { width: 110px; min-height: 140px; }
-    .carousel-image { width: 86px; height: 86px; }
-    .carousel-title { font-size: 12px; }
+    .carousel-image { width: 86px; height: 86px; margin-left: 15px;}
+    .carousel-title { font-size: 12px;  }
     .carousel-control-prev, .carousel-control-next { display: none; } /* hide arrows on smaller screens */
   }
 
   @media (max-width: 768px) {
     padding: 12px 10px;
+       .carousel-image { width: 86px; height: 86px; margin-left: 15px;}
+    .carousel-title { font-size: 12px; margin-left: 15px; }
   }
 }
 

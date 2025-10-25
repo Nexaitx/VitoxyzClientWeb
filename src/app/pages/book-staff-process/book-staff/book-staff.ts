@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { Login } from "../../authorization/login/login";
 import { Authorization } from '../../authorization/authorization';
 import { Footer } from "../../footer/footer";
+import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 
 @Component({
   selector: 'app-book-staff',
@@ -19,7 +20,7 @@ import { Footer } from "../../footer/footer";
     MapComponent,
     Submission,
     // AadharVerificationComponent,
-    Authorization, Footer],
+    Authorization, Footer, MobileFooterNavComponent],
   templateUrl: './book-staff.html',
   styleUrls: ['./book-staff.scss'],
 })
