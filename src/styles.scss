@@ -118,3 +118,139 @@ body {
     border-radius: 15px;
     overflow: hidden;
 }
+
+.carousel-wrapper {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 16px;
+    padding: 10px 10px 10px 10px; // Inner padding for scrollable area
+
+    // Hide Scrollbar
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+  .carousel-container .carousel-wrapper mat-card img {
+        height: 190px;
+        border-radius: 12px 12px 0 0;
+    }
+}
+ .carousel-container .carousel-wrapper mat-card img {
+        height: 190px;
+        border-radius: 12px 12px 0 0;
+    }
+.category-section {
+    margin: 20px 0;
+    padding: 0 10px;
+}
+
+.carousel-container {
+    position: relative;
+    padding: 8px;
+    padding-left: 0; // Remove side padding on desktop container to align with buttons
+    padding-right: 0;
+}
+
+.category-card {
+    min-width: 180px; // Fixed width for desktop scrolling
+    max-width: 180px;
+    flex: 0 0 auto;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+        transform: translateY(-10px);
+    }
+
+    // img {
+    //     height: 190px;
+    //     object-fit: cover;
+    //     border-radius: 12px 12px 0 0; // Match container border-radius
+    // }
+
+    h3 {
+        margin: 8px 0 0;
+        font-size: 14px;
+        text-align: center;
+        font-weight: 500;
+    }
+}
+
+// --- Navigation Buttons (Desktop Only) ---
+.side-nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    // ... (rest of the button styles) ...
+}
+
+.right-button {
+    right: 0px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 24px;
+    border: none;
+}
+
+.left-button {
+    left: 0px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 24px;
+    border: none;
+}
+
+// --- Mobile Specific Styles (Max Width 768px) ---
+@media (max-width: 768px) {
+
+    // 1. Hide Navigation Buttons on Mobile
+    .side-nav-button {
+        display: none !important;
+    }
+
+    .carousel-container {
+        padding: 8px 0; // Reset padding for full width
+    }
+
+    // 2. Transform Scrollable Wrapper into a Responsive Grid
+    .carousel-wrapper {
+        // OVERRIDE CAROUSEL STYLES
+        display: flex; // Keep flex for the primary structure
+        flex-wrap: wrap; // CRITICAL: Allow cards to wrap to the next row (GRID EFFECT)
+        overflow-x: hidden; // CRITICAL: Disable horizontal scrolling
+        justify-content: space-between; // Distribute cards evenly
+        gap: 8px; // Smaller gap on mobile
+        padding: 0 10px 10px; // Add back horizontal padding for content alignment
+    }
+
+    // 3. Set Card Width for 3 items per Row
+    .category-card {
+        width: 31%;
+        min-width: 31%; // Ensure 3 items fit
+        max-width: 31%;
+
+        // Reduce shadow and hover effects for mobile performance
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+            transform: none; // Disable desktop hover shift
+        }
+
+        img {
+            height: 120px; // Reduced image height for mobile
+        }
+
+        h3 {
+            font-size: 12px;
+        }
+    }
+}

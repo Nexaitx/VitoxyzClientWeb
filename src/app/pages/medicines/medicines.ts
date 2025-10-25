@@ -631,13 +631,13 @@ export class Medicines implements AfterViewInit {
   }
 
   healthItems = [
-    { image: '../../../assets/medicines/1.avif', label: 'Diabetes', link: '/products/Granule' },
+    { image: '../../../assets/medicines/1.png', label: 'Diabetes', link: '/products/Granule' },
     { image: '../../../assets/medicines/2.avif', label: 'Heart Rate', link: '/products/Tablet SR' },
     { image: '../../../assets/medicines/3.avif', label: 'Stomach Care', link: '/products/Digestive Tablet' },
-    { image: '../../../assets/medicines/4.avif', label: 'Liver Care', link: '/products/Tablet' },
+    { image: '../../../assets/medicines/4.png', label: 'Liver Care', link: '/products/Tablet' },
     { image: '../../../assets/medicines/5.avif', label: 'Eye Care', link: '/products/Eye Drop' },
-    { image: '../../../assets/medicines/6.avif', label: 'Bone & Joint', link: '/products/Bandage' },
-    { image: '../../../assets/medicines/7.avif', label: 'Kidney Care', link: '/products/Tonic' },
+    { image: '../../../assets/medicines/6.png', label: 'Bone & Joint', link: '/products/Bandage' },
+    { image: '../../../assets/medicines/7.png', label: 'Kidney Care', link: '/products/Tonic' },
     { image: '../../../assets/medicines/8.avif', label: 'Derma Care', link: '/products/Face Cream' },
   ];
 
