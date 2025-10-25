@@ -60,7 +60,7 @@
 
               <button type="button" (click)="togglePasswordVisibility('password')"
                 [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'" [attr.aria-pressed]="showPassword"
-                class="btn btn-link p-0   eye-btn">
+                class="btn btn-link p-0 bg-none text-primary  eye-btn">
                  <i class="bi" [ngClass]="showConfirmPassword ? 'bi-eye' : 'bi-eye-slash'"></i>
               </button>
             </div>
@@ -82,7 +82,7 @@
 
               <button type="button" (click)="togglePasswordVisibility('confirm')"
                 [attr.aria-label]="showConfirmPassword ? 'Hide password' : 'Show password'"
-                [attr.aria-pressed]="showConfirmPassword" class="btn btn-link p-0 eye-btn">
+                [attr.aria-pressed]="showConfirmPassword" class="btn btn-link p-0 bg-none text-primary eye-btn">
                 <i class="bi" [ngClass]="showConfirmPassword ? 'bi-eye' : 'bi-eye-slash'"></i>
               </button>
             </div>

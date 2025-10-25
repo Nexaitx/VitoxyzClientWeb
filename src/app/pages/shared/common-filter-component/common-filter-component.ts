@@ -1,13 +1,14 @@
+
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { Observable, finalize, map, of } from 'rxjs';
 import { ProductService } from '../../../core/product.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { API_URL } from '@src/app/core/const';
 import { Router } from '@angular/router';
-import { CurrencyPipe } from '@angular/common';
+import { CartService } from '@src/app/core/cart.service'; // ✅ Make sure this path is correct
 
 @Component({
   selector: 'app-common-filter-component',
@@ -42,12 +43,17 @@ export class CommonFilterComponent implements OnInit {
   // Track loading states for each product (if needed)
   loadingStates: { [key: string]: boolean } = {};
 
+  // Track UI states for add-to-cart buttons
+  addingProducts: Set<string> = new Set();
+  addedProducts: Set<string> = new Set();
+
   @ViewChild('productCarouselWrapper', { static: false })
   carouselWrapper!: ElementRef<HTMLDivElement>;
 
   constructor(
     private productService: ProductService,
-    private router: Router
+    private router: Router,
+    private cartService: CartService // ✅ Added missing service
   ) {}
 
   ngOnInit(): void {
@@ -58,12 +64,11 @@ export class CommonFilterComponent implements OnInit {
         finalize(() => {
           this.isLoadingData = false;
         }),
-        map(response => {
+        map((response) => {
           if (response && response.data && Array.isArray(response.data.content)) {
             const products = response.data.content.map((product: any) => ({
               ...product,
             }));
-            // Initialize quantities for each product to 0
             products.forEach((product: any) => {
               const productId = (product.id ?? product.productId).toString();
               if (!(productId in this.quantities)) {
@@ -104,7 +109,9 @@ export class CommonFilterComponent implements OnInit {
       return;
     }
     const routeType = this.endpoint.includes('otc') ? 'otc' : 'otc';
-    this.router.navigate(['/medicine', productId], { queryParams: { type: routeType } });
+    this.router.navigate(['/medicine', productId], {
+      queryParams: { type: routeType },
+    });
   }
 
   seeAllProducts() {
@@ -115,29 +122,66 @@ export class CommonFilterComponent implements OnInit {
     });
   }
 
+  // ✅ Fixed addToCart
   addToCart(product: any, event: Event) {
     event.stopPropagation();
-    event.preventDefault();
 
-    const productId = (product.id ?? product.productId).toString();
+    const productId = product.id ?? product.productId;
     if (!productId) {
       console.error('Cannot add to cart: Product ID missing', product);
-      this.showCustomToast('❌ Product ID missing. Cannot add to cart.', 'error');
+      this.showCustomToast('Failed to add product to cart', 'error');
       return;
     }
 
-    console.log('🛒 Adding product to cart, ID:', productId);
-
-    // Set initial quantity to 1 when adding to cart
+    this.addingProducts.add(productId);
     this.quantities[productId] = 1;
 
-    this.showCustomToast(`${product.name} added to cart successfully!`, 'success');
+    const cartItem = {
+      id: productId.toString(),
+      name: product.name,
+      price: product.mrp,
+      mrp: product.mrpOld || product.mrp,
+      image: this.getFirstImageUrl(product.imageUrl),
+      qty: product.packaging || '1',
+      count: 1,
+      productType: this.endpoint.includes('otc') ? 'otc' : 'otc',
+    };
+
+    // ✅ Add to local cart
+    this.cartService.addToLocalCart(cartItem);
+
+    this.showCustomToast(`${product.name} added to cart successfully!`);
+
+    // Update UI states
+    this.addingProducts.delete(productId);
+    this.addedProducts.add(productId);
+
+    // ✅ Optional: Sync to backend if logged in
+    if (this.cartService.isLoggedIn()) {
+      this.cartService
+        .addItem({
+          medicineId: productId.toString(),
+          quantity: 1,
+          productType: this.endpoint.includes('otc') ? 'otc' : 'otc',
+        })
+        .subscribe({
+          next: () => console.log('Item synced with backend'),
+          error: (err) => console.error('Failed to sync with backend:', err),
+        });
+    }
+
+    // Reset "added" visual state
+    setTimeout(() => {
+      this.addedProducts.delete(productId);
+    }, 2000);
   }
 
   increment(product: any) {
     const productId = (product.id ?? product.productId).toString();
     this.quantities[productId] = (this.quantities[productId] || 0) + 1;
-    console.log(`Incremented quantity for product ${productId}: ${this.quantities[productId]}`);
+    console.log(
+      `Incremented quantity for product ${productId}: ${this.quantities[productId]}`
+    );
   }
 
   decrement(product: any) {
@@ -145,14 +189,19 @@ export class CommonFilterComponent implements OnInit {
     const current = this.quantities[productId] || 0;
     if (current > 1) {
       this.quantities[productId] = current - 1;
-      console.log(`Decremented quantity for product ${productId}: ${this.quantities[productId]}`);
+      console.log(
+        `Decremented quantity for product ${productId}: ${this.quantities[productId]}`
+      );
     } else {
-      this.quantities[productId] = 0; // Reset to 0 to show "Add" button
+      this.quantities[productId] = 0;
       console.log(`Removed product ${productId} from cart`);
     }
   }
 
-  private showCustomToast(message: string, type: 'success' | 'error' = 'success') {
+  private showCustomToast(
+    message: string,
+    type: 'success' | 'error' = 'success'
+  ) {
     this.toastMessage = message;
     this.toastType = type;
     this.showToast = true;

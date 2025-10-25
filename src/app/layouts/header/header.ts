@@ -56,14 +56,15 @@ cartCount: number = 0;
     {
       label: 'Book Staff',
       icon: 'fi-rr-together-people',
-      dropdown: true,
-      dropdownItems: [
-        { label: 'Nurse', path: '/book-staff' },
-        { label: 'Physiotherapist', path: '/book-staff' },
-        { label: 'Baby-Sitter', path: '/book-staff' },
-        { label: 'Security Guard', path: '/book-staff' },
-        { label: 'Psychiatrist', path: '/book-staff' },
-      ]
+       path: '/book-staff'
+      // dropdown: true,
+      // dropdownItems: [
+      //   { label: 'Nurse', path: '/book-staff' },
+      //   { label: 'Physiotherapist', path: '/book-staff' },
+      //   { label: 'Baby-Sitter', path: '/book-staff' },
+      //   { label: 'Security Guard', path: '/book-staff' },
+      //   { label: 'Psychiatrist', path: '/book-staff' },
+      // ]
     },
     { label: 'Diet Plans', icon: 'fi-rr-salad',  path: 'diet/user-onboarding' },
 

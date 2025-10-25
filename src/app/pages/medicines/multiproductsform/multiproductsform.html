@@ -1,18 +1,90 @@
-<div class="multiproducts-page">
-  <!-- Debug Info (remove in production) -->
-  <div style="background: #f0f0f0; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-    <small>Debug: {{ products.length }} products loaded | Forms: {{ productForms.join(', ') }} | Page: {{ currentPage }} | Total: {{ totalProducts }}</small>
+<div *ngIf="showToast" class="custom-toast" [class]="'custom-toast--' + toastType">
+  <div class="toast-content">
+    <mat-icon class="toast-icon">
+      {{ toastType === 'success' ? 'check_circle' : 'error' }}
+    </mat-icon>
+    <span class="toast-message">{{ toastMessage }}</span>
+    <button class="toast-close" (click)="showToast = false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>
+
+
+<!-- template... -->
+<div class="d-block d-md-none" style="margin-top: -70px">
+  <app-banner-slider [images]="[
+    'assets/1.avif',
+    'assets/2.avif',
+    'assets/3.avif'
+  ]" [autoSlide]="true" [slideInterval]="4000">
+  </app-banner-slider>
+</div>
+
+<div *ngIf="showQuantityPanel" class="quantity-panel-overlay" (click)="closeQuantityPanel()"></div>
+
+<div *ngIf="showQuantityPanel" class="quantity-panel">
+  <div class="panel-header">
+    <h4>Update Quantity</h4>
+    <button class="close-panel" (click)="closeQuantityPanel()">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
 
-  <!-- Page Header -->
-  <header class="page-header">
-    <button class="back-btn" (click)="goBack()">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      Back
+  <div class="quantity-controls">
+    <button class="quantity-btn" (click)="updateQuantity(-1)" [disabled]="quantity <= 1">−</button>
+    <div class="quantity-display">{{ quantity }}</div>
+    <button class="quantity-btn" (click)="updateQuantity(1)" [disabled]="quantity >= 10">+</button>
+  </div>
+
+  <div class="unit-selection">
+    <h5>Unit Type</h5>
+    <div class="unit-buttons">
+      <button *ngFor="let unit of availableUnits" class="unit-btn" [class.active]="selectedUnit === unit"
+        (click)="selectUnit(unit)">
+        {{ unit }}
+      </button>
+    </div>
+  </div>
+
+  <div class="strength-selection">
+    <h5>Strength</h5>
+    <div class="strength-buttons">
+      <button *ngFor="let strength of availableStrengths" class="strength-btn"
+        [class.active]="selectedStrength === strength" (click)="selectStrength(strength)">
+        {{ strength }}
+      </button>
+    </div>
+  </div>
+
+  <div class="panel-actions">
+    <button class="cancel-btn" (click)="closeQuantityPanel()">Cancel</button>
+    <button class="update-btn" (click)="updateCart()">
+      Update Cart
     </button>
+  </div>
+</div>
+
+<div class="category-page" [class.blur-content]="isLoading || showQuantityPanel">
+   
+   <!-- <button class="br-10" (click)="goBack()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+      <i class="bi bi-arrow-left"></i>
+    </button> -->
+
+  <!-- <div style="background: #f0f0f0; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+    <small>Debug: {{ products.length }} products loaded | Forms: {{ productForms.join(', ') }} | Page: {{ currentPage }}
+      | Total: {{ totalProducts }}</small>
+  </div> -->
+
+  <!-- Page Header -->
+   
+  <header class="page-header">
     <h1 class="page-title">{{ categoryName }}</h1>
+    <!-- <h1 class="page-title">{{ categoryName }}</h1>
     <div class="product-forms">
       <span class="forms-label">Filters: </span>
       <span class="form-tags">
@@ -21,18 +93,8 @@
     </div>
     <div class="total-products" *ngIf="products.length > 0">
       {{ totalProducts }} products found
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main class="main-content">
-     <div class="sidebar-section" [class.sidebar-loading]="isLoading">
-      <app-sidebar-filter [categories]="categoryList" [brands]="brandList" [disabled]="isLoading || showQuantityPanel"
-        (categorySelected)="filterByCategory($event)" (brandSelected)="filterByBrands($event)">
-      </app-sidebar-filter>
-    </div>
-    <!-- Loading State -->
-    <div *ngIf="isLoading" class="state-container loading-state">
+    </div> -->
+    <div *ngIf="isLoading" class="full-screen-loader">
       <div class="loader-content">
         <mat-spinner diameter="50" color="primary"></mat-spinner>
         <p>Products loading...</p>
@@ -42,110 +104,214 @@
         </div>
       </div>
     </div>
-    <!-- Error State -->
-    <div *ngIf="error && !isLoading" class="state-container error-state">
-      <div class="error-icon">⚠️</div>
-      <h3>Something went wrong</h3>
-      <p>{{ error }}</p>
-      <button class="retry-btn" (click)="fetchProducts(productForms, 0, true)">
-        Try Again
-      </button>
+  </header>
+
+  <!-- Main Content -->
+  <div class="category-layout">
+
+    <div class="sidebar-section" [class.sidebar-loading]="isLoading">
+      <app-sidebar-filter [categories]="categoryList" [brands]="brandList" [disabled]="isLoading || showQuantityPanel"
+        (categorySelected)="filterByCategory($event)" (brandSelected)="filterByBrands($event)">
+      </app-sidebar-filter>
     </div>
 
-    <!-- Products Grid -->
-    <div *ngIf="!isLoading && !error && products.length > 0" class="products-section">
-      <div class="products-meta">
-        <p class="products-count">Showing {{ products.length }} of {{ totalProducts }} products</p>
-      </div>
-      
-      <div class="products-grid">
-        <div 
-          *ngFor="let product of products; trackBy: trackByProductId" 
-          class="product-card"
-          (click)="viewProductDetails(product)"
-        >
-          <div class="product-image-container">
-            <img 
-              [src]="getFirstImage(product.imageUrl)" 
-              [alt]="product.name"
-              class="product-image"
-              (error)="product.imageUrl = 'assets/medicines/placeholder.png'"
-            />
-            <!-- Discount Badge -->
-            <div *ngIf="hasDiscount(product)" class="discount-badge">
-              {{ product.discountPercentage }}% OFF
-            </div>
-            <!-- Out of Stock Badge -->
-            <div *ngIf="!product.isAvailable" class="out-of-stock-badge">
-              Out of Stock
-            </div>
-          </div>
-
-          <div class="product-info">
-            <h3 class="product-name">{{ product.name }}</h3>
-            <p class="product-brand">{{ product.manufacturers }}</p>
-            <p class="product-packaging">{{ getPackagingInfo(product) }}</p>
-            
-            <div class="product-form">
-              {{ product.productForm }}
-            </div>
-
-            <div class="product-pricing">
-              <div class="price-container">
-                <span class="current-price">
-                  ₹{{ getDisplayPrice(product) }}
-                </span>
-                <span *ngIf="hasDiscount(product)" class="original-price">
-                  ₹{{ product.mrp }}
-                </span>
-              </div>
-            </div>
-
-            <button 
-              class="add-to-cart-btn" 
-              (click)="addToCart(product, $event)"
-              [disabled]="!product.isAvailable"
-            >
-              {{ product.isAvailable ? 'Add to Cart' : 'Out of Stock' }}
-            </button>
+    <div class="products-section">
+     
+      <div class="section-header">
+         <div *ngIf="isLoading" class="state-container loading-state">
+          <div class="loader-content">
+            <mat-spinner diameter="50" color="primary"></mat-spinner>
+            <p>Products loading...</p>
+            <small>Category: {{ categoryName }}</small>
           </div>
         </div>
-      </div>
+         <div *ngIf="error && !isLoading" class="state-container error-state">
+          <div class="error-icon">⚠️</div>
+          <h3>Something went wrong</h3>
+          <p>{{ error }}</p>
+          <button class="retry-btn" (click)="fetchProducts(productForms, 0, true)">Try Again</button>
+        </div>
 
-      <!-- Load More Section -->
-      <div class="load-more-section" *ngIf="hasMoreProducts">
-        <button 
-          class="load-more-btn" 
-          (click)="loadMore()"
-          [disabled]="isLoadMoreLoading"
-        >
-          <span *ngIf="!isLoadMoreLoading">
-            Load More Products ({{ getRemainingProductsCount() }} more available)
-          </span>
-          <span *ngIf="isLoadMoreLoading" class="loading-text">
-            <div class="small-spinner"></div>
-            Loading...
-          </span>
-        </button>
-        <p class="load-more-info">
-          Showing {{ products.length }} of {{ totalProducts }} products
-        </p>
-      </div>
+        <!-- Empty State -->
+        <div *ngIf="!isLoading && !error && products.length === 0" class="state-container empty-state">
+          <div class="empty-icon">📦</div>
+          <h3>No Products Found</h3>
+          <p>We couldn't find any products matching "{{ productForms.join(', ') }}".</p>
+          <button class="back-home-btn" (click)="goBack()">Browse Other Categories</button>
+        </div>
 
-      <!-- No More Products Message -->
-      <div *ngIf="!hasMoreProducts && products.length > 0" class="no-more-products">
-        <p>🎉 You've seen all {{ totalProducts }} products!</p>
-      </div>
-    </div>
+         <div class="filter-info"
+          *ngIf="(selectedCategory$ | async) || ((selectedBrands$ | async) && (selectedBrands$ | async)!.length > 0)">
+          <div class="active-filters-container">
+            <!-- Category Filter -->
+            <span *ngIf="selectedCategory$ | async as selectedCategory" class="active-filter">
+              Category: <strong>{{ getCategoryLabel(selectedCategory) }}</strong>
+              <button class="clear-filter-btn" (click)="clearFilters()" [disabled]="isLoading || showQuantityPanel">
+                ×
+                <span *ngIf="isLoading" class="button-loading"></span>
+              </button>
+            </span>
 
-    <!-- Empty State -->
-    <div *ngIf="!isLoading && !error && products.length === 0" class="state-container empty-state">
-      <div class="empty-icon">📦</div>
-      <h3>No Products Found</h3>
-      <p>We couldn't find any products matching "{{ productForms.join(', ') }}".</p>
-      <button class="back-home-btn" (click)="goBack()">
-        Browse Other Categories
-      </button>
-    </div>
-  </main>
+            <!-- Brand Filters -->
+            <span *ngFor="let brand of (selectedBrands$ | async) || []" class="active-filter">
+              Brand: <strong>{{ getBrandLabel(brand) }}</strong>
+              <button class="clear-filter-btn" (click)="clearFilters()" [disabled]="isLoading || showQuantityPanel">
+                ×
+                <span *ngIf="isLoading" class="button-loading"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+         <div *ngIf="isLoading" class="header-loading">
+          <mat-spinner diameter="20" color="primary"></mat-spinner>
+          <span>Updating products...</span>
+        </div>
+      </div>
+      
+      <div class="product-grid-container">
+        <div *ngIf="!isLoading && !error && products.length > 0" class="product-grid">
+
+          <ng-container *ngIf="products.length > 0; else noProducts">
+           <mat-card *ngFor="let product of products" class="product-card mat-elevation-z4" style="cursor: pointer;">
+            @if(product.imageUrl) {
+              <img (click)="goToProduct(product)" mat-card-image [src]="getFirstImage(product.imageUrl) || '../../../../assets/default.avif'"
+                   [alt]="product.name" class="product-image" />
+            } @else {
+              <img src="../../../../assets/default.avif" alt="">
+            }
+            <mat-card-content>
+              <div class="rating-badge">4.4 ★</div>
+              <h3 class="product-name">{{ product.name }}</h3>
+              <p class="product-form" *ngIf="product.packaging">{{ product.packaging }}</p>
+              <div class="price-details-group">
+                <div class="price-info">
+                  <p class="current-price" *ngIf="product.mrp">
+                    <small class="text-muted"> MRP </small>{{ product.mrp | currency:'INR':'symbol':'1.0-0' }}
+                  </p>
+                  <p class="current-price no-price" *ngIf="!product.mrp">
+                    Price not available
+                  </p>
+                </div>
+              </div>
+              <div>
+                 <ng-container *ngIf="(quantities[getProductKey(product)] || 0) === 0; else quantityTemplate">
+                 <button class="btn btn-sm w-100 rounded-pill btn-primary text-light" (click)="addToCart(product, $event)">
+                  Add
+                </button>
+              </ng-container>
+
+               
+                <ng-template #quantityTemplate>
+                <div class="quantity-control w-100 btn-group rounded-pill text-white btn-group-sm" role="group">
+                  <button class="btn text-white left" (click)="decrement(product)">−</button>
+                  <span class="btn">{{ quantities[getProductKey(product)] || 0  }}</span>
+                  <button class="btn text-white right" (click)="increment(product)">+</button>
+                </div>
+              </ng-template>
+              </div>
+              <!-- <ng-container *ngIf="quantities[getProductKey(product)] === 0; else quantityTemplate">
+                <button class="btn btn-sm rounded-pill btn-primary text-light" (click)="addToCart(product, $event)">
+                  Add
+                </button>
+              </ng-container> -->
+              <!-- <ng-template #quantityTemplate>
+                <div class="quantity-control btn-group rounded-pill text-white btn-group-sm" role="group">
+                  <button class="btn text-white left" (click)="decrement(product)">−</button>
+                  <span class="btn">{{ quantities[getProductKey(product)] }}</span>
+                  <button class="btn text-white right" (click)="increment(product)">+</button>
+                </div>
+              </ng-template> -->
+            </mat-card-content>
+          </mat-card>
+          </ng-container>
+
+          
+          <ng-template #noProducts>
+            <div class="no-products-container">
+              <p class="no-products-message">
+                Sorry, {{ categoryName }} Product not found.
+              </p>
+              <button class="clear-filter-btn-large" (click)="clearFilters()"
+                [disabled]="isLoading || showQuantityPanel">
+                <span *ngIf="isLoading" class="button-spinner"></span>
+                Clear Filter
+              </button>
+            </div>
+          </ng-template>
+        </div>
+        <ng-template #loadingOrNoProducts>
+          <!-- <div class="loading-container" *ngIf="!isLoading">
+            <mat-spinner diameter="40"></mat-spinner>
+            <p>Products loading1...</p>
+          </div> -->
+          <div *ngIf="!isLoading" class="vm-loading" role="status" aria-live="polite">
+            <div class="vm-spinner" aria-hidden="true"></div>
+            <div class="vm-loading-text">Products loading...</div>
+          </div>
+        </ng-template>
+        
+      </div>
+       
+
+        <!-- Product Grid -->
+        <!-- <div *ngIf="!isLoading && !error && products.length > 0" class="products-section">
+          <div class="products-meta">
+            <p class="products-count">Showing {{ products.length }} of {{ totalProducts }} products</p>
+          </div>
+
+          <div class="products-grid">
+            <div *ngFor="let product of products; trackBy: trackByProductId" class="product-card"
+              (click)="viewProductDetails(product)">
+              <div class="product-image-container">
+                <img [src]="getFirstImage(product.imageUrl)" [alt]="product.name"
+                  (error)="product.imageUrl = 'assets/medicines/placeholder.png'" />
+                <div *ngIf="hasDiscount(product)" class="discount-badge">{{ product.discountPercentage }}% OFF</div>
+                <div *ngIf="!product.isAvailable" class="out-of-stock-badge">Out of Stock</div>
+              </div>
+
+              <div class="product-info">
+                <h3 class="product-name">{{ product.name }}</h3>
+                <p class="product-brand">{{ product.manufacturers }}</p>
+                <p class="product-packaging">{{ getPackagingInfo(product) }}</p>
+                <div class="product-form">{{ product.productForm }}</div>
+
+                <div class="product-pricing">
+                  <span class="current-price">₹{{ getDisplayPrice(product) }}</span>
+                  <span *ngIf="hasDiscount(product)" class="original-price">₹{{ product.mrp }}</span>
+                </div>
+
+                <button class="add-to-cart-btn" (click)="addToCart(product, $event)" [disabled]="!product.isAvailable">
+                  {{ product.isAvailable ? 'Add to Cart' : 'Out of Stock' }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          
+
+          
+         
+        </div> --> 
+       <div class="load-more-section" *ngIf="hasMoreProducts">
+            <button class="load-more-btn" (click)="loadMore()" [disabled]="isLoadMoreLoading">
+              <span *ngIf="!isLoadMoreLoading">Load More Products ({{ getRemainingProductsCount() }} more
+                available)</span>
+              <span *ngIf="isLoadMoreLoading" class="loading-text">
+                <div class="small-spinner"></div>Loading...
+              </span>
+            </button>
+          </div>
+    
+
+
+ 
+
+
+     </div> <!-- Error State -->
+
+ </div>
 </div>
+
+<app-footer></app-footer>
+<app-mobile-footer-nav></app-mobile-footer-nav>

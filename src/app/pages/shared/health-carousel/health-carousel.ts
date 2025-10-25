@@ -32,22 +32,41 @@ export class HealthCarouselComponent implements AfterViewInit , OnDestroy {
 
   constructor(private router: Router) {}
 
+  // ngAfterViewInit(): void {
+  //   this.checkMobileView();
+  //   this.updateVisibleItems();
+
+  //   // Auto-scroll every 5s only if not mobile
+  //   if (!this.isMobile) {
+  //     this.slideInterval = setInterval(() => {
+  //       this.nextSlide();
+  //     }, 5000000);
+  //   }
+
+  //   // Add touch event listeners for mobile
+  //   if (this.isMobile) {
+  //     this.addTouchListeners();
+  //   }
+  // }
+
+
   ngAfterViewInit(): void {
-    this.checkMobileView();
-    this.updateVisibleItems();
+  this.checkMobileView();
+  this.updateVisibleItems();
 
-    // Auto-scroll every 5s only if not mobile
-    if (!this.isMobile) {
-      this.slideInterval = setInterval(() => {
-        this.nextSlide();
-      }, 5000000);
-    }
-
-    // Add touch event listeners for mobile
-    if (this.isMobile) {
-      this.addTouchListeners();
-    }
+  // Auto-scroll every 5s only if not mobile
+  if (!this.isMobile) {
+    this.slideInterval = setInterval(() => {
+      this.nextSlide();
+    }, 5000000);
   }
+
+  // ✅ Add touch listeners only if the element exists
+  if (this.isMobile && this.carouselTrack) {
+    this.addTouchListeners();
+  }
+}
+
 
  scrollCarousel(direction: 'left' | 'right'): void {
     const el = this.carouselTrack?.nativeElement;
@@ -75,31 +94,59 @@ export class HealthCarouselComponent implements AfterViewInit , OnDestroy {
     this.isMobile = window.innerWidth <= 768;
   }
 
-  private addTouchListeners() {
-    const track = this.carouselTrack.nativeElement;
+  // private addTouchListeners() {
+  //   const track = this.carouselTrack.nativeElement;
     
-    track.addEventListener('touchstart', (e: TouchEvent) => {
-      this.isDragging = true;
-      this.startX = e.touches[0].pageX - track.offsetLeft;
-      this.scrollLeft = track.scrollLeft;
-    });
+  //   track.addEventListener('touchstart', (e: TouchEvent) => {
+  //     this.isDragging = true;
+  //     this.startX = e.touches[0].pageX - track.offsetLeft;
+  //     this.scrollLeft = track.scrollLeft;
+  //   });
 
-    track.addEventListener('touchmove', (e: TouchEvent) => {
-      if (!this.isDragging) return;
-      e.preventDefault();
-      const x = e.touches[0].pageX - track.offsetLeft;
-      const walk = (x - this.startX) * 2;
-      track.scrollLeft = this.scrollLeft - walk;
-    });
+  //   track.addEventListener('touchmove', (e: TouchEvent) => {
+  //     if (!this.isDragging) return;
+  //     e.preventDefault();
+  //     const x = e.touches[0].pageX - track.offsetLeft;
+  //     const walk = (x - this.startX) * 2;
+  //     track.scrollLeft = this.scrollLeft - walk;
+  //   });
 
-    track.addEventListener('touchend', () => {
-      this.isDragging = false;
-    });
-  }
+  //   track.addEventListener('touchend', () => {
+  //     this.isDragging = false;
+  //   });
+  // }
+
+
+  private addTouchListeners() {
+  if (!this.carouselTrack) return; // ✅ safety check
+
+  const track = this.carouselTrack.nativeElement;
+  if (!track) return;
+
+  track.addEventListener('touchstart', (e: TouchEvent) => {
+    this.isDragging = true;
+    this.startX = e.touches[0].pageX - track.offsetLeft;
+    this.scrollLeft = track.scrollLeft;
+  });
+
+  track.addEventListener('touchmove', (e: TouchEvent) => {
+    if (!this.isDragging) return;
+    e.preventDefault();
+    const x = e.touches[0].pageX - track.offsetLeft;
+    const walk = (x - this.startX) * 2;
+    track.scrollLeft = this.scrollLeft - walk;
+  });
+
+  track.addEventListener('touchend', () => {
+    this.isDragging = false;
+  });
+}
+
 
   goToCategory(link: string) {
     if (link) this.router.navigate([link]);
   }
+  
 
   nextSlide() {
     if (this.isMobile) return;

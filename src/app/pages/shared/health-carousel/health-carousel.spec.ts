@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HealthCarouselComponent } from './health-carousel';
 
-import { HealthCarousel } from './health-carousel';
-
-describe('HealthCarousel', () => {
-  let component: HealthCarousel;
-  let fixture: ComponentFixture<HealthCarousel>;
+describe('HealthCarouselComponent', () => {
+  let component: HealthCarouselComponent;
+  let fixture: ComponentFixture<HealthCarouselComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HealthCarousel]
+      imports: [HealthCarouselComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HealthCarousel);
+    fixture = TestBed.createComponent(HealthCarouselComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

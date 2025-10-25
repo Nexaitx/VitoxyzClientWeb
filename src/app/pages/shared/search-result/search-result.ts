@@ -51,7 +51,7 @@ export class SearchResultComponent implements OnInit {
   }
 
   getFirstImage(images: string[]): string {
-    if (!images || images.length === 0) return 'assets/img/default.png';
+    if (!images || images.length === 0) return 'assets/img/default.avif';
     return images[0].split('|')[0].trim();
   }
 }
