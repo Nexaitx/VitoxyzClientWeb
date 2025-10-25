@@ -204,39 +204,39 @@ export class Medicines implements AfterViewInit {
   brands = [
     {
       name: "Brand 1",
-      image: "../../../assets/medicines/brand-1.png",
+      image: "../../../assets/medicines/brand-1.avif",
     },
     {
       name: "Brand 2",
-      image: "../../../assets/medicines/brand-1.png",
+      image: "../../../assets/medicines/brand-1.avif",
     },
     {
       name: "Brand 3",
-      image: "../../../assets/medicines/brand-1.png",
+      image: "../../../assets/medicines/brand-1.avif",
     },
     {
       name: "Brand 4",
-      image: "../../../assets/medicines/brand-1.png",
+      image: "../../../assets/medicines/brand-1.avif",
     },
     {
       name: "Brand 5",
-      image: "../../../assets/medicines/brand-1.png",
+      image: "../../../assets/medicines/brand-1.avif",
     },
     {
       name: "Brand 2",
-      image: "../../../assets/medicines/brand-1.png",
+      image: "../../../assets/medicines/brand-1.avif",
     },
     {
       name: "Brand 3",
-      image: "../../../assets/medicines/brand-1.png",
+      image: "../../../assets/medicines/brand-1.avif",
     },
     {
       name: "Brand 4",
-      image: "../../../assets/medicines/brand-1.png",
+      image: "../../../assets/medicines/brand-1.avif",
     },
     {
       name: "Brand 5",
-      image: "../../../assets/medicines/brand-1.png",
+      image: "../../../assets/medicines/brand-1.avif",
     },
   ];
   // personal care add same to next 
@@ -255,98 +255,103 @@ export class Medicines implements AfterViewInit {
   //copy this and make same others category
   categories: Category[] = [
     {
-      name: 'Skin Care', apiValue: ["Cream", "Lotion", "Gel", "Face Wash", "Face Pack", "Face Mask",
-        "Scrub", "Toner", "Serum", "Cleanser", "Moisturiser", "Body Wash",
-        "Soap", "Mask",], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/skin care.png', altText: 'Skin Care Products'
+      name: 'Skin Care', apiValue: ["Cream", "Lotion", "Gel", "Face Wash", "Face Pack", 
+        "Scrub", "Toner", "Serum", "Cleanser", "Moisturiser", "Body Wash","Ointment","Face Cream","Face Gel",
+        "Soap",], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/skin care.avif', altText: 'Skin Care Products'
     },
     {
       name: 'Women Care', apiValue: ["Sanitary Pad", "Pad", "Panty", "Tampon", "Menstrual Cup",
         "Nursing Bra", "Pumping Bra", "Breast Pad", "Breast Pump",
         "Cup", "Belt", "Corset", "Panty Liner", "Vaginal Cream",
         "Vaginal Gel", "Vaginal Ointment", "Vaginal Capsule",
-        "Vaginal Spray", "Vaginal Wash", "Legium"], cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/women care.png', altText: 'Hair Care Products'
+        "Vaginal Spray", "Vaginal Wash", "Legium"], cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/women care.avif', altText: 'Hair Care Products'
     },
     {
       name: 'Sexual Wellness', apiValue: [
-        "Condom", "Lubricant", "Gel", "Spray", "Capsule", "Tablet",
-        "Oil", "Massage Oil", "Cream", "Tonic", "Patch", "Sublingual Spray",
+        "Condom", "Lubricant",  "Capsule", "Tablet",
+         "Massage Oil", "Cream", "Tonic", "Patch", "Sublingual Spray",
         "Test Kit", "Self Test Kit"
-      ], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/sexual wellness.png', altText: 'Sexual Wellness Products'
+      ], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/sexual wellness.avif', altText: 'Sexual Wellness Products'
     },
     {
       name: 'Oral Care', apiValue: [
         "Toothpaste", "Toothbrush", "Tongue Cleaner", "Mouth Wash",
         "Mouth Spray", "Mouth Paint", "Gum Paint", "Dental Gel",
         "Floss", "Dental Brush"
-      ], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/oral care.png', altText: 'Oral care Wellness Products'
+      ], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/oral care.avif', altText: 'Oral care Wellness Products'
     },
     {
       name: 'Elder Care', apiValue: [
-        "Diaper", "Urine Pot", "Bed Pan", "Wheelchair", "Walker",
-        "Knee Support", "Heel Cushion", "Foot Support", "Stocking",
+        "Knee Support", "Heel Cushion", "Foot Support", "Stocking", "Bed Pan", "Wheelchair", "Walker",
         "Mask", "Glove", "Cushion", "Sock", "Elastic Bandage",
-        "Crepe Bandage", "Gel Pack", "Support Belt"
-      ], cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/eldercare.png', altText: 'Oral care Wellness Products'
+        "Crepe Bandage", "Gel Pack", "Support Belt", "Urine Pot"
+      ], cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/eldercare.avif', altText: 'Oral care Wellness Products'
     },
     {
       name: 'Baby Care', apiValue: [
-        "Diaper", "Feeding Bottle", "Bottle Cleaning Brush", "Pacifier",
-        "Teether", "Nipple", "Baby Oil", "Baby Lotion", "Baby Powder",
+        "Baby Lotion", "Baby Powder", "Diaper", "Feeding Bottle", "Bottle Cleaning Brush", "Pacifier",
+        "Teether", "Nipple", "Baby Oil",
         "Baby Soap", "Baby Shampoo", "Wipe", "Cup", "Toy", "Sipper"
-      ], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/Baby Care.png', altText: 'Oral care Wellness Products'
+      ], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/Baby Care.avif', altText: 'Oral care Wellness Products'
     },
-    // { name: 'daily dose of health', apiValue: 'Jar', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/jarsdose.png', altText: 'Oral care Wellness Products' },
+    // { name: 'daily dose of health', apiValue: 'Jar', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/jarsdose.avif', altText: 'Oral care Wellness Products' },
     {
       name: 'Men Care', apiValue: [
         "Beard Oil", "Shaving Cream", "Shaving Gel", "After Shave Lotion",
         "Deodorant", "Body Wash", "Face Wash", "Soap", "Shampoo",
         "Cream", "Spray", "Gel"
-      ], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/mens care.png', altText: 'Oral care Wellness Products'
+      ], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/mens care.avif', altText: 'Oral care Wellness Products'
     },
     {
       name: 'Ayurveda', apiValue: [
         "Churna", "Churna (Powder)", "Bhasma", "Majoon", "Asava",
         "Arishta", "Taila", "Kwath", "Lehyam", "Guggulu", "Tablet",
-        "Capsule", "Syrup", "Tonic", "Arka", "Linctus", "Ointment",
-        "Oil", "Powder", "Extract", "Herbal Juice", "Herbal Gel"
-      ], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.png', altText: 'Oral care Wellness Products'
+        "Capsule", "Syrup", "Tonic", "Arka", "Linctus", "Ointment","Flower","Root","Leaf",
+        "Seed", "Powder", "Extract", "Herbal Juice", "Herbal Gel"
+      ], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.avif', altText: 'Oral care Wellness Products'
     },
+ 
     {
       name: 'Pet Care', apiValue: [
-        "Pet Food", "Pet Spray", "Dog Bone", "Shampoo", "Soap",
-        "Belt", "Cotton", "Toy", "Cream", "Powder", "Oil"
-      ], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/petcare.png', altText: 'Oral care Wellness Products'
+        "Pet Food", "Pet Spray", "Dog Bone", "Pet Shampoo", "Pet Conditioner",
+        "Belt", "Cotton", "Pet Lotion", "Pet Soap"
+      ], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/petcare.avif', altText: 'Oral care Wellness Products'
     },
+
 
     // { name: 'Caring for every tiny move', apiValue: 'Diaper', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
 
   ];
 
   categories2: Category[] = [
-    { name: 'Best offers', apiValue: ['Butter'], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/bestoffer.avif', altText: 'Skin Care Products' },
-    { name: 'Vitamins & Supplements', apiValue: ['Powder'], cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/vitamins.avif', altText: 'Hair Care Products' },
-    { name: 'Nutritional Drinks', apiValue: ['Juice'], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/drinks.png', altText: 'Sexual Wellness Products' },
-    { name: 'Skin Care', apiValue: ['Body Wash'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/skin1.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Best offers', apiValue: [ "Beard Oil","Yoga Mat",'Butter',"Oil","Knee Support","Body Wash", "Sanitary Pad", "Pad", "Panty","Face Wash", "Soap", "Shampoo"], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/bestoffer.avif', altText: 'Skin Care Products' },
+    { name: 'Vitamins & Supplements', apiValue: ['Powder','Juice',"Tablet"], cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/vitamins.avif', altText: 'Hair Care Products' },
+    { name: 'Nutritional Drinks', apiValue: ['Protein Powder',"Nutritional Drink","Shake","Tea Bag","Energy Drink","Herbal Juice"], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/drinks.avif', altText: 'Sexual Wellness Products' },
+    { name: 'Skin Care', apiValue: ['Body Wash',"Cream", "Lotion", "Gel", "Face Wash", "Face Pack", 
+        "Scrub", "Toner", "Serum", "Cleanser", "Moisturiser", "Body Wash",], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/skin1.avif', altText: 'Oral care Wellness Products' },
     { name: 'Hair Care', apiValue: ['Hair Mask'], cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/hair1.avif', altText: 'Oral care Wellness Products' },
-    { name: 'Sexual Wellness', apiValue: ['Condom'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/sexual wellness.png', altText: 'Oral care Wellness Products' },
-    { name: 'Ayurveda Products', apiValue: ['Mouth Wash'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.png', altText: 'Oral care Wellness Products' },
+    { name: 'Sexual Wellness', apiValue: ['Condom'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/sexual wellness.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Ayurveda Products', apiValue: ['Mouth Wash'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.avif', altText: 'Oral care Wellness Products' },
     { name: 'Pain Relief', apiValue: ['Spray'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/pain.avif', altText: 'Oral care Wellness Products' },
-    { name: 'Homeopathy', apiValue: ['Flower'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/homopathy.png', altText: 'Oral care Wellness Products' },
-    { name: 'Ayurveda', apiValue: ['Face Pack'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.png', altText: 'Oral care Wellness Products' },
-    { name: 'Caring for every tiny move', apiValue: ['Diaper'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/diapper-pants.png', altText: 'Oral care Wellness Products' },
-    { name: 'Top deals of nut& Dry Fruit', apiValue: ['Nut'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/high-muesli.png', altText: 'Oral care Wellness Products' },
+    { name: 'Homeopathy', apiValue: ['Flower'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/homopathy.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Ayurveda', apiValue: ['Face Pack', "Churna", "Churna (Powder)", "Bhasma", "Majoon", "Asava",
+        "Arishta", "Taila", "Kwath", "Lehyam", "Guggulu", "Tablet",
+        "Capsule", "Syrup", "Tonic", "Arka", "Linctus", "Ointment",
+        "Oil", "Powder", "Extract", "Herbal Juice", "Herbal Gel"], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Caring for every tiny move', apiValue: ['Diaper'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/diapper-pants.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Top deals of nut& Dry Fruit', apiValue: ['Nut'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/high-muesli.avif', altText: 'Oral care Wellness Products' },
 
   ];
   categories4: Category[] = [
-    { name: 'Top deals of Spray', apiValue: ['Spray'], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/top-spray.png', altText: 'Skin Care Products' },
-    { name: 'Small tablet, big relief', apiValue: ['Biochemic Tablet'], cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/tablets-catagery.png', altText: 'Hair Care Products' },
-    { name: 'Testing product', apiValue: ['Paste'], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/again-raw.png', altText: 'Sexual Wellness Products' },
-    { name: 'Nature’s aloe, your daily boost', apiValue: ['Juice'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/juice.png', altText: 'Oral care Wellness Products' },
-    { name: 'Support that cares', apiValue: ['Walker'], cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/support-care.png', altText: 'Oral care Wellness Products' },
-    { name: 'A sweet way to stay healthy', apiValue: ['Murabba'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/dhampuramala.png', altText: 'Oral care Wellness Products' },
-    { name: 'Snack smart, live better', apiValue: ['Biscuit'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/sncaksmart.png', altText: 'Oral care Wellness Products' },
-    { name: 'testing Products', apiValue: ['Pillow'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/pillowfit.png', altText: 'Oral care Wellness Products' },
-    { name: 'Top deals of Dry Fruit', apiValue: ['Dry Fruit'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/nutsfood.png', altText: 'Oral care Wellness Products' },
+    { name: 'Top deals of Spray', apiValue: ['Spray'], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/top-spray.avif', altText: 'Skin Care Products' },
+    { name: 'Small tablet, big relief', apiValue: ['Biochemic Tablet'], cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/calcarea_fluorica.avif', altText: 'Hair Care Products' },
+    { name: 'Testing product', apiValue: ['Paste'], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/again-shijait-front.avif', altText: 'Sexual Wellness Products' },
+    { name: 'Nature’s aloe, your daily boost', apiValue: ['Juice'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/juice.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Support that cares', apiValue: ['Walker'], cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/support-care.avif', altText: 'Oral care Wellness Products' },
+    { name: 'A sweet way to stay healthy', apiValue: ['Murabba'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/dhampuramala.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Snack smart, live better', apiValue: ['Biscuit'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ador-health-cookies.avif', altText: 'Oral care Wellness Products' },
+    { name: 'testing Products', apiValue: ['Pillow'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/pillowfit.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Top deals of Dry Fruit', apiValue: ['Dry Fruit'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/nutsfood.avif', altText: 'Oral care Wellness Products' },
 
     // { name: 'Oral Care', apiValue: 'Oralcare', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
 
@@ -355,19 +360,19 @@ export class Medicines implements AfterViewInit {
   brandCarouselWrapper!: ElementRef<HTMLDivElement>;
 
   brandsone = [
-    { image: '../../../assets/medicines/cetaphil-brand.png', name: 'Brand 1' },
-    { image: '../../../assets/medicines/dabur-brand.png', name: 'Brand 2' },
-    { image: '../../../assets/medicines/morepen-brand.png', name: 'Brand 3' },
-    { image: '../../../assets/medicines/organic-brand.png', name: 'Brand 4' },
-    { image: '../../../assets/medicines/minimalist-brand.png', name: 'Brand 5' },
-    { image: '../../../assets/medicines/on-brand.png', name: 'Brand 6' },
-    { image: '../../../assets/medicines/protinex-brand.png', name: 'Brand 7' },
-    { image: '../../../assets/medicines/dettol-brand.png', name: 'Brand 8' },
-    { image: '../../../assets/medicines/himalaya.png', name: 'Brand 9' },
-    { image: '../../../assets/medicines/healthkart.png', name: 'Brand 10' },
-    { image: '../../../assets/medicines/mamaearth.png', name: 'Brand 11' },
-    { image: '../../../assets/medicines/nivea.png', name: 'Brand 12' },
-    { image: '../../../assets/medicines/pilgrim.png', name: 'Brand 12' }
+    { image: '../../../assets/medicines/cetaphil-brand.avif', name: 'Brand 1' },
+    { image: '../../../assets/medicines/dabur-brand.avif', name: 'Brand 2' },
+    { image: '../../../assets/medicines/morepen-brand.avif', name: 'Brand 3' },
+    { image: '../../../assets/medicines/organic-brand.avif', name: 'Brand 4' },
+    { image: '../../../assets/medicines/minimalist-brand.avif', name: 'Brand 5' },
+    { image: '../../../assets/medicines/on-brand.avif', name: 'Brand 6' },
+    { image: '../../../assets/medicines/protinex-brand.avif', name: 'Brand 7' },
+    { image: '../../../assets/medicines/dettol-brand.avif', name: 'Brand 8' },
+    { image: '../../../assets/medicines/himalaya.avif', name: 'Brand 9' },
+    { image: '../../../assets/medicines/healthkart.avif', name: 'Brand 10' },
+    { image: '../../../assets/medicines/mamaearth.avif', name: 'Brand 11' },
+    { image: '../../../assets/medicines/nivea.avif', name: 'Brand 12' },
+    { image: '../../../assets/medicines/pilgrim.avif', name: 'Brand 12' }
   ];
 
   scrollBrandCarousel(direction: 'left' | 'right'): void {
@@ -385,10 +390,10 @@ export class Medicines implements AfterViewInit {
 
 
   categories3: Category[] = [
-    { name: 'Pet Medicine', apiValue: ['Face Wash'], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/petcare.png', altText: 'Skin Care Products' },
+    { name: 'Pet Medicine', apiValue: ['Face Wash'], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/petcare.avif', altText: 'Skin Care Products' },
     { name: 'Pet Supplements', apiValue: ['Shampoo'], cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/.png', altText: 'Hair Care Products' },
-    { name: 'Prescription Diet', apiValue: ['Condom'], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/petcare.png', altText: 'Sexual Wellness Products' },
-    { name: 'Pet Food', apiValue: ['Oral Gel'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/petcare.png', altText: 'Oral care Wellness Products' },
+    { name: 'Prescription Diet', apiValue: ['Condom'], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/petcare.avif', altText: 'Sexual Wellness Products' },
+    { name: 'Pet Food', apiValue: ['Oral Gel'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/petcare.avif', altText: 'Oral care Wellness Products' },
     { name: 'Pet Treats', apiValue: ['Mother Tincture'], cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/.avif', altText: 'Oral care Wellness Products' },
 
     { name: 'Pet Care', apiValue: ['Pet Food'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/petcare.avif', altText: 'Oral care Wellness Products' },
@@ -626,42 +631,42 @@ export class Medicines implements AfterViewInit {
   }
 
   healthItems = [
-    { image: '../../../assets/medicines/1.png', label: 'Diabetes', link: '/products/Granule' },
-    { image: '../../../assets/medicines/2.png', label: 'Heart Rate', link: '/products/Tablet SR' },
-    { image: '../../../assets/medicines/3.jpg', label: 'Stomach Care', link: '/products/Lancet' },
-    { image: '../../../assets/medicines/4.png', label: 'Liver Care', link: '/products/LiverCare' },
-    { image: '../../../assets/medicines/5.png', label: 'Eye Care', link: '/products/EyeCare' },
-    { image: '../../../assets/medicines/6.png', label: 'Bone & Joint', link: '/products/BoneJoint' },
-    { image: '../../../assets/medicines/7.png', label: 'Kidney Care', link: '/products/Capsule' },
-    { image: '../../../assets/medicines/8.png', label: 'Derma Care', link: '/products/DermaCare' },
+    { image: '../../../assets/medicines/1.avif', label: 'Diabetes', link: '/products/Granule' },
+    { image: '../../../assets/medicines/2.avif', label: 'Heart Rate', link: '/products/Tablet SR' },
+    { image: '../../../assets/medicines/3.avif', label: 'Stomach Care', link: '/products/Digestive Tablet' },
+    { image: '../../../assets/medicines/4.avif', label: 'Liver Care', link: '/products/Tablet' },
+    { image: '../../../assets/medicines/5.avif', label: 'Eye Care', link: '/products/Eye Drop' },
+    { image: '../../../assets/medicines/6.avif', label: 'Bone & Joint', link: '/products/Bandage' },
+    { image: '../../../assets/medicines/7.avif', label: 'Kidney Care', link: '/products/Tonic' },
+    { image: '../../../assets/medicines/8.avif', label: 'Derma Care', link: '/products/Face Cream' },
   ];
 
   //testing working 
 
   healthItems1 = [
-    { image: '../../../assets/medicines/petcare.png', label: 'Pet Care', link: '/products/Pet Food' },
+    { image: '../../../assets/medicines/petcare.avif', label: 'Pet Care', link: '/products/Pet Food' },
     { image: '../../../assets/medicines/vitamins.avif', label: 'Vitamins & Supplements', link: '/products/Powder' },
-    { image: '../../../assets/medicines/ayurveda.png', label: 'Ayurvedic Wellness', link: '/products/Face Pack' },
-    { image: '../../../assets/medicines/homopathy.png', label: 'Homeopathic Medicine', link: '/products/Flower' },
-    { image: '../../../assets/medicines/monitoring-devices.png', label: 'Monitoring Devices', link: '/products/EyeCare' },
-    { image: '../../../assets/medicines/sexual wellness.png', label: 'Sexual Wellness', link: '/products/Condom' },
-    { image: '../../../assets/medicines/drinks.png', label: 'Food & Nutrition', link: '/products/Juice' },
-    { image: '../../../assets/medicines/FItness And health.png', label: 'Fitness & Health', link: '/products/Juice' },
-    { image: '../../../assets/medicines/skin care.png', label: 'Skin Care', link: '/products/Cream' },
-    { image: '../../../assets/medicines/mens care.png', label: 'Men Care', link: '/products/Body Wash' },
-    { image: '../../../assets/medicines/pain relief.png', label: 'Pain Relief', link: '/products/Spray' },
-    { image: '../../../assets/medicines/cardiaccare.png', label: 'Cardiac Care', link: '/products/Tablet' },
-    { image: '../../../assets/medicines/didestive and health.png', label: 'Digestive HealthClean Environment Essentials ', link: '/products/Tablet' },
-    { image: '../../../assets/medicines/daibities.png', label: 'Diabetes', link: '/products/Granule' },
-    { image: '../../../assets/medicines/hair care.png', label: 'Hair Care', link: '/products/Hair Mask' },
-    { image: '../../../assets/medicines/oral care.png', label: 'Oral Care', link: '/products/Oral Gel' },
-    { image: '../../../assets/medicines/didestive and health.png', label: 'Respiratory Care', link: '/products/Tablet' },
-    { image: '../../../assets/medicines/cardiaccare.png', label: 'Mental Wellness ', link: '/products/Tablet' },
-    { image: '../../../assets/medicines/Baby Care.png', label: 'Baby Care ', link: '/products/Diaper' },
-    { image: '../../../assets/medicines/women care.png', label: 'Women Care', link: '/products/Vaginal Cream' },
-    { image: '../../../assets/medicines/fiRST AID.png', label: 'First Aid', link: '/products/Tablet' },
-    { image: '../../../assets/medicines/Sup[port and braces.png', label: 'Supports & Braces', link: '/products/Walker' },
-    { image: '../../../assets/medicines/Colds, cough , and fever.png', label: 'Cold, Cough & Fever ', link: '/products/Tablet' },
+    { image: '../../../assets/medicines/ayurveda.avif', label: 'Ayurvedic Wellness', link: '/products/Face Pack' },
+    { image: '../../../assets/medicines/homopathy.avif', label: 'Homeopathic Medicine', link: '/products/Flower' },
+    { image: '../../../assets/medicines/monitoring-devices.avif', label: 'Monitoring Devices', link: '/products/Device' },
+    { image: '../../../assets/medicines/sexual wellness.avif', label: 'Sexual Wellness', link: '/products/Condom' },
+    { image: '../../../assets/medicines/drinks.avif', label: 'Food & Nutrition', link: '/products/Juice' },
+    { image: '../../../assets/medicines/FItness And health.avif', label: 'Fitness & Health', link: '/products/Juice' },
+    { image: '../../../assets/medicines/skin care.avif', label: 'Skin Care', link: '/products/Cream' },
+    { image: '../../../assets/medicines/mens care.avif', label: 'Men Care', link: '/products/Body Wash' },
+    { image: '../../../assets/medicines/pain relief.avif', label: 'Pain Relief', link: '/products/Spray' },
+    { image: '../../../assets/medicines/cardiaccare.avif', label: 'Cardiac Care', link: '/products/Tablet' },
+    { image: '../../../assets/medicines/didestive and health.avif', label: 'Digestive HealthClean Environment Essentials ', link: '/products/Tablet' },
+    { image: '../../../assets/medicines/daibities.avif', label: 'Diabetes', link: '/products/Granule' },
+    { image: '../../../assets/medicines/hair care.avif', label: 'Hair Care', link: '/products/Hair Mask' },
+    { image: '../../../assets/medicines/oral care.avif', label: 'Oral Care', link: '/products/Oral Gel' },
+    { image: '../../../assets/medicines/didestive and health.avif', label: 'Respiratory Care', link: '/products/Tablet' },
+    { image: '../../../assets/medicines/cardiaccare.avif', label: 'Mental Wellness ', link: '/products/Tablet' },
+    { image: '../../../assets/medicines/Baby Care.avif', label: 'Baby Care ', link: '/products/Diaper' },
+    { image: '../../../assets/medicines/women care.avif', label: 'Women Care', link: '/products/Vaginal Cream' },
+    { image: '../../../assets/medicines/fiRST AID.avif', label: 'First Aid', link: '/products/Tablet' },
+    { image: '../../../assets/medicines/Sup[port and braces.avif', label: 'Supports & Braces', link: '/products/Walker' },
+    { image: '../../../assets/medicines/Colds, cough , and fever.avif', label: 'Cold, Cough & Fever ', link: '/products/Tablet' },
 
 
 

@@ -520,7 +520,7 @@ addToCart(product: any, event: Event) {
 }
 
   getFirstImageUrl(imageUrls: string): string {
-    if (!imageUrls) return 'assets/default.png'; 
+    if (!imageUrls) return 'assets/default.avif'; 
     return imageUrls.split('|')[0].trim();
   }
 

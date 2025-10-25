@@ -1,11 +1,11 @@
 // .login-screen {
 //     display: flex;
 //     font-family: 'Segoe UI', sans-serif;
-//     background: url('/assets/login/background.png') no-repeat center center;
+//     background: url('/assets/login/background.avif') no-repeat center center;
 
 //     .left-panel {
 //         flex: 1;
-//         background: url('/assets/login/login-illustrate.png') no-repeat center center;
+//         background: url('/assets/login/login-illustrate.avif') no-repeat center center;
 //         background-size: cover;
 //         display: flex;
 //         align-items: center;
@@ -62,7 +62,7 @@
 
 .left-panel {
   flex: 1;
-  background: url('/assets/login/login-illustrate.png') no-repeat center center;
+  background: url('/assets/login/login-illustrate.avif') no-repeat center center;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -163,7 +163,7 @@ app-sign-up {
 .login-screen {
   display: flex;
   font-family: 'Segoe UI', sans-serif;
-  background: url('/assets/login/background.png') no-repeat center center;
+  background: url('/assets/login/background.avif') no-repeat center center;
   height: 500px;
 }
 

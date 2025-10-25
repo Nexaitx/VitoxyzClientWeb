@@ -96,7 +96,8 @@ export class MultiproductsformComponent implements OnInit {
   currentPage$ = new BehaviorSubject<number>(0);
   selectedCategory$ = new BehaviorSubject<string | null>(null);
   selectedBrands$ = new BehaviorSubject<string[]>([]);
-
+  availableUnits: string[] = ['tablets', 'capsules', 'bottles', 'strips', 'pieces'];
+  availableStrengths: string[] = ['250mg', '500mg', '750mg', '1000mg', '5ml', '10ml'];
   // Additional fields that were referenced but not defined
   currentEndpoint: string = 'otc'; // defaulting to 'otc'
   addingProducts: Set<string> = new Set();
@@ -396,14 +397,30 @@ export class MultiproductsformComponent implements OnInit {
     this.selectedUnit = '';
     this.selectedStrength = '';
   }
-
+ updateQuantity(change: number) {
+    const newQuantity = this.quantity + change;
+    if (newQuantity >= 1 && newQuantity <= 10) {
+      this.quantity = newQuantity;
+    }
+  }
   // Get display price
   getDisplayPrice(product: Product): number {
     return (product.discountPrice && product.discountPrice > 0) ? product.discountPrice : product.mrp;
   }
+ selectUnit(unit: string) {
+    this.selectedUnit = unit;
+  }
+  selectStrength(strength: string) {
+    this.selectedStrength = strength;
+  }
 
+  //  Check button states
   isAddingToCart(productId: string): boolean {
     return this.addingProducts.has(productId);
+  }
+
+  isAddedToCart(productId: string): boolean {
+    return this.addedProducts.has(productId);
   }
 
   // Check if product has discount
@@ -416,10 +433,10 @@ export class MultiproductsformComponent implements OnInit {
     return product.packaging || `${product.productForm || 'Pack'} Product`;
   }
 
-  getProductKey(product: any): string | number {
-  return product.id ?? product.productId;
-}
 
+getProductKey(product: any): string {
+  return (product.id ?? product.productId ?? '').toString();
+}
 
   // Get remaining products count
   getRemainingProductsCount(): number {
@@ -472,5 +489,13 @@ export class MultiproductsformComponent implements OnInit {
     this.selectedBrands$.next([]);
     this.currentPage$.next(0);
   }
+getCategoryLabel(value: string): string {
+    const category = this.categoryList.find(cat => cat.value === value);
+    return category ? category.label : value;
+  }
 
+  getBrandLabel(value: string): string {
+    const brand = this.brandList.find(b => b.name === value);
+    return brand ? brand.name : value;
+  }
 }
