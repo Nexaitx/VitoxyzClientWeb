@@ -1,4 +1,10 @@
-
+.dietonboardcls {
+  background-image: url("/src/assets/diet/diet-planbg.avif");
+  background:  linear-gradient(1deg, rgb(251 248 235) 2%, #fff6e0 70%, #ff8865 160%),;
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+}
 
 // ::ng-deep .custom-stepper .mat-horizontal-stepper-header-container {
 //   width: 600px;

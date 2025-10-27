@@ -324,7 +324,7 @@ export class Medicines implements AfterViewInit {
   ];
 
   categories2: Category[] = [
-    { name: 'Best offers', apiValue: [ "Beard Oil","Yoga Mat",'Butter',"Oil","Knee Support","Body Wash", "Sanitary Pad", "Pad", "Panty","Face Wash", "Soap", "Shampoo"], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/bestoffer.avif', altText: 'Skin Care Products' },
+    { name: 'Best offers', apiValue: [ "Beard Oil","Yoga Mat","Soap",'Butter',"Oil","Knee Support","Body Wash", "Sanitary Pad", "Pad", "Panty","Face Wash", "Soap", "Shampoo"], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/bestoffer.avif', altText: 'Skin Care Products' },
     { name: 'Vitamins & Supplements', apiValue: ['Powder','Juice',"Tablet"], cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/vitamins.avif', altText: 'Hair Care Products' },
     { name: 'Nutritional Drinks', apiValue: ['Protein Powder',"Nutritional Drink","Shake","Tea Bag","Energy Drink","Herbal Juice"], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/drinks.avif', altText: 'Sexual Wellness Products' },
     { name: 'Skin Care', apiValue: ['Body Wash',"Cream", "Lotion", "Gel", "Face Wash", "Face Pack", 
@@ -563,20 +563,25 @@ export class Medicines implements AfterViewInit {
       }
     });
   }
+  
 
+  // private getCategoryNameByApiValues(apiValues: string[]): string {
+  //   console.log("apiValues",apiValues);
+    
+  //   const category = this.categories.find(cat =>
+  //     cat.apiValue.join(',') === apiValues.join(',')
+  //   );
+  //   console.log("categoryaame",category);
+    
+  //   return category ? category.name : 'Products';
+  // }
+  // Helper method to get category name from API values
   private getCategoryNameByApiValues(apiValues: string[]): string {
-    const category = this.categories.find(cat =>
+    const category = this.categories.find(cat => 
       cat.apiValue.join(',') === apiValues.join(',')
     );
     return category ? category.name : 'Products';
   }
-  // Helper method to get category name from API values
-  // private getCategoryNameByApiValues(apiValues: string[]): string {
-  //   const category = this.categories.find(cat => 
-  //     cat.apiValue.join(',') === apiValues.join(',')
-  //   );
-  //   return category ? category.name : 'Products';
-  // }
 
   // Slider/Carousel Container ko reference karne ke liye
   @ViewChild("categoryCarouselWrapper", { static: false })
@@ -630,17 +635,56 @@ export class Medicines implements AfterViewInit {
     this.router.navigate(['/products', category], { queryParams: { endpoint: 'products/filter' } });
   }
 
-  healthItems = [
-    { image: '../../../assets/medicines/1.png', label: 'Diabetes', link: '/products/Granule' },
-    { image: '../../../assets/medicines/2.avif', label: 'Heart Rate', link: '/products/Tablet SR' },
-    { image: '../../../assets/medicines/3.avif', label: 'Stomach Care', link: '/products/Digestive Tablet' },
-    { image: '../../../assets/medicines/4.png', label: 'Liver Care', link: '/products/Tablet' },
-    { image: '../../../assets/medicines/5.avif', label: 'Eye Care', link: '/products/Eye Drop' },
-    { image: '../../../assets/medicines/6.png', label: 'Bone & Joint', link: '/products/Bandage' },
-    { image: '../../../assets/medicines/7.png', label: 'Kidney Care', link: '/products/Tonic' },
-    { image: '../../../assets/medicines/8.avif', label: 'Derma Care', link: '/products/Face Cream' },
+  // healthItems = [
+  //   { image: '../../../assets/medicines/1.avif', label: 'Diabetes', link: '/products/Granule' },
+  //   { image: '../../../assets/medicines/2.avif', label: 'Heart Rate', link: '/products/Tablet' },
+  //   { image: '../../../assets/medicines/3.avif', label: 'Stomach Care', link: '/products/Digestive Tablet' },
+  //   { image: '../../../assets/medicines/4.avif', label: 'Liver Care', link: '/products/Tablet' },
+  //   { image: '../../../assets/medicines/5.avif', label: 'Eye Care', link: '/products/Eye Drop' },
+  //   { image: '../../../assets/medicines/6.avif', label: 'Bone & Joint', link: '/products/Bandage' },
+  //   { image: '../../../assets/medicines/7.avif', label: 'Kidney Care', link: '/products/Tonic' },
+  //   { image: '../../../assets/medicines/8.avif', label: 'Derma Care', link: '/products/Face Cream' },
+  // ];
+
+  // {
+  //     name: 'Skin Care', apiValue: ["Cream", "Lotion", "Gel", "Face Wash", "Face Pack", 
+  //       "Scrub", "Toner", "Serum", "Cleanser", "Moisturiser", "Body Wash","Ointment","Face Cream","Face Gel",
+  //       "Soap",], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/skin care.avif', altText: 'Skin Care Products'
+  //   },
+
+
+ categories5: Category[] = [
+    { name: 'Diabetes', apiValue: ['Insulin Syringe (Syringe)',"Injection","Test Strip","Tablet",
+      "Test kit","Lancet","Needle","Self Test Kit"
+    ], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/1.avif', altText: 'Diabetes Care Products' },
+    { name: 'Heart Rate', apiValue: ['Capsule',"Tablet","Injection","Solution for Infusion","Syrup","Infusion"], cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/2.avif', altText: 'Heart Rate Care Products' },
+    { name: 'Stomach Care', apiValue: ['Digestive Tablet',"Syrup","Suspension","Oral Suspension","Oral Solution","Oral Liquid","Oral Gel","Tonic","Granule","Muesli","Powder for Oral Suspension","Powder for Oral Solution"], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/3.avif', altText: 'Stomach Care Products' },
+    { name: 'Liver Care', apiValue: ['Tablet',"Capsule","Granule","Syrup","Tonic","Liver Care Juice"], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/4.avif', altText: 'Liver Care Products' },
+    { name: 'Eye Care', apiValue: ['Eye Drop',"Eye Gel","Eye Cream","Eye Ointment","Eye Pad","Eye Capsule","Eye/Ear Drop","Ophthalmic Solution","Lens Solution","Reading Eyeglass"], cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/5.avif', altText: 'Eye Care Products' },
+    { name: 'Bone & Joint', apiValue: ["Knee Support","Wrist Support","Massager","Liniment","Balm","Ointment","Bone & Joint Tablet","Bone & Joint Oil",'Bandage'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/6.avif', altText: 'Bone & Joint Products' },
+    { name: 'Kidney Care', apiValue: ['Tonic',"Kidney Tablet ","Tablet","Kidney Capsule ","Kidney Syrup ","Kidney Tonic ","Kidney Infusion ","Kidney Solution for Infusion ","Kidney Drop"," Juice"], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/7.avif', altText: 'Kidney Care Products' },
+    { name: 'Derma Care', apiValue: ['Face Cream',"Face Pack","Lotion","Face Wash","Serum","Cream","Moisturiser","Dusting Powder","Body Wash","Conditioner","Wax","Scrub","Gel","Soap"], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/8.avif', altText: 'Derma Care Products' },
+
+    // { name: 'Oral Care', apiValue: 'Oralcare', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
+
   ];
 
+
+    @ViewChild("categoryCarouselWrapper5", { static: false })
+  carouselWrapper5!: ElementRef<HTMLDivElement>;
+
+  scrollCarousel5(direction: 'left' | 'right'): void {
+    if (this.carouselWrapper3) {
+      const element = this.carouselWrapper3.nativeElement;
+      const scrollAmount = 180 * 4;
+
+      if (direction === 'left') {
+        element.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        element.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  }
   //testing working 
 
   healthItems1 = [

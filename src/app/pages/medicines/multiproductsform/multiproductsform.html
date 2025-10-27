@@ -12,7 +12,7 @@
 
 
 <!-- template... -->
-<div class="d-block d-md-none" style="margin-top: -70px">
+<div class="d-block d-md-none" >
   <app-banner-slider [images]="[
     'assets/1.avif',
     'assets/2.avif',
@@ -195,7 +195,7 @@
               </div>
               <div>
                  <ng-container *ngIf="(quantities[getProductKey(product)] || 0) === 0; else quantityTemplate">
-                 <button class="btn btn-sm w-100 rounded-pill btn-primary text-light" (click)="addToCart(product, $event)">
+                 <button class="btn btn-sm w-100 rounded-pill  text-light" (click)="addToCart(product, $event)">
                   Add
                 </button>
               </ng-container>
