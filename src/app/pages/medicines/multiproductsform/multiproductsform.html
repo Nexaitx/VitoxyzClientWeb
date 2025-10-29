@@ -10,9 +10,223 @@
   </div>
 </div>
 
+<!-- Dynamic Banner based on Category -->
+@if (categoryName === 'Skin Care') {
+  <app-text-banner
+    image="assets/medicines/skin-care-banner.avif"
+    title="Skin Care Products"
+    subtitle="Nourish your skin with our premium care range"
+    buttonText="Shop Skin Care"
+    buttonLink="/medicines">
+  </app-text-banner>
+} @else if (categoryName === 'Women Care') {
+  <app-text-banner
+    image="assets/medicines/women-care-banner.avif"
+    title="Women Care Products"
+    subtitle="Special care for special women"
+    buttonText="Shop Women Care"
+    buttonLink="/medicines">
+  </app-text-banner>
+} @else if (categoryName === 'Sexual Wellness') {
+  <app-text-banner
+    image="assets/medicines/sexual-wellness-banner.avif"
+    title="Sexual Wellness"
+    subtitle="Discreet and reliable products for your intimate health"
+    buttonText="Shop Wellness"
+    buttonLink="/medicines">
+  </app-text-banner>
+} @else if (categoryName === 'Diabetes') {
+  <app-text-banner
+    image="assets/medicines/diabetes-banner.avif"
+    title="Diabetes Care"
+    subtitle="Manage diabetes with our comprehensive care products"
+    buttonText="Shop Diabetes Care"
+    buttonLink="/medicines">
+  </app-text-banner>
+} @else if (categoryName === 'Heart Rate') {
+  <app-text-banner
+    image="assets/medicines/heart-banner.avif"
+    title="Heart Care"
+    subtitle="Keep your heart healthy with our specialized products"
+    buttonText="Shop Heart Care"
+    buttonLink="/medicines">
+  </app-text-banner>
+} @else if (categoryName === 'Stomach Care') {
+  <app-text-banner
+    image="assets/medicines/stomach-banner.avif"
+    title="Stomach Care"
+    subtitle="Relief and care for your digestive health"
+    buttonText="Shop Stomach Care"
+    buttonLink="/medicines">
+  </app-text-banner>
+} @else if (categoryName === 'Liver Care') {
+  <app-text-banner
+    image="assets/medicines/liver-banner.avif"
+    title="Liver Care"
+    subtitle="Detoxify and protect your liver"
+    buttonText="Shop Liver Care"
+    buttonLink="/medicines">
+  </app-text-banner>
+} @else if (categoryName === 'Eye Care') {
+  <app-text-banner
+    image="assets/medicines/eye-banner.avif"
+    title="Eye Care"
+    subtitle="Clear vision and healthy eyes"
+    buttonText="Shop Eye Care"
+    buttonLink="/medicines">
+  </app-text-banner>
+} @else if (categoryName === 'Bone & Joint') {
+  <app-text-banner
+    image="assets/medicines/bone-banner.avif"
+    title="Bone & Joint Care"
+    subtitle="Strong bones, flexible joints"
+    buttonText="Shop Bone Care"
+    buttonLink="/medicines">
+  </app-text-banner>
+} @else if (categoryName === 'Kidney Care') {
+  <app-text-banner
+    image="assets/medicines/kidney-banner.avif"
+    title="Kidney Care"
+    subtitle="Healthy kidneys for a healthy life"
+    buttonText="Shop Kidney Care"
+    buttonLink="/medicines">
+  </app-text-banner>
+} @else if (categoryName === 'Derma Care') {
+  <app-text-banner
+    image="assets/medicines/derma-banner.avif"
+    title="Dermatological Care"
+    subtitle="Specialized care for skin conditions"
+    buttonText="Shop Derma Care"
+    buttonLink="/medicines">
+  </app-text-banner>
+} @else {
+  <!-- Default Banner -->
+  <app-text-banner
+    image="assets/medicines/banner.avif"
+    title="Welcome to Vitoxyz"
+    subtitle="Your trusted health partner"
+    buttonText="Shop Now"
+    buttonLink="/medicines">
+  </app-text-banner>
+}
 
-<!-- template... -->
-<div class="d-block d-md-none" >
+
+<!-- <app-single-product-form-grid 
+  [items]="productFormsfilter"
+  title="Browse by Product Type"
+  subtitle="Select a product type to view available products"
+  [columns]="4">
+</app-single-product-form-grid> -->
+
+@if (categoryName === 'Skin Care') {
+  <app-single-product-form-grid
+    [items]="skinCare"
+    title="Skin Care Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+} @else if (categoryName === 'Women Care') {
+  <app-single-product-form-grid
+    [items]="womencare"
+    title="Women Care Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+} @else if (categoryName === 'Sexual Wellness') {
+  <app-single-product-form-grid
+    [items]="sexualcare"
+    title="Sexual Wellness Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+} @else if (categoryName === 'Oral Care') {
+  <app-single-product-form-grid
+    [items]="oralcare"
+    title="Oral Care Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+} @else if (categoryName === 'Elder Care') {
+  <app-single-product-form-grid
+    [items]="eldercare"
+    title="Elder Care Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+} @else if (categoryName === 'Baby Care') {
+  <app-single-product-form-grid
+    [items]="babycare"
+    title="Baby Care Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+} @else if (categoryName === 'Men Care') {
+  <app-single-product-form-grid
+    [items]="mencare"
+    title="Men Care Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+} @else if (categoryName === 'Ayurveda') {
+  <app-single-product-form-grid
+    [items]="ayurveda"
+    title="Ayurveda Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+} @else if (categoryName === 'Pet Care') {
+  <app-single-product-form-grid
+    [items]="petcare"
+    title="Pet Care Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+} @else {
+  <!-- Default grid -->
+  <app-single-product-form-grid
+    [items]="productFormsfilter"
+    title="Popular Product Forms"
+    [columns]="3">
+  </app-single-product-form-grid>
+}
+
+<!-- <app-common-multifilter-component 
+  [config]="{
+    endpoint: 'products/filter',
+    productForms: ['Tablet', 'Capsule'],
+    title: 'Power Up with Multivitamins',
+    slideCount: 8,
+    autoSlide: true
+  }">
+</app-common-multifilter-component> -->
+
+
+
+<!-- //single form -->
+<!-- Single Item -->
+
+<!-- <app-single-product-form-component 
+  [config]="{
+    productForm: 'Cream',
+    label: 'Skin Creams',
+    imageUrl: 'assets/cream.avif',
+    description: 'Various medicated creams',
+    cssClass: 'cream-category'
+  }">
+</app-single-product-form-component> -->
+
+<!-- Grid Layout -->
+
+<app-common-multifilter-component 
+  [config]="{
+    endpoint: 'products/filter',
+    productForms: ['Tablet', 'Capsule'],
+    title: 'Power Up with Multivitamins',
+    slideCount: 8,
+    autoSlide: true
+  }">
+</app-common-multifilter-component>
+
+
+<!-- <app-single-product-form-grid 
+  [items]="skinCare"
+  title="Skin Care Products"
+  [columns]="3">
+</app-single-product-form-grid> -->
+
+<!-- Mobile Banner -->
+<div class="d-block d-md-none">
   <app-banner-slider [images]="[
     'assets/1.avif',
     'assets/2.avif',
@@ -21,6 +235,7 @@
   </app-banner-slider>
 </div>
 
+<!-- Quantity Panel -->
 <div *ngIf="showQuantityPanel" class="quantity-panel-overlay" (click)="closeQuantityPanel()"></div>
 
 <div *ngIf="showQuantityPanel" class="quantity-panel">
@@ -65,67 +280,30 @@
   </div>
 </div>
 
-<div class="category-page" [class.blur-content]="isLoading || showQuantityPanel">
+<!-- Main Page Content -->
+<div class="category-page" [class.blur-content]="showQuantityPanel">
    
-   <!-- <button class="br-10" (click)="goBack()">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
-      <i class="bi bi-arrow-left"></i>
-    </button> -->
-
-  <!-- <div style="background: #f0f0f0; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-    <small>Debug: {{ products.length }} products loaded | Forms: {{ productForms.join(', ') }} | Page: {{ currentPage }}
-      | Total: {{ totalProducts }}</small>
-  </div> -->
-
-  <!-- Page Header -->
-   
+  <!-- Page Header - No loading here -->
   <header class="page-header">
     <h1 class="page-title">{{ categoryName }}</h1>
-    <!-- <h1 class="page-title">{{ categoryName }}</h1>
-    <div class="product-forms">
-      <span class="forms-label">Filters: </span>
-      <span class="form-tags">
-        {{ productForms.join(', ') }}
-      </span>
-    </div>
-    <div class="total-products" *ngIf="products.length > 0">
-      {{ totalProducts }} products found
-    </div> -->
-    <div *ngIf="isLoading" class="full-screen-loader">
-      <div class="loader-content">
-        <mat-spinner diameter="50" color="primary"></mat-spinner>
-        <p>Products loading...</p>
-        <small>Category: {{ categoryName }}</small>
-        <div class="loading-details">
-          <small>Filter/Pagination update in progress...</small>
-        </div>
-      </div>
-    </div>
   </header>
 
   <!-- Main Content -->
   <div class="category-layout">
 
-    <div class="sidebar-section" [class.sidebar-loading]="isLoading">
+    <!-- Sidebar - Always visible -->
+    <div class="sidebar-section">
       <app-sidebar-filter [categories]="categoryList" [brands]="brandList" [disabled]="isLoading || showQuantityPanel"
         (categorySelected)="filterByCategory($event)" (brandSelected)="filterByBrands($event)">
       </app-sidebar-filter>
     </div>
 
+    <!-- Products Section - Loading only here -->
     <div class="products-section">
      
       <div class="section-header">
-         <div *ngIf="isLoading" class="state-container loading-state">
-          <div class="loader-content">
-            <mat-spinner diameter="50" color="primary"></mat-spinner>
-            <p>Products loading...</p>
-            <small>Category: {{ categoryName }}</small>
-          </div>
-        </div>
-         <div *ngIf="error && !isLoading" class="state-container error-state">
+        <!-- Error State -->
+        <div *ngIf="error && !isLoading" class="state-container error-state">
           <div class="error-icon">⚠️</div>
           <h3>Something went wrong</h3>
           <p>{{ error }}</p>
@@ -140,7 +318,8 @@
           <button class="back-home-btn" (click)="goBack()">Browse Other Categories</button>
         </div>
 
-         <div class="filter-info"
+        <!-- Active Filters -->
+        <div class="filter-info"
           *ngIf="(selectedCategory$ | async) || ((selectedBrands$ | async) && (selectedBrands$ | async)!.length > 0)">
           <div class="active-filters-container">
             <!-- Category Filter -->
@@ -162,17 +341,32 @@
             </span>
           </div>
         </div>
-         <div *ngIf="isLoading" class="header-loading">
+        
+        <!-- Small loading indicator for filter updates -->
+        <div *ngIf="isLoading && products.length > 0" class="header-loading">
           <mat-spinner diameter="20" color="primary"></mat-spinner>
           <span>Updating products...</span>
         </div>
       </div>
       
+      <!-- Products Grid Container -->
       <div class="product-grid-container">
-        <div *ngIf="!isLoading && !error && products.length > 0" class="product-grid">
+        
+        <!-- Main Loading State - Only shows when initially loading and no products -->
+        <div *ngIf="isLoading && products.length === 0" class="products-loading-state">
+          <div class="loader-content">
+            <mat-spinner diameter="50" color="primary"></mat-spinner>
+            <p>Products loading...</p>
+            <small>Category: {{ categoryName }}</small>
+            <div class="loading-details">
+              <small>Please wait while we fetch the products</small>
+            </div>
+          </div>
+        </div>
 
-          <ng-container *ngIf="products.length > 0; else noProducts">
-           <mat-card *ngFor="let product of products" class="product-card mat-elevation-z4" style="cursor: pointer;">
+        <!-- Products Grid - Shows when not loading and has products -->
+        <div *ngIf="!isLoading && !error && products.length > 0" class="product-grid">
+          <mat-card *ngFor="let product of products" class="product-card mat-elevation-z4" style="cursor: pointer;">
             @if(product.imageUrl) {
               <img (click)="goToProduct(product)" mat-card-image [src]="getFirstImage(product.imageUrl) || '../../../../assets/default.avif'"
                    [alt]="product.name" class="product-image" />
@@ -194,123 +388,50 @@
                 </div>
               </div>
               <div>
-                 <ng-container *ngIf="(quantities[getProductKey(product)] || 0) === 0; else quantityTemplate">
-                 <button class="btn btn-sm w-100 rounded-pill  text-light" (click)="addToCart(product, $event)">
+                <ng-container *ngIf="(quantities[getProductKey(product)] || 0) === 0; else quantityTemplate">
+                 <button class="btn btn-sm w-100 rounded-pill text-light" (click)="addToCart(product, $event)">
                   Add
                 </button>
-              </ng-container>
-
+                </ng-container>
                
                 <ng-template #quantityTemplate>
                 <div class="quantity-control w-100 btn-group rounded-pill text-white btn-group-sm" role="group">
                   <button class="btn text-white left" (click)="decrement(product)">−</button>
-                  <span class="btn">{{ quantities[getProductKey(product)] || 0  }}</span>
+                  <span class="btn">{{ quantities[getProductKey(product)] || 0 }}</span>
                   <button class="btn text-white right" (click)="increment(product)">+</button>
                 </div>
-              </ng-template>
+                </ng-template>
               </div>
-              <!-- <ng-container *ngIf="quantities[getProductKey(product)] === 0; else quantityTemplate">
-                <button class="btn btn-sm rounded-pill btn-primary text-light" (click)="addToCart(product, $event)">
-                  Add
-                </button>
-              </ng-container> -->
-              <!-- <ng-template #quantityTemplate>
-                <div class="quantity-control btn-group rounded-pill text-white btn-group-sm" role="group">
-                  <button class="btn text-white left" (click)="decrement(product)">−</button>
-                  <span class="btn">{{ quantities[getProductKey(product)] }}</span>
-                  <button class="btn text-white right" (click)="increment(product)">+</button>
-                </div>
-              </ng-template> -->
             </mat-card-content>
           </mat-card>
-          </ng-container>
-
-          
-          <ng-template #noProducts>
-            <div class="no-products-container">
-              <p class="no-products-message">
-                Sorry, {{ categoryName }} Product not found.
-              </p>
-              <button class="clear-filter-btn-large" (click)="clearFilters()"
-                [disabled]="isLoading || showQuantityPanel">
-                <span *ngIf="isLoading" class="button-spinner"></span>
-                Clear Filter
-              </button>
-            </div>
-          </ng-template>
         </div>
-        <ng-template #loadingOrNoProducts>
-          <!-- <div class="loading-container" *ngIf="!isLoading">
-            <mat-spinner diameter="40"></mat-spinner>
-            <p>Products loading1...</p>
-          </div> -->
-          <div *ngIf="!isLoading" class="vm-loading" role="status" aria-live="polite">
-            <div class="vm-spinner" aria-hidden="true"></div>
-            <div class="vm-loading-text">Products loading...</div>
-          </div>
-        </ng-template>
+
+        <!-- No Products Message -->
+        <div *ngIf="!isLoading && !error && products.length === 0" class="no-products-container">
+          <p class="no-products-message">
+            Sorry, {{ categoryName }} Product not found.
+          </p>
+          <button class="clear-filter-btn-large" (click)="clearFilters()"
+            [disabled]="isLoading || showQuantityPanel">
+            <span *ngIf="isLoading" class="button-spinner"></span>
+            Clear Filter
+          </button>
+        </div>
         
       </div>
-       
 
-        <!-- Product Grid -->
-        <!-- <div *ngIf="!isLoading && !error && products.length > 0" class="products-section">
-          <div class="products-meta">
-            <p class="products-count">Showing {{ products.length }} of {{ totalProducts }} products</p>
-          </div>
+      <!-- Load More Section -->
+      <div class="load-more-section" *ngIf="hasMoreProducts && !isLoading">
+        <button class="load-more-btn" (click)="loadMore()" [disabled]="isLoadMoreLoading">
+          <span *ngIf="!isLoadMoreLoading">Load More Products ({{ getRemainingProductsCount() }} more available)</span>
+          <span *ngIf="isLoadMoreLoading" class="loading-text">
+            <div class="small-spinner"></div>Loading...
+          </span>
+        </button>
+      </div>
 
-          <div class="products-grid">
-            <div *ngFor="let product of products; trackBy: trackByProductId" class="product-card"
-              (click)="viewProductDetails(product)">
-              <div class="product-image-container">
-                <img [src]="getFirstImage(product.imageUrl)" [alt]="product.name"
-                  (error)="product.imageUrl = 'assets/medicines/placeholder.png'" />
-                <div *ngIf="hasDiscount(product)" class="discount-badge">{{ product.discountPercentage }}% OFF</div>
-                <div *ngIf="!product.isAvailable" class="out-of-stock-badge">Out of Stock</div>
-              </div>
-
-              <div class="product-info">
-                <h3 class="product-name">{{ product.name }}</h3>
-                <p class="product-brand">{{ product.manufacturers }}</p>
-                <p class="product-packaging">{{ getPackagingInfo(product) }}</p>
-                <div class="product-form">{{ product.productForm }}</div>
-
-                <div class="product-pricing">
-                  <span class="current-price">₹{{ getDisplayPrice(product) }}</span>
-                  <span *ngIf="hasDiscount(product)" class="original-price">₹{{ product.mrp }}</span>
-                </div>
-
-                <button class="add-to-cart-btn" (click)="addToCart(product, $event)" [disabled]="!product.isAvailable">
-                  {{ product.isAvailable ? 'Add to Cart' : 'Out of Stock' }}
-                </button>
-              </div>
-            </div>
-          </div>
-
-
-          
-
-          
-         
-        </div> --> 
-       <div class="load-more-section" *ngIf="hasMoreProducts">
-            <button class="load-more-btn" (click)="loadMore()" [disabled]="isLoadMoreLoading">
-              <span *ngIf="!isLoadMoreLoading">Load More Products ({{ getRemainingProductsCount() }} more
-                available)</span>
-              <span *ngIf="isLoadMoreLoading" class="loading-text">
-                <div class="small-spinner"></div>Loading...
-              </span>
-            </button>
-          </div>
-    
-
-
- 
-
-
-     </div> <!-- Error State -->
-
- </div>
+    </div>
+  </div>
 </div>
 
 <app-footer></app-footer>

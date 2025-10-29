@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -9,9 +9,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { CartService } from '@src/app/core/cart.service';
 import { BannerSliderComponent } from "@src/app/shared/banner-slider/banner-slider";
-import { MatIcon } from "@angular/material/icon";
 import { Footer } from "../../footer/footer";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
+import { TextBanner } from "@src/app/shared/text-banner/text-banner";
+import { MatIconModule } from '@angular/material/icon';
+import { CommonFilterComponentComponent } from "../../shared/product-slider/product-slider";
+import { SingleProductFormComponentComponent } from "../../shared/single-product-form/single-product-form";
+import { SingleProductFormGridComponent } from "../../shared/single-product-form-grid/single-product-form-grid";
 
 // Product interface based on your API response
 interface Product {
@@ -57,6 +61,14 @@ interface CartItem {
   productType: string;
 }
 
+interface Category {
+  name: string;
+  apiValue: string[]; // API mein bhej jaane wali value (e.g., 'skin_care' agar zarurat ho)
+  cssClass: string;
+  imageUrl: string;
+  altText: string;
+}
+
 @Component({
   selector: 'app-multiproductsform',
   standalone: true,
@@ -68,9 +80,13 @@ interface CartItem {
     MatProgressSpinnerModule,
     MatCardModule,
     BannerSliderComponent,
-    MatIcon,
+    MatIconModule,
     Footer,
-    MobileFooterNavComponent
+    MobileFooterNavComponent,
+    TextBanner,
+    CommonFilterComponentComponent,
+    SingleProductFormComponentComponent,
+    SingleProductFormGridComponent
 ],
   templateUrl: './multiproductsform.html',
   styleUrls: ['./multiproductsform.scss'],
@@ -498,4 +514,567 @@ getCategoryLabel(value: string): string {
     const brand = this.brandList.find(b => b.name === value);
     return brand ? brand.name : value;
   }
+  @ViewChild("categoryCarouselWrapper3", { static: false })
+  carouselWrapper3!: ElementRef<HTMLDivElement>;
+  
+   scrollCarousel5(direction: 'left' | 'right'): void {
+    if (this.carouselWrapper3) {
+      const element = this.carouselWrapper3.nativeElement;
+      const scrollAmount = 180 * 4;
+
+      if (direction === 'left') {
+        element.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        element.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  }
+
+
+
+
+   scrollBrandCarousel(direction: 'left' | 'right'): void {
+    if (this.brandCarouselWrapper) {
+      const element = this.brandCarouselWrapper.nativeElement;
+      // Scroll by the visible width minus a little gap so items align nicely
+      const scrollAmount = Math.max(element.clientWidth - 80, 180);
+      if (direction === 'left') {
+        element.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        element.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  }
+    @ViewChild('brandCarouselWrapper', { static: false })
+  brandCarouselWrapper!: ElementRef<HTMLDivElement>;
+
+  
+
+  skinCare = [
+    {
+      productForm: 'Cream',
+      label: 'Face Creams',
+      imageUrl: 'assets/skin-care/face-cream.avif',
+      cssClass: 'cream-category',
+      description: 'Face creams for different skin types'
+    },
+    {
+      productForm: 'Lotion',
+      label: 'Body Lotions',
+      imageUrl: 'assets/skin-care/body-lotion.avif',
+      cssClass: 'lotion-category',
+      description: 'Moisturizing body lotions'
+    },
+    {
+      productForm: 'Gel',
+      label: 'Face Gels',
+      imageUrl: 'assets/skin-care/face-gel.avif',
+      cssClass: 'gel-category',
+      description: 'Cooling and refreshing face gels'
+    },
+    {
+      productForm: 'Ointment',
+      label: 'Ointments',
+      imageUrl: 'assets/skin-care/ointment.avif',
+      cssClass: 'cream-category',
+      description: 'Medicated skin ointments'
+    },
+     {
+      productForm: 'Wax',
+      label: 'Wax',
+      imageUrl: 'assets/skin-care/ointment.avif',
+      cssClass: 'cream-category',
+      description: 'Medicated skin Wax'
+    },
+     {
+      productForm: 'Body Wash',
+      label: 'Body Wash',
+      imageUrl: 'assets/skin-care/ointment.avif',
+      cssClass: 'cream-category',
+      description: 'Medicated skin Body Wash'
+    },
+     {
+      productForm: 'Face Pack',
+      label: 'Face Pack',
+      imageUrl: 'assets/skin-care/ointment.avif',
+      cssClass: 'cream-category',
+      description: 'Medicated skin Face Pack'
+    },
+     {
+      productForm: 'Face Mask',
+      label: 'Face Mask',
+      imageUrl: 'assets/skin-care/ointment.avif',
+      cssClass: 'cream-category',
+      description: 'Medicated skin Face Mask'
+    }
+  ];
+  productFormsfilter = [
+    {
+      productForm: 'Cream',
+      label: 'Skin Creams',
+      imageUrl: 'assets/product-forms/cream.avif',
+      altText: 'Skin Creams',
+      cssClass: 'cream-category',
+      description: 'Medicated and cosmetic creams for skin care'
+    },
+    {
+      productForm: 'Tablet',
+      label: 'Tablets',
+      imageUrl: 'assets/product-forms/tablet.avif',
+      altText: 'Medicine Tablets',
+      cssClass: 'tablet-category',
+      description: 'Various medicinal tablets for different health conditions'
+    },
+    {
+      productForm: 'Syrup',
+      label: 'Syrups',
+      imageUrl: 'assets/product-forms/syrup.avif',
+      altText: 'Medicinal Syrups',
+      cssClass: 'syrup-category',
+      description: 'Liquid medicines and health syrups'
+    },
+    {
+      productForm: 'Injection',
+      label: 'Injections',
+      imageUrl: 'assets/product-forms/injection.avif',
+      altText: 'Medical Injections',
+      cssClass: 'injection-category',
+      description: 'Injectable medicines and vaccines'
+    },
+    {
+      productForm: 'Capsule',
+      label: 'Capsules',
+      imageUrl: 'assets/product-forms/capsule.avif',
+      altText: 'Medicine Capsules',
+      cssClass: 'capsule-category',
+      description: 'Gelatin capsules with powdered medicine'
+    },
+    {
+      productForm: 'Lotion',
+      label: 'Lotions',
+      imageUrl: 'assets/product-forms/lotion.avif',
+      altText: 'Body Lotions',
+      cssClass: 'lotion-category',
+      description: 'Medicated and cosmetic lotions'
+    }
+  ];
+
+   womencare = [
+    {
+      productForm: 'Pad',
+      label: 'Pads',
+      imageUrl: 'assets/product-forms/cream.avif',
+      altText: 'Skin Creams',
+      cssClass: 'cream-category',
+      description: 'Pads for women hygiene'
+    },
+    {
+      productForm: 'Vaginal Capsule',
+      label: 'Vaginal Capsule',
+      imageUrl: 'assets/product-forms/tablet.avif',
+      altText: 'Medicine Tablets',
+      cssClass: 'tablet-category',
+      description: 'Vaginal Capsules for women health'
+    },
+    {
+      productForm: 'Breast Pad',
+      label: 'Breast Pad',
+      imageUrl: 'assets/product-forms/syrup.avif',
+      altText: 'Medicinal Syrups',
+      cssClass: 'syrup-category',
+      description: 'Breast Pads for women'
+    },
+    {
+      productForm: 'Vaginal Cream',
+      label: 'Vaginal Cream',
+      imageUrl: 'assets/product-forms/injection.avif',
+      altText: 'Medical Injections',
+      cssClass: 'injection-category',
+      description: 'Vaginal Creams for women health'
+    },
+    {
+      productForm: 'Panty',
+      label: 'Panty',
+      imageUrl: 'assets/product-forms/capsule.avif',
+      altText: 'Medicine Capsules',
+      cssClass: 'capsule-category',
+      description: 'Pantys'
+    },
+    {
+      productForm: 'Pumping Bra',
+      label: 'Pumping Bra',
+      imageUrl: 'assets/product-forms/lotion.avif',
+      altText: 'Body Lotions',
+      cssClass: 'lotion-category',
+      description: 'Pumping Bras for  women'
+    }
+  ];
+   sexualcare = [
+    {
+      productForm: 'Condom',
+      label: 'Condoms',
+      imageUrl: 'assets/product-forms/cream.avif',
+      altText: 'Skin Creams',
+      cssClass: 'cream-category',
+      description: 'Condoms for safe sexual activity'
+    },
+    {
+      productForm: 'Vaginal Spray',
+      label: 'Vaginal Spray',
+      imageUrl: 'assets/product-forms/tablet.avif',
+      altText: 'Medicine Tablets',
+      cssClass: 'tablet-category',
+      description: 'Vaginal Sprays for sexual wellness'
+    },
+    {
+      productForm: 'Spray',
+      label: 'Sprays',
+      imageUrl: 'assets/product-forms/syrup.avif',
+      altText: 'Medicinal Syrups',
+      cssClass: 'syrup-category',
+      description: 'Sprays for sexual wellness'
+    },
+    {
+      productForm: 'Sublingual Spray',
+      label: 'Sublingual Spray',
+      imageUrl: 'assets/product-forms/injection.avif',
+      altText: 'Medical Injections',
+      cssClass: 'injection-category',
+      description: 'Sublingual Sprays for sexual wellness'
+    },
+    {
+      productForm: 'Ointment',
+      label: 'Ointment',
+      imageUrl: 'assets/product-forms/capsule.avif',
+      altText: 'Medicine Capsules',
+      cssClass: 'capsule-category',
+      description: 'Ointment with powdered medicine'
+    },
+    {
+      productForm: 'Massage Oil',
+      label: 'Massage Oil',
+      imageUrl: 'assets/product-forms/lotion.avif',
+      altText: 'Body Lotions',
+      cssClass: 'lotion-category',
+      description: 'Massage Oils'
+    }
+  ];
+
+   oralcare = [
+    {
+      productForm: 'Toothpaste',
+      label: 'Toothpastes',
+      imageUrl: 'assets/product-forms/cream.avif',
+      altText: 'Skin Creams',
+      cssClass: 'cream-category',
+      description: 'Toothpastes for oral hygiene'
+    },
+    {
+      productForm: 'Toothbrush',
+      label: 'Toothbrushs',
+      imageUrl: 'assets/product-forms/tablet.avif',
+      altText: 'Medicine Tablets',
+      cssClass: 'tablet-category',
+      description: 'Toothbrushs for oral hygiene'
+    },
+    {
+      productForm: 'Mouth Wash',
+      label: 'Mouth Wash',
+      imageUrl: 'assets/product-forms/syrup.avif',
+      altText: 'Medicinal Syrups',
+      cssClass: 'syrup-category',
+      description: 'Mouth Wash for oral hygiene'
+    },
+    {
+      productForm: 'Mouth Spray',
+      label: 'Mouth Spray',
+      imageUrl: 'assets/product-forms/injection.avif',
+      altText: 'Medical Injections',
+      cssClass: 'injection-category',
+      description: 'Mouth Spray for oral hygiene'
+    },
+    {
+      productForm: 'Dental Brush',
+      label: 'Dental Brush',
+      imageUrl: 'assets/product-forms/capsule.avif',
+      altText: 'Medicine Capsules',
+      cssClass: 'capsule-category',
+      description: 'Dental Brushs for oral hygiene'
+    },
+    {
+      productForm: 'Tongue Cleaner',
+      label: 'Tongue Cleaner',
+      imageUrl: 'assets/product-forms/lotion.avif',
+      altText: 'Body Lotions',
+      cssClass: 'lotion-category',
+      description: 'Tongue Cleaners for oral hygiene'
+    },
+     {
+      productForm: 'Oral Gel',
+      label: 'Oral Gel',
+      imageUrl: 'assets/product-forms/lotion.avif',
+      altText: 'Body Lotions',
+      cssClass: 'lotion-category',
+      description: 'Oral Gels for oral hygiene'
+    },
+     {
+      productForm: 'Disintegrating Strip',
+      label: 'Disintegrating Strip',
+      imageUrl: 'assets/product-forms/lotion.avif',
+      altText: 'Body Lotions',
+      cssClass: 'lotion-category',
+      description: 'Disintegrating Strip for oral hygiene'
+    }
+  ];
+   eldercare = [
+    {
+      productForm: 'Wheelchair',
+      label: 'Wheelchair',
+      imageUrl: 'assets/product-forms/cream.avif',
+      altText: 'Skin Creams',
+      cssClass: 'cream-category',
+      description: 'Wheelchairs for elder mobility'
+    },
+    {
+      productForm: 'Tonic',
+      label: 'Tonic',
+      imageUrl: 'assets/product-forms/tablet.avif',
+      altText: 'Medicine Tablets',
+      cssClass: 'tablet-category',
+      description: 'Tonics for elder health'
+    },
+    {
+      productForm: 'Knee Support',
+      label: 'Knee Support',
+      imageUrl: 'assets/product-forms/syrup.avif',
+      altText: 'Medicinal Syrups',
+      cssClass: 'syrup-category',
+      description: 'Knee Supports for elder mobility'
+    },
+    {
+      productForm: 'Walker',
+      label: 'Walker',
+      imageUrl: 'assets/product-forms/injection.avif',
+      altText: 'Medical Injections',
+      cssClass: 'injection-category',
+      description: 'Walkers for elder mobility'
+    },
+    {
+      productForm: 'Foot Support',
+      label: 'Foot Support',
+      imageUrl: 'assets/product-forms/capsule.avif',
+      altText: 'Medicine Capsules',
+      cssClass: 'capsule-category',
+      description: 'Foot Supports for elder comfort'
+    },
+    {
+      productForm: 'Massager',
+      label: 'Massager',
+      imageUrl: 'assets/product-forms/lotion.avif',
+      altText: 'Body Lotions',
+      cssClass: 'lotion-category',
+      description: 'Massagers for elder relaxation'
+    }, {
+      productForm: 'Belt',
+      label: 'Belt',
+      imageUrl: 'assets/product-forms/lotion.avif',
+      altText: 'Body Lotions',
+      cssClass: 'lotion-category',
+      description: 'Belts for elder support'
+    }
+  ];
+   babycare = [
+    {
+      productForm: 'Diaper',
+      label: 'Diapers',
+      imageUrl: 'assets/product-forms/cream.avif',
+      altText: 'Skin Creams',
+      cssClass: 'cream-category',
+      description: 'Diapers for baby care'
+    },
+    {
+      productForm: 'Wipe',
+      label: 'Wipe',
+      imageUrl: 'assets/product-forms/tablet.avif',
+      altText: 'Medicine Tablets',
+      cssClass: 'tablet-category',
+      description: 'Wipe'
+    },
+    {
+      productForm: 'Powder',
+      label: 'Powder',
+      imageUrl: 'assets/product-forms/syrup.avif',
+      altText: 'Medicinal Syrups',
+      cssClass: 'syrup-category',
+      description: 'Powder for baby care'
+    },
+    {
+      productForm: 'Nipple',
+      label: 'Nipple',
+      imageUrl: 'assets/product-forms/injection.avif',
+      altText: 'Medical Injections',
+      cssClass: 'injection-category',
+      description: 'Nipple for baby feeding'
+    },
+    {
+      productForm: 'Feeding Bottle',
+      label: 'Feeding Bottle',
+      imageUrl: 'assets/product-forms/capsule.avif',
+      altText: 'Medicine Capsules',
+      cssClass: 'capsule-category',
+      description: 'Feeding Bottles for baby feeding'
+    },
+    {
+      productForm: 'Syrup',
+      label: 'Syrup',
+      imageUrl: 'assets/product-forms/lotion.avif',
+      altText: 'Body Lotions',
+      cssClass: 'lotion-category',
+      description: 'Syrups for baby health'
+    }
+  ];
+   mencare = [
+    {
+      productForm: 'Juice',
+      label: 'Juice',
+      imageUrl: 'assets/product-forms/cream.avif',
+      altText: 'Skin Creams',
+      cssClass: 'cream-category',
+      description: 'Juices for men health'
+    },
+    {
+      productForm: 'Tablet SR',
+      label: 'Tablet SR',
+      imageUrl: 'assets/product-forms/tablet.avif',
+      altText: 'Medicine Tablets',
+      cssClass: 'tablet-category',
+      description: 'Tablet SR for men health'
+    },
+    {
+      productForm: 'Powder',
+      label: 'Powder',
+      imageUrl: 'assets/product-forms/syrup.avif',
+      altText: 'Medicinal Syrups',
+      cssClass: 'syrup-category',
+      description: 'Powder for  men health'
+    },
+    {
+      productForm: 'Gel',
+      label: 'Gel',
+      imageUrl: 'assets/product-forms/injection.avif',
+      altText: 'Medical Injections',
+      cssClass: 'injection-category',
+      description: 'Gel for men health'
+    }
+  ];
+   ayurveda = [
+    {
+      productForm: 'Churna',
+      label: 'Churna',
+      imageUrl: 'assets/product-forms/cream.avif',
+      altText: 'Skin Creams',
+      cssClass: 'cream-category',
+      description: 'Churna for ayurvedic health'
+    },
+    {
+      productForm: 'Bhasma',
+      label: 'Bhasma',
+      imageUrl: 'assets/product-forms/tablet.avif',
+      altText: 'Medicine Tablets',
+      cssClass: 'tablet-category',
+      description: 'Bhasma for ayurvedic health'
+    },
+    {
+      productForm: 'Ark',
+      label: 'Ark',
+      imageUrl: 'assets/product-forms/syrup.avif',
+      altText: 'Medicinal Syrups',
+      cssClass: 'syrup-category',
+      description: 'Ark for ayurvedic health'
+    },
+    {
+      productForm: 'Tablet SR',
+      label: 'Tablet SR',
+      imageUrl: 'assets/product-forms/injection.avif',
+      altText: 'Medical Injections',
+      cssClass: 'injection-category',
+      description: 'Tablet SR'
+    },
+    {
+      productForm: 'Flower',
+      label: 'Flower',
+      imageUrl: 'assets/product-forms/capsule.avif',
+      altText: 'Medicine Capsules',
+      cssClass: 'capsule-category',
+      description: 'Flowers for ayurvedic health'
+    },
+    {
+      productForm: 'Leaf',
+      label: 'Leaf',
+      imageUrl: 'assets/product-forms/lotion.avif',
+      altText: 'Body Lotions',
+      cssClass: 'lotion-category',
+      description: 'Leaf  for ayurvedic health'
+    },
+     {
+      productForm: 'Seed',
+      label: 'Seed',
+      imageUrl: 'assets/product-forms/lotion.avif',
+      altText: 'Body Lotions',
+      cssClass: 'lotion-category',
+      description: 'Seed  for ayurvedic health'
+    },
+     {
+      productForm: 'Nut',
+      label: 'Nut',
+      imageUrl: 'assets/product-forms/lotion.avif',
+      altText: 'Body Lotions',
+      cssClass: 'lotion-category',
+      description: 'Nut  for ayurvedic health'
+    }
+    ,
+     {
+      productForm: 'Candy',
+      label: 'Candy',
+      imageUrl: 'assets/product-forms/lotion.avif',
+      altText: 'Body Lotions',
+      cssClass: 'lotion-category',
+      description: 'Candy  for ayurvedic health'
+    },
+     {
+      productForm: 'Oat',
+      label: 'Oat',
+      imageUrl: 'assets/product-forms/lotion.avif',
+      altText: 'Body Lotions',
+      cssClass: 'lotion-category',
+      description: 'Oat for ayurvedic health'
+    }
+  ];
+   petcare = [
+    {
+      productForm: 'Pet Food',
+      label: 'Pet Food',
+      imageUrl: 'assets/product-forms/cream.avif',
+      altText: 'Skin Creams',
+      cssClass: 'cream-category',
+      description: 'Pet Food for your lovely pets'
+    },
+    {
+      productForm: 'Pet Spray',
+      label: 'Pet Spray',
+      imageUrl: 'assets/product-forms/tablet.avif',
+      altText: 'Medicine Tablets',
+      cssClass: 'tablet-category',
+      description: 'Pet Spray for your lovely pets'
+    },
+    {
+      productForm: 'Dog Bone',
+      label: 'Dog Bone',
+      imageUrl: 'assets/product-forms/syrup.avif',
+      altText: 'Medicinal Syrups',
+      cssClass: 'syrup-category',
+      description: 'Dog Bone for your lovely pets'
+    }
+  ];
+ 
 }

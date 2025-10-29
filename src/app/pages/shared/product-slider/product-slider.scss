@@ -1,0 +1,438 @@
+.common-filter-slider {
+  margin: 3rem 0;
+  padding: 0 1rem;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  .slider-header {
+    margin-bottom: 2rem;
+
+    .header-with-image {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+
+      .header-image {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .slider-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #1a365d;
+        margin: 0;
+        background: linear-gradient(135deg, #2c3e50, #007bff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
+
+    .slider-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #1a365d;
+      text-align: center;
+      background: linear-gradient(135deg, #2c3e50, #007bff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+
+  .slider-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+
+    .loading-state,
+    .error-state,
+    .empty-state {
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      background: #f8f9fa;
+    }
+
+    .error-icon,
+    .empty-icon {
+      opacity: 0.7;
+    }
+
+    .retry-btn {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    // ✅ Slider wrapper - NO scrollbar visible
+    .slider-wrapper {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      padding: 1rem 0;
+
+      .slider-track {
+        display: flex;
+        gap: 1.5rem;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-behavior: smooth;
+        scrollbar-width: none; // Firefox
+        -ms-overflow-style: none; // IE
+        padding: 0.5rem 0;
+        
+        // ✅ Complete scrollbar hiding for all browsers
+        &::-webkit-scrollbar {
+          display: none;
+          width: 0;
+          height: 0;
+          background: transparent;
+        }
+        
+        &::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+          background: transparent;
+        }
+
+        .col-6 {
+          flex: 0 0 280px;
+          min-width: 280px;
+
+          .product-card {
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #e9ecef;
+            border-radius: 16px;
+            overflow: hidden;
+            height: 100%;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+            &:hover {
+              transform: translateY(-8px);
+              box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+              border-color: #007bff;
+            }
+
+            .product-image-container {
+              height: 200px;
+              overflow: hidden;
+              position: relative;
+
+              .product-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.4s ease;
+              }
+
+              .discount-badge {
+                position: absolute;
+                top: 12px;
+                right: 12px;
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+                border-radius: 20px;
+                font-weight: 700;
+                background: #dc3545;
+                color: white;
+              }
+
+              .out-of-stock-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(255, 255, 255, 0.95);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .out-of-stock-text {
+                  background: #dc3545;
+                  color: white;
+                  padding: 0.5rem 1rem;
+                  border-radius: 25px;
+                  font-weight: 700;
+                  font-size: 0.9rem;
+                }
+              }
+            }
+
+            .card-body {
+              padding: 1.5rem;
+              display: flex;
+              flex-direction: column;
+              height: calc(100% - 200px);
+
+              .rating-badge {
+                margin-bottom: 0.75rem;
+
+                .badge {
+                  font-size: 0.8rem;
+                  padding: 0.4rem 0.8rem;
+                  border-radius: 20px;
+                  background: #ffc107;
+                  color: #000;
+                }
+              }
+
+              .product-name {
+                font-size: 1rem;
+                font-weight: 700;
+                color: #2c3e50;
+                line-height: 1.4;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                margin-bottom: 0.5rem;
+                min-height: 2.8rem;
+              }
+
+              .manufacturer {
+                font-size: 0.85rem;
+                color: #6c757d;
+                margin-bottom: 0.5rem;
+                line-height: 1.3;
+              }
+
+              .packaging {
+                font-size: 0.8rem;
+                color: #28a745;
+                font-weight: 600;
+                margin-bottom: 1rem;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // ✅ Navigation buttons
+    .carousel-control-prev,
+    .carousel-control-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      background: white;
+      border: 2px solid #007bff;
+      border-radius: 50%;
+      color: #007bff;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      opacity: 0.9;
+      cursor: pointer;
+
+      &:hover:not(:disabled) {
+        background: #007bff;
+        color: white;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
+      }
+
+      &:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        border-color: #6c757d;
+        color: #6c757d;
+      }
+    }
+
+    .carousel-control-prev {
+      left: 10px;
+    }
+
+    .carousel-control-next {
+      right: 10px;
+    }
+
+    // ✅ Dots indicator - CENTERED and improved
+    .carousel-indicators {
+      display: flex;
+      justify-content: center; // ✅ Center the dots
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      padding: 1rem 0;
+      width: 100%;
+
+      .carousel-dot {
+        width: 12px;
+        height: 12px;
+        border: 2px solid #007bff;
+        border-radius: 50%;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+
+        &.active {
+          background: #007bff;
+          transform: scale(1.3);
+          box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+        }
+
+        &:hover:not(.active) {
+          background: #007bff;
+          opacity: 0.7;
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}
+
+// ✅ Responsive Design
+@media (max-width: 768px) {
+  .common-filter-slider {
+    margin: 2rem 0;
+    padding: 0 0.5rem;
+
+    .slider-header {
+      .header-with-image {
+        .slider-title {
+          font-size: 1.5rem;
+        }
+      }
+
+      .slider-title {
+        font-size: 1.5rem;
+      }
+    }
+
+    .slider-container {
+      .slider-wrapper {
+        .slider-track {
+          .col-6 {
+            flex: 0 0 240px;
+            min-width: 240px;
+
+            .product-card {
+              .product-image-container {
+                height: 160px;
+              }
+
+              .card-body {
+                padding: 1.25rem;
+
+                .product-name {
+                  font-size: 0.9rem;
+                  min-height: 2.6rem;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // Hide navigation on mobile
+      .carousel-control-prev,
+      .carousel-control-next {
+        display: none;
+      }
+
+      // ✅ Mobile dots styling
+      .carousel-indicators {
+        margin-top: 1.5rem;
+        gap: 0.5rem;
+        
+        .carousel-dot {
+          width: 10px;
+          height: 10px;
+          
+          &.active {
+            transform: scale(1.2);
+          }
+        }
+      }
+    }
+  }
+}
+
+// ✅ Extra small devices
+@media (max-width: 480px) {
+  .common-filter-slider {
+    .slider-container {
+      .slider-wrapper {
+        .slider-track {
+          .col-6 {
+            flex: 0 0 220px;
+            min-width: 220px;
+          }
+        }
+      }
+
+      // ✅ Smaller dots on very small screens
+      .carousel-indicators {
+        .carousel-dot {
+          width: 8px;
+          height: 8px;
+        }
+      }
+    }
+  }
+}
+
+// ✅ Global styles to prevent horizontal scroll
+body {
+  overflow-x: hidden;
+}
+
+// ✅ Additional scrollbar hiding for IE/Edge
+.slider-track {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+// ✅ Animation for dots
+@keyframes dotPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+}
+
+.carousel-dot.active {
+  animation: dotPulse 2s infinite;
+}
+
+// ✅ Main component animation
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.common-filter-slider {
+  animation: fadeIn 0.6s ease-out;
+}

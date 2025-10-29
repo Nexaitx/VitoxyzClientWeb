@@ -1,0 +1,349 @@
+.single-product-form-grid {
+  margin: 3rem 0;
+  padding: 0 1rem;
+  position: relative;
+
+  .grid-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #007bff, transparent);
+      transform: translateY(-50%);
+      z-index: -1;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #1a365d;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(135deg, #2c3e50, #007bff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline-block;
+      padding: 0 2rem;
+      background-color: white;
+      position: relative;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: #64748b;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+      font-weight: 400;
+      background-color: white;
+      display: inline-block;
+      padding: 0 1.5rem;
+      position: relative;
+    }
+  }
+
+  .slider-wrapper {
+    position: relative;
+    
+    &:hover {
+      .slider-nav .nav-btn {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+      }
+    }
+  }
+
+  .grid-container {
+    position: relative;
+    padding: 1rem 0;
+
+    // Desktop - Horizontal Scroll with Gradient Overlays
+    &.grid-slider {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 2rem 1rem;
+      margin: 0 -1rem;
+      scrollbar-width: none; // Firefox
+      -ms-overflow-style: none; // IE
+      cursor: grab;
+
+      &:active {
+        cursor: grabbing;
+      }
+
+      &::-webkit-scrollbar {
+        display: none; // Chrome, Safari
+      }
+
+      .grid-item {
+        flex: 0 0 170px;
+        min-height: 350px;
+        transition: transform 0.3s ease;
+        scroll-snap-align: start;
+
+        &:hover {
+          transform: translateY(-5px);
+        }
+      }
+
+      // Gradient fade effect on edges
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 80px;
+        pointer-events: none;
+        z-index: 2;
+        transition: opacity 0.3s ease;
+      }
+
+      &::before {
+        left: 0;
+        background: linear-gradient(90deg, rgba(255,255,255,0.95), transparent);
+        opacity: 0;
+      }
+
+      &::after {
+        right: 0;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.95));
+        opacity: 0;
+      }
+
+      // Show gradients when not at edges
+      &:not(.at-start)::before {
+        opacity: 1;
+      }
+
+      &:not(.at-end)::after {
+        opacity: 1;
+      }
+    }
+
+    // Mobile - Grid Layout
+    &.grid-mobile {
+      display: grid;
+      gap: 1.25rem;
+      grid-template-columns: repeat(2, 1fr);
+      
+      .grid-item {
+        min-height: 300px;
+      }
+    }
+
+    // Tablet - Grid Layout
+    &.grid-tablet {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(3, 1fr);
+      
+      .grid-item {
+        min-height: 320px;
+      }
+    }
+  }
+
+  // Navigation Arrows for Desktop Slider
+  .slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: calc(100% + 2rem);
+    left: -1rem;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 3;
+    padding: 0 1rem;
+
+    .nav-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+      transition: all 0.3s ease;
+      pointer-events: all;
+      opacity: 0.8;
+      transform: translateY(-50%) scale(0.95);
+
+      &:hover:not(:disabled) {
+        opacity: 1;
+        transform: translateY(-50%) scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(-50%) scale(0.95);
+      }
+
+      &:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        transform: translateY(-50%) scale(0.9);
+      }
+
+      mat-icon {
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+
+  // Scroll Indicators for Desktop
+  .scroll-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+
+    .indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid transparent;
+
+      &.active {
+        background: #007bff;
+        transform: scale(1.3);
+        border-color: #007bff;
+      }
+
+      &:hover:not(.active) {
+        background: #007bff;
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+
+// Responsive Design - Desktop (Slider)
+@media (min-width: 1025px) {
+  .single-product-form-grid {
+    .grid-container {
+      &.grid-slider {
+        .grid-item {
+          flex: 0 0 280px;
+        }
+      }
+    }
+    
+    .slider-nav {
+      .nav-btn {
+        width: 60px;
+        height: 60px;
+        
+        mat-icon {
+          font-size: 28px;
+          width: 28px;
+          height: 28px;
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design - Tablet
+@media (max-width: 1024px) and (min-width: 769px) {
+  .single-product-form-grid {
+    margin: 2.5rem 0;
+
+    .grid-header {
+      margin-bottom: 2.5rem;
+
+      h2 {
+        font-size: 2.2rem;
+      }
+
+      .subtitle {
+        font-size: 1.1rem;
+      }
+    }
+
+    .grid-container {
+      &.grid-tablet {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    // Hide navigation on tablet
+    .slider-nav {
+      display: none;
+    }
+    
+    .scroll-indicators {
+      display: none;
+    }
+  }
+}
+
+// Responsive Design - Mobile
+@media (max-width: 768px) {
+  .single-product-form-grid {
+    margin: 2rem 0;
+    padding: 0 0.5rem;
+
+    .grid-header {
+      margin-bottom: 2rem;
+
+      h2 {
+        font-size: 1.8rem;
+        padding: 0 1rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+    }
+
+    // Hide navigation on mobile
+    .slider-nav {
+      display: none;
+    }
+    
+    .scroll-indicators {
+      display: none;
+    }
+  }
+}
+
+// Animation for scroll indicators
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.scroll-indicators .indicator.active {
+  animation: pulse 2s infinite;
+}
+
+// Smooth scrolling for the entire page
+html {
+  scroll-behavior: smooth;
+}

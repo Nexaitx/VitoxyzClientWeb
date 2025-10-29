@@ -40,11 +40,10 @@ export class SearchProductComponent {
       return of([]);
     }
 
-    const url = `${API_URL}/search?q=${term}&type=combined&page=0&size=20`;
+    const url = `${API_URL}/search/quick-fast?q=${term}&type=combined&page=0&size=20`;
 
     return this.http.get<any>(url).pipe(
       switchMap((res: any) => {
-        // मान लो API response कुछ ऐसा आता है: { data: [...] }
         if (res && res.data && Array.isArray(res.data)) {
           return of(res.data);
         }

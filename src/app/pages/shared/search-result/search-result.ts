@@ -30,7 +30,7 @@ export class SearchResultComponent implements OnInit {
 
   fetchResults(query: string) {
     this.loading = true;
-    const url = `${API_URL}/search?q=${query}&type=combined&page=0&size=20`;
+    const url = `${API_URL}/search/quick-fast?q=${query}&type=combined&page=0&size=20`;
     this.http.get<any>(url).subscribe({
       next: (res) => {
         this.medicines = res?.data?.medicines || [];
