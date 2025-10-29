@@ -9,43 +9,31 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
   imports: [CommonModule, SingleProductFormComponentComponent, MatIconModule],
   template: `
-    <div class="single-product-form-grid">
-      <div class="grid-header" *ngIf="title">
-        <h2>{{ title }}</h2>
-        <p *ngIf="subtitle" class="subtitle">{{ subtitle }}</p>
-      </div>
+   <div class="single-product-form-grid">
+  <div class="grid-header" *ngIf="title">
+    <h2>{{ title }}</h2>
+    <p *ngIf="subtitle" class="subtitle">{{ subtitle }}</p>
+  </div>
 
-      <!-- Desktop Slider with Navigation -->
-      <div class="grid-container" [class]="getGridClass()" #sliderContainer>
-        @for (item of items; track item.productForm) {
-          <app-single-product-form-component 
-            [config]="item"
-            class="grid-item">
-          </app-single-product-form-component>
-        }
-      </div>
+  <div class="grid-container" [class]="getGridClass()" #sliderContainer>
+    @for (item of items; track item.productForm) {
+      <app-single-product-form-component 
+        [config]="item"
+        class="grid-item">
+      </app-single-product-form-component>
+    }
+  </div>
 
-      <!-- Navigation Arrows for Desktop -->
-      <div class="slider-nav" *ngIf="isDesktopView()">
-        <button class="nav-btn prev" (click)="scrollLeft()">
-          <mat-icon>chevron_left</mat-icon>
-        </button>
-        <button class="nav-btn next" (click)="scrollRight()">
-          <mat-icon>chevron_right</mat-icon>
-        </button>
-      </div>
+  <div class="slider-nav" *ngIf="isDesktopView()">
+    <button class="nav-btn prev text-light" (click)="scrollLeft()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button class="nav-btn next text-light " (click)="scrollRight()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+</div>
 
-      <!-- Scroll Indicators -->
-      <div class="scroll-indicators" *ngIf="isDesktopView() && items.length > 4">
-        @for (indicator of getScrollIndicators(); track indicator) {
-          <div 
-            class="indicator" 
-            [class.active]="indicator === currentIndicator"
-            (click)="scrollToIndicator(indicator)">
-          </div>
-        }
-      </div>
-    </div>
   `,
   styleUrls: ['./single-product-form-grid.scss']
 })
