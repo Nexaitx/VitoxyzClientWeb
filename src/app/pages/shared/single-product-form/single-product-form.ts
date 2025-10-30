@@ -29,23 +29,23 @@ import { API_URL } from '@src/app/core/const';
             class="category-image"
             (error)="onImageError($event)"
           />
-          <div class="image-overlay"></div>
+          <!-- <div class="image-overlay"></div> -->
         </div>
 
         <!-- Category Content -->
         <div class="content">
           <h3 class="category-label">{{ config.label }}</h3>
           
-          @if (config.description) {
+          <!-- @if (config.description) {
             <p class="category-description">{{ config.description }}</p>
-          }
+          } -->
 
-          <div class="category-info">
+          <!-- <div class="category-info">
             <span class="product-form">
               <mat-icon>category</mat-icon>
               {{ config.productForm }}
             </span>
-          </div>
+          </div> -->
 
           <!-- Loading State -->
           @if (isLoading) {
@@ -54,10 +54,10 @@ import { API_URL } from '@src/app/core/const';
               <span>Loading...</span>
             </div>
           } @else {
-            <button class="view-products-btn" [disabled]="isLoading">
+            <!-- <button class="view-products-btn" [disabled]="isLoading">
               View Products
               <mat-icon>arrow_forward</mat-icon>
-            </button>
+            </button> -->
           }
         </div>
 

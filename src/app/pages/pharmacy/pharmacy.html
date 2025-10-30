@@ -15,8 +15,44 @@
 </app-common-filter-component>
 
 
-<app-health-carousel [items]="healthItems"></app-health-carousel>
+<!-- <app-health-carousel [items]="healthItems"></app-health-carousel> -->
+ <!-- <div class="d-block d-md-none">
+  
+</div> -->
+ <div class="category-section">
+  <div class="category-section-header mat-elevation-z2">
+    <h2>Shop by health concerns</h2>
+    </div>
 
+  <div class="carousel-container">
+    
+    <button
+      class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
+      (click)="scrollCarousel('left')"
+    >
+       </button>
+
+    <div #categoryCarouselWrapper class="carousel-wrapper">
+      <mat-card
+        *ngFor="let category of categories"
+        class="category-card mat-elevation-z4"
+        (click)="fetchProductsByCategory(category.apiValue)"
+      >
+        <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
+        <mat-card-content>
+          <h3>{{ category?.name }}</h3>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <button
+       class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
+      (click)="scrollCarousel('right')"
+    >
+     </button>
+    
+  </div>
+</div>
 
 <app-common-filter-component 
   [endpoint]="'products/filter'" 
