@@ -27,6 +27,8 @@ export const ENDPOINTS = {
   MEDICINE_BY_ID: (id: string) => `/medicines/${id}`,
   OTC_MEDICINE_BY_ID: (id: string) => `/products/${id}`,
   OTC_MEDICINES: "/products",
+    PRODUCT_BY_ID: (id: string) => `/products/${id}`,
+
   // On board to diet plan
   ONBOARD_DIET: "/user/diet/onboard-diet",
   BOOKING_RESPONSE: "/user/booking-response",

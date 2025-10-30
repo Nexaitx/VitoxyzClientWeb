@@ -8,11 +8,12 @@ import { FormsModule } from "@angular/forms";
 import { API_URL, ENDPOINTS } from "@src/app/core/const";
 import { CartService } from "@src/app/core/cart.service";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
+import { CommonFilterComponent } from "../../shared/common-filter-component/common-filter-component";
 
 @Component({
   selector: "app-view-medicine",
   standalone: true,
-  imports: [CommonModule, FormsModule, Footer, Header, MobileFooterNavComponent],
+  imports: [CommonModule, FormsModule, Footer, Header, MobileFooterNavComponent, CommonFilterComponent],
   templateUrl: "./view-medicine.html",
   styleUrls: ["./view-medicine.scss"],
   

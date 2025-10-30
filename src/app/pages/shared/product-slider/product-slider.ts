@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonFilterConfig, Product, ApiResponse } from './product-slider.interface';
 import { API_URL } from '@src/app/core/const';
+import { ProductService } from '@src/app/core/product.service'; // ✅ Import ProductService
 
 @Component({
   selector: 'app-common-multifilter-component',
@@ -61,7 +62,7 @@ import { API_URL } from '@src/app/core/const';
 
         <!-- Products Slider -->
         @if (!isLoading && !error && products.length > 0) {
-          <div class="row">
+          <div class="row position-relative">
             <!-- Navigation Buttons -->
             @if (config.showNavigation !== false) {
               <button class="carousel-control-prev" type="button" (click)="scrollLeft()" [disabled]="isLoading">
@@ -78,9 +79,11 @@ import { API_URL } from '@src/app/core/const';
             <!-- Slider Wrapper -->
             <div #sliderWrapper class="slider-wrapper">
               <div class="row flex-nowrap slider-track">
-                @for (product of products; track product.id) {
+                @for (product of products; track getProductTrackId(product, $index); let i = $index) {
                   <div class="col-6 col-md-4 col-lg-3 mb-4">
-                    <div class="card product-card h-100 shadow-sm" (click)="viewProduct(product)">
+                    <!-- Entire card is clickable for product navigation -->
+                    <div class="card product-card h-100 shadow-sm" (click)="goToProduct(product)">
+                      
                       <!-- Product Image -->
                       <div class="product-image-container position-relative">
                         <img 
@@ -90,7 +93,7 @@ import { API_URL } from '@src/app/core/const';
                         />
                         @if (hasDiscount(product)) {
                           <span class="badge bg-danger discount-badge">
-                            {{ product.discountPercentage }}% OFF
+                            {{ getDiscountPercentage(product) }}% OFF
                           </span>
                         }
                         @if (!product.isAvailable) {
@@ -102,17 +105,17 @@ import { API_URL } from '@src/app/core/const';
 
                       <!-- Product Content -->
                       <div class="card-body d-flex flex-column">
-                        <!-- Rating -->
-                        <div class="rating-badge mb-2">
-                          <span class="badge bg-warning text-dark">
-                            <i class="fas fa-star"></i> 4.4
-                          </span>
-                        </div>
-
                         <!-- Product Name -->
                         <h5 class="card-title product-name" [title]="product.name">
                           {{ product.name }}
                         </h5>
+
+                        <!-- Product Form -->
+                        @if (product.productForm) {
+                          <p class="card-text text-muted small manufacturer">
+                            {{ product.productForm }}
+                          </p>
+                        }
 
                         <!-- Manufacturer -->
                         @if (product.manufacturers) {
@@ -128,8 +131,41 @@ import { API_URL } from '@src/app/core/const';
                           </p>
                         }
 
-                        <!-- Pricing -->
-                        
+                        <!-- Product Highlights -->
+                        @if (product.productHighlights) {
+                          <p class="card-text text-muted small manufacturer">
+                            {{ product.productHighlights }}
+                          </p>
+                        }
+
+                        <!-- Pricing Section -->
+                        <div class="pricing-section mt-auto pt-2">
+                          @if (hasDiscount(product)) {
+                            <div class="d-flex align-items-center gap-2">
+                              <span class="current-price fw-bold text-danger">
+                                {{ getDisplayPrice(product) | currency:'INR':'symbol':'1.0-0' }}
+                              </span>
+                              <span class="original-price text-muted text-decoration-line-through">
+                                {{ product.mrp | currency:'INR':'symbol':'1.0-0' }}
+                              </span>
+                            </div>
+                          } @else {
+                            <div class="current-price fw-bold">
+                              {{ getDisplayPrice(product) | currency:'INR':'symbol':'1.0-0' }}
+                            </div>
+                          }
+                        </div>
+
+                        <!-- Add to Cart Button -->
+                        <div class="mt-2">
+                          <button 
+                            class="btn btn-primary btn-sm w-100" 
+                            (click)="addToCart(product, $event)"
+                            [disabled]="!product.isAvailable">
+                            {{ product.isAvailable ? 'Add to Cart' : 'Out of Stock' }}
+                          </button>
+                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -181,7 +217,8 @@ export class CommonFilterComponentComponent implements OnInit, OnDestroy {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private productService: ProductService // ✅ Inject ProductService
   ) {}
 
   ngOnInit(): void {
@@ -203,6 +240,8 @@ export class CommonFilterComponentComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.error = '';
 
+    // ✅ Use ProductService instead of direct HTTP call
+    // For multiple forms, we'll use the existing logic but you can modify based on your needs
     const queryParams = this.config.productForms
       .map(form => `productForms=${encodeURIComponent(form.trim())}`)
       .join('&');
@@ -210,21 +249,67 @@ export class CommonFilterComponentComponent implements OnInit, OnDestroy {
     const size = this.config.slideCount || 12;
     const apiUrl = `${API_URL}/${this.config.endpoint}/multiple-forms?${queryParams}&page=0&size=${size}`;
 
+    console.log('🟡 Fetching products from:', apiUrl);
+
+    // If you want to use ProductService for all calls, you can create a new method in ProductService
+    // For now, using direct HTTP call for multiple-forms endpoint
     this.http.get<ApiResponse>(apiUrl).subscribe({
       next: (response) => {
+        console.log('🟢 Products API Response:', response);
         if (response.status && response.data) {
           this.products = response.data.content || [];
+          console.log('Products loaded:', this.products.length);
         } else {
           this.error = response.message || 'Failed to load products';
         }
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Error fetching products:', error);
+        console.error('❌ Error fetching products:', error);
         this.error = 'Failed to load products. Please try again.';
         this.isLoading = false;
       }
     });
+  }
+
+  // ✅ Alternative: Using ProductService for single category (if needed)
+  fetchProductsUsingService(): void {
+    this.isLoading = true;
+    this.error = '';
+
+    // If you have single product form, use ProductService
+    if (this.config.productForms.length === 1) {
+      const productForm = this.config.productForms[0];
+      const size = this.config.slideCount || 12;
+      
+      this.productService.getProductsByCategory(productForm, 0, size).subscribe({
+        next: (response) => {
+          console.log('🟢 Products from Service:', response);
+          if (response?.data?.content) {
+            this.products = response.data.content;
+          } else {
+            this.error = 'Failed to load products';
+          }
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error('❌ Error from ProductService:', error);
+          this.error = 'Failed to load products. Please try again.';
+          this.isLoading = false;
+        }
+      });
+    } else {
+      // For multiple forms, use the existing fetchProducts method
+      this.fetchProducts();
+    }
+  }
+
+  // ✅ FIXED: Better track ID with index fallback
+  getProductTrackId(product: Product, index: number): string {
+    if (product.id && product.id !== null) return `id-${product.id}`;
+    if (product.productId && product.productId !== null) return `productId-${product.productId}`;
+    if (product.name) return `name-${product.name}-${index}`;
+    return `index-${index}`;
   }
 
   scrollLeft(): void {
@@ -248,8 +333,8 @@ export class CommonFilterComponentComponent implements OnInit, OnDestroy {
   goToSlide(slideIndex: number): void {
     if (this.sliderWrapper) {
       const element = this.sliderWrapper.nativeElement;
-      const cardWidth = 280; // Adjust based on your card width
-      const scrollAmount = slideIndex * cardWidth * 4; // 4 cards per slide
+      const cardWidth = 280;
+      const scrollAmount = slideIndex * cardWidth * 4;
       element.scrollTo({ left: scrollAmount, behavior: 'smooth' });
       this.currentSlide = slideIndex;
     }
@@ -264,7 +349,7 @@ export class CommonFilterComponentComponent implements OnInit, OnDestroy {
   }
 
   getDotsArray(): number[] {
-    const slides = Math.ceil(this.products.length / 4); // 4 cards per slide
+    const slides = Math.ceil(this.products.length / 4);
     return Array.from({ length: slides }, (_, i) => i);
   }
 
@@ -289,21 +374,56 @@ export class CommonFilterComponentComponent implements OnInit, OnDestroy {
     return !!product.discountPrice && product.discountPrice > 0 && product.discountPrice < product.mrp;
   }
 
-  viewProduct(product: Product): void {
-    const productId = (product.id ?? product.productId)?.toString();
-    if (productId) {
-      this.router.navigate(['/medicine', productId], { 
-        queryParams: { type: 'otc' } 
-      });
-    }
+  getDiscountPercentage(product: Product): number {
+    if (!this.hasDiscount(product)) return 0;
+    const discount = ((product.mrp - product.discountPrice!) / product.mrp) * 100;
+    return Math.round(discount);
   }
 
+  // ✅ FIXED: Correct Product Navigation to Medicine Page
+  goToProduct(product: Product): void {
+    console.log('🟡 CommonFilterComponentComponent - Navigating to product:', product);
+    
+    const productId = (product.id ?? product.productId)?.toString();
+    if (!productId) {
+      console.error('❌ Product ID missing', product);
+      return;
+    }
+
+    // ✅ Determine product type based on endpoint
+    let routeType = 'health'; // default
+    
+    if (this.config.endpoint.includes('otc')) {
+      routeType = 'otc';
+    } else if (this.config.endpoint.includes('health')) {
+      routeType = 'health';
+    }
+
+    console.log(`🟡 Navigating to /medicine/${productId} with type: ${routeType}`);
+    
+    // ✅ Navigate to Medicine page
+    this.router.navigate(['/medicine', productId], {
+      queryParams: { type: routeType },
+    });
+  }
+
+  // Alternative method for consistency
+  viewProduct(product: Product): void {
+    this.goToProduct(product);
+  }
+
+  // Add to Cart with Event Prevention
   addToCart(product: Product, event: Event): void {
     event.stopPropagation();
-    // Add your cart logic here
-    console.log('Add to cart:', product);
-    // You can emit an event or call a service here
+    
+    if (!product.isAvailable) {
+      return;
+    }
+
+    console.log('🟡 Adding to cart:', product);
+    // Add your cart logic here using CartService if needed
   }
+
 
   
 }

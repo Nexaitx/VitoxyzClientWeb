@@ -549,11 +549,39 @@ addToCart(product: any, event: Event) {
 
   // category filter
   categoryList = [
-    { label: 'Syrups & Tonics', value: 'syrup' },
-    { label: 'Chest Rubs & Balms', value: 'chest_rubs' },
-    { label: 'Cough Syrups', value: 'cough_syrup' },
-    { label: 'Herbal Juices & Teas', value: 'herbal_juices' },
-    { label: 'Candy & Lozenges', value: 'lozenges' }
+    { label: 'Syrups ', value: 'syrup' },
+    { label: 'Chest Rubs', value: 'Balm' },
+    { label: 'Cough Syrups', value: 'Syrups' },
+    { label: 'Herbal Juices & Teas', value: 'Juice' },
+    { label: 'Candy & Lozenges', value: 'candy' },
+    { label: 'Yoga Mat', value: 'Yoga Mat' },
+    { label: 'Self Test Kit', value: 'Self Test Kit' },
+    { label: 'Sanitizer', value: 'Sanitizer' },
+    { label: 'Pet Food', value: 'Pet Food' },
+    { label: 'Oxygen Mask', value: 'Oxygen Mask' },
+    { label: 'Massager', value: 'Massager' },
+    { label: 'Inhaler', value: 'Inhaler' },
+    { label: 'Face Mask', value: 'Face Mask' },
+
+    { label: 'Eye/Ear Drop', value: 'Eye/Ear Drop' },
+    { label: 'Face Wash', value: 'Face Wash' },
+    { label: 'Conditioner', value: 'Conditioner' },
+    { label: 'Cream', value: 'Cream' },
+    { label: 'Contact Lens', value: 'Contact Lens' },
+    { label: 'Body Wash', value: 'Body Wash' },
+    { label: 'Capsule CR', value: 'Capsule CR' },
+    { label: 'Churna', value: 'Churna' },   
+    { label: 'Crepe bandage', value: 'Crepe bandage' },
+    { label: 'Butter', value: 'Butter' },
+    { label: 'Band aid', value: 'Band aid' },
+    { label: 'Mouth Spray', value: 'Mouth Spray' },
+    { label: 'Dropper', value: 'Dropper' },
+    { label: 'Plaster', value: 'Plaster' },
+    { label: 'Elixir', value: 'Elixir' },
+    { label: 'Shampoo', value: 'Shampoo' },
+
+
+    
   ];
 
   brandList = [

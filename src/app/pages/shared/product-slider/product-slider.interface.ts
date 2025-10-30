@@ -18,6 +18,7 @@ export interface Product {
   mrp: number;
   imageUrl?: string;
   packaging?: string;
+  productHighlights?: string;
   manufacturers?: string;
   discountPrice?: number;
   originalPrice?: number;
