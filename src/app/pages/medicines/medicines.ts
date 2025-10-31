@@ -654,11 +654,11 @@ export class Medicines implements AfterViewInit {
 
 
  categories5: Category[] = [
+    { name: 'Stomach Care', apiValue: ['Digestive Tablet',"Syrup","Suspension","Oral Suspension","Oral Solution","Oral Liquid","Oral Gel","Tonic","Granule","Powder for Oral Suspension","Powder for Oral Solution"] ,cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/1.avif', altText: 'Diabetes Care Products' },
+    { name: 'Heart Rate', apiValue: ['Capsule',"Tablet","Injection","Solution for Infusion","Syrup","Infusion"], cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/2.avif', altText: 'Heart Rate Care Products' },
     { name: 'Diabetes', apiValue: ['Insulin Syringe (Syringe)',"Injection","Test Strip","Tablet",
       "Test kit","Lancet","Needle","Self Test Kit"
-    ], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/1.avif', altText: 'Diabetes Care Products' },
-    { name: 'Heart Rate', apiValue: ['Capsule',"Tablet","Injection","Solution for Infusion","Syrup","Infusion"], cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/2.avif', altText: 'Heart Rate Care Products' },
-    { name: 'Stomach Care', apiValue: ['Digestive Tablet',"Syrup","Suspension","Oral Suspension","Oral Solution","Oral Liquid","Oral Gel","Tonic","Granule","Muesli","Powder for Oral Suspension","Powder for Oral Solution"], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/3.avif', altText: 'Stomach Care Products' },
+    ], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/3.avif', altText: 'Stomach Care Products' },
     { name: 'Liver Care', apiValue: ['Tablet',"Capsule","Granule","Syrup","Tonic","Liver Care Juice"], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/4.avif', altText: 'Liver Care Products' },
     { name: 'Eye Care', apiValue: ['Eye Drop',"Eye Gel","Eye Cream","Eye Ointment","Eye Pad","Eye Capsule","Eye/Ear Drop","Ophthalmic Solution","Lens Solution","Reading Eyeglass"], cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/5.avif', altText: 'Eye Care Products' },
     { name: 'Bone & Joint', apiValue: ["Knee Support","Wrist Support","Massager","Liniment","Balm","Ointment","Bone & Joint Tablet","Bone & Joint Oil",'Bandage'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/6.avif', altText: 'Bone & Joint Products' },
@@ -666,6 +666,7 @@ export class Medicines implements AfterViewInit {
     { name: 'Derma Care', apiValue: ['Face Cream',"Face Pack","Lotion","Face Wash","Serum","Cream","Moisturiser","Dusting Powder","Body Wash","Conditioner","Wax","Scrub","Gel","Soap"], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/8.avif', altText: 'Derma Care Products' },
 
     // { name: 'Oral Care', apiValue: 'Oralcare', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
+
 
   ];
 
