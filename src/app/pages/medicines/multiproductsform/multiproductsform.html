@@ -167,7 +167,57 @@
     title="Pet Care Products"
     [columns]="3">
   </app-single-product-form-grid>
-} @else {
+}
+
+@if (categoryName === 'Diabetes') {
+  <app-single-product-form-grid
+    [items]="Diabetes"
+    title="Diabetes Care Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+} @else if (categoryName === 'Heart Rate') {
+  <app-single-product-form-grid
+    [items]="HeartRatecare"
+    title="Heart Rate Care Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+} @else if (categoryName === 'Stomach Care') {
+  <app-single-product-form-grid
+    [items]="StomachCare"
+    title="Stomach Care Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+} @else if (categoryName === 'Liver Care') {
+  <app-single-product-form-grid
+    [items]="LiverCare"
+    title="Liver Care Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+} @else if (categoryName === 'Eye Care') {
+  <app-single-product-form-grid
+    [items]="EyeCare"
+    title="Eye Care Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+} @else if (categoryName === 'Bone & Joint') {
+  <app-single-product-form-grid
+    [items]="BoneAndJoint"
+    title="Bone & Joint Care Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+} @else if (categoryName === 'Kidney Care') {
+  <app-single-product-form-grid
+    [items]="KidneyCare"
+    title="Kidney Care Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+} @else if (categoryName === 'Derma Care') {
+  <app-single-product-form-grid
+    [items]="DermaCare"
+    title="Derma Care Products"
+    [columns]="3">
+  </app-single-product-form-grid>
+}  @else {
   <!-- Default grid -->
   <app-single-product-form-grid
     [items]="productFormsfilter"
@@ -175,7 +225,6 @@
     [columns]="3">
   </app-single-product-form-grid>
 }
-
 <!-- <app-common-multifilter-component 
   [config]="{
     endpoint: 'products/filter',
@@ -186,7 +235,14 @@
   }">
 </app-common-multifilter-component> -->
 
-
+<!-- @else {
+ 
+  <app-single-product-form-grid
+    [items]="productFormsfilter"
+    title="Popular Product Forms"
+    [columns]="3">
+  </app-single-product-form-grid>
+} -->
 
 <!-- //single form -->
 <!-- Single Item -->
