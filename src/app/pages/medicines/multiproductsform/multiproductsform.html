@@ -176,6 +176,13 @@
   </app-single-product-form-grid>
 }
 
+<app-medicine-slider 
+  title="Featured Medicines"
+  [showSeeAll]="true"
+  [maxItems]="8"
+  [autoSlide]="true"
+  [slideInterval]="5000">
+</app-medicine-slider>
 <!-- <app-common-multifilter-component 
   [config]="{
     endpoint: 'products/filter',

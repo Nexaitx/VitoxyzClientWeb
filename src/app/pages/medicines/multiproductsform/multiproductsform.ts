@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonFilterComponentComponent } from "../../shared/product-slider/product-slider";
 import { SingleProductFormComponentComponent } from "../../shared/single-product-form/single-product-form";
 import { SingleProductFormGridComponent } from "../../shared/single-product-form-grid/single-product-form-grid";
+import { MedicineSliderComponent } from "@src/app/shared/medicine-slider/medicine-slider";
 
 // Product interface based on your API response
 interface Product {
@@ -86,8 +87,9 @@ interface Category {
     TextBanner,
     CommonFilterComponentComponent,
     SingleProductFormComponentComponent,
-    SingleProductFormGridComponent
-  ],
+    SingleProductFormGridComponent,
+    MedicineSliderComponent
+],
   templateUrl: './multiproductsform.html',
   styleUrls: ['./multiproductsform.scss'],
 })

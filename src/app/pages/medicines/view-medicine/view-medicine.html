@@ -1,11 +1,234 @@
 <app-header></app-header>
 
-<!-- <ng-container *ngIf="medicineType === 'health' && isLoaded && !hasError; else loadingOrError">
-
-  <div class="container mt-4 product-detail">
+<ng-container *ngIf="isLoaded && !hasError; else loadingOrError">
+  <!-- NEW: Unified Medicine Management Interface -->
+  <div *ngIf="isUsingManagementApi()" class="container mt-4 product-detail">
     <div class="row">
+      <!-- Desktop View -->
+      <div class="col-md-6 d-flex" *ngIf="!isMobile">
+        <!-- Thumbnail Images -->
+        <div class="d-flex flex-column me-3 thumbnails-container" *ngIf="medicine.images && medicine.images.length > 1">
+          <img *ngFor="let img of medicine.images; let i = index"
+               [src]="img"
+               class="thumb-img mb-2"
+               [class.active]="img === selectedImage"
+               (click)="selectedImage = img; currentIndex = i"
+               (error)="onImageError($event)" />
+        </div>
 
-      
+        <!-- Main Image with Zoom -->
+        <div class="product-view">
+          <div class="zoom-container"
+               (mousemove)="onMouseMove($event)"
+               (mouseleave)="onMouseLeave()"
+               (mouseenter)="onMouseEnter()">
+            <img [src]="selectedImage" 
+                 class="main-img" 
+                 [alt]="medicine.name"
+                 (error)="onImageError($event)" />
+
+            <div class="zoom-lens"
+                 *ngIf="isHovering"
+                 [ngStyle]="{ top: lensY + 'px', left: lensX + 'px' }"></div>
+          </div>
+
+          <div class="zoom-result" *ngIf="isHovering">
+            <img [src]="selectedImage"
+                 [ngStyle]="{
+                   transform: 'translate(' + -zoomX * zoomScale + 'px, ' + -zoomY * zoomScale + 'px) scale(' + zoomScale + ')'
+                 }"
+                 [alt]="medicine.name + ' - zoomed'" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Carousel -->
+      <div *ngIf="isMobile" class="mobile-carousel">
+        <div class="carousel-wrapper">
+          <div class="carousel-track" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
+            <div class="carousel-item" *ngFor="let img of medicine.images">
+              <img [src]="img" 
+                   class="main-img-mobile" 
+                   [alt]="medicine.name"
+                   (error)="onImageError($event)" />
+            </div>
+          </div>
+          <button class="nav prev" (click)="prevSlide()">‹</button>
+          <button class="nav next" (click)="nextSlide()">›</button>
+        </div>
+        <div class="dots" *ngIf="medicine.images && medicine.images.length > 1">
+          <span *ngFor="let img of medicine.images; let i = index"
+                [class.active]="i === currentIndex"
+                (click)="goToSlide(i)"></span>
+        </div>
+      </div>
+
+      <!-- Product Details -->
+      <div class="col-md-6 mt-3 product-info">
+        <h1 class="product-title">{{ medicine.name }}</h1>
+        
+        <div class="manufacturer-brand">
+          <span class="manufacturer">By {{ medicine.manufacturer }}</span>
+          <span class="category-badge">{{ medicine.category }}</span>
+          <span class="type-badge" *ngIf="medicine.entityType">{{ medicine.entityType }}</span>
+        </div>
+
+        <!-- Rating -->
+        <div class="rating mb-3">
+          <span class="badge bg-warning text-dark">{{ medicine.rating }}★</span>
+          <small class="rating-text">{{ medicine.reviewsCount }} Ratings</small>
+        </div>
+
+        <!-- NEW: Pricing Section with Discount Support -->
+        <div class="pricing-section mb-4">
+          <!-- Main Price Display -->
+          <div class="price-display">
+            <div class="current-price">₹{{ formatPrice(getCurrentPrice()) }}</div>
+            
+            <!-- Discount Badge -->
+            <div *ngIf="hasDiscount()" class="discount-percentage-badge">
+              {{ getDiscountPercentage() }}% OFF
+            </div>
+          </div>
+
+          <!-- Original Price and Savings -->
+          <div *ngIf="hasDiscount()" class="price-details">
+            <div class="original-price-line">
+              <span class="original-price-label">M.R.P.:</span>
+              <span class="original-price">₹{{ formatPrice(medicine.originalPrice) }}</span>
+            </div>
+            <div class="savings-info">
+              <span class="savings-text">You save: ₹{{ formatPrice(getSavingsAmount()) }}</span>
+              <span class="inclusive-text">(Inclusive of all taxes)</span>
+            </div>
+          </div>
+
+          <!-- No Discount Case -->
+          <div *ngIf="!hasDiscount() && medicine.originalPrice" class="price-details">
+            <div class="mrp-info">
+              <span class="mrp-text">M.R.P.: ₹{{ formatPrice(medicine.originalPrice) }}</span>
+              <span class="inclusive-text">(Inclusive of all taxes)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Highlights -->
+        <div class="highlights-section mb-4" *ngIf="medicine.productHighlights?.length">
+          <h5>Product Highlights</h5>
+          <ul class="highlights-list">
+            <li *ngFor="let point of medicine.productHighlights">{{ point }}</li>
+          </ul>
+        </div>
+
+        <!-- Key Benefits -->
+        <div class="benefits-section mb-4" *ngIf="medicine.keyBenefits?.length">
+          <h5>Key Benefits</h5>
+          <ul class="benefits-list">
+            <li *ngFor="let benefit of medicine.keyBenefits">{{ benefit }}</li>
+          </ul>
+        </div>
+
+        <!-- Product Form -->
+        <div class="product-form-info mb-3" *ngIf="medicine.productForm">
+          <strong>Product Form:</strong> {{ medicine.productForm }}
+        </div>
+
+        <!-- Quantity Selection -->
+        <div class="quantity-section mb-4">
+          <label class="quantity-label">Quantity:</label>
+          <select [(ngModel)]="selectedQty" class="quantity-select">
+            <option *ngFor="let qty of medicine.packSizes" [value]="qty">{{ qty }}</option>
+          </select>
+        </div>
+
+        <!-- Add to Cart Button -->
+        <button class="btn btn-primary btn-lg add-to-cart-btn" (click)="addToCart()">
+          Add to Cart
+        </button>
+
+        <!-- Delivery Info -->
+        <div class="delivery-info mt-3">
+          <strong>🕒 Get by {{ medicine.deliveryTime }}</strong>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="additional-info mt-4">
+          <div class="info-item" *ngIf="medicine.countryOfOrigin">
+            <strong>Country of Origin:</strong> {{ medicine.countryOfOrigin }}
+          </div>
+          <div class="info-item" *ngIf="medicine.prescriptionRequired !== null">
+            <strong>Prescription Required:</strong> {{ medicine.prescriptionRequired ? 'Yes' : 'No' }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detailed Description Section -->
+    <div class="detailed-description mt-5">
+      <!-- Description -->
+      <div class="description-section mb-4" *ngIf="medicine.description">
+        <h4>Description</h4>
+        <p>{{ medicine.description }}</p>
+      </div>
+
+      <!-- Key Ingredients -->
+      <div class="ingredients-section mb-4" *ngIf="medicine.keyIngredients?.length">
+        <h4>Key Ingredients</h4>
+        <ul>
+          <li *ngFor="let ingredient of medicine.keyIngredients">{{ ingredient }}</li>
+        </ul>
+      </div>
+
+      <!-- How to Use -->
+      <div class="usage-section mb-4" *ngIf="medicine.howToUse">
+        <h4>How to Use</h4>
+        <p>{{ medicine.howToUse }}</p>
+      </div>
+
+      <!-- Safety Information -->
+      <div class="safety-section mb-4" *ngIf="medicine.safetyAdvise?.length">
+        <h4>Safety Information</h4>
+        <ul>
+          <li *ngFor="let safety of medicine.safetyAdvise">{{ safety }}</li>
+        </ul>
+      </div>
+
+      <!-- Side Effects -->
+      <div class="side-effects-section mb-4" *ngIf="medicine.commonSideEffects">
+        <h4>Common Side Effects</h4>
+        <p>{{ medicine.commonSideEffects }}</p>
+      </div>
+
+      <!-- Storage Instructions -->
+      <div class="storage-section mb-4" *ngIf="medicine.storage">
+        <h4>Storage Instructions</h4>
+        <p>{{ medicine.storage }}</p>
+      </div>
+
+      <!-- Additional Information -->
+      <div class="additional-info-section mb-4" *ngIf="medicine.information">
+        <h4>Additional Information</h4>
+        <p>{{ medicine.information }}</p>
+      </div>
+
+      <!-- How It Works -->
+      <div class="mechanism-section mb-4" *ngIf="medicine.howItWorks">
+        <h4>How It Works</h4>
+        <p>{{ medicine.howItWorks }}</p>
+      </div>
+
+      <!-- Salt Composition -->
+      <div class="composition-section mb-4" *ngIf="medicine.saltComposition">
+        <h4>Salt Composition</h4>
+        <p>{{ medicine.saltComposition }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEGACY: Health Medicine Type -->
+  <div *ngIf="!isUsingManagementApi() && medicineType === 'health'" class="container mt-4 product-detail">
+    <div class="row">
+      <!-- Desktop -->
       <div class="col-md-6 d-flex" *ngIf="!isMobile">
         <div class="d-flex flex-column me-3">
           <img *ngFor="let img of medicine.images"
@@ -18,7 +241,7 @@
         </div>
       </div>
 
-      
+      <!-- Mobile carousel -->
       <div *ngIf="isMobile" class="mobile-carousel">
         <div class="carousel-wrapper">
           <div class="carousel-track" [style.transform]="'translateX(-' + currentIndex*100 + '%)'">
@@ -36,7 +259,7 @@
         </div>
       </div>
 
-      
+      <!-- Product Details -->
       <div class="col mt-3">
         <h3>{{ medicine.name }}</h3>
         <p class="manufacturer">{{ medicine.manufacturer }}</p>
@@ -71,7 +294,7 @@
       </div>
     </div>
 
-   
+    <!-- Description Section -->
     <div class="description my-4">
       <p class="mb-1">{{ medicine.introduction }}</p>
       <p class="headings mb-1">{{ medicine.description }}</p>
@@ -85,10 +308,9 @@
       <p class="mb-1">{{ medicine.storage }}</p>
     </div>
   </div>
-</ng-container> -->
 
-<ng-container *ngIf="medicineType === 'otc' && isLoaded && !hasError; else loadingOrError">
-  <div class="container mt-4 product-detail">
+  <!-- LEGACY: OTC Medicine Type -->
+  <div *ngIf="!isUsingManagementApi() && medicineType === 'otc'" class="container mt-4 product-detail">
     <div class="row">
       <!-- Desktop -->
       <div class="col-md-6 d-flex" *ngIf="!isMobile">
@@ -98,42 +320,40 @@
                class="thumb-img mb-2"
                (click)="selectedImage = img" />
         </div>
-       <!-- Main Image + Zoom Preview -->
- <div class="product-view">
-  <div
-    class="zoom-container"
-    (mousemove)="onMouseMove($event)"
-    (mouseleave)="onMouseLeave()"
-    (mouseenter)="onMouseEnter()"
-  >
-    <img [src]="selectedImage" class="main-img" alt="product image" />
+        <!-- Main Image + Zoom Preview -->
+        <div class="product-view">
+          <div
+            class="zoom-container"
+            (mousemove)="onMouseMove($event)"
+            (mouseleave)="onMouseLeave()"
+            (mouseenter)="onMouseEnter()"
+          >
+            <img [src]="selectedImage" class="main-img" alt="product image" />
 
-    <div
-      class="zoom-lens"
-      *ngIf="isHovering"
-      [ngStyle]="{ top: lensY + 'px', left: lensX + 'px' }"
-    ></div>
-  </div>
+            <div
+              class="zoom-lens"
+              *ngIf="isHovering"
+              [ngStyle]="{ top: lensY + 'px', left: lensX + 'px' }"
+            ></div>
+          </div>
 
-  <div class="zoom-result" *ngIf="isHovering">
-    <img
-      [src]="selectedImage"
-      [ngStyle]="{
-        transform:
-          'translate(' +
-          -zoomX * zoomScale +
-          'px, ' +
-          -zoomY * zoomScale +
-          'px) scale(' +
-          zoomScale +
-          ')'
-      }"
-      alt="zoomed preview"
-    />
-  </div>
-</div>
-
-
+          <div class="zoom-result" *ngIf="isHovering">
+            <img
+              [src]="selectedImage"
+              [ngStyle]="{
+                transform:
+                  'translate(' +
+                  -zoomX * zoomScale +
+                  'px, ' +
+                  -zoomY * zoomScale +
+                  'px) scale(' +
+                  zoomScale +
+                  ')'
+              }"
+              alt="zoomed preview"
+            />
+          </div>
+        </div>
       </div>
       
       <!-- Mobile carousel -->
@@ -169,7 +389,6 @@
         <div class="price-box my-2 mt-3">
           <h4 class="text-black">
             ₹{{ product.price }}
-            <!-- ₹{{ product.price }} <small class="text-muted">₹{{ product.mrp }}</small> -->
             <span class="text-success" *ngIf="product.discount">{{ product.discount }}% off</span>
           </h4>
         </div>
@@ -182,10 +401,6 @@
         </div>
 
         <button class="btn btnCls btn-lg mt-3" (click)="addToCartOtc()">Add to cart</button>
-
-        <!-- <div class="delivery mt-3">
-          <strong>Get by {{ product.deliveryTime }}</strong>
-        </div> -->
       </div>
     </div>
 
@@ -204,10 +419,6 @@
   </div>
 </ng-container>
 
-<!-- <ng-template #loadingOrError>
-  <p *ngIf="!isLoaded">Loading medicine details…</p>
-  <p *ngIf="isLoaded && hasError">Could not load medicine details.</p>
-</ng-template> -->
 <ng-template #loadingOrError>
   <div *ngIf="!isLoaded" class="vm-loading" role="status" aria-live="polite">
     <div class="vm-spinner" aria-hidden="true"></div>
@@ -218,14 +429,6 @@
     Could not load medicine details.
   </p>
 </ng-template>
-
-
-<app-common-filter-component
-  [title]="'Men Care'"
-  [endpoint]="'otc'"
-  [productForm]="'Oil'">
-</app-common-filter-component>
-
 
 <app-footer></app-footer>
 <app-mobile-footer-nav></app-mobile-footer-nav>
