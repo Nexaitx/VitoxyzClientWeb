@@ -134,12 +134,12 @@
                 <strong>Packaging:</strong> {{ medicine.packaging }}
               </div>
 
-              <p class="medicine-description" *ngIf="medicine.description">
+              <!-- <p class="medicine-description" *ngIf="medicine.description">
                 {{ (medicine.description.length > 150) ? (medicine.description | slice:0:150) + '...' : medicine.description }}
-              </p>
+              </p> -->
             </div>
 
-            <div class="medicine-actions">
+            <!-- <div class="medicine-actions">
               <button class="add-to-cart-btn" 
                       (click)="addToCart(medicine, $event)">
                 Add to Cart
@@ -148,7 +148,26 @@
                       (click)="onMedicineClick(medicine); $event.stopPropagation()">
                 View Details
               </button>
-            </div>
+            </div> -->
+            <!-- inside medicine-card, replace add/quantity area with: -->
+<ng-container *ngIf="(quantities[getMedicineKey(medicine)] || 0) === 0; else quantityTemplate">
+  <button class="btn btn-sm rounded-pill btn-primary text-light"
+          (click)="addToCart(medicine, $event)">
+    Add
+  </button>
+</ng-container>
+
+<ng-template #quantityTemplate>
+  <div class="quantity-control btn-group rounded-pill text-white btn-group-sm" role="group">
+    <button class="btn text-white left"
+            (click)="decrement(medicine); $event.stopPropagation()">−</button>
+    <span class="btn">{{ quantities[getMedicineKey(medicine)] || 0 }}</span>
+    <button class="btn text-white right"
+            (click)="increment(medicine); $event.stopPropagation()">+</button>
+  </div>
+</ng-template>
+
+
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { MedicineService, Medicine } from '../../core/services/medicine.service';
@@ -17,7 +17,7 @@ export class MedicineSliderComponent implements OnInit, OnDestroy {
   @Input() maxItems: number = 10;
   @Input() autoSlide: boolean = true;
   @Input() slideInterval: number = 5000;
-
+@ViewChild('sliderContainer', { static: false }) sliderContainer!: ElementRef;
   medicines: Medicine[] = [];
   currentSlide = 0;
   isLoading = false;
@@ -34,10 +34,7 @@ export class MedicineSliderComponent implements OnInit, OnDestroy {
   itemsPerSlide = 4;
   visibleItems = 4;
 
-  constructor(
-    private medicineService: MedicineService,
-    private router: Router
-  ) {}
+  constructor( private medicineService: MedicineService,private router: Router) {}
 
   ngOnInit(): void {
     this.calculateItemsPerSlide();
@@ -49,7 +46,14 @@ export class MedicineSliderComponent implements OnInit, OnDestroy {
 
     window.addEventListener('resize', this.calculateItemsPerSlide.bind(this));
   }
-
+ scroll(direction: 'left' | 'right'): void {
+    if (!this.sliderContainer) return;
+    const scrollAmount = this.sliderContainer.nativeElement.offsetWidth * 0.8;
+    this.sliderContainer.nativeElement.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth'
+    });
+  }
   ngOnDestroy(): void {
     if (this.slideTimer) {
       clearInterval(this.slideTimer);

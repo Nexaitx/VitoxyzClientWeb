@@ -7,7 +7,7 @@
       (click)="onSeeAllClick()" 
       class="see-all-btn"
       aria-label="See all medicines">
-      See All →
+      See All 
     </button>
   </div>
 
@@ -24,13 +24,13 @@
   </div>
 
   <!-- Slider Content -->
-  <div 
+  <!-- <div 
     *ngIf="!isLoading && medicines.length > 0" 
     class="slider-wrapper"
     (mouseenter)="pauseAutoSlide()"
     (mouseleave)="resumeAutoSlide()">
     
-    <!-- Navigation Arrows -->
+    
     <button 
       *ngIf="medicines.length > itemsPerSlide"
       (click)="prevSlide()" 
@@ -39,14 +39,14 @@
       ‹
     </button>
 
-    <!-- Medicine Cards -->
+  
     <div class="slider-track">
       <div 
-        *ngFor="let medicine of getVisibleMedicines(); let i = index" 
+        *ngFor="let medicine of getVisibleMedicines(); " 
         class="medicine-card"
         (click)="onMedicineClick(medicine)">
         
-        <!-- Medicine Image with Gallery -->
+        
         <div class="medicine-image">
           <img 
             [src]="getFirstImage(medicine)" 
@@ -54,7 +54,7 @@
             (error)="onImageError(medicine, $event)"
             class="medicine-img" />
           
-          <!-- Multiple Images Indicator -->
+         
           <div 
             *ngIf="hasImages(medicine) && medicine.imageUrls && medicine.imageUrls.length > 1" 
             class="image-count-badge"
@@ -62,13 +62,13 @@
             {{ medicine.imageUrls.length }} 📷
           </div>
           
-          <!-- Discount Badge -->
+         
           <div *ngIf="hasDiscount(medicine)" class="discount-badge">
             {{ getDiscountPercentage(medicine) }}% OFF
           </div>
         </div>
 
-        <!-- Medicine Details -->
+    
         <div class="medicine-content">
           <h3 class="medicine-name" [title]="medicine.name">
             {{ medicine.name }}
@@ -82,7 +82,7 @@
             By {{ medicine.manufacturer }}
           </div>
 
-          <!-- Price Section -->
+     
           <div class="price-section">
             <span class="current-price">
               ₹{{ getDiscountPrice(medicine) }}
@@ -92,20 +92,17 @@
             </span>
           </div>
 
-          <!-- Product Form -->
+         
           <div *ngIf="medicine.productForm" class="product-form">
             {{ medicine.productForm }}
           </div>
 
-          <!-- Add to Cart Button -->
-          <!-- <button class="add-to-cart-btn" (click)="$event.stopPropagation(); addToCart(medicine)">
-            Add to Cart
-          </button> -->
+        
         </div>
       </div>
     </div>
 
-    <!-- Navigation Arrows -->
+    
     <button 
       *ngIf="medicines.length > itemsPerSlide"
       (click)="nextSlide()" 
@@ -113,10 +110,77 @@
       aria-label="Next slide">
       ›
     </button>
+  </div> -->
+
+<div *ngIf="!isLoading && medicines.length > 0" class="carousel-wrapper">
+     
+     <button
+      class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
+      (click)="scroll('left')"
+    >
+       </button>
+
+     <div #sliderContainer class="slider-scroll">
+       <div 
+      class="medicine-card"
+      *ngFor="let medicine of medicines"
+      (click)="onMedicineClick(medicine)">
+      
+      <!-- Medicine Image -->
+      <div class="medicine-image">
+        <img 
+          [src]="getFirstImage(medicine)" 
+          [alt]="medicine.name"
+          (error)="onImageError(medicine, $event)" />
+          <div 
+            *ngIf="hasImages(medicine) && medicine.imageUrls && medicine.imageUrls.length > 1" 
+            class="image-count-badge"
+            (click)="openImageGallery(medicine, $event)">
+            {{ medicine.imageUrls.length }} 📷
+          </div>
+          
+         
+          <div *ngIf="hasDiscount(medicine)" class="discount-badge">
+            {{ getDiscountPercentage(medicine) }}% OFF
+          </div>
+      </div>
+
+      <!-- Medicine Info -->
+      <div class="medicine-content">
+        <h3 class="medicine-name" [title]="medicine.name">
+          {{ medicine.name }}
+        </h3>
+        <div class="medicine-category">
+            {{ medicine.category }}
+          </div>
+        <div class="medicine-manufacturer" *ngIf="medicine.manufacturer">
+            By {{ medicine.manufacturer }}
+          </div>
+
+        <div class="price-section">
+          <span class="current-price text-black">₹{{ getDiscountPrice(medicine) }}</span>
+          <span *ngIf="hasDiscount(medicine)" class="original-price ">
+            ₹{{ medicine.originalPrice }}
+          </span>
+        </div>
+         <div *ngIf="medicine.productForm" class="product-form">
+            {{ medicine.productForm }}
+          </div>
+        <!-- <button class="add-btn" (click)="$event.stopPropagation(); addToCart(medicine, $event)">
+          Add
+        </button> -->
+      </div>
+    </div>
+     </div>
+     <button
+       class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
+     (click)="scroll('right')"
+    >
+     </button>
   </div>
 
   <!-- Dots Indicator -->
-  <div 
+  <!-- <div 
     *ngIf="!isLoading && medicines.length > itemsPerSlide" 
     class="slider-dots">
     <button 
@@ -126,7 +190,7 @@
       class="slider-dot"
       [attr.aria-label]="'Go to slide ' + (i + 1)">
     </button>
-  </div>
+  </div> -->
 
   <!-- No Results -->
   <div *ngIf="!isLoading && medicines.length === 0" class="no-results">

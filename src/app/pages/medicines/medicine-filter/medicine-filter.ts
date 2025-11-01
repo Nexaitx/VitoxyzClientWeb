@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MedicineService, Medicine, FilterParams } from '../../../core/services/medicine.service';
 import { finalize } from 'rxjs/operators';
-
+import { Subscription } from 'rxjs';
+import { CartService } from '@src/app/core/cart.service';
 @Component({
   selector: 'app-medicine-filter',
   templateUrl: './medicine-filter.html',
@@ -36,10 +37,23 @@ export class MedicineFilterComponent implements OnInit {
   
   // Error handling
   error: string = '';
+  quantities: { [productId: string]: number } = {};
+  addingProducts: Set<string> = new Set();
+  addedProducts: Set<string> = new Set();
+  loadingStates: { [productId: string]: boolean } = {};
 
+  // Simple toast
+  toastMessage: string = '';
+  toastType: 'success' | 'error' = 'success';
+  showToast: boolean = false;
+
+  // optional: if you use endpoints to decide productType
+  endpoint: string = 'otc';
+  private subs: Subscription[] = [];
   constructor(
     private medicineService: MedicineService,
-    private router: Router
+    private router: Router,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +64,7 @@ export class MedicineFilterComponent implements OnInit {
 
   loadCategories(): void {
     this.isLoadingCategories = true;
-    this.medicineService.getCategories()
+    const sub = this.medicineService.getCategories()
       .pipe(finalize(() => this.isLoadingCategories = false))
       .subscribe({
         next: (response) => {
@@ -65,11 +79,12 @@ export class MedicineFilterComponent implements OnInit {
           console.error('Error loading categories:', err);
         }
       });
+      this.subs.push(sub);
   }
 
   loadProductForms(): void {
     this.isLoadingProductForms = true;
-    this.medicineService.getProductForms()
+    const sub = this.medicineService.getProductForms()
       .pipe(finalize(() => this.isLoadingProductForms = false))
       .subscribe({
         next: (response) => {
@@ -84,6 +99,7 @@ export class MedicineFilterComponent implements OnInit {
           console.error('Error loading product forms:', err);
         }
       });
+      this.subs.push(sub);
   }
 
   loadMedicines(): void {
@@ -148,27 +164,123 @@ export class MedicineFilterComponent implements OnInit {
       return 'health'; // default fallback
     }
   }
-
+getMedicineKey(medicine: any): string {
+  return medicine.id ?? medicine.productId ?? medicine.managementId ?? '';
+}
   // NEW: Add to cart functionality
-  addToCart(medicine: Medicine, event: Event): void {
-    event.stopPropagation();
-    
-    // You can implement cart functionality here
-    console.log('Add to cart clicked for:', medicine.name);
-    
-    // Optional: Show quick add confirmation
-    alert(`${medicine.name} added to cart!`);
-    
-    // Or you can call your cart service directly
-    // this.cartService.addItem({
-    //   medicineId: medicine.managementId,
-    //   productId: medicine.productId,
-    //   quantity: 1,
-    //   productType: this.getMedicineType(medicine),
-    //   name: medicine.name,
-    //   price: this.getDiscountPrice(medicine),
-    //   image: this.getFirstImage(medicine)
-    // }).subscribe(...);
+  addToCart(medicine: any, event?: Event): void {
+    if (event) { event.stopPropagation(); }
+
+    const productId = (medicine.id ?? medicine.productId ?? medicine.managementId);
+    if (!productId) {
+      console.error('Cannot add to cart: Product ID missing', medicine);
+      this.showCustomToast('Failed to add product to cart', 'error');
+      return;
+    }
+    const productKey = String(productId);
+
+    // mark loading/adding
+    this.addingProducts.add(productKey);
+    this.loadingStates[productKey] = true;
+
+    // default initial quantity
+    this.quantities[productKey] = this.quantities[productKey] ? this.quantities[productKey] : 1;
+
+    // Build cart item (shape used by your local cart service)
+    const cartItem = {
+      id: productKey,
+      name: medicine.name,
+      price: this.getDiscountPrice(medicine),
+      mrp: medicine.originalPrice ?? medicine.mrp,
+      image: this.getFirstImage(medicine),
+      qty: medicine.packaging ?? '1',
+      count: this.quantities[productKey],
+      productType: this.endpoint?.includes('otc') ? 'otc' : 'otc',
+      productId: productKey
+    };
+
+    try {
+      // Add to local cart (implement in your CartService)
+      if (typeof this.cartService.addToLocalCart === 'function') {
+        this.cartService.addToLocalCart(cartItem);
+      }else {
+        console.warn('cartService.localAdd not found; skipping local add');
+      }
+
+      this.showCustomToast(`${medicine.name} added to cart successfully!`, 'success');
+
+      // Update UI state
+      this.addingProducts.delete(productKey);
+      this.addedProducts.add(productKey);
+      this.loadingStates[productKey] = false;
+
+      // Optional: sync to backend if logged in
+      if (typeof this.cartService.isLoggedIn === 'function' && this.cartService.isLoggedIn()) {
+        const backendReq = this.cartService.addItem?.({
+          medicineId: productKey.toString(),
+          quantity: this.quantities[productKey] || 1,
+          productType: cartItem.productType
+        });
+
+        // if addItem returns an observable
+        if (backendReq && typeof backendReq.subscribe === 'function') {
+          const sub = backendReq.subscribe({
+            next: () => console.log('Item synced with backend'),
+            error: (err: any) => console.error('Failed to sync with backend:', err)
+          });
+          this.subs.push(sub);
+        }
+      }
+
+      // Reset "added" visual state after a short delay
+      setTimeout(() => {
+        this.addedProducts.delete(productKey);
+      }, 2000);
+    } catch (err) {
+      console.error('addToCart error', err);
+      this.showCustomToast('Failed to add product to cart', 'error');
+      this.addingProducts.delete(productKey);
+      this.loadingStates[productKey] = false;
+    }
+  }
+
+  increment(medicine: any): void {
+    const productId = (medicine.id ?? medicine.productId ?? medicine.managementId);
+    if (!productId) return;
+    const key = String(productId);
+    this.quantities[key] = (this.quantities[key] || 0) + 1;
+    console.log(`Incremented quantity for product ${key}: ${this.quantities[key]}`);
+    // Optionally update cart local/backend here
+  }
+
+  decrement(medicine: any): void {
+    const productId = (medicine.id ?? medicine.productId ?? medicine.managementId);
+    if (!productId) return;
+    const key = String(productId);
+    const current = this.quantities[key] || 0;
+    if (current > 1) {
+      this.quantities[key] = current - 1;
+      console.log(`Decremented quantity for product ${key}: ${this.quantities[key]}`);
+    } else {
+      // remove from UI/cart
+      this.quantities[key] = 0;
+      console.log(`Removed product ${key} from cart (quantity set to 0)`);
+      // optionally call local remove: this.cartService.removeFromLocalCart(key);
+    }
+  }
+
+  private showCustomToast(message: string, type: 'success' | 'error' = 'success') {
+    this.toastMessage = message;
+    this.toastType = type;
+    this.showToast = true;
+
+    setTimeout(() => {
+      this.showToast = false;
+    }, 3000);
+  }
+
+  isLoading(productId: string): boolean {
+    return !!this.loadingStates[productId];
   }
 
   // Image related methods

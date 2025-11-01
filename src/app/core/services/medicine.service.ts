@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { API_URL } from '../const';
 
 export interface Medicine {
   managementId: number;
@@ -72,7 +73,7 @@ export interface FilterParams {
   providedIn: 'root'
 })
 export class MedicineService {
-  private baseUrl = 'http://localhost:8080/api/public/medicines';
+  private baseUrl = `${API_URL}/public/medicines`;
 
   constructor(private http: HttpClient) { }
 

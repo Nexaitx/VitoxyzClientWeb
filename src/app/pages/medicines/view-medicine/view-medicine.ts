@@ -124,7 +124,7 @@ export class ViewMedicine implements OnInit {
 
   // METHOD 1: New Management ID API
   private getMedicineByManagementId(managementId: string) {
-    this.http.get<any>(`http://localhost:8080/api/public/medicines/management/${managementId}`)
+    this.http.get<any>(`${API_URL}/public/medicines/management/${managementId}`)
       .subscribe({
         next: (res) => {
           if (res?.success && res.data) {
