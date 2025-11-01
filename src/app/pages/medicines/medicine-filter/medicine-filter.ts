@@ -6,12 +6,14 @@ import { MedicineService, Medicine, FilterParams } from '../../../core/services/
 import { finalize } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { CartService } from '@src/app/core/cart.service';
+import { Footer } from "../../footer/footer";
+import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 @Component({
   selector: 'app-medicine-filter',
   templateUrl: './medicine-filter.html',
   styleUrls: ['./medicine-filter.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule]
+  imports: [CommonModule, FormsModule, RouterModule, Footer, MobileFooterNavComponent]
 })
 export class MedicineFilterComponent implements OnInit {
   categories: string[] = [];
