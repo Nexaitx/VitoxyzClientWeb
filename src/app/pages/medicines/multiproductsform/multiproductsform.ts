@@ -519,6 +519,15 @@ getProductKey(product: any): string {
     // this.resetPagination(); this.fetchProducts(this.productForms, 0, true);
   }
 
+  filterByCategory1(category: string) {
+    console.log('🔄 Category filter applied:', category);
+    this.isLoading = true;
+    this.selectedCategory$.next(category);
+    this.currentPage$.next(0);
+    // Optionally call fetchProducts again based on filters
+    // this.resetPagination(); this.fetchProducts(this.productForms, 0, true);
+  }
+
   filterByBrands(brands: string[]) {
     console.log('🔄 Brands filter applied:', brands);
     this.isLoading = true;
@@ -1107,587 +1116,587 @@ getCategoryLabel(value: string): string {
     }
   ];
  
- Diabetes = [
-    {
-      productForm: 'Self Test Kit',
-      label: 'Self Test Kit',
-      imageUrl: 'assets/product-forms/cream.avif',
-      altText: 'Self Test Kit',
-      cssClass: 'cream-category',
-      description: 'Self Test Kit health'
-    },
-    {
-      productForm: 'Injection',
-      label: 'Injection',
-      imageUrl: 'assets/product-forms/tablet.avif',
-      altText: 'Injection',
-      cssClass: 'tablet-category',
-      description: 'Injection for health'
-    },
-    {
-      productForm: 'Test Strip',
-      label: 'Test Strip',
-      imageUrl: 'assets/product-forms/syrup.avif',
-      altText: 'Medicinal Test Strip',
-      cssClass: 'syrup-category',
-      description: 'Test Strip for  health'
-    },
-    {
-      productForm: 'Tablet SR',
-      label: 'Tablet SR',
-      imageUrl: 'assets/product-forms/injection.avif',
-      altText: 'Medical Injections',
-      cssClass: 'injection-category',
-      description: 'Tablet SR'
-    },
-    {
-      productForm: 'Tablet',
-      label: 'Tablet',
-      imageUrl: 'assets/product-forms/capsule.avif',
-      altText: 'Medicine Capsules',
-      cssClass: 'capsule-category',
-      description: 'Tablet for health'
-    },
-    {
-      productForm: 'Needle',
-      label: 'Needle',
-      imageUrl: 'assets/product-forms/Needle.avif',
-      altText: 'Needle',
-      cssClass: 'lotion-category',
-      description: 'Needle  for  health'
-    },
-     {
-      productForm: 'Insulin Syringe (Syringe)',
-      label: 'Insulin Syringe (Syringe)',
-      imageUrl: 'assets/product-forms/Insulin Syringe (Syringe).avif',
-      altText: 'Insulin Syringe (Syringe)',
-      cssClass: 'lotion-category',
-      description: 'Insulin Syringe (Syringe)  for  health'
-    },
-     {
-      productForm: 'Lancet',
-      label: 'Lancet',
-      imageUrl: 'assets/product-forms/Lancet.avif',
-      altText: 'Lancet',
-      cssClass: 'lotion-category',
-      description: 'Lancet  for  health'
-    }
-    ,
-     {
-      productForm: 'Test kit',
-      label: 'Test kit',
-      imageUrl: 'assets/product-forms/Test kit.avif',
-      altText: 'Test kit',
-      cssClass: 'lotion-category',
-      description: 'Test kit  for  health'
-    },
-    
-  ];
+  Diabetes1 = [
+      {
+        productForm: 'Self Test Kit',
+        label: 'Self Test Kit',
+        imageUrl: 'assets/product-forms/cream.avif',
+        altText: 'Self Test Kit',
+        cssClass: 'cream-category',
+        description: 'Self Test Kit health'
+      },
+      {
+        productForm: 'Injection',
+        label: 'Injection',
+        imageUrl: 'assets/product-forms/tablet.avif',
+        altText: 'Injection',
+        cssClass: 'tablet-category',
+        description: 'Injection for health'
+      },
+      {
+        productForm: 'Test Strip',
+        label: 'Test Strip',
+        imageUrl: 'assets/product-forms/syrup.avif',
+        altText: 'Medicinal Test Strip',
+        cssClass: 'syrup-category',
+        description: 'Test Strip for  health'
+      },
+      {
+        productForm: 'Tablet SR',
+        label: 'Tablet SR',
+        imageUrl: 'assets/product-forms/injection.avif',
+        altText: 'Medical Injections',
+        cssClass: 'injection-category',
+        description: 'Tablet SR'
+      },
+      {
+        productForm: 'Tablet',
+        label: 'Tablet',
+        imageUrl: 'assets/product-forms/capsule.avif',
+        altText: 'Medicine Capsules',
+        cssClass: 'capsule-category',
+        description: 'Tablet for health'
+      },
+      {
+        productForm: 'Needle',
+        label: 'Needle',
+        imageUrl: 'assets/product-forms/Needle.avif',
+        altText: 'Needle',
+        cssClass: 'lotion-category',
+        description: 'Needle  for  health'
+      },
+      {
+        productForm: 'Insulin Syringe (Syringe)',
+        label: 'Insulin Syringe (Syringe)',
+        imageUrl: 'assets/product-forms/Insulin Syringe (Syringe).avif',
+        altText: 'Insulin Syringe (Syringe)',
+        cssClass: 'lotion-category',
+        description: 'Insulin Syringe (Syringe)  for  health'
+      },
+      {
+        productForm: 'Lancet',
+        label: 'Lancet',
+        imageUrl: 'assets/product-forms/Lancet.avif',
+        altText: 'Lancet',
+        cssClass: 'lotion-category',
+        description: 'Lancet  for  health'
+      }
+      ,
+      {
+        productForm: 'Test kit',
+        label: 'Test kit',
+        imageUrl: 'assets/product-forms/Test kit.avif',
+        altText: 'Test kit',
+        cssClass: 'lotion-category',
+        description: 'Test kit  for  health'
+      },
+      
+    ];
 
-   HeartRatecare = [
-    {
-      productForm: 'Capsule',
-      label: 'Capsule',
-      imageUrl: 'assets/product-forms/Capsule.avif',
-      altText: 'Capsule',
-      cssClass: 'cream-category',
-      description: 'Capsule for  health'
-    },
-    {
-      productForm: 'Syrup',
-      label: 'Syrup',
-      imageUrl: 'assets/product-forms/Syrup.avif',
-      altText: 'Syrup',
-      cssClass: 'tablet-category',
-      description: 'Syrup for  health'
-    },
-   
-    {
-      productForm: 'Tablet',
-      label: 'Tablet',
-      imageUrl: 'assets/product-forms/Tablet.avif',
-      altText: 'Medicinal Tablet',
-      cssClass: 'syrup-category',
-      description: 'Tablet for  health'
-    },
-    {
-      productForm: 'Injection',
-      label: 'Injection',
-      imageUrl: 'assets/product-forms/injection.avif',
-      altText: 'Medical Injections',
-      cssClass: 'injection-category',
-      description: 'Injection'
-    },
-    {
-      productForm: 'Solution for Infusion',
-      label: 'Solution for Infusion',
-      imageUrl: 'assets/product-forms/Solution for Infusion.avif',
-      altText: 'Medicine Solution for Infusion',
-      cssClass: 'capsule-category',
-      description: 'Solution for Infusion for  health'
-    },
-    {
-      productForm: 'Infusion',
-      label: 'Infusion',
-      imageUrl: 'assets/product-forms/Infusion.avif',
-      altText: 'Infusion',
-      cssClass: 'lotion-category',
-      description: 'Infusion  for  health'
-    },
+    HeartRatecare1 = [
+      {
+        productForm: 'Capsule',
+        label: 'Capsule',
+        imageUrl: 'assets/product-forms/Capsule.avif',
+        altText: 'Capsule',
+        cssClass: 'cream-category',
+        description: 'Capsule for  health'
+      },
+      {
+        productForm: 'Syrup',
+        label: 'Syrup',
+        imageUrl: 'assets/product-forms/Syrup.avif',
+        altText: 'Syrup',
+        cssClass: 'tablet-category',
+        description: 'Syrup for  health'
+      },
     
-  ];
-  StomachCare = [
-    {
-      productForm: 'Capsule',
-      label: 'Capsule',
-      imageUrl: 'assets/product-forms/Capsule.avif',
-      altText: 'Capsule',
-      cssClass: 'cream-category',
-      description: 'Capsule for  health'
-    },
-    {
-      productForm: 'Digestive Tablet',
-      label: 'Digestive Tablet',
-      imageUrl: 'assets/product-forms/Digestive Tablet.avif',
-      altText: 'Digestive Tablet',
-      cssClass: 'tablet-category',
-      description: 'Digestive Tablet for  health'
-    },
-    {
-      productForm: 'Tablet',
-      label: 'Tablet',
-      imageUrl: 'assets/product-forms/Tablet.avif',
-      altText: 'Medicinal Tablet',
-      cssClass: 'syrup-category',
-      description: 'Tablet for  health'
-    },
-    {
-      productForm: 'Oral Suspension',
-      label: 'Oral Suspension',
-      imageUrl: 'assets/product-forms/Oral Suspension.avif',
-      altText: 'Medical Oral Suspension',
-      cssClass: 'injection-category',
-      description: 'Oral Suspension'
-    },
-    {
-      productForm: 'Syrup',
-      label: 'Syrup',
-      imageUrl: 'assets/product-forms/Syrup.avif',
-      altText: 'Medicine Syrup',
-      cssClass: 'capsule-category',
-      description: 'Syrup for  health'
-    },
-    {
-      productForm: 'Powder for Oral Suspension',
-      label: 'Powder for Oral Suspension',
-      imageUrl: 'assets/product-forms/Powder for Oral Suspension.avif',
-      altText: 'Powder for Oral Suspension',
-      cssClass: 'lotion-category',
-      description: 'Powder for Oral Suspension  for  health'
-    },
-     {
-      productForm: 'Oral Solution',
-      label: 'Oral Solution',
-      imageUrl: 'assets/product-forms/Oral Solution.avif',
-      altText: 'Oral Solution',
-      cssClass: 'lotion-category',
-      description: 'Oral Solution  for  health'
-    },
-     {
-      productForm: 'Oral Liquid',
-      label: 'Oral Liquid',
-      imageUrl: 'assets/product-forms/Oral Liquid.avif',
-      altText: 'Oral Liquid',
-      cssClass: 'lotion-category',
-      description: 'Oral Liquid  for  health'
-    },
-     {
-      productForm: 'Oral Gel',
-      label: 'Oral Gel',
-      imageUrl: 'assets/product-forms/Oral Gel.avif',
-      altText: 'Oral Gel',
-      cssClass: 'lotion-category',
-      description: 'Oral Gel  for  health'
-    },
-     {
-      productForm: 'Powder for Oral Solution',
-      label: 'Powder for Oral Solution',
-      imageUrl: 'assets/product-forms/Powder for Oral Solution.avif',
-      altText: 'Powder for Oral Solution',
-      cssClass: 'lotion-category',
-      description: 'Powder for Oral Solution  for  health'
-    },
-   
-  ];
-   LiverCare = [
-    {
-      productForm: 'Capsule',
-      label: 'Capsule',
-      imageUrl: 'assets/product-forms/Capsule.avif',
-      altText: 'Capsule',
-      cssClass: 'cream-category',
-      description: 'Capsule for  health'
-    },
-    {
-      productForm: 'Syrup',
-      label: 'Syrup',
-      imageUrl: 'assets/product-forms/Syrup.avif',
-      altText: 'Syrup',
-      cssClass: 'tablet-category',
-      description: 'Syrup for  health'
-    },
-   
-    {
-      productForm: 'Tablet',
-      label: 'Tablet',
-      imageUrl: 'assets/product-forms/Tablet.avif',
-      altText: 'Medicinal Tablet',
-      cssClass: 'syrup-category',
-      description: 'Tablet for  health'
-    },
-    {
-      productForm: 'Granule',
-      label: 'Granule',
-      imageUrl: 'assets/product-forms/Granule.avif',
-      altText: 'Medical Granule',
-      cssClass: 'injection-category',
-      description: 'Granule'
-    },
-    {
-      productForm: 'Tonic',
-      label: 'Tonic',
-      imageUrl: 'assets/product-forms/Tonic.avif',
-      altText: 'Medicine Tonic',
-      cssClass: 'capsule-category',
-      description: 'Tonic for  health'
-    },
-    {
-      productForm: 'Liver Care Juice',
-      label: 'Liver Care Juice',
-      imageUrl: 'assets/product-forms/Liver Care Juice.avif',
-      altText: 'Liver Care Juice',
-      cssClass: 'lotion-category',
-      description: 'Liver Care Juice for  health'
-    },
+      {
+        productForm: 'Tablet',
+        label: 'Tablet',
+        imageUrl: 'assets/product-forms/Tablet.avif',
+        altText: 'Medicinal Tablet',
+        cssClass: 'syrup-category',
+        description: 'Tablet for  health'
+      },
+      {
+        productForm: 'Injection',
+        label: 'Injection',
+        imageUrl: 'assets/product-forms/injection.avif',
+        altText: 'Medical Injections',
+        cssClass: 'injection-category',
+        description: 'Injection'
+      },
+      {
+        productForm: 'Solution for Infusion',
+        label: 'Solution for Infusion',
+        imageUrl: 'assets/product-forms/Solution for Infusion.avif',
+        altText: 'Medicine Solution for Infusion',
+        cssClass: 'capsule-category',
+        description: 'Solution for Infusion for  health'
+      },
+      {
+        productForm: 'Infusion',
+        label: 'Infusion',
+        imageUrl: 'assets/product-forms/Infusion.avif',
+        altText: 'Infusion',
+        cssClass: 'lotion-category',
+        description: 'Infusion  for  health'
+      },
+      
+    ];
+    StomachCare1 = [
+      {
+        productForm: 'Capsule',
+        label: 'Capsule',
+        imageUrl: 'assets/product-forms/Capsule.avif',
+        altText: 'Capsule',
+        cssClass: 'cream-category',
+        description: 'Capsule for  health'
+      },
+      {
+        productForm: 'Digestive Tablet',
+        label: 'Digestive Tablet',
+        imageUrl: 'assets/product-forms/Digestive Tablet.avif',
+        altText: 'Digestive Tablet',
+        cssClass: 'tablet-category',
+        description: 'Digestive Tablet for  health'
+      },
+      {
+        productForm: 'Tablet',
+        label: 'Tablet',
+        imageUrl: 'assets/product-forms/Tablet.avif',
+        altText: 'Medicinal Tablet',
+        cssClass: 'syrup-category',
+        description: 'Tablet for  health'
+      },
+      {
+        productForm: 'Oral Suspension',
+        label: 'Oral Suspension',
+        imageUrl: 'assets/product-forms/Oral Suspension.avif',
+        altText: 'Medical Oral Suspension',
+        cssClass: 'injection-category',
+        description: 'Oral Suspension'
+      },
+      {
+        productForm: 'Syrup',
+        label: 'Syrup',
+        imageUrl: 'assets/product-forms/Syrup.avif',
+        altText: 'Medicine Syrup',
+        cssClass: 'capsule-category',
+        description: 'Syrup for  health'
+      },
+      {
+        productForm: 'Powder for Oral Suspension',
+        label: 'Powder for Oral Suspension',
+        imageUrl: 'assets/product-forms/Powder for Oral Suspension.avif',
+        altText: 'Powder for Oral Suspension',
+        cssClass: 'lotion-category',
+        description: 'Powder for Oral Suspension  for  health'
+      },
+      {
+        productForm: 'Oral Solution',
+        label: 'Oral Solution',
+        imageUrl: 'assets/product-forms/Oral Solution.avif',
+        altText: 'Oral Solution',
+        cssClass: 'lotion-category',
+        description: 'Oral Solution  for  health'
+      },
+      {
+        productForm: 'Oral Liquid',
+        label: 'Oral Liquid',
+        imageUrl: 'assets/product-forms/Oral Liquid.avif',
+        altText: 'Oral Liquid',
+        cssClass: 'lotion-category',
+        description: 'Oral Liquid  for  health'
+      },
+      {
+        productForm: 'Oral Gel',
+        label: 'Oral Gel',
+        imageUrl: 'assets/product-forms/Oral Gel.avif',
+        altText: 'Oral Gel',
+        cssClass: 'lotion-category',
+        description: 'Oral Gel  for  health'
+      },
+      {
+        productForm: 'Powder for Oral Solution',
+        label: 'Powder for Oral Solution',
+        imageUrl: 'assets/product-forms/Powder for Oral Solution.avif',
+        altText: 'Powder for Oral Solution',
+        cssClass: 'lotion-category',
+        description: 'Powder for Oral Solution  for  health'
+      },
     
-  ];
-    EyeCare = [
-    {
-      productForm: 'Eye Drop',
-      label: 'Eye Drop',
-      imageUrl: 'assets/product-forms/Eye Drop.avif',
-      altText: 'Eye Drop',
-      cssClass: 'cream-category',
-      description: 'Eye Drop for  health'
-    },
-    {
-      productForm: 'Eye Gel',
-      label: 'Eye Gel',
-      imageUrl: 'assets/product-forms/Eye Gel.avif',
-      altText: 'Eye Gel',
-      cssClass: 'tablet-category',
-      description: 'Eye Gel for  health'
-    },
-   
-    {
-      productForm: 'Eye Cream',
-      label: 'Eye Cream',
-      imageUrl: 'assets/product-forms/Eye Cream.avif',
-      altText: 'Eye Cream',
-      cssClass: 'syrup-category',
-      description: 'Eye Cream '
-    },
-    {
-      productForm: 'Eye Ointment',
-      label: 'Eye Ointment',
-      imageUrl: 'assets/product-forms/Eye Ointment.avif',
-      altText: 'Medical Eye Ointment',
-      cssClass: 'injection-category',
-      description: 'Eye Ointment'
-    },
-    {
-      productForm: 'Eye Pad',
-      label: 'Eye Pad',
-      imageUrl: 'assets/product-forms/Eye Pad.avif',
-      altText: 'Medicine Eye Pad',
-      cssClass: 'capsule-category',
-      description: 'Eye Pad'
-    },
-    {
-      productForm: 'Eye Capsule',
-      label: 'Eye Capsule',
-      imageUrl: 'assets/product-forms/Eye Capsule.avif',
-      altText: 'Eye Capsule',
-      cssClass: 'lotion-category',
-      description: 'Eye Capsule'
-    },
-     {
-      productForm: 'Eye/Ear Drop',
-      label: 'Eye/Ear Drop',
-      imageUrl: 'assets/product-forms/Eye/Ear Drop.avif',
-      altText: 'Eye/Ear Drop',
-      cssClass: 'lotion-category',
-      description: 'Eye/Ear Drop'
-    },
-     {
-      productForm: 'Ophthalmic Solution',
-      label: 'Ophthalmic Solution',
-      imageUrl: 'assets/product-forms/Ophthalmic Solution.avif',
-      altText: 'Ophthalmic Solution',
-      cssClass: 'lotion-category',
-      description: 'Ophthalmic Solution'
-    },
-     {
-      productForm: 'Lens Solution',
-      label: 'Lens Solution',
-      imageUrl: 'assets/product-forms/Lens Solution.avif',
-      altText: 'Lens Solution',
-      cssClass: 'lotion-category',
-      description: 'Lens Solution'
-    },
-     {
-      productForm: 'Reading Eyeglass',
-      label: 'Reading Eyeglass',
-      imageUrl: 'assets/product-forms/Reading Eyeglass.avif',
-      altText: 'Reading Eyeglass',
-      cssClass: 'lotion-category',
-      description: 'Reading Eyeglass'
-    },
-  ];
-    BoneAndJoint = [
-    {
-      productForm: 'Knee Support',
-      label: 'Knee Support',
-      imageUrl: 'assets/product-forms/Knee Support.avif',
-      altText: 'Knee Support',
-      cssClass: 'cream-category',
-      description: 'Knee Support for supporting bones and jointes'
-    },
-    {
-      productForm: 'Liniment',
-      label: 'Liniment',
-      imageUrl: 'assets/product-forms/Liniment.avif',
-      altText: 'Liniment',
-      cssClass: 'tablet-category',
-      description: 'Liniment for  health'
-    },
-   
-    {
-      productForm: 'Wrist Support',
-      label: 'Wrist Support',
-      imageUrl: 'assets/product-forms/Wrist Support.avif',
-      altText: 'Wrist Support',
-      cssClass: 'syrup-category',
-      description: 'Wrist Support'
-    },
-    {
-      productForm: 'Ointment',
-      label: 'Ointment',
-      imageUrl: 'assets/product-forms/Ointment.avif',
-      altText: 'Ointment',
-      cssClass: 'injection-category',
-      description: 'Ointment'
-    },
-    {
-      productForm: 'Massager',
-      label: 'Massager',
-      imageUrl: 'assets/product-forms/Massager.avif',
-      altText: 'Massager',
-      cssClass: 'capsule-category',
-      description: 'Massager'
-    },
+    ];
+    LiverCare1 = [
       {
-      productForm: 'Bandage',
-      label: 'Bandage',
-      imageUrl: 'assets/product-forms/Bandage.avif',
-      altText: 'Bandage',
-      cssClass: 'capsule-category',
-      description: 'Bandage'
-    },
+        productForm: 'Capsule',
+        label: 'Capsule',
+        imageUrl: 'assets/product-forms/Capsule.avif',
+        altText: 'Capsule',
+        cssClass: 'cream-category',
+        description: 'Capsule for  health'
+      },
       {
-      productForm: 'Bone & Joint Tablet',
-      label: 'Bone & Joint Tablet',
-      imageUrl: 'assets/product-forms/Bone & Joint Tablet.avif',
-      altText: 'Bone & Joint Tablet',
-      cssClass: 'capsule-category',
-      description: 'Bone & Joint Tablet'
-    },
-    {
-      productForm: 'Balm',
-      label: 'Balm',
-      imageUrl: 'assets/product-forms/Balm.avif',
-      altText: 'Balm',
-      cssClass: 'lotion-category',
-      description: 'Balm'
-    },
+        productForm: 'Syrup',
+        label: 'Syrup',
+        imageUrl: 'assets/product-forms/Syrup.avif',
+        altText: 'Syrup',
+        cssClass: 'tablet-category',
+        description: 'Syrup for  health'
+      },
     
-  ];
-      KidneyCare = [
-    {
-      productForm: 'Kidney Tablet',
-      label: 'Kidney Tablet',
-      imageUrl: 'assets/product-forms/Kidney Tablet.avif',
-      altText: 'Kidney Tablet',
-      cssClass: 'cream-category',
-      description: 'Kidney Tablet for health'
-    },
-    {
-      productForm: 'Tonic',
-      label: 'Tonic',
-      imageUrl: 'assets/product-forms/Tonic.avif',
-      altText: 'Tonic',
-      cssClass: 'tablet-category',
-      description: 'Tonic for  health'
-    },
-    {
-      productForm: 'Kidney Capsule',
-      label: 'Kidney Capsule',
-      imageUrl: 'assets/product-forms/Kidney Capsule.avif',
-      altText: 'Kidney Capsule',
-      cssClass: 'syrup-category',
-      description: 'Kidney Capsule'
-    },
-    {
-      productForm: 'Kidney Syrup',
-      label: 'Kidney Syrup',
-      imageUrl: 'assets/product-forms/Kidney Syrup.avif',
-      altText: 'Kidney Syrup',
-      cssClass: 'injection-category',
-      description: 'Kidney Syrup'
-    },
-    {
-      productForm: 'Kidney Infusion',
-      label: 'Kidney Infusion',
-      imageUrl: 'assets/product-forms/Kidney Infusion.avif',
-      altText: 'Kidney Infusion',
-      cssClass: 'capsule-category',
-      description: 'Kidney Infusion'
-    },
       {
-      productForm: 'Kidney Solution for Infusion',
-      label: 'Kidney Solution for Infusion',
-      imageUrl: 'assets/product-forms/Kidney Solution for Infusion.avif',
-      altText: 'Kidney Solution for Infusion',
-      cssClass: 'capsule-category',
-      description: 'Kidney Solution for Infusion'
-    },
+        productForm: 'Tablet',
+        label: 'Tablet',
+        imageUrl: 'assets/product-forms/Tablet.avif',
+        altText: 'Medicinal Tablet',
+        cssClass: 'syrup-category',
+        description: 'Tablet for  health'
+      },
       {
-      productForm: 'Juice',
-      label: 'Juice',
-      imageUrl: 'assets/product-forms/Juice.avif',
-      altText: 'Juice',
-      cssClass: 'capsule-category',
-      description: 'Juice'
-    },
+        productForm: 'Granule',
+        label: 'Granule',
+        imageUrl: 'assets/product-forms/Granule.avif',
+        altText: 'Medical Granule',
+        cssClass: 'injection-category',
+        description: 'Granule'
+      },
+      {
+        productForm: 'Tonic',
+        label: 'Tonic',
+        imageUrl: 'assets/product-forms/Tonic.avif',
+        altText: 'Medicine Tonic',
+        cssClass: 'capsule-category',
+        description: 'Tonic for  health'
+      },
+      {
+        productForm: 'Liver Care Juice',
+        label: 'Liver Care Juice',
+        imageUrl: 'assets/product-forms/Liver Care Juice.avif',
+        altText: 'Liver Care Juice',
+        cssClass: 'lotion-category',
+        description: 'Liver Care Juice for  health'
+      },
+      
+    ];
+      EyeCare1 = [
+      {
+        productForm: 'Eye Drop',
+        label: 'Eye Drop',
+        imageUrl: 'assets/product-forms/Eye Drop.avif',
+        altText: 'Eye Drop',
+        cssClass: 'cream-category',
+        description: 'Eye Drop for  health'
+      },
+      {
+        productForm: 'Eye Gel',
+        label: 'Eye Gel',
+        imageUrl: 'assets/product-forms/Eye Gel.avif',
+        altText: 'Eye Gel',
+        cssClass: 'tablet-category',
+        description: 'Eye Gel for  health'
+      },
     
-  ];
- DermaCare = [
-    {
-      productForm: 'Face Cream',
-      label: 'Face Cream',
-      imageUrl: 'assets/product-forms/Face Cream.avif',
-      altText: 'Face Cream',
-      cssClass: 'cream-category',
-      description: 'Face Cream'
-    },
-    {
-      productForm: 'Face Pack',
-      label: 'Face Pack',
-      imageUrl: 'assets/product-forms/Face Pack.avif',
-      altText: 'Face Pack',
-      cssClass: 'tablet-category',
-      description: 'Face Pack for  health'
-    },
-   
-    {
-      productForm: 'Lotion',
-      label: 'Wrist Support',
-      imageUrl: 'assets/product-forms/Lotion.avif',
-      altText: 'Lotion',
-      cssClass: 'syrup-category',
-      description: 'Lotion'
-    },
-    {
-      productForm: 'Face Wash',
-      label: 'Face Wash',
-      imageUrl: 'assets/product-forms/Face Wash.avif',
-      altText: 'Face Wash',
-      cssClass: 'injection-category',
-      description: 'Face Wash'
-    },
-    {
-      productForm: 'Serum',
-      label: 'Serum',
-      imageUrl: 'assets/product-forms/Serum.avif',
-      altText: 'Serum',
-      cssClass: 'capsule-category',
-      description: 'Serum'
-    },
       {
-      productForm: 'Cream',
-      label: 'Cream',
-      imageUrl: 'assets/product-forms/Cream.avif',
-      altText: 'Cream',
-      cssClass: 'capsule-category',
-      description: 'Cream'
-    },
+        productForm: 'Eye Cream',
+        label: 'Eye Cream',
+        imageUrl: 'assets/product-forms/Eye Cream.avif',
+        altText: 'Eye Cream',
+        cssClass: 'syrup-category',
+        description: 'Eye Cream '
+      },
       {
-      productForm: 'Moisturiser',
-      label: 'Moisturiser',
-      imageUrl: 'assets/product-forms/Moisturiser.avif',
-      altText: 'Moisturiser',
-      cssClass: 'capsule-category',
-      description: 'Moisturiser'
-    },
-    {
-      productForm: 'Dusting Powder',
-      label: 'Dusting Powder',
-      imageUrl: 'assets/product-forms/Dusting Powder.avif',
-      altText: 'Dusting Powder',
-      cssClass: 'lotion-category',
-      description: 'Dusting Powder'
-    },
+        productForm: 'Eye Ointment',
+        label: 'Eye Ointment',
+        imageUrl: 'assets/product-forms/Eye Ointment.avif',
+        altText: 'Medical Eye Ointment',
+        cssClass: 'injection-category',
+        description: 'Eye Ointment'
+      },
       {
-      productForm: 'Body Wash',
-      label: 'Body Wash',
-      imageUrl: 'assets/product-forms/Body Wash.avif',
-      altText: 'Body Wash',
-      cssClass: 'lotion-category',
-      description: 'Body Wash'
-    },
+        productForm: 'Eye Pad',
+        label: 'Eye Pad',
+        imageUrl: 'assets/product-forms/Eye Pad.avif',
+        altText: 'Medicine Eye Pad',
+        cssClass: 'capsule-category',
+        description: 'Eye Pad'
+      },
       {
-      productForm: 'Conditioner',
-      label: 'Conditioner',
-      imageUrl: 'assets/product-forms/Conditioner.avif',
-      altText: 'Conditioner',
-      cssClass: 'lotion-category',
-      description: 'Conditionerr'
-    },
+        productForm: 'Eye Capsule',
+        label: 'Eye Capsule',
+        imageUrl: 'assets/product-forms/Eye Capsule.avif',
+        altText: 'Eye Capsule',
+        cssClass: 'lotion-category',
+        description: 'Eye Capsule'
+      },
+      {
+        productForm: 'Eye/Ear Drop',
+        label: 'Eye/Ear Drop',
+        imageUrl: 'assets/product-forms/Eye/Ear Drop.avif',
+        altText: 'Eye/Ear Drop',
+        cssClass: 'lotion-category',
+        description: 'Eye/Ear Drop'
+      },
+      {
+        productForm: 'Ophthalmic Solution',
+        label: 'Ophthalmic Solution',
+        imageUrl: 'assets/product-forms/Ophthalmic Solution.avif',
+        altText: 'Ophthalmic Solution',
+        cssClass: 'lotion-category',
+        description: 'Ophthalmic Solution'
+      },
+      {
+        productForm: 'Lens Solution',
+        label: 'Lens Solution',
+        imageUrl: 'assets/product-forms/Lens Solution.avif',
+        altText: 'Lens Solution',
+        cssClass: 'lotion-category',
+        description: 'Lens Solution'
+      },
+      {
+        productForm: 'Reading Eyeglass',
+        label: 'Reading Eyeglass',
+        imageUrl: 'assets/product-forms/Reading Eyeglass.avif',
+        altText: 'Reading Eyeglass',
+        cssClass: 'lotion-category',
+        description: 'Reading Eyeglass'
+      },
+    ];
+      BoneAndJoint1 = [
+      {
+        productForm: 'Knee Support',
+        label: 'Knee Support',
+        imageUrl: 'assets/product-forms/Knee Support.avif',
+        altText: 'Knee Support',
+        cssClass: 'cream-category',
+        description: 'Knee Support for supporting bones and jointes'
+      },
+      {
+        productForm: 'Liniment',
+        label: 'Liniment',
+        imageUrl: 'assets/product-forms/Liniment.avif',
+        altText: 'Liniment',
+        cssClass: 'tablet-category',
+        description: 'Liniment for  health'
+      },
+    
+      {
+        productForm: 'Wrist Support',
+        label: 'Wrist Support',
+        imageUrl: 'assets/product-forms/Wrist Support.avif',
+        altText: 'Wrist Support',
+        cssClass: 'syrup-category',
+        description: 'Wrist Support'
+      },
+      {
+        productForm: 'Ointment',
+        label: 'Ointment',
+        imageUrl: 'assets/product-forms/Ointment.avif',
+        altText: 'Ointment',
+        cssClass: 'injection-category',
+        description: 'Ointment'
+      },
+      {
+        productForm: 'Massager',
+        label: 'Massager',
+        imageUrl: 'assets/product-forms/Massager.avif',
+        altText: 'Massager',
+        cssClass: 'capsule-category',
+        description: 'Massager'
+      },
+        {
+        productForm: 'Bandage',
+        label: 'Bandage',
+        imageUrl: 'assets/product-forms/Bandage.avif',
+        altText: 'Bandage',
+        cssClass: 'capsule-category',
+        description: 'Bandage'
+      },
+        {
+        productForm: 'Bone & Joint Tablet',
+        label: 'Bone & Joint Tablet',
+        imageUrl: 'assets/product-forms/Bone & Joint Tablet.avif',
+        altText: 'Bone & Joint Tablet',
+        cssClass: 'capsule-category',
+        description: 'Bone & Joint Tablet'
+      },
+      {
+        productForm: 'Balm',
+        label: 'Balm',
+        imageUrl: 'assets/product-forms/Balm.avif',
+        altText: 'Balm',
+        cssClass: 'lotion-category',
+        description: 'Balm'
+      },
+      
+    ];
+        KidneyCare1 = [
+      {
+        productForm: 'Kidney Tablet',
+        label: 'Kidney Tablet',
+        imageUrl: 'assets/product-forms/Kidney Tablet.avif',
+        altText: 'Kidney Tablet',
+        cssClass: 'cream-category',
+        description: 'Kidney Tablet for health'
+      },
+      {
+        productForm: 'Tonic',
+        label: 'Tonic',
+        imageUrl: 'assets/product-forms/Tonic.avif',
+        altText: 'Tonic',
+        cssClass: 'tablet-category',
+        description: 'Tonic for  health'
+      },
+      {
+        productForm: 'Kidney Capsule',
+        label: 'Kidney Capsule',
+        imageUrl: 'assets/product-forms/Kidney Capsule.avif',
+        altText: 'Kidney Capsule',
+        cssClass: 'syrup-category',
+        description: 'Kidney Capsule'
+      },
+      {
+        productForm: 'Kidney Syrup',
+        label: 'Kidney Syrup',
+        imageUrl: 'assets/product-forms/Kidney Syrup.avif',
+        altText: 'Kidney Syrup',
+        cssClass: 'injection-category',
+        description: 'Kidney Syrup'
+      },
+      {
+        productForm: 'Kidney Infusion',
+        label: 'Kidney Infusion',
+        imageUrl: 'assets/product-forms/Kidney Infusion.avif',
+        altText: 'Kidney Infusion',
+        cssClass: 'capsule-category',
+        description: 'Kidney Infusion'
+      },
+        {
+        productForm: 'Kidney Solution for Infusion',
+        label: 'Kidney Solution for Infusion',
+        imageUrl: 'assets/product-forms/Kidney Solution for Infusion.avif',
+        altText: 'Kidney Solution for Infusion',
+        cssClass: 'capsule-category',
+        description: 'Kidney Solution for Infusion'
+      },
+        {
+        productForm: 'Juice',
+        label: 'Juice',
+        imageUrl: 'assets/product-forms/Juice.avif',
+        altText: 'Juice',
+        cssClass: 'capsule-category',
+        description: 'Juice'
+      },
+      
+    ];
+  DermaCare1 = [
+      {
+        productForm: 'Face Cream',
+        label: 'Face Cream',
+        imageUrl: 'assets/product-forms/Face Cream.avif',
+        altText: 'Face Cream',
+        cssClass: 'cream-category',
+        description: 'Face Cream'
+      },
+      {
+        productForm: 'Face Pack',
+        label: 'Face Pack',
+        imageUrl: 'assets/product-forms/Face Pack.avif',
+        altText: 'Face Pack',
+        cssClass: 'tablet-category',
+        description: 'Face Pack for  health'
+      },
+    
+      {
+        productForm: 'Lotion',
+        label: 'Wrist Support',
+        imageUrl: 'assets/product-forms/Lotion.avif',
+        altText: 'Lotion',
+        cssClass: 'syrup-category',
+        description: 'Lotion'
+      },
+      {
+        productForm: 'Face Wash',
+        label: 'Face Wash',
+        imageUrl: 'assets/product-forms/Face Wash.avif',
+        altText: 'Face Wash',
+        cssClass: 'injection-category',
+        description: 'Face Wash'
+      },
+      {
+        productForm: 'Serum',
+        label: 'Serum',
+        imageUrl: 'assets/product-forms/Serum.avif',
+        altText: 'Serum',
+        cssClass: 'capsule-category',
+        description: 'Serum'
+      },
+        {
+        productForm: 'Cream',
+        label: 'Cream',
+        imageUrl: 'assets/product-forms/Cream.avif',
+        altText: 'Cream',
+        cssClass: 'capsule-category',
+        description: 'Cream'
+      },
+        {
+        productForm: 'Moisturiser',
+        label: 'Moisturiser',
+        imageUrl: 'assets/product-forms/Moisturiser.avif',
+        altText: 'Moisturiser',
+        cssClass: 'capsule-category',
+        description: 'Moisturiser'
+      },
+      {
+        productForm: 'Dusting Powder',
+        label: 'Dusting Powder',
+        imageUrl: 'assets/product-forms/Dusting Powder.avif',
+        altText: 'Dusting Powder',
+        cssClass: 'lotion-category',
+        description: 'Dusting Powder'
+      },
+        {
+        productForm: 'Body Wash',
+        label: 'Body Wash',
+        imageUrl: 'assets/product-forms/Body Wash.avif',
+        altText: 'Body Wash',
+        cssClass: 'lotion-category',
+        description: 'Body Wash'
+      },
+        {
+        productForm: 'Conditioner',
+        label: 'Conditioner',
+        imageUrl: 'assets/product-forms/Conditioner.avif',
+        altText: 'Conditioner',
+        cssClass: 'lotion-category',
+        description: 'Conditionerr'
+      },
 
-      {
-      productForm: 'Wax',
-      label: 'Wax',
-      imageUrl: 'assets/product-forms/Wax.avif',
-      altText: 'Wax',
-      cssClass: 'lotion-category',
-      description: 'Wax'
-    },
-      {
-      productForm: 'Scrub',
-      label: 'Scrub',
-      imageUrl: 'assets/product-forms/Scrub.avif',
-      altText: 'Scrub',
-      cssClass: 'lotion-category',
-      description: 'Scrub'
-    },
-      {
-      productForm: 'Gel',
-      label: 'Gel',
-      imageUrl: 'assets/product-forms/Gel.avif',
-      altText: 'Gel',
-      cssClass: 'lotion-category',
-      description: 'Gel'
-    },
-   
-  ];
+        {
+        productForm: 'Wax',
+        label: 'Wax',
+        imageUrl: 'assets/product-forms/Wax.avif',
+        altText: 'Wax',
+        cssClass: 'lotion-category',
+        description: 'Wax'
+      },
+        {
+        productForm: 'Scrub',
+        label: 'Scrub',
+        imageUrl: 'assets/product-forms/Scrub.avif',
+        altText: 'Scrub',
+        cssClass: 'lotion-category',
+        description: 'Scrub'
+      },
+        {
+        productForm: 'Gel',
+        label: 'Gel',
+        imageUrl: 'assets/product-forms/Gel.avif',
+        altText: 'Gel',
+        cssClass: 'lotion-category',
+        description: 'Gel'
+      },
+    
+    ];
 }
