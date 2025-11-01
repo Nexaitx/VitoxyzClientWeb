@@ -13,6 +13,8 @@ import { Authorization } from '../../authorization/authorization';
 import { Footer } from "../../footer/footer";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 import { TextBanner } from "../../../../app/shared/text-banner/text-banner";
+import { TextImageComponent } from "../../../pages/shared/text-image/text-image";
+import { MedicineSliderComponent } from "../../../shared/medicine-slider/medicine-slider";
 
 @Component({
   selector: 'app-book-staff',
@@ -21,7 +23,7 @@ import { TextBanner } from "../../../../app/shared/text-banner/text-banner";
     MapComponent,
     Submission,
     // AadharVerificationComponent,
-    Authorization, Footer, MobileFooterNavComponent, TextBanner],
+    Authorization, Footer, MobileFooterNavComponent, TextBanner, TextImageComponent, MedicineSliderComponent],
   templateUrl: './book-staff.html',
   styleUrls: ['./book-staff.scss'],
 })

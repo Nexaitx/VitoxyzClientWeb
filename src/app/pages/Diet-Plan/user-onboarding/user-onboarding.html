@@ -1,4 +1,24 @@
+
+<app-text-banner
+  image="assets/staff/book-staff-banner.avif"
+  title="Hire Trusted Staff Easily"
+  subtitle="Find verified professionals for your home, office, or business needs"
+  buttonText="Book Now"
+  (buttonClick)="centerContent()">
+</app-text-banner>
 <div class="container mt-3 main-container">
+<app-text-image
+  imageUrl="assets/images/sample.jpg"
+  imageAlt="Sample Image"
+  title="Find, Book & Shop — All in One Place"
+  subtitle="Discover Amazing Features"
+  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  buttonText=""
+  buttonLink="/">
+</app-text-image>
+
+
+
   @if (!showLoginAlert)
   { <mat-stepper class="custom-stepper" labelPosition="bottom" #stepper  >
 

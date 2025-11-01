@@ -11,6 +11,8 @@ import { API_URL, ENDPOINTS } from '@src/app/core/const';
 import { Toast } from 'bootstrap';
 import { Authorization } from '../../authorization/authorization';
 import { MatIconModule } from '@angular/material/icon';
+import { TextBanner } from "../../../shared/text-banner/text-banner";
+import { TextImageComponent } from "../../../pages/shared/text-image/text-image";
 
 @Component({
   selector: 'app-user-onboarding',
@@ -24,8 +26,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatIconModule,
     CommonModule,
-    Authorization
-  ],
+    Authorization,
+    TextBanner,
+    TextImageComponent
+],
   templateUrl: './user-onboarding.html',
   styleUrl: './user-onboarding.scss'
 })
@@ -154,6 +158,11 @@ decrement(type: 'height' | 'weight'): void {
   }
 }
 
-
+centerContent() {
+  const banner = document.querySelector('.banner .banner-content');
+  if (banner) {
+    banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
   
 }
