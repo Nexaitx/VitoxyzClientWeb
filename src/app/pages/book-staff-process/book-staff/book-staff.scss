@@ -93,12 +93,12 @@
 }
 
 
-.counter-box .btn-counter {
+.counter-box .btn-counterRight {
    background: transparent;
   border: none;
   font-size: 24px;
   font-weight: bold;
-  color: #09b8c2; /* teal color like image */
+  color: #fff; /* teal color like image */
   cursor: pointer;
   width: 30px;
   height: 30px;
@@ -108,11 +108,29 @@
   justify-content: center;
 }
 
-.counter-box .btn-counter:focus {
+.counter-box .btn-counterRight:focus {
   outline: none;
   box-shadow: none;
 }
+.counter-box .btn-counterLeft {
+   background: transparent;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff; /* teal color like image */
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.counter-box .btn-counterLeft:focus {
+  outline: none;
+  box-shadow: none;
+}
 .counter-input {
   width: 55px;
   text-align: center;
@@ -181,14 +199,23 @@
     // background: #f9fbfd;
 
 /* Counter buttons (+/-) */
-.search-staff-form .btn-counter {
+.search-staff-form .btn-counterRight {
   height: 40px !important;
   width: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius:0 14px 14px 0;
+  padding: 10px;
 }
-
+.search-staff-form .btn-counterLeft {
+  height: 40px !important;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px 0 0 14px;
+}
 .search-staff-form .counter-select {
   height: 40px !important;
   min-height: 40px !important;
