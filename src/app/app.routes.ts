@@ -5,6 +5,7 @@ import { UserOnboarding } from './pages/user-onboarding/user-onboarding';
 import { ViewMedicine } from './pages/medicines/view-medicine/view-medicine';
 import { SearchResultComponent } from '../app/pages/shared/search-result/search-result';
 import { MultiproductsformComponent } from './pages/medicines/multiproductsform/multiproductsform';
+import { MedicineFilterComponent } from './pages/medicines/medicine-filter/medicine-filter';
 
 export const routes: Routes = [
   {
@@ -16,7 +17,13 @@ export const routes: Routes = [
         loadChildren: () => import('./pages/medicines/medicines-module').then(m => m.MedicinesModule),
 
       },
+      {
+    path: 'view-medicine/:id',
+    component: ViewMedicine
+  },
         { path: 'products', component: MultiproductsformComponent },
+          { path: 'medicine', component: MedicineFilterComponent },
+
 
 
       {

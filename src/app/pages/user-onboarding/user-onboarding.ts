@@ -12,6 +12,9 @@ import { API_URL, ENDPOINTS } from '@src/app/core/const';
 import { Toast } from 'bootstrap';
 import { Footer } from "../footer/footer";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
+import { TextBanner } from "@src/app/shared/text-banner/text-banner";
+import { TextImageComponent } from "../shared/text-image/text-image";
+import { MedicineSliderComponent } from "@src/app/shared/medicine-slider/medicine-slider";
 
 @Component({
   selector: 'app-user-onboarding',
@@ -26,7 +29,10 @@ import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mob
     MatButtonModule,
     CommonModule,
     Footer,
-    MobileFooterNavComponent
+    MobileFooterNavComponent,
+    TextBanner,
+    TextImageComponent,
+    MedicineSliderComponent
 ],
   templateUrl: './user-onboarding.html',
   styleUrl: './user-onboarding.scss'
@@ -250,4 +256,12 @@ export class UserOnboarding implements OnInit {
     goToSubscriptionPlans() {
      this.router.navigate(['/subscription-plans']);
     }
+    centerContent() {
+  const banner = document.querySelector('.banner .banner-content');
+  if (banner) {
+    banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+
 }

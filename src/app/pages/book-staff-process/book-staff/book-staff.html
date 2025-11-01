@@ -1,4 +1,24 @@
+ <app-text-banner
+  image="assets/staff/book-staff-banner.avif"
+  title="Hire Trusted Staff Easily"
+  subtitle="Find verified professionals for your home, office, or business needs"
+  buttonText="Book Now"
+  (buttonClick)="centerContent()">
+</app-text-banner>
+
+
+
+  <app-text-image
+    imageUrl="assets/images/sample.jpg"
+    imageAlt="Sample Image"
+    title="Find, Book & Shop — All in One Place"
+    subtitle="Discover Amazing Features"
+    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    buttonText=""
+    buttonLink="/">
+  </app-text-image>
 <div class="container-fluid" style="margin-top: 60px;">
+  
   <div class="row">
     <div class="col-md-4 h-100 map-styles">
       <app-map
@@ -187,7 +207,7 @@
                                   class="d-flex align-items-center counter-box"
                                 >
                                   <button
-                                    class="btn-counter btn-minus"
+                                    class="btn-counterLeft btn-minus"
                                     type="button"
                                     (click)="decrementTime('hours', i, sh)"
                                   >
@@ -205,7 +225,7 @@
                                   />
 
                                   <button
-                                    class="btn-counter  btn-plus"
+                                    class="btn-counterRight  btn-plus"
                                     type="button"
                                     (click)="incrementTime('hours', i, sh)"
                                   >
@@ -217,7 +237,7 @@
                                   class="d-flex align-items-center counter-box mx-2"
                                 >
                                   <button
-                                    class="btn-counter btn-minus"
+                                    class="btn-counterLeft btn-minus"
                                     type="button"
                                     (click)="decrementTime('minutes', i, sh)"
                                   >
@@ -235,7 +255,7 @@
                                   />
 
                                   <button
-                                    class="btn-counter btn-plus"
+                                    class="btn-counterRight btn-plus"
                                     type="button"
                                     (click)="incrementTime('minutes', i, sh)"
                                   >
@@ -316,7 +336,7 @@
                                   class="d-flex align-items-center counter-box"
                                 >
                                   <button
-                                    class="btn-counter btn-minus"
+                                    class="btn-counterLeft btn-minus"
                                     type="button"
                                     (click)="decrease('maleQuantity', i, sh)"
                                   >
@@ -331,7 +351,7 @@
                                     (input)="onManualChange('maleQuantity', i, sh, $event)"
                                   />
                                   <button
-                                    class="btn-counter btn-plus"
+                                    class="btn-counterRight btn-plus"
                                     type="button"
                                     (click)="increase('maleQuantity', i, sh)"
                                   >
@@ -343,7 +363,7 @@
                                   class="d-flex align-items-center counter-box"
                                 >
                                   <button
-                                    class="btn-counter btn-minus"
+                                    class="btn-counterLeft btn-minus"
                                     type="button"
                                     (click)="decrease('femaleQuantity', i, sh)"
                                   >
@@ -358,7 +378,7 @@
                                     (input)="onManualChange('femaleQuantity', i, sh, $event)"
                                   />
                                   <button
-                                    class="btn-counter btn-plus"
+                                    class="btn-counterRight btn-plus"
                                     type="button"
                                     (click)="increase('femaleQuantity', i, sh)"
                                   >
@@ -480,6 +500,14 @@
     </div>
   </div>
 </div>
+
+<app-medicine-slider 
+  title="Experience the Joy of Easy Shopping"
+  [showSeeAll]="true"
+  [maxItems]="8"
+  [autoSlide]="true"
+  [slideInterval]="5000">
+</app-medicine-slider>
 
 <div>
   <app-footer></app-footer>

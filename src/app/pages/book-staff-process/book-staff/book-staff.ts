@@ -12,6 +12,9 @@ import { Login } from "../../authorization/login/login";
 import { Authorization } from '../../authorization/authorization';
 import { Footer } from "../../footer/footer";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
+import { TextBanner } from "../../../../app/shared/text-banner/text-banner";
+import { TextImageComponent } from "../../../pages/shared/text-image/text-image";
+import { MedicineSliderComponent } from "../../../shared/medicine-slider/medicine-slider";
 
 @Component({
   selector: 'app-book-staff',
@@ -20,7 +23,7 @@ import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mob
     MapComponent,
     Submission,
     // AadharVerificationComponent,
-    Authorization, Footer, MobileFooterNavComponent],
+    Authorization, Footer, MobileFooterNavComponent, TextBanner, TextImageComponent, MedicineSliderComponent],
   templateUrl: './book-staff.html',
   styleUrls: ['./book-staff.scss'],
 })
@@ -536,6 +539,13 @@ onManualTimeChange(field: string, i: number, sh: number, event: Event) {
   this.getNestedShiftDetailsControls(i)[sh].get(field)?.setValue(value);
 }
 
+
+centerContent() {
+  const banner = document.querySelector('.banner .banner-content');
+  if (banner) {
+    banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
 
 
 }

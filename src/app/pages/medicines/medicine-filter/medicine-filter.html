@@ -1,0 +1,205 @@
+<div class="medicine-filter-container">
+  <!-- Error Display -->
+  <div *ngIf="error" class="error-alert">
+    {{ error }}
+    <button (click)="error = ''" class="close-btn">&times;</button>
+  </div>
+
+  <div class="filter-layout">
+    <!-- Sidebar Filters -->
+    <aside class="filter-sidebar">
+      <div class="filter-section">
+        <h3>Filters</h3>
+        
+        <!-- Category Filter -->
+        <div class="filter-group">
+          <label for="categorySelect">Category</label>
+          <select 
+            id="categorySelect"
+            [(ngModel)]="selectedCategory" 
+            (change)="onCategoryChange()"
+            class="filter-select"
+            [disabled]="isLoadingCategories">
+            <option value="all">All Categories</option>
+            <option *ngFor="let category of categories" [value]="category">
+              {{ category }}
+            </option>
+          </select>
+          <div *ngIf="isLoadingCategories" class="loading-text">Loading categories...</div>
+        </div>
+
+        <!-- Product Form Filter -->
+        <div class="filter-group">
+          <label for="productFormSelect">Product Form</label>
+          <select 
+            id="productFormSelect"
+            [(ngModel)]="selectedProductForm" 
+            (change)="onProductFormChange()"
+            class="filter-select"
+            [disabled]="isLoadingProductForms">
+            <option value="all">All Forms</option>
+            <option *ngFor="let form of productForms" [value]="form">
+              {{ form }}
+            </option>
+          </select>
+          <div *ngIf="isLoadingProductForms" class="loading-text">Loading product forms...</div>
+        </div>
+
+        <!-- Clear Filters Button -->
+        <button 
+          (click)="clearFilters()" 
+          class="clear-filters-btn"
+          [disabled]="(selectedCategory === 'all' && selectedProductForm === 'all') || isLoadingMedicines">
+          Clear Filters
+        </button>
+
+        <!-- Active Filters Display -->
+        <div class="active-filters" *ngIf="selectedCategory !== 'all' || selectedProductForm !== 'all'">
+          <h4>Active Filters:</h4>
+          <div *ngIf="selectedCategory !== 'all'" class="active-filter-tag">
+            Category: {{ selectedCategory }}
+          </div>
+          <div *ngIf="selectedProductForm !== 'all'" class="active-filter-tag">
+            Form: {{ selectedProductForm }}
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="medicine-list">
+      <div class="results-header">
+        <h2>Medicines</h2>
+        <div class="results-count" *ngIf="!isLoadingMedicines">
+          Showing {{ medicines.length }} of {{ totalItems }} results
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div *ngIf="isLoadingMedicines" class="loading-container">
+        <div class="loading-spinner"></div>
+        <p>Loading medicines...</p>
+      </div>
+
+      <!-- No Results -->
+      <div *ngIf="!isLoadingMedicines && medicines.length === 0" class="no-results">
+        <h3>No medicines found</h3>
+        <p>Try adjusting your filters to see more results.</p>
+      </div>
+
+      <!-- Medicine Cards with Images -->
+      <div *ngIf="!isLoadingMedicines && medicines.length > 0" class="medicine-grid">
+        <div *ngFor="let medicine of medicines" 
+             class="medicine-card"
+             (click)="onMedicineClick(medicine)">
+          
+          <!-- Medicine Image -->
+          <div class="medicine-image">
+            <img 
+              [src]="getFirstImage(medicine)" 
+              [alt]="medicine.name"
+              (error)="onImageError($event)"
+              class="medicine-img" />
+            
+            <!-- Discount Badge -->
+            <div *ngIf="hasDiscount(medicine)" class="discount-badge">
+              {{ getDiscountPercentage(medicine) }}% OFF
+            </div>
+          </div>
+
+          <!-- Medicine Content -->
+          <div class="medicine-content">
+            <div class="medicine-header">
+              <h3 class="medicine-name">{{ medicine.name }}</h3>
+              <div class="medicine-category">{{ medicine.category }}</div>
+            </div>
+            
+            <div class="medicine-details">
+              <div class="price-section">
+                <span class="current-price">₹{{ getDiscountPrice(medicine) }}</span>
+                <span *ngIf="hasDiscount(medicine)" class="original-price">
+                  ₹{{ medicine.originalPrice }}
+                </span>
+              </div>
+              
+              <div class="manufacturer" *ngIf="medicine.manufacturer">
+                <strong>Manufacturer:</strong> {{ medicine.manufacturer }}
+              </div>
+              
+              <div class="product-form" *ngIf="medicine.productForm">
+                <strong>Form:</strong> {{ medicine.productForm }}
+              </div>
+
+              <div class="packaging" *ngIf="medicine.packaging">
+                <strong>Packaging:</strong> {{ medicine.packaging }}
+              </div>
+
+              <!-- <p class="medicine-description" *ngIf="medicine.description">
+                {{ (medicine.description.length > 150) ? (medicine.description | slice:0:150) + '...' : medicine.description }}
+              </p> -->
+            </div>
+
+            <!-- <div class="medicine-actions">
+              <button class="add-to-cart-btn" 
+                      (click)="addToCart(medicine, $event)">
+                Add to Cart
+              </button>
+              <button class="view-details-btn" 
+                      (click)="onMedicineClick(medicine); $event.stopPropagation()">
+                View Details
+              </button>
+            </div> -->
+            <!-- inside medicine-card, replace add/quantity area with: -->
+<ng-container *ngIf="(quantities[getMedicineKey(medicine)] || 0) === 0; else quantityTemplate">
+  <button class="btn btn-sm rounded-pill btn-primary text-light"
+          (click)="addToCart(medicine, $event)">
+    Add
+  </button>
+</ng-container>
+
+<ng-template #quantityTemplate>
+  <div class="quantity-control btn-group rounded-pill text-white btn-group-sm" role="group">
+    <button class="btn text-white left"
+            (click)="decrement(medicine); $event.stopPropagation()">−</button>
+    <span class="btn">{{ quantities[getMedicineKey(medicine)] || 0 }}</span>
+    <button class="btn text-white right"
+            (click)="increment(medicine); $event.stopPropagation()">+</button>
+  </div>
+</ng-template>
+
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div *ngIf="!isLoadingMedicines && totalPages > 1" class="pagination">
+        <button 
+          (click)="onPageChange(currentPage - 1)" 
+          [disabled]="!hasPrevious"
+          class="pagination-btn">
+          Previous
+        </button>
+        
+        <div class="page-numbers">
+          <button 
+            *ngFor="let page of getPages()" 
+            (click)="onPageChange(page)"
+            [class.active]="page === currentPage"
+            class="page-btn">
+            {{ page + 1 }}
+          </button>
+        </div>
+        
+        <button 
+          (click)="onPageChange(currentPage + 1)" 
+          [disabled]="!hasNext"
+          class="pagination-btn">
+          Next
+        </button>
+      </div>
+    </main>
+  </div>
+</div>
+<app-footer></app-footer>
+<app-mobile-footer-nav></app-mobile-footer-nav>

@@ -1,349 +1,372 @@
-<div class="dietonboardcls">
-  <div class="container  main-container" style="margin-top: -30px;" >
+<div  >
+  <div style="margin-top: -11px;">
+    <app-text-banner image="assets/staff/book-staff-banner.avif" title="Hire Trusted Staff Easily"
+      subtitle="Find verified professionals for your home, office, or business needs" buttonText="Book Now"
+      (buttonClick)="centerContent()">
+    </app-text-banner>
+  </div>
+  <div>
+    <app-text-image imageUrl="assets/images/sample.jpg" imageAlt="Sample Image"
+      title="Find, Book & Shop — All in One Place" subtitle="Discover Amazing Features"
+      description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      buttonText="" buttonLink="/">
+    </app-text-image>
+  </div>
+
+  <div class="container  main-container" style="background:  linear-gradient(1deg, rgb(251 248 235) 2%, #fff6e0 70%, #ff8865 160%);">
 
 
-  <mat-stepper class="custom-stepper" labelPosition="bottom" #stepper>
+    <mat-stepper class="custom-stepper" labelPosition="bottom" #stepper>
 
-    <ng-template matStepperIcon="number" let-index="index">
-      <span>{{ index + 1 }}</span>
-    </ng-template>
-
-
-    <ng-template matStepperIcon="edit">
-      <mat-icon>check</mat-icon>
-    </ng-template>
-
-    <ng-template matStepperIcon="done">
-      <mat-icon>check</mat-icon>
-    </ng-template>
+      <ng-template matStepperIcon="number" let-index="index">
+        <span>{{ index + 1 }}</span>
+      </ng-template>
 
 
-    <mat-step [stepControl]="firstFormGroup">
-      <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Personal Info</ng-template>
-        <div class="row">
-          <div class="col-md-12 mb-3 position-relative">
-            <label class="form-label">Full Name</label>
+      <ng-template matStepperIcon="edit">
+        <mat-icon>check</mat-icon>
+      </ng-template>
 
-            <i class="bi bi-person address"></i>
-            <input type="text" class="form-control with-icon" placeholder="Enter Full Name" formControlName="fullName"
-              [class.is-invalid]="firstFormGroup.get('fullName')?.invalid && firstFormGroup.get('fullName')?.touched">
-            <div *ngIf="firstFormGroup.get('fullName')?.invalid && firstFormGroup.get('fullName')?.touched"
-              class="invalid-feedback">
-              Full Name is required.
-            </div>
-
-          </div>
-
-          <div class="col-md-6 mb-3 position-relative">
-            <label class="form-label">Enter Age</label>
-            <!-- <div class="input-group"> -->
-            <!-- <span class="input-group-text"> -->
-            <!-- <i class="bi bi-person"></i> -->
-            <!-- </span> -->
-            <i class="bi bi-person address"></i>
-
-            <input type="number" class="form-control with-icon" placeholder="Enter your age" formControlName="age"
-              [class.is-invalid]="firstFormGroup.get('age')?.invalid && firstFormGroup.get('age')?.touched">
-            <div *ngIf="firstFormGroup.get('age')?.invalid && firstFormGroup.get('age')?.touched"
-              class="invalid-feedback">
-              Age is required and must be a positive number.
-            </div>
-          </div>
-
-          <div class="col-md-6 d-flex align-items-end mb-3">
-            <div>
-              <label class="form-label d-block">Gender</label>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="gender" id="male" value="Male"
-                  formControlName="gender">
-                <label class="pt-1 form-check-label" for="male">Male</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="gender" id="female" value="Female"
-                  formControlName="gender">
-                <label class="pt-1 form-check-label" for="female">Female</label>
-              </div>
-              <div *ngIf="firstFormGroup.get('gender')?.invalid && firstFormGroup.get('gender')?.touched"
-                class="invalid-feedback d-block">
-                Gender is required.
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Height</label>
-            <div class="d-flex gap-2 align-items-center">
-              <div class="input-group" style="max-width: 120px;">
-                <button class="btn  action border-0" type="button"
-                  (click)="adjustValue('heightValue', 'heightValue', false)">−</button>
-                <input type="text" class="form-control measure text-center" formControlName="heightValue" readonly>
-                <button class="btn  action-add border-0" type="button"
-                  (click)="adjustValue('heightValue', 'heightValue', true)">+</button>
-              </div>
-              <select class="form-select" style="max-width: 100px;" formControlName="heightUnit">
-                <option value="Feet">Feet</option>
-                <option value="cm">cm</option>
-                <option value="Inches ">Inches </option>
-              </select>
-            </div>
-            <div *ngIf="firstFormGroup.get('heightValue')?.invalid && firstFormGroup.get('heightValue')?.touched"
-              class="invalid-feedback d-block">
-              Height is required.
-            </div>
-          </div>
-
-          <!-- Weight -->
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Weight</label>
-            <div class="d-flex gap-2 align-items-center">
-              <div class="input-group" style="max-width: 120px;">
-                <button class="btn  action border-0" type="button"
-                  (click)="adjustValue('weightValue', 'weightValue', false)">−</button>
-                <input type="text" class="form-control measure text-center" formControlName="weightValue" readonly>
-                <button class="btn  action-add border-0" type="button"
-                  (click)="adjustValue('weightValue', 'weightValue', true)">+</button>
-              </div>
-              <span>kg</span>
-            </div>
-            <div *ngIf="firstFormGroup.get('weightValue')?.invalid && firstFormGroup.get('weightValue')?.touched"
-              class="invalid-feedback d-block">
-              Weight is required.
-            </div>
-          </div>
-        </div>
-        <div class="text-end mt-3">
-          <button matStepperNext class="btn px-4 rounded-pill submission next-button"
-            [disabled]="firstFormGroup.invalid">Next</button>
-        </div>
-      </form>
-    </mat-step>
+      <ng-template matStepperIcon="done">
+        <mat-icon>check</mat-icon>
+      </ng-template>
 
 
-
-
-    <mat-step [stepControl]="secondFormGroup">
-      <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Health & Goals</ng-template>
-        <div class="row">
-          <h3>Tell Us About Your Goals</h3>
-          <div class="col-md-12 mb-3">
-            <label class="form-label d-block mb-2">Diet Preference</label>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="dietPreference" id="weightLoss" value="Weight Loss"
-                formControlName="dietPreference">
-              <label class="form-check-label" for="weightLoss">Weight Loss</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="dietPreference" id="weightGain" value="Weight Gain"
-                formControlName="dietPreference">
-              <label class="form-check-label" for="weightGain">Weight Gain</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="dietPreference" id="maintainWeight"
-                value="Maintain Weight" formControlName="dietPreference">
-              <label class="form-check-label" for="maintainWeight">Maintain Weight</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="dietPreference" id="improveHealth"
-                value="Improve Health" formControlName="dietPreference">
-              <label class="form-check-label" for="improveHealth">Improve Health</label>
-            </div>
-            <div
-              *ngIf="secondFormGroup.get('dietPreference')?.invalid && secondFormGroup.get('dietPreference')?.touched"
-              class="invalid-feedback d-block">
-              Diet Preference is required.
-            </div>
-          </div>
-
-          <div class="col-md-12 mb-3">
-            <label class="form-label d-block mb-2">Do you have any medical conditions?</label>
-            <div *ngFor="let condition of displayedMedicalConditionsOptions" class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" [id]="condition | lowercase" [value]="condition"
-                [checked]="isMedicalConditionSelected(condition)" (change)="onMedicalConditionChange($event)">
-              <label class="form-check-label" [for]="condition | lowercase">{{ condition }}</label>
-            </div>
-            <div
-              *ngIf="secondFormGroup.get('medicalConditions')?.invalid && secondFormGroup.get('medicalConditions')?.touched"
-              class="invalid-feedback d-block">
-              At least one medical condition must be selected.
-            </div>
-          </div>
-
-          <div class="col-md-12 mb-3">
-            <label class="form-label d-block mb-2">Are you on any Medications?</label>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" id="medicationsYes" name="anyMedication" value="yes"
-                formControlName="anyMedication">
-              <label class="form-check-label" for="medicationsYes">Yes</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" id="medicationsNo" name="anyMedication" value="no"
-                formControlName="anyMedication">
-              <label class="form-check-label" for="medicationsNo">No</label>
-            </div>
-            <div *ngIf="secondFormGroup.get('anyMedication')?.invalid && secondFormGroup.get('anyMedication')?.touched"
-              class="invalid-feedback d-block">
-              This field is required.
-            </div>
-
-            <div *ngIf="secondFormGroup.get('anyMedication')?.value === 'yes'" class="mt-2">
-              <input type="text" class="form-control" placeholder="Enter medication details"
-                formControlName="medicationDetails"
-                [class.is-invalid]="secondFormGroup.get('medicationDetails')?.invalid && secondFormGroup.get('medicationDetails')?.touched">
-              <div
-                *ngIf="secondFormGroup.get('medicationDetails')?.invalid && secondFormGroup.get('medicationDetails')?.touched"
-                class="invalid-feedback d-block">
-                Medication details are required if you are on medication.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="text-end mt-3">
-          <button matButton matStepperPrevious class="btn px-4 rounded-pill me-2 text-light">Back</button>
-          <button matStepperNext class="btn px-4 rounded-pill submission next-button"
-            [disabled]="secondFormGroup.invalid">Next</button>
-        </div>
-      </form>
-    </mat-step>
-
-    <!-- Step 3: Food Preferences background: linear-gradient(147deg, #f5ede2 78%, #fbdee7 240%);-->
-    <mat-step [stepControl]="thirdFormGroup">
-      <form [formGroup]="thirdFormGroup">
-        <ng-template matStepLabel>Food Preferences</ng-template>
-        <h3>Food & Preferences</h3>
-        <div class="row">
-          <div class="col-md-12 mb-3">
-            <label class="form-label d-block mb-2">Diet Preference</label>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="foodPreference" id="vegetarian" value="Vegetarian"
-                formControlName="foodPreference">
-              <label class="form-check-label" for="vegetarian">Vegetarian</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="foodPreference" id="nonVegetarian"
-                value="Non-Vegetarian" formControlName="foodPreference">
-              <label class="form-check-label" for="nonVegetarian">Non-Vegetarian</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="foodPreference" id="eggetarian" value="Eggetarian"
-                formControlName="foodPreference">
-              <label class="form-check-label" for="eggetarian">Eggetarian</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="foodPreference" id="vegan" value="Vegan"
-                formControlName="foodPreference">
-              <label class="form-check-label" for="vegan">Vegan</label>
-            </div>
-            <div *ngIf="thirdFormGroup.get('foodPreference')?.invalid && thirdFormGroup.get('foodPreference')?.touched"
-              class="invalid-feedback d-block">
-              Food Preference is required.
-            </div>
-          </div>
-          <div class="col-md-12 mb-3">
-            <label class="form-label">Food to Avoid?</label>
-            <textarea class="form-control" rows="3" placeholder="List any foods you want to avoid"
-              formControlName="foodToAvoid"></textarea>
-          </div>
-
-          <div class="col-md-12 form-group mb-3">
-            <label class="form-label">Daily Water Intake</label>
-            <input type="text" class="form-control" placeholder="e.g., 2 litres or 8 cups"
-              formControlName="dailyWaterIntake"
-              [class.is-invalid]="thirdFormGroup.get('dailyWaterIntake')?.invalid && thirdFormGroup.get('dailyWaterIntake')?.touched">
-            <div
-              *ngIf="thirdFormGroup.get('dailyWaterIntake')?.invalid && thirdFormGroup.get('dailyWaterIntake')?.touched"
-              class="invalid-feedback d-block">
-              Daily Water Intake is required and should be a valid format (e.g., "2 litres").
-            </div>
-          </div>
-        </div>
-        <div class="text-end mt-3">
-          <button matButton matStepperPrevious class="btn px-4 rounded-pill text-light me-2">Back</button>
-          <button matStepperNext class="btn px-4 rounded-pill submission next-button"
-            [disabled]="thirdFormGroup.invalid">Next</button>
-        </div>
-      </form>
-    </mat-step>
-
-    <!-- Step 4: Lifestyle & Activity -->
-    <mat-step [stepControl]="fourthFormGroup">
-      <form [formGroup]="fourthFormGroup">
-        <ng-template matStepLabel>Lifestyle & Activity</ng-template>
-        <h3>Tell Us About Your Day</h3>
-        <div class="col-md-12 mb-3">
-          <label class="form-label d-block mb-2">Activity Level</label>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="activityLevel" id="sedentary" value="Sedentary"
-              formControlName="activityLevel">
-            <label class="form-check-label" for="sedentary">Sedentary</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="activityLevel" id="lightly" value="Lightly Active"
-              formControlName="activityLevel">
-            <label class="form-check-label" for="lightly">Lightly Active</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="activityLevel" id="moderate" value="Moderate"
-              formControlName="activityLevel">
-            <label class="form-check-label" for="moderate">Moderate</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="activityLevel" id="veryActive" value="Very Active"
-              formControlName="activityLevel">
-            <label class="form-check-label" for="veryActive">Very Active</label>
-          </div>
-          <div *ngIf="fourthFormGroup.get('activityLevel')?.invalid && fourthFormGroup.get('activityLevel')?.touched"
-            class="invalid-feedback d-block">
-            Activity Level is required.
-          </div>
-        </div>
-
-        <div class="col-md-12 mb-3">
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Personal Info</ng-template>
           <div class="row">
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Wake Up Time</label>
-              <input type="time" class="form-control" placeholder="Select wake up time" formControlName="wakeUpTime"
-                [class.is-invalid]="fourthFormGroup.get('wakeUpTime')?.invalid && fourthFormGroup.get('wakeUpTime')?.touched">
-              <div *ngIf="fourthFormGroup.get('wakeUpTime')?.invalid && fourthFormGroup.get('wakeUpTime')?.touched"
-                class="invalid-feedback d-block">
-                Wake Up Time is required.
+            <div class="col-md-12 mb-3 position-relative">
+              <label class="form-label">Full Name</label>
+
+              <i class="bi bi-person address"></i>
+              <input type="text" class="form-control with-icon" placeholder="Enter Full Name" formControlName="fullName"
+                [class.is-invalid]="firstFormGroup.get('fullName')?.invalid && firstFormGroup.get('fullName')?.touched">
+              <div *ngIf="firstFormGroup.get('fullName')?.invalid && firstFormGroup.get('fullName')?.touched"
+                class="invalid-feedback">
+                Full Name is required.
+              </div>
+
+            </div>
+
+            <div class="col-md-6 mb-3 position-relative">
+              <label class="form-label">Enter Age</label>
+              <!-- <div class="input-group"> -->
+              <!-- <span class="input-group-text"> -->
+              <!-- <i class="bi bi-person"></i> -->
+              <!-- </span> -->
+              <i class="bi bi-person address"></i>
+
+              <input type="number" class="form-control with-icon" placeholder="Enter your age" formControlName="age"
+                [class.is-invalid]="firstFormGroup.get('age')?.invalid && firstFormGroup.get('age')?.touched">
+              <div *ngIf="firstFormGroup.get('age')?.invalid && firstFormGroup.get('age')?.touched"
+                class="invalid-feedback">
+                Age is required and must be a positive number.
               </div>
             </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Sleep Time</label>
-              <input type="time" class="form-control" placeholder="Select sleep time" formControlName="sleepTime"
-                [class.is-invalid]="fourthFormGroup.get('sleepTime')?.invalid && fourthFormGroup.get('sleepTime')?.touched">
-              <div *ngIf="fourthFormGroup.get('sleepTime')?.invalid && fourthFormGroup.get('sleepTime')?.touched"
-                class="invalid-feedback d-block">
-                Sleep Time is required.
+
+            <div class="col-md-6 d-flex align-items-end mb-3">
+              <div>
+                <label class="form-label d-block">Gender</label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="male" value="Male"
+                    formControlName="gender">
+                  <label class="pt-1 form-check-label" for="male">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="female" value="Female"
+                    formControlName="gender">
+                  <label class="pt-1 form-check-label" for="female">Female</label>
+                </div>
+                <div *ngIf="firstFormGroup.get('gender')?.invalid && firstFormGroup.get('gender')?.touched"
+                  class="invalid-feedback d-block">
+                  Gender is required.
+                </div>
               </div>
             </div>
+
             <div class="col-md-6 mb-3">
-              <label class="form-label">Breakfast Time</label>
-              <input type="time" class="form-control" formControlName="breakfastTime">
+              <label class="form-label">Height</label>
+              <div class="d-flex gap-2 align-items-center">
+                <div class="input-group" style="max-width: 120px;">
+                  <button class="btn  action border-0" type="button"
+                    (click)="adjustValue('heightValue', 'heightValue', false)">−</button>
+                  <input type="text" class="form-control measure text-center" formControlName="heightValue" readonly>
+                  <button class="btn  action-add border-0" type="button"
+                    (click)="adjustValue('heightValue', 'heightValue', true)">+</button>
+                </div>
+                <select class="form-select" style="max-width: 100px;" formControlName="heightUnit">
+                  <option value="Feet">Feet</option>
+                  <option value="cm">cm</option>
+                  <option value="Inches ">Inches </option>
+                </select>
+              </div>
+              <div *ngIf="firstFormGroup.get('heightValue')?.invalid && firstFormGroup.get('heightValue')?.touched"
+                class="invalid-feedback d-block">
+                Height is required.
+              </div>
             </div>
+
+            <!-- Weight -->
             <div class="col-md-6 mb-3">
-              <label class="form-label">Lunch Time</label>
-              <input type="time" class="form-control" formControlName="lunchTime">
-            </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Dinner Time</label>
-              <input type="time" class="form-control" formControlName="dinnerTime">
+              <label class="form-label">Weight</label>
+              <div class="d-flex gap-2 align-items-center">
+                <div class="input-group" style="max-width: 120px;">
+                  <button class="btn  action border-0" type="button"
+                    (click)="adjustValue('weightValue', 'weightValue', false)">−</button>
+                  <input type="text" class="form-control measure text-center" formControlName="weightValue" readonly>
+                  <button class="btn  action-add border-0" type="button"
+                    (click)="adjustValue('weightValue', 'weightValue', true)">+</button>
+                </div>
+                <span>kg</span>
+              </div>
+              <div *ngIf="firstFormGroup.get('weightValue')?.invalid && firstFormGroup.get('weightValue')?.touched"
+                class="invalid-feedback d-block">
+                Weight is required.
+              </div>
             </div>
           </div>
-        </div>
-        <div class="text-end mt-3">
-          <button matButton matStepperPrevious class="btn px-4 rounded-pill text-light me-2">Back</button>
-          <button type="button" class="btn px-4 rounded-pill submission next-button"
-            (click)="goToPlans()">Submit</button>
-        </div>
-      </form>
-    </mat-step>
-  </mat-stepper>
-</div>
-</div>
+          <div class="text-end mt-3">
+            <button matStepperNext class="btn px-4 rounded-pill submission next-button"
+              [disabled]="firstFormGroup.invalid">Next</button>
+          </div>
+        </form>
+      </mat-step>
 
-<app-footer></app-footer>
-<app-mobile-footer-nav></app-mobile-footer-nav>
+
+
+
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>Health & Goals</ng-template>
+          <div class="row">
+            <h3>Tell Us About Your Goals</h3>
+            <div class="col-md-12 mb-3">
+              <label class="form-label d-block mb-2">Diet Preference</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="dietPreference" id="weightLoss" value="Weight Loss"
+                  formControlName="dietPreference">
+                <label class="form-check-label" for="weightLoss">Weight Loss</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="dietPreference" id="weightGain" value="Weight Gain"
+                  formControlName="dietPreference">
+                <label class="form-check-label" for="weightGain">Weight Gain</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="dietPreference" id="maintainWeight"
+                  value="Maintain Weight" formControlName="dietPreference">
+                <label class="form-check-label" for="maintainWeight">Maintain Weight</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="dietPreference" id="improveHealth"
+                  value="Improve Health" formControlName="dietPreference">
+                <label class="form-check-label" for="improveHealth">Improve Health</label>
+              </div>
+              <div
+                *ngIf="secondFormGroup.get('dietPreference')?.invalid && secondFormGroup.get('dietPreference')?.touched"
+                class="invalid-feedback d-block">
+                Diet Preference is required.
+              </div>
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <label class="form-label d-block mb-2">Do you have any medical conditions?</label>
+              <div *ngFor="let condition of displayedMedicalConditionsOptions" class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" [id]="condition | lowercase" [value]="condition"
+                  [checked]="isMedicalConditionSelected(condition)" (change)="onMedicalConditionChange($event)">
+                <label class="form-check-label" [for]="condition | lowercase">{{ condition }}</label>
+              </div>
+              <div
+                *ngIf="secondFormGroup.get('medicalConditions')?.invalid && secondFormGroup.get('medicalConditions')?.touched"
+                class="invalid-feedback d-block">
+                At least one medical condition must be selected.
+              </div>
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <label class="form-label d-block mb-2">Are you on any Medications?</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="medicationsYes" name="anyMedication" value="yes"
+                  formControlName="anyMedication">
+                <label class="form-check-label" for="medicationsYes">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="medicationsNo" name="anyMedication" value="no"
+                  formControlName="anyMedication">
+                <label class="form-check-label" for="medicationsNo">No</label>
+              </div>
+              <div
+                *ngIf="secondFormGroup.get('anyMedication')?.invalid && secondFormGroup.get('anyMedication')?.touched"
+                class="invalid-feedback d-block">
+                This field is required.
+              </div>
+
+              <div *ngIf="secondFormGroup.get('anyMedication')?.value === 'yes'" class="mt-2">
+                <input type="text" class="form-control" placeholder="Enter medication details"
+                  formControlName="medicationDetails"
+                  [class.is-invalid]="secondFormGroup.get('medicationDetails')?.invalid && secondFormGroup.get('medicationDetails')?.touched">
+                <div
+                  *ngIf="secondFormGroup.get('medicationDetails')?.invalid && secondFormGroup.get('medicationDetails')?.touched"
+                  class="invalid-feedback d-block">
+                  Medication details are required if you are on medication.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-end mt-3">
+            <button matButton matStepperPrevious class="btn px-4 rounded-pill me-2 text-light">Back</button>
+            <button matStepperNext class="btn px-4 rounded-pill submission next-button"
+              [disabled]="secondFormGroup.invalid">Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Step 3: Food Preferences background: linear-gradient(147deg, #f5ede2 78%, #fbdee7 240%);-->
+      <mat-step [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup">
+          <ng-template matStepLabel>Food Preferences</ng-template>
+          <h3>Food & Preferences</h3>
+          <div class="row">
+            <div class="col-md-12 mb-3">
+              <label class="form-label d-block mb-2">Diet Preference</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="foodPreference" id="vegetarian" value="Vegetarian"
+                  formControlName="foodPreference">
+                <label class="form-check-label" for="vegetarian">Vegetarian</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="foodPreference" id="nonVegetarian"
+                  value="Non-Vegetarian" formControlName="foodPreference">
+                <label class="form-check-label" for="nonVegetarian">Non-Vegetarian</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="foodPreference" id="eggetarian" value="Eggetarian"
+                  formControlName="foodPreference">
+                <label class="form-check-label" for="eggetarian">Eggetarian</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="foodPreference" id="vegan" value="Vegan"
+                  formControlName="foodPreference">
+                <label class="form-check-label" for="vegan">Vegan</label>
+              </div>
+              <div
+                *ngIf="thirdFormGroup.get('foodPreference')?.invalid && thirdFormGroup.get('foodPreference')?.touched"
+                class="invalid-feedback d-block">
+                Food Preference is required.
+              </div>
+            </div>
+            <div class="col-md-12 mb-3">
+              <label class="form-label">Food to Avoid?</label>
+              <textarea class="form-control" rows="3" placeholder="List any foods you want to avoid"
+                formControlName="foodToAvoid"></textarea>
+            </div>
+
+            <div class="col-md-12 form-group mb-3">
+              <label class="form-label">Daily Water Intake</label>
+              <input type="text" class="form-control" placeholder="e.g., 2 litres or 8 cups"
+                formControlName="dailyWaterIntake"
+                [class.is-invalid]="thirdFormGroup.get('dailyWaterIntake')?.invalid && thirdFormGroup.get('dailyWaterIntake')?.touched">
+              <div
+                *ngIf="thirdFormGroup.get('dailyWaterIntake')?.invalid && thirdFormGroup.get('dailyWaterIntake')?.touched"
+                class="invalid-feedback d-block">
+                Daily Water Intake is required and should be a valid format (e.g., "2 litres").
+              </div>
+            </div>
+          </div>
+          <div class="text-end mt-3">
+            <button matButton matStepperPrevious class="btn px-4 rounded-pill text-light me-2">Back</button>
+            <button matStepperNext class="btn px-4 rounded-pill submission next-button"
+              [disabled]="thirdFormGroup.invalid">Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Step 4: Lifestyle & Activity -->
+      <mat-step [stepControl]="fourthFormGroup">
+        <form [formGroup]="fourthFormGroup">
+          <ng-template matStepLabel>Lifestyle & Activity</ng-template>
+          <h3>Tell Us About Your Day</h3>
+          <div class="col-md-12 mb-3">
+            <label class="form-label d-block mb-2">Activity Level</label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="activityLevel" id="sedentary" value="Sedentary"
+                formControlName="activityLevel">
+              <label class="form-check-label" for="sedentary">Sedentary</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="activityLevel" id="lightly" value="Lightly Active"
+                formControlName="activityLevel">
+              <label class="form-check-label" for="lightly">Lightly Active</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="activityLevel" id="moderate" value="Moderate"
+                formControlName="activityLevel">
+              <label class="form-check-label" for="moderate">Moderate</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="activityLevel" id="veryActive" value="Very Active"
+                formControlName="activityLevel">
+              <label class="form-check-label" for="veryActive">Very Active</label>
+            </div>
+            <div *ngIf="fourthFormGroup.get('activityLevel')?.invalid && fourthFormGroup.get('activityLevel')?.touched"
+              class="invalid-feedback d-block">
+              Activity Level is required.
+            </div>
+          </div>
+
+          <div class="col-md-12 mb-3">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Wake Up Time</label>
+                <input type="time" class="form-control" placeholder="Select wake up time" formControlName="wakeUpTime"
+                  [class.is-invalid]="fourthFormGroup.get('wakeUpTime')?.invalid && fourthFormGroup.get('wakeUpTime')?.touched">
+                <div *ngIf="fourthFormGroup.get('wakeUpTime')?.invalid && fourthFormGroup.get('wakeUpTime')?.touched"
+                  class="invalid-feedback d-block">
+                  Wake Up Time is required.
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Sleep Time</label>
+                <input type="time" class="form-control" placeholder="Select sleep time" formControlName="sleepTime"
+                  [class.is-invalid]="fourthFormGroup.get('sleepTime')?.invalid && fourthFormGroup.get('sleepTime')?.touched">
+                <div *ngIf="fourthFormGroup.get('sleepTime')?.invalid && fourthFormGroup.get('sleepTime')?.touched"
+                  class="invalid-feedback d-block">
+                  Sleep Time is required.
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Breakfast Time</label>
+                <input type="time" class="form-control" formControlName="breakfastTime">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Lunch Time</label>
+                <input type="time" class="form-control" formControlName="lunchTime">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Dinner Time</label>
+                <input type="time" class="form-control" formControlName="dinnerTime">
+              </div>
+            </div>
+          </div>
+          <div class="text-end mt-3">
+            <button matButton matStepperPrevious class="btn px-4 rounded-pill text-light me-2">Back</button>
+            <button type="button" class="btn px-4 rounded-pill submission next-button"
+              (click)="goToPlans()">Submit</button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-stepper>
+  </div>
+
+  <div>
+    <app-medicine-slider title="Experience the Joy of Easy Shopping" [showSeeAll]="true" [maxItems]="8"
+      [autoSlide]="true" [slideInterval]="5000">
+    </app-medicine-slider>
+  </div>
+  <div>
+  <app-footer></app-footer>
+  <app-mobile-footer-nav></app-mobile-footer-nav>
+</div>
+</div>

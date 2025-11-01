@@ -555,7 +555,11 @@ export class Medicines implements AfterViewInit {
   // personal care
 
   fetchProductsByCategory(categoryApiValues: string[]): void {
+      console.log('🔄 Fetching products for category API values:', categoryApiValues);
+
     const categoryName = this.getCategoryNameByApiValues(categoryApiValues);
+      console.log('🔄 Fetching products for category API values:', categoryApiValues);
+
     this.router.navigate(['/products'], {
       queryParams: {
         category: categoryName,
@@ -564,6 +568,42 @@ export class Medicines implements AfterViewInit {
     });
   }
   
+
+
+
+private getCategoryNameByApiValues(apiValues: string[]): string {
+  console.log('🔍 Searching for category with API values:', apiValues);
+  
+  // Create a map of all categories for better lookup
+  const allCategories = [
+    ...this.categories,
+    ...this.categories2, 
+    ...this.categories4,
+    ...this.categories5
+  ];
+  
+  // Try exact match first (when clicked category has specific values)
+  let category = allCategories.find(cat => {
+    // Check if this category was specifically clicked (exact match of apiValues)
+    const isExactMatch = apiValues.every(value => cat.apiValue.includes(value));
+    console.log(`🔍 Exact match check for "${cat.name}":`, isExactMatch);
+    return isExactMatch;
+  });
+  
+  // If no exact match, try partial match (for backward compatibility)
+  if (!category) {
+    category = allCategories.find(cat => {
+      const hasAnyMatch = apiValues.some(value => cat.apiValue.includes(value));
+      console.log(`🔍 Partial match check for "${cat.name}":`, hasAnyMatch);
+      return hasAnyMatch;
+    });
+  }
+  
+  console.log('🔍 Found category:', category?.name || 'Products');
+  return category ? category.name : 'Products';
+}
+
+
 
   // private getCategoryNameByApiValues(apiValues: string[]): string {
   //   console.log("apiValues",apiValues);
@@ -576,7 +616,7 @@ export class Medicines implements AfterViewInit {
   //   return category ? category.name : 'Products';
   // }
   // Helper method to get category name from API values
-  private getCategoryNameByApiValues(apiValues: string[]): string {
+  private getCategoryNameByApiValues1(apiValues: string[]): string {
     const category = this.categories.find(cat => 
       cat.apiValue.join(',') === apiValues.join(',')
     );
@@ -652,7 +692,7 @@ export class Medicines implements AfterViewInit {
   //       "Soap",], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/skin care.avif', altText: 'Skin Care Products'
   //   },
 
-
+// here category
  categories5: Category[] = [
     { name: 'Stomach Care', apiValue: ['Digestive Tablet',"Syrup","Suspension","Oral Suspension","Oral Solution","Oral Liquid","Oral Gel","Tonic","Granule","Powder for Oral Suspension","Powder for Oral Solution"] ,cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/1.avif', altText: 'Diabetes Care Products' },
     { name: 'Heart Rate', apiValue: ['Capsule',"Tablet","Injection","Solution for Infusion","Syrup","Infusion"], cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/2.avif', altText: 'Heart Rate Care Products' },
@@ -671,6 +711,7 @@ export class Medicines implements AfterViewInit {
   ];
 
 
+  
     @ViewChild("categoryCarouselWrapper5", { static: false })
   carouselWrapper5!: ElementRef<HTMLDivElement>;
 

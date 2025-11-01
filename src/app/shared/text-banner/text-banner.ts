@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {  Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -16,4 +16,11 @@ export class TextBanner {
   @Input() subtitle: string = '';         // Subtext
   @Input() buttonText: string = 'Click';  // Button label
   @Input() buttonLink: string = '#';
+
+
+   @Output() buttonClick = new EventEmitter<void>();
+
+  onButtonClick() {
+    this.buttonClick.emit();
+  }
 }
