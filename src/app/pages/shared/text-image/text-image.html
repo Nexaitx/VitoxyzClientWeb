@@ -1,0 +1,42 @@
+<section 
+  class="text-image-section"
+  [class.reverse]="reverse"
+  [style.background-color]="backgroundColor"
+  [style.color]="textColor">
+  
+  <div class="container">
+    <div class="content-wrapper">
+      
+      <!-- Text Content -->
+      <div class="text-content">
+        <div class="content-inner">
+          <h2 class="title" *ngIf="title">{{ title }}</h2>
+          <h3 class="subtitle" *ngIf="subtitle">{{ subtitle }}</h3>
+          <p class="description" *ngIf="description">{{ description }}</p>
+          
+          <a 
+            *ngIf="buttonText"
+            [routerLink]="buttonLink"
+            class="btn"
+            [class.btn-primary]="buttonType === 'primary'"
+            [class.btn-secondary]="buttonType === 'secondary'"
+            [class.btn-outline]="buttonType === 'outline'">
+            {{ buttonText }}
+          </a>
+        </div>
+      </div>
+
+      <!-- Image Content -->
+      <div class="image-content" *ngIf="imageUrl">
+        <div class="image-wrapper">
+          <img 
+            [src]="imageUrl" 
+            [alt]="imageAlt"
+            class="image"
+            loading="lazy">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
