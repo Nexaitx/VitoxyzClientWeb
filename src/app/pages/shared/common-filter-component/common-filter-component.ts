@@ -10,6 +10,7 @@ import { API_URL } from '@src/app/core/const';
 import { Router } from '@angular/router';
 import { CartService } from '@src/app/core/cart.service'; // ✅ Make sure this path is correct
 
+// addtocart issue
 @Component({
   selector: 'app-common-filter-component',
   standalone: true,

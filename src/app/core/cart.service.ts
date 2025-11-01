@@ -18,8 +18,8 @@ export interface CartItem {
 @Injectable({ providedIn: 'root' })
 export class CartService {
   private http = inject(HttpClient);
-  // private API_BASE = 'http://localhost:8080/api/cart';
- private API_BASE = `${API_URL}/cart`;
+  private API_BASE = 'http://localhost:8080/api/cart';
+//  private API_BASE = `${API_URL}/cart`;
   
   
 
@@ -201,78 +201,231 @@ export class CartService {
   }
 
   // Fetch cart from backend with loading states
-  private fetchCartFromBackend(): Observable<any> {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      console.log('❌ No token for backend fetch');
-      return of(null);
-    }
+  // private fetchCartFromBackend(): Observable<any> {
+  //   const token = localStorage.getItem('authToken');
+  //   if (!token) {
+  //     console.log('❌ No token for backend fetch');
+  //     return of(null);
+  //   }
 
-    console.log('📥 Fetching cart from backend...');
-    this.setLoading(true);
+  //   console.log('📥 Fetching cart from backend...');
+  //   this.setLoading(true);
     
-    return this.http.get<any>(`${this.API_BASE}/my`, {
-      headers: { Authorization: `Bearer ${token}` }
-    }).pipe(
-      tap((res) => {
-        console.log('📦 Backend cart response:', res);
-        this.setLoading(false);
+  //   return this.http.get<any>(`${this.API_BASE}/my`, {
+  //     headers: { Authorization: `Bearer ${token}` }
+  //   }).pipe(
+  //     tap((res) => {
+  //       console.log('📦 Backend cart response:', res);
+  //       this.setLoading(false);
         
-        if (res && res.status) {
-          if (res.data && Array.isArray(res.data) && res.data.length > 0) {
-            const items = res.data.map((item: any) => {
-              let imageUrl = 'assets/no-image.png';
-              if (item.imageUrl) {
-                imageUrl = item.imageUrl.split('|')[0].trim();
-              }
+  //       if (res && res.status) {
+  //         if (res.data && Array.isArray(res.data) && res.data.length > 0) {
+  //           const items = res.data.map((item: any) => {
+  //             let imageUrl = 'assets/no-image.png';
+  //             if (item.imageUrl) {
+  //               imageUrl = item.imageUrl.split('|')[0].trim();
+  //             }
 
-              return {
-                id: item.medicineId,
-                name: item.productName,
-                image: imageUrl,
-                qty: item?.quantity?.toString() || '1',
-                price: item.price,
-                mrp: item.mrp || item.price,
-                count: item.quantity || 1,
-                productType: item.productType
-              };
-            });
-            console.log('✅ Processed backend cart items:', items);
-            this._cart$.next(items);
-          } else {
-            console.log('ℹ️ Backend cart is empty');
-            this._cart$.next([]);
+  //             return {
+  //               id: item.medicineId,
+  //               name: item.productName,
+  //               image: imageUrl,
+  //               qty: item?.quantity?.toString() || '1',
+  //               price: item.price,
+  //               mrp: item.mrp || item.price,
+  //               count: item.quantity || 1,
+  //               productType: item.productType
+  //             };
+  //           });
+  //           console.log('✅ Processed backend cart items:', items);
+  //           this._cart$.next(items);
+  //         } else {
+  //           console.log('ℹ️ Backend cart is empty');
+  //           this._cart$.next([]);
             
-            // Check if we have local cart items that failed to sync
-            const localCart = localStorage.getItem(this.LOCAL_STORAGE_KEY);
-            if (localCart && JSON.parse(localCart).length > 0) {
-              console.log('⚠️ Local cart items still exist, sync might have failed');
-              console.log('🔄 Loading local cart as fallback');
-              this.loadLocalCart();
-            }
-          }
-        } else {
-          console.error('❌ Invalid backend response format');
-          this._cart$.next([]);
-        }
-      }),
-      tap({
-        error: (error) => {
-          console.error('❌ Error fetching backend cart:', error);
-          this.setLoading(false);
-          // Fallback to local cart if backend fails
-          console.log('🔄 Falling back to local cart due to backend error');
-          this.loadLocalCart();
-        }
-      })
-    );
+  //           // Check if we have local cart items that failed to sync
+  //           const localCart = localStorage.getItem(this.LOCAL_STORAGE_KEY);
+  //           if (localCart && JSON.parse(localCart).length > 0) {
+  //             console.log('⚠️ Local cart items still exist, sync might have failed');
+  //             console.log('🔄 Loading local cart as fallback');
+  //             this.loadLocalCart();
+  //           }
+  //         }
+  //       } else {
+  //         console.error('❌ Invalid backend response format');
+  //         this._cart$.next([]);
+  //       }
+  //     }),
+  //     tap({
+  //       error: (error) => {
+  //         console.error('❌ Error fetching backend cart:', error);
+  //         this.setLoading(false);
+  //         // Fallback to local cart if backend fails
+  //         console.log('🔄 Falling back to local cart due to backend error');
+  //         this.loadLocalCart();
+  //       }
+  //     })
+  //   );
+  // }
+
+  // Fetch cart from backend with loading states - UPDATED
+private fetchCartFromBackend(): Observable<any> {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    console.log('❌ No token for backend fetch');
+    return of(null);
   }
 
-  //  Add item with loading states and better error handling
-  // addItem(product: any, quantity: number = 1): Observable<any> {
+  console.log('📥 Fetching cart from backend...');
+  this.setLoading(true);
+  
+  return this.http.get<any>(`${this.API_BASE}/my`, {
+    headers: { Authorization: `Bearer ${token}` }
+  }).pipe(
+    tap((res) => {
+      console.log('📦 Backend cart response:', res);
+      this.setLoading(false);
+      
+      if (res && res.status) {
+        if (res.data && Array.isArray(res.data) && res.data.length > 0) {
+          const items = res.data.map((item: any) => {
+            let imageUrl = 'assets/no-image.png';
+            if (item.imageUrl) {
+              imageUrl = item.imageUrl.split('|')[0].trim();
+            }
+
+            // ✅ IMPORTANT: id field में medicineManagementId use करें
+            return {
+              id: item.medicineManagementId || item.medicineId, // ✅ medicineManagementId को priority दें
+              medicineId: item.medicineId, // original medicineId भी store करें
+              name: item.productName,
+              image: imageUrl,
+              qty: item?.quantity?.toString() || '1',
+              price: item.price,
+              mrp: item.mrp || item.price,
+              count: item.quantity || 1,
+              productType: item.productType
+            };
+          });
+          console.log('✅ Processed backend cart items:', items);
+          this._cart$.next(items);
+        } else {
+          console.log('ℹ️ Backend cart is empty');
+          this._cart$.next([]);
+        }
+      } else {
+        console.error('❌ Invalid backend response format');
+        this._cart$.next([]);
+      }
+    }),
+    tap({
+      error: (error) => {
+        console.error('❌ Error fetching backend cart:', error);
+        this.setLoading(false);
+        console.log('🔄 Falling back to local cart due to backend error');
+        this.loadLocalCart();
+      }
+    })
+  );
+}
+
+addItem(product: any, quantity: number = 1): Observable<any> {
+  const token = localStorage.getItem('authToken');
+  
+  const cartItem: CartItem = {
+    id: product.managementId || product.id || product.productId || product.medicineId,
+    name: product.name,
+    price: product.price || product.discountPrice || product.originalPrice,
+    mrp: product.originalPrice,
+    image: product.image || this.getFirstImageUrl(product.imageUrls),
+    qty: product.productForm || product.packaging || '1',
+    count: quantity,
+    productType: product.productType || 'otc'
+  };
+
+  console.log('🛒 Adding item to cart - Token exists:', !!token);
+  console.log('📦 Product details:', product);
+
+  if (!token) {
+    this.addToLocalCart(cartItem);
+    this.notificationService.showSuccess(`${product.name} added to cart successfully!`);
+    return of(cartItem);
+  }
+
+  // ✅ managementId को priority दें (आपके response के according)
+  const managementId = product.managementId;
+  const medicineId = product.medicineId || product.id || product.productId;
+  
+  if (!managementId && !medicineId) {
+    console.error('❌ Both managementId and medicineId are missing', product);
+    this.addToLocalCart(cartItem);
+    this.notificationService.showSuccess(`${product.name} added to cart successfully!`);
+    return of(cartItem);
+  }
+
+  const identifier = managementId || medicineId;
+  this.setItemLoading(identifier.toString(), true);
+
+  // ✅ Backend payload - managementId को priority दें
+  const backendPayload: any = {
+    quantity: quantity,
+    productType: product.productType || 'otc'
+  };
+
+  // Priority: managementId > medicineId (आपके API के according)
+  if (managementId) {
+    backendPayload.medicineManagementId = managementId;
+  } else if (medicineId) {
+    backendPayload.medicineId = medicineId;
+  }
+
+  console.log('📤 Backend payload:', backendPayload);
+
+  return this.http.post<any>(`${this.API_BASE}/add`, backendPayload, {
+    headers: { Authorization: `Bearer ${token}` }
+  }).pipe(
+    tap({
+      next: (response) => {
+        this.setItemLoading(identifier.toString(), false);
+        
+        if (response && response.status) {
+          this.notificationService.showSuccess(`${product.name} added to cart successfully!`);
+          setTimeout(() => {
+            this.fetchCartFromBackend().subscribe();
+          }, 500);
+        } else {
+          console.warn('⚠️ Backend add failed, using local cart');
+          this.addToLocalCart(cartItem);
+          this.notificationService.showSuccess(`${product.name} added to cart successfully!`);
+        }
+      },
+      error: (error) => {
+        this.setItemLoading(identifier.toString(), false);
+        console.error('❌ Backend add error:', error);
+        this.addToLocalCart(cartItem);
+        this.notificationService.showSuccess(`${product.name} added to cart successfully!`);
+      }
+    })
+  );
+}
+
+// Helper method for image URL
+private getFirstImageUrl(imageUrls: any): string {
+  if (!imageUrls) return 'assets/no-image.png';
+  
+  if (Array.isArray(imageUrls)) {
+    return imageUrls.length > 0 ? imageUrls[0] : 'assets/no-image.png';
+  }
+  
+  if (typeof imageUrls === 'string') {
+    return imageUrls.split('|')[0].trim() || 'assets/no-image.png';
+  }
+  
+  return 'assets/no-image.png';
+}
+  //  addItem(product: any, quantity: number = 1): Observable<any> {
   //   const token = localStorage.getItem('authToken');
     
-  //   // Create cart item
   //   const cartItem: CartItem = {
   //     id: product.id || product.productId,
   //     name: product.name,
@@ -285,29 +438,21 @@ export class CartService {
   //   };
 
   //   console.log('🛒 Adding item to cart - Token exists:', !!token);
-  //   console.log('📦 Cart item:', cartItem);
 
   //   if (!token) {
-  //     // User not logged in - save to local storage
-  //     console.log('👤 User not logged in, saving to local storage');
   //     this.addToLocalCart(cartItem);
-  //     this.showSuccessNotification(`${product.name} added to cart!`);
+  //     this.notificationService.showSuccess(`${product.name} added to cart successfully!`);
   //     return of(cartItem);
   //   }
 
-  //   // User logged in - save to backend
-  //   console.log('👤 User logged in, saving to backend');
-    
   //   const medicineId = product.id || product.productId;
     
   //   if (!medicineId) {
-  //     console.error('❌ Medicine ID missing');
   //     this.addToLocalCart(cartItem);
-  //     this.showSuccessNotification(`${product.name} added to cart!`);
+  //     this.notificationService.showSuccess(`${product.name} added to cart successfully!`);
   //     return of(cartItem);
   //   }
 
-  //   // Set loading state for this item
   //   this.setItemLoading(medicineId, true);
 
   //   const backendPayload = {
@@ -316,206 +461,296 @@ export class CartService {
   //     productType: product.productType || 'otc'
   //   };
 
-  //   console.log('📤 Backend payload:', backendPayload);
-
   //   return this.http.post<any>(`${this.API_BASE}/add`, backendPayload, {
   //     headers: { Authorization: `Bearer ${token}` }
   //   }).pipe(
   //     tap({
   //       next: (response) => {
-  //         console.log('✅ Backend response:', response);
   //         this.setItemLoading(medicineId, false);
           
   //         if (response && response.status) {
-  //           this.showSuccessNotification(`${product.name} added to cart!`);
-  //           // Refresh cart from backend
+  //           this.notificationService.showSuccess(`${product.name} added to cart successfully!`);
   //           setTimeout(() => {
   //             this.fetchCartFromBackend().subscribe();
   //           }, 500);
   //         } else {
-  //           console.error('❌ Backend failed, using local storage');
   //           this.addToLocalCart(cartItem);
-  //           this.showSuccessNotification(`${product.name} added to cart!`);
+  //           this.notificationService.showSuccess(`${product.name} added to cart successfully!`);
   //         }
   //       },
   //       error: (error) => {
-  //         console.error('❌ Backend error:', error);
   //         this.setItemLoading(medicineId, false);
   //         this.addToLocalCart(cartItem);
-  //         this.showSuccessNotification(`${product.name} added to cart!`);
+  //         this.notificationService.showSuccess(`${product.name} added to cart successfully!`);
   //       }
   //     })
   //   );
   // }
 
-   addItem(product: any, quantity: number = 1): Observable<any> {
-    const token = localStorage.getItem('authToken');
-    
-    const cartItem: CartItem = {
-      id: product.id || product.productId,
-      name: product.name,
-      price: product.price,
-      mrp: product.mrp,
-      image: product.image || product.imageUrl,
-      qty: product.form || product.packaging,
-      count: quantity,
-      productType: product.productType || 'otc'
-    };
-
-    console.log('🛒 Adding item to cart - Token exists:', !!token);
-
-    if (!token) {
-      this.addToLocalCart(cartItem);
-      this.notificationService.showSuccess(`${product.name} added to cart successfully!`);
-      return of(cartItem);
-    }
-
-    const medicineId = product.id || product.productId;
-    
-    if (!medicineId) {
-      this.addToLocalCart(cartItem);
-      this.notificationService.showSuccess(`${product.name} added to cart successfully!`);
-      return of(cartItem);
-    }
-
-    this.setItemLoading(medicineId, true);
-
-    const backendPayload = {
-      medicineId: medicineId,
-      quantity: quantity,
-      productType: product.productType || 'otc'
-    };
-
-    return this.http.post<any>(`${this.API_BASE}/add`, backendPayload, {
-      headers: { Authorization: `Bearer ${token}` }
-    }).pipe(
-      tap({
-        next: (response) => {
-          this.setItemLoading(medicineId, false);
-          
-          if (response && response.status) {
-            this.notificationService.showSuccess(`${product.name} added to cart successfully!`);
-            setTimeout(() => {
-              this.fetchCartFromBackend().subscribe();
-            }, 500);
-          } else {
-            this.addToLocalCart(cartItem);
-            this.notificationService.showSuccess(`${product.name} added to cart successfully!`);
-          }
-        },
-        error: (error) => {
-          this.setItemLoading(medicineId, false);
-          this.addToLocalCart(cartItem);
-          this.notificationService.showSuccess(`${product.name} added to cart successfully!`);
-        }
-      })
-    );
-  }
 
 
   //  Remove item with loading state
-  removeItem(id: string): Observable<any> {
-    const token = localStorage.getItem('authToken');
+  // removeItem(id: string): Observable<any> {
+  //   const token = localStorage.getItem('authToken');
     
-    console.log('🗑️ Removing item:', id);
-    this.setItemLoading(id, true);
+  //   console.log('🗑️ Removing item:', id);
+  //   this.setItemLoading(id, true);
 
-    // Always remove from local storage first
-    this.removeFromLocalCart(id);
+  //   // Always remove from local storage first
+  //   this.removeFromLocalCart(id);
 
-    if (!token) {
-      console.log('👤 User not logged in, removed from local storage only');
-      this.setItemLoading(id, false);
-      this.showSuccessNotification('Item removed from cart');
-      return of(null);
-    }
+  //   if (!token) {
+  //     console.log('👤 User not logged in, removed from local storage only');
+  //     this.setItemLoading(id, false);
+  //     this.showSuccessNotification('Item removed from cart');
+  //     return of(null);
+  //   }
 
-    // Also remove from backend if logged in
-    console.log('👤 User logged in, removing from backend');
-    return this.http.delete<any>(`${this.API_BASE}/remove/${id}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    }).pipe(
-      tap({
-        next: () => {
-          this.setItemLoading(id, false);
-          console.log('✅ Backend remove successful');
-          this.showSuccessNotification('Item removed from cart');
-          this.fetchCartFromBackend().subscribe();
-        },
-        error: (error) => {
-          this.setItemLoading(id, false);
-          console.error('❌ Backend remove failed:', error);
-          this.showSuccessNotification('Item removed from cart');
-        }
-      })
-    );
+  //   // Also remove from backend if logged in
+  //   console.log('👤 User logged in, removing from backend');
+  //   return this.http.delete<any>(`${this.API_BASE}/remove/${id}`, {
+  //     headers: { Authorization: `Bearer ${token}` }
+  //   }).pipe(
+  //     tap({
+  //       next: () => {
+  //         this.setItemLoading(id, false);
+  //         console.log('✅ Backend remove successful');
+  //         this.showSuccessNotification('Item removed from cart');
+  //         this.fetchCartFromBackend().subscribe();
+  //       },
+  //       error: (error) => {
+  //         this.setItemLoading(id, false);
+  //         console.error('❌ Backend remove failed:', error);
+  //         this.showSuccessNotification('Item removed from cart');
+  //       }
+  //     })
+  //   );
+  // }
+
+  //remove
+  //  Smart remove item that tries multiple endpoints
+removeItem(id: string): Observable<any> {
+  const token = localStorage.getItem('authToken');
+  
+  console.log('🗑️ Removing item from cart:', id);
+  this.setItemLoading(id, true);
+
+  // Always remove from local storage first
+  this.removeFromLocalCart(id);
+
+  if (!token) {
+    console.log('👤 User not logged in, removed from local storage only');
+    this.setItemLoading(id, false);
+    this.showSuccessNotification('Item removed from cart');
+    return of(null);
   }
+
+  // ✅ Try medicineManagementId endpoint first, then fallback to medicineId
+  return this.tryRemoveWithManagementId(id).pipe(
+    tap({
+      next: () => {
+        this.setItemLoading(id, false);
+        console.log('✅ Remove successful with managementId endpoint');
+        this.showSuccessNotification('Item removed from cart');
+        this.fetchCartFromBackend().subscribe();
+      },
+      error: (error) => {
+        console.error('❌ ManagementId remove failed, trying medicineId endpoint:', error);
+        this.tryRemoveWithMedicineId(id).subscribe({
+          next: () => {
+            this.setItemLoading(id, false);
+            console.log('✅ Remove successful with medicineId endpoint');
+            this.showSuccessNotification('Item removed from cart');
+            this.fetchCartFromBackend().subscribe();
+          },
+          error: (fallbackError) => {
+            this.setItemLoading(id, false);
+            console.error('❌ Both remove methods failed:', fallbackError);
+            this.showSuccessNotification('Item removed from cart (local only)');
+          }
+        });
+      }
+    })
+  );
+}
+
+// ✅ Try remove with medicineManagementId
+private tryRemoveWithManagementId(managementId: string): Observable<any> {
+  const token = localStorage.getItem('authToken');
+  console.log('🔧 Trying remove with managementId endpoint');
+  
+  return this.http.delete<any>(`${this.API_BASE}/remove/${managementId}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
+
+// ✅ Try remove with medicineId (fallback)
+private tryRemoveWithMedicineId(medicineId: string): Observable<any> {
+  const token = localStorage.getItem('authToken');
+  console.log('🔧 Trying remove with medicineId endpoint');
+  
+  return this.http.delete<any>(`${this.API_BASE}/remove/${medicineId}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
 
   //  Increment quantity with loading state
-  incrementQty(medicineId: string): Observable<any> {
-    const token = localStorage.getItem('authToken');
+  // incrementQty(medicineId: string): Observable<any> {
+  //   const token = localStorage.getItem('authToken');
     
-    this.setItemLoading(medicineId, true);
+  //   this.setItemLoading(medicineId, true);
 
-    if (!token) {
-      const currentCart = this._cart$.value;
-      const item = currentCart.find(i => i.id === medicineId);
-      if (item) {
-        this.updateLocalCartQuantity(medicineId, item.count + 1);
-      }
-      this.setItemLoading(medicineId, false);
-      return of(null);
+  //   if (!token) {
+  //     const currentCart = this._cart$.value;
+  //     const item = currentCart.find(i => i.id === medicineId);
+  //     if (item) {
+  //       this.updateLocalCartQuantity(medicineId, item.count + 1);
+  //     }
+  //     this.setItemLoading(medicineId, false);
+  //     return of(null);
+  //   }
+
+  //   return this.http.put<any>(`${this.API_BASE}/increment/${medicineId}`, {}, {
+  //     headers: { Authorization: `Bearer ${token}` }
+  //   }).pipe(
+  //     tap({
+  //       next: () => {
+  //         this.setItemLoading(medicineId, false);
+  //         this.fetchCartFromBackend().subscribe();
+  //       },
+  //       error: (error) => {
+  //         this.setItemLoading(medicineId, false);
+  //         console.error('❌ Increment failed:', error);
+  //       }
+  //     })
+  //   );
+  // }
+
+  // //  Decrement quantity with loading state
+  // decrementQty(medicineId: string): Observable<any> {
+  //   const token = localStorage.getItem('authToken');
+    
+  //   this.setItemLoading(medicineId, true);
+
+  //   if (!token) {
+  //     const currentCart = this._cart$.value;
+  //     const item = currentCart.find(i => i.id === medicineId);
+  //     if (item && item.count > 1) {
+  //       this.updateLocalCartQuantity(medicineId, item.count - 1);
+  //     } else if (item && item.count === 1) {
+  //       this.removeFromLocalCart(medicineId);
+  //     }
+  //     this.setItemLoading(medicineId, false);
+  //     return of(null);
+  //   }
+
+  //   return this.http.put<any>(`${this.API_BASE}/decrement/${medicineId}`, {}, {
+  //     headers: { Authorization: `Bearer ${token}` }
+  //   }).pipe(
+  //     tap({
+  //       next: () => {
+  //         this.setItemLoading(medicineId, false);
+  //         this.fetchCartFromBackend().subscribe();
+  //       },
+  //       error: (error) => {
+  //         this.setItemLoading(medicineId, false);
+  //         console.error('❌ Decrement failed:', error);
+  //       }
+  //     })
+  //   );
+  // }
+
+  //  Increment quantity with loading state - UPDATED
+incrementQty(medicineId: string): Observable<any> {
+  const token = localStorage.getItem('authToken');
+  
+  this.setItemLoading(medicineId, true);
+
+  if (!token) {
+    const currentCart = this._cart$.value;
+    const item = currentCart.find(i => i.id === medicineId);
+    if (item) {
+      this.updateLocalCartQuantity(medicineId, item.count + 1);
     }
-
-    return this.http.put<any>(`${this.API_BASE}/increment/${medicineId}`, {}, {
-      headers: { Authorization: `Bearer ${token}` }
-    }).pipe(
-      tap({
-        next: () => {
-          this.setItemLoading(medicineId, false);
-          this.fetchCartFromBackend().subscribe();
-        },
-        error: (error) => {
-          this.setItemLoading(medicineId, false);
-          console.error('❌ Increment failed:', error);
-        }
-      })
-    );
+    this.setItemLoading(medicineId, false);
+    return of(null);
   }
 
-  //  Decrement quantity with loading state
-  decrementQty(medicineId: string): Observable<any> {
-    const token = localStorage.getItem('authToken');
-    
-    this.setItemLoading(medicineId, true);
-
-    if (!token) {
-      const currentCart = this._cart$.value;
-      const item = currentCart.find(i => i.id === medicineId);
-      if (item && item.count > 1) {
-        this.updateLocalCartQuantity(medicineId, item.count - 1);
-      } else if (item && item.count === 1) {
-        this.removeFromLocalCart(medicineId);
+  // ✅ medicineManagementId के साथ increment API call
+  return this.http.put<any>(`${this.API_BASE}/increment-by-management/${medicineId}`, {}, {
+    headers: { Authorization: `Bearer ${token}` }
+  }).pipe(
+    tap({
+      next: () => {
+        this.setItemLoading(medicineId, false);
+        this.fetchCartFromBackend().subscribe();
+      },
+      error: (error) => {
+        this.setItemLoading(medicineId, false);
+        console.error('❌ Increment failed with managementId, trying fallback:', error);
+        
+        // Fallback to old endpoint
+        this.http.put<any>(`${this.API_BASE}/increment/${medicineId}`, {}, {
+          headers: { Authorization: `Bearer ${token}` }
+        }).subscribe({
+          next: () => {
+            this.fetchCartFromBackend().subscribe();
+          },
+          error: (fallbackError) => {
+            console.error('❌ Both increment methods failed:', fallbackError);
+          }
+        });
       }
-      this.setItemLoading(medicineId, false);
-      return of(null);
-    }
+    })
+  );
+}
 
-    return this.http.put<any>(`${this.API_BASE}/decrement/${medicineId}`, {}, {
-      headers: { Authorization: `Bearer ${token}` }
-    }).pipe(
-      tap({
-        next: () => {
-          this.setItemLoading(medicineId, false);
-          this.fetchCartFromBackend().subscribe();
-        },
-        error: (error) => {
-          this.setItemLoading(medicineId, false);
-          console.error('❌ Decrement failed:', error);
-        }
-      })
-    );
+//  Decrement quantity with loading state - UPDATED
+decrementQty(medicineId: string): Observable<any> {
+  const token = localStorage.getItem('authToken');
+  
+  this.setItemLoading(medicineId, true);
+
+  if (!token) {
+    const currentCart = this._cart$.value;
+    const item = currentCart.find(i => i.id === medicineId);
+    if (item && item.count > 1) {
+      this.updateLocalCartQuantity(medicineId, item.count - 1);
+    } else if (item && item.count === 1) {
+      this.removeFromLocalCart(medicineId);
+    }
+    this.setItemLoading(medicineId, false);
+    return of(null);
   }
+
+  // ✅ medicineManagementId के साथ decrement API call
+  return this.http.put<any>(`${this.API_BASE}/decrement-by-management/${medicineId}`, {}, {
+    headers: { Authorization: `Bearer ${token}` }
+  }).pipe(
+    tap({
+      next: () => {
+        this.setItemLoading(medicineId, false);
+        this.fetchCartFromBackend().subscribe();
+      },
+      error: (error) => {
+        this.setItemLoading(medicineId, false);
+        console.error('❌ Decrement failed with managementId, trying fallback:', error);
+        
+        // Fallback to old endpoint
+        this.http.put<any>(`${this.API_BASE}/decrement/${medicineId}`, {}, {
+          headers: { Authorization: `Bearer ${token}` }
+        }).subscribe({
+          next: () => {
+            this.fetchCartFromBackend().subscribe();
+          },
+          error: (fallbackError) => {
+            console.error('❌ Both decrement methods failed:', fallbackError);
+          }
+        });
+      }
+    })
+  );
+}
 
   // Update quantity with loading state
   updateQty(medicineId: string, quantity: number, productType: string = 'otc'): Observable<any> {
@@ -662,7 +897,7 @@ syncLocalCartSmartMerge(payload: any): Observable<any> {
     headers: { Authorization: `Bearer ${token}` }
   });
 }
-
+//addtocart issue
 
 
 }
