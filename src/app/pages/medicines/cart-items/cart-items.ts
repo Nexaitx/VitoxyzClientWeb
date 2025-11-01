@@ -364,27 +364,62 @@ onAuthSuccess() {
 }
 
   //  Remove item with confirmation
-  removeItem(id: string) {
-    const item = this.cart.find(item => item.id === id);
-    if (!item) return;
+  // removeItem(id: string) {
+  //   const item = this.cart.find(item => item.id === id);
+  //   if (!item) return;
 
    
-    console.log('🗑️ Removing item from cart:', id);
-    this.updateDebugInfo(`Removing item: ${id}`);
+  //   console.log('🗑️ Removing item from cart:', id);
+  //   this.updateDebugInfo(`Removing item: ${id}`);
     
-    this.cartService.removeItem(id).subscribe({
-      next: () => {
-        console.log('✅ Item removed successfully');
-        this.updateDebugInfo('Item removed');
-        this.showSuccessAlert('Item removed from cart');
-      },
-      error: (err) => {
-        console.error('❌ Failed to remove item:', err);
-        this.updateDebugInfo('Failed to remove item');
-        this.showErrorAlert('Failed to remove item. Please try again.');
-      }
-    });
+  //   this.cartService.removeItem(id).subscribe({
+  //     next: () => {
+  //       console.log('✅ Item removed successfully');
+  //       this.updateDebugInfo('Item removed');
+  //       this.showSuccessAlert('Item removed from cart');
+  //     },
+  //     error: (err) => {
+  //       console.error('❌ Failed to remove item:', err);
+  //       this.updateDebugInfo('Failed to remove item');
+  //       this.showErrorAlert('Failed to remove item. Please try again.');
+  //     }
+  //   });
+  // }
+  //  Remove item with confirmation - UPDATED with better debugging
+removeItem(id: string) {
+  const item = this.cart.find(item => item.id === id);
+  if (!item) return;
+
+  console.log('🗑️ Removing item from cart:', {
+    id: id,
+    name: item.name,
+    cartLength: this.cart.length
+  });
+  
+  this.updateDebugInfo(`Removing item: ${item.name} (${id})`);
+  
+  if (!confirm(`Remove "${item.name}" from cart?`)) {
+    return;
   }
+  
+  this.cartService.removeItem(id).subscribe({
+    next: () => {
+      console.log('✅ Item removed successfully');
+      this.updateDebugInfo(`Removed: ${item.name}`);
+      this.showSuccessAlert('Item removed from cart');
+    },
+    error: (err) => {
+      console.error('❌ Failed to remove item:', err);
+      this.updateDebugInfo(`Failed to remove: ${item.name}`);
+      
+      // Additional debugging
+      console.log('🔧 Current cart state:', this.cart);
+      console.log('🔧 Local storage cart:', this.checkLocalStorage());
+      
+      this.showErrorAlert('Failed to remove item from server, but removed locally.');
+    }
+  });
+}
 
   //  Increase quantity with loading state
   increaseQty(item: CartItem) {

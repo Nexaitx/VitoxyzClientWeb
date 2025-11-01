@@ -412,40 +412,74 @@ export class ViewMedicine implements OnInit {
   }
 
   // ========== CART METHODS ==========
+// ========== CART METHODS ==========
 
-  addToCart() {
-    if (!this.medicine) return;
+addToCart() {
+  if (!this.medicine) return;
 
-    const payload = {
-      medicineId: this.medicine.id,
-      productId: this.medicine.productId,
-      quantity: Number(this.selectedQty) || 1,
-      productType: this.medicine.entityType === 'PRODUCT_OTC' ? 'otc' : 'health',
-      name: this.medicine.name,
-      price: this.getCurrentPrice(),
-      image: this.selectedImage
-    };
+  // ✅ managementId को primary ID के रूप में use करें
+  const managementId = this.medicine.id; // यह managementId ही है
+  const productType = this.medicine.entityType === 'PRODUCT_OTC' ? 'otc' : 'health';
 
-    this.cartService.addItem(payload).subscribe({
-      next: () => alert(`${this.medicine.name} added to cart!`),
-      error: () => alert("Failed to add item to cart. Try again."),
-    });
-  }
+  console.log('🛒 Adding to cart:', {
+    managementId: managementId,
+    name: this.medicine.name,
+    productType: productType
+  });
 
-  addToCartOtc() {
-    if (!this.product) return;
+  const payload = {
+    managementId: managementId, // ✅ यही main field है
+    medicineId: this.medicine.productId, // optional
+    name: this.medicine.name,
+    discountPrice: this.medicine.discountPrice,
+    originalPrice: this.medicine.originalPrice,
+    imageUrls: this.medicine.images,
+    qty: this.medicine.quantity || this.selectedQty,
+    productForm: this.medicine.productForm,
+    entityType: this.medicine.entityType,
+    productType: productType
+  };
 
-    const payload = {
-      medicineId: this.product.id,
-      quantity: Number(this.selectedQty) || 1,
-      productType: "otc",
-    };
+  this.cartService.addItem(payload, Number(this.selectedQty) || 1).subscribe({
+    next: (response) => {
+      console.log('✅ Add to cart successful:', response);
+      alert(`${this.medicine.name} added to cart successfully!`);
+    },
+    error: (error) => {
+      console.error('❌ Add to cart failed:', error);
+      alert("Failed to add item to cart. Try again.");
+    },
+  });
+}
 
-    this.cartService.addItem(payload).subscribe({
-      next: () => alert(`${this.product.name} added to cart!`),
-      error: () => alert("Failed to add item to cart. Try again."),
-    });
-  }
+addToCartOtc() {
+  if (!this.product) return;
+
+  console.log('🛒 Adding OTC product to cart:', this.product);
+
+  const payload = {
+    managementId: this.product.id, // ✅ managementId के रूप में भेजें
+    name: this.product.name,
+    discountPrice: this.product.price,
+    originalPrice: this.product.mrp,
+    imageUrls: this.product.images,
+    qty: this.selectedQty,
+    productForm: this.product.productForm,
+    entityType: 'PRODUCT_OTC', // Assume OTC type
+    productType: 'otc'
+  };
+
+  this.cartService.addItem(payload, Number(this.selectedQty) || 1).subscribe({
+    next: (response) => {
+      console.log('✅ Add to cart successful:', response);
+      alert(`${this.product.name} added to cart successfully!`);
+    },
+    error: (error) => {
+      console.error('❌ Add to cart failed:', error);
+      alert("Failed to add item to cart. Try again.");
+    },
+  });
+}
 
   // ========== UTILITY METHODS ==========
 
