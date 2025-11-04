@@ -398,9 +398,9 @@ removeItem(id: string) {
   
   this.updateDebugInfo(`Removing item: ${item.name} (${id})`);
   
-  if (!confirm(`Remove "${item.name}" from cart?`)) {
-    return;
-  }
+  // if (!confirm(`Remove "${item.name}" from cart?`)) {
+  //   return;
+  // }
   
   this.cartService.removeItem(id).subscribe({
     next: () => {

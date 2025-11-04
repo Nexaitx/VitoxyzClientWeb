@@ -58,13 +58,31 @@
           </li>
 
         
-          <li class="nav-item mx-4" *ngIf="!item.dropdown && item.label !== 'Profile'">
-            <a class="nav-link text-white" [ngClass]="{'active rounded-pill': rla.isActive}" [routerLink]="item.path"
+          <!-- <li class="nav-item mx-4" *ngIf="!item.dropdown && item.label !== 'Profile'">
+            <a class="nav-link text-white" [ngClass]="{'active rounded-pill': rla.isActive}" (click)="handleMenuNavigation(item.path)"
               routerLinkActive #rla="routerLinkActive">
               {{ item.label }}
             </a>
-          </li>
+          </li> -->
+<li class="nav-item mx-4" *ngIf="!item.dropdown && item.label !== 'Profile'">
+  <a
+    class="nav-link text-white"
+    [ngClass]="{'active rounded-pill': rla.isActive}"
+    *ngIf="item.label !== 'Book Staff'; else bookStaffLink"
+    [routerLink]="item.path"
+    routerLinkActive
+    #rla="routerLinkActive">
+    {{ item.label }}
+  </a>
 
+  <!-- ✅ Book Staff special case -->
+  <ng-template #bookStaffLink>
+    <a class="nav-link text-white"
+       (click)="handleMenuNavigation(item.path)">
+      {{ item.label }}
+    </a>
+  </ng-template>
+</li>
        
           <!-- <li class="nav-item" *ngIf="item.label === 'Book Staff'">
             <button class="nav-link text-white bg-none" [cdkMenuTriggerFor]="bookStaffMenu" type="button">
@@ -122,11 +140,30 @@
   <ul class="list-unstyled pt-2 pb-3">
     <li *ngFor="let item of menuItems; let i = index" class="mobile-menu-item py-0">
      
-      <ng-container *ngIf="!item.dropdown">
+      <!-- <ng-container *ngIf="!item.dropdown">
         <a class="d-block py-2 ps-3" (click)="closeSidebar()" [routerLink]="item.path" routerLinkActive="active">
          <i class="fi {{ item.icon }}"></i>  &nbsp;{{ item.label }}
         </a>
-      </ng-container>
+      </ng-container> -->
+      <ng-container *ngIf="!item.dropdown">
+  <a
+    class="d-block py-2 ps-3"
+    *ngIf="item.label !== 'Book Staff'; else mobileBookStaffLink"
+    (click)="closeSidebar()"
+    [routerLink]="item.path"
+    routerLinkActive="active">
+    <i class="fi {{ item.icon }}"></i> &nbsp;{{ item.label }}
+  </a>
+
+  <!-- ✅ Special case for Book Staff -->
+  <ng-template #mobileBookStaffLink>
+    <a class="d-block py-2 ps-3"
+       (click)="handleMenuNavigation(item.path)">
+      <i class="fi {{ item.icon }}"></i> &nbsp;{{ item.label }}
+    </a>
+  </ng-template>
+</ng-container>
+
 
       <ng-container *ngIf="item.dropdown">
         

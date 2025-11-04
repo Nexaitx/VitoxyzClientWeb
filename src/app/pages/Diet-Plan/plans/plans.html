@@ -9,48 +9,72 @@
     <!-- Horizontal scroll container -->
        <mat-card-content class="plans-content mt-3">
         <div class="scroll-spacer"></div>
-      <div class="plan-item" (click)="goToPayment()">
-        <h3>Basic Wellness</h3>
+      <div  class="plan-item"
+        *ngFor="let plan of plans"
+        (click)="purchasePlan(plan)">
+        <!-- <h3>Basic Wellness</h3>
         <p>Access to basic dietary advice and meal plans.</p>
-        <hr>
+        <hr> -->
+         <h3>{{ plan.planTitle }}</h3>
+        <p>{{ plan.description || 'No description available.' }}</p>
+        <hr />
         <ul>
           <li><i class="bi bi-check2"></i>Monthly check-ins</li>
           <li><i class="bi bi-check2"></i>Standard meal library</li>
+          <!-- <li *ngFor="let feature of plan.features">
+            <i class="bi bi-check2"></i> {{ feature }}
+          </li> -->
         </ul>
         <div class="d-flex align-items-baseline">
-          <h4>₹499</h4><span>/month</span>
+         <h4>₹{{ plan.price }}</h4><span>/month</span>
         </div>
         <button class="btn rounded-pill planBtn">Select Plan</button>
       </div>
-      <div class="plan-item" (click)="goToPayment()">
+      <!-- <div  class="plan-item"
+        *ngFor="let plan of plans"
+        (click)="purchasePlan(plan)">
         <h3>Premium Health</h3>
         <p>Personalized coaching, advanced meal plans, and more!</p>
         <hr>
+          <h3>{{ plan.planTitle }}</h3>
+        <p>{{ plan.description || 'No description available.' }}</p>
+        <hr />
         <ul>
           <li><i class="bi bi-check2"></i>Weekly one-on-one sessions</li>
           <li><i class="bi bi-check2"></i>Customized meal plans</li>
           <li><i class="bi bi-check2"></i>24/7 chat support</li>
+          <li *ngFor="let feature of plan.features">
+            <i class="bi bi-check2"></i> {{ feature }}
+          </li>
         </ul>
         <div class="d-flex align-items-baseline ">
-          <h4>₹1499</h4><span>/month</span>
+           <h4>₹{{ plan.price }}</h4><span>/month</span>
         </div>
         <button class="btn rounded-pill planBtn">Select Plan</button>
-      </div>
-      <div class="plan-item" (click)="goToPayment()">
+      </div> -->
+      <!-- <div  class="plan-item"
+        *ngFor="let plan of plans"
+        (click)="purchasePlan(plan)">
         <h3>Elite Transformation</h3>
         <p>Comprehensive support for your ultimate health journey.</p>
         <hr>
+         <h3>{{ plan.planTitle }}</h3>
+        <p>{{ plan.description || 'No description available.' }}</p>
+        <hr />
         <ul>
           <li><i class="bi bi-check2"></i>Daily progress tracking</li>
           <li><i class="bi bi-check2"></i>Premium resource access</li>
           <li><i class="bi bi-check2"></i>Exclusive workshops</li>
-          <li><i class="bi bi-check2"></i>Direct dietician access</li>
+           <li *ngFor="let feature of plan.features">
+            <i class="bi bi-check2"></i> {{ feature }}
+          </li>>
         </ul>
         <div class="d-flex align-items-baseline">
           <h4>₹2499</h4><span>/month</span>
+              <h4>₹{{ plan.price }}</h4><span>/month</span>
         </div>
         <button class="btn rounded-pill planBtn">Select Plan</button>
-      </div>
+      </div> -->
       <div class="scroll-spacer"></div>
     </mat-card-content>
   </mat-card>

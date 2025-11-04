@@ -50,6 +50,7 @@ export class Header implements OnInit, OnDestroy {
 cartCount: number = 0;
   
   openSubmenus = new Set<number>();
+  redirectAfterLogin: string | null = null; // ✅ added for redirection after login
 
   menuItems = [
     { label: 'Medicines', icon: 'fi-rr-medicine' , path: '/medicines' },
@@ -99,11 +100,20 @@ ngOnInit(): void {
     document.body.classList.remove('no-scroll');
   }
 
-  checkLoginStatus(): void {
+  // checkLoginStatus(): void {
+  //   const token = localStorage.getItem('authToken');
+  //   this.isLoggedIn = !!token;
+  // }
+   checkLoginStatus(): void {
     const token = localStorage.getItem('authToken');
     this.isLoggedIn = !!token;
-  }
 
+    if (this.isLoggedIn && this.redirectAfterLogin) {
+      const redirectPath = this.redirectAfterLogin;
+      this.redirectAfterLogin = null;
+      this.router.navigate([redirectPath]);
+    }
+  }
   setAuthMode(mode: 'login' | 'signup') {
     this.authMode = mode;
   }
@@ -117,14 +127,18 @@ ngOnInit(): void {
   goToCart() {
     this.router.navigate(['/cart']);
   }
- handleMenuNavigation(path: string) {
+ handleMenuNavigation(path?: string) {
+   if (!path) return;
     this.closeSidebar();
 
+
     if (!this.isLoggedIn) {
+      this.redirectAfterLogin = path;
       // Not logged in → open auth modal
       const modalEl = document.getElementById('authModal');
       if (modalEl) {
         const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+        this.setAuthMode('login');
         modal.show();
       }
     } else {
@@ -133,6 +147,8 @@ ngOnInit(): void {
     }
   }
  
+
+
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
     this.isMobileMenuOpen.update(m => !m);

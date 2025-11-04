@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '@src/app/core/const';
 import { Router } from '@angular/router';
 import { Footer } from "../../footer/footer";
@@ -27,20 +27,95 @@ export class Plans implements OnInit {
   selectedPlan: string = 'monthly';
   http = inject(HttpClient);
   router = inject(Router)
-
+plans: any[] = [];
+  loading: boolean = false;
   constructor() { }
 
   ngOnInit(): void {
     this.getPlans();
   }
 
-  getPlans() {
-    this.http.get(API_URL + ENDPOINTS.SUBSCRIPTION_PLANS).subscribe((res: any) => {
-      console.log(res)
-    })
+ getPlans() {
+  this.loading = true;
+  this.http.get(API_URL + ENDPOINTS.SUBSCRIPTION_PLANS).subscribe({
+    next: (res: any) => {
+      this.loading = false;
+      console.log('Plans API Response:', res);
+      this.plans = res?.data || res || []; // depends on backend structure
+    },
+    error: (err) => {
+      this.loading = false;
+      console.error('Error fetching plans:', err);
+    }
+  });
+}
+
+  // goToPayment() {
+  //   this.router.navigate(['/payment']);
+
+  // }
+
+
+
+  
+
+purchasePlan(plan: any) {
+  // const token = localStorage.getItem('token'); // 👈 make sure you stored this after login
+    const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+
+  if (!token) {
+    alert('Please log in first to purchase a plan.');
+    this.router.navigate(['/login']);
+    return;
   }
 
-  goToPayment() {
-    this.router.navigate(['/payment']);
-  }
+
+  //   // const payload = {
+  //   //   subscriptionId: plan.id || plan.subscriptionId, // depends on your backend field
+  //   // };
+
+  const payload = {
+    planId: plan.id, // or dynamic: plan.id if needed
+    paymentMethod: "null",
+    transactionId: "w2S223355Df"
+  };
+
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}` // 👈 attach token here
+  });
+
+  console.log('Purchasing Plan with headers:', headers, payload);
+
+  this.http.post(`${API_URL}${ENDPOINTS.PURCHASE_SUBSCRIPTION}`, payload, { headers })
+    .subscribe({
+      next: (res: any) => {
+        console.log('Purchase API Response:', res);
+
+        if (res?.status) {
+           const paymentData = {
+            planTitle: plan.planTitle,
+            price: plan.price,
+            duration: plan.duration || '1 Month',
+            description: plan.description || '',
+            apiResponse: res
+          };
+          localStorage.setItem('paymentData', JSON.stringify(paymentData));
+          this.router.navigate(['/payment']);
+        } else {
+          alert(res.message || 'Failed to purchase plan. Please try again.');
+        }
+      },
+      error: (err) => {
+        console.error('Purchase API Error:', err);
+        if (err.status === 401) {
+          alert('Session expired or unauthorized. Please log in again.');
+          this.router.navigate(['/login']);
+        } else {
+          alert('Something went wrong while purchasing.');
+        }
+      }
+    });
+}
+
+
 }

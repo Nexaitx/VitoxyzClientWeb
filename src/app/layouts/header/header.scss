@@ -7,7 +7,9 @@
 .navbcls {
   margin-right: 174px;
 }
-
+.navbar-nav .nav-link {
+  cursor: pointer; /* 👈 makes it show the hand cursor on hover */
+}
 .navbar-nav .nav-link.active.rounded-pill,
 .dropdown-item.active.rounded-pill,
 .nav-item.dropdown.active.rounded-pill {
@@ -153,6 +155,7 @@ body.no-scroll {
   width: 100%;
   text-decoration: none;
   color: #333;
+  cursor: pointer; 
 }
 
 .sidebar ul li button {

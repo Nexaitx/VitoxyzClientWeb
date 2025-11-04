@@ -14,7 +14,7 @@
 
 /* ----- CARD BASE STYLING ----- */
 .plan-item {
-  border: 1px solid #0AB8C2;
+  border: 1px solid #ff8061;
   border-radius: 26px;
   padding: 25px;
   display: flex;
@@ -29,14 +29,14 @@
 .plan-item:hover,
 .plan-item:hover h3 {
   color: #fff;
-  background: #0AB8C2;
+  background: #ff8061;
   cursor: pointer;
 }
 
 .plan-item:hover .bi-check2,
 .plan-item:hover .planBtn {
   background: #fff;
-  color: #0AB8C2;
+  color: #fff;
 }
 
 .bi-check2 {
@@ -110,7 +110,7 @@
 /* Desktop layout remains untouched */
 .plans-content {
   display: flex;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
   gap: 20px;
 }
 
@@ -152,11 +152,6 @@
     margin-top: 0;
   }
 }
-
-
-
-
-
 
 
 
