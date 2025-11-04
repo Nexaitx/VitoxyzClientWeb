@@ -481,11 +481,11 @@
         <button class="load-more-btn" (click)="loadMore()" [disabled]="isLoadMoreLoading">
           <span *ngIf="!isLoadMoreLoading">Load More Products ({{ getRemainingProductsCount() }} more available)</span>
           <span *ngIf="isLoadMoreLoading" class="loading-text">
-            <div class="small-spinner"></div>Loading...
+            <div class="small-spinner me-2"></div>Loading...
           </span>
         </button>
       </div>
-
+  
     </div>
   </div>
 </div>

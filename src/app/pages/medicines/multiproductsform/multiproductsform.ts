@@ -109,7 +109,7 @@ export class MultiproductsformComponent implements OnInit {
 
   // Pagination variables
   currentPage: number = 0;
-  pageSize: number = 12;
+  pageSize: number = 20;
   hasMoreProducts: boolean = true;
   currentPage$ = new BehaviorSubject<number>(0);
   selectedCategory$ = new BehaviorSubject<string | null>(null);
@@ -974,6 +974,71 @@ getCategoryLabel(value: string): string {
   ];
    mencare = [
     {
+       productForm: 'Beard Oil',
+      label: 'Beard Oil',
+      imageUrl: 'assets/product-forms/Beard Oil.avif',
+      altText: 'Beard Oil',
+      cssClass: 'cream-category',
+      description: 'Beard Oil for men '
+    },
+    {
+       productForm: 'Shaving Cream',
+      label: 'Shaving Cream',
+      imageUrl: 'assets/product-forms/Shaving Cream.avif',
+      altText: 'Shaving Cream',
+      cssClass: 'cream-category',
+      description: 'Shaving Cream for men '
+    },
+     {
+       productForm: 'Shaving Gel',
+      label: 'Shaving Gel',
+      imageUrl: 'assets/product-forms/Shaving Gel.avif',
+      altText: 'Shaving Gel',
+      cssClass: 'cream-category',
+      description: 'Shaving Gelfor men '
+    },
+     {
+       productForm: 'After Shave Lotion',
+      label: 'After Shave Lotion',
+      imageUrl: 'assets/product-forms/After Shave Lotion.avif',
+      altText: 'After Shave Lotion',
+      cssClass: 'cream-category',
+      description: 'After Shave Lotion for men '
+    },
+    {
+       productForm: 'Deodorant',
+      label: 'Deodorant',
+      imageUrl: 'assets/product-forms/Deodorant.avif',
+      altText: 'Deodorant',
+      cssClass: 'cream-category',
+      description: 'Deodorant for men '
+    },
+     {
+       productForm: 'Spray',
+      label: 'Spray',
+      imageUrl: 'assets/product-forms/Spray.avif',
+      altText: 'Spray',
+      cssClass: 'cream-category',
+      description: 'Spray for men '
+    },
+     {
+       productForm: 'Shampoo',
+      label: 'Shampoo',
+      imageUrl: 'assets/product-forms/Shampoo.avif',
+      altText: 'Shampoo',
+      cssClass: 'cream-category',
+      description: 'Shampoo for men '
+    },
+     {
+       productForm: 'Face Wash',
+      label: 'Face Wash',
+      imageUrl: 'assets/product-forms/Face Wash.avif',
+      altText: 'Face Wash',
+      cssClass: 'cream-category',
+      description: 'Face Wash for men '
+    },
+   
+    {
       productForm: 'Juice',
       label: 'Juice',
       imageUrl: 'assets/product-forms/cream.avif',
@@ -989,6 +1054,7 @@ getCategoryLabel(value: string): string {
       cssClass: 'tablet-category',
       description: 'Tablet SR for men health'
     },
+    
     {
       productForm: 'Powder',
       label: 'Powder',

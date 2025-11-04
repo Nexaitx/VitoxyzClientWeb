@@ -18,8 +18,8 @@ export interface CartItem {
 @Injectable({ providedIn: 'root' })
 export class CartService {
   private http = inject(HttpClient);
-  private API_BASE = 'http://localhost:8080/api/cart';
-//  private API_BASE = `${API_URL}/cart`;
+ // private API_BASE = 'http://localhost:8080/api/cart';
+  private API_BASE = `${API_URL}/cart`;
   
   
 
@@ -677,7 +677,7 @@ incrementQty(medicineId: string): Observable<any> {
   }
 
   // ✅ medicineManagementId के साथ increment API call
-  return this.http.put<any>(`${this.API_BASE}/increment-by-management/${medicineId}`, {}, {
+  return this.http.put<any>(`${this.API_BASE}/increment/${medicineId}`, {}, {
     headers: { Authorization: `Bearer ${token}` }
   }).pipe(
     tap({
@@ -724,7 +724,7 @@ decrementQty(medicineId: string): Observable<any> {
   }
 
   // ✅ medicineManagementId के साथ decrement API call
-  return this.http.put<any>(`${this.API_BASE}/decrement-by-management/${medicineId}`, {}, {
+  return this.http.put<any>(`${this.API_BASE}/decrement/${medicineId}`, {}, {
     headers: { Authorization: `Bearer ${token}` }
   }).pipe(
     tap({

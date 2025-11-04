@@ -126,7 +126,7 @@ export class CommonFilterComponent implements OnInit {
   // ✅ Fixed addToCart
   addToCart(product: any, event: Event) {
     event.stopPropagation();
-
+    
     const productId = product.id ?? product.productId;
     if (!productId) {
       console.error('Cannot add to cart: Product ID missing', product);
@@ -147,7 +147,7 @@ export class CommonFilterComponent implements OnInit {
       count: 1,
       productType: this.endpoint.includes('otc') ? 'otc' : 'otc',
     };
-
+console.log("cartItem my one", cartItem.id);
     // ✅ Add to local cart
     this.cartService.addToLocalCart(cartItem);
 

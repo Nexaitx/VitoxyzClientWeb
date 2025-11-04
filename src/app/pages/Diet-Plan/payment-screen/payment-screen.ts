@@ -53,10 +53,11 @@ export class PaymentScreen {
   countries = ['India', 'United States', 'United Kingdom', 'Canada', 'Australia'];
 
 
-  plan = 'Premium Health';
-  price = 499;   
-  tax = 5;       
-  duration = '1 Month';
+  plan = '';
+  price = 0;
+  duration = '';
+  tax = 0;
+  description = '';
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -64,6 +65,24 @@ export class PaymentScreen {
       email: ['', [Validators.required, Validators.email]],
       country: ['', Validators.required],
     });
+  }
+
+ ngOnInit() {
+    const paymentData = localStorage.getItem('paymentData');
+
+    if (paymentData) {
+      const parsed = JSON.parse(paymentData);
+      console.log(parsed ,"parsed")
+      this.plan = parsed.apiResponse.planType || 'Selected Plan';
+      this.price = parsed.price || 0;
+      this.duration = parsed.duration || '1 Month';
+      this.description = parsed.description || '';
+      this.tax = this.price * 0.05; // 5% GST
+    } else {
+      // fallback
+      alert('No plan selected! Redirecting to plans page.');
+      this.router.navigate(['/plans']);
+    }
   }
 
   get total() {
