@@ -63,3 +63,17 @@ footer {
 .form-control {
   border-radius: 25px !important;
 }
+.status-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh; /* adjust height if needed */
+  text-align: center;
+  position: relative;
+}
+
+.status-container h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #555;
+}

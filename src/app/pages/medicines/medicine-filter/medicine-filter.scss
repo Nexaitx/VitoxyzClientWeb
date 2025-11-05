@@ -328,14 +328,26 @@
 }
 
 /* Pagination */
+// .pagination {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   gap: 10px;
+//   margin-top: 30px;
+// }
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  margin-top: 30px;
+  gap: 8px;
+  margin-top: 20px;
+  cursor: pointer;
 }
 
+.page-numbers {
+  display: flex;
+  gap: 4px;
+}
 .pagination-btn,
 .page-btn {
   padding: 8px 16px;

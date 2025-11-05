@@ -1,4 +1,22 @@
-<div class="container-fluid " style="margin-top: -70px;">
+ <app-text-banner
+  image="assets/staff/book-staff-banner.avif"
+  title="Hire Trusted Staff Easily"
+  subtitle="Find verified professionals for your home, office, or business needs"
+  buttonText="Book Now"
+  (buttonClick)="centerContent()">
+</app-text-banner>
+
+ <app-text-image
+    imageUrl="assets/images/sample.jpg"
+    imageAlt="Sample Image"
+    title="Find, Book & Shop — All in One Place"
+    subtitle="Discover Amazing Features"
+    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    buttonText=""
+    buttonLink="/">
+  </app-text-image>
+
+<div class="container-fluid " >
   <ng-container *ngIf="staffDetails.length > 0; else noStaff">
     <div *ngFor="let categoryGroup of staffDetails" class="row">
       <div class="col-12 mb-2">
@@ -64,13 +82,13 @@
   </ng-container>
 
   <ng-template #noStaff>
-    <div class="text-center mt-4">
+    <div class="status-container">
       <h2>No staff found.</h2>
     </div>
   </ng-template>
 </div>
 
-
+<!-- 
 <footer class="bg-white px-0">
     <div class="p-3 d-flex justify-content-between">
         <p class="text-muted">Total Staff: 01</p>
@@ -78,7 +96,7 @@
             data-bs-target="#exampleModal">Proceed to Booking (1212)</button>
     </div>
 
-</footer>
+</footer> -->
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -173,8 +191,15 @@
     </div>
 </div>
 
-<div>
+<app-medicine-slider 
+  title="Experience the Joy of Easy Shopping"
+  [showSeeAll]="true"
+  [maxItems]="8"
+  [autoSlide]="true"
+  [slideInterval]="5000">
+</app-medicine-slider>
+
 <app-footer></app-footer>
 
-</div>
+
 <app-mobile-footer-nav></app-mobile-footer-nav>

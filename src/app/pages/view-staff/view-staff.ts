@@ -6,6 +6,9 @@ import { API_URL, ENDPOINTS } from '@src/app/core/const';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Footer } from "../footer/footer";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
+import { TextBanner } from "@src/app/shared/text-banner/text-banner";
+import { TextImageComponent } from "../shared/text-image/text-image";
+import { MedicineSliderComponent } from "@src/app/shared/medicine-slider/medicine-slider";
 
 
 declare var Razorpay: any;
@@ -14,7 +17,7 @@ declare var Razorpay: any;
   selector: 'app-view-staff',
   standalone: true,
   imports: [CommonModule,
-    ReactiveFormsModule, Footer, MobileFooterNavComponent],
+    ReactiveFormsModule, Footer, MobileFooterNavComponent, TextBanner, TextImageComponent, MedicineSliderComponent],
   templateUrl: './view-staff.html',
   styleUrls: ['./view-staff.scss']
 })
@@ -242,5 +245,12 @@ console.log('Formatted staff:', formatted);
   private getPayableAmount(): number {
     return 1212; // INR
   }
+
+  centerContent() {
+  const banner = document.querySelector('.banner .banner-content');
+  if (banner) {
+    banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
 
 }

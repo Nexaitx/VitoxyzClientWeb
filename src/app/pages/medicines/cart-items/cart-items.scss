@@ -30,6 +30,26 @@ input:focus-visible {
     box-shadow: none !important;
     border: none !important;
 }
+.radioCls{
+   border-radius:10px;
+   margin-left:-22px ;
+   margin-right:6px ;
+   
+}
+.radioCls:focus-visible {
+    background-color: transparent !important;
+    outline: #db9280 !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+.colseCls{
+  margin: auto;
+    margin-right: 1px;
+    border: 0px;
+    border-color: #db9280;
+    border-radius: 3px;
+    color: #fff;
+}
 td {
     font-size: 12px;
 }
