@@ -48,7 +48,7 @@
 
         <button class="btn btn-sm rounded-pill btn w-50">
           <button class="text-white btn btn-sm bg-none" (click)="decreaseQty(item)">−</button>
-          <input type="text" [value]="item.count" class="w-25 text-white text-center" readonly />
+          <input type="text" [value]="item.count" class="w-25 text-white text-center  " readonly />
           <button class="text-white btn btn-sm bg-none" (click)="increaseQty(item)">+</button>
         </button>
       </div>
@@ -96,13 +96,13 @@
         </div>
       </div>
       <div class="d-flex justify-content-between">
-        <button class="btn btn-outline btn-sm text-white rounded-pill" (click)="onProceedToPayment()"
+        <button class="btn btn-outline btn-sm text-white rounded-pill payContBts" (click)="onProceedToPayment()"
           [disabled]="isLoading || isPaymentLoading">
           <span *ngIf="isPaymentLoading" class="spinner-border spinner-border-sm me-2"></span>
           {{ isPaymentLoading ? 'Processing...' : 'Continue to Pay' }}
         </button>
 
-        <button class="btn btn-outline btn-sm text-white rounded-pill mt-2" (click)="continueShopping()"
+        <button class="btn btn-outline btn-sm text-white rounded-pill payContBts mt-2" (click)="continueShopping()"
           [disabled]="isLoading">
           Continue Shopping
         </button>
@@ -425,3 +425,4 @@
 }
 
 <app-footer></app-footer>
+<app-mobile-footer-nav></app-mobile-footer-nav>

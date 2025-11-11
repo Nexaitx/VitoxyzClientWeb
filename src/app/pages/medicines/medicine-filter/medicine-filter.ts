@@ -36,7 +36,7 @@ export class MedicineFilterComponent implements OnInit {
   isLoadingCategories: boolean = false;
   isLoadingProductForms: boolean = false;
   isLoadingMedicines: boolean = false;
-  
+  isLoadMoreLoading: boolean = false;
   // Error handling
   error: string = '';
   quantities: { [productId: string]: number } = {};
@@ -103,10 +103,56 @@ export class MedicineFilterComponent implements OnInit {
       });
       this.subs.push(sub);
   }
+loadMore(): void {
+  if (this.isLoadMoreLoading || !this.hasNext) return;
 
+  this.isLoadMoreLoading = true;
+  this.currentPage += 1; // next page
+
+  const params: FilterParams = {
+    category: this.selectedCategory,
+    productForm: this.selectedProductForm,
+    page: this.currentPage,
+    size: this.pageSize,
+    sortBy: 'name',
+    sortDirection: 'asc'
+  };
+
+  this.medicineService.filterMedicines(params)
+    .pipe(finalize(() => this.isLoadMoreLoading = false))
+    .subscribe({
+      next: (response) => {
+        if (response.success) {
+          // Append new data instead of replacing
+          this.medicines = [...this.medicines, ...response.data];
+          
+          // Update pagination state
+          this.totalPages = response.pagination.totalPages;
+          this.totalItems = response.pagination.totalItems;
+          this.hasNext = response.pagination.hasNext;
+          this.hasPrevious = response.pagination.hasPrevious;
+          this.currentPage = response.pagination.currentPage;
+        } else {
+          this.error = 'Failed to load more medicines';
+        }
+      },
+      error: (err) => {
+        this.error = 'Error loading more medicines: ' + err.message;
+        console.error('Error loading more medicines:', err);
+      }
+    });
+}
+
+// ✅ Helper: Show how many more products remain
+getRemainingProductsCount(): number {
+  const remaining = this.totalItems - this.medicines.length;
+  return remaining > 0 ? remaining : 0;
+}
   loadMedicines(): void {
     this.isLoadingMedicines = true;
-    
+     this.currentPage = 0; // reset
+  this.medicines = [];
+  
     const params: FilterParams = {
       category: this.selectedCategory,
       productForm: this.selectedProductForm,

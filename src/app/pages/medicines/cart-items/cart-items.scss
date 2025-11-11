@@ -95,7 +95,49 @@ td {
     font-size: 14px;
   }
 }
+@media  (max-width: 320px){
+    .quantity {
+        display: flex !important;
+        justify-content: space-between;
+ 
+        div {
+            margin-left: 10px;
+            min-width: 100px !important;
+        }
+    }
+    .cart-item .text-end {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
 
+  .cart-item .btn.w-50 {
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 0;
+    margin-top: 5px;
+  }
+
+  .cart-item .btn.w-50 button {
+    padding: 4px 8px !important;
+    font-size: 16px !important;
+    min-width: 28px;
+  }
+
+  .cart-item .btn.w-50 input {
+    width: 35px !important;
+    margin: 0 4px !important;
+    font-size: 14px;
+  }
+  .contBtnCls{
+    column-gap: 23px;
+  }
+  .payContBts{
+    font-size: small;
+  }
+}
 
 
 .cart-item {
@@ -180,7 +222,19 @@ td {
   border: 1px solid #ddd;
   border-radius: 4px;
 }
+.spinner {
+  width: 10px;
+  border: 2px solid #ff6b6b;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
 
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 .bill-summary {
   background: #fbf8eb;

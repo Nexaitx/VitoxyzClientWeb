@@ -88,7 +88,6 @@ interface Category {
     CommonFilterComponentComponent,
     SingleProductFormComponentComponent,
     SingleProductFormGridComponent,
-    MedicineSliderComponent
 ],
   templateUrl: './multiproductsform.html',
   styleUrls: ['./multiproductsform.scss'],
@@ -970,7 +969,47 @@ getCategoryLabel(value: string): string {
       altText: 'Body Lotions',
       cssClass: 'lotion-category',
       description: 'Syrups for baby health'
-    }
+    },
+     {
+      productForm: 'Baby Powder',
+      label: 'Baby Powder',
+      imageUrl: 'assets/product-forms/Baby Powder.avif',
+      altText: 'Baby Powder',
+      cssClass: 'lotion-category',
+      description: 'Baby Powdern for baby health'
+    },
+     {
+      productForm: 'Baby Shampoo',
+      label: 'Baby Shampoo',
+      imageUrl: 'assets/product-forms/Baby Shampoo.avif',
+      altText: 'Baby Shampoo',
+      cssClass: 'lotion-category',
+      description: 'Baby Shampoo for baby health'
+    },
+     {
+      productForm: 'Baby Soap',
+      label: 'Baby Soap',
+      imageUrl: 'assets/product-forms/Baby Soap.avif',
+      altText: 'Baby Soap',
+      cssClass: 'lotion-category',
+      description: 'Baby Soap for baby health'
+    },
+     {
+      productForm: 'Baby Lotion',
+      label: 'Baby Lotion',
+      imageUrl: 'assets/product-forms/Baby Lotion.avif',
+      altText: 'Baby Lotions',
+      cssClass: 'lotion-category',
+      description: 'Baby Lotion for baby health'
+    },
+     {
+      productForm: 'Baby Oil',
+      label: 'Baby Oil',
+      imageUrl: 'assets/product-forms/Baby Oil.avif',
+      altText: 'Baby Oil',
+      cssClass: 'lotion-category',
+      description: 'Baby Oil for baby health'
+    },
   ];
    mencare = [
     {

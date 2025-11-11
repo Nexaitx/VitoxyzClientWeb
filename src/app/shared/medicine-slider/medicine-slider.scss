@@ -216,6 +216,7 @@
   align-items: center;
   justify-content: center;
   // overflow: hidden;
+   padding: 10px;
 }
 
 .medicine-image img {
@@ -223,6 +224,7 @@
   height: 100%;
   // object-fit: cover;
    object-fit: contain;
+    transition: transform 0.3s ease;
 }
 
 .discount-badge {
@@ -235,6 +237,7 @@
   border-radius: 4px;
    font-size: 12px;
   font-weight: 600;
+  z-index: 2;
 }
 
 .medicine-content {
@@ -638,55 +641,64 @@
 }
 
 /* Responsive Design for Modal */
-@media (max-width: 768px) {
-  .image-modal-content {
-    max-width: 95vw;
-    max-height: 95vh;
-  }
+// @media (max-width: 768px) {
+//   .image-modal-content {
+//     max-width: 95vw;
+//     max-height: 95vh;
+//   }
   
-  .modal-image-container {
-    min-height: 300px;
-    padding: 10px;
-  }
+//   .modal-image-container {
+//     min-height: 300px;
+//     padding: 10px;
+//   }
   
-  .modal-nav {
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
-  }
+//   .modal-nav {
+//     width: 40px;
+//     height: 40px;
+//     font-size: 20px;
+//   }
   
-  .modal-nav-prev {
-    left: 10px;
-  }
+//   .modal-nav-prev {
+//     left: 10px;
+//   }
   
-  .modal-nav-next {
-    right: 10px;
-  }
+//   .modal-nav-next {
+//     right: 10px;
+//   }
   
-  .image-thumbnails {
-    padding: 10px;
-  }
+//   .image-thumbnails {
+//     padding: 10px;
+//   }
   
-  .thumbnail-container {
-    width: 50px;
-    height: 50px;
-  }
+//   .thumbnail-container {
+//     width: 50px;
+//     height: 50px;
+//   }
   
-  .modal-medicine-info {
-    padding: 15px;
+//   .modal-medicine-info {
+//     padding: 15px;
+//   }
+// }
+@media (max-width: 1025px) {
+  .medicine-card {
+    flex: 0 0 calc(25% - 16px);
   }
 }
-@media (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .medicine-card {
-    flex: 0 0 calc(33.33% - 16px);
+    flex: 0 0 calc(25% - 12px);
+  }
+
+  .slider-scroll {
+    gap: 12px;
   }
 }
-@media (max-width: 768px) {
+@media (min-width: 600px) and (max-width: 767px) {
   .medicine-card {
-    flex: 0 0 calc(50% - 10px);
-    min-width: unset;
+    flex: 0 0 calc(33.33% - 10px);
   }
- .slider-scroll {
+
+  .slider-scroll {
     gap: 10px;
   }
 }

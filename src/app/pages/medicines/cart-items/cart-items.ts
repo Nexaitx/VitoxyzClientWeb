@@ -11,7 +11,8 @@ import { Authorization } from '../../authorization/authorization';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
+import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav"; 
 
 declare var Razorpay: any;
 
@@ -28,7 +29,7 @@ interface PaymentMethodOption {
 
 @Component({
   selector: 'app-cart-items',
-  imports: [Footer, CommonModule, Header, Authorization, MatProgressSpinnerModule, MatSnackBarModule, FormsModule],
+  imports: [Footer, CommonModule, Header, Authorization, MatProgressSpinnerModule, MatSnackBarModule, FormsModule, MobileFooterNavComponent],
   standalone: true,
   templateUrl: './cart-items.html',
   styleUrls: ['./cart-items.scss']

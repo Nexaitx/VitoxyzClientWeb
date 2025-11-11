@@ -15,12 +15,12 @@
           +91 7717471907
           }
         </div>
-        <div>
+        <div class="mt-4">
           @if(editField === 'mobile') {
-          <button class="btn text-primary border-0" (click)="submitEdit('mobile')">Submit</button>
+          <button class="btn text-primary border-0 rounded-pill text-light" (click)="submitEdit('mobile')">Submit</button>
           }
           @else {
-          <button class="btn text-primary border-0" (click)="startEdit('mobile')">Edit</button>
+          <button class="btn text-primary border-0 rounded-pill text-light" (click)="startEdit('mobile')">Edit</button>
           }
         </div>
       </div>
@@ -37,12 +37,12 @@
           text@nexaitx.com
           }
         </div>
-        <div>
+        <div class="mt-4">
           @if(editField === 'email') {
-          <button class="btn text-primary border-0" (click)="submitEdit('email')">Submit</button>
+          <button class="btn text-primary border-0 rounded-pill text-light" (click)="submitEdit('email')">Submit</button>
           }
           @else {
-          <button class="btn text-primary border-0" (click)="startEdit('email')">Edit</button>
+          <button class="btn text-primary border-0 rounded-pill text-light" (click)="startEdit('email')">Edit</button>
           }
         </div>
       </div>
@@ -59,12 +59,12 @@
           Street 1, lane II test, Xyz
           }
         </div>
-        <div>
+        <div class="mt-4">
           @if(editField === 'address') {
-          <button class="btn text-primary border-0" (click)="submitEdit('address')">Submit</button>
+          <button class="btn text-primary border-0 rounded-pill text-light" (click)="submitEdit('address')">Submit</button>
           }
           @else {
-          <button class="btn text-primary border-0" (click)="startEdit('address')">Edit</button>
+          <button class="btn text-primary border-0 rounded-pill  text-light" (click)="startEdit('address')">Edit</button>
           }
         </div>
       </div>
@@ -92,4 +92,8 @@
     </div>
   </div>
 </div>
+<div class="mt-13p">
+<app-footer></app-footer>
+</div>
+
 <app-mobile-footer-nav></app-mobile-footer-nav>

@@ -17,7 +17,7 @@ declare var Razorpay: any;
   selector: 'app-view-staff',
   standalone: true,
   imports: [CommonModule,
-    ReactiveFormsModule, Footer, MobileFooterNavComponent, TextBanner, TextImageComponent, MedicineSliderComponent],
+    ReactiveFormsModule, Footer, MobileFooterNavComponent, TextBanner, TextImageComponent, ],
   templateUrl: './view-staff.html',
   styleUrls: ['./view-staff.scss']
 })

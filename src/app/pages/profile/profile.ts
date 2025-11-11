@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
+import { Footer } from "../footer/footer";
 
 @Component({
   selector: 'app-profile',
   imports: [
     RouterLink,
-    MobileFooterNavComponent
+    MobileFooterNavComponent,
+    Footer
 ],
   templateUrl: './profile.html',
   styleUrl: './profile.scss'

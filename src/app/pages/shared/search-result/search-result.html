@@ -3,21 +3,37 @@
 
   <div *ngIf="loading">Loading...</div>
 
-  <div *ngIf="!loading && medicines.length === 0">
+  <div *ngIf="!loading && medicines.length == 0">
     <p>No results found.</p>
   </div>
 
   <div class="row" *ngIf="medicines.length > 0">
-    <div class="col-12 col-md-4 mb-3" *ngFor="let med of medicines">
+    <div class="col-12 cardCls mb-3" *ngFor="let med of medicines">
       <div class="card h-100 shadow-sm" (click)="goToMedicine(med)" style="cursor:pointer;">
-        <img [src]="getFirstImage(med.imageUrls)" class="card-img-top" alt="{{ med.productName }}">
+        <!-- <img [src]="getFirstImage(med.imageUrls)" class="card-img-top" alt="{{ med.productName }}"> -->
+       <img [src]="getFirstImage(med.imageUrl || med.imageUrls)" class="card-img-top" alt="{{ med.name || med.productName }}">
+
         <div class="card-body">
-          <h5 class="card-title">{{ med.productName }}</h5>
+          <h5 class="card-title">{{ med.name || med.productName }}</h5>
           <p class="card-text">Form: {{ med.productForm }}</p>
           <p class="card-text">MRP: ₹{{ med.mrp }}</p>
           <p class="card-text text-danger" *ngIf="med.prescriptionRequired">Prescription Required</p>
         </div>
+          <ng-container *ngIf="(quantities[med.id ?? med.productId] || 0) === 0; else quantityTemplate">
+        <button class="btn btn-sm rounded-pill btn-primary text-light" (click)="addToCart(med, $event)">
+          Add
+        </button>
+      </ng-container>
+
+      <ng-template #quantityTemplate>
+        <div class="quantity-control btn-group rounded-pill text-white btn-group-sm" role="group">
+          <button class="btn text-white left" (click)="decrement(med)">−</button>
+          <span class="btn">{{ quantities[med.id ?? med.productId] }}</span>
+          <button class="btn text-white right" (click)="increment(med)">+</button>
+        </div>
+      </ng-template>
       </div>
+      
     </div>
   </div>
 </div>
