@@ -1,5 +1,5 @@
 /* ===============================
-   SEARCH RESULTS STYLING
+   SEARCH RESULTS STYLING (Corrected & Responsive)
    =============================== */
 .container.my-4 {
   padding: 20px;
@@ -17,56 +17,218 @@
   font-size: 14px;
 }
 
-/* ===============================
-   CARD STYLING (Match product-card)
-   =============================== */
-.card {
-  border-radius: 8px;
-  border: 1px solid #eee;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* ===============================
-   IMAGE STYLING
-   =============================== */
-.card-img-top {
-  height: 160px;
-  object-fit: contain;
+/* -------------------------------
+   PRODUCT GRID - accept both class names used in original
+   (.product-grid and .products-grid)
+   ------------------------------- */
+.product-grid,
+.products-grid {
+  display: grid;
+  gap: 1.5rem;
   width: 100%;
-  padding: 8px;
-  background-color: #fff;
+  justify-content: center;
+  box-sizing: border-box;
+  grid-template-columns: repeat(5, 1fr); /* Default: 5 per row on very large screens */
+}
+
+/* Large desktops / wide screens */
+@media (max-width: 1440px) {
+  .product-grid,
+  .products-grid {
+     display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: center;
+  box-sizing: border-box;
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Laptops / medium screens */
+@media (max-width: 1200px) {
+  .product-grid,
+  .products-grid {
+     display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: center;
+  box-sizing: border-box;
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Tablet & large phones */
+@media (max-width: 900px) {
+  .product-grid,
+  .products-grid {
+     display: grid;
+  
+  width: 100%;
+  justify-content: center;
+  box-sizing: border-box;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+}
+
+/* Small phones — KEEP 2 cards per row as requested */
+@media (max-width: 480px) {
+  .product-grid,
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.9rem;
+  }
+}
+
+/* Very small phones / narrow devices — still 2 cards */
+@media (max-width: 360px) {
+  .product-grid,
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
 }
 
 /* ===============================
-   CARD BODY CONTENT
+   PRODUCT CARD (valid plain CSS)
    =============================== */
-.card-body {
-  padding: 10px 12px 14px;
+.product-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  justify-content: space-between;
+  position: relative;
+  min-height: 230px; /* keeps consistent card heights */
+  box-sizing: border-box;
 }
 
-.card-title {
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.product-card img {
+  height: 150px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  margin: 0 auto 0.5rem auto;
+  display: block;
+}
+
+/* slightly smaller images for small screens */
+@media (max-width: 480px) {
+  .product-card {
+    padding: 0.75rem;
+    min-height: 200px;
+  }
+  .product-card img {
+    height: 110px;
+  }
+}
+
+.rating-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #ffd15c;
+  color: #fff;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Product text blocks */
+.product-name {
   font-size: 15px;
-  font-weight: 600;
-  color: #333;
+  font-weight: 500;
+  color: #222;
+  margin: 6px 0 4px;
   line-height: 1.3;
-  height: 2.6em; /* max 2 lines */
+  height: 2.6em; /* show max ~2 lines */
   overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-brand,
+.product-packaging {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+}
+
+.product-packaging {
+  color: #777;
   margin-bottom: 6px;
 }
 
+/* product-form badge */
+.product-form {
+  background: #eef4ff;
+  color: #2c5aa0;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 10px;
+  display: inline-block;
+  padding: 3px 8px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+}
+
+/* Pricing */
+.product-pricing {
+  font-size: 15px;
+  font-weight: 700;
+  color: #2c5aa0;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  box-sizing: border-box;
+}
+
+.product-pricing .original-price {
+  font-size: 13px;
+  color: #999;
+  text-decoration: line-through;
+}
+
+/* Add to cart button */
+.add-to-cart-btn {
+  border: none;
+  background: linear-gradient(90deg, #ffb47a, #ff7b60);
+  color: #fff;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.add-to-cart-btn:hover {
+  background: linear-gradient(90deg, #ff9860, #ff5e4b);
+  transform: translateY(-1px);
+}
+
+.add-to-cart-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* small helper text */
 .card-text {
   font-size: 13px;
   color: #777;
@@ -77,123 +239,46 @@
   color: #d9534f !important;
   font-weight: 500;
 }
-.cardCls{
- flex: 0 0 auto;
- width: 20%;
+
+/* legacy class from original — keep but do not force layout issues */
+.cardCls {
+  flex: 0 0 auto;
+  width: 20%;
+  box-sizing: border-box;
 }
+
+/* If you use mat-card-content element from Angular Material */
+mat-card-content {
+  padding: 8px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  box-sizing: border-box;
+}
+
 /* ===============================
-   PRICE TEXT
+   LOAD MORE BUTTON
    =============================== */
-.card-text:nth-child(3) {
-  font-size: 15px;
+.load-more-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.load-more-btn {
+  border-radius: 20px;
+  height: 36px;
+  border: none;
+  color: white;
+  padding: 0px 12px;
+  background: linear-gradient(90deg, #ffb47a, #ff7b60);
   font-weight: 600;
-  color: #333;
-}
-
-/* ---------- Large Desktop (≥1200px) ---------- */
-@media (min-width: 1200px) {
-  .cardCls {
-    flex: 0 0 20%;
-    max-width: 20%;
-  }
-}
-
-/* ---------- Laptops (992px–1199px) ---------- */
-@media (max-width: 1199px) and (min-width: 992px) {
-  .cardCls {
-    flex: 0 0 25%;
-    max-width: 25%; /* 4 per row */
-  }
-
-  .card-img-top {
-    height: 170px;
-  }
-}
-
-/* ---------- Tablets (768px–991px) ---------- */
-@media (max-width: 991px) and (min-width: 768px) {
-  .cardCls {
-    flex: 0 0 33.33%;
-    max-width: 33.33%; /* 3 per row */
-  }
-
-  .card-img-top {
-    height: 160px;
-  }
-
-  .card-title {
-    font-size: 14px;
-  }
-}
-
-/* ---------- Mobile Landscape (576px–767px) ---------- */
-@media (max-width: 767px) and (min-width: 576px) {
-  .cardCls {
-    flex: 0 0 50%;
-    max-width: 50%; /* 2 per row */
-  }
-
-  .card-img-top {
-    height: 150px;
-  }
-
-  .card-body {
-    padding: 8px 10px 10px;
-  }
-
-  .card-title {
-    font-size: 14px;
-  }
-
-  .card-text {
-    font-size: 12px;
-  }
-}
-
-/* ---------- Small Mobile (≤575px) ---------- */
-@media (max-width: 575px) {
-  .container.my-4 {
-    padding: 10px;
-  }
-
-//   .row {
-//     gap: 10px;
-//   }
-
-  .cardCls {
-            flex: 0 0 50%;
-        max-width: 50%;
-        padding: 0px 6px 5px; /* ✅ 2 cards per row */
-  }
-
-  .card {
-    border-radius: 6px;
-  }
-
-  .card-img-top {
-    height: 140px;
-    padding: 8px;
-  }
-
-  .card-body {
-    padding: 8px 8px 10px;
-  }
-
-  .card-title {
-    font-size: 13px;
-  }
-
-  .card-text {
-    font-size: 12px;
-  }
-
-  h3 {
-    font-size: 16px;
-  }
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
 /* ===============================
-   "No Results" & Loading Text
+   NO RESULTS / LOADING
    =============================== */
 div[ngIf="loading"],
 div[ngIf="!loading && medicines.length == 0"] {

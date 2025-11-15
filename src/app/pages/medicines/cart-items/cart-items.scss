@@ -160,7 +160,7 @@ td {
 
 .cart-item .details h6 {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   margin: 0 0 5px 0;
 }
 
@@ -236,34 +236,151 @@ td {
   }
 }
 
-.bill-summary {
-  background: #fbf8eb;
+// .bill-summary {
+//   background: #fbf8eb;
 
-  table {
-    font-size: 0.9rem;
-  }
-}
-.CONSCls{
-  // margin-top: -50px !important;
-    margin-bottom: 1.5rem !important;
-}
+//   table {
+//     font-size: 0.9rem;
+//   }
+// }
+// .CONSCls{
+//   // margin-top: -50px !important;
+//     margin-bottom: 1.5rem !important;
+
+// }
+
 /* Scrollable container */
-.cart-scroll-container {
-  max-height: 70vh; /* adjust height as needed */
-  overflow-y: auto;
-  padding-right: 8px; /* prevent content from hiding under scrollbar */
-}
+// .cart-scroll-container {
+//   max-height: 70vh ; /* adjust height as needed */
+//   overflow-y: auto ;
+//   padding-right: 8px ; /* prevent content from hiding under scrollbar */
+// }
 
 /* Optional: smooth scrollbar style for modern look */
 .cart-scroll-container::-webkit-scrollbar {
-  width: 6px;
+  width: 6px ;
 }
 
 .cart-scroll-container::-webkit-scrollbar-thumb {
   background-color: rgb(254 179 124); /* teal theme */
-  border-radius: 3px;
+  border-radius: 3px ;
 }
 
 .cart-scroll-container::-webkit-scrollbar-track {
   background-color: transparent;
 }
+/* ---------- Layout: two columns (desktop) ---------- */
+
+
+/* Make left column flexible and independently scrollable */
+/* ---------- MAIN TWO-COLUMN LAYOUT ---------- */
+
+.CONSCls {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* LEFT: SCROLLABLE CART LIST */
+.CONSCls .cart-scroll-container {
+  flex: 1;                           
+  max-height: calc(100vh - 90px);    
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Smooth scrollbar */
+.cart-scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cart-scroll-container::-webkit-scrollbar-thumb {
+  background-color: rgb(254 179 124);
+  border-radius: 3px;
+}
+
+/* RIGHT: FIXED WIDTH BILL SUMMARY */
+.CONSCls .bill-summary {
+  width: 450px;
+  flex: 0 0 450px;
+  position: sticky;
+  top: 20px;
+  background: #fbf8eb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border-radius: 6px;
+  padding: 16px;
+}
+
+/* ---------- MOBILE FIX: STACK LAYOUT ---------- */
+
+@media (max-width: 992px) {
+  .CONSCls {
+    display: block;
+  }
+
+  .CONSCls .cart-scroll-container {
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .CONSCls .bill-summary {
+    width: 100%;
+    position: static;
+    margin-top: 16px;
+  }
+}
+
+
+/* preserve your custom scrollbar style (no change) */
+// .cart-scroll-container::-webkit-scrollbar {
+//   width: 6px;
+// }
+// .cart-scroll-container::-webkit-scrollbar-thumb {
+//   background-color: rgb(254 179 124);
+//   border-radius: 3px;
+// }
+// .cart-scroll-container::-webkit-scrollbar-track {
+//   background-color: transparent;
+// }
+/* ✅ LAPTOP FIX (max-width: 1200px) */
+@media (max-width: 1200px) {
+  .bill-summary {
+    width: 380px;
+    flex: 0 0 380px;
+  }
+}
+
+/* ✅ TABLETS FIX (max-width: 992px) */
+@media (max-width: 992px) {
+  .CONSCls {
+    flex-direction: column;
+  }
+  .bill-summary {
+    width: 100%;
+    position: static;
+    margin-top: 16px;
+  }
+  .cart-scroll-container {
+    max-height: none;
+    overflow: visible;
+  }
+}
+
+/* ✅ LARGE MOBILE FIX (max-width: 768px) */
+@media (max-width: 768px) {
+  .cart-item {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .cart-item img {
+    max-width: 65px;
+  }
+  .qty-box {
+    justify-content: flex-start;
+  }
+}
+

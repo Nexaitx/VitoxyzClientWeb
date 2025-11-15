@@ -5,11 +5,13 @@ import { CommonModule } from '@angular/common';
 import { API_URL } from '@src/app/core/const';
 import { Footer } from "../../footer/footer";
 import { CartService } from '@src/app/core/cart.service';
+import { MatCard, MatCardContent } from "@angular/material/card";
+import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 
 @Component({
   selector: 'app-search-result',
   standalone: true,
-  imports: [CommonModule, Footer],
+  imports: [CommonModule, Footer, MatCard, MatCardContent, MobileFooterNavComponent],
   templateUrl: './search-result.html',
   styleUrls: ['./search-result.scss']
 })

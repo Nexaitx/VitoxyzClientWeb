@@ -247,7 +247,7 @@ export class CommonFilterComponentComponent implements OnInit, OnDestroy {
       .join('&');
 
     const size = this.config.slideCount || 12;
-    const apiUrl = `${API_URL}/${this.config.endpoint}/multiple-forms?${queryParams}&page=0&size=${size}`;
+    const apiUrl = `${API_URL}/${this.config.endpoint}/otc-products/by-forms?${queryParams}&page=0&size=${size}`;
 
     console.log('🟡 Fetching products from:', apiUrl);
 

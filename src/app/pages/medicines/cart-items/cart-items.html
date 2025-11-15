@@ -31,9 +31,9 @@
       </div>
 
       <div class="details">
-        <h6>{{ item.name }}</h6>
+        <h6 >{{ item.name }}</h6>
         <small>{{ item.qty || '' }}</small>
-        <div class="remove" (click)="removeItem(item.id)"><i class="fi fi-rs-trash"></i></div>
+        <div class="remove" (click)="removeItem(item.id)"><i class="fi fi-rs-trash text-muted"></i></div>
       </div>
 
       <div class="text-end">
@@ -55,7 +55,9 @@
     </div>
 
     <!-- Bill Summary -->
-    <div *ngIf="cart.length > 0" class="bill-summary border rounded p-3 mt-4">
+   
+  </div>
+   <div *ngIf="cart.length > 0" class="bill-summary ">
       <h6 class="fw-bold mb-3">Bill Summary</h6>
       <table class="table table-borderless">
         <tbody>
@@ -108,7 +110,6 @@
         </button>
       </div>
     </div>
-  </div>
 </div>
 
 <!-- Login Modal -->

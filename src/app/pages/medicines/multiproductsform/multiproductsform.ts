@@ -17,6 +17,7 @@ import { CommonFilterComponentComponent } from "../../shared/product-slider/prod
 import { SingleProductFormComponentComponent } from "../../shared/single-product-form/single-product-form";
 import { SingleProductFormGridComponent } from "../../shared/single-product-form-grid/single-product-form-grid";
 import { MedicineSliderComponent } from "@src/app/shared/medicine-slider/medicine-slider";
+import { CustomMedicineSliderComponent } from '../../shared/custom-medicine-slider/custom-medicine-slider';
 
 // Product interface based on your API response
 interface Product {
@@ -88,6 +89,7 @@ interface Category {
     CommonFilterComponentComponent,
     SingleProductFormComponentComponent,
     SingleProductFormGridComponent,
+    CustomMedicineSliderComponent,
 ],
   templateUrl: './multiproductsform.html',
   styleUrls: ['./multiproductsform.scss'],
@@ -184,16 +186,19 @@ export class MultiproductsformComponent implements OnInit {
       .map((form) => `productForms=${encodeURIComponent(form.trim())}`)
       .join('&');
 
-    const apiUrl = `${API_URL}/products/filter/multiple-forms?${queryParams}&page=${page}&size=${this.pageSize}`;
+    const apiUrl = `${API_URL}/otc-products/by-forms?${queryParams}&page=${page}&size=${this.pageSize}`;
 
-    console.log('API URL:', apiUrl);
+    console.log('API URL udaykiran:', apiUrl);
 
     this.http.get<ApiResponse>(apiUrl).subscribe({
       next: (response) => {
-        console.log('API Response:', response);
+        console.log('API Response uday:', response);
 
         if (response.status && response.data) {
           const newProducts = response.data.content || [];
+
+          console.log("newProducts 123455", newProducts);
+          
 
           if (isInitialLoad) {
             this.products = newProducts;

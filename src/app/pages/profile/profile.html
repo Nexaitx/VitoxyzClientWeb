@@ -6,8 +6,10 @@
 
       <!-- Mobile Number -->
       <div class="d-flex justify-content-between align-items-center">
+        
         <div class="w-100">
-          <p class="text-muted mb-0">Mobile Number</p>
+         
+          <p class="text-muted mb-0  "><i class="bi bi-telephone text-primary"></i> Mobile Number</p>
           @if(editField === 'mobile') {
           <input type="text" class="form-control border-0 border-bottom w-100" value="+91 7717471907">
           }
@@ -17,7 +19,7 @@
         </div>
         <div class="mt-4">
           @if(editField === 'mobile') {
-          <button class="btn text-primary border-0 rounded-pill text-light" (click)="submitEdit('mobile')">Submit</button>
+          <button class="btn text-primary border-0 rounded-pill text-light" (click)="submitEdit('mobile')">Add</button>
           }
           @else {
           <button class="btn text-primary border-0 rounded-pill text-light" (click)="startEdit('mobile')">Edit</button>
@@ -29,7 +31,7 @@
       <!-- Email -->
       <div class="d-flex justify-content-between align-items-center">
         <div class="w-100">
-          <p class="text-muted mb-0">Email</p>
+          <p class="text-muted mb-0"> <i class="bi bi-envelope  text-primary"></i> Email</p>
           @if(editField === 'email') {
           <input type="email" id="email" class="form-control border-0 border-bottom w-100" value="text@nexaitx.com">
           }
@@ -39,7 +41,7 @@
         </div>
         <div class="mt-4">
           @if(editField === 'email') {
-          <button class="btn text-primary border-0 rounded-pill text-light" (click)="submitEdit('email')">Submit</button>
+          <button class="btn text-primary border-0 rounded-pill text-light" (click)="submitEdit('email')">Add</button>
           }
           @else {
           <button class="btn text-primary border-0 rounded-pill text-light" (click)="startEdit('email')">Edit</button>
@@ -51,7 +53,7 @@
       <!-- Address -->
       <div class="d-flex justify-content-between align-items-center">
         <div class="w-100">
-          <p class="text-muted mb-0">Your Address</p>
+          <p class="text-muted mb-0"><i class="bi bi-briefcase text-primary"></i> Your Address</p>
           @if(editField === 'address') {
           <input type="text" class="form-control border-0 border-bottom w-100" value="Street 1, lane II test, Xyz">
           }
@@ -61,7 +63,7 @@
         </div>
         <div class="mt-4">
           @if(editField === 'address') {
-          <button class="btn text-primary border-0 rounded-pill text-light" (click)="submitEdit('address')">Submit</button>
+          <button class="btn text-primary border-0 rounded-pill text-light" (click)="submitEdit('address')">Add</button>
           }
           @else {
           <button class="btn text-primary border-0 rounded-pill  text-light" (click)="startEdit('address')">Edit</button>
@@ -92,7 +94,7 @@
     </div>
   </div>
 </div>
-<div class="mt-13p">
+<div style="margin-top: 13%;">
 <app-footer></app-footer>
 </div>
 

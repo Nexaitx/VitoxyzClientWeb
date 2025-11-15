@@ -241,12 +241,12 @@ export class Medicines implements AfterViewInit {
   ];
   // personal care add same to next 
   // for testing
-  //  private readonly API_BASE_URL = 'http://localhost:8080/api/products/filter';
-  // private readonly FILTER_ENDPOINT = '/products/filter';
+  //  private readonly API_BASE_URL = 'http://localhost:8080/api/otc-products/form';
+  // private readonly FILTER_ENDPOINT = '/otc-products/form';
 
 
   //  ngOnInit(): void {
-  //      this.API_BASE_URL = `${API_URL}/products/filter`; 
+  //      this.API_BASE_URL = `${API_URL}/otc-products/form`; 
 
   // }
   // Products ko store karne ke liye
@@ -716,8 +716,8 @@ private getCategoryNameByApiValues(apiValues: string[]): string {
   carouselWrapper5!: ElementRef<HTMLDivElement>;
 
   scrollCarousel5(direction: 'left' | 'right'): void {
-    if (this.carouselWrapper3) {
-      const element = this.carouselWrapper3.nativeElement;
+    if (this.carouselWrapper5) {
+      const element = this.carouselWrapper5.nativeElement;
       const scrollAmount = 180 * 4;
 
       if (direction === 'left') {
