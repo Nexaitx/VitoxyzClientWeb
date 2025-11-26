@@ -1,6 +1,6 @@
-export const API_URL = 'http://localhost:8080/api';
+//export const API_URL = 'http://localhost:8080/api';
 
-//  export const API_URL = "https://vitoxyz.com/Backend/api";
+  export const API_URL = "https://vitoxyz.com/Backend/api";
   // export const API_URL = "https://vitoxyzbackend.onrender.com/api"
 // export const API_URL = 'https://398ff2efa7fa.ngrok-free.app/api';
 

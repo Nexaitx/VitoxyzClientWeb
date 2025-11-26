@@ -316,31 +316,7 @@
                                 </div>
                               </div>
                             </div>
-                            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                              <label class="form-label">Shift Duration</label>
-                              <select
-                                class="d-flex align-items-center counter-box mx-2"
-                                formControlName="preferredTimeSlot"
-                                [class.is-invalid]="
-                            shiftDetail.get('preferredTimeSlot')?.invalid &&
-                            shiftDetail.get('preferredTimeSlot')?.touched
-                          "
-                              >
-                                <option
-                                  *ngFor="let type of preferredTimeSlots"
-                                  [value]="type"
-                                >
-                                  {{ type }}
-                                </option>
-                              </select>
-                              @if(shiftDetail.get('preferredTimeSlot')?.invalid
-                              && shiftDetail.get('preferredTimeSlot')?.touched)
-                              {
-                              <div class="invalid-feedback">
-                                Shift Type is required.
-                              </div>
-                              }
-                            </div> -->
+                           
 
                             <div class="gender-quantity-row">
                               <!-- Preferred Gender -->
@@ -421,7 +397,31 @@
                                 }
                               </div>
                             </div>
-
+                             <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                              <label class="form-label">Shift Duration</label>
+                              <select
+                                class="d-flex align-items-center counter-box mx-2"
+                                formControlName="preferredTimeSlot"
+                                [class.is-invalid]="
+                            shiftDetail.get('preferredTimeSlot')?.invalid &&
+                            shiftDetail.get('preferredTimeSlot')?.touched
+                          "
+                              >
+                                <option
+                                  *ngFor="let type of preferredTimeSlots"
+                                  [value]="type"
+                                >
+                                  {{ type }}
+                                </option>
+                              </select>
+                              @if(shiftDetail.get('preferredTimeSlot')?.invalid
+                              && shiftDetail.get('preferredTimeSlot')?.touched)
+                              {
+                              <div class="invalid-feedback">
+                                Shift Type is required.
+                              </div>
+                              }
+                            </div>
                           </div>
 
                           <div class="row">
