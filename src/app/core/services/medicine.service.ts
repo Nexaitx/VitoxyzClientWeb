@@ -74,7 +74,7 @@ export interface FilterParams {
 })
 export class MedicineService {
   private baseUrl = `${API_URL}/public/medicines`;
-
+   private baseUrls = `${API_URL}/custom-medicines`;
   constructor(private http: HttpClient) { }
 
   // Get all medicines for slider with image processing
@@ -85,7 +85,7 @@ export class MedicineService {
       .set('sortBy', sortBy)
       .set('sortDirection', sortDirection);
 
-    return this.http.get<MedicineResponse>(this.baseUrl, { params })
+    return this.http.get<MedicineResponse>(this.baseUrls, { params })
       .pipe(
         map(response => {
           // Process image URLs for each medicine
@@ -93,7 +93,7 @@ export class MedicineService {
             response.data = response.data.map(medicine => ({
               ...medicine,
               imageUrls: this.processImageUrls(medicine.imageUrls)
-            }));
+            }));  
           }
           return response;
         })

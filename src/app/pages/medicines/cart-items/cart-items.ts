@@ -11,7 +11,8 @@ import { Authorization } from '../../authorization/authorization';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
+import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav"; 
 
 declare var Razorpay: any;
 
@@ -28,7 +29,7 @@ interface PaymentMethodOption {
 
 @Component({
   selector: 'app-cart-items',
-  imports: [Footer, CommonModule, Header, Authorization, MatProgressSpinnerModule, MatSnackBarModule, FormsModule],
+  imports: [Footer, CommonModule, Header, Authorization, MatProgressSpinnerModule, MatSnackBarModule, FormsModule, MobileFooterNavComponent],
   standalone: true,
   templateUrl: './cart-items.html',
   styleUrls: ['./cart-items.scss']
@@ -561,26 +562,174 @@ removeItem(id: string) {
     console.log('💳 Payment method selected:', method);
   }
 
-  //  Confirm payment method and proceed
-  onConfirmPaymentMethod() {
-    if (!this.selectedPaymentMethod) {
-      this.showErrorAlert('Please select a payment method');
-      return;
-    }
+  // //  Confirm payment method and proceed
+  // onConfirmPaymentMethod() {
+  //   if (!this.selectedPaymentMethod) {
+  //     this.showErrorAlert('Please select a payment method');
+  //     return;
+  //   }
 
-    console.log('✅ Confirming payment method:', this.selectedPaymentMethod);
-    this.showPaymentMethodModal = false;
+  //   console.log('✅ Confirming payment method:', this.selectedPaymentMethod);
+  //   this.showPaymentMethodModal = false;
     
-    // Now create order and process payment based on selected method
-    this.createOrderAndProcessPayment();
+  //   // Now create order and process payment based on selected method
+  //   this.createOrderAndProcessPayment();
+  // }
+onConfirmPaymentMethod() {
+  if (!this.selectedPaymentMethod) {
+    this.showErrorAlert('Please select a payment method');
+    return;
   }
 
+  console.log('✅ Confirming payment method:', this.selectedPaymentMethod);
+
+  if (this.selectedPaymentMethod === 'ONLINE') {
+    // Step 1: open Razorpay first
+    this.startOnlinePaymentBeforeCreatingOrder();
+  } else {
+    // Step 2: COD path, create order directly
+    this.createOrderAndProcessPayment();
+  }
+}
   // Cancel payment method selection
   onCancelPaymentMethod() {
     this.showPaymentMethodModal = false;
     console.log('❌ Payment method selection cancelled');
   }
+private async startOnlinePaymentBeforeCreatingOrder() {
+  if (!this.selectedAddress) {
+    this.showErrorAlert('Please select a delivery address');
+    return;
+  }
 
+  if (!this.razorpayKeyId) {
+    this.showErrorAlert('Razorpay Key ID is missing.');
+    return;
+  }
+
+  const amountInINR = this.getPayableAmount();
+  if (!(amountInINR > 0)) {
+    this.showErrorAlert('Invalid amount. Please check your order.');
+    return;
+  }
+
+  try {
+    console.log('💳 Starting Razorpay payment for amount:', amountInINR);
+    this.isPaymentLoading = true;
+    await this.loadRazorpaySdk();
+
+    const userProfile = localStorage.getItem('userProfile');
+    const profile = userProfile ? JSON.parse(userProfile) : {};
+    const userName = profile?.name || '';
+    const userEmail = profile?.email || '';
+
+    const options: any = {
+      key: this.razorpayKeyId,
+      amount: Math.round(amountInINR * 100),
+      currency: 'INR',
+      name: 'Vitoxyz',
+      description: 'Order payment',
+      prefill: {
+        name: userName,
+        email: userEmail,
+        contact: this.selectedAddress?.phoneNumber || ''
+      },
+      theme: { color: '#0d6efd' },
+      handler: (razorpayResponse: any) => {
+        console.log('✅ Payment success:', razorpayResponse);
+        this.isPaymentLoading = false;
+        // Step 2: Create order after payment
+        this.createOrderAfterSuccessfulPayment(razorpayResponse, amountInINR);
+      },
+      modal: {
+        ondismiss: () => {
+          console.log('❌ Payment modal dismissed');
+          this.isPaymentLoading = false;
+          this.showErrorAlert('Payment was cancelled.');
+        }
+      }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.on('payment.failed', (resp: any) => {
+      console.error('❌ Payment failed:', resp);
+      this.isPaymentLoading = false;
+      const msg = resp?.error?.description || 'Payment failed. Please try again.';
+      this.showErrorAlert(msg);
+    });
+    rzp.open();
+  } catch (err) {
+    console.error('Payment init error:', err);
+    this.isPaymentLoading = false;
+    this.showErrorAlert('Unable to start payment. Please try again.');
+  }
+}
+
+// Step 2: Create order after successful payment
+private createOrderAfterSuccessfulPayment(razorpayResponse: any, paidAmount: number) {
+  if (!razorpayResponse?.razorpay_payment_id) {
+    this.showErrorAlert('Invalid payment response. Please contact support.');
+    return;
+  }
+
+  if (!this.selectedAddress) {
+    this.showErrorAlert('No address selected');
+    return;
+  }
+
+  const orderData: any = {
+    paymentMethod: this.selectedPaymentMethod,
+    shippingAddress: {
+      fullName: this.selectedAddress.fullName,
+      phoneNumber: this.selectedAddress.phoneNumber,
+      addressLine1: this.selectedAddress.addressLine1,
+      addressLine2: this.selectedAddress.addressLine2 || '',
+      landmark: this.selectedAddress.landmark || '',
+      city: this.selectedAddress.city,
+      state: this.selectedAddress.state,
+      pincode: this.selectedAddress.pincode,
+      addressType: this.selectedAddress.addressType
+    },
+    paymentDetails: {
+      provider: 'RAZORPAY',
+      paymentId: razorpayResponse.razorpay_payment_id,
+      orderId: razorpayResponse.razorpay_order_id || null,
+      signature: razorpayResponse.razorpay_signature || null,
+      amount: paidAmount
+    }
+  };
+
+  console.log('📦 Creating order after payment:', orderData);
+  this.isLoading = true;
+
+  this.orderService.createOrder(orderData).subscribe({
+    next: (response) => {
+      this.isLoading = false;
+      console.log('✅ Order created after payment:', response);
+
+      if (response.status && response.data) {
+        this.showSuccessAlert(`Payment successful! Order #${response.data.orderNumber} placed.`);
+        this.cartService.clearCart().subscribe({
+          next: () => {
+            console.log('🛒 Cart cleared');
+            setTimeout(() => this.router.navigate(['/orders']), 1500);
+          },
+          error: (err) => {
+            console.error('❌ Cart clear failed:', err);
+            this.router.navigate(['/orders']);
+          }
+        });
+      } else {
+        this.showErrorAlert('Payment succeeded but order creation failed. Please contact support.');
+      }
+    },
+    error: (err) => {
+      this.isLoading = false;
+      console.error('❌ API error after payment:', err);
+      this.showErrorAlert('Payment succeeded but order creation failed. Please contact support.');
+    }
+  });
+}
   // Create order and then process payment with better error handling
   private createOrderAndProcessPayment() {
     if (!this.selectedAddress) {
@@ -696,6 +845,7 @@ removeItem(id: string) {
         theme: { color: '#0d6efd' },
         handler: (response: any) => {
           this.onOnlinePaymentSuccess(response, amountInINR, orderData);
+
         },
         modal: {
           ondismiss: () => {
@@ -744,7 +894,7 @@ removeItem(id: string) {
     this.isPaymentLoading = false;
     
     this.showSuccessAlert(`Payment successful! Order #${orderData.orderNumber} has been placed.`);
-    
+      // this.createOrderAndProcessPayment();
     // Clear cart after successful payment
     this.cartService.clearCart().subscribe({
       next: () => {

@@ -23,7 +23,7 @@ import { MedicineSliderComponent } from "../../../shared/medicine-slider/medicin
     MapComponent,
     Submission,
     // AadharVerificationComponent,
-    Authorization, Footer, MobileFooterNavComponent, TextBanner, TextImageComponent, MedicineSliderComponent],
+    Authorization, Footer, MobileFooterNavComponent, TextBanner, TextImageComponent,],
   templateUrl: './book-staff.html',
   styleUrls: ['./book-staff.scss'],
 })

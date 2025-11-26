@@ -12,7 +12,12 @@
   </div>
 
   <!-- Search input -->
-  <div class="search-box flex-grow-1 position-relative">
+  <!-- <div class="search-box flex-grow-1 position-relative">
+     <i
+      class="bi bi-search position-absolute top-50 translate-middle-y me-3"
+      (click)="onSearch()"
+      style="cursor: pointer"
+    ></i>
     <input
       type="text"
       class="form-control"
@@ -21,15 +26,30 @@
       aria-label="Search field"
       (keyup.enter)="onSearch()"
     />
-    <i
-      class="bi bi-search position-absolute end-0 top-50 translate-middle-y me-3"
-      (click)="onSearch()"
-      style="cursor: pointer"
-    ></i>
+   
+  </div> -->
+  <div class="search-wrapper">
+  <div class="search-input-container">
+    <i class="bi bi-search search-icon" (click)="onSearch()"></i>
+
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (keyup.enter)="onSearch()"
+      placeholder="Search for Medicine and Healthcare items"
+    />
+
+    <button class="search-btn" (click)="onSearch()">Search</button>
   </div>
-
+</div>
+  
   <div class="quick-box d-flex align-items-center">
-
+    <!-- <h6 style="
+    margin-top: 9px;
+    margin-right: -19px;
+    margin-left: 8px;
+">
+QUICK BUY! Get 15% off on medicines</h6> -->
     <button
       class="btn btn-danger btn-quick d-none d-md-inline-flex rounded-pill ms-3 px-4"
       (click)="onQuickOrder()"

@@ -30,6 +30,26 @@ input:focus-visible {
     box-shadow: none !important;
     border: none !important;
 }
+.radioCls{
+   border-radius:10px;
+   margin-left:-22px ;
+   margin-right:6px ;
+   
+}
+.radioCls:focus-visible {
+    background-color: transparent !important;
+    outline: #db9280 !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+.colseCls{
+  margin: auto;
+    margin-right: 1px;
+    border: 0px;
+    border-color: #db9280;
+    border-radius: 3px;
+    color: #fff;
+}
 td {
     font-size: 12px;
 }
@@ -75,7 +95,49 @@ td {
     font-size: 14px;
   }
 }
+@media  (max-width: 320px){
+    .quantity {
+        display: flex !important;
+        justify-content: space-between;
+ 
+        div {
+            margin-left: 10px;
+            min-width: 100px !important;
+        }
+    }
+    .cart-item .text-end {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
 
+  .cart-item .btn.w-50 {
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 0;
+    margin-top: 5px;
+  }
+
+  .cart-item .btn.w-50 button {
+    padding: 4px 8px !important;
+    font-size: 16px !important;
+    min-width: 28px;
+  }
+
+  .cart-item .btn.w-50 input {
+    width: 35px !important;
+    margin: 0 4px !important;
+    font-size: 14px;
+  }
+  .contBtnCls{
+    column-gap: 23px;
+  }
+  .payContBts{
+    font-size: small;
+  }
+}
 
 
 .cart-item {
@@ -98,7 +160,7 @@ td {
 
 .cart-item .details h6 {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   margin: 0 0 5px 0;
 }
 
@@ -160,36 +222,165 @@ td {
   border: 1px solid #ddd;
   border-radius: 4px;
 }
+.spinner {
+  width: 10px;
+  border: 2px solid #ff6b6b;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
 
-
-.bill-summary {
-  background: #fbf8eb;
-
-  table {
-    font-size: 0.9rem;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
-.CONSCls{
-  // margin-top: -50px !important;
-    margin-bottom: 1.5rem !important;
-}
+
+// .bill-summary {
+//   background: #fbf8eb;
+
+//   table {
+//     font-size: 0.9rem;
+//   }
+// }
+// .CONSCls{
+//   // margin-top: -50px !important;
+//     margin-bottom: 1.5rem !important;
+
+// }
+
 /* Scrollable container */
-.cart-scroll-container {
-  max-height: 70vh; /* adjust height as needed */
-  overflow-y: auto;
-  padding-right: 8px; /* prevent content from hiding under scrollbar */
-}
+// .cart-scroll-container {
+//   max-height: 70vh ; /* adjust height as needed */
+//   overflow-y: auto ;
+//   padding-right: 8px ; /* prevent content from hiding under scrollbar */
+// }
 
 /* Optional: smooth scrollbar style for modern look */
 .cart-scroll-container::-webkit-scrollbar {
-  width: 6px;
+  width: 6px ;
 }
 
 .cart-scroll-container::-webkit-scrollbar-thumb {
   background-color: rgb(254 179 124); /* teal theme */
-  border-radius: 3px;
+  border-radius: 3px ;
 }
 
 .cart-scroll-container::-webkit-scrollbar-track {
   background-color: transparent;
 }
+/* ---------- Layout: two columns (desktop) ---------- */
+
+
+/* Make left column flexible and independently scrollable */
+/* ---------- MAIN TWO-COLUMN LAYOUT ---------- */
+
+.CONSCls {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* LEFT: SCROLLABLE CART LIST */
+.CONSCls .cart-scroll-container {
+  flex: 1;                           
+  max-height: calc(100vh - 90px);    
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Smooth scrollbar */
+.cart-scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cart-scroll-container::-webkit-scrollbar-thumb {
+  background-color: rgb(254 179 124);
+  border-radius: 3px;
+}
+
+/* RIGHT: FIXED WIDTH BILL SUMMARY */
+.CONSCls .bill-summary {
+  width: 450px;
+  flex: 0 0 450px;
+  position: sticky;
+  top: 20px;
+  background: #fbf8eb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border-radius: 6px;
+  padding: 16px;
+}
+
+/* ---------- MOBILE FIX: STACK LAYOUT ---------- */
+
+@media (max-width: 992px) {
+  .CONSCls {
+    display: block;
+  }
+
+  .CONSCls .cart-scroll-container {
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .CONSCls .bill-summary {
+    width: 100%;
+    position: static;
+    margin-top: 16px;
+  }
+}
+
+
+/* preserve your custom scrollbar style (no change) */
+// .cart-scroll-container::-webkit-scrollbar {
+//   width: 6px;
+// }
+// .cart-scroll-container::-webkit-scrollbar-thumb {
+//   background-color: rgb(254 179 124);
+//   border-radius: 3px;
+// }
+// .cart-scroll-container::-webkit-scrollbar-track {
+//   background-color: transparent;
+// }
+/* ✅ LAPTOP FIX (max-width: 1200px) */
+@media (max-width: 1200px) {
+  .bill-summary {
+    width: 380px;
+    flex: 0 0 380px;
+  }
+}
+
+/* ✅ TABLETS FIX (max-width: 992px) */
+@media (max-width: 992px) {
+  .CONSCls {
+    flex-direction: column;
+  }
+  .bill-summary {
+    width: 100%;
+    position: static;
+    margin-top: 16px;
+  }
+  .cart-scroll-container {
+    max-height: none;
+    overflow: visible;
+  }
+}
+
+/* ✅ LARGE MOBILE FIX (max-width: 768px) */
+@media (max-width: 768px) {
+  .cart-item {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .cart-item img {
+    max-width: 65px;
+  }
+  .qty-box {
+    justify-content: flex-start;
+  }
+}
+

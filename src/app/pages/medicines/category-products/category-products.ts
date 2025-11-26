@@ -449,7 +449,7 @@ addToCart(product: any, event: Event) {
         return this.productService.getProductsForCategoryPage(
           this.currentEndpoint,
           this.categoryName,
-          page + 1,
+          page ,
           this.pageSize,
           selectedBrands
         ).pipe(

@@ -70,7 +70,8 @@
     .grid-container {
       &.grid-slider {
         .grid-item {
-          flex: 0 0 230px;
+          // flex: 0 0 230px;
+          flex: 0 0 calc(16.66% - 16px); 
         }
       }
     }
@@ -93,26 +94,37 @@
 // Responsive Design - Tablet
 @media (max-width: 1024px) and (min-width: 769px) {
   .single-product-form-grid {
-    margin: 2.5rem 0;
+    // margin: 2.5rem 0;
+     margin: 2rem 0;
+    padding: 0 0.5rem;
 
     .grid-header {
-      margin-bottom: 2.5rem;
-
+      // margin-bottom: 2.5rem;
+         margin-bottom: 1.5rem;
       h2 {
-        font-size: 2.2rem;
+        // font-size: 2.2rem;
+         font-size: 1.8rem;
+          padding: 0 1rem;
       }
 
       .subtitle {
-        font-size: 1.1rem;
+         font-size: 1rem;
+        padding: 0 1rem;
       }
     }
 
-    .grid-container {
-      &.grid-tablet {
-        grid-template-columns: repeat(3, 1fr);
+    // .grid-container {
+    //   &.grid-tablet {
+    //     grid-template-columns: repeat(3, 1fr);
+    //   }
+    // }
+      .grid-container {
+      gap: 1rem;
+
+      .grid-item {
+        flex: 0 0 calc(20% - 10px); // 6 cards per row
       }
     }
-
     // Hide navigation on tablet
     .slider-nav {
       display: none;
@@ -125,13 +137,14 @@
 }
 
 // Responsive Design - Mobile
-@media (max-width: 768px) {
+@media (min-width: 600px) and (max-width: 768px) {
   .single-product-form-grid {
     margin: 2rem 0;
     padding: 0 0.5rem;
 
     .grid-header {
-      margin-bottom: 2rem;
+      // margin-bottom: 2rem;
+       margin-bottom: 1.5rem;
 
       h2 {
         font-size: 1.8rem;
@@ -143,7 +156,13 @@
         padding: 0 1rem;
       }
     }
+    .grid-container {
+      gap: 1rem;
 
+      .grid-item {
+        flex: 0 0 calc(25% - 10px); // 4 cards per row
+      }
+    }
     // Hide navigation on mobile
     .slider-nav {
       display: none;
@@ -154,7 +173,41 @@
     }
   }
 }
+/* ✅ Small Mobiles (<600px) - Show 2 cards */
+@media (max-width: 599px) {
+  .single-product-form-grid {
+    margin: 1.5rem 0;
+    padding: 0 0.5rem;
 
+    .grid-header {
+      margin-bottom: 1rem;
+
+      h2 {
+        font-size: 1.6rem;
+      }
+
+      .subtitle {
+        font-size: 0.9rem;
+      }
+    }
+
+    .grid-container {
+      gap: 0.4rem;
+
+      .grid-item {
+        flex: 0 0 calc(50% - 8px); // 2 cards per row
+      }
+    }
+
+    .slider-nav {
+      display: none;
+    }
+
+    .scroll-indicators {
+      display: none;
+    }
+  }
+}
 // Animation for scroll indicators
 @keyframes pulse {
   0%, 100% {

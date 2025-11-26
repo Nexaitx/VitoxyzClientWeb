@@ -1,0 +1,139 @@
+<div class="medicine-slider-container">
+  <div class="slider-header">
+    <h2 class="slider-title">{{ title }}</h2>
+     <button 
+      *ngIf="showSeeAll" 
+      (click)="onSeeAllClick()" 
+      class="see-all-btn"
+      aria-label="See all medicines">
+      See All 
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Loading medicines...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="error-alert">
+    {{ error }}
+        <button (click)="error = ''" class="close-btn">&times;</button>
+  </div>
+
+  <!-- Slider -->
+  <div *ngIf="!isLoading && medicines.length > 0" class="carousel-wrapper">
+    <button class="side-nav-button left text-light" (click)="scroll('left')">
+      <i class="fa fa-chevron-left"></i>
+    </button>
+
+    <div #sliderContainer class="slider-scroll">
+      <div
+        class="medicine-card"
+        *ngFor="let medicine of medicines"
+        (click)="onMedicineClick(medicine)"
+      >
+        <div class="medicine-image">
+          <img
+            [src]="getImage(medicine)"
+            [alt]="medicine.name"
+            (error)="onImageError(medicine,$event)"
+          />
+           <div 
+            *ngIf="hasImages(medicine) && medicine.imageUrl && medicine.imageUrl.length > 1" 
+            class="image-count-badge"
+            (click)="openImageGallery(medicine, $event)">
+            {{ medicine.imageUrl.length }} 📷
+          </div>
+          <div *ngIf="hasDiscount(medicine)" class="discount-badge">
+            {{ getDiscountPercentage(medicine) }}% OFF
+          </div>
+        </div>
+
+        <div class="medicine-content">
+          <h3 class="medicine-name">{{ medicine.name }}</h3>
+          <p class="medicine-category">{{ medicine.category }}</p>
+          <p *ngIf="medicine.manufacturer" class="manufacturer medicine-manufacturer">
+            By {{ medicine.manufacturer }}
+          </p>
+
+          <div class="price-section">
+            <span class="current-price text-black">₹{{ getDiscountPrice(medicine) }}</span>
+            <span *ngIf="hasDiscount(medicine)" class="original-price"
+              >₹{{ medicine.price }}</span
+            >
+          </div>
+
+          <div *ngIf="medicine.productForm" class="product-form">
+            {{ medicine.productForm }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="side-nav-button right text-light" (click)="scroll('right')">
+      <i class="fa fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <div *ngIf="!isLoading && medicines.length === 0" class="no-results">
+    <p>No medicines available.</p>
+  </div>
+    <div *ngIf="showImageModal && selectedMedicine" class="image-modal-overlay" (click)="closeImageGallery()">
+    <div class="image-modal-content" (click)="$event.stopPropagation()">
+      <!-- Close Button -->
+      <button class="modal-close-btn" (click)="closeImageGallery()">&times;</button>
+      
+      <!-- Main Image -->
+      <div class="modal-image-container">
+        <button class="modal-nav modal-nav-prev" (click)="prevImage()">‹</button>
+        
+        <img 
+          [src]="getCurrentImage()" 
+          [alt]="selectedMedicine.name + ' - Image ' + (currentImageIndex + 1)"
+          (error)="onImageError(selectedMedicine, $event)"
+          class="modal-main-image" />
+        
+        <button class="modal-nav modal-nav-next" (click)="nextImage()">›</button>
+      </div>
+
+      <!-- Image Thumbnails -->
+      <div *ngIf="selectedMedicine.imageUrl && selectedMedicine.imageUrl.length > 1" class="image-thumbnails">
+        <div 
+          *ngFor="let imageUrl of selectedMedicine.imageUrl; let thumbIndex = index" 
+          class="thumbnail-container"
+          [class.active]="thumbIndex === currentImageIndex">
+          <img 
+            [src]="imageUrl" 
+            [alt]="selectedMedicine.name + ' - Thumbnail ' + (thumbIndex + 1)"
+            (click)="goToImage(thumbIndex)"
+            (error)="onImageError(selectedMedicine, $event)"
+            class="thumbnail-image" />
+        </div>
+      </div>
+
+      <!-- Medicine Info in Modal -->
+      <div class="modal-medicine-info">
+        <h3>{{ selectedMedicine.name }}</h3>
+        <div class="modal-price-section">
+          <span class="current-price">₹{{ getDiscountPrice(selectedMedicine) }}</span>
+          <span *ngIf="hasDiscount(selectedMedicine)" class="original-price">
+            ₹{{ selectedMedicine.price }}
+          </span>
+          <span *ngIf="hasDiscount(selectedMedicine)" class="discount-percentage">
+            {{ getDiscountPercentage(selectedMedicine) }}% OFF
+          </span>
+        </div>
+        <p class="modal-description">{{ selectedMedicine.description }}</p>
+        
+        <!-- View Details Button in Modal -->
+        <button class="btn btn-primary view-details-btn" 
+                (click)="onMedicineClick(selectedMedicine); closeImageGallery()">
+          View Product Details
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

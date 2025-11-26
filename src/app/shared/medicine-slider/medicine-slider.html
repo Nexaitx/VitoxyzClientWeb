@@ -114,11 +114,14 @@
 
 <div *ngIf="!isLoading && medicines.length > 0" class="carousel-wrapper">
      
-     <button
+     <!-- <button
       class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
       (click)="scroll('left')"
     >
-       </button>
+       </button> -->
+       <button class="side-nav-button left text-light" (click)="scroll('left')">
+    <i class="fa fa-chevron-left"></i>
+  </button>
 
      <div #sliderContainer class="slider-scroll">
        <div 
@@ -172,11 +175,14 @@
       </div>
     </div>
      </div>
-     <button
+     <!-- <button
        class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
      (click)="scroll('right')"
     >
-     </button>
+     </button> -->
+      <button class="side-nav-button right text-light" (click)="scroll('right')">
+    <i class="fa fa-chevron-right"></i>
+  </button>
   </div>
 
   <!-- Dots Indicator -->

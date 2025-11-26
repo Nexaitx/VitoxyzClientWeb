@@ -32,7 +32,7 @@ import { MedicineSliderComponent } from "@src/app/shared/medicine-slider/medicin
     MobileFooterNavComponent,
     TextBanner,
     TextImageComponent,
-    MedicineSliderComponent
+  
 ],
   templateUrl: './user-onboarding.html',
   styleUrl: './user-onboarding.scss'

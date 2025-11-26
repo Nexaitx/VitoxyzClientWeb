@@ -1,0 +1,289 @@
+/* ===============================
+   SEARCH RESULTS STYLING (Corrected & Responsive)
+   =============================== */
+.container.my-4 {
+  padding: 20px;
+}
+
+.container.my-4 h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.container.my-4 p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* -------------------------------
+   PRODUCT GRID - accept both class names used in original
+   (.product-grid and .products-grid)
+   ------------------------------- */
+.product-grid,
+.products-grid {
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: center;
+  box-sizing: border-box;
+  grid-template-columns: repeat(5, 1fr); /* Default: 5 per row on very large screens */
+}
+
+/* Large desktops / wide screens */
+@media (max-width: 1440px) {
+  .product-grid,
+  .products-grid {
+     display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: center;
+  box-sizing: border-box;
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Laptops / medium screens */
+@media (max-width: 1200px) {
+  .product-grid,
+  .products-grid {
+     display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: center;
+  box-sizing: border-box;
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Tablet & large phones */
+@media (max-width: 900px) {
+  .product-grid,
+  .products-grid {
+     display: grid;
+  
+  width: 100%;
+  justify-content: center;
+  box-sizing: border-box;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+}
+
+/* Small phones — KEEP 2 cards per row as requested */
+@media (max-width: 480px) {
+  .product-grid,
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.9rem;
+  }
+}
+
+/* Very small phones / narrow devices — still 2 cards */
+@media (max-width: 360px) {
+  .product-grid,
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+}
+
+/* ===============================
+   PRODUCT CARD (valid plain CSS)
+   =============================== */
+.product-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  min-height: 230px; /* keeps consistent card heights */
+  box-sizing: border-box;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.product-card img {
+  height: 150px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  margin: 0 auto 0.5rem auto;
+  display: block;
+}
+
+/* slightly smaller images for small screens */
+@media (max-width: 480px) {
+  .product-card {
+    padding: 0.75rem;
+    min-height: 200px;
+  }
+  .product-card img {
+    height: 110px;
+  }
+}
+
+.rating-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #ffd15c;
+  color: #fff;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Product text blocks */
+.product-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: #222;
+  margin: 6px 0 4px;
+  line-height: 1.3;
+  height: 2.6em; /* show max ~2 lines */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-brand,
+.product-packaging {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+}
+
+.product-packaging {
+  color: #777;
+  margin-bottom: 6px;
+}
+
+/* product-form badge */
+.product-form {
+  background: #eef4ff;
+  color: #2c5aa0;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 10px;
+  display: inline-block;
+  padding: 3px 8px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+}
+
+/* Pricing */
+.product-pricing {
+  font-size: 15px;
+  font-weight: 700;
+  color: #2c5aa0;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  box-sizing: border-box;
+}
+
+.product-pricing .original-price {
+  font-size: 13px;
+  color: #999;
+  text-decoration: line-through;
+}
+
+/* Add to cart button */
+.add-to-cart-btn {
+  border: none;
+  background: linear-gradient(90deg, #ffb47a, #ff7b60);
+  color: #fff;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.add-to-cart-btn:hover {
+  background: linear-gradient(90deg, #ff9860, #ff5e4b);
+  transform: translateY(-1px);
+}
+
+.add-to-cart-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* small helper text */
+.card-text {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 4px;
+}
+
+.card-text.text-danger {
+  color: #d9534f !important;
+  font-weight: 500;
+}
+
+/* legacy class from original — keep but do not force layout issues */
+.cardCls {
+  flex: 0 0 auto;
+  width: 20%;
+  box-sizing: border-box;
+}
+
+/* If you use mat-card-content element from Angular Material */
+mat-card-content {
+  padding: 8px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  box-sizing: border-box;
+}
+
+/* ===============================
+   LOAD MORE BUTTON
+   =============================== */
+.load-more-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.load-more-btn {
+  border-radius: 20px;
+  height: 36px;
+  border: none;
+  color: white;
+  padding: 0px 12px;
+  background: linear-gradient(90deg, #ffb47a, #ff7b60);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* ===============================
+   NO RESULTS / LOADING
+   =============================== */
+div[ngIf="loading"],
+div[ngIf="!loading && medicines.length == 0"] {
+  text-align: center;
+  font-size: 15px;
+  color: #555;
+  margin-top: 40px;
+}

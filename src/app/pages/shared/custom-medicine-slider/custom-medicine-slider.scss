@@ -1,0 +1,107 @@
+.medicine-slider-container {
+  position: relative;
+  padding: 20px;
+
+  .slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .slider-title {
+      font-size: 20px;
+      font-weight: 600;
+    }
+  }
+
+  .carousel-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .slider-scroll {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 10px;
+  }
+
+  .medicine-card {
+    flex: 0 0 240px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(-4px);
+    }
+
+    .medicine-image {
+      position: relative;
+      img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+      }
+      .discount-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #e63946;
+        color: #fff;
+        font-size: 12px;
+        padding: 3px 6px;
+        border-radius: 4px;
+      }
+    }
+
+    .medicine-content {
+      padding: 10px;
+      .medicine-name {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .price-section {
+        margin-top: 5px;
+        .current-price {
+          font-weight: 600;
+        }
+        .original-price {
+          text-decoration: line-through;
+          color: #888;
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+
+  .side-nav-button {
+    background: rgba(0, 0, 0, 0.4);
+    border: none;
+    font-size: 18px;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+
+    &.left {
+      position: absolute;
+      left: 0;
+    }
+
+    &.right {
+      position: absolute;
+      right: 0;
+    }
+  }
+}

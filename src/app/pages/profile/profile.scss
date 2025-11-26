@@ -1,7 +1,14 @@
 h5 {
   cursor: pointer;
 }
-
+.editSubmit{
+  border: 0px;
+  border-radius: 15px;
+  text-align: center;
+  color: white;
+  background: #feb47b;
+  border-color: 1px solid #feb47b;
+}
 .form-control {
   border-radius : 0px !important;
 }

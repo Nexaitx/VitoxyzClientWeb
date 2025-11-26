@@ -58,6 +58,8 @@ export class CommonFilterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log("kdfhdhfsfhsjf123456",this.endpoint);
+    
     this.API_BASE_URL = `${API_URL}/${this.endpoint}`;
     this.products$ = this.productService
       .getFilteredProducts(this.API_BASE_URL, this.productForm, this.page, this.size)

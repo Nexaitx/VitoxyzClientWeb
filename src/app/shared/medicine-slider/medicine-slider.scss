@@ -78,18 +78,19 @@
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
+  overflow: hidden;
+  padding: 10px 0;
 }
 .slider-scroll {
   display: flex;
-  overflow-x: hidden;
   gap: 16px;
-  padding-bottom: 8px;
+  overflow-x: auto;
   scroll-behavior: smooth;
-  scrollbar-width: thin;
+  scrollbar-width: none; /* Firefox */
 }
-
 .slider-scroll::-webkit-scrollbar {
-  height: 6px;
+  display: none; /* Chrome, Safari */
 }
 
 .slider-scroll::-webkit-scrollbar-thumb {
@@ -99,126 +100,123 @@
 
 
 /* Navigation Buttons */
-.nav-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  z-index: 10;
-}
+// .nav-btn {
+//   position: absolute;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   background: white;
+//   border: 1px solid #ddd;
+//   border-radius: 50%;
+//   width: 36px;
+//   height: 36px;
+//   color: #333;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+//   transition: all 0.3s ease;
+//   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+//   z-index: 10;
+// }
 
-.nav-btn:hover {
-  background: #feb47b;
-  color: white;
-}
+// .nav-btn:hover {
+//   background: #feb47b;
+//   color: white;
+// }
 
-.nav-btn.left {
-  left: -12px;
-}
-.nav-btn.right {
-  right: -12px;
-}
-.slider-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
- .right-button {
-    right: 0px;
-    color: #fff;
-    font-weight: 600;
-    font-size: 24px;
-    border: none;
-  }
+// .nav-btn.left {
+//   left: -12px;
+// }
+// .nav-btn.right {
+//   right: -12px;
+// }
+// .slider-wrapper {
+//   position: relative;
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 20px;
+// }
+//  .right-button {
+//     right: 0px;
+//     color: #fff;
+//     font-weight: 600;
+//     font-size: 24px;
+//     border: none;
+//   }
 
-  .left-button {
-    left: 0px;
-    color: #fff;
-    font-weight: 600;
-    font-size: 24px;
-    border: none;
-  }
-.slider-track {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  width: 100%;
-  overflow: hidden;
-}
+//   .left-button {
+//     left: 0px;
+//     color: #fff;
+//     font-weight: 600;
+//     font-size: 24px;
+//     border: none;
+//   }
+// .slider-track {
+//   display: grid;
+//   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+//   gap: 20px;
+//   width: 100%;
+//   overflow: hidden;
+// }
 
-.slider-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: white;
-  border: 2px solid #e0e0e0;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-  z-index: 10;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
+// .slider-nav {
+//   position: absolute;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   background: white;
+//   border: 2px solid #e0e0e0;
+//   border-radius: 50%;
+//   width: 40px;
+//   height: 40px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+//   font-size: 18px;
+//   font-weight: bold;
+//   color: #333;
+//   z-index: 10;
+//   transition: all 0.3s ease;
+//   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+// }
 
-.slider-nav:hover {
-  background: #feb47b;
-  color: white;
-  border-color: #feb47b;
-}
+// .slider-nav:hover {
+//   background: #feb47b;
+//   color: white;
+//   border-color: #feb47b;
+// }
 
-.slider-nav-prev {
-  left: -20px;
-}
+// .slider-nav-prev {
+//   left: -20px;
+// }
 
-.slider-nav-next {
-  right: -20px;
-}
+// .slider-nav-next {
+//   right: -20px;
+// }
 
 .medicine-card {
-  flex: 0 0 230px;
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  overflow: hidden;
-  // transition: 0.3s;
-  transition: all 0.3s ease;
+     flex: 0 0 calc(25% - 16px);
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background: #fff;
+  transition: transform 0.2s ease;
   cursor: pointer;
-  position: relative;
+  min-width: 0;
 }
 
 .medicine-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
- 
+  transform: translateY(-4px);
 }
 
 .medicine-image {
   // position: relative;
-  height: 140px;
+  height: 170px;
   background: #f8f9fa;
   display: flex;
   align-items: center;
   justify-content: center;
   // overflow: hidden;
+   padding: 10px;
 }
 
 .medicine-image img {
@@ -226,6 +224,7 @@
   height: 100%;
   // object-fit: cover;
    object-fit: contain;
+    transition: transform 0.3s ease;
 }
 
 .discount-badge {
@@ -236,8 +235,9 @@
   color: white;
   padding: 4px 8px;
   border-radius: 4px;
-  font-size: 0.8rem;
+   font-size: 12px;
   font-weight: 600;
+  z-index: 2;
 }
 
 .medicine-content {
@@ -257,23 +257,40 @@
 //   overflow: hidden;
 // }
 .medicine-name {
-  font-size: 0.9rem;
+  font-size: 15px;
   font-weight: 600;
-  color: #333;
-  margin: 0 0 4px;
-  height: 38px;
-  overflow: hidden;
+  margin-bottom: 4px;
+  min-height: 40px;
 }
-.medicine-category {
-  background: #e8f5e8;
-  color: #2e7d32;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  display: inline-block;
-  margin-bottom: 8px;
+
+.medicine-category,
+.medicine-manufacturer,
+.product-form {
+  font-size: 13px;
+  color: #666;
 }
+.price-section {
+  margin-top: 6px;
+}
+.current-price {
+  font-weight: 600;
+}
+.original-price {
+  margin-left: 6px;
+  text-decoration: line-through;
+  color: #999;
+  font-size: 13px;
+}
+// .medicine-category {
+//   background: #e8f5e8;
+//   color: #2e7d32;
+//   padding: 2px 8px;
+//   border-radius: 12px;
+//   font-size: 0.75rem;
+//   font-weight: 500;
+//   display: inline-block;
+//   margin-bottom: 8px;
+// }
 
 // .medicine-manufacturer {
 //   font-size: 0.85rem;
@@ -284,42 +301,42 @@
 //   -webkit-box-orient: vertical;
 //   overflow: hidden;
 // }
-.manufacturer {
-  font-size: 0.75rem;
-  color: #777;
-  margin-bottom: 6px;
-  height: 16px;
-  overflow: hidden;
-}
-.price-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  margin-bottom: 8px;
-}
+// .manufacturer {
+//   font-size: 0.75rem;
+//   color: #777;
+//   margin-bottom: 6px;
+//   height: 16px;
+//   overflow: hidden;
+// }
+// .price-section {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   gap: 6px;
+//   margin-bottom: 8px;
+// }
 
-.current-price {
-  font-size: 0.95rem;
-  font-weight: bold;
-  color: #d32f2f;
-}
+// .current-price {
+//   font-size: 0.95rem;
+//   font-weight: bold;
+//   color: #d32f2f;
+// }
 
-.original-price {
- font-size: 0.8rem;
- color: #777;
-  text-decoration: line-through;
-}
+// .original-price {
+//  font-size: 0.8rem;
+//  color: #777;
+//   text-decoration: line-through;
+// }
 
-.product-form {
-  font-size: 0.8rem;
-  color: #666;
-  margin-bottom: 12px;
-  padding: 4px 8px;
-  background: #f5f5f5;
-  border-radius: 4px;
-  display: inline-block;
-}
+// .product-form {
+//   font-size: 0.8rem;
+//   color: #666;
+//   margin-bottom: 12px;
+//   padding: 4px 8px;
+//   background: #f5f5f5;
+//   border-radius: 4px;
+//   display: inline-block;
+// }
 
 .add-to-cart-btn {
   width: 100%;
@@ -368,97 +385,43 @@
   padding: 40px;
   color: #666;
 }
-
-/* Responsive Design */
-@media (max-width: 1280px) {
-  .slider-track {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.side-nav-button {
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 45%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  cursor: pointer;
+  z-index: 5;
+  transition: all 0.2s ease;
+}
+.side-nav-button:hover {
+  background: #f7f7f7;
+}
+.side-nav-button.left {
+  left: 0;
+}
+.side-nav-button.right {
+  right: 0;
 }
 
-@media (max-width: 1024px) {
-  .slider-track {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .slider-nav-prev {
-    left: -10px;
-  }
-  
-  .slider-nav-next {
-    right: -10px;
-  }
-}
-
-@media (max-width: 768px) {
-  .medicine-slider-container {
-    padding: 15px;
-  }
-  
-  .slider-track {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
-  .nav-btn {
-    width: 32px;
-    height: 32px;
-  }
-  .slider-nav {
-    width: 35px;
-    height: 35px;
-    font-size: 16px;
-  }
-  
-  .slider-nav-prev {
-    left: -5px;
-  }
-  
-  .slider-nav-next {
-    right: -5px;
-  }
-  
-  .slider-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  
-  .see-all-btn {
-    align-self: flex-end;
-  }
-}
-
-@media (max-width: 480px) {
-  .medicine-image {
-    height: 160px;
-  }
-  
-  .medicine-content {
-    padding: 12px;
-  }
-  
-  .medicine-name {
-    font-size: 0.9rem;
-  }
-}
 /* Previous styles remain the same, add these new styles for image gallery */
 
 .medicine-image {
   position: relative;
-  height: 200px;
-  background: #f8f9fa;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  cursor: pointer;
+  text-align: center;
+  padding: 10px;
 }
-
 .medicine-image img {
   width: 100%;
-  height: 100%;
+  height: 180px;
   object-fit: contain;
-  transition: transform 0.3s ease;
 }
 
 .medicine-card:hover .medicine-image img {
@@ -482,7 +445,7 @@
 }
 
 .image-count-badge:hover {
-  background: rgba(0, 123, 255, 0.8);
+  background: #feb47b;
 }
 
 .discount-badge {
@@ -493,7 +456,7 @@
   color: white;
   padding: 4px 8px;
   border-radius: 4px;
-  font-size: 0.8rem;
+  font-size: 12px;
   font-weight: 600;
   z-index: 2;
 }
@@ -678,43 +641,81 @@
 }
 
 /* Responsive Design for Modal */
-@media (max-width: 768px) {
-  .image-modal-content {
-    max-width: 95vw;
-    max-height: 95vh;
-  }
+// @media (max-width: 768px) {
+//   .image-modal-content {
+//     max-width: 95vw;
+//     max-height: 95vh;
+//   }
   
-  .modal-image-container {
-    min-height: 300px;
-    padding: 10px;
-  }
+//   .modal-image-container {
+//     min-height: 300px;
+//     padding: 10px;
+//   }
   
-  .modal-nav {
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
-  }
+//   .modal-nav {
+//     width: 40px;
+//     height: 40px;
+//     font-size: 20px;
+//   }
   
-  .modal-nav-prev {
-    left: 10px;
-  }
+//   .modal-nav-prev {
+//     left: 10px;
+//   }
   
-  .modal-nav-next {
-    right: 10px;
-  }
+//   .modal-nav-next {
+//     right: 10px;
+//   }
   
-  .image-thumbnails {
-    padding: 10px;
-  }
+//   .image-thumbnails {
+//     padding: 10px;
+//   }
   
-  .thumbnail-container {
-    width: 50px;
-    height: 50px;
-  }
+//   .thumbnail-container {
+//     width: 50px;
+//     height: 50px;
+//   }
   
-  .modal-medicine-info {
-    padding: 15px;
+//   .modal-medicine-info {
+//     padding: 15px;
+//   }
+// }
+@media (max-width: 1025px) {
+  .medicine-card {
+    flex: 0 0 calc(25% - 16px);
   }
 }
+@media (min-width: 768px) and (max-width: 1024px) {
+  .medicine-card {
+    flex: 0 0 calc(25% - 12px);
+  }
+
+  .slider-scroll {
+    gap: 12px;
+  }
+}
+@media (min-width: 600px) and (max-width: 767px) {
+  .medicine-card {
+    flex: 0 0 calc(33.33% - 10px);
+  }
+
+  .slider-scroll {
+    gap: 10px;
+  }
+}
+@media (max-width: 480px) {
+  .medicine-card {
+   flex: 0 0 calc(50% - 8px);
+min-width: unset;
+  }
+   .slider-scroll {
+    gap: 8px;
+  }
+  .slider-title{
+    color: #333;
+    font-size:22px;
+    font-weight: 500;
+}
+}
+
 
 /* Rest of the previous CSS styles remain the same */

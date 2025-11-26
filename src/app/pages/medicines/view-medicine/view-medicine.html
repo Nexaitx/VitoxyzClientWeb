@@ -396,7 +396,10 @@
         <div class="quantity mb-3">
           <label>Qty:</label>
           <select [(ngModel)]="selectedQty" class="form-select w-auto d-inline-block ms-2">
-            <option *ngFor="let qty of product.packSizes" [value]="qty">{{ qty }}</option>
+            <option *ngFor="let qty of product.packSizes" [value]="qty">{{qty }}</option>
+            <option *ngFor="let qty of product.packSizes" [value]="qty">1{{ qty }}</option>
+            <option *ngFor="let qty of product.packSizes" [value]="qty">2{{ qty }}</option>
+            <option *ngFor="let qty of product.packSizes" [value]="qty">3{{ qty }}</option>
           </select>
         </div>
 
