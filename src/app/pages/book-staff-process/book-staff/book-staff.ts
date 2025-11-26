@@ -94,7 +94,42 @@ export class BookStaff {
     });
   }
 
-  incrementTime(unit: 'hours' | 'minutes', staffIndex: number, shiftIndex: number): void {
+  incrementTimes(unit: 'hours' | 'minutes', staffIndex: number, shiftIndex: number, timeType: 'start' | 'end' = 'start'): void {
+    const shiftGroup = this.getShiftGroup(staffIndex, shiftIndex);
+    if (!shiftGroup) return;
+     const hourKey = timeType === 'start' ? 'startTimeHour' : 'endTimeHour';
+  const minuteKey = timeType === 'start' ? 'startTimeMinute' : 'endTimeMinute';
+    if (unit === 'hours') {
+      let currentHours = +shiftGroup.get(hourKey)?.value || 1;
+      currentHours = (currentHours % 12) + 1;
+      if (currentHours === 0) currentHours = 12;
+      shiftGroup.get(hourKey)?.setValue(currentHours);
+    } else {
+      let currentMinutes = +shiftGroup.get(minuteKey)?.value || 0;
+      currentMinutes = (currentMinutes + 1) % 60;
+      shiftGroup.get(minuteKey)?.setValue(currentMinutes);
+    }
+     if (timeType === 'start') this.updateTimeSlot(shiftGroup);
+  }
+
+  decrementTimes(unit: 'hours' | 'minutes', staffIndex: number, shiftIndex: number, timeType: 'start' | 'end' = 'start'): void {
+    const shiftGroup = this.getShiftGroup(staffIndex, shiftIndex);
+    if (!shiftGroup) return;
+     const hourKey = timeType === 'start' ? 'startTimeHour' : 'endTimeHour';
+  const minuteKey = timeType === 'start' ? 'startTimeMinute' : 'endTimeMinute';
+    if (unit === 'hours') {
+      let currentHours = +shiftGroup.get(hourKey)?.value || 1;
+      currentHours = (currentHours - 1 + 12) % 12;
+      if (currentHours === 0) currentHours = 12;
+      shiftGroup.get(hourKey)?.setValue(this.pad(currentHours));
+    } else {
+      let currentMinutes = +shiftGroup.get(minuteKey)?.value || 0;
+      currentMinutes = (currentMinutes - 1 + 60) % 60;
+      shiftGroup.get(minuteKey)?.setValue(this.pad(currentMinutes));
+    }
+    if (timeType === 'start') this.updateTimeSlot(shiftGroup);
+  }
+incrementTime(unit: 'hours' | 'minutes', staffIndex: number, shiftIndex: number): void {
     const shiftGroup = this.getShiftGroup(staffIndex, shiftIndex);
     if (!shiftGroup) return;
     if (unit === 'hours') {
@@ -123,7 +158,6 @@ export class BookStaff {
       shiftGroup.get('minutes')?.setValue(this.pad(currentMinutes));
     }
   }
-
   private getShiftGroup(staffIndex: number, shiftIndex: number): FormGroup | null {
     const staffGroup = this.staffListFormArray.at(staffIndex) as FormGroup;
     const shiftArray = staffGroup.get('shiftDetails') as FormArray;
@@ -219,7 +253,7 @@ export class BookStaff {
   createShiftDetailFormGroup(): FormGroup {
     const now = new Date();
     let currentHour = now.getHours(); 
-    const minutes = '00';
+   let currentMinute = now.getMinutes();
     const ampm = currentHour >= 12 ? 'PM' : 'AM';
     if (currentHour === 0) currentHour = 12;
     else if (currentHour > 12) currentHour -= 12;
@@ -232,9 +266,21 @@ export class BookStaff {
       maleQuantity: ['0', [Validators.min(0), Validators.max(10)]],
       femaleQuantity: ['0', [Validators.min(0), Validators.max(10)]],
       hours: [currentHour, [Validators.required, Validators.min(1), Validators.max(12)]],
-      minutes: [minutes, [Validators.required, Validators.min(0), Validators.max(59)]],
+      // minutes: [minutes, [Validators.required, Validators.min(0), Validators.max(59)]],
+       minutes: [currentMinute, [Validators.required, Validators.min(0), Validators.max(59)]],
       ampm: [ampm, Validators.required],
+       startTimeHour: [currentHour, [Validators.required, Validators.min(1), Validators.max(12)]],
+    startTimeMinute: [currentMinute, [Validators.required, Validators.min(0), Validators.max(59)]],
+    startTimeAmPm: [ampm, Validators.required],
+    // END time fields
+    endTimeHour: [currentHour, [Validators.required, Validators.min(1), Validators.max(12)]],
+    endTimeMinute: [currentMinute, [Validators.required, Validators.min(0), Validators.max(59)]],
+    endTimeAmPm: [ampm, Validators.required],
     }, { validators: [this.shiftDurationValidator] });
+     // Subscribe to start-time changes to update timeSlot string
+  group.get('startTimeHour')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
+  group.get('startTimeMinute')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
+  group.get('startTimeAmPm')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
     group.get('hours')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
     group.get('minutes')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
     group.get('ampm')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
@@ -272,13 +318,12 @@ export class BookStaff {
 
   return group;
 
-    
   }
 
-  private updateTimeSlot(shiftGroup: FormGroup): void {
-    const hours = shiftGroup.get('hours')?.value ?? 0;
-    const minutes = shiftGroup.get('minutes')?.value ?? 0;
-    const ampm = shiftGroup.get('ampm')?.value ?? 'AM';
+   updateTimeSlot(shiftGroup: FormGroup): void {
+    const hours = shiftGroup.get('startTimeHour')?.value ?? 0;
+    const minutes = shiftGroup.get('startTimeMinute')?.value ?? 0;
+    const ampm = shiftGroup.get('startTimeAmPm')?.value ?? 'AM';
     const pad = (v: number): string => v.toString().padStart(2, '0');
     const time = `${pad(+hours)}:${pad(+minutes)} ${ampm}`;
     const timeSlotControl = shiftGroup.get('timeSlot');
@@ -290,8 +335,8 @@ export class BookStaff {
   private updateGenderQty(group: FormGroup): void {
     const maleQuantity = Number(group.get('maleQuantity')?.value || 0);
     const femaleQuantity = Number(group.get('femaleQuantity')?.value || 0);
-    group.get('maleQuantity')?.setValue(maleQuantity);
-    group.get('gender')?.setValue(femaleQuantity);
+    group.get('maleQuantity')?.setValue(maleQuantity, { emitEvent: false });
+  group.get('femaleQuantity')?.setValue(femaleQuantity, { emitEvent: false });
   }
 
   createStaffFormGroup(): FormGroup {
@@ -342,7 +387,7 @@ export class BookStaff {
 
     const hasPastTimeError = this.hasPastTimeError();
     const hasZeroQuantityError = this.hasZeroQuantityError();
-
+    console.log("SUBMIT CALLED");
     if (!this.staffBookingForm.valid || hasPastTimeError || hasZeroQuantityError) {
       this.markAllAsTouched(this.staffBookingForm);
             this.isSubmitting = false;
@@ -372,8 +417,14 @@ export class BookStaff {
         const staffDetailsControl = (staffGroup.get('staffDetails') as FormArray).at(0);
         const { typeOfStaff, typeOfSubStaff } = staffDetailsControl.value;
         const shiftDetailsArray = (staffGroup.get('shiftDetails') as FormArray).controls.map((shiftGroup: AbstractControl) => {
-          const { preferredTimeSlot, timeSlot, tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate } = shiftGroup.value;
-          return { preferredTimeSlot, timeSlot, tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate };
+          const { tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate,startTimeHour, startTimeMinute, startTimeAmPm,
+          endTimeHour, endTimeMinute, endTimeAmPm } = shiftGroup.value;
+          return {  tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate ,startTimeHour: String(startTimeHour),
+          startTimeMinute: String(startTimeMinute),
+          startTimeAmPm: String(startTimeAmPm),
+          endTimeHour: String(endTimeHour),
+          endTimeMinute: String(endTimeMinute),
+          endTimeAmPm: String(endTimeAmPm)};
         });
         return {
           typeOfStaff,
@@ -526,17 +577,20 @@ onManualTimeChange(field: string, i: number, sh: number, event: Event) {
 
   if (isNaN(value)) value = 0;
 
-  if (field === 'hours') {
+  if (field.toLowerCase().includes('hour')){
     if (value < 0) value = 0;
     if (value > 12) value = 12;
   }
 
-  if (field === 'minutes') {
+  if (field.toLowerCase().includes('minute')) {
     if (value < 0) value = 0;
     if (value > 59) value = 59;
   }
 
   this.getNestedShiftDetailsControls(i)[sh].get(field)?.setValue(value);
+ if (field.startsWith('startTime')) {
+    this.updateTimeSlot(this.getNestedShiftDetailsControls(i)[sh]);
+  }
 }
 
 

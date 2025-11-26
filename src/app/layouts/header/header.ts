@@ -12,6 +12,8 @@ import { Authorization } from '../../pages/authorization/authorization';
 import { ProfileService } from '@src/app/core/services/profile.service';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '@src/app/core/cart.service';
+import { HttpClient } from '@angular/common/http';
+import { API_URL, ENDPOINTS } from '@src/app/core/const';
 declare var bootstrap: any;
 
 @Component({
@@ -39,7 +41,7 @@ export class Header implements OnInit, OnDestroy {
   otp!: string;
   refId!: string;
   verificationResult: any;
-
+constructor(private http: HttpClient) {}
   private profileService = inject(ProfileService);
    private cartService = inject(CartService);
   public router = inject(Router);
@@ -123,6 +125,37 @@ ngOnInit(): void {
     this.isLoggedIn = false;
     this.router.navigate(['/']);
   }
+navigateToDiet() {
+  const token = localStorage.getItem("authToken");
+
+  if (!token) {
+    // Not logged in → open login modal
+    const modal = new (window as any).bootstrap.Modal(
+      document.getElementById("loginModal")
+    );
+    modal.show();
+    return;
+  }
+
+  // Logged in → check if user purchased a diet plan
+  this.http.get(`${API_URL}${ENDPOINTS.DIET_DASHBOARD}?id=1073741824&username=string&password=string&authorities=%5B%7B%22authority%22%3A%22string%22%7D%5D&userType=string&enabled=true&accountNonExpired=true&accountNonLocked=true&credentialsNonExpired=true`, {
+    headers: { Authorization: `Bearer ${token}` }
+  }).subscribe({
+    next: (res: any) => {
+       console.log("Diet Dashboard Response:", res);
+      const hasPlan = !!res?.userSubscriptionType;
+
+      if (hasPlan) {
+        this.router.navigate(["diet-charts"]);
+      } else {
+        this.router.navigate(["diet/user-onboarding"]);
+      }
+    },
+    error: () => {
+      this.router.navigate(["diet/user-onboarding"]);
+    }
+  });
+}
 
   goToCart() {
     this.router.navigate(['/cart']);

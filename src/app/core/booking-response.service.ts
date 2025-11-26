@@ -58,7 +58,4 @@ addIndividualStaff(payload: {
   return this.http.post(`${API_URL}${ENDPOINTS.BOOK_SINGLE_STAFF}`, payload, { headers });
 }
 
-
-
-
 }

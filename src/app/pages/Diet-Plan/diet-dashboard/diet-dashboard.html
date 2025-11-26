@@ -1,118 +1,13 @@
 <!-- <div class="plancls" >
 <h5 >Diet Plan</h5>
 </div>
-
-<div class="container mt-3">
-    <div class="row">
-        <div class="col-md-8 col-12">
-            <div class="calendar-container d-flex justify-content-center gap-3 p-3 rounded">
-                @for (day of weekDays; track day) {
-                <div class="calendar-day text-center px-1 mx-2 py-2 rounded" [class.active]="day?.isToday"
-                    (click)="selectDay(day)">
-                    <div class="font-500">{{ day?.date }}</div>
-                    <span>{{ day?.name }}</span>
-                </div>
-                }
-            </div>
-            <div class="row mt-3">
-                <div class="col-6 col-md-6">
-                    <div class="border rounded p-2">
-                        <div class=" d-flex justify-content-between">
-                            <div class="font-500">Daily Water Consumption</div>
-                            <div class="font-500">8 to 10</div>
-                        </div>
-                        <div class="d-flex justify-content-evenly mt-3">
-                            <img src="../../../../assets/diet/glass.avif" alt="">
-                            <img src="../../../../assets/diet/glass.avif" alt="">
-                            <img src="../../../../assets/diet/glass.avif" alt="">
-                            <img src="../../../../assets/diet/glass.avif" alt="">
-                            <img src="../../../../assets/diet/glass.avif" alt="">
-                            <img src="../../../../assets/diet/glass.avif" alt="">
-                            <img src="../../../../assets/diet/glass.avif" alt="">
-                            <img src="../../../../assets/diet/glass.avif" alt="">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-md-3">
-                    <div class="border rounded py-3">
-                        <div class="d-flex justify-content-evenly align-items-center">
-                            <img src="../../../../assets/diet/step.avif" alt="">
-                            <div class="font-500">215 Steps</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-md-3">
-                    <div class="border rounded py-3">
-                        <div class="d-flex justify-content-evenly align-items-center">
-                            <img src="../../../../assets/diet/sleep.avif" alt="">
-   +                         <div class="font-500">7:30 Hrs</div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="col-12 mt-3">
-                <div class="rounded bg-white border p-2">
-                    Schedule a call with Dietician
-                </div>
-            </div>
-            <div class="col-12 mt-3">
-                <div class="rounded bg-white border p-2">
-                    Start Realtime Chat with Dietician
-                </div>
-            </div>
-
-        </div>
-        <div class="col-md-4 col-12 border px-0 rounded">
-            <div class="p-3 text-center">
-                <img src="../../../../assets/female-icon.avif" alt="" class="profile-img">
-            </div>
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <td>Name</td>
-                        <td>Rukhsana</td>
-                    </tr>
-                    <tr>
-                        <td>Age</td>
-                        <td>32</td>
-                    </tr>
-                    <tr>
-                        <td>Height</td>
-                        <td>5'4</td>
-                    </tr>
-                    <tr>
-                        <td>Weight</td>
-                        <td>83</td>
-                    </tr>
-                    <tr>
-                        <td>Diet Prefrence</td>
-                        <td>Non Vegetarian</td>
-                    </tr>
-                    
-                </tbody>
-            </table>
-
-        </div>
-    </div>
-
-
-
-
-</div> -->
-<div class="plancls" >
-<h5 >Diet Plan</h5>
-</div>
 <div class="diet-plan-container">
   
 
   <div class="row">
-    <!-- LEFT CONTENT -->
+    
     <div class="col-md-8 col-12">
-      <!-- Calendar -->
+     
       <div class="calendar-container d-flex gap-3 p-3 rounded shadow-sm">
         @for (day of weekDays; track day) {
           <div
@@ -126,7 +21,7 @@
         }
       </div>
 
-      <!-- Stats -->
+    
       <div class="row mt-3 g-3">
         <div class="col-12 col-md-4">
           <div class="stat-card">
@@ -134,9 +29,9 @@
               <span class="fw-semibold">Daily Water Consumption</span>
               <span>8 to 10</span>
             </div>
-            <!-- <div class="d-flex flex-wrap mt-2">
+            //<div class="d-flex flex-wrap mt-2">
               <img src="../../../../assets/diet/glass.avif" alt="" *ngFor="let i of [].constructor(8)" />
-            </div> -->
+            </div>
             <div class="d-flex justify-content-evenly mt-3">
                             <img src="../../../../assets/diet/glass.avif" alt="">
                             <img src="../../../../assets/diet/glass.avif" alt="">
@@ -164,12 +59,12 @@
           </div>
         </div>
       </div>
-  <!-- TOTAL KCAL -->
+  
         <div class="total-kcal">
           <span>Total:</span>
           <span>1400 kcal</span>
         </div>
-      <!-- Meals Section -->
+      
       <div class="meals mt-3">
         <div class="meal-card">
           <img src="../../../../assets/diet/breakfast.avif" alt="breakfast" />
@@ -197,7 +92,7 @@
       </div>
     </div>
 
-    <!-- RIGHT CONTENT -->
+   
     <div class="col-md-4 col-12">
       <div class="profile-card shadow-sm">
         <div class="text-center p-3">
@@ -213,8 +108,168 @@
       </div>
     </div>
   </div>
+</div> -->
+
+<div class="plancls">
+  <h5>Diet Plan</h5>
 </div>
 
+<div class="diet-plan-container">
+  <div class="row">
+    <!-- LEFT -->
+    <div class="col-md-8 col-12">
 
+      <!-- Calendar -->
+      <div class="calendar-container d-flex gap-3 p-3 rounded shadow-sm">
+        <div
+          *ngFor="let day of weekDays; trackBy: trackByDay"
+          class="calendar-day text-center px-3 py-2 rounded"
+          [class.active]="day?.isToday"
+          (click)="selectDay(day)"
+          style="cursor:pointer;"
+        >
+          <div class="date">{{ day?.date }}</div>
+          <span>{{ day?.name }}</span>
+        </div>
+      </div>
+
+      <!-- Loading -->
+      <div *ngIf="loading" class="mt-3">Loading diet plans...</div>
+      <div *ngIf="error" class="mt-3 text-danger">{{ error }}</div>
+
+      <!-- Plan selector -->
+      <div *ngIf="dietPlans.length > 1" class="mt-3 d-flex gap-2 flex-wrap">
+        <button
+          class="btn btn-outline-secondary"
+          *ngFor="let plan of dietPlans"
+          (click)="selectPlan(plan)"
+          [class.active]="selectedPlan?.dietPlanId === plan?.dietPlanId"
+        >
+          {{ plan?.title }}
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="row mt-3 g-3" *ngIf="selectedPlan">
+        <div class="col-12 col-md-4">
+          <div class="stat-card p-3">
+            <div class="d-flex justify-content-between">
+              <span class="fw-semibold">Daily Calories</span>
+              <span>{{ selectedPlan?.caloriesPerDay }} kcal</span>
+            </div>
+            <div class="mt-2 small text-muted">
+              Duration: {{ selectedPlan?.durationDays }} days
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+          <div class="stat-card text-center p-3">
+            <div class="fw-semibold mt-2">{{ selectedPlan?.mealType | titlecase }}</div>
+            <div class="small text-muted">Meal Type</div>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+          <div class="stat-card text-center p-3">
+            <div class="fw-semibold mt-2">{{ selectedPlan?.difficultyLevel }}</div>
+            <div class="small text-muted">Difficulty</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Total -->
+      <div class="total-kcal mt-3" *ngIf="selectedPlan">
+        <span>Total: </span>
+        <span>{{ selectedPlan?.caloriesPerDay }} kcal</span>
+      </div>
+
+      <!-- Meals -->
+      <div class="meals mt-3" *ngIf="selectedPlan">
+
+        <!-- Breakfast -->
+        <div class="meal-card d-flex gap-3 mb-3">
+          <img
+            [src]="selectedPlan?.primaryImageUrl || selectedPlan?.imageUrls?.[0] || 'assets/diet/breakfast.avif'"
+            style="width:96px;height:96px;border-radius:8px;object-fit:cover"
+          >
+          <div>
+            <div class="fw-semibold">Breakfast</div>
+            <p class="mb-0">{{ selectedPlan?.breakfastDetails }}</p>
+          </div>
+        </div>
+
+        <!-- Lunch -->
+        <div class="meal-card d-flex gap-3 mb-3">
+          <img
+            [src]="selectedPlan?.primaryImageUrl || selectedPlan?.imageUrls?.[0] || 'assets/diet/lunch.avif'"
+            style="width:96px;height:96px;border-radius:8px;object-fit:cover"
+          >
+          <div>
+            <div class="fw-semibold">Lunch</div>
+            <p class="mb-0">{{ selectedPlan?.lunchDetails }}</p>
+          </div>
+        </div>
+
+        <!-- Snacks -->
+        <div class="meal-card d-flex gap-3 mb-3" *ngIf="selectedPlan?.snacksDetails">
+          <img
+            [src]="selectedPlan?.primaryImageUrl || selectedPlan?.imageUrls?.[0] || 'assets/diet/snack.avif'"
+            style="width:96px;height:96px;border-radius:8px;object-fit:cover"
+          >
+          <div>
+            <div class="fw-semibold">Snacks</div>
+            <p class="mb-0">{{ selectedPlan?.snacksDetails }}</p>
+          </div>
+        </div>
+
+        <!-- Dinner -->
+        <div class="meal-card d-flex gap-3 mb-3" *ngIf="selectedPlan?.dinnerDetails">
+          <img
+            [src]="selectedPlan?.primaryImageUrl || selectedPlan?.imageUrls?.[0] || 'assets/diet/snack.avif'"
+            style="width:96px;height:96px;border-radius:8px;object-fit:cover"
+          >
+          <div>
+            <div class="fw-semibold">Dinner</div>
+            <p class="mb-0">{{ selectedPlan?.dinnerDetails }}</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="col-md-4 col-12">
+      <div class="profile-card shadow-sm">
+
+        <div class="text-center p-3">
+          <img
+            [src]="selectedPlan?.primaryImageUrl || selectedPlan?.imageUrls?.[0] || 'assets/diet/profileImage.avif'"
+            class="profile-img"
+            style="width:120px;height:120px;border-radius:50%;object-fit:cover"
+          >
+        </div>
+
+        <div class="profile-info p-3">
+          <div><span class="text-muted">Title:</span> {{ selectedPlan?.title }}</div>
+          <div><span class="text-muted">Category:</span> {{ selectedPlan?.category }}</div>
+          <div><span class="text-muted">Duration:</span> {{ selectedPlan?.durationDays }} days</div>
+          <div><span class="text-muted">Calories/day:</span> {{ selectedPlan?.caloriesPerDay }} kcal</div>
+          <div><span class="text-muted">Added By:</span> {{ selectedPlan?.addedByAdminName }}</div>
+
+          <div *ngIf="selectedPlan?.addedDate" class="small text-muted">
+            Added: {{ selectedPlan?.addedDate | date : 'mediumDate' }}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<app-footer></app-footer>
+<app-mobile-footer-nav></app-mobile-footer-nav>
 
 
