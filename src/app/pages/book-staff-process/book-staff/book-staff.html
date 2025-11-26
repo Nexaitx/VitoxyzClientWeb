@@ -1,29 +1,20 @@
- <app-text-banner
-  image="assets/staff/book-staff-banner.avif"
-  title="Hire Trusted Staff Easily"
-  subtitle="Find verified professionals for your home, office, or business needs"
-  buttonText="Book Now"
+<app-text-banner image="assets/staff/book-staff-banner.avif" title="Hire Trusted Staff Easily"
+  subtitle="Find verified professionals for your home, office, or business needs" buttonText="Book Now"
   (buttonClick)="centerContent()">
 </app-text-banner>
 
 
 
-  <app-text-image
-    imageUrl="assets/images/sample.jpg"
-    imageAlt="Sample Image"
-    title="Find, Book & Shop — All in One Place"
-    subtitle="Discover Amazing Features"
-    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    buttonText=""
-    buttonLink="/">
-  </app-text-image>
+<app-text-image imageUrl="assets/images/sample.jpg" imageAlt="Sample Image" title="Find, Book & Shop — All in One Place"
+  subtitle="Discover Amazing Features"
+  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  buttonText="" buttonLink="/">
+</app-text-image>
 <div class="container-fluid" style="margin-top: 60px;">
-  
+
   <div class="row">
     <div class="col-md-4 h-100 map-styles">
-      <app-map
-        (locationSelected)="getAddressFromCoords($event.lat, $event.lng)"
-      ></app-map>
+      <app-map (locationSelected)="getAddressFromCoords($event.lat, $event.lng)"></app-map>
     </div>
 
     <div class="col-md-8 search-staff-form">
@@ -37,15 +28,10 @@
                   <div class="form-group">
                     <label class="form-label">Select your area</label>
                     <i class="fi fi-rr-navigation address"></i>
-                    <input
-                      type="text"
-                      class="form-control ps-4"
-                      formControlName="userAddress"
-                      [class.is-invalid]="
+                    <input type="text" class="form-control ps-4" formControlName="userAddress" [class.is-invalid]="
                   staffBookingForm.get('userAddress')?.invalid &&
                   staffBookingForm.get('userAddress')?.touched
-                "
-                    />
+                " />
                     @if(staffBookingForm.get('userAddress')?.invalid &&
                     staffBookingForm.get('userAddress')?.touched) {
                     <div class="invalid-feedback">Area is required.</div>
@@ -58,22 +44,14 @@
                   <div class="form-group">
                     <label class="form-label">Address</label>
                     <i class="fi fi-rr-navigation address"></i>
-                    <input
-                      type="text"
-                      class="form-control ps-4"
-                      placeholder="Enter address"
-                      formControlName="address"
-                     
-                    />
+                    <input type="text" class="form-control ps-4" placeholder="Enter address"
+                      formControlName="address" />
                   </div>
                 </div>
               </div>
               <div formArrayName="staffForms" class="staff-list">
-                <div
-                  class="pe-2"
-                  *ngFor="let staffGroup of staffListFormArray.controls; let i = index"
-                  [formGroupName]="i"
-                >
+                <div class="pe-2" *ngFor="let staffGroup of staffListFormArray.controls; let i = index"
+                  [formGroupName]="i">
                   @if(i > 0){
                   <div class="indexed-divider-container">
                     <div class="line"></div>
@@ -83,43 +61,28 @@
                   }
                   <div class="col-md-12 d-flex justify-content-end">
                     @if(i !== 0) {
-                    <button
-                      type="button"
+                    <button type="button"
                       class="btn btn-outline-danger btn-lg rounded-circle d-flex align-items-center justify-content-center"
-                      style="width: 20px; height: 30px"
-                      (click)="removeStaff(i)"
-                      title="Remove Staff"
-                    >
+                      style="width: 20px; height: 30px" (click)="removeStaff(i)" title="Remove Staff">
                       <i class="bi bi-trash fs-5"></i>
                     </button>
                     }
                   </div>
                   <div formArrayName="staffDetails">
-                    <div
-                      *ngFor="let staffDetails of getNestedStaffDetailsControls(i); let s = index"
-                      [formGroupName]="s"
-                    >
+                    <div *ngFor="let staffDetails of getNestedStaffDetailsControls(i); let s = index"
+                      [formGroupName]="s">
                       <div class="row">
                         <div class="col-md-12 mb-2">
                           <div class="form-group">
-                            <label for="typeOfStaff-{{ i }}" class="form-label"
-                              >Select Staff Type</label
-                            >
+                            <label for="typeOfStaff-{{ i }}" class="form-label">Select Staff Type</label>
                             <i class="bi bi-person address"></i>
-                            <select
-                              class="form-select ps-4"
-                              id="typeOfStaff-{{ i }}"
-                              formControlName="typeOfStaff"
+                            <select class="form-select ps-4" id="typeOfStaff-{{ i }}" formControlName="typeOfStaff"
                               [class.is-invalid]="
                           staffDetails.get('typeOfStaff')?.invalid &&
                           staffDetails.get('typeOfStaff')?.touched
-                        "
-                            >
+                        ">
                               <option value="" disabled>Select Type</option>
-                              <option
-                                *ngFor="let staff of staffCategories"
-                                [value]="staff.name"
-                              >
+                              <option *ngFor="let staff of staffCategories" [value]="staff.name">
                                 {{ staff.name }}
                               </option>
                             </select>
@@ -137,33 +100,22 @@
                         <ng-container>
                           <div class="col-md-12 my-3">
                             <div class="form-group">
-                              <label
-                                for="typeOfSubStaff-{{ i }}"
-                                class="form-label"
-                                >Select {{
+                              <label for="typeOfSubStaff-{{ i }}" class="form-label">Select {{
                                 staffDetails.get('typeOfStaff')?.value |
-                                titlecase }} Type</label
-                              >
+                                titlecase }} Type</label>
                               <i class="bi bi-people address"></i>
-                              <select
-                                class="form-select ps-4"
-                                id="typeOfSubStaff-{{ i }}"
-                                formControlName="typeOfSubStaff"
-                                [disabled]="!staffDetails.get('typeOfStaff')?.value"
+                              <select class="form-select ps-4" id="typeOfSubStaff-{{ i }}"
+                                formControlName="typeOfSubStaff" [disabled]="!staffDetails.get('typeOfStaff')?.value"
                                 [class.is-invalid]="
                             staffDetails.get('typeOfSubStaff')?.invalid &&
                             staffDetails.get('typeOfSubStaff')?.touched
-                          "
-                              >
+                          ">
                                 <option value="" disabled>
                                   Select {{
                                   staffDetails.get('typeOfStaff')?.value |
                                   titlecase }}
                                 </option>
-                                <option
-                                  *ngFor="let nurse of staffSubCategories[i]"
-                                  [value]="nurse.value"
-                                >
+                                <option *ngFor="let nurse of staffSubCategories[i]" [value]="nurse.value">
                                   {{ nurse.label }}
                                 </option>
                               </select>
@@ -187,14 +139,11 @@
                   {
                   <ng-container>
                     <div formArrayName="shiftDetails">
-                      <div
-                        *ngFor="let shiftDetail of getNestedShiftDetailsControls(i); let sh = index"
-                        [formGroupName]="sh"
-                        class="shift-detail"
-                      >
+                      <div *ngFor="let shiftDetail of getNestedShiftDetailsControls(i); let sh = index"
+                        [formGroupName]="sh" class="shift-detail">
                         <div class="row d-flex">
                           <div class="sub-row">
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                               <label class="form-label"
                                 >Preferred Time Slot</label
                               >
@@ -271,9 +220,103 @@
                                   <option value="PM">PM</option>
                                 </select>
                               </div>
+                            </div> -->
+                                                        <div class="d-flex align-items-center">
+                              <div class="d-flex flex-column">
+                                <small class="text-muted">Start Time</small>
+                                <div class="d-flex align-items-center"
+                                  [class.is-invalid]="shiftDetail.get('timeSlot')?.errors?.['pastTime'] && shiftDetail.get('timeSlot')?.touched">
+                                  <div class="d-flex align-items-center counter-box">
+                                    <button class="btn-counterLeft btn-minus" type="button"
+                                      (click)="decrementTimes('hours', i, sh, 'start')">
+                                      <i class="bi bi-dash"></i>
+                                    </button>
+
+                                    <input type="number" class="value-font counter-input"
+                                      formControlName="startTimeHour"
+                                      [value]="pad(shiftDetail.get('startTimeHour')?.value)" min="1" max="12"
+                                      (input)="onManualTimeChange('startTimeHour', i, sh, $event)" />
+
+                                    <button class="btn-counterRight btn-plus" type="button"
+                                      (click)="incrementTimes('hours', i, sh, 'start')">
+                                      <i class="bi bi-plus"></i>
+                                    </button>
+                                  </div>
+
+                                  <div class="d-flex align-items-center counter-box mx-2">
+                                    <button class="btn-counterLeft btn-minus" type="button"
+                                      (click)="decrementTimes('minutes', i, sh, 'start')">
+                                      <i class="bi bi-dash"></i>
+                                    </button>
+
+                                    <input type="number" class="value-font counter-input hrsMin"
+                                      formControlName="startTimeMinute"
+                                      [value]="pad(shiftDetail.get('startTimeMinute')?.value)" min="0" max="59"
+                                      (input)="onManualTimeChange('startTimeMinute', i, sh, $event)" />
+
+                                    <button class="btn-counterRight btn-plus" type="button"
+                                      (click)="incrementTimes('minutes', i, sh, 'start')">
+                                      <i class="bi bi-plus"></i>
+                                    </button>
+                                  </div>
+
+                                  <select class="d-flex align-items-center counter-box mx-2"
+                                    formControlName="startTimeAmPm"
+                                    (change)="updateTimeSlot(getNestedShiftDetailsControls(i)[sh])">
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                  </select>
+                                </div>
+                              </div>
                             </div>
 
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                            <!-- END TIME -->
+                            <div class="d-flex align-items-center ">
+                              <div class="d-flex flex-column">
+                                <small class="text-muted">End Time</small>
+                                <div class="d-flex align-items-center">
+                                  <div class="d-flex align-items-center counter-box">
+                                    <button class="btn-counterLeft btn-minus" type="button"
+                                      (click)="decrementTimes('hours', i, sh, 'end')">
+                                      <i class="bi bi-dash"></i>
+                                    </button>
+
+                                    <input type="number" class="value-font counter-input" formControlName="endTimeHour"
+                                      [value]="pad(shiftDetail.get('endTimeHour')?.value)" min="1" max="12"
+                                      (input)="onManualTimeChange('endTimeHour', i, sh, $event)" />
+
+                                    <button class="btn-counterRight btn-plus" type="button"
+                                      (click)="incrementTimes('hours', i, sh, 'end')">
+                                      <i class="bi bi-plus"></i>
+                                    </button>
+                                  </div>
+
+                                  <div class="d-flex align-items-center counter-box mx-2">
+                                    <button class="btn-counterLeft btn-minus" type="button"
+                                      (click)="decrementTimes('minutes', i, sh, 'end')">
+                                      <i class="bi bi-dash"></i>
+                                    </button>
+
+                                    <input type="number" class="value-font counter-input hrsMin"
+                                      formControlName="endTimeMinute"
+                                      [value]="pad(shiftDetail.get('endTimeMinute')?.value)" min="0" max="59"
+                                      (input)="onManualTimeChange('endTimeMinute', i, sh, $event)" />
+
+                                    <button class="btn-counterRight btn-plus" type="button"
+                                      (click)="incrementTimes('minutes', i, sh, 'end')">
+                                      <i class="bi bi-plus"></i>
+                                    </button>
+                                  </div>
+
+                                  <select class="d-flex align-items-center counter-box mx-2"
+                                    formControlName="endTimeAmPm">
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-2">
                               <label class="form-label">Shift Duration</label>
                               <select
                                 class="d-flex align-items-center counter-box mx-2"
@@ -297,25 +340,19 @@
                                 Shift Type is required.
                               </div>
                               }
-                            </div>
+                            </div> -->
 
                             <div class="gender-quantity-row">
                               <!-- Preferred Gender -->
                               <div class="gender-box">
-                                <label class="form-label d-block"
-                                  >Preferred Gender</label
-                                >
+                                <label class="form-label d-block">Preferred Gender</label>
 
-                                <div
-                                  class="d-flex align-items-center counter-box mx-2"
-                                >
+                                <div class="d-flex align-items-center counter-box mx-2">
                                   <i class="bi bi-person text-primary me-2"></i>
                                   <span class="counter-label">Male</span>
                                 </div>
 
-                                <div
-                                  class="d-flex align-items-center counter-box mx-2"
-                                >
+                                <div class="d-flex align-items-center counter-box mx-2">
                                   <i class="bi bi-person text-primary me-2"></i>
                                   <span class="counter-label">Female</span>
                                 </div>
@@ -332,56 +369,30 @@
                               <div class="quantity-box">
                                 <label class="form-label">Quantity</label>
 
-                                <div
-                                  class="d-flex align-items-center counter-box"
-                                >
-                                  <button
-                                    class="btn-counterLeft btn-minus"
-                                    type="button"
-                                    (click)="decrease('maleQuantity', i, sh)"
-                                  >
+                                <div class="d-flex align-items-center counter-box">
+                                  <button class="btn-counterLeft btn-minus" type="button"
+                                    (click)="decrease('maleQuantity', i, sh)">
                                     <i class="bi bi-dash"></i>
                                   </button>
-                                  <input
-                                    type="number"
-                                    class="value-font counter-input"
-                                    [formControlName]="'maleQuantity'"
-                                    min="0"
-                                    max="10"
-                                    (input)="onManualChange('maleQuantity', i, sh, $event)"
-                                  />
-                                  <button
-                                    class="btn-counterRight btn-plus"
-                                    type="button"
-                                    (click)="increase('maleQuantity', i, sh)"
-                                  >
+                                  <input type="number" class="value-font counter-input"
+                                    [formControlName]="'maleQuantity'" min="0" max="10"
+                                    (input)="onManualChange('maleQuantity', i, sh, $event)" />
+                                  <button class="btn-counterRight btn-plus" type="button"
+                                    (click)="increase('maleQuantity', i, sh)">
                                     <i class="bi bi-plus"></i>
                                   </button>
                                 </div>
 
-                                <div
-                                  class="d-flex align-items-center counter-box"
-                                >
-                                  <button
-                                    class="btn-counterLeft btn-minus"
-                                    type="button"
-                                    (click)="decrease('femaleQuantity', i, sh)"
-                                  >
+                                <div class="d-flex align-items-center counter-box">
+                                  <button class="btn-counterLeft btn-minus" type="button"
+                                    (click)="decrease('femaleQuantity', i, sh)">
                                     <i class="bi bi-dash"></i>
                                   </button>
-                                  <input
-                                    type="number"
-                                    class="value-font counter-input"
-                                    [formControlName]="'femaleQuantity'"
-                                    min="0"
-                                    max="10"
-                                    (input)="onManualChange('femaleQuantity', i, sh, $event)"
-                                  />
-                                  <button
-                                    class="btn-counterRight btn-plus"
-                                    type="button"
-                                    (click)="increase('femaleQuantity', i, sh)"
-                                  >
+                                  <input type="number" class="value-font counter-input"
+                                    [formControlName]="'femaleQuantity'" min="0" max="10"
+                                    (input)="onManualChange('femaleQuantity', i, sh, $event)" />
+                                  <button class="btn-counterRight btn-plus" type="button"
+                                    (click)="increase('femaleQuantity', i, sh)">
                                     <i class="bi bi-plus"></i>
                                   </button>
                                 </div>
@@ -392,19 +403,11 @@
                               <div class="form-group">
                                 <label class="form-label">Tenure</label>
 
-                                <div
-                                  class="d-flex align-items-center counter-box mx-2"
-                                >
+                                <div class="d-flex align-items-center counter-box mx-2">
                                   <i class="bi bi-calendar4 text-primary"></i>
-                                  <select
-                                    class="value-font border-0 counter-select"
-                                    formControlName="tenure"
-                                    [class.is-invalid]="shiftDetail.get('tenure')?.invalid && shiftDetail.get('tenure')?.touched"
-                                  >
-                                    <option
-                                      *ngFor="let ten of tenure"
-                                      [value]="ten.value"
-                                    >
+                                  <select class="value-font border-0 counter-select" formControlName="tenure"
+                                    [class.is-invalid]="shiftDetail.get('tenure')?.invalid && shiftDetail.get('tenure')?.touched">
+                                    <option *ngFor="let ten of tenure" [value]="ten.value">
                                       {{ ten.label }}
                                     </option>
                                   </select>
@@ -418,55 +421,36 @@
                                 }
                               </div>
                             </div>
+
                           </div>
 
                           <div class="row">
                             <div class="col-md-6">
                               <label class="form-label">Duty Start Date</label>
-                              <input
-                                type="date"
-                                class="form-control"
-                                [min]="today"
-                                formControlName="dutyStartDate"
-                              />
+                              <input type="date" class="form-control" [min]="today" formControlName="dutyStartDate" />
                             </div>
 
-                            <div
-                              class="col-md-6"
-                              *ngIf="shiftDetail.get('tenure')?.value !== '1'"
-                            >
+                            <div class="col-md-6" *ngIf="shiftDetail.get('tenure')?.value !== '1'">
                               <label class="form-label">Duty End Date</label>
-                              <input
-                                type="date"
-                                class="form-control"
+                              <input type="date" class="form-control"
                                 [min]="shiftDetail.get('dutyStartDate')?.value || today"
-                                formControlName="dutyEndDate"
-                              />
-                              <div
-                                class="invalid-feedback"
-                                *ngIf="shiftDetail.get('dutyEndDate')?.invalid && shiftDetail.get('dutyEndDate')?.touched"
-                              >
+                                formControlName="dutyEndDate" />
+                              <div class="invalid-feedback"
+                                *ngIf="shiftDetail.get('dutyEndDate')?.invalid && shiftDetail.get('dutyEndDate')?.touched">
                                 Duty End Date is required.
                               </div>
                             </div>
                           </div>
 
-                          <div
-                            class="d-flex align-items-start justify-content-end gap-2 mt-3"
-                          >
+
+
+                          <div class="d-flex align-items-start justify-content-end gap-2 mt-3">
                             @if(sh === 0 || sh ===
                             getNestedShiftDetailsControls(i).length - 1) {
-                            <i
-                              class="bi bi-plus-lg add"
-                              (click)="addShift(i)"
-                              title="Add Time Slot"
-                            ></i>
+                            <i class="bi bi-plus-lg add" (click)="addShift(i)" title="Add Time Slot"></i>
                             } @if(sh > 0) {
-                            <i
-                              class="bi bi-trash text-danger remove"
-                              (click)="removeShiftDetail(i, sh)"
-                              title="Remove Time Slot"
-                            ></i>
+                            <i class="bi bi-trash text-danger remove" (click)="removeShiftDetail(i, sh)"
+                              title="Remove Time Slot"></i>
                             }
                           </div>
                         </div>
@@ -482,15 +466,12 @@
             {
             <ng-container>
               <div class="d-flex justify-content-center addNewBtn my-2">
-                <button type="button" class="btn" (click)="addNewStaff()">
+                <button type="button" class="btn text-light" (click)="addNewStaff()">
                   <i class="bi bi-plus"></i>Add Another Staff
                 </button>
               </div>
               <div class="submission-fixed d-flex justify-content-end">
-                <app-submission
-                  [buttonType]="button"
-                  [disableButton]="isSubmitting"
-                ></app-submission>
+                <app-submission [buttonType]="button" [disableButton]="isSubmitting"></app-submission>
               </div>
             </ng-container>
             }
@@ -519,12 +500,8 @@
 <!-- Remove this -->
 
 @if (showAuthPopup) {
-<app-authorization
-  [showAuthModal]="showAuthPopup"
-  [authMode]="'login'"
-  (loginSuccess)="onAuthSuccess()"
-  (close)="onAuthClose()"
-></app-authorization>
+<app-authorization [showAuthModal]="showAuthPopup" [authMode]="'login'" (loginSuccess)="onAuthSuccess()"
+  (close)="onAuthClose()"></app-authorization>
 }
 
 <!-- @if(showAuthPopup) {

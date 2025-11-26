@@ -4,6 +4,7 @@ import { SpinnerToastComponent } from "./core/toasts/spinner-toast/spinner-toast
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChatSupport } from './pages/chat-support/chat-support';
 import { NotificationComponent } from './pages/medicines/notification/notification';
+import { PushNotificationService } from './core/services/push-notification.service';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,9 @@ export class App {
   time: Date | null = null;
   defaultOpenValue = new Date(0, 0, 0, 0, 0, 0);
   token = localStorage.getItem('authToken')
-
-  ngOnInit() { }
+  constructor(private pushService: PushNotificationService) {}
+  ngOnInit() { 
+    //  this.pushService.subscribeToNotifications();
+    this.pushService.subscribe();
+  }
 }

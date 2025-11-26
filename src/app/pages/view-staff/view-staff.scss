@@ -59,7 +59,14 @@ footer {
   bottom: 0;
   width: 100%;
 }
-
+.colseCls{
+  margin: auto;
+    margin-right: 1px;
+    border: 0px;
+    border-color: #db9280;
+    border-radius: 3px;
+    color: #fff;
+}
 .form-control {
   border-radius: 25px !important;
 }

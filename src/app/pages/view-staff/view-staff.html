@@ -1,84 +1,105 @@
- <app-text-banner
-  image="assets/staff/book-staff-banner.avif"
-  title="Hire Trusted Staff Easily"
-  subtitle="Find verified professionals for your home, office, or business needs"
-  buttonText="Book Now"
+<!-- <app-text-banner image="assets/staff/book-staff-banner.avif" title="Hire Trusted Staff Easily"
+  subtitle="Find verified professionals for your home, office, or business needs" buttonText="Book Now"
   (buttonClick)="centerContent()">
 </app-text-banner>
 
- <app-text-image
-    imageUrl="assets/images/sample.jpg"
-    imageAlt="Sample Image"
-    title="Find, Book & Shop — All in One Place"
-    subtitle="Discover Amazing Features"
-    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    buttonText=""
-    buttonLink="/">
-  </app-text-image>
+<app-text-image imageUrl="assets/images/sample.jpg" imageAlt="Sample Image" title="Find, Book & Shop — All in One Place"
+  subtitle="Discover Amazing Features"
+  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  buttonText="" buttonLink="/">
+</app-text-image> -->
 
-<div class="container-fluid " >
-  <ng-container *ngIf="staffDetails.length > 0; else noStaff">
-    <div *ngFor="let categoryGroup of staffDetails" class="row">
-      <div class="col-12 mb-2">
-        {{ categoryGroup.category | titlecase }}
-        ({{ categoryGroup.availableStaff?.length || 0 }})
+
+<div class="container-fluid">
+  <!-- Loading template -->
+  <ng-template #loadingTpl>
+    <div class="d-flex justify-content-center align-items-center" style="min-height:200px;">
+      <div class="text-center">
+        <div class="spinner-border" role="status" aria-hidden="true"></div>
+        <div class="mt-2">wait for accepted staff</div>
       </div>
+    </div>
+  </ng-template>
+
+  <!-- Main display: show spinner while loading, otherwise show staff or noStaff -->
+  <ng-container *ngIf="!loading; else loadingTpl">
+    <ng-container *ngIf="staffDetails.length > 0; else noStaff">
+      <div *ngFor="let categoryGroup of staffDetails" class="row">
+        <div class="col-12 mb-2">
+          {{ categoryGroup.category | titlecase }}
+          ({{ categoryGroup.availableStaff?.length || 0 }})
+        </div>
 
         <div class="col-md-3 mb-4" *ngFor="let staff of categoryGroup.availableStaff; let i = index">
-                <div class="card h-100">
-                    <div class="row g-0">
-                        <div class="col-4">
-                            <div class="staff-img">
-                                <img [src]="staff.imageUrl || (staff.gender?.toLowerCase() === 'female' 
-                            ? '/assets/profile.avif' 
-                            : '/assets/profile.avif')" class="img-fluid rounded" alt="Staff Image" />
-                            </div>
-                        </div>
-
-                        <div class="col-7">
-                            <div class="card-body p-2">
-                                <h6 class="card-title mb-1"><span>{{ staff.name }}</span></h6>
-
-                                <p class="mb-1 text-muted">
-                                    {{ staff.experience }} Years Experience | {{ staff.duties }} Duties
-                                </p>
-
-                                <p class="mb-1">
-                                    <ng-container *ngFor="let star of getStars(staff.rating)">
-                                        <i class="bi" [ngClass]="{
-                                    'bi-star-fill text-warning': star === 'full',
-                                    'bi-star-half text-warning': star === 'half',
-                                    'bi-star text-warning': star === 'empty'
-                                }"></i>
-                                    </ng-container>
-                                    <span class="ms-1 text-warning">{{ staff.rating }}/5</span>
-
-                                </p>
-
-                                <p class="mb-1 text-muted">₹{{ staff.price }}</p>
-
-                                <div class="d-flex justify-content-start gap-2 mt-2">
-                                    <button class="btn btn-outline-primary actionSwap" data-bs-toggle="modal"
-                                        data-bs-target="#swapStaff" (click)="selectedStaff = staff"
-                                        [disabled]="staff.isBooked">
-                                        <i class="bi bi-arrow-left-right"></i>
-                                    </button>
-
-
-                                    <button class="btn btn-sm btn-outline-danger actionDelete"
-                                     data-bs-toggle="modal"
-                                        data-bs-target="#deleteStaff" 
-                                         (click)="selectedStaff = staff">
-                                        <i class="bi bi-x-lg"></i>
-                                    </button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+          <div class="card h-100">
+            <div class="row g-0">
+              <div class="col-4">
+                <div class="staff-img">
+                  <img
+                    [src]="staff.imageUrl || (staff.gender?.toLowerCase() === 'female' ? '/assets/profile.avif' : '/assets/profile.avif')"
+                    class="img-fluid rounded" alt="Staff Image" />
                 </div>
+              </div>
+
+              <div class="col-7">
+                <div class="card-body p-2">
+                  <h6 class="card-title mb-1"><span>{{ staff.name }}</span></h6>
+
+                  <p class="mb-1 text-muted">
+                    {{ staff.experience }} Years Experience | {{ staff.duties }} Duties
+                  </p>
+
+                  <p class="mb-1">
+                    <ng-container *ngFor="let star of getStars(staff.rating)">
+                      <i class="bi" [ngClass]="{
+                        'bi-star-fill text-warning': star === 'full',
+                        'bi-star-half text-warning': star === 'half',
+                        'bi-star text-warning': star === 'empty'
+                      }"></i>
+                    </ng-container>
+                    <span class="ms-1 text-warning">{{ staff.rating }}/5</span>
+                  </p>
+
+                  <p class="mb-1 text-muted">₹{{ staff.price }}</p>
+                  <!-- ✅ ADDED: Phone -->
+                  <p class="mb-1">
+                    📞 <strong>{{ staff.staffPhone }}</strong>
+                  </p>
+
+                  <!-- ✅ ADDED: Start & End Dates -->
+                  <p class="mb-1 text-muted">
+                    Start: <strong>{{ staff.startDate }}</strong>
+                  </p>
+                  <p class="mb-1 text-muted">
+                    End: <strong>{{ staff.endDate }}</strong>
+                  </p>
+                  <div class="d-flex justify-content-start gap-2 mt-2">
+                    <button class="btn btn-outline-primary actionSwap" data-bs-toggle="modal"
+                      data-bs-target="#swapStaff" (click)="selectedStaff = staff" [disabled]="staff.isBooked">
+                      <i class="bi bi-arrow-left-right"></i>
+                    </button>
+
+                    <button class="btn btn-sm btn-outline-danger actionDelete" data-bs-toggle="modal"
+                      data-bs-target="#deleteStaff" (click)="selectedStaff = staff">
+                      <i class="bi bi-x-lg"></i>
+                    </button>
+                  </div>
+
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
+      </div> <!-- row -->
+      <footer class="bg-white px-0">
+    <div class="p-3 d-flex justify-content-between">
+        <!-- <p class="text-muted">Total Staff: 01</p> -->
+        <button class="submission btn btn-primary text-light rounded-pill btn-sm" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">Proceed to Booking (1212)</button>
     </div>
+
+</footer>
+    </ng-container>
   </ng-container>
 
   <ng-template #noStaff>
@@ -88,10 +109,15 @@
   </ng-template>
 </div>
 
-<!-- 
-<footer class="bg-white px-0">
+
+<!-- modals unchanged (keep your existing modal HTML) -->
+<!-- ... keep #exampleModal, #swapStaff, #deleteStaff modals as is ... -->
+
+
+
+<!-- <footer class="bg-white px-0">
     <div class="p-3 d-flex justify-content-between">
-        <p class="text-muted">Total Staff: 01</p>
+       <p class="text-muted">Total Staff: 01</p>
         <button class="submission btn btn-primary text-light rounded-pill btn-sm" data-bs-toggle="modal"
             data-bs-target="#exampleModal">Proceed to Booking (1212)</button>
     </div>
@@ -104,50 +130,51 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Please Enter Billing Information</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="colseCls" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg  "></i></button>
       </div>
 
-    <div class="modal-body">
-  <form [formGroup]="billingForm">
-    <div class="form-group">
-      <label>Billing Address</label>
-      <input formControlName="billingAddress" type="text" class="form-control" placeholder="Enter billing address">
-      <div *ngIf="billingForm.get('billingAddress')?.touched && billingForm.get('billingAddress')?.invalid" class="text-danger small">
-        Billing Address is required (min 5 chars).
-      </div>
-    </div>
+      <div class="modal-body">
+        <form [formGroup]="billingForm">
+          <div class="form-group">
+            <label>Billing Address</label>
+            <input formControlName="billingAddress" type="text" class="form-control"
+              placeholder="Enter billing address">
+            <div *ngIf="billingForm.get('billingAddress')?.touched && billingForm.get('billingAddress')?.invalid"
+              class="text-danger small">
+              Billing Address is required (min 5 chars).
+            </div>
+          </div>
 
-    <div class="form-group my-3">
-      <label>Your Name</label>
-      <input formControlName="billingName" type="text" class="form-control" placeholder="Enter your name">
-      <div *ngIf="billingForm.get('billingName')?.touched && billingForm.get('billingName')?.invalid" class="text-danger small">
-        Valid Name is required (alphabets only).
-      </div>
-    </div>
+          <div class="form-group my-3">
+            <label>Your Name</label>
+            <input formControlName="billingName" type="text" class="form-control" placeholder="Enter your name">
+            <div *ngIf="billingForm.get('billingName')?.touched && billingForm.get('billingName')?.invalid"
+              class="text-danger small">
+              Valid Name is required (alphabets only).
+            </div>
+          </div>
 
-    <div class="form-group">
-      <label>GST Number</label>
-      <input formControlName="gstNumber" type="text" class="form-control" placeholder="Enter GST number">
-      <div *ngIf="billingForm.get('gstNumber')?.touched && billingForm.get('gstNumber')?.invalid" class="text-danger small">
-        Enter valid GST Number (15 characters).
+          <div class="form-group">
+            <label>GST Number</label>
+            <input formControlName="gstNumber" type="text" class="form-control" placeholder="Enter GST number">
+            <div *ngIf="billingForm.get('gstNumber')?.touched && billingForm.get('gstNumber')?.invalid"
+              class="text-danger small">
+              Enter valid GST Number (15 characters).
+            </div>
+          </div>
+        </form>
       </div>
-    </div>
-  </form>
-</div>
 
 
       <div class="modal-footer">
-         <button
-    type="button"
-    class="btn btn-primary submission text-light btn-sm w-100 rounded-pill"
-    [disabled]="billingForm.invalid"
-    (click)="onProceedToPayment(
+        <button type="button" class="btn btn-primary submission text-light btn-sm w-100 rounded-pill"
+          [disabled]="billingForm.invalid" (click)="onProceedToPayment(
       billingForm.value.billingName,
       billingForm.value.billingAddress,
       billingForm.value.gstNumber
     )">
-    Proceed to Payment (1212)
-  </button>
+          Proceed to Payment (1212)
+        </button>
       </div>
     </div>
   </div>
@@ -155,40 +182,42 @@
 
 
 <div class="modal fade" id="swapStaff" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Please Enter Billing Information</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h5>Are you Sure, you want to swap the Staff?</h5>
-            </div>
-            <div class="modal-footer">
-               <button type="button" class="btn submission text-light btn-sm w-100 rounded-pill">No</button>
-                <button type="submit" class="btn btn-primary submission text-light btn-sm rounded-pill" (click)="addSpecificStaff(selectedStaff)">Yes</button>
-            </div>
-        </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Please Enter Billing Information</h1>
+        <button type="button" class="colseCls" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg  "></i></button>
+      </div>
+      <div class="modal-body">
+        <h5>Are you Sure, you want to swap the Staff?</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn submission text-light btn-sm w-100 rounded-pill">No</button>
+        <button type="submit" class="btn btn-primary submission text-light btn-sm rounded-pill"
+          (click)="addSpecificStaff(selectedStaff)">Yes</button>
+      </div>
     </div>
+  </div>
 </div>
 
 
 <div class="modal fade" id="deleteStaff" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-               <h5>Are you sure you want to remove this staff ?</h5>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn submission text-light btn-sm w-100 rounded-pill">Cancel</button>
-                <button type="submit" class="btn btn-primary submission text-light btn-sm rounded-pill" (click)="removeStaff(selectedStaff)">Remove</button>
-            </div>
-        </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm</h1>
+        <button type="button" class="colseCls" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg  "></i></button>
+      </div>
+      <div class="modal-body">
+        <h5>Are you sure you want to remove this staff ?</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn submission text-light btn-sm w-100 rounded-pill">Cancel</button>
+        <button type="submit" class="btn btn-primary submission text-light btn-sm rounded-pill"
+          (click)="removeStaff(selectedStaff)">Remove</button>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- <app-medicine-slider 
