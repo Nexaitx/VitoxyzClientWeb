@@ -33,6 +33,11 @@
                                 "glob": "**/*",
                                 "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
                                 "output": "/assets/"
+                            },
+                            {
+                                "glob": "sw-push.js",
+                                "input": "src",
+                                "output": "/"
                             }
                         ],
                         "styles": [
@@ -40,24 +45,25 @@
                             "src/styles.scss"
                         ],
                         "scripts": [
-                            "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"                           
+                            "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
                         ]
                     },
                     "configurations": {
                         "production": {
-                           "budgets": [
-  {
-    "type": "initial",
-    "maximumWarning": "3mb",
-    "maximumError": "5mb"
-  },
-  {
-    "type": "anyComponentStyle",
-    "maximumWarning": "20kb",
-    "maximumError": "30kb"
-  }
-],
-                            "outputHashing": "all"
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "3mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "20kb",
+                                    "maximumError": "30kb"
+                                }
+                            ],
+                            "outputHashing": "all",
+                            "serviceWorker": "ngsw-config.json"
                         },
                         "development": {
                             "optimization": false,

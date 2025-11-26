@@ -1,13 +1,13 @@
 <div class="medicine-slider-container">
   <div class="slider-header">
     <h2 class="slider-title">{{ title }}</h2>
-     <button 
+     <!-- <button 
       *ngIf="showSeeAll" 
       (click)="onSeeAllClick()" 
       class="see-all-btn"
       aria-label="See all medicines">
       See All 
-    </button>
+    </button> -->
   </div>
 
   <!-- Loading -->
@@ -36,7 +36,7 @@
       >
         <div class="medicine-image">
           <img
-            [src]="getImage(medicine)"
+            [src]="getFirstImage(medicine)"
             [alt]="medicine.name"
             (error)="onImageError(medicine,$event)"
           />

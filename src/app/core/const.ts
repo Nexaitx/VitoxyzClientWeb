@@ -10,7 +10,7 @@ export const ENDPOINTS = {
   LOGIN: "/user/loginWithPasswordUser",
   SIGN_UP: "/user/signup",
   USER_PROFILE: "/user/profile",
-  BOOK_STAFF: "/user/complex-booking",
+  BOOK_STAFF: "/booking/staff/complex-booking",
   CATEGORIES: "/categories",
   SUB_CATEGORIES: "/subcategories",
   SEND_OTP: "/user/otp",
@@ -31,7 +31,8 @@ export const ENDPOINTS = {
 PRESCRIPTION:"/prescriptions/upload-without-medicine",
   // On board to diet plan
   ONBOARD_DIET: "/user/diet/onboard-diet",
-  BOOKING_RESPONSE: "/user/booking-response",
+  // BOOKING_RESPONSE: "/user/booking-response",user/accepted
+BOOKING_RESPONSE: "/user/accepted",
   SUBSCRIPTION_PLANS: "/user/subscription/plans",
    PURCHASE_SUBSCRIPTION:"/subscriptions/purchase",
   REMOVE_STAFF: "/user/remove-staff/{bookingId}",
@@ -41,4 +42,6 @@ PRESCRIPTION:"/prescriptions/upload-without-medicine",
   // PRODUCT_FILTER_MULTIPLE: "/products/filter/multiple-forms",
   PRODUCT_FILTER: "/otc-products/form",
   PRODUCT_FILTER_MULTIPLE: "/otc-products/by-forms",
+  SUBSCRIBEAPI:"/subscribe",
+  DIET_DASHBOARD:"/user/active/my-all-dietplans",
 };

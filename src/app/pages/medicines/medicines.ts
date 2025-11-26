@@ -24,6 +24,7 @@ import { HealthCarouselComponent } from "../shared/health-carousel/health-carous
 import { BannerSliderComponent } from "@src/app/shared/banner-slider/banner-slider";
 import { TextBanner } from "@src/app/shared/text-banner/text-banner";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
+import { CustomMedicineSliderComponent } from "../shared/custom-medicine-slider/custom-medicine-slider";
 declare var bootstrap: any;
 export interface Medicine {
   id: string;
@@ -90,7 +91,7 @@ interface Category {
     CommonFilterComponent,
     HealthCarouselComponent,
     BannerSliderComponent,
-
+     CustomMedicineSliderComponent,
     MobileFooterNavComponent
   ],
   templateUrl: "./medicines.html",

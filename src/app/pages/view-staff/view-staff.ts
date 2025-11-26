@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookingResponseService } from '../../core/booking-response.service';
 import { API_URL, ENDPOINTS } from '@src/app/core/const';
@@ -25,6 +25,7 @@ export class ViewStaff implements OnInit {
   staffDetails: any[] = [];
   selectedStaff: any;
 billingForm!: FormGroup;
+ loading: boolean = true;
 
   private readonly razorpayKeyId = 'rzp_test_RARA6BGk8D2Y2o';
   private isPaymentLoading = false;
@@ -33,47 +34,114 @@ billingForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private bookingResponseService: BookingResponseService
+    private bookingResponseService: BookingResponseService,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-    this.fetchBookingResponses();
+    
     this.billingForm = this.fb.group({
     billingAddress: ['', [Validators.required, Validators.minLength(5)]],
     billingName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]],
     gstNumber: ['', [Validators.required, ]]
   });
+  this.fetchBookingResponses();
   }
     // gstNumber: ['', [Validators.required, Validators.pattern(/^([0-9A-Z]{15})$/)]]
 
 
-  fetchBookingResponses() {
-    this.bookingResponseService.getBookingResponse().subscribe({
-      next: (res) => {
-        
-        const rawStaffList = res?.staff ?? [];
-const formatted: any[] = [];
+ fetchBookingResponses() {
+  const MIN_LOADING_TIME = 2000;
+  const startTime = Date.now();
+  this.loading = true;
+  this.cd.detectChanges();
 
-rawStaffList.forEach((entry: any) => {
-  (entry.staffDetails ?? []).forEach((detail: any) => {
-    formatted.push({
-      category: detail.typeOfStaff,
-      availableStaff: detail.availableStaff ?? []
-    });
+  this.bookingResponseService.getBookingResponse().subscribe({
+    next: (res) => {
+
+      console.log("RAW API RESPONSE :", res);
+
+      const raw = res ?? [];
+
+      // Grouping staff by category
+      const grouped: any = {};
+
+      raw.forEach((s: any) => {
+        const category = s.category || 'Others';
+
+        if (!grouped[category]) {
+          grouped[category] = {
+            category,
+            availableStaff: []
+          };
+        }
+
+        grouped[category].availableStaff.push({
+          id: s.staffId,
+          name: s.staffName,
+          phone: s.staffPhone,
+          staffPhone: s.staffPhone,
+  startDate: s.startDate,
+  endDate: s.endDate,
+          category: s.category,
+          subCategory: s.subCategory,
+          rating: s.rating || 0,
+          duties: s.duties || 0,
+          price: s.price || 0,
+          gender: s.gender,
+          experience: s.experience || 0,
+          tenure: s.tenure,
+          imageUrl: s.imageUrl || null
+        });
+      });
+
+      this.staffDetails = Object.values(grouped);
+
+      console.log("FINAL FORMATTED STAFF:", this.staffDetails);
+
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, MIN_LOADING_TIME - elapsed);
+      setTimeout(() => (this.loading = false), remaining);
+    },
+
+    error: (err) => {
+      console.error('Error fetching booking responses', err);
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, MIN_LOADING_TIME - elapsed);
+      setTimeout(() => (this.loading = false), remaining);
+    }
   });
-});
+}
 
-this.staffDetails = formatted;
+// fetchBookingResponses() {
+//   this.loading = true;
 
-console.log('API staff:', res.staff);
-console.log('Formatted staff:', formatted);
+//   setTimeout(() => {
+//     this.bookingResponseService.getBookingResponse().subscribe({
+//       next: (res) => {
+//         const rawStaffList = res?.staff ?? [];
+//         const formatted: any[] = [];
 
-      },
-      error: (err) => {
-        console.error('Error fetching booking responses', err);
-      }
-    });
-  }
+//         rawStaffList.forEach((entry: any) => {
+//           (entry.staffDetails ?? []).forEach((detail: any) => {
+//             formatted.push({
+//               category: detail.typeOfStaff,
+//               availableStaff: detail.availableStaff ?? []
+//             });
+//           });
+//         });
+
+//         this.staffDetails = formatted;
+//         this.loading = false;
+//       },
+//       error: (err) => {
+//         console.error('Error fetching booking responses', err);
+//         this.loading = false;
+//       }
+//     });
+//   }, 10000);
+// }
+
 
   getStars(rating: number): ('full' | 'half' | 'empty')[] {
     const stars: ('full' | 'half' | 'empty')[] = [];
@@ -204,7 +272,7 @@ console.log('Formatted staff:', formatted);
 
   private onPaymentSuccess(response: any, amountInINR: number) {
     console.log('Payment success:', response);
-          // this.router.navigate(['/medicines']);
+          this.router.navigate(['/medicines']);
 
     // alert(`Payment successful! Payment ID: ${response?.razorpay_payment_id || 'N/A'}`);
   }
