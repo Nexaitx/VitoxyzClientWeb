@@ -73,6 +73,10 @@ export const routes: Routes = [
         path: 'payment',
         loadComponent: () => import('./pages/Diet-Plan/payment-screen/payment-screen').then(m => m.PaymentScreen),
       },
+      {path: 'PaymentSuccessComponent',
+        loadComponent: () => import('./payment/payment').then(m => m.PaymentSuccessComponent),
+
+      },
       {
         path: 'contact-us',
         loadComponent: () => import('./pages/contact-us/contact-us').then(m => m.ContactUs),

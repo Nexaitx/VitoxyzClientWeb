@@ -1,13 +1,4 @@
-<!-- <app-text-banner image="assets/staff/book-staff-banner.avif" title="Hire Trusted Staff Easily"
-  subtitle="Find verified professionals for your home, office, or business needs" buttonText="Book Now"
-  (buttonClick)="centerContent()">
-</app-text-banner>
 
-<app-text-image imageUrl="assets/images/sample.jpg" imageAlt="Sample Image" title="Find, Book & Shop — All in One Place"
-  subtitle="Discover Amazing Features"
-  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-  buttonText="" buttonLink="/">
-</app-text-image> -->
 
 
 <div class="container-fluid">
@@ -91,13 +82,16 @@
           </div>
         </div>
       </div> <!-- row -->
-      <footer class="bg-white px-0">
+     <footer class="bg-white px-0">
     <div class="p-3 d-flex justify-content-between">
-        <!-- <p class="text-muted">Total Staff: 01</p> -->
-        <button class="submission btn btn-primary text-light rounded-pill btn-sm" data-bs-toggle="modal"
-            data-bs-target="#exampleModal">Proceed to Booking (1212)</button>
+        <p class="text-muted">Total Staff: {{ getTotalStaff() }}</p>
+        <button class="submission btn btn-primary text-light rounded-pill btn-sm" 
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                [disabled]="getTotalStaff() === 0">
+            Proceed to Payment (₹{{ getTotalAmount() }})
+        </button>
     </div>
-
 </footer>
     </ng-container>
   </ng-container>
@@ -130,50 +124,61 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Please Enter Billing Information</h1>
-        <button type="button" class="colseCls" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg  "></i></button>
+        <button type="button" class="colseCls" data-bs-dismiss="modal" aria-label="Close">
+          <i class="bi bi-x-lg"></i>
+        </button>
       </div>
 
       <div class="modal-body">
         <form [formGroup]="billingForm">
           <div class="form-group">
-            <label>Billing Address</label>
-            <input formControlName="billingAddress" type="text" class="form-control"
-              placeholder="Enter billing address">
-            <div *ngIf="billingForm.get('billingAddress')?.touched && billingForm.get('billingAddress')?.invalid"
-              class="text-danger small">
+            <label>Your Name *</label>
+            <input formControlName="billingName" type="text" class="form-control" placeholder="Enter your name">
+            <div *ngIf="formControls['billingName']?.touched && formControls['billingName']?.invalid"
+                 class="text-danger small">
+              Valid Name is required (alphabets only).
+            </div>
+          </div>
+
+          <div class="form-group my-3">
+            <label>Phone Number *</label>
+            <input formControlName="phoneNumber" type="tel" class="form-control" 
+                   placeholder="Enter your phone number">
+            <div *ngIf="formControls['phoneNumber']?.touched && formControls['phoneNumber']?.invalid"
+                 class="text-danger small">
+              Valid Indian phone number is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Billing Address *</label>
+            <textarea formControlName="billingAddress" class="form-control"
+                      placeholder="Enter complete billing address" rows="3"></textarea>
+            <div *ngIf="formControls['billingAddress']?.touched && formControls['billingAddress']?.invalid"
+                 class="text-danger small">
               Billing Address is required (min 5 chars).
             </div>
           </div>
 
           <div class="form-group my-3">
-            <label>Your Name</label>
-            <input formControlName="billingName" type="text" class="form-control" placeholder="Enter your name">
-            <div *ngIf="billingForm.get('billingName')?.touched && billingForm.get('billingName')?.invalid"
-              class="text-danger small">
-              Valid Name is required (alphabets only).
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>GST Number</label>
-            <input formControlName="gstNumber" type="text" class="form-control" placeholder="Enter GST number">
-            <div *ngIf="billingForm.get('gstNumber')?.touched && billingForm.get('gstNumber')?.invalid"
-              class="text-danger small">
-              Enter valid GST Number (15 characters).
-            </div>
+            <label>GST Number (Optional)</label>
+            <input formControlName="gstNumber" type="text" class="form-control" 
+                   placeholder="Enter GST number">
           </div>
         </form>
       </div>
 
-
       <div class="modal-footer">
         <button type="button" class="btn btn-primary submission text-light btn-sm w-100 rounded-pill"
-          [disabled]="billingForm.invalid" (click)="onProceedToPayment(
-      billingForm.value.billingName,
-      billingForm.value.billingAddress,
-      billingForm.value.gstNumber
-    )">
-          Proceed to Payment (1212)
+                [disabled]="billingForm.invalid || isPaymentProcessing"
+                (click)="onProceedToPayment(
+                  billingForm.value.billingName,
+                  billingForm.value.billingAddress,
+                  billingForm.value.gstNumber,
+                  billingForm.value.phoneNumber
+                )">
+          <span *ngIf="isPaymentProcessing" class="spinner-border spinner-border-sm me-2"></span>
+          {{ isPaymentProcessing ? 'Processing...' : 'Pay ₹' + getTotalAmount() }}
         </button>
       </div>
     </div>
