@@ -139,11 +139,12 @@ navigateToDiet() {
 
   // Logged in → check if user purchased a diet plan
   this.http.get(`${API_URL}${ENDPOINTS.DIET_DASHBOARD}?id=1073741824&username=string&password=string&authorities=%5B%7B%22authority%22%3A%22string%22%7D%5D&userType=string&enabled=true&accountNonExpired=true&accountNonLocked=true&credentialsNonExpired=true`, {
-    headers: { Authorization: `Bearer ${token}` }
+  //  this.http.get(`${API_URL}${ENDPOINTS.DIET_DASHBOARD}` , {
+  headers: { Authorization: `Bearer ${token}` }
   }).subscribe({
     next: (res: any) => {
        console.log("Diet Dashboard Response:", res);
-      const hasPlan = !!res?.userSubscriptionType;
+       const hasPlan = res?.totalPlans > 0;
 
       if (hasPlan) {
         this.router.navigate(["diet-charts"]);
