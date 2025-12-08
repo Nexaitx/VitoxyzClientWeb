@@ -36,14 +36,21 @@ addIndividualStaff(payload: {
     typeOfStaff: string;
     typeOfSubStaff: string;
     shifts: {
-      timeSlot: string;
-      shiftType: string;
-      maleQuantity: number;
+       maleQuantity: number;
       femaleQuantity: number;
       tenure: string;
       dutyStartDate: string;
+      dutyEndDate: string;
+      startTimeHour: string;
+      startTimeMinute: string;
+      startTimeAmPm: string;
+      endTimeHour: string;
+      endTimeMinute: string;
+      endTimeAmPm: string;
     }[];
   }[];
+    latitude: number;
+  longitude: number;
 }): Observable<any> {
   const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
   if (!token) {

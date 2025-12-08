@@ -105,7 +105,7 @@
                                 titlecase }} Type</label>
                               <i class="bi bi-people address"></i>
                               <select class="form-select ps-4" id="typeOfSubStaff-{{ i }}"
-                                formControlName="typeOfSubStaff" [disabled]="!staffDetails.get('typeOfStaff')?.value"
+                                formControlName="typeOfSubStaff" [disabled]="!staffDetails.get('typeOfStaff')?.value" (change)="onSubStaffChange(i)"
                                 [class.is-invalid]="
                             staffDetails.get('typeOfSubStaff')?.invalid &&
                             staffDetails.get('typeOfSubStaff')?.touched
@@ -144,10 +144,10 @@
                         <div class="row d-flex">
                           <div class="sub-row">
                             
-                             <div class="col-lg-3 col-md-4 col-12 d-flex align-items-center">
+                             <div class="d-flex align-items-center">
                               <div class="d-flex flex-column">
-                                <small class="text-muted">Start Time</small>
-                                <div class="d-flex align-items-center "
+                                <!-- <small class="text-muted">Start Time</small>
+                                <div class="d-flex align-items-center"
                                   [class.is-invalid]="shiftDetail.get('timeSlot')?.errors?.['pastTime'] && shiftDetail.get('timeSlot')?.touched">
                                   <div class="d-flex align-items-center counter-box">
                                     <button class="btn-counterLeft btn-minus" type="button"
@@ -189,15 +189,22 @@
                                     <option value="AM">AM</option>
                                     <option value="PM">PM</option>
                                   </select>
-                                </div>
+                                </div> -->
+                                  <small class="text-muted">Start Time</small>
+  
+                                    <input 
+                                    type="time"
+                                    formControlName="startTime"
+                                    (change)="onStartTimeChange(i, sh)"
+                                    />
                               </div>
                             </div>
 
                             <!-- END TIME -->
-                            <div class="col-lg-3 col-md-4 col-12 d-flex align-items-center ">
+                            <div class="d-flex align-items-center ">
                               <div class="d-flex flex-column">
-                                <small class="text-muted">End Time</small>
-                                <div class="d-flex align-items-center ">
+                                <!-- <small class="text-muted">End Time</small>
+                                <div class="d-flex align-items-center">
                                   <div class="d-flex align-items-center counter-box">
                                     <button class="btn-counterLeft btn-minus" type="button"
                                       (click)="decrementTimes('hours', i, sh, 'end')">
@@ -236,7 +243,14 @@
                                     <option value="AM">AM</option>
                                     <option value="PM">PM</option>
                                   </select>
-                                </div>
+                                </div> -->
+                                 <small class="text-muted">End Time</small>
+  
+                                 <input 
+                                   type="time"
+                                  formControlName="endTime"
+                                  (change)="onStartTimeChange(i, sh)"
+                                 />
                               </div>
                             </div>
                            
@@ -306,7 +320,7 @@
                                   <i class="bi bi-calendar4 text-primary"></i>
                                   <select class="value-font border-0 counter-select" formControlName="tenure"
                                     [class.is-invalid]="shiftDetail.get('tenure')?.invalid && shiftDetail.get('tenure')?.touched">
-                                    <option *ngFor="let ten of tenure" [value]="ten.value">
+                                    <option *ngFor="let ten of getTenureOptions(i)" [value]="ten.value">
                                       {{ ten.label }}
                                     </option>
                                   </select>
@@ -331,7 +345,7 @@
                           "
                               >
                                 <option
-                                  *ngFor="let type of preferredTimeSlots"
+                                  *ngFor="let type of getSlotsByStaffIndex(i)"
                                   [value]="type"
                                 >
                                   {{ type }}
@@ -350,7 +364,7 @@
                           <div class="row">
                             <div class="col-md-6">
                               <label class="form-label">Duty Start Date</label>
-                              <input type="date" class="form-control" [min]="today" formControlName="dutyStartDate" />
+                              <input type="date" class="form-control " [min]="today" formControlName="dutyStartDate" />
                             </div>
 
                             <div class="col-md-6" *ngIf="shiftDetail.get('tenure')?.value !== '1'">
@@ -404,7 +418,14 @@
     </div>
   </div>
 </div>
-
+<div *ngIf="message" 
+     class="mt-2 p-2 rounded"
+     [ngClass]="{
+       'bg-success text-white': messageType === 'success',
+       'bg-danger text-white': messageType === 'error'
+     }">
+  {{ message }}
+</div>
 <!-- <app-medicine-slider 
   title="Experience the Joy of Easy Shopping"
   [showSeeAll]="true"

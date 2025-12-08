@@ -9,8 +9,51 @@
   box-sizing: border-box;
   margin-top: -76px;
 }
+.plan-card {
+  position: relative; /* REQUIRED */
+}
+
+/* Full-page centered loader that matches your screenshot */
+.fullpage-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  z-index: 9999; /* sits above everything */
+  background: transparent; /* change to rgba(0,0,0,0.06) if you want slight overlay */
+}
+
+.loader-text {
+  margin: 0;
+  font-size: 15px;
+  color: #222;
+  text-align: center;
+  letter-spacing: 0.1px;
+}
 
 
+button[disabled] {
+  opacity: .5;
+  cursor: not-allowed;
+}
+.global-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
 
 /* ----- CARD BASE STYLING ----- */
 .plan-item {

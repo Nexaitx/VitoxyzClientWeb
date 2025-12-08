@@ -1,6 +1,6 @@
-export const API_URL = 'http://localhost:8080/api';
+//export const API_URL = 'http://localhost:8080/api';
 
-  // export const API_URL = "https://vitoxyz.com/Backend/api";
+ export const API_URL = "https://vitoxyz.com/Backend/api";
   // export const API_URL = "https://vitoxyzbackend.onrender.com/api"
 // export const API_URL = 'https://398ff2efa7fa.ngrok-free.app/api';
 
@@ -35,8 +35,9 @@ PRESCRIPTION:"/prescriptions/upload-without-medicine",
 BOOKING_RESPONSE: "/user/accepted",
   SUBSCRIPTION_PLANS: "/user/subscription/plans",
    PURCHASE_SUBSCRIPTION:"/subscriptions/purchase",
-  REMOVE_STAFF: "/user/remove-staff/{bookingId}",
-  BOOK_SINGLE_STAFF: "/user/complex-booking",
+  REMOVE_STAFF: "/user/accepted/{bookingId}/remove",
+
+  BOOK_SINGLE_STAFF: "/booking/staff/complex-booking",
   UPDATE_PROFILE: "/user/update-profile",
   // PRODUCT_FILTER: "/products/filter",
   // PRODUCT_FILTER_MULTIPLE: "/products/filter/multiple-forms",

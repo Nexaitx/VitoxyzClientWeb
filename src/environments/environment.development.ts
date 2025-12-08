@@ -1,8 +1,8 @@
 
 export const environment = {
   production: false,
-  // apiBaseUrl: 'https://vitoxyz.com/Backend/api',
-    apiUrl: 'http://localhost:8080/api',
+   apiUrl: 'https://vitoxyz.com/Backend/api',
+    //apiUrl: 'http://localhost:8080/api',
 
 
   apiKey: 'dev_api_key',

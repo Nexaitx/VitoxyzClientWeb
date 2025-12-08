@@ -5,9 +5,9 @@
   <div class="container-fluid w-100 px-0">
     <app-banner-slider 
   [images]="[
-    'assets/medicines/newupdateBanner1.avif',
-    '../../../assets/medicines/newupdateBanner2.avif',
-    '../../../assets/medicines/newupdateBanner3.avif',
+     { src: 'assets/medicines/newupdateBanner1.avif', link: '/medicines' },
+    { src: '../../../assets/medicines/newupdateBanner2.avif', link: '/diet/user-onboarding' },
+    { src: '../../../assets/medicines/newupdateBanner3.avif', link: '/book-staff', target: '_blank' }
   ]"
   [autoSlide]="true"
   [slideInterval]="4000">
@@ -294,7 +294,7 @@
   </div>
 </div>
 
-<app-custom-medicine-slider title="Popular Custom Medicines"></app-custom-medicine-slider> 
+<!-- <app-custom-medicine-slider title="Popular Custom Medicines"></app-custom-medicine-slider>  -->
 
 <ng-template #loadingOrError>
   <p *ngIf="!isLoaded">Loading…</p>

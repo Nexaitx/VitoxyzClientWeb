@@ -7,13 +7,14 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Footer } from "../footer/footer";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 import { environment } from '@src/environments/environment.development';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 declare var Razorpay: any;
-
+declare var bootstrap: any;
 @Component({
   selector: 'app-view-staff',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Footer, MobileFooterNavComponent],
+  imports: [CommonModule, ReactiveFormsModule, Footer, MobileFooterNavComponent, MatSnackBarModule],
   templateUrl: './view-staff.html',
   styleUrls: ['./view-staff.scss']
 })
@@ -29,7 +30,8 @@ export class ViewStaff implements OnInit {
     private router: Router,
     private bookingResponseService: BookingResponseService,
     private paymentService: PaymentService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -47,12 +49,12 @@ export class ViewStaff implements OnInit {
   }
 
   private getToken(): string | null {
-    return localStorage.getItem('token') || 
-           sessionStorage.getItem('token') ||
-           localStorage.getItem('auth_token') || 
-           sessionStorage.getItem('auth_token') ||
-           localStorage.getItem('authToken') ||
-           sessionStorage.getItem('authToken');
+    return localStorage.getItem('token') ||
+      sessionStorage.getItem('token') ||
+      localStorage.getItem('auth_token') ||
+      sessionStorage.getItem('auth_token') ||
+      localStorage.getItem('authToken') ||
+      sessionStorage.getItem('authToken');
   }
 
   initBillingForm(): void {
@@ -65,62 +67,82 @@ export class ViewStaff implements OnInit {
   }
 
   fetchBookingResponses() {
-    const MIN_LOADING_TIME = 2000;
+    const MIN_LOADING_TIME = 8000;
     const startTime = Date.now();
     this.loading = true;
     this.cd.detectChanges();
+    setTimeout(() => {
+      this.bookingResponseService.getBookingResponse().subscribe({
+        next: (res) => {
+          console.log("📦 RAW API RESPONSE:", res);
 
-    this.bookingResponseService.getBookingResponse().subscribe({
-      next: (res) => {
-        console.log("📦 RAW API RESPONSE:", res);
+          const raw = res ?? [];
+          const grouped: any = {};
 
-        const raw = res ?? [];
-        const grouped: any = {};
+          raw.forEach((s: any) => {
+            const category = s.category || 'Others';
 
-        raw.forEach((s: any) => {
-          const category = s.category || 'Others';
+            if (!grouped[category]) {
+              grouped[category] = {
+                category,
+                availableStaff: []
+              };
+            }
 
-          if (!grouped[category]) {
-            grouped[category] = {
-              category,
-              availableStaff: []
-            };
-          }
-
-          grouped[category].availableStaff.push({
-            id: s.staffId,
-            name: s.staffName,
-            phone: s.staffPhone,
-            staffPhone: s.staffPhone,
-            startDate: s.startDate,
-            endDate: s.endDate,
-            category: s.category,
-            subCategory: s.subCategory,
-            rating: s.rating || 0,
-            duties: s.duties || 0,
-            price: s.price || 0,
-            gender: s.gender,
-            experience: s.experience || 0,
-            tenure: s.tenure,
-            imageUrl: s.imageUrl || null,
-            bookingId: s.bookingId
+            grouped[category].availableStaff.push({
+              id: s.staffId,
+              name: s.staffName,
+              phone: s.staffPhone,
+              staffPhone: s.staffPhone,
+              startDate: s.startDate,
+              endDate: s.endDate,
+              category: s.category,
+              subCategory: s.subCategory,
+              rating: s.rating || 0,
+              duties: s.duties || 0,
+              price: s.price || 0,
+              gender: s.gender,
+              experience: s.experience || 0,
+              tenure: s.tenure,
+              imageUrl: s.imageUrl || null,
+              bookingId: s.bookingId
+            });
           });
-        });
 
-        this.staffDetails = Object.values(grouped);
-        console.log("👥 FINAL FORMATTED STAFF:", this.staffDetails);
+          this.staffDetails = Object.values(grouped);
+          console.log("👥 FINAL FORMATTED STAFF:", this.staffDetails);
 
-        const elapsed = Date.now() - startTime;
-        const remaining = Math.max(0, MIN_LOADING_TIME - elapsed);
-        setTimeout(() => (this.loading = false), remaining);
-      },
-      error: (err) => {
-        console.error('❌ Error fetching booking responses', err);
-        const elapsed = Date.now() - startTime;
-        const remaining = Math.max(0, MIN_LOADING_TIME - elapsed);
-        setTimeout(() => (this.loading = false), remaining);
-      }
-    });
+          const elapsed = Date.now() - startTime;
+          const remaining = Math.max(0, MIN_LOADING_TIME - elapsed);
+          setTimeout(() => {
+            this.loading = false;
+            this.cd.detectChanges();
+          }, remaining);
+        },
+        error: (err) => {
+          console.error('❌ Error fetching booking responses', err);
+          const elapsed = Date.now() - startTime;
+          const remaining = Math.max(0, MIN_LOADING_TIME - elapsed);
+          setTimeout(() => {
+            this.loading = false;
+            this.cd.detectChanges();
+          }, remaining);
+        }
+      });
+
+    }, 6000);
+
+  }
+  private closeModal(modalId: string) {
+    const modalEl = document.getElementById(modalId);
+    if (!modalEl) return;
+    // reuse existing instance if created by Bootstrap when modal opened
+    const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+    try {
+      modalInstance.hide();
+    } catch (e) {
+      console.warn('Could not hide modal', modalId, e);
+    }
   }
 
   async onProceedToPayment(billingName: string, billingAddress: string, gstNumber: string, phoneNumber: string) {
@@ -172,23 +194,23 @@ export class ViewStaff implements OnInit {
       this.paymentService.createPayment(paymentRequest).subscribe({
         next: async (response: any) => {
           console.log('✅ Payment order created:', response);
-          
+
           if (!response.razorpayOrderId) {
             console.error('❌ Razorpay Order ID missing in response');
             alert('Payment order creation failed. Missing Razorpay Order ID.');
             this.isPaymentProcessing = false;
             return;
           }
-
+          this.closeModal('exampleModal');
           // Load Razorpay SDK
           await this.loadRazorpaySdk();
-          
+
           // Open Razorpay checkout
           this.openRazorpayCheckout(response, billingName, phoneNumber, billingAddress, gstNumber);
         },
         error: (error) => {
           console.error('❌ Payment creation error:', error);
-          
+
           // Try alternative endpoints if primary fails
           this.tryAlternativeEndpoints(paymentRequest, billingName, phoneNumber, billingAddress, gstNumber);
         }
@@ -216,7 +238,7 @@ export class ViewStaff implements OnInit {
       },
       error: (error2) => {
         console.log('❌ V2 endpoint failed, trying token endpoint...', error2);
-        
+
         // Try token endpoint
         this.paymentService.createPaymentWithToken(paymentRequest).subscribe({
           next: async (response: any) => {
@@ -240,19 +262,19 @@ export class ViewStaff implements OnInit {
     gstNumber: string
   ) {
     console.log('✅ Payment order created successfully:', response);
-    
+
     if (!response.razorpayOrderId) {
       console.error('❌ Razorpay Order ID missing in response');
       alert('Payment order creation failed. Missing Razorpay Order ID.');
       this.isPaymentProcessing = false;
       return;
     }
-
+    this.closeModal('exampleModal');
     try {
       // Load Razorpay SDK
       await this.loadRazorpaySdk();
       console.log('✅ Razorpay SDK loaded successfully');
-      
+
       // Open Razorpay checkout
       this.openRazorpayCheckout(response, billingName, phoneNumber, billingAddress, gstNumber);
     } catch (error) {
@@ -262,53 +284,53 @@ export class ViewStaff implements OnInit {
     }
   }
 
-private handleAllEndpointsFailed(error: any) {
-  this.isPaymentProcessing = false;
-  
-  const errorMsg = error.error?.error || error.message || 'Payment failed';
-  
-  if (error.status === 401 || error.status === 403) {
-    alert('Session expired. Please login again.');
-    this.router.navigate(['/login']);
-  } else if (errorMsg.includes('PAYMENT_PENDING')) {
-    // ✅ Specific handling for PAYMENT_PENDING - allow retry
-    const confirmed = confirm(
-      'A payment is already in process for this booking. Would you like to continue with the existing payment?'
-    );
-    if (confirmed) {
-      // Refresh and try again with force retry
-      this.fetchBookingResponses();
-      setTimeout(() => {
-        this.retryPaymentWithExisting();
-      }, 1000);
-    }
-  } else if (errorMsg.includes('already paid') || errorMsg.includes('already PAID')) {
-    alert('This booking is already paid. Please check your bookings.');
-    this.router.navigate(['/my-bookings']);
-  } else {
-    alert('Payment failed: ' + errorMsg);
-  }
-  
-  console.error('Payment failed:', error);
-}
+  private handleAllEndpointsFailed(error: any) {
+    this.isPaymentProcessing = false;
 
-// ✅ New method for retrying with existing payment
-private retryPaymentWithExisting() {
-  // Get the latest booking data and try payment again
-  const billingName = this.billingForm.get('billingName')?.value;
-  const billingAddress = this.billingForm.get('billingAddress')?.value;
-  const gstNumber = this.billingForm.get('gstNumber')?.value;
-  const phoneNumber = this.billingForm.get('phoneNumber')?.value;
-  
-  if (billingName && billingAddress && phoneNumber) {
-    this.onProceedToPayment(billingName, billingAddress, gstNumber, phoneNumber);
+    const errorMsg = error.error?.error || error.message || 'Payment failed';
+
+    if (error.status === 401 || error.status === 403) {
+      alert('Session expired. Please login again.');
+      this.router.navigate(['/login']);
+    } else if (errorMsg.includes('PAYMENT_PENDING')) {
+      // ✅ Specific handling for PAYMENT_PENDING - allow retry
+      const confirmed = confirm(
+        'A payment is already in process for this booking. Would you like to continue with the existing payment?'
+      );
+      if (confirmed) {
+        // Refresh and try again with force retry
+        this.fetchBookingResponses();
+        setTimeout(() => {
+          this.retryPaymentWithExisting();
+        }, 1000);
+      }
+    } else if (errorMsg.includes('already paid') || errorMsg.includes('already PAID')) {
+      alert('This booking is already paid. Please check your bookings.');
+      this.router.navigate(['/my-bookings']);
+    } else {
+      alert('Payment failed: ' + errorMsg);
+    }
+
+    console.error('Payment failed:', error);
   }
-}
+
+  // ✅ New method for retrying with existing payment
+  private retryPaymentWithExisting() {
+    // Get the latest booking data and try payment again
+    const billingName = this.billingForm.get('billingName')?.value;
+    const billingAddress = this.billingForm.get('billingAddress')?.value;
+    const gstNumber = this.billingForm.get('gstNumber')?.value;
+    const phoneNumber = this.billingForm.get('phoneNumber')?.value;
+
+    if (billingName && billingAddress && phoneNumber) {
+      this.onProceedToPayment(billingName, billingAddress, gstNumber, phoneNumber);
+    }
+  }
 
   private openRazorpayCheckout(
-    response: any, 
-    billingName: string, 
-    phoneNumber: string, 
+    response: any,
+    billingName: string,
+    phoneNumber: string,
     billingAddress: string,
     gstNumber: string
   ): void {
@@ -362,7 +384,7 @@ private retryPaymentWithExisting() {
       }
 
       const rzp = new Razorpay(options);
-      
+
       rzp.on('payment.failed', (response: any) => {
         console.error('❌ Payment failed:', response);
         this.isPaymentProcessing = false;
@@ -373,7 +395,7 @@ private retryPaymentWithExisting() {
       // Open Razorpay checkout
       rzp.open();
       console.log('✅ Razorpay checkout opened successfully');
-      
+
     } catch (error) {
       console.error('❌ Razorpay initialization failed:', error);
       this.isPaymentProcessing = false;
@@ -381,6 +403,55 @@ private retryPaymentWithExisting() {
     }
   }
 
+  // private verifyPayment(razorpayResponse: any): void {
+  //   const verifyRequest: VerifyPaymentRequest = {
+  //     razorpay_order_id: razorpayResponse.razorpay_order_id,
+  //     razorpay_payment_id: razorpayResponse.razorpay_payment_id,
+  //     razorpay_signature: razorpayResponse.razorpay_signature
+  //   };
+
+  //   console.log('🔍 Verifying payment:', verifyRequest);
+
+  //   this.paymentService.verifyPayment(verifyRequest).subscribe({
+  //     next: (response: any) => {
+  //       this.isPaymentProcessing = false;
+  //       console.log('✅ Payment verified successfully:', response);
+
+  //       // alert('Payment completed successfully!');
+  //        this.snackBar.open('Payment completed successfully!', 'Close', {
+  //       duration: 3000,
+  //       horizontalPosition: 'right',
+  //       verticalPosition: 'top',
+  //       panelClass: ['success-snackbar']
+  //     });
+
+  //       this.router.navigate(['/payment-success'], {
+  //         queryParams: { 
+  //           paymentId: response.payment?.paymentId,
+  //           amount: response.payment?.amount 
+  //         }
+  //       });
+
+
+  //     },
+  //     error: (error) => {
+  //       this.isPaymentProcessing = false;
+  //       console.error('❌ Payment verification failed:', error);
+  //           this.snackBar.open(
+  //       'Payment verification failed: ' + (error.error?.error || error.message),
+  //       'Close',
+  //       {
+  //         duration: 3000,
+  //         horizontalPosition: 'right',
+  //         verticalPosition: 'top',
+  //         panelClass: ['error-snackbar']
+  //       }
+  //     );
+  //     }
+  //   });
+  // }
+
+  // Utility methods
   private verifyPayment(razorpayResponse: any): void {
     const verifyRequest: VerifyPaymentRequest = {
       razorpay_order_id: razorpayResponse.razorpay_order_id,
@@ -392,26 +463,136 @@ private retryPaymentWithExisting() {
 
     this.paymentService.verifyPayment(verifyRequest).subscribe({
       next: (response: any) => {
+        // Verification succeeded
         this.isPaymentProcessing = false;
         console.log('✅ Payment verified successfully:', response);
-        
-        alert('Payment completed successfully!');
-        this.router.navigate(['/payment-success'], {
-          queryParams: { 
-            paymentId: response.payment?.paymentId,
-            amount: response.payment?.amount 
-          }
+        this.closeModal('exampleModal');
+        // show success snackbar
+        this.snackBar.open('Payment completed successfully!', 'Close', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          panelClass: ['success-snackbar']
         });
+
+        // call paymentDone API to mark booking(s) as paid
+        const bookingIds = this.getAllBookingIds();
+        if (bookingIds.length) {
+          this.paymentService.paymentDone(bookingIds).subscribe({
+            next: (doneResp: any) => {
+              console.log('📡 paymentDone response:', doneResp);
+
+              this.router.navigate(['/view-staff-booking-history'],
+                //   {
+                //   queryParams: {
+                //     paymentId: response?.payment?.paymentId || razorpayResponse.razorpay_payment_id,
+                //     amount: response?.payment?.amount || this.getTotalAmount()
+                //   }
+                // }
+              );
+            },
+            error: (err) => {
+              console.error('⚠️ paymentDone API failed:', err);
+              this.snackBar.open('Payment recorded but finalization failed.', 'Close', {
+                duration: 4000,
+                horizontalPosition: 'right',
+                verticalPosition: 'top',
+                panelClass: ['error-snackbar']
+              });
+
+              this.router.navigate(['/payment-success'], {
+                queryParams: {
+                  paymentId: response?.payment?.paymentId || razorpayResponse.razorpay_payment_id,
+                  amount: response?.payment?.amount || this.getTotalAmount()
+                }
+              });
+            }
+          });
+        } else {
+          console.warn('No bookingIds found to mark done.');
+          this.router.navigate(['/view-staff-booking-history'], {
+            queryParams: {
+              paymentId: response?.payment?.paymentId || razorpayResponse.razorpay_payment_id,
+              amount: response?.payment?.amount || this.getTotalAmount()
+            }
+          });
+        }
       },
+
       error: (error) => {
         this.isPaymentProcessing = false;
         console.error('❌ Payment verification failed:', error);
-        alert('Payment verification failed: ' + (error.error?.error || error.message));
+
+        const errMsg = (error?.error && (error.error.error || error.error.message)) || error?.message || '';
+        const status = error?.status;
+        const bookingIds = this.getAllBookingIds();
+
+        // If backend sends "PAYMENT_PENDING"
+        if (errMsg && errMsg.toUpperCase().includes('PAYMENT_PENDING')) {
+          if (bookingIds.length) {
+            this.paymentService.paymentPending(bookingIds).subscribe({
+              next: (pendingResp: any) => {
+                console.log('📡 paymentPending response:', pendingResp);
+                this.snackBar.open('Payment pending. Saved status.', 'Close', {
+                  duration: 3000,
+                  horizontalPosition: 'right',
+                  verticalPosition: 'top',
+                  panelClass: ['info-snackbar']
+                });
+                this.router.navigate(['/payment-pending']);
+              },
+              error: (err2) => {
+                console.error('⚠️ paymentPending API failed:', err2);
+                this.snackBar.open('Payment pending but marking failed.', 'Close', {
+                  duration: 4000,
+                  horizontalPosition: 'right',
+                  verticalPosition: 'top',
+                  panelClass: ['error-snackbar']
+                });
+              }
+            });
+          }
+          return;
+        }
+
+        // If HTTP pending code
+        if (status === 202 || status === 409 || status === 423) {
+          if (bookingIds.length) {
+            this.paymentService.paymentPending(bookingIds).subscribe({
+              next: (pendingResp: any) => {
+                console.log('📡 paymentPending response:', pendingResp);
+                this.snackBar.open('Payment pending at gateway.', 'Close', {
+                  duration: 3000,
+                  horizontalPosition: 'right',
+                  verticalPosition: 'top',
+                  panelClass: ['info-snackbar']
+                });
+                this.router.navigate(['/payment-pending']);
+              },
+              error: (err2) => {
+                console.error('⚠️ paymentPending API failed:', err2);
+              }
+            });
+          }
+          return;
+        }
+
+        // Fallback generic failure
+        this.snackBar.open(
+          'Payment verification failed: ' + (error.error?.error || error.message || 'Unknown'),
+          'Close',
+          {
+            duration: 4000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['error-snackbar']
+          }
+        );
       }
     });
   }
 
-  // Utility methods
+
   private getAllBookingIds(): number[] {
     const bookingIds: number[] = [];
     this.staffDetails.forEach(categoryGroup => {
@@ -494,15 +675,53 @@ private retryPaymentWithExisting() {
   }
 
   removeStaff(staff: any): void {
-    if (!staff.id) {
-      console.error('No ID found for staff:', staff);
+    // if (!staff.id) {
+    //   console.error('No ID found for staff:', staff);
+    //   return;
+    // }
+    const bookingId = staff.bookingId ?? staff.id;
+    if (!bookingId) {
+      console.error('No bookingId found for staff:', staff);
+      // show user-friendly message (use snackBar if available)
+      // this.snackBar.open('Unable to remove staff: missing booking id', 'Close', { duration: 3000 });
       return;
     }
-    this.bookingResponseService.removeStaffFromBooking(staff.id).subscribe({
+    this.bookingResponseService.removeStaffFromBooking(String(bookingId)).subscribe({
       next: () => {
         this.staffDetails.forEach(categoryGroup => {
-          categoryGroup.availableStaff = categoryGroup.availableStaff.filter((s: any) => s.id !== staff.id);
+          categoryGroup.availableStaff = categoryGroup.availableStaff.filter((s: any) => (s.bookingId ?? s.id) !== bookingId);
         });
+        this.snackBar.open('Staff removed from booking.', 'Close', {
+          duration: 3000,
+          panelClass: ['info-snackbar']
+        });
+        // --- Close the Bootstrap modal programmatically ---
+        try {
+          // If Bootstrap JS (bundle) is loaded and global `bootstrap` is available
+          const modalEl = document.getElementById('deleteStaff');
+          if (modalEl) {
+            // Use existing instance if present, otherwise create a new one
+            // @ts-ignore - 'bootstrap' is a global provided by bootstrap.bundle.js
+            const bsModal = (window as any).bootstrap?.Modal?.getInstance(modalEl)
+              || new (window as any).bootstrap.Modal(modalEl);
+            bsModal?.hide();
+          } else {
+            // Fallback: click the close button inside modal
+            const closeBtn: HTMLElement | null = document.querySelector('#deleteStaff .colseCls');
+            closeBtn?.click();
+          }
+        } catch (e) {
+          // Fallback safe close: try to click the modal's cancel button which has data-bs-dismiss
+          const cancelBtn: HTMLElement | null = document.querySelector('#deleteStaff [data-bs-dismiss="modal"]');
+          cancelBtn?.click();
+          console.warn('Modal close via JS failed, fallback used.', e);
+        } finally {
+          // Optional: cleanup removing state
+          // staff.isRemoving = false;
+        }
+        setTimeout(() => {
+          this.router.navigate(['/view-staff']);
+        }, 1000);
       },
       error: (err) => {
         console.error('Error removing staff:', err);
@@ -518,6 +737,37 @@ private retryPaymentWithExisting() {
       return;
     }
 
+    // const payload = {
+    //   staffForms: [
+    //     {
+    //       typeOfStaff: staff.typeOfStaff || staff.category,
+    //       typeOfSubStaff: staff.typeOfSubStaff,
+    //       shifts: [
+    //         {
+    //           // timeSlot: staff.timeSlot,
+    //           // shiftType: staff.shiftType || 'Day',
+    //           maleQuantity: staff.gender?.toLowerCase() === 'male' ? 1 : 0,
+    //           femaleQuantity: staff.gender?.toLowerCase() === 'female' ? 1 : 0,
+    //           tenure: staff.tenure,
+    //           dutyStartDate: String(
+    //             staff.dutyStartDate || new Date().toISOString().split('T')[0]
+    //           ),
+    //             dutyEndDate: String(
+    //             staff.dutyEndDate || new Date().toISOString().split('T')[0]
+    //           ),
+    //             startTimeHour: staff.startTimeHour || '',
+    //         startTimeMinute: staff.startTimeMinute || '',
+    //         startTimeAmPm: staff.startTimeAmPm || '',
+
+    //         endTimeHour: staff.endTimeHour || '',
+    //         endTimeMinute: staff.endTimeMinute || '',
+    //         endTimeAmPm: staff.endTimeAmPm || ''
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // };
+
     const payload = {
       staffForms: [
         {
@@ -525,28 +775,58 @@ private retryPaymentWithExisting() {
           typeOfSubStaff: staff.typeOfSubStaff,
           shifts: [
             {
-              timeSlot: staff.timeSlot,
-              shiftType: staff.shiftType || 'Day',
               maleQuantity: staff.gender?.toLowerCase() === 'male' ? 1 : 0,
               femaleQuantity: staff.gender?.toLowerCase() === 'female' ? 1 : 0,
-              tenure: staff.tenure,
+              tenure: staff.tenure || '',
               dutyStartDate: String(
                 staff.dutyStartDate || new Date().toISOString().split('T')[0]
-              )
+              ),
+              dutyEndDate: String(
+                staff.dutyEndDate || new Date().toISOString().split('T')[0]
+              ),
+
+              // NEW TIME FORMAT FIELDS
+              startTimeHour: staff.startTimeHour || '09',
+              startTimeMinute: staff.startTimeMinute || '00',
+              startTimeAmPm: staff.startTimeAmPm || 'AM',
+              endTimeHour: staff.endTimeHour || '05',
+              endTimeMinute: staff.endTimeMinute || '00',
+              endTimeAmPm: staff.endTimeAmPm || 'PM'
             }
           ]
         }
-      ]
-    };
+      ],
 
+      // NEW FIELDS ADDED
+      latitude: staff.latitude ?? 0.1,
+      longitude: staff.longitude ?? 0.1
+    };
     this.bookingResponseService.addIndividualStaff(payload).subscribe({
       next: () => {
-        alert(`${staff.name} has been added to your booking!`);
+        this.snackBar.open(`${staff.name} has been added to your booking!`, 'Close', {
+          duration: 3500,
+          panelClass: ['success-snackbar']
+        });
         staff.isBooked = true;
+        // close the bootstrap modal (id="swapStaff")
+        const modalEl = document.getElementById('swapStaff');
+        if (modalEl) {
+          const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+          modalInstance.hide();
+        }
+
+        // optional: clear selectedStaff to avoid accidental reuse
+        this.selectedStaff = null;
+        setTimeout(() => {
+          this.router.navigate(['/view-staff']);
+        }, 1000);
       },
       error: (err) => {
         console.error('Error adding staff:', err);
-        alert('Failed to add staff. Please try again.');
+        this.snackBar.open('Failed to add staff. Please try again.', 'Close', {
+          duration: 4000,
+          panelClass: ['error-snackbar']
+        });
       }
     });
   }

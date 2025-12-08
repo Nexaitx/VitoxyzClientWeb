@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
-import { Observable } from 'rxjs';
-
+import { Observable,  throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 export interface CreatePaymentRequest {
   bookingIds: number[];
   fullName: string;
@@ -137,4 +137,52 @@ export class PaymentService {
       headers: this.getHeaders()
     });
   }
+// Add inside PaymentService class
+
+/**
+ * Mark booking(s) as payment done.
+ * Tries POST first, falls back to GET if backend rejects POST.
+ */
+paymentDone(bookingIds: number[]): Observable<any> {
+  const headers = this.getHeaders();
+
+  const url = `${this.apiUrl}/user/paymentDone?bookingIds=${bookingIds.join(
+    ','
+  )}&enabled=true&password=string&username=string&authorities=%5B%7B%22authority%22%3A%22string%22%7D%5D&accountNonExpired=true&accountNonLocked=true&credentialsNonExpired=true`;
+
+  return this.http.get(url, { headers }).pipe(
+    catchError((err) => {
+      // If backend does not allow POST, try GET fallback with bookingIds as query param
+      if (err.status === 405 || err.status === 404 || err.status === 400) {
+        const urlGet = `${this.apiUrl}/user/paymentDone?bookingIds=${bookingIds.join(',')}&enabled=true&password=string&username=string&authorities=%5B%7B%22authority%22%3A%22string%22%7D%5D&accountNonExpired=true&accountNonLocked=true&credentialsNonExpired=true`;
+        return this.http.get(urlGet, { headers });
+      }
+      return throwError(() => err);
+    })
+  );
+}
+
+/**
+ * Mark booking(s) as payment pending.
+ * Tries POST first, falls back to GET if backend rejects POST.
+ */
+paymentPending(bookingIds: number[]): Observable<any> {
+  const headers = this.getHeaders();
+
+  const url = `${this.apiUrl}/user/paymentPending?bookingIds=${bookingIds.join(
+    ','
+  )}&enabled=true&password=string&username=string&authorities=%5B%7B%22authority%22%3A%22string%22%7D%5D&accountNonExpired=true&accountNonLocked=true&credentialsNonExpired=true`;
+
+  return this.http.get(url, { headers }).pipe(
+    catchError((err) => {
+      if (err.status === 405 || err.status === 404 || err.status === 400) {
+        const urlGet = `${this.apiUrl}/user/paymentPending?bookingIds=${bookingIds.join(',')}&enabled=true&password=string&username=string&authorities=%5B%7B%22authority%22%3A%22string%22%7D%5D&accountNonExpired=true&accountNonLocked=true&credentialsNonExpired=true`;
+        return this.http.get(urlGet, { headers });
+      }
+      return throwError(() => err);
+    })
+  );
+}
+
+
 }

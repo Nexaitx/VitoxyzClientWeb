@@ -53,12 +53,12 @@
           </li>
 
 
-          <!-- <li class="nav-item mx-4" *ngIf="!item.dropdown && item.label !== 'Profile'">
-            <a class="nav-link text-white" [ngClass]="{'active rounded-pill': rla.isActive}" (click)="handleMenuNavigation(item.path)"
+          <li class="nav-item mx-4" *ngIf="!item.dropdown && item.label !== 'Profile'">
+            <a class="nav-link text-white" [ngClass]="{'active rounded-pill': rla.isActive}" [routerLink]="item.path"
               routerLinkActive #rla="routerLinkActive">
               {{ item.label }}
             </a>
-          </li> -->
+          </li>
           <!-- <li class="nav-item mx-4" *ngIf="!item.dropdown && item.label !== 'Profile'">
   <a
     class="nav-link text-white"
@@ -78,28 +78,28 @@
     </a>
   </ng-template>
 </li> -->
-          <li class="nav-item mx-4" *ngIf="!item.dropdown && item.label !== 'Profile'">
+          <!-- <li class="nav-item mx-4" *ngIf="!item.dropdown && item.label !== 'Profile'">
 
-            <!-- ⭐ Special case for Diet Plans -->
+          
             <a *ngIf="item.label === 'Diet Plans'" class="nav-link text-white" (click)="navigateToDiet()">
               {{ item.label }}
             </a>
 
-            <!-- ⭐ Special case for Book Staff -->
+           
             <ng-template [ngIf]="item.label === 'Book Staff'">
               <a class="nav-link text-white" (click)="handleMenuNavigation(item.path)">
                 {{ item.label }}
               </a>
             </ng-template>
 
-            <!-- ⭐ Default normal menu links -->
+           
             <a *ngIf="item.label !== 'Diet Plans' && item.label !== 'Book Staff'" class="nav-link text-white"
               [ngClass]="{'active rounded-pill': rla.isActive}" [routerLink]="item.path" routerLinkActive
               #rla="routerLinkActive">
               {{ item.label }}
             </a>
 
-          </li>
+          </li> -->
 
 
           <!-- <li class="nav-item" *ngIf="item.label === 'Book Staff'">

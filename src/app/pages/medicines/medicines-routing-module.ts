@@ -10,7 +10,7 @@ const routes: Routes = [
     loadComponent: () => import('./category-products/category-products').then(m => m.CategoryProductsComponent) 
   },
   // { path: 'cart', loadComponent: () => import('./cart-items/cart-items').then(m => m.CartItems) },
-  { path: 'order', loadComponent: () => import('./order/order').then(m => m.Order) },
+  // { path: 'order', loadComponent: () => import('./order/order').then(m => m.Order) },
 
     { path: 'order-prescription', loadComponent: () => import('./order-prescription/order-prescription').then(m => m.OrderPrescription) },
 

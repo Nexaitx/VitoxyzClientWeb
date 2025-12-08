@@ -18,7 +18,8 @@ export class OrderPrescription {
   attachedPreview: string | null = null;
   showMobileSheet = false;
  isUploading = false;
-
+message: string = '';
+messageType: 'success' | 'error' | '' = '';
   savedPrescriptions = [
     { id: 1, name: 'Prescription - 01.jpg' },
     { id: 2, name: 'Prescription - 02.pdf' },
@@ -65,17 +66,28 @@ export class OrderPrescription {
     this.attachedPreview = null;
   }
 
+  // onContinue() {
+  //   if (!this.attachedFile) {
+  //     alert('Please attach a prescription to continue.');
+  //     return;
+  //   }
+  //    alert('Continue — upload logic goes here.');
+  //    this.uploadPrescription(this.attachedFile);
+  // }
   onContinue() {
-    if (!this.attachedFile) {
-      alert('Please attach a prescription to continue.');
-      return;
-    }
-    alert('Continue — upload logic goes here.');
-     this.uploadPrescription(this.attachedFile);
+  if (!this.attachedFile) {
+    this.message = 'Please attach a prescription to continue.';
+    this.messageType = 'error';
+    return;
   }
+
+  this.message = ''; 
+  this.uploadPrescription(this.attachedFile);
+}
+
 private uploadPrescription(file: File) {
   this.isUploading = true;
-
+this.message = '';
   const formData = new FormData();
   formData.append('file', file);
   formData.append('medicineId', '');
@@ -102,17 +114,23 @@ private uploadPrescription(file: File) {
     next: (res) => {
       this.isUploading = false;
       if (res.status) {
-        alert('✅ ' + res.message);
+        // alert('✅ ' + res.message);
+         this.message = res.message;
+    this.messageType = 'success';
         console.log('Upload success:', res.data);
-        this.router.navigate(['/']);
+        setTimeout(() => this.router.navigate(['/']), 1000);
       } else {
-        alert('❌ Upload failed: ' + (res.message || 'Unknown error'));
+        // alert('❌ Upload failed: ' + (res.message || 'Unknown error'));
+        this.message = 'Upload failed: ' + res.message;
+    this.messageType = 'error';
       }
     },
     error: (err) => {
       this.isUploading = false;
       console.error('Upload error:', err);
-      alert('❌ Something went wrong while uploading.');
+      // alert('❌ Something went wrong while uploading.');
+        this.message = 'Something went wrong while uploading the prescription. Please try again.';
+  this.messageType = 'error';
     },
   });
 }
