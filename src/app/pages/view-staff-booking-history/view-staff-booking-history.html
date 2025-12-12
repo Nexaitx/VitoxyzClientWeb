@@ -1,0 +1,118 @@
+<div class="orders-container">
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button (click)="setTab('upcoming')" [class.active]="activeTab === 'upcoming'">Upcoming</button>
+    <button (click)="setTab('ongoing')" [class.active]="activeTab === 'ongoing'">Ongoing</button>
+    <button (click)="setTab('past')" [class.active]="activeTab === 'past'">Past</button>
+  </div>
+
+  <!-- Loading / Error -->
+  <div class="loading" *ngIf="loading">Loading...</div>
+  <div class="error" *ngIf="error">{{ error }}</div>
+
+  <!-- Empty State -->
+  <div class="empty" *ngIf="!loading && !error && items.length === 0">
+    No bookings found for {{ activeTab }}.
+  </div>
+
+  <!-- Booking Cards -->
+  <div class="order-card" *ngFor="let b of items">
+
+    <!-- Header -->
+    <div class="order-header">
+      <div>
+        <h3>Booking #{{ b.bookingId }}</h3>
+        <p>Placed on {{ b.startDate | date:'dd MMM yyyy' }}</p>
+      </div>
+
+      <div class="status-badges">
+        <span class="badge pending" *ngIf="b.status === 'Pending'">Pending</span>
+        <span class="badge completed" *ngIf="b.status === 'Completed'">Completed</span>
+        <span class="badge cancelled" *ngIf="b.status === 'Cancelled'">Cancelled</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Booking Details 
+      <div class="col">
+            
+          </div>-->
+    <!-- <div class="order-item">
+      <div class="details">
+        <p><strong>Booking ID:</strong> {{ b.bookingId ?? '—' }}</p>
+        <p><strong>Staff:</strong> {{ b.staffName }}</p>
+        <p><strong>Client:</strong> {{ b.clientName }}</p>
+        <p><strong>Service From:</strong> {{ b.startDate | date:'medium' }}</p>
+        <p><strong>Service To:</strong> {{ b.endDate | date:'medium' }}</p>
+      </div>
+
+      <div class="price">
+        <p class="amount">₹{{ b.Price ?? 0 }}</p>
+      </div>
+    </div> -->
+
+    <div class="order-item">
+  <div class="details">
+    <p><strong>Booking ID:</strong> {{ b.bookingId ?? '—' }}</p>
+    <p><strong>Staff:</strong> {{ b.staffName ?? '—' }}</p>
+    <p *ngIf="b.clientName"><strong>Client:</strong> {{ b.clientName }}</p>
+
+    <p><strong>Status:</strong>
+      <span class="badge"
+        [ngClass]="{
+          'bg-success': (b.status || '').toLowerCase() === 'confirmed' || (b.status || '').toLowerCase() === 'accepted',
+          'bg-warning text-dark': (b.status || '').toLowerCase() === 'pending',
+          'bg-danger': (b.status || '').toLowerCase() === 'cancelled' || (b.status || '').toLowerCase() === 'rejected',
+          'bg-secondary': !(b.status)
+        }">
+        {{ b.status || 'UNKNOWN' }}
+      </span>
+    </p>
+
+    <p><strong>Service From:</strong> {{ b.startDate | date:'mediumDate' }}</p>
+    <p><strong>Service To:</strong> {{ b.endDate | date:'mediumDate' }}</p>
+
+    <p><strong>Time Slot:</strong>
+      {{ b.timeSlot || (b.startTimeHour + ':' + b.startTimeMinute + ' ' + b.startTimeAmPm + ' - ' +
+                        b.endTimeHour + ':' + b.endTimeMinute + ' ' + b.endTimeAmPm) }}
+    </p>
+
+    <p><strong>Category:</strong> {{ b.category }} / {{ b.subCategory }}</p>
+    <p><strong>Distance:</strong> {{ b.distanceKm | number:'1.1-1' }} km</p>
+
+    <p class="text-break">
+      <strong>Address:</strong> {{ b.userAddress }}
+    </p>
+
+    <p><strong>Price:</strong> ₹{{ b.price }}</p>
+
+    <p *ngIf="b.expired" class="text-danger"><strong>Expired:</strong> Yes</p>
+    <p class="small"><strong>Expiry At:</strong> {{ b.expiryAt | date:'medium' }}</p>
+  </div>
+
+ 
+</div>
+
+    <div class="divider"></div>
+
+    <!-- Footer -->
+    <div class="order-footer">
+      <button class="btn view">👁 View Details</button>
+      <button class="btn reorder">↻ Reorder</button>
+      <button class="btn cancel">✖ Cancel</button>
+    </div>
+
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination" *ngIf="pages[activeTab] as p">
+    <button (click)="goToPage(0)" [disabled]="p.first">First</button>
+    <button (click)="goToPage(page - 1)" [disabled]="p.first">Prev</button>
+    <span>Page {{ p.currentPage + 1 }} / {{ p.totalPages }}</span>
+    <button (click)="goToPage(page + 1)" [disabled]="p.last">Next</button>
+    <button (click)="goToPage(p.totalPages - 1)" [disabled]="p.last">Last</button>
+  </div>
+
+</div>

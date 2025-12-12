@@ -69,17 +69,31 @@
               </div>
             </div>
           </div>
-
+          <div *ngIf="message" class="msg-box" [ngClass]="messageType">
+  {{ message }}
+</div>
+<!-- <div *ngIf="isUploading" class="upload-loader">
+  Uploading prescription, please wait...
+</div> -->
           <div class="d-flex gap-2 mt-4">
-            <button class="btn text-white rounded-pill btn-sm px-3" (click)="goBack()">
+            <button class="btn text-white rounded-pill btn-sm px-3" (click)="goBack()" [disabled]="isUploading">
               Back
             </button>
-            <button
+            <!-- <button
               class="btn ms-auto text-white rounded-pill btn-sm"
               (click)="onContinue()"
             >
               Continue
-            </button>
+            </button> -->
+            <button
+  class="btn ms-auto text-white rounded-pill btn-sm"
+  (click)="onContinue()"
+  [disabled]="isUploading"
+>
+  <span *ngIf="!isUploading">Continue</span>
+  <span *ngIf="isUploading" class="spinner"></span>
+</button>
+
           </div>
         </div>
       </div>

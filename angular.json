@@ -38,7 +38,12 @@
                                 "glob": "sw-push.js",
                                 "input": "src",
                                 "output": "/"
-                            }
+                            },
+                              {
+    "glob": "firebase-messaging-sw.js",
+    "input": "src",
+    "output": "/"
+  }
                         ],
                         "styles": [
                             "./src/app/styles/custom-bootstrap.scss",

@@ -1,11 +1,22 @@
+<!-- Screenshot-style Loader -->
+ <ng-template #loadingTpl>
+    <div class="d-flex justify-content-center align-items-center" style="min-height:200px;">
+      <div class="text-center">
+        <div class="spinner-border" role="status" aria-hidden="true"></div>
+        <div class="mt-2">...Loading the plan cards</div>
+      </div>
+    </div>
+  </ng-template>
+ 
+<div class="plans-container" *ngIf="!loading; else loadingTpl">
 
-<div class="plans-container">
-  <mat-card class="plan-card">
+  <mat-card class="plan-card" >
+
     <div class="text-center">
       <h3>Choose Your Plan</h3>
       <p>Select the best plan that fits your needs.</p>
     </div>
-
+ 
     <!-- Horizontal scroll container -->
        <mat-card-content class="plans-content mt-3">
         <div class="scroll-spacer"></div>

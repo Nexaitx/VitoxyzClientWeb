@@ -5,6 +5,9 @@
       (buttonClick)="centerContent()">
     </app-text-banner>
   </div>
+     <div >
+      <button class="btn btn-primary" (click)="enable()" type="button">Enable Notifications</button>
+    </div>
   <div>
     <app-text-image imageUrl="assets/images/sample.jpg" imageAlt="Sample Image"
       title="Find, Book & Shop — All in One Place" subtitle="Discover Amazing Features"
@@ -91,7 +94,7 @@
                 <div class="input-group" style="max-width: 120px;">
                   <button class="btn  action border-0" type="button"
                     (click)="adjustValue('heightValue', 'heightValue', false)">−</button>
-                  <input type="text" class="form-control measure text-center" formControlName="heightValue" readonly>
+                  <input type="text" class="form-control measure text-center" formControlName="heightValue" >
                   <button class="btn  action-add border-0" type="button"
                     (click)="adjustValue('heightValue', 'heightValue', true)">+</button>
                 </div>
@@ -114,7 +117,7 @@
                 <div class="input-group" style="max-width: 120px;">
                   <button class="btn  action border-0" type="button"
                     (click)="adjustValue('weightValue', 'weightValue', false)">−</button>
-                  <input type="text" class="form-control measure text-center" formControlName="weightValue" readonly>
+                  <input type="text" class="form-control measure text-center" formControlName="weightValue" >
                   <button class="btn  action-add border-0" type="button"
                     (click)="adjustValue('weightValue', 'weightValue', true)">+</button>
                 </div>

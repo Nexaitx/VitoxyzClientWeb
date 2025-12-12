@@ -1,5 +1,5 @@
 import { CommonModule, JsonPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors, FormControl, FormsModule } from '@angular/forms';
 import { MapComponent } from '../map/map';
 import { Submission } from '../../submission/submission';
@@ -15,6 +15,7 @@ import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mob
 import { TextBanner } from "../../../../app/shared/text-banner/text-banner";
 import { TextImageComponent } from "../../../pages/shared/text-image/text-image";
 import { MedicineSliderComponent } from "../../../shared/medicine-slider/medicine-slider";
+import { BookingTextBanner } from "../../shared/booking-text-banner/booking-text-banner";
 
 @Component({
   selector: 'app-book-staff',
@@ -23,25 +24,44 @@ import { MedicineSliderComponent } from "../../../shared/medicine-slider/medicin
     MapComponent,
     Submission,
     // AadharVerificationComponent,
-    Authorization, Footer, MobileFooterNavComponent, TextBanner, TextImageComponent,],
+    Authorization, Footer, MobileFooterNavComponent, TextBanner, TextImageComponent, BookingTextBanner],
   templateUrl: './book-staff.html',
   styleUrls: ['./book-staff.scss'],
 })
 
-export class BookStaff {
+export class BookStaff  {
   fb = inject(FormBuilder);
   http = inject(HttpClient);
   router = inject(Router)
   staffBookingForm!: FormGroup;
   hours: number[] = Array.from({ length: 24 }, (_, i) => i);
   minutes: number[] = [0, 15, 30, 45];
-  nurseTenure = ['1 Day', '15 Days', 'Monthly', 'Quarterly', 'Half Yearly', 'Yearly'];
+  // nurseTenure = ['1 Day', '15 Days', 'Monthly', 'Quarterly', 'Half Yearly', 'Yearlys'];
   button = 'Search for staff';
   staffCategories: { id: number; name: string }[] = [];
   staffSubCategories: { [index: number]: { label: string; value: string }[] } = {};
-  preferredTimeSlots = ['2 Hours', '8 Hours', '12 Hours', '24 Hours'];
-  tenure = [
-    { label: '1 Day', value: '1' }, { label: '3 Days', value: '2' }, { label: '1 Week', value: '3' }, { label: '2 Weeks', value: '4' }, { label: '1 Month', value: '5' }
+  preferredTimeSlots = ['Monthly(8 hour, 4 Holidays)','Monthly(12 hour, 4 Holidays)','Monthly(24 hour, 4 Holidays)'];
+  nursePreferredTimeSlots = [ '8 Hours', '12 Hours', '24 Hours', 'Monthly(8 hour, 4 Holidays)', 'Monthly(12 hour, 4 Holidays)', 'Monthly(24 hour, 4 Holidays)'];
+// nurse-specific tenure list (use your full list)
+nursetenure = [
+  { label: '1 Day', value: '1' }, { label: '2 Days', value: '2' }, { label: '3 Days', value: '3' },
+  { label: '4 Days', value: '4' }, { label: '5 Days', value: '5' }, { label: '6 Days', value: '6' },
+  { label: '7 Days', value: '7' }, { label: '8 Days', value: '8' }, { label: '9 Days', value: '9' },
+  { label: '10 Days', value: '10' }, { label: '11 Days', value: '11' }, { label: '12 Days', value: '12' },
+  { label: '13 Days', value: '13' }, { label: '14 Days', value: '14' }, { label: '15 Days', value: '15' },
+  { label: '16 Days', value: '16' }, { label: '17 Days', value: '17' }, { label: '18 Days', value: '18' },
+  { label: '19 Days', value: '19' }, { label: '20 Days', value: '20' }, { label: '21 Days', value: '21' },
+  { label: '22 Days', value: '22' }, { label: '23 Days', value: '23' }, { label: '24 Days', value: '24' },
+  { label: '25 Days', value: '25' }, { label: '26 Days', value: '26' }, { label: '27 Days', value: '27' },
+  { label: '28 Days', value: '28' }, { label: '29 Days', value: '29' }, { label: '30 Days', value: '30' },
+  // keep monthly options too (if you want both day & month options available for nurses)
+  { label: '1 Month', value: '1m' }, { label: '2 Months', value: '2m' }, { label: '3 Months', value: '3m' },
+  { label: '4 Months', value: '4m' }, { label: '5 Months', value: '5m' }, { label: '6 Months', value: '6m' },
+  { label: '7 Months', value: '7m' }, { label: '8 Months', value: '8m' }, { label: '9 Months', value: '9m' },
+  { label: '10 Months', value: '10m' }, { label: '11 Months', value: '11m' }, { label: '12 Months', value: '12m' }
+];
+  monthsTenure = [
+    { label: '1 Month', value: '1m' }, { label: '2 Months', value: '2m' },  { label: '3 Months', value: '3m' }, { label: '4 Months', value: '4m' }, { label: '5 Months', value: '5m' }, { label: '6 Months', value: '6m' }, { label: '7 Months', value: '7m' }, { label: '8 Months', value: '8m' }, { label: '9 Months', value: '9m' }, { label: '10 Months', value: '10m' }, { label: '11 Months', value: '11m' }, { label: '12 Months', value: '12m' },
   ]
   today: string = new Date().toISOString().split('T')[0];
   showAadharPopup = false; 
@@ -50,10 +70,12 @@ export class BookStaff {
   meridian = true;
 
    isSubmitting = false;
-   
+  message: string = '';
+messageType: 'success' | 'error' | '' = ''; 
   constructor(
     private spinnerService: SpinnerToastService
   ) { }
+    @ViewChild('bookingSection', { read: ElementRef }) bookingSection!: ElementRef<HTMLElement>;
 
   ngOnInit(): void {
     this.getUserLocation();
@@ -67,7 +89,78 @@ export class BookStaff {
     });
     this.subscribeToCategoryChange(0);
   }
+  
+getSlotsByStaffIndex(staffIndex: number): string[] {
+  const staffGroup = this.staffListFormArray.at(staffIndex) as FormGroup | undefined;
+  if (!staffGroup) return this.preferredTimeSlots;
 
+  // staffDetails is an array; we use first item (your current structure)
+  const staffDetailsArray = staffGroup.get('staffDetails') as FormArray | null;
+  const staffDetails = staffDetailsArray?.at(0) as FormGroup | null;
+  if (!staffDetails) return this.preferredTimeSlots;
+
+  const main = (staffDetails.get('typeOfStaff')?.value ?? '').toString().toLowerCase();
+  const sub = (staffDetails.get('typeOfSubStaff')?.value ?? '').toString().toLowerCase();
+
+  // if either main or sub contains 'nurse' => return nurse list
+  if ((main && main.includes('nurse')) || (sub && sub.includes('nurse'))) {
+    return this.nursePreferredTimeSlots;
+  }
+
+  // default fallback options (monthly ones)
+  return this.preferredTimeSlots;
+}
+// returns the appropriate tenure options for the staff at `staffIndex`
+// returns the appropriate tenure options for the staff at `staffIndex`
+getTenureOptions(staffIndex: number) {
+  // get staffDetails FormGroup at staffIndex
+  const staffGroup = this.staffListFormArray.at(staffIndex) as FormGroup;
+  if (!staffGroup) return this.monthsTenure;
+
+  const staffDetailsArray = staffGroup.get('staffDetails') as FormArray;
+  const details = staffDetailsArray && staffDetailsArray.length ? staffDetailsArray.at(0) as FormGroup : null;
+  if (!details) return this.monthsTenure;
+
+  const type = (details.get('typeOfStaff')?.value ?? '').toString().toLowerCase();
+  const sub  = (details.get('typeOfSubStaff')?.value ?? '').toString().toLowerCase();
+
+  // treat anything containing 'nurse' as nurse - adjust matching rule if needed
+  if (type.includes('nurse') || sub.includes('nurse')) {
+    return this.nursetenure;
+  }
+  return this.monthsTenure;
+}
+// called when sub-staff changes (from template or subscription)
+onSubStaffChange(staffIndex: number): void {
+  const allowed = this.getTenureOptions(staffIndex).map(t => t.value);
+  const staffGroup = this.staffListFormArray.at(staffIndex) as FormGroup | null;
+  if (!staffGroup) return;
+  const shiftArray = staffGroup.get('shiftDetails') as FormArray | null;
+  if (!shiftArray) return;
+
+  const options = this.getSlotsByStaffIndex(staffIndex);
+  // update each shift's preferredTimeSlot if current value not valid
+  shiftArray.controls.forEach((shiftCtrl: AbstractControl) => {
+    const prefCtrl = (shiftCtrl as FormGroup).get('preferredTimeSlot');
+    if (!prefCtrl) return;
+    const current = prefCtrl.value;
+    if (!current || !options.includes(current)) {
+    prefCtrl.setValue(null, { emitEvent: false });
+    }
+  });
+   // update tenure if invalid (FIXED)
+  shiftArray.controls.forEach((shCtrl: AbstractControl) => {
+    const grp = shCtrl as FormGroup;
+    const tenureCtrl = grp.get('tenure');
+    if (!tenureCtrl) return;
+
+    const current = tenureCtrl.value;
+
+    if (current == null || !allowed.includes(current)) {
+      tenureCtrl.setValue(null, { emitEvent: false });
+    }
+  });
+}
   getStaffCategories(): void {
     const apiUrl = API_URL + ENDPOINTS.CATEGORIES;
     this.http.get<{ id: number; name: string }[]>(apiUrl).subscribe({
@@ -90,8 +183,15 @@ export class BookStaff {
         const categoryId = selected.id;
         this.fetchSubCategories(categoryId, staffIndex);
         staffDetailsGroup.get('typeOfSubStaff')?.setValue('');
+
+             // ensure shift options update
+      this.onSubStaffChange(staffIndex);
       }
     });
+     // subscribe to typeOfSubStaff changes so we update shift options automatically
+  staffDetailsGroup.get('typeOfSubStaff')?.valueChanges.subscribe(() => {
+    this.onSubStaffChange(staffIndex);
+  });
   }
 
   incrementTimes(unit: 'hours' | 'minutes', staffIndex: number, shiftIndex: number, timeType: 'start' | 'end' = 'start'): void {
@@ -249,6 +349,39 @@ incrementTime(unit: 'hours' | 'minutes', staffIndex: number, shiftIndex: number)
       }
     });
   }
+// onStartTimeChange(i: number, sh: number) {
+//   const shiftDetail = this.getNestedShiftDetailsControls(i)[sh];
+//   const time = shiftDetail.get('startTime')?.value; // Example: "14:30"
+  
+//   shiftDetail.get('timeSlot')?.setValue(time);
+// }
+onStartTimeChange(i: number, sh: number) {
+  const shiftDetail = this.getNestedShiftDetailsControls(i)[sh];
+  const time = shiftDetail.get('startTime')?.value; // "13:45"
+
+  if (!time) return;
+
+  const [hour, minute] = time.split(':');
+  let h = parseInt(hour);
+  let ampm = 'AM';
+
+  if (h === 0) {
+    h = 12;
+  } else if (h === 12) {
+    ampm = 'PM';
+  } else if (h > 12) {
+    h = h - 12;
+    ampm = 'PM';
+  }
+
+  shiftDetail.patchValue({
+    startTimeHour: h,
+    startTimeMinute: minute,
+    startTimeAmPm: ampm,
+  });
+
+  this.updateTimeSlot(shiftDetail);
+}
 
   createShiftDetailFormGroup(): FormGroup {
     const now = new Date();
@@ -261,6 +394,8 @@ incrementTime(unit: 'hours' | 'minutes', staffIndex: number, shiftIndex: number)
       preferredTimeSlot: ['', Validators.required],
       timeSlot: [''],
       tenure: [''],
+    startTime: ['', Validators.required],   // <-- NEW
+    endTime: ['', Validators.required],  
       dutyStartDate: [new Date().toISOString().substring(0, 10)],
        dutyEndDate: [''],  
       maleQuantity: ['0', [Validators.min(0), Validators.max(10)]],
@@ -418,8 +553,8 @@ incrementTime(unit: 'hours' | 'minutes', staffIndex: number, shiftIndex: number)
         const { typeOfStaff, typeOfSubStaff } = staffDetailsControl.value;
         const shiftDetailsArray = (staffGroup.get('shiftDetails') as FormArray).controls.map((shiftGroup: AbstractControl) => {
           const { tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate,startTimeHour, startTimeMinute, startTimeAmPm,
-          endTimeHour, endTimeMinute, endTimeAmPm } = shiftGroup.value;
-          return {  tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate ,startTimeHour: String(startTimeHour),
+          endTimeHour, endTimeMinute, endTimeAmPm, startTime, endTime } = shiftGroup.value;
+          return {  tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate,startTime, endTime ,startTimeHour: String(startTimeHour),
           startTimeMinute: String(startTimeMinute),
           startTimeAmPm: String(startTimeAmPm),
           endTimeHour: String(endTimeHour),
@@ -442,18 +577,25 @@ incrementTime(unit: 'hours' | 'minutes', staffIndex: number, shiftIndex: number)
         this.isSubmitting = false;
         if (response?.status === true) {
           const staffDetails = response?.staff?.[0]?.staffDetails || [];
+           this.messageType = 'success';
+      this.message = response?.message || 'Success';
           this.router.navigate(['/view-staff'], {
             state: { staffDetails: staffDetails, bookingIds: response.bookingIds }
           });
         } else {
-          alert(response?.message || 'Something went wrong.');
+          // alert(response?.message || 'Something went wrong.');
+                this.messageType = 'error';
+      this.message = response?.message || 'Something went wrong.';
+
         }
       },
       error: (error) => {
         this.spinnerService.hide();
         this.isSubmitting = false;
          console.error('Staff search API call failed:', error);
-        alert('An error occurred while processing your request.');
+        // alert('An error occurred while processing your request.');
+            this.messageType = 'error';
+    this.message = 'An error occurred while processing your request.';
       }
     });
   }
@@ -594,12 +736,41 @@ onManualTimeChange(field: string, i: number, sh: number, event: Event) {
 }
 
 
-centerContent() {
-  const banner = document.querySelector('.banner .banner-content');
-  if (banner) {
-    banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+// put this inside your BookStaff class (you already declared the ViewChild)
+centerContent(): void {
+  try {
+    const el = this.bookingSection?.nativeElement as HTMLElement | undefined;
+    if (!el) {
+      // fallback to query selector if ViewChild didn't resolve
+      const fallback = document.querySelector('.container-fluid') as HTMLElement | null;
+      if (fallback) {
+        fallback.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      return;
+    }
+
+    // If you have fixed header, set its selector here. Adjust if your header uses a different selector.
+    const header = document.querySelector('header') as HTMLElement | null;
+    const headerHeight = header ? header.offsetHeight : 72; // fallback 72px if header unknown
+
+    // Compute scroll top with header offset
+    const rect = el.getBoundingClientRect();
+    const top = rect.top + window.scrollY - headerHeight - 8; // small gap of 8px
+
+    window.scrollTo({
+      top: Math.max(0, Math.floor(top)),
+      behavior: 'smooth'
+    });
+
+  } catch (err) {
+    // last-resort fallback
+    const el = document.querySelector('#bookingSection') || document.querySelector('.container-fluid');
+    (el as HTMLElement | null)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    console.warn('centerContent fallback used', err);
   }
 }
+
+
 
 
 }

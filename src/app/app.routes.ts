@@ -70,8 +70,16 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/Diet-Plan/plans/plans').then(m => m.Plans),
       },
       {
+        path: 'view-staff-booking-history',
+        loadComponent: () => import('./pages/view-staff-booking-history/view-staff-booking-history').then(m => m.ViewStaffBookingHistory),
+      },
+      {
         path: 'payment',
         loadComponent: () => import('./pages/Diet-Plan/payment-screen/payment-screen').then(m => m.PaymentScreen),
+      },
+      {path: 'PaymentSuccessComponent',
+        loadComponent: () => import('./payment/payment').then(m => m.PaymentSuccessComponent),
+
       },
       {
         path: 'contact-us',

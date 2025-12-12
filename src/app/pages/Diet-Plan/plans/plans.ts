@@ -10,6 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '@src/app/core/const';
 import { Router } from '@angular/router';
 import { Footer } from "../../footer/footer";
+import { MatProgressSpinner, MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-plans',
@@ -19,7 +20,7 @@ import { Footer } from "../../footer/footer";
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatRadioModule, Footer],
+    MatRadioModule, Footer, MatProgressSpinnerModule, ],
   templateUrl: './plans.html',
   styleUrl: './plans.scss'
 })
@@ -28,20 +29,21 @@ export class Plans implements OnInit {
   http = inject(HttpClient);
   router = inject(Router)
 plans: any[] = [];
-  loading: boolean = false;
+loading: boolean = true;
   constructor() { }
 
-  ngOnInit(): void {
-    this.getPlans();
-  }
+ ngOnInit(): void {
+  this.loading = true;
+  setTimeout(() => { this.loading = false; this.getPlans(); }, 2500);
+}
 
  getPlans() {
   this.loading = true;
   this.http.get(API_URL + ENDPOINTS.SUBSCRIPTION_PLANS).subscribe({
     next: (res: any) => {
-      this.loading = false;
       console.log('Plans API Response:', res);
       this.plans = res?.data || res || []; // depends on backend structure
+       this.loading = false;
     },
     error: (err) => {
       this.loading = false;
@@ -54,11 +56,6 @@ plans: any[] = [];
   //   this.router.navigate(['/payment']);
 
   // }
-
-
-
-  
-
 purchasePlan(plan: any) {
   // const token = localStorage.getItem('token'); // 👈 make sure you stored this after login
     const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
@@ -85,10 +82,11 @@ purchasePlan(plan: any) {
   });
 
   console.log('Purchasing Plan with headers:', headers, payload);
-
+    this.loading = true; // show loader while purchasing
   this.http.post(`${API_URL}${ENDPOINTS.PURCHASE_SUBSCRIPTION}`, payload, { headers })
     .subscribe({
       next: (res: any) => {
+        this.loading = false;
         console.log('Purchase API Response:', res);
 
         if (res?.status) {
@@ -106,7 +104,8 @@ purchasePlan(plan: any) {
         }
       },
       error: (err) => {
-        console.error('Purchase API Error:', err);
+        this.loading = false;
+          console.error('Purchase API Error:', err);
         if (err.status === 401) {
           alert('Session expired or unauthorized. Please log in again.');
           this.router.navigate(['/login']);

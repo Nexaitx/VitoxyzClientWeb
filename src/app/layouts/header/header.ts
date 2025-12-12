@@ -78,8 +78,8 @@ cartCount: number = 0;
       dropdownItems: [
         { label: 'My Profile', path: '/user-profile' },
         { label: 'My Orders', path: '/orders' },
-        { label: 'Manage Payments', path: '' },
-        { label: 'Settings', path: '/settings' },
+        // { label: 'Manage Payments', path: '' },
+        // { label: 'Settings', path: '/settings' },
         { label: 'Logout', path: '/logout' }
       ]
     },
@@ -125,36 +125,67 @@ ngOnInit(): void {
     this.isLoggedIn = false;
     this.router.navigate(['/']);
   }
+// navigateToDiet() {
+//   const token = localStorage.getItem("authToken");
+
+//   if (!token) {
+//     // Not logged in → open login modal
+//     const modal = new (window as any).bootstrap.Modal(
+//       document.getElementById("loginModal")
+//     );
+//     modal.show();
+//     return;
+//   }
+
+//   // Logged in → check if user purchased a diet plan
+//  // this.http.get(`${API_URL}${ENDPOINTS.DIET_DASHBOARD}?id=1073741824&username=string&password=string&authorities=%5B%7B%22authority%22%3A%22string%22%7D%5D&userType=string&enabled=true&accountNonExpired=true&accountNonLocked=true&credentialsNonExpired=true`, {
+//    this.http.get(`${API_URL}${ENDPOINTS.DIET_DASHBOARD}` , {
+//   headers: { Authorization: `Bearer ${token}` }
+//   }).subscribe({
+//     next: (res: any) => {
+//        console.log("Diet Dashboard Response:", res);
+//        const hasPlan = res?.totalPlans > 0;
+
+//       if (hasPlan) {
+//         this.router.navigate(["diet-charts"]);
+//       } else {
+//         this.router.navigate(["diet/user-onboarding"]);
+//       }
+//     },
+//     error: () => {
+//       this.router.navigate(["diet/user-onboarding"]);
+//     }
+//   });
+// }
 navigateToDiet() {
   const token = localStorage.getItem("authToken");
 
+  // 1. USER NOT LOGGED IN
   if (!token) {
-    // Not logged in → open login modal
-    const modal = new (window as any).bootstrap.Modal(
-      document.getElementById("loginModal")
-    );
-    modal.show();
+    this.redirectAfterLogin = "diet";
+
+    const modalEl =
+      document.getElementById("loginModal") ||
+      document.getElementById("authModal");
+
+    if (modalEl) {
+      const modal = (window as any).bootstrap.Modal.getOrCreateInstance(modalEl);
+      this.setAuthMode("login");
+      modal.show();
+    }
     return;
   }
 
-  // Logged in → check if user purchased a diet plan
-  this.http.get(`${API_URL}${ENDPOINTS.DIET_DASHBOARD}?id=1073741824&username=string&password=string&authorities=%5B%7B%22authority%22%3A%22string%22%7D%5D&userType=string&enabled=true&accountNonExpired=true&accountNonLocked=true&credentialsNonExpired=true`, {
-    headers: { Authorization: `Bearer ${token}` }
-  }).subscribe({
-    next: (res: any) => {
-       console.log("Diet Dashboard Response:", res);
-      const hasPlan = !!res?.userSubscriptionType;
+  // 2. USER LOGGED IN → CHECK LOCAL PURCHASE STATUS
+  const planStatus = localStorage.getItem("dietPlanPurchased");
 
-      if (hasPlan) {
-        this.router.navigate(["diet-charts"]);
-      } else {
-        this.router.navigate(["diet/user-onboarding"]);
-      }
-    },
-    error: () => {
-      this.router.navigate(["diet/user-onboarding"]);
-    }
-  });
+  const hasPlan = planStatus === "true";
+
+  if (hasPlan) {
+    this.router.navigate(["/diet-charts"]);
+  } else {
+    this.router.navigate(["/diet/user-onboarding"]);
+  }
 }
 
   goToCart() {

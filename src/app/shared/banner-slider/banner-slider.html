@@ -2,23 +2,30 @@
   <!-- Slides -->
   <div class="slides">
     <img
-      *ngFor="let img of images; let i = index"
-      [src]="img"
+      *ngFor="let img of normalizedImages; let i = index"
+      [src]="img.src"
       [class.active]="i === currentIndex"
       alt="Banner"
+      (click)="onImageClick(img, i)"
+      (keydown.enter)="onImageClick(img, i)"
+      role="button"
+      tabindex="0"
     />
   </div>
 
-  <!-- Navigation -->
-  <!-- <button class="prev" (click)="prevSlide()">&#10094;</button>
-  <button class="next" (click)="nextSlide()">&#10095;</button> -->
+  <!-- Optional Prev / Next (uncomment if wanted) -->
+  <!--<button class="prev" (click)="prevSlide()">&#10094;</button>
+  <button class="next" (click)="nextSlide()">&#10095;</button>-->
 
   <!-- Dots -->
   <div class="dots">
     <span
-      *ngFor="let img of images; let i = index"
+      *ngFor="let img of normalizedImages; let i = index"
       (click)="goToSlide(i)"
       [class.active]="i === currentIndex"
+      role="button"
+      tabindex="0"
+      (keydown.enter)="goToSlide(i)"
     ></span>
   </div>
 </div>
