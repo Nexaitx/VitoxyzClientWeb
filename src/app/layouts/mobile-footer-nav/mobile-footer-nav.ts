@@ -104,9 +104,9 @@ navigateToDiet() {
       const hasPlan = res?.userSubscriptionType !== null;
 
       if (hasPlan) {
-        this.router.navigate(["diet-charts"]);
-      } else {
         this.router.navigate(["diet/user-onboarding"]);
+      } else {
+        this.router.navigate(["diet-charts"]);
       }
     },
     error: () => {

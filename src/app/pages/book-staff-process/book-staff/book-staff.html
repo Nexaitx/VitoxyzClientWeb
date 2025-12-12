@@ -1,16 +1,19 @@
-<app-text-banner image="assets/staff/book-staff-banner.avif" title="Hire Trusted Staff Easily"
+<!-- <app-text-banner image="assets/staff/book-staff-banner.avif" title="Hire Trusted Staff Easily"
   subtitle="Find verified professionals for your home, office, or business needs" buttonText="Book Now"
   (buttonClick)="centerContent()">
-</app-text-banner>
+</app-text-banner> -->
 
-
+<app-booking-text-banner image="assets/staff/book-staff-banner.avif" title="Hire Trusted Staff Easily"
+  subtitle="Find verified professionals for your home, office, or business needs" buttonText="Book Now"
+  (buttonClick)="centerContent()"
+></app-booking-text-banner>
 
 <app-text-image imageUrl="assets/images/sample.jpg" imageAlt="Sample Image" title="Find, Book & Shop — All in One Place"
   subtitle="Discover Amazing Features"
   description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
   buttonText="" buttonLink="/">
 </app-text-image>
-<div class="container-fluid" style="margin-top: 60px;">
+<div class="container-fluid" #bookingSection  style="margin-top: 60px;">
 
   <div class="row">
     <div class="col-md-4 h-100 map-styles">
@@ -27,7 +30,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="form-label">Select your area</label>
-                    <i class="fi fi-rr-navigation address"></i>
+                    <i class="fi fi-rr-navigation address" style="line-height: 2;"></i>
                     <input type="text" class="form-control ps-4" formControlName="userAddress" [class.is-invalid]="
                   staffBookingForm.get('userAddress')?.invalid &&
                   staffBookingForm.get('userAddress')?.touched
@@ -43,7 +46,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="form-label">Address</label>
-                    <i class="fi fi-rr-navigation address"></i>
+                    <i class="fi fi-rr-navigation address" style="line-height: 2;"></i>
                     <input type="text" class="form-control ps-4" placeholder="Enter address"
                       formControlName="address" />
                   </div>

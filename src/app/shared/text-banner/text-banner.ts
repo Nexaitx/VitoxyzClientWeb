@@ -15,7 +15,7 @@ export class TextBanner {
   @Input() title: string = 'Your Title';  // Heading text
   @Input() subtitle: string = '';         // Subtext
   @Input() buttonText: string = 'Click';  // Button label
-  @Input() buttonLink: string = '/book-staff';
+   @Input() buttonLink: string = '/book-staff';
 
 
    @Output() buttonClick = new EventEmitter<void>();

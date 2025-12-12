@@ -15,6 +15,7 @@ import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mob
 import { TextBanner } from "@src/app/shared/text-banner/text-banner";
 import { TextImageComponent } from "../shared/text-image/text-image";
 import { MedicineSliderComponent } from "@src/app/shared/medicine-slider/medicine-slider";
+import { PushNotificationService } from '@src/app/core/services/push-notification.service';
 
 @Component({
   selector: 'app-user-onboarding',
@@ -50,7 +51,7 @@ export class UserOnboarding implements OnInit {
   medicalConditionsOptions: string[] = ['Diabetes', 'Thyroid', 'PCOS', 'Hypertension', 'None'];
   displayedMedicalConditionsOptions: string[] = [];
 
-  constructor() {
+  constructor(private notif: PushNotificationService) {
     this.firstFormGroup = this._formBuilder.group({
       fullName: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(1)]],
@@ -112,7 +113,30 @@ export class UserOnboarding implements OnInit {
       }
       medicationDetailsControl?.updateValueAndValidity();
     });
+     console.log('[App] ngOnInit: starting');          // <-- confirm component boots
+    try {
+      this.notif.listen();
+      console.log('[App] listenMessages() called');
+    } catch (err) {
+      console.error('[App] listenMessages failed:', err);
+    }
   }
+  enable() {
+  console.log('[App] enable() pressed — requesting permission');
+
+  this.notif.requestPermission().then(token => {
+    console.log('[App] requestPermission returned:', token);
+
+    if (!token) {
+      console.warn('[App] No token received. Check SW errors.');
+    } else {
+      console.log('[App] FCM token acquired:', token);
+    }
+  })
+  .catch(err => {
+    console.error('[App] requestPermission threw:', err);
+  });
+}
   get medicalConditionsFormArray(): FormArray {
     return this.secondFormGroup.get('medicalConditions') as FormArray;
   }
@@ -184,7 +208,7 @@ export class UserOnboarding implements OnInit {
           dietPreference: this.secondFormGroup.value.dietPreference,
           medicalCondition: medicalConditionString, 
           anyMedication: this.secondFormGroup.value.anyMedication === 'yes', 
-          medication: this.secondFormGroup.value.medicationDetails
+          medication: this.secondFormGroup.value.medicationDetails || ""
         },
         food_prefrence: {
           foodPreference: this.thirdFormGroup.value.foodPreference,
@@ -203,14 +227,14 @@ export class UserOnboarding implements OnInit {
 
       console.log('Final Submission Payload:', finalPayload);
       // alert('Form Submitted! Check console for payload.');
-      this.goToSubscriptionPlans()
+       this.goToSubscriptionPlans()
 
 
      const token = localStorage.getItem('authToken');
            console.log('token Payload:', token);
-
+const url = API_URL + ENDPOINTS.ONBOARD_DIET;
     if (token) {
-      this.http.post(API_URL + ENDPOINTS.ONBOARD_DIET, finalPayload, {
+      this.http.post(url, finalPayload, {
         headers: { Authorization: `Bearer ${token}` }
       }).subscribe({
         next: (res: any) => {
@@ -240,6 +264,8 @@ export class UserOnboarding implements OnInit {
       }
     }
   }
+
+
 
   goToPlans() {
     this.submitForm(); 

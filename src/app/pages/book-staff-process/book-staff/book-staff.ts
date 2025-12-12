@@ -1,5 +1,5 @@
 import { CommonModule, JsonPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors, FormControl, FormsModule } from '@angular/forms';
 import { MapComponent } from '../map/map';
 import { Submission } from '../../submission/submission';
@@ -15,6 +15,7 @@ import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mob
 import { TextBanner } from "../../../../app/shared/text-banner/text-banner";
 import { TextImageComponent } from "../../../pages/shared/text-image/text-image";
 import { MedicineSliderComponent } from "../../../shared/medicine-slider/medicine-slider";
+import { BookingTextBanner } from "../../shared/booking-text-banner/booking-text-banner";
 
 @Component({
   selector: 'app-book-staff',
@@ -23,12 +24,12 @@ import { MedicineSliderComponent } from "../../../shared/medicine-slider/medicin
     MapComponent,
     Submission,
     // AadharVerificationComponent,
-    Authorization, Footer, MobileFooterNavComponent, TextBanner, TextImageComponent,],
+    Authorization, Footer, MobileFooterNavComponent, TextBanner, TextImageComponent, BookingTextBanner],
   templateUrl: './book-staff.html',
   styleUrls: ['./book-staff.scss'],
 })
 
-export class BookStaff {
+export class BookStaff  {
   fb = inject(FormBuilder);
   http = inject(HttpClient);
   router = inject(Router)
@@ -60,7 +61,7 @@ nursetenure = [
   { label: '10 Months', value: '10m' }, { label: '11 Months', value: '11m' }, { label: '12 Months', value: '12m' }
 ];
   monthsTenure = [
-    { label: '1 Month', value: '1' }, { label: '2 Months', value: '2' },  { label: '3 Months', value: '3' }, { label: '4 Months', value: '4' }, { label: '5 Months', value: '5' }, { label: '6 Months', value: '6' }, { label: '7 Months', value: '7' }, { label: '8 Months', value: '8' }, { label: '9 Months', value: '9' }, { label: '10 Months', value: '10' }, { label: '11 Months', value: '11' }, { label: '12 Months', value: '12' },
+    { label: '1 Month', value: '1m' }, { label: '2 Months', value: '2m' },  { label: '3 Months', value: '3m' }, { label: '4 Months', value: '4m' }, { label: '5 Months', value: '5m' }, { label: '6 Months', value: '6m' }, { label: '7 Months', value: '7m' }, { label: '8 Months', value: '8m' }, { label: '9 Months', value: '9m' }, { label: '10 Months', value: '10m' }, { label: '11 Months', value: '11m' }, { label: '12 Months', value: '12m' },
   ]
   today: string = new Date().toISOString().split('T')[0];
   showAadharPopup = false; 
@@ -74,6 +75,7 @@ messageType: 'success' | 'error' | '' = '';
   constructor(
     private spinnerService: SpinnerToastService
   ) { }
+    @ViewChild('bookingSection', { read: ElementRef }) bookingSection!: ElementRef<HTMLElement>;
 
   ngOnInit(): void {
     this.getUserLocation();
@@ -155,7 +157,7 @@ onSubStaffChange(staffIndex: number): void {
     const current = tenureCtrl.value;
 
     if (current == null || !allowed.includes(current)) {
-      tenureCtrl.setValue(allowed[0], { emitEvent: false });
+      tenureCtrl.setValue(null, { emitEvent: false });
     }
   });
 }
@@ -392,6 +394,8 @@ onStartTimeChange(i: number, sh: number) {
       preferredTimeSlot: ['', Validators.required],
       timeSlot: [''],
       tenure: [''],
+    startTime: ['', Validators.required],   // <-- NEW
+    endTime: ['', Validators.required],  
       dutyStartDate: [new Date().toISOString().substring(0, 10)],
        dutyEndDate: [''],  
       maleQuantity: ['0', [Validators.min(0), Validators.max(10)]],
@@ -549,8 +553,8 @@ onStartTimeChange(i: number, sh: number) {
         const { typeOfStaff, typeOfSubStaff } = staffDetailsControl.value;
         const shiftDetailsArray = (staffGroup.get('shiftDetails') as FormArray).controls.map((shiftGroup: AbstractControl) => {
           const { tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate,startTimeHour, startTimeMinute, startTimeAmPm,
-          endTimeHour, endTimeMinute, endTimeAmPm } = shiftGroup.value;
-          return {  tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate ,startTimeHour: String(startTimeHour),
+          endTimeHour, endTimeMinute, endTimeAmPm, startTime, endTime } = shiftGroup.value;
+          return {  tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate,startTime, endTime ,startTimeHour: String(startTimeHour),
           startTimeMinute: String(startTimeMinute),
           startTimeAmPm: String(startTimeAmPm),
           endTimeHour: String(endTimeHour),
@@ -732,12 +736,41 @@ onManualTimeChange(field: string, i: number, sh: number, event: Event) {
 }
 
 
-centerContent() {
-  const banner = document.querySelector('.banner .banner-content');
-  if (banner) {
-    banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+// put this inside your BookStaff class (you already declared the ViewChild)
+centerContent(): void {
+  try {
+    const el = this.bookingSection?.nativeElement as HTMLElement | undefined;
+    if (!el) {
+      // fallback to query selector if ViewChild didn't resolve
+      const fallback = document.querySelector('.container-fluid') as HTMLElement | null;
+      if (fallback) {
+        fallback.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      return;
+    }
+
+    // If you have fixed header, set its selector here. Adjust if your header uses a different selector.
+    const header = document.querySelector('header') as HTMLElement | null;
+    const headerHeight = header ? header.offsetHeight : 72; // fallback 72px if header unknown
+
+    // Compute scroll top with header offset
+    const rect = el.getBoundingClientRect();
+    const top = rect.top + window.scrollY - headerHeight - 8; // small gap of 8px
+
+    window.scrollTo({
+      top: Math.max(0, Math.floor(top)),
+      behavior: 'smooth'
+    });
+
+  } catch (err) {
+    // last-resort fallback
+    const el = document.querySelector('#bookingSection') || document.querySelector('.container-fluid');
+    (el as HTMLElement | null)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    console.warn('centerContent fallback used', err);
   }
 }
+
+
 
 
 }

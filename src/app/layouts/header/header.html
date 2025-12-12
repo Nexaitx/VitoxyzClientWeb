@@ -158,11 +158,11 @@
   <ul class="list-unstyled pt-2 pb-3">
     <li *ngFor="let item of menuItems; let i = index" class="mobile-menu-item py-0">
 
-      <!-- <ng-container *ngIf="!item.dropdown">
+      <ng-container *ngIf="!item.dropdown">
         <a class="d-block py-2 ps-3" (click)="closeSidebar()" [routerLink]="item.path" routerLinkActive="active">
          <i class="fi {{ item.icon }}"></i>  &nbsp;{{ item.label }}
         </a>
-      </ng-container> -->
+      </ng-container>
       <!-- <ng-container *ngIf="!item.dropdown">
         <a class="d-block py-2 ps-3" *ngIf="item.label !== 'Book Staff'; else mobileBookStaffLink"
           (click)="closeSidebar()" [routerLink]="item.path" routerLinkActive="active">
@@ -176,9 +176,9 @@
           </a>
         </ng-template>
       </ng-container> -->
-      <ng-container *ngIf="!item.dropdown">
+      <!-- <ng-container *ngIf="!item.dropdown">
 
-  <!-- ⭐ Special case for Diet Plans (MOBILE) -->
+
   <a
     *ngIf="item.label === 'Diet Plans'"
     class="d-block py-2 ps-3"
@@ -186,7 +186,7 @@
     <i class="fi {{ item.icon }}"></i> &nbsp;{{ item.label }}
   </a>
 
-  <!-- ⭐ Special case for Book Staff (MOBILE) -->
+ 
   <ng-template [ngIf]="item.label === 'Book Staff'">
     <a class="d-block py-2 ps-3"
        (click)="handleMenuNavigation(item.path)">
@@ -194,7 +194,7 @@
     </a>
   </ng-template>
 
-  <!-- ⭐ Default menu links -->
+
   <a
     *ngIf="item.label !== 'Diet Plans' && item.label !== 'Book Staff'"
     class="d-block py-2 ps-3"
@@ -204,7 +204,7 @@
     <i class="fi {{ item.icon }}"></i> &nbsp;{{ item.label }}
   </a>
 
-</ng-container>
+</ng-container> -->
 
 
 

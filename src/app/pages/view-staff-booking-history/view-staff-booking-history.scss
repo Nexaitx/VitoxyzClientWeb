@@ -45,7 +45,7 @@ $orange: #ff8a00;
       font-weight: 700;
       opacity: 1;
       border-bottom: 3px solid $orange;
-      color: #111;
+      color: #fff;
     }
   }
 }
@@ -148,9 +148,9 @@ $orange: #ff8a00;
     font-size: 14px;
     font-weight: 600;
 
-    &.view { background: #ffe2d4; }
-    &.reorder { background: #ffd8a8; }
-    &.cancel { background: #f8b8b8; }
+    &.view { background: #ffe2d4; color: #fff;}
+    &.reorder { background: #ffd8a8; color: #fff; }
+    &.cancel { background: #f8b8b8; color: #fff; }
   }
 }
 
@@ -171,7 +171,7 @@ $orange: #ff8a00;
 
   button {
     padding: 8px 12px;
-    border-radius: 6px;
+    border-radius: 16px;
     cursor: pointer;
   }
 }
