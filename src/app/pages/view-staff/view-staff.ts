@@ -482,14 +482,11 @@ export class ViewStaff implements OnInit {
             next: (doneResp: any) => {
               console.log('📡 paymentDone response:', doneResp);
 
-              this.router.navigate(['/view-staff-booking-history'],
-                //   {
-                //   queryParams: {
-                //     paymentId: response?.payment?.paymentId || razorpayResponse.razorpay_payment_id,
-                //     amount: response?.payment?.amount || this.getTotalAmount()
-                //   }
-                // }
-              );
+            
+               setTimeout(() => {
+           // close modal if open
+          this.router.navigate(['/view-staff-booking-history']);
+        }, 2000);
             },
             error: (err) => {
               console.error('⚠️ paymentDone API failed:', err);

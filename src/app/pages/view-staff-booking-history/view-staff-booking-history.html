@@ -82,14 +82,14 @@
     <p><strong>Category:</strong> {{ b.category }} / {{ b.subCategory }}</p>
     <p><strong>Distance:</strong> {{ b.distanceKm | number:'1.1-1' }} km</p>
 
-    <p class="text-break">
+    <!-- <p class="text-break">
       <strong>Address:</strong> {{ b.userAddress }}
-    </p>
+    </p> -->
 
     <p><strong>Price:</strong> ₹{{ b.price }}</p>
 
-    <p *ngIf="b.expired" class="text-danger"><strong>Expired:</strong> Yes</p>
-    <p class="small"><strong>Expiry At:</strong> {{ b.expiryAt | date:'medium' }}</p>
+    <!-- <p *ngIf="b.expired" class="text-danger"><strong>Expired:</strong> Yes</p>
+    <p class="small"><strong>Expiry At:</strong> {{ b.expiryAt | date:'medium' }}</p> -->
   </div>
 
  
@@ -99,8 +99,8 @@
 
     <!-- Footer -->
     <div class="order-footer">
-      <button class="btn view">👁 View Details</button>
-      <button class="btn reorder">↻ Reorder</button>
+      <button class="btn view" (click)="viewStaffDetails(b.staffId)">👁 View Details</button>
+    <button class="btn reorder" (click)="openReorderModal(b)">↻ Reorder</button>
       <button class="btn cancel">✖ Cancel</button>
     </div>
 
@@ -114,5 +114,147 @@
     <button (click)="goToPage(page + 1)" [disabled]="p.last">Next</button>
     <button (click)="goToPage(p.totalPages - 1)" [disabled]="p.last">Last</button>
   </div>
+<!-- Reorder Modal -->
+<div *ngIf="reorderOpen" class="reorder-modal-backdrop">
+  <div class="reorder-modal">
+    <h4>Reorder Booking(s)</h4>
+
+    <form [formGroup]="overrideForm" (ngSubmit)="submitOverride()">
+
+      <!-- <div class="form-row">
+        <label>User Latitude</label>
+        <input type="number" step="0.000001" formControlName="userLatitude" />
+        <label>User Longitude</label>
+        <input type="number" step="0.000001" formControlName="userLongitude" />
+      </div> -->
+
+      <div formArrayName="bookings">
+        <div *ngFor="let bCtrl of overrideBookings.controls; let idx = index" [formGroupName]="idx" class="booking-row">
+          <h5>Booking #{{ idx + 1 }}</h5>
+          <label>Staff ID</label>
+          <input type="number" formControlName="staffId" />
+           
+          <label>Start Date</label>
+          <input type="date" formControlName="startDate" />
+
+          <label>End Date</label>
+          <input type="date" formControlName="endDate" />
+
+          <div class="time-row">
+            <div>
+              <label>Start Time Hour</label>
+              <input type="text" formControlName="startTimeHour" />
+            </div>
+            <div>
+              <label>Start Time Minute</label>
+              <input type="text" formControlName="startTimeMinute" />
+            </div>
+            <div>
+              <label>Start AM/PM</label>
+              <select formControlName="startTimeAmPm">
+                <option value="am">am</option>
+                <option value="pm">pm</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="time-row">
+            <div>
+              <label>End Time Hour</label>
+              <input type="text" formControlName="endTimeHour" />
+            </div>
+            <div>
+              <label>End Time Minute</label>
+              <input type="text" formControlName="endTimeMinute" />
+            </div>
+            <div>
+              <label>End AM/PM</label>
+              <select formControlName="endTimeAmPm">
+                <option value="am">am</option>
+                <option value="pm">pm</option>
+              </select>
+            </div>
+          </div>
+
+          <label>Override Reason</label>
+          <input type="text" formControlName="overrideReason" />
+          <hr />
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <!-- <button type="button" (click)="addBookingRow()">+ Add booking</button> -->
+        <button type="submit" class=" text-light overridebtn " [disabled]="overrideSubmitting">Send Override</button>
+        <button type="button" class="text-light overridebtn " (click)="closeReorderModal()">Close</button>
+      </div>
+    </form>
+
+    <!-- Results -->
+    <div *ngIf="overrideResult">
+      <h5>Result</h5>
+      <p><strong>{{ overrideResult.message }}</strong></p>
+      <div *ngIf="overrideResult.results?.length">
+        <div *ngFor="let r of overrideResult.results">
+          <p>staffId: {{ r.staffId }} — {{ r.message }} — status: {{ r.status }} — bookingId: {{ r.bookingId }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="overrideError" class="text-danger">
+      {{ overrideError }}
+    </div>
+  </div>
+</div>
+
+<!-- View Staff Details Popup -->
+<div class="modal-backdrop" *ngIf="viewDetailsOpen">
+  <div class="modal-card">
+
+    <h3>Staff Details</h3>
+
+    <div *ngIf="staffDetailsLoading">Loading...</div>
+    <div *ngIf="staffDetailsError" class="text-danger">
+      {{ staffDetailsError }}
+    </div>
+
+    <div *ngIf="staffDetails">
+
+      <p><strong>Name:</strong> {{ staffDetails.name }}</p>
+      <p><strong>StaffId:</strong> {{ staffDetails.staffId }}</p>
+      <p><strong>Phone:</strong> {{ maskPhone(staffDetails.phoneNumber) }}</p>
+      <p><strong>Gender:</strong> {{ staffDetails.gender }}</p>
+      <p><strong>Profession:</strong> {{ staffDetails.profession }}</p>
+      <p><strong>Qualification:</strong> {{ staffDetails.qualification }}</p>
+      <p><strong>Experience:</strong> {{ staffDetails.experience }} yrs</p>
+      <p><strong>Rating:</strong> {{ staffDetails.rating }}</p>
+
+      <p><strong>Category:</strong>
+        {{ staffDetails.category }} / {{ staffDetails.subCategory }}
+      </p>
+
+      <p><strong>Address:</strong>
+        {{ staffDetails.fullAddress }}
+       
+      </p>
+      <p><strong>state:</strong> {{ staffDetails.state }}</p>
+      <p><strong>country:</strong> {{ staffDetails.country }}</p>
+      <p><strong>Duties:</strong> {{ staffDetails.duties }}</p>
+      <p><strong>Degree:</strong> {{ staffDetails.degree }}</p>
+      <!-- <h4>Pricing</h4>
+      <p>8 Hours: ₹{{ staffDetails.eightHourPrice }}</p>
+      <p>12 Hours: ₹{{ staffDetails.twelveHourPrice }}</p>
+      <p>24 Hours: ₹{{ staffDetails.twentyFourHourPrice }}</p>
+      <p *ngIf="staffDetails.weeklyPrice">
+        Weekly: ₹{{ staffDetails.weeklyPrice }}
+      </p> -->
+
+    </div>
+
+    <div class="text-end mt-2">
+      <button class="btn cancel text-white" (click)="closeViewDetails()">Close</button>
+    </div>
+
+  </div>
+</div>
 
 </div>
