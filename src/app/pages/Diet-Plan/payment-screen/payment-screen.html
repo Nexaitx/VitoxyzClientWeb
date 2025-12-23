@@ -110,20 +110,20 @@
               </div>
               <div class="d-flex justify-content-between py-1">
                 <span class="muted">Plan Price</span>
-                <span class="fw-semibold">${{ price }}/month</span>
+                <span class="fw-semibold">₹{{ price }}/month</span>
               </div>
               <div class="d-flex justify-content-between py-1">
                 <span class="muted">Duration</span>
                 <span class="fw-semibold">{{ duration }}</span>
               </div>
-              <div class="d-flex justify-content-between py-1">
+              <!-- <div class="d-flex justify-content-between py-1">
                 <span class="muted">Income Tax</span>
                 <span class="fw-semibold">${{ tax.toFixed(2) }}</span>
-              </div>
+              </div> -->
               <mat-divider class="my-2"></mat-divider>
               <div class="d-flex justify-content-between py-1">
-                <span class="fw-semibold">Total Due</span>
-                <span class="fw-bold">${{ total.toFixed(2) }}</span>
+                <span class="fw-semibold">Total Payment</span>
+                <span class="fw-bold">₹{{ total.toFixed(2) }}</span>
               </div>
             </div>
 

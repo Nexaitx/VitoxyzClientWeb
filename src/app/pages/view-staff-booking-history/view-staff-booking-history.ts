@@ -56,6 +56,10 @@ cancelBookingId!: number;
 cancelReason = '';
 cancelSubmitting = false;
 cancelResult: string | null = null;
+// Cancel success popup
+cancelSuccessOpen = false;
+cancelSuccessMessage = '';
+
 
   private overrideUrl = 'https://vitoxyz.com/Backend/api/booking/override/bulk-request?accountNonExpired=true&credentialsNonExpired=true&accountNonLocked=true&authorities=%5B%7B%22authority%22%3A%22string%22%7D%5D&username=string&password=string&enabled=true';
 
@@ -422,17 +426,25 @@ confirmCancelBooking() {
   ).subscribe({
     next: (res) => {
       if (res?.success) {
-        if (res.isRefundEligible) {
-          this.cancelResult =
-            `You are eligible for ₹${res.refundAmount} refund.`;
-        } else {
-          this.cancelResult =
-            'You are not eligible for a refund.';
-        }
+         this.cancelModalOpen = false;
+
+    // ✅ Prepare popup message
+    if (res.isRefundEligible) {
+      this.cancelSuccessMessage =
+        `You are eligible for ₹${res.refundAmount} refund.`;
+    } else {
+      this.cancelSuccessMessage =
+        'You are not eligible for a refund.';
+    }
+         this.cancelSuccessOpen = true;
 
         // reload cancellations + bookings
         this.loadMyCancellations();
         this.loadTab(this.activeTab);
+          // ✅ Auto close popup after 3 seconds (optional)
+    setTimeout(() => {
+      this.cancelSuccessOpen = false;
+    }, 3000);
       } else {
         this.cancelResult = res?.message || 'Cancellation failed';
       }

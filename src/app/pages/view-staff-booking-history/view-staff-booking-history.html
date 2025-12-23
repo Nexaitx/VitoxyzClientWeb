@@ -454,9 +454,27 @@
     </div>
 
     <!-- Result Message -->
-    <div *ngIf="cancelResult" class="mt-3">
+    <!-- <div *ngIf="cancelResult" class="mt-3">
       <p class="fw-bold">{{ cancelResult }}</p>
-    </div>
+    </div> -->
+
+  </div>
+</div>
+<!-- Cancel Success Popup -->
+<div class="modal-backdrop" *ngIf="cancelSuccessOpen">
+  <div class="modal-card text-center">
+
+    <h3>Cancellation Successful</h3>
+
+    <p class="fw-bold mt-2">
+      {{ cancelSuccessMessage }}
+    </p>
+
+    <button
+      class="btn btn-primary mt-3"
+      (click)="cancelSuccessOpen = false">
+      OK
+    </button>
 
   </div>
 </div>
