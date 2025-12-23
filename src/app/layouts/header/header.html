@@ -29,7 +29,7 @@
       id="navbarNav">
       <ul class="navbar-nav align-items-center">
         <ng-container *ngFor="let item of menuItems; let i = index">
-
+         <ng-container *ngIf="!item.mobileOnly">
           <li class="nav-item" *ngIf="item.label === 'Profile' && isLoggedIn">
             <button class="nav-link text-white bg-none" [cdkMenuTriggerFor]="profileMenu" type="button">
               <i class="bi bi-person-circle" style="font-size: large;"></i>
@@ -116,6 +116,7 @@
               </div>
             </ng-template>
           </li>  -->
+          </ng-container>
         </ng-container>
 
 

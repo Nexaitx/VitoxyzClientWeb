@@ -15,13 +15,35 @@ export interface PageMeta {
   first: boolean;
   last: boolean;
 }
-
+export interface MyCancellationsResponse {
+  cancellations: CancellationItem[];
+  totalCancellations: number;
+  success: boolean;
+  userName: string;
+  message: string;
+  userId: number;
+}
 export interface ApiResponse<T> {
   status: boolean;
   message: string;
   data: T;
 }
-
+export interface CancellationItem {
+  cancellationId: number;
+  bookingId: number;
+  bookingType?: string | null;
+  reason: string;
+  cancellationType: string;
+  refundAmount: number;
+  isRefunded: boolean;
+  refundTransactionId?: string | null;
+  bookingAmount: number;
+  hoursBeforeStart: number;
+  isEligibleForRefund: boolean;
+  refundStatus: string;
+  cancelledAt: string;
+  refundDate?: string | null;
+}
 export interface BookingItem {
   // add fields that actually come back from your API.
   // You gave empty arrays as example so these are a best guess.
@@ -56,9 +78,19 @@ export interface BookingItem {
   endTimeHour?: string;
   endTimeMinute?: string;
   endTimeAmPm?: string;
-
+createdAt?: string;
+  updatedAt?: string;
+  staffPhone?: string;
+  staffEmail?: string;
+  staffProfession?: string;
+  staffRating?: number;
+  staffCategory?: string;
+  paymentId?: number | null;
+  paymentStatus?: string | null;
+  paymentAmount?: number | null;
   expired?: boolean;
 }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -130,4 +162,26 @@ getUpcomingBookings(page = 0, size = 10, sortBy = 'startDate', sortDirection = '
   return this.http.get<ApiResponse<PageMeta>>(url, { params, headers })
     .pipe(map(res => res.data));
 }
+getCompletedBookings(): Observable<BookingItem[]> {
+  const url = `${this.baseUrl}/bookings/completed`;
+
+  const token = localStorage.getItem('authToken');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+  return this.http
+    .get<ApiResponse<BookingItem[]>>(url, { headers })
+    .pipe(map(res => res.data));
+}
+getMyCancellations(): Observable<MyCancellationsResponse> {
+  const url = `${API_URL}/bookings/my-cancellations`;
+  const token = localStorage.getItem('authToken');
+
+  const headers = new HttpHeaders().set(
+    'Authorization',
+    `Bearer ${token}`
+  );
+
+  return this.http.get<MyCancellationsResponse>(url, { headers });
+}
+
 }

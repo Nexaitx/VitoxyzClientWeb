@@ -66,11 +66,17 @@ cartCount: number = 0;
       //   { label: 'Physiotherapist', path: '/book-staff' },
       //   { label: 'Baby-Sitter', path: '/book-staff' },
       //   { label: 'Security Guard', path: '/book-staff' },
-      //   { label: 'Psychiatrist', path: '/book-staff' },
+      //   { label: 'Psychiatrist', path: '/book-staff' }, diet/user-onboarding
       // ]
     },
     { label: 'Diet Plans', icon: 'fi-rr-salad',  path: 'diet/user-onboarding' },
-
+    // { label: 'Diet Plans', icon: 'fi-rr-salad',  path: '/diet' },
+    {
+    label: 'Staff Booking History',
+    icon: 'fi-rr-clipboard-list',
+    path: '/view-staff-booking-history',
+    mobileOnly: true
+  },
     {
       label: 'Profile',
       icon: 'fi-rr-user-pen',
@@ -78,12 +84,15 @@ cartCount: number = 0;
       dropdownItems: [
         { label: 'My Profile', path: '/user-profile' },
         { label: 'My Orders', path: '/orders' },
+        { label: 'Booked staff', path: '/view-staff' },
+        { label: 'Staff Booking History', path: '/view-staff-booking-history' },
         // { label: 'Manage Payments', path: '' },
         // { label: 'Settings', path: '/settings' },
         { label: 'Logout', path: '/logout' }
       ]
     },
     { label: 'Need Help?', icon: 'fi-rr-exclamation', path: '/help' },
+  
   ];
 
 ngOnInit(): void {

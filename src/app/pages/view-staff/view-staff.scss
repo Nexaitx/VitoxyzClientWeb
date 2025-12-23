@@ -95,3 +95,55 @@ footer {
   font-weight: 600;
   color: #555;
 }
+/* ⏳ Payment Timer Wrapper */
+.payment-timer-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+/* Timer Box */
+.payment-timer-box {
+  background: #fff3cd;
+  border: 1px solid #ffe69c;
+  border-radius: 14px;
+  padding: 16px 24px;
+  text-align: center;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Time Display */
+.timer-time {
+  font-size: 36px;
+  font-weight: 700;
+  color: #dc3545;
+  letter-spacing: 1px;
+}
+
+/* Message Below Timer */
+.timer-message {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #856404;
+  line-height: 1.4;
+}
+
+/* ❌ Expired State */
+.payment-expired-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.payment-expired-box {
+  background: #f8d7da;
+  border: 1px solid #f5c2c7;
+  color: #842029;
+  border-radius: 14px;
+  padding: 16px 24px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  width: 100%;
+  max-width: 420px;
+}
