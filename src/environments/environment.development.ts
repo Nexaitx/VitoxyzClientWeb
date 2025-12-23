@@ -2,8 +2,9 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 export const environment = {
   production: false,
-   apiUrl: 'https://vitoxyz.com/api',
-    //apiUrl: 'http://localhost:8080/api',
+  apiUrl: 'https://vitoxyz.com/Backend/api',
+  //  apiUrl: 'https://vitoxyz.com/api',
+    //apiUrl: 'http://localhost:8080/api', 
 
 
   apiKey: 'dev_api_key',

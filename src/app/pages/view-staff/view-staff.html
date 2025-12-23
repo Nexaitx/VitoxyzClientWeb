@@ -1,6 +1,16 @@
 
 <div class="container-fluid">
   <!-- Loading template -->
+   <div class="d-flex justify-content-end mb-2">
+  <button
+    class="btn btn-outline-primary btn-sm rounded-pill text-light"
+    (click)="reloadPage()"
+    [disabled]="loading">
+    <i class="bi bi-arrow-clockwise me-1"></i>
+    Reload
+  </button>
+</div>
+
   <ng-template #loadingTpl>
     <div class="d-flex justify-content-center align-items-center" style="min-height:200px;">
       <div class="text-center">
@@ -13,6 +23,27 @@
   <!-- Main display: show spinner while loading, otherwise show staff or noStaff -->
   <ng-container *ngIf="!loading; else loadingTpl">
     <ng-container *ngIf="staffDetails.length > 0; else noStaff">
+      <!-- ⏳ Payment Timer UI -->
+<div class="payment-timer-wrapper mb-4" *ngIf="showPaymentTimer && !paymentExpired">
+  <div class="payment-timer-box">
+    <div class="timer-time">
+     {{ countdown }}
+    </div>
+    <div class="timer-message">
+      Please process the payment within the given time,<br />
+      otherwise it will expire.
+    </div>
+  </div>
+</div>
+
+<!-- ❌ Expired Message -->
+<div class="payment-expired-wrapper mb-4" *ngIf="paymentExpired">
+  <div class="payment-expired-box">
+    ⏰ Payment time expired.<br />
+    Please reselect staff to continue.
+  </div>
+</div>
+
       <div *ngFor="let categoryGroup of staffDetails" class="row">
         <div class="col-12 mb-2">
           {{ categoryGroup.category | titlecase }}
@@ -86,7 +117,7 @@
         <button class="submission btn btn-primary text-light rounded-pill btn-sm" 
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-                [disabled]="getTotalStaff() === 0">
+                [disabled]="getTotalStaff() === 0 || paymentExpired">
             Proceed to Payment (₹{{ getTotalAmount() }})
         </button>
     </div>

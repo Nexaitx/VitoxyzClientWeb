@@ -22,7 +22,9 @@ $orange: #ff8a00;
   color: #222;
   box-sizing: border-box;
 }
-
+.tabs-wrapper {
+  overflow: hidden;
+}
 /* Tabs */
 .tabs {
   display: flex;
@@ -88,14 +90,17 @@ $orange: #ff8a00;
     border-radius: 20px;
     font-size: 12px;
     font-weight: 600;
-    color: white;
+    color: rgb(247, 184, 10);
 
     &.pending { background: #efb400; }
     &.completed { background: #28a745; }
     &.cancelled { background: #d9534f; }
   }
 }
-
+.statusbgcls{
+   color: rgb(247, 184, 10);
+   background: #fff;
+}
 /* order item layout */
 .order-item {
   display: flex;
@@ -175,6 +180,80 @@ $orange: #ff8a00;
     cursor: pointer;
   }
 }
+.reorder-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+}
+
+.reorder-modal {
+  background: #fff;
+  padding: 18px;
+  max-width: 820px;
+  width: 95%;
+  max-height: 85vh;
+  overflow: auto;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+}
+.overridebtn {
+  background-color: #f5a38f;
+  border: 1px solid #f5a38f;
+  border-radius: 19px;
+  color: #fff;
+  padding: 6px 16px;
+  font-weight: 400;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(245, 163, 143, 0.4);
+  transition: all 0.3s ease;
+}
+
+/* hover */
+.overridebtn:hover:not(:disabled) {
+  background-color: #ef8f78;
+  box-shadow: 0 6px 14px rgba(245, 163, 143, 0.6);
+}
+
+/* disabled state */
+.overridebtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 95%;
+  max-width: 520px;
+  max-height: 85vh;
+      margin-bottom: -31px;
+  overflow-y: auto;
+}
+
+.reorder-modal .form-row, .reorder-modal .time-row {
+  display:flex;
+  gap:8px;
+  margin-bottom:8px;
+  flex-wrap:wrap;
+}
+.reorder-modal label { display:block; font-size:0.85rem; color:#333; margin-bottom:2px; }
+.reorder-modal input, .reorder-modal select { padding:6px 8px; border-radius:20px; border:1px solid #ddd; }
+.reorder-modal .modal-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:12px; }
 
 /* -----------------------------------------------------------
    Responsive breakpoints
@@ -198,6 +277,11 @@ $orange: #ff8a00;
   .order-item .details { flex-basis: 100%; min-width: 0; }
   .order-item .price { flex-basis: 100%; width: 100%; text-align: left; margin-top: 8px; }
   .order-footer .btn { padding: 8px 12px; font-size: 13px; width: 100%; }
+    .reorder-modal {
+    // padding: 14px;
+    // width: 96%;
+     margin-bottom: -37px;
+  }
 }
 
 /* Small phones */
@@ -208,7 +292,68 @@ $orange: #ff8a00;
   .order-item { gap: 12px; }
   .order-item .details { flex-basis: 100%; }
   .order-item .price { flex-basis: 100%; width: 100%; text-align: left; margin-top: 6px; }
-  .order-footer .btn { width: 100%; }
+  .order-footer .btn { padding: 8px 12px; font-size: 13px; width: 100%; }
+   .reorder-modal {
+    padding: 14px;
+    width: 96%;
+     margin-bottom: -37px;
+  }
+
+  .modal-card {
+    padding: 14px;
+           
+  }
+
+  .reorder-modal h4,
+  .modal-card h3 {
+    font-size: 16px;
+  }
+
+  .reorder-modal .time-row {
+    flex-direction: column;
+  }
+
+  // .modal-actions {
+  //   flex-direction: column;
+  // }
+}
+/* =====================================
+   SMALL MOBILE – SINGLE ROW 4 TABS
+   ===================================== */
+@media (max-width: 480px) {
+
+  .tabs {
+    display: flex;
+    flex-wrap: nowrap;          /* FORCE single row */
+    overflow-x: auto;           /* Allow scroll instead of wrap */
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+    padding-bottom: 6px;
+  }
+
+  /* Hide scrollbar (clean UI) */
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tabs button {
+    flex: 0 0 auto;             /* Prevent shrinking */
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 8px 14px;
+    // border-radius: 20px;
+    background: #ffe2d4;
+    color: #333;
+    font-weight: 600;
+    opacity: 1;
+  }
+
+  .tabs button.active {
+    background: linear-gradient(135deg, #ff8a00, #ffb066);
+    color: #fff;
+    border-bottom: none;
+    box-shadow: 0 3px 8px rgba(255, 138, 0, 0.45);
+  }
 }
 
 /* Large phones */
@@ -219,6 +364,28 @@ $orange: #ff8a00;
   .order-item .details { flex-basis: 65%; }
   .order-item .price { flex-basis: 35%; width: auto; text-align: right; }
   .order-footer .btn { min-width: 140px; }
+    .reorder-modal {
+    max-width: 96%;
+    padding: 16px;
+     margin-bottom: -37px;
+  }
+
+  .modal-card {
+    max-width: 96%;
+    padding: 16px;
+  }
+
+  .reorder-modal .time-row {
+    flex-wrap: wrap;
+  }
+
+  .modal-actions {
+    flex-wrap: wrap;
+  }
+
+  .overridebtn {
+    flex: 1 1 100%;
+  }
 }
 
 /* Tablets */
@@ -230,6 +397,19 @@ $orange: #ff8a00;
   .order-item .details { flex-basis: 68%; }
   .order-item .price { flex-basis: 32%; }
   .order-footer .btn { min-width: 140px; }
+    .reorder-modal {
+    max-width: 720px;
+     margin-bottom: -37px;
+  }
+
+  .modal-card {
+    max-width: 600px;
+   margin-bottom: -50px;
+  }
+
+  .reorder-modal .time-row > div {
+    flex: 1 1 30%;
+  }
 }
 
 /* Laptops */
@@ -240,6 +420,14 @@ $orange: #ff8a00;
   .order-item { gap: 20px; }
   .order-item .details { flex-basis: 70%; }
   .order-item .price { flex-basis: 30%; width: 260px; }
+    .reorder-modal {
+    max-width: 820px;
+  }
+
+  .modal-card {
+    max-width: 520px;
+    
+  }
 }
 
 /* Desktop */
@@ -250,6 +438,10 @@ $orange: #ff8a00;
   .order-item { gap: 22px; }
   .order-item .details { flex-basis: 72%; }
   .order-item .price { flex-basis: 28%; width: 280px; }
+    .reorder-modal {
+    max-width: 900px;
+    overflow-y: hidden;
+  }
 }
 
 /* 4K screens */
@@ -261,6 +453,25 @@ $orange: #ff8a00;
   .order-item .details { flex-basis: 75%; font-size: 16px; }
   .order-item .price { flex-basis: 25%; width: 340px; }
   .order-footer .btn { padding: 10px 18px; font-size: 15px; }
+    .reorder-modal {
+    max-width: 1100px;
+    padding: 28px;
+  }
+
+  .modal-card {
+    max-width: 700px;
+    padding: 28px;
+  }
+
+  .reorder-modal label {
+    font-size: 15px;
+  }
+
+  .reorder-modal input,
+  .reorder-modal select {
+    font-size: 15px;
+    padding: 8px 12px;
+  }
 }
 
 /* Ultra 4K / very large displays */
@@ -272,6 +483,24 @@ $orange: #ff8a00;
   .order-item .details { flex-basis: 78%; font-size: 18px; }
   .order-item .price { flex-basis: 22%; width: 420px; }
   .order-footer .btn { padding: 12px 22px; font-size: 16px; }
+   .reorder-modal {
+    max-width: 1300px;
+    padding: 36px;
+  }
+
+  .modal-card {
+    max-width: 900px;
+    padding: 36px;
+  }
+
+  .reorder-modal label {
+    font-size: 17px;
+  }
+
+  .reorder-modal input,
+  .reorder-modal select {
+    font-size: 16px;
+  }
 }
 
 /* Utility: ensure long text wraps nicely */

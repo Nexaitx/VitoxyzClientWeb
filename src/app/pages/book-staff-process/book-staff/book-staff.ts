@@ -110,6 +110,34 @@ getSlotsByStaffIndex(staffIndex: number): string[] {
   // default fallback options (monthly ones)
   return this.preferredTimeSlots;
 }
+
+private calculateEndDate(
+  startDate: string,
+  tenure: string
+): string {
+  const start = new Date(startDate);
+
+  if (tenure === '1') {
+    // 1 day → same day
+    return startDate;
+  }
+
+  // DAY BASED (2–30)
+  if (/^\d+$/.test(tenure)) {
+    const days = parseInt(tenure, 10);
+    start.setDate(start.getDate() + days - 1);
+  }
+
+  // MONTH BASED (1m, 2m, ...)
+  if (/^\d+m$/.test(tenure)) {
+    const months = parseInt(tenure.replace('m', ''), 10);
+    start.setMonth(start.getMonth() + months);
+    start.setDate(start.getDate() - 1);
+  }
+
+  return start.toISOString().substring(0, 10);
+}
+
 // returns the appropriate tenure options for the staff at `staffIndex`
 // returns the appropriate tenure options for the staff at `staffIndex`
 getTenureOptions(staffIndex: number) {
@@ -172,6 +200,7 @@ onSubStaffChange(staffIndex: number): void {
       }
     });
   }
+
 
   subscribeToCategoryChange(staffIndex: number): void {
     const staffGroup = this.staffListFormArray.at(staffIndex) as FormGroup;
@@ -355,62 +384,77 @@ incrementTime(unit: 'hours' | 'minutes', staffIndex: number, shiftIndex: number)
   
 //   shiftDetail.get('timeSlot')?.setValue(time);
 // }
-onStartTimeChange(i: number, sh: number) {
-  const shiftDetail = this.getNestedShiftDetailsControls(i)[sh];
-  const time = shiftDetail.get('startTime')?.value; // "13:45"
+// onStartTimeChange(i: number, sh: number) {
+//   const shiftDetail = this.getNestedShiftDetailsControls(i)[sh];
+//   const time = shiftDetail.get('startTime')?.value; // "13:45"
 
-  if (!time) return;
+//   if (!time) return;
 
-  const [hour, minute] = time.split(':');
-  let h = parseInt(hour);
+//   const [hour, minute] = time.split(':');
+//   let h = parseInt(hour);
+//   let ampm = 'AM';
+
+//   if (h === 0) {
+//     h = 12;
+//   } else if (h === 12) {
+//     ampm = 'PM';
+//   } else if (h > 12) {
+//     h = h - 12;
+//     ampm = 'PM';
+//   }
+
+//   shiftDetail.patchValue({
+//     startTimeHour: h,
+//     startTimeMinute: minute,
+//     startTimeAmPm: ampm,
+//   });
+
+//   this.updateTimeSlot(shiftDetail);
+// }
+convertTime(time: string) {
+  const [h, m] = time.split(':').map(Number);
+  let hour = h;
   let ampm = 'AM';
 
-  if (h === 0) {
-    h = 12;
-  } else if (h === 12) {
+  if (hour === 0) {
+    hour = 12;
+  } else if (hour === 12) {
     ampm = 'PM';
-  } else if (h > 12) {
-    h = h - 12;
+  } else if (hour > 12) {
+    hour -= 12;
     ampm = 'PM';
   }
 
-  shiftDetail.patchValue({
-    startTimeHour: h,
-    startTimeMinute: minute,
-    startTimeAmPm: ampm,
-  });
-
-  this.updateTimeSlot(shiftDetail);
+  return {
+    hour: String(hour),
+    minute: String(m),
+    ampm
+  };
 }
 
   createShiftDetailFormGroup(): FormGroup {
-    const now = new Date();
-    let currentHour = now.getHours(); 
-   let currentMinute = now.getMinutes();
-    const ampm = currentHour >= 12 ? 'PM' : 'AM';
-    if (currentHour === 0) currentHour = 12;
-    else if (currentHour > 12) currentHour -= 12;
+   
     const group = this.fb.group({
       preferredTimeSlot: ['', Validators.required],
       timeSlot: [''],
       tenure: [''],
-    startTime: ['', Validators.required],   // <-- NEW
-    endTime: ['', Validators.required],  
+ startTime: ['', Validators.required], // "10:00"
+    endTime: ['', Validators.required],
       dutyStartDate: [new Date().toISOString().substring(0, 10)],
        dutyEndDate: [''],  
       maleQuantity: ['0', [Validators.min(0), Validators.max(10)]],
       femaleQuantity: ['0', [Validators.min(0), Validators.max(10)]],
-      hours: [currentHour, [Validators.required, Validators.min(1), Validators.max(12)]],
-      // minutes: [minutes, [Validators.required, Validators.min(0), Validators.max(59)]],
-       minutes: [currentMinute, [Validators.required, Validators.min(0), Validators.max(59)]],
-      ampm: [ampm, Validators.required],
-       startTimeHour: [currentHour, [Validators.required, Validators.min(1), Validators.max(12)]],
-    startTimeMinute: [currentMinute, [Validators.required, Validators.min(0), Validators.max(59)]],
-    startTimeAmPm: [ampm, Validators.required],
-    // END time fields
-    endTimeHour: [currentHour, [Validators.required, Validators.min(1), Validators.max(12)]],
-    endTimeMinute: [currentMinute, [Validators.required, Validators.min(0), Validators.max(59)]],
-    endTimeAmPm: [ampm, Validators.required],
+    //   hours: [currentHour, [Validators.required, Validators.min(1), Validators.max(12)]],
+    //   // minutes: [minutes, [Validators.required, Validators.min(0), Validators.max(59)]],
+    //    minutes: [currentMinute, [Validators.required, Validators.min(0), Validators.max(59)]],
+    //   ampm: [ampm, Validators.required],
+    //    startTimeHour: [currentHour, [Validators.required, Validators.min(1), Validators.max(12)]],
+    // startTimeMinute: [currentMinute, [Validators.required, Validators.min(0), Validators.max(59)]],
+    // startTimeAmPm: [ampm, Validators.required],
+    // // END time fields
+    // endTimeHour: [currentHour, [Validators.required, Validators.min(1), Validators.max(12)]],
+    // endTimeMinute: [currentMinute, [Validators.required, Validators.min(0), Validators.max(59)]],
+    // endTimeAmPm: [ampm, Validators.required],
     }, { validators: [this.shiftDurationValidator] });
      // Subscribe to start-time changes to update timeSlot string
   group.get('startTimeHour')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
@@ -421,35 +465,40 @@ onStartTimeChange(i: number, sh: number) {
     group.get('ampm')?.valueChanges.subscribe(() => this.updateTimeSlot(group));
     group.get('maleQuantity')?.valueChanges.subscribe(() => this.updateGenderQty(group));
     group.get('femaleQuantity')?.valueChanges.subscribe(() => this.updateGenderQty(group));
-     group.get('tenure')?.valueChanges.subscribe((value) => {
-    const endDateCtrl = group.get('dutyEndDate');
-    if (value === '1') {
-      // Hide & clear validation if 1 Day
-      endDateCtrl?.clearValidators();
-      endDateCtrl?.setValue('');
-    } else {
-      // Add validation back for other tenures
-      endDateCtrl?.setValidators([Validators.required]);
-    }
-    endDateCtrl?.updateValueAndValidity();
-  });
+    group.get('tenure')?.valueChanges.subscribe((tenure) => {
+  const startDate = group.get('dutyStartDate')?.value;
+  const endCtrl = group.get('dutyEndDate');
 
-    group.get('dutyStartDate')?.valueChanges.subscribe((value: string | null) => {
-    if (!value) {
-      const today = new Date().toISOString().substring(0, 10);
-      group.get('dutyStartDate')?.setValue(today, { emitEvent: false });
-      return; 
-    }
-
-   const endDateCtrl = group.get('dutyEndDate');
-  if (endDateCtrl) {  
-    const endDateVal = endDateCtrl.value as string | null; 
-
-    if (endDateVal && new Date(endDateVal) < new Date(value)) {
-      endDateCtrl.setValue(value, { emitEvent: false });
-    }
+  if (!tenure || !startDate) {
+    endCtrl?.setValue('');
+    return;
   }
-  });
+
+  if (tenure === '1') {
+    endCtrl?.setValue(startDate);
+    endCtrl?.clearValidators();
+  } else {
+    const endDate = this.calculateEndDate(startDate, tenure);
+    endCtrl?.setValue(endDate);
+    endCtrl?.setValidators([Validators.required]);
+  }
+
+  endCtrl?.updateValueAndValidity({ emitEvent: false });
+});
+
+group.get('dutyStartDate')?.valueChanges.subscribe((startDate) => {
+  const tenure = group.get('tenure')?.value;
+  const endCtrl = group.get('dutyEndDate');
+
+  if (!startDate || !tenure) return;
+
+  if (tenure === '1') {
+    endCtrl?.setValue(startDate);
+  } else {
+    endCtrl?.setValue(this.calculateEndDate(startDate, tenure));
+  }
+});
+
 
   return group;
 
@@ -552,14 +601,18 @@ onStartTimeChange(i: number, sh: number) {
         const staffDetailsControl = (staffGroup.get('staffDetails') as FormArray).at(0);
         const { typeOfStaff, typeOfSubStaff } = staffDetailsControl.value;
         const shiftDetailsArray = (staffGroup.get('shiftDetails') as FormArray).controls.map((shiftGroup: AbstractControl) => {
-          const { tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate,startTimeHour, startTimeMinute, startTimeAmPm,
-          endTimeHour, endTimeMinute, endTimeAmPm, startTime, endTime } = shiftGroup.value;
-          return {  tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate,startTime, endTime ,startTimeHour: String(startTimeHour),
-          startTimeMinute: String(startTimeMinute),
-          startTimeAmPm: String(startTimeAmPm),
-          endTimeHour: String(endTimeHour),
-          endTimeMinute: String(endTimeMinute),
-          endTimeAmPm: String(endTimeAmPm)};
+          const { tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate,startTime,
+      endTime} = shiftGroup.value;
+       const start = this.convertTime(startTime);
+    const end = this.convertTime(endTime);
+          return {  tenure, maleQuantity, femaleQuantity, dutyStartDate,dutyEndDate , startTimeHour: start.hour,
+      startTimeMinute: start.minute,
+      startTimeAmPm: start.ampm,
+
+      endTimeHour: end.hour,
+      endTimeMinute: end.minute,
+      endTimeAmPm: end.ampm
+    }
         });
         return {
           typeOfStaff,
