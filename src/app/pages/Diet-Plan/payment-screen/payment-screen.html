@@ -1,4 +1,5 @@
 
+
 <!-- <div class="payment-container container-fluid">
   <div class="row justify-content-center">
     <div class="col-lg-8 col-md-10 col-12 card shadow-lg p-4 rounded-4 bg-white">
@@ -57,7 +58,7 @@
   </div>
 </div> -->
 
-<div class="page-wrap" style="margin-top:-30px ;">
+<!-- <div class="page-wrap" style="margin-top:-30px ;">
   <div class="container py-5">
 
     <form [formGroup]="form" novalidate>
@@ -116,10 +117,7 @@
                 <span class="muted">Duration</span>
                 <span class="fw-semibold">{{ duration }}</span>
               </div>
-              <!-- <div class="d-flex justify-content-between py-1">
-                <span class="muted">Income Tax</span>
-                <span class="fw-semibold">${{ tax.toFixed(2) }}</span>
-              </div> -->
+             
               <mat-divider class="my-2"></mat-divider>
               <div class="d-flex justify-content-between py-1">
                 <span class="fw-semibold">Total Payment</span>
@@ -139,10 +137,350 @@
       </div>
     </form>
   </div>
-</div>
+</div> -->
 
 
 <!-- <button class="btn btn-primary rounded-pill px-3 text-light" (click)="goToDietDashboard()">Proceed to Payment</button> -->
-<div>
+<!-- <div>
   <app-footer></app-footer>
+</div> -->
+
+
+<!-- <div class="payment-container container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-12 card shadow-lg p-4 rounded-4 bg-white">
+      <h5 class="fw-bold mb-4">Enter your payment details.</h5>
+
+      <div class="row">
+       
+        <div class="col-md-6 mb-4">
+          <h6 class="fw-semibold mb-3">Payment details</h6>
+
+      
+          <mat-form-field appearance="outline" class="w-100 mb-3 input-field">
+            <mat-label>Full Name</mat-label>
+            <mat-icon matPrefix>person</mat-icon>
+            <input matInput placeholder="Enter Full Name">
+          </mat-form-field>
+
+         
+          <mat-form-field appearance="outline" class="w-100 mb-3 input-field">
+            <mat-label>Email Address</mat-label>
+            <mat-icon matPrefix>email</mat-icon>
+            <input matInput placeholder="Enter Email Address">
+          </mat-form-field>
+
+          
+          <mat-form-field appearance="outline" class="w-100 mb-3 input-field">
+            <mat-label>Country</mat-label>
+            <mat-icon matPrefix>public</mat-icon>
+            <mat-select>
+              <mat-option *ngFor="let country of countries" [value]="country">
+                {{ country }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        
+        <div class="col-md-6">
+          <h6 class="fw-semibold mb-3">Order Summary</h6>
+
+          <div class="summary-box p-3 rounded-4 shadow-sm">
+            <p><strong>Plan:</strong> Premium Health</p>
+            <p><strong>Plan Price:</strong> $499/month</p>
+            <p><strong>Duration:</strong> 1 Month</p>
+            <p><strong>Income Tax:</strong> $5.00</p>
+            <hr>
+            <p class="fw-bold">Total Due: $503.00</p>
+          </div>
+
+          <button mat-raised-button color="primary" class="w-100 mt-3 py-3 rounded-pill">
+            Make a Payment
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="page-wrap" style="margin-top:-30px ;">
+  <div class="container py-5">
+
+    <form [formGroup]="form" novalidate>
+      <div class="row g-4 justify-content-between" style="margin-top: -86px;">
+
+        <div class="col-12">
+          <h5 class="title mb-4">Enter your payment details.</h5>
+        </div>
+
+      
+        <div class="col-lg-7">
+          <h6 class="section-heading mb-3">Payment details</h6>
+
+          <div class="form-group mb-3 position-relative">
+            <label class="form-label">Name</label>
+            <i class="bi bi-person input-icon"></i>
+            <input type="text" class="form-control input-with-icon"
+                   placeholder="Enter your Name" formControlName="name">
+          </div>
+
+          <div class="form-group flex-fill mb-3 position-relative">
+            <label class="form-label">Email</label>
+            <i class="bi bi-envelope input-icon"></i>
+            <input type="email" class="form-control input-with-icon"
+                   placeholder="Enter your Email" formControlName="email">
+          </div>
+
+          <div class="form-group flex-fill mb-3 position-relative">
+            <label class="form-label">Country</label>
+            <div class="custom-select-wrapper">
+              <i class="fi fi-rr-navigation input-icon"></i>
+             
+              <select class="form-control custom-select input-with-icon" formControlName="country">
+                <option value="" disabled selected>Select Country</option>
+                <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+     
+        <div class="col-lg-5">
+          <div class="card p-4 shadow-sm rounded-4 border-0">
+            <h6 class="section-heading mb-3">Order Summary</h6>
+
+            <div class="summary-box rounded-4 p-3">
+              <div class="d-flex justify-content-between py-1">
+                <span class="muted">Plan</span>
+                <span class="fw-semibold">{{ plan }}</span>
+              </div>
+              <div class="d-flex justify-content-between py-1">
+                <span class="muted">Plan Price</span>
+                <span class="fw-semibold">${{ price }}/month</span>
+              </div>
+              <div class="d-flex justify-content-between py-1">
+                <span class="muted">Duration</span>
+                <span class="fw-semibold">{{ duration }}</span>
+              </div>
+              <div class="d-flex justify-content-between py-1">
+                <span class="muted">Income Tax</span>
+                <span class="fw-semibold">${{ tax.toFixed(2) }}</span>
+              </div>
+              <mat-divider class="my-2"></mat-divider>
+              <div class="d-flex justify-content-between py-1">
+                <span class="fw-semibold">Total Due</span>
+                <span class="fw-bold">${{ total.toFixed(2) }}</span>
+              </div>
+            </div>
+
+         
+            <button mat-raised-button color="primary"
+                    class="pay-btn w-90 mt-3 makepaymt rounded-pill"
+                    (click)="pay()" [disabled]="form.invalid">
+              Make a Payment
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div> -->
+
+<div class="page-wrap">
+  <div class="container py-4">
+    <!-- Header with back button -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <button mat-button (click)="goBackToPlans()" class="back-btn">
+          <mat-icon>arrow_back</mat-icon>
+          Back to Plans
+        </button>
+        <h4 class="title mb-2 mt-3">Complete Your Subscription</h4>
+        <p class="text-muted">Enter your payment details to activate your subscription</p>
+      </div>
+    </div>
+
+    <form [formGroup]="form" novalidate>
+      <div class="row g-4">
+        <!-- Left Column: Payment Details -->
+        <div class="col-lg-7">
+          <mat-card class="mb-4">
+            <mat-card-header>
+              <mat-card-title>Payment Details</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <!-- Name -->
+              <div class="mb-3">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Full Name</mat-label>
+                  <input matInput type="text" formControlName="name" placeholder="Enter your full name">
+                  <mat-icon matSuffix>person</mat-icon>
+                  <mat-error *ngIf="name?.hasError('required')">
+                    Name is required
+                  </mat-error>
+                  <mat-error *ngIf="name?.hasError('minlength')">
+                    Name must be at least 3 characters
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <!-- Email -->
+              <div class="mb-3">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Email Address</mat-label>
+                  <input matInput type="email" formControlName="email" placeholder="Enter your email">
+                  <mat-icon matSuffix>email</mat-icon>
+                  <mat-error *ngIf="email?.hasError('required')">
+                    Email is required
+                  </mat-error>
+                  <mat-error *ngIf="email?.hasError('email')">
+                    Please enter a valid email
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <!-- Phone -->
+              <div class="mb-3">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Phone Number (Optional)</mat-label>
+                  <input matInput type="tel" formControlName="phone" placeholder="Enter your phone number">
+                  <mat-icon matSuffix>phone</mat-icon>
+                  <mat-error *ngIf="phone?.hasError('pattern')">
+                    Please enter a valid 10-digit phone number
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <!-- Country -->
+              <div class="mb-3">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Country</mat-label>
+                  <mat-select formControlName="country">
+                    <mat-option *ngFor="let country of countries" [value]="country">
+                      {{ country }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>location_on</mat-icon>
+                  <mat-error *ngIf="country?.hasError('required')">
+                    Country is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </mat-card-content>
+          </mat-card>
+
+          <!-- Selected Plan Info -->
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Selected Plan</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="selected-plan-info">
+                <h5 class="plan-name">{{ plan }}</h5>
+                <p class="plan-description text-muted" *ngIf="description">{{ description }}</p>
+                <div class="plan-details">
+                  <div class="detail-item">
+                    <span class="label">Duration:</span>
+                    <span class="value">{{ duration }}</span>
+                  </div>
+                  <div class="detail-item">
+                    <span class="label">Plan Price:</span>
+                    <span class="value">₹{{ price }}</span>
+                  </div>
+                  <div class="detail-item" *ngIf="subscriptionId">
+                    <span class="label">Subscription ID:</span>
+                    <span class="value">{{ subscriptionId }}</span>
+                  </div>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <!-- Right Column: Order Summary -->
+        <div class="col-lg-5">
+          <mat-card class="sticky-card">
+            <mat-card-header>
+              <mat-card-title>Order Summary</mat-card-title>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <!-- Summary Items -->
+              <div class="summary-items">
+                <div class="summary-item">
+                  <span>Plan Price</span>
+                  <span class="amount">₹{{ price | number:'1.2-2' }}</span>
+                </div>
+                
+                <div class="summary-item">
+                  <span>GST (18%)</span>
+                  <span class="amount">₹{{ tax | number:'1.2-2' }}</span>
+                </div>
+                
+                <mat-divider class="my-3"></mat-divider>
+                
+                <div class="summary-item total">
+                  <span class="fw-bold">Total Amount</span>
+                  <span class="amount fw-bold">₹{{ total | number:'1.2-2' }}</span>
+                </div>
+              </div>
+
+              <!-- Additional Info -->
+              <div class="additional-info mt-4">
+                <h6>What's included:</h6>
+                <ul class="features-list">
+                  <li><mat-icon class="success-icon">check_circle</mat-icon> Full access to diet plans</li>
+                  <li><mat-icon class="success-icon">check_circle</mat-icon> Personalized meal recommendations</li>
+                  <li><mat-icon class="success-icon">check_circle</mat-icon> Expert health consultation</li>
+                  <li><mat-icon class="success-icon">check_circle</mat-icon> 24/7 customer support</li>
+                </ul>
+              </div>
+
+              <!-- Payment Button -->
+              <div class="payment-btn-container mt-4">
+                <button 
+                  mat-raised-button 
+                  color="primary" 
+                  class="pay-btn w-100"
+                  (click)="pay()" 
+                  [disabled]="form.invalid || isProcessing"
+                  [class.loading]="isProcessing">
+                  
+                  <span *ngIf="!isProcessing">
+                    <mat-icon>payment</mat-icon>
+                    Pay ₹{{ total | number:'1.2-2' }}
+                  </span>
+                  
+                  <span *ngIf="isProcessing">
+                    <mat-spinner diameter="20" class="me-2"></mat-spinner>
+                    Processing Payment...
+                  </span>
+                </button>
+                
+                <p class="text-muted text-center mt-2 small">
+                  <mat-icon class="lock-icon">lock</mat-icon>
+                  Secure payment powered by Razorpay
+                </p>
+              </div>
+
+              <!-- Help Text -->
+              <div class="help-text mt-3">
+                <p class="small text-muted">
+                  By proceeding, you agree to our 
+                  <a href="#" class="text-primary">Terms of Service</a> and 
+                  <a href="#" class="text-primary">Privacy Policy</a>.
+                </p>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
+
+<app-footer></app-footer>
+
+
