@@ -198,7 +198,7 @@
                                     <input 
                                     type="time"
                                     formControlName="startTime"
-                                    (change)="onStartTimeChange(i, sh)"
+                                    
                                     />
                               </div>
                             </div>
@@ -252,7 +252,7 @@
                                  <input 
                                    type="time"
                                   formControlName="endTime"
-                                  (change)="onStartTimeChange(i, sh)"
+                                  
                                  />
                               </div>
                             </div>
@@ -374,7 +374,9 @@
                               <label class="form-label">Duty End Date</label>
                               <input type="date" class="form-control"
                                 [min]="shiftDetail.get('dutyStartDate')?.value || today"
-                                formControlName="dutyEndDate" />
+                                formControlName="dutyEndDate" readonly />
+
+
                               <div class="invalid-feedback"
                                 *ngIf="shiftDetail.get('dutyEndDate')?.invalid && shiftDetail.get('dutyEndDate')?.touched">
                                 Duty End Date is required.

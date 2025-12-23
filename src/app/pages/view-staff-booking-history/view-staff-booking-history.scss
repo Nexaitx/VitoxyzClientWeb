@@ -22,7 +22,9 @@ $orange: #ff8a00;
   color: #222;
   box-sizing: border-box;
 }
-
+.tabs-wrapper {
+  overflow: hidden;
+}
 /* Tabs */
 .tabs {
   display: flex;
@@ -88,14 +90,17 @@ $orange: #ff8a00;
     border-radius: 20px;
     font-size: 12px;
     font-weight: 600;
-    color: rgb(26, 194, 23);
+    color: rgb(247, 184, 10);
 
     &.pending { background: #efb400; }
     &.completed { background: #28a745; }
     &.cancelled { background: #d9534f; }
   }
 }
-
+.statusbgcls{
+   color: rgb(247, 184, 10);
+   background: #fff;
+}
 /* order item layout */
 .order-item {
   display: flex;
@@ -311,6 +316,44 @@ $orange: #ff8a00;
   // .modal-actions {
   //   flex-direction: column;
   // }
+}
+/* =====================================
+   SMALL MOBILE – SINGLE ROW 4 TABS
+   ===================================== */
+@media (max-width: 480px) {
+
+  .tabs {
+    display: flex;
+    flex-wrap: nowrap;          /* FORCE single row */
+    overflow-x: auto;           /* Allow scroll instead of wrap */
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+    padding-bottom: 6px;
+  }
+
+  /* Hide scrollbar (clean UI) */
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tabs button {
+    flex: 0 0 auto;             /* Prevent shrinking */
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 8px 14px;
+    // border-radius: 20px;
+    background: #ffe2d4;
+    color: #333;
+    font-weight: 600;
+    opacity: 1;
+  }
+
+  .tabs button.active {
+    background: linear-gradient(135deg, #ff8a00, #ffb066);
+    color: #fff;
+    border-bottom: none;
+    box-shadow: 0 3px 8px rgba(255, 138, 0, 0.45);
+  }
 }
 
 /* Large phones */

@@ -6,12 +6,15 @@ import { ViewMedicine } from './pages/medicines/view-medicine/view-medicine';
 import { SearchResultComponent } from '../app/pages/shared/search-result/search-result';
 import { MultiproductsformComponent } from './pages/medicines/multiproductsform/multiproductsform';
 import { MedicineFilterComponent } from './pages/medicines/medicine-filter/medicine-filter';
+import { DietGuard } from './core/guards/diet.guard';
+import { Empty } from './shared/empty/empty';
 
 export const routes: Routes = [
   {
     path: '',
     component: Header,
     children: [
+  // 
       {
         path: '',
         loadChildren: () => import('./pages/medicines/medicines-module').then(m => m.MedicinesModule),
@@ -38,6 +41,11 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/book-staff-process/book-staff/book-staff').then(m => m.BookStaff),
 
       },
+      {
+  path: 'diet',
+  canActivate: [DietGuard],
+  component: Empty
+},
       {
         path: 'diet/user-onboarding',
         component: UserOnboarding

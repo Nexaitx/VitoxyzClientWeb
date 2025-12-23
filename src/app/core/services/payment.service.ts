@@ -123,7 +123,15 @@ export class PaymentService {
       headers: this.getHeaders()
     });
   }
-
+markIncompletePayment(bookingId: number) {
+  return this.http.post(
+    `${this.apiUrl}/user/${bookingId}/mark-incomplete-payment?enabled=true`,
+    {}, // ✅ EMPTY BODY
+    {
+      headers: this.getHeaders() // ✅ HEADERS IN OPTIONS
+    }
+  );
+}
   // Get payments by booking ID
   getPaymentsByBooking(bookingId: number): Observable<PaymentResponse[]> {
     return this.http.get<PaymentResponse[]>(`${this.apiUrl}/payments/booking/${bookingId}`, {

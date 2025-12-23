@@ -1,19 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BookingItem, PageMeta, ViewStaffBookingHistoryService } from '@src/app/core/services/view-staff-booking-history.service';
+import { BookingItem, CancellationItem, PageMeta, ViewStaffBookingHistoryService } from '@src/app/core/services/view-staff-booking-history.service';
 
 
 import { finalize } from 'rxjs/operators';
 
-type TabKey = 'past' | 'ongoing' | 'upcoming';
+type TabKey = 'past' | 'ongoing' | 'upcoming' | 'completed'| 'my-cancellations';
 
 @Component({
   selector: 'app-view-staff-booking-history',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,FormsModule],
   templateUrl: './view-staff-booking-history.html',
   styleUrls: ['./view-staff-booking-history.scss']
 })
@@ -27,7 +27,9 @@ export class ViewStaffBookingHistory implements OnInit {
   pages: Record<TabKey, PageMeta | null> = {
     past: null,
     ongoing: null,
-    upcoming: null
+    upcoming: null,
+    completed:null,
+    'my-cancellations': null
   };
 
   // local pagination controls
@@ -40,12 +42,20 @@ export class ViewStaffBookingHistory implements OnInit {
   overrideSubmitting = false;
   overrideResult: any = null;
   overrideError: string | null = null;
-
+completedBookings: BookingItem[] = [];
+cancellations: CancellationItem[] = [];
   // View details popup
 viewDetailsOpen = false;
 staffDetailsLoading = false;
 staffDetailsError: string | null = null;
 staffDetails: any = null;
+
+// Cancel booking popup
+cancelModalOpen = false;
+cancelBookingId!: number;
+cancelReason = '';
+cancelSubmitting = false;
+cancelResult: string | null = null;
 
   private overrideUrl = 'https://vitoxyz.com/Backend/api/booking/override/bulk-request?accountNonExpired=true&credentialsNonExpired=true&accountNonLocked=true&authorities=%5B%7B%22authority%22%3A%22string%22%7D%5D&username=string&password=string&enabled=true';
 
@@ -70,6 +80,14 @@ staffDetails: any = null;
   setTab(tab: TabKey) {
     this.activeTab = tab;
     this.page = 0; // reset page on tab switch or keep persisted if you want
+      if (tab === 'completed') {
+    this.loadCompletedBookings();
+    return;
+  }
+   if (tab === 'my-cancellations') {
+    this.loadMyCancellations();
+    return;
+  }
     if (!this.pages[tab]) {
       this.loadTab(tab);
     }
@@ -96,6 +114,41 @@ staffDetails: any = null;
       }
     });
   }
+private loadCompletedBookings() {
+  this.loading = true;
+  this.error = null;
+
+  this.viewStaffBookingHistoryService
+    .getCompletedBookings()
+    .pipe(finalize(() => (this.loading = false)))
+    .subscribe({
+      next: data => {
+        this.completedBookings = data;
+      },
+      error: err => {
+        console.error('Completed bookings API error', err);
+        this.error = 'Failed to load completed bookings';
+      }
+    });
+}
+
+private loadMyCancellations() {
+  this.loading = true;
+  this.error = null;
+
+  this.viewStaffBookingHistoryService
+    .getMyCancellations()
+    .pipe(finalize(() => (this.loading = false)))
+    .subscribe({
+      next: (res) => {
+        this.cancellations = res.cancellations || [];
+      },
+      error: (err) => {
+        console.error('My cancellations API error', err);
+        this.error = 'Failed to load cancellations';
+      }
+    });
+}
 
   // pagination controls
   goToPage(newPage: number) {
@@ -114,6 +167,9 @@ staffDetails: any = null;
 
   // convenience for template
   get items(): BookingItem[] {
+      if (this.activeTab === 'completed') {
+    return this.completedBookings;
+  }
     const p = this.pages[this.activeTab];
     return p ? p.content : [];
   }
@@ -320,6 +376,76 @@ maskPhone(phone?: string | number): string {
       }
     });
   }
+  openCancelModal(booking: BookingItem) {
+    if (!booking.bookingId) {
+    console.error('Booking ID is missing', booking);
+    this.cancelResult = 'Unable to cancel booking. Booking ID missing.';
+    return;
+  }
+  this.cancelBookingId = booking.bookingId;
+  this.cancelReason = '';
+  this.cancelResult = null;
+  this.cancelModalOpen = true;
+}
+
+closeCancelModal() {
+  this.cancelModalOpen = false;
+}
+
+confirmCancelBooking() {
+  if (!this.cancelReason || !this.cancelBookingId) return;
+
+  this.cancelSubmitting = true;
+  this.cancelResult = null;
+
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    this.cancelSubmitting = false;
+    this.cancelResult = 'User not authenticated';
+    return;
+  }
+
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  });
+
+  const payload = {
+    bookingId: this.cancelBookingId,
+    reason: this.cancelReason
+  };
+
+  this.http.post<any>(
+    'https://vitoxyz.com/Backend/api/bookings/cancel',
+    payload,
+    { headers }
+  ).subscribe({
+    next: (res) => {
+      if (res?.success) {
+        if (res.isRefundEligible) {
+          this.cancelResult =
+            `You are eligible for ₹${res.refundAmount} refund.`;
+        } else {
+          this.cancelResult =
+            'You are not eligible for a refund.';
+        }
+
+        // reload cancellations + bookings
+        this.loadMyCancellations();
+        this.loadTab(this.activeTab);
+      } else {
+        this.cancelResult = res?.message || 'Cancellation failed';
+      }
+
+      this.cancelSubmitting = false;
+    },
+    error: (err) => {
+      console.error('Cancel booking error', err);
+      this.cancelResult = 'Failed to cancel booking';
+      this.cancelSubmitting = false;
+    }
+  });
+}
 
   // small helpers
   private asISODate(value: string | Date): string {

@@ -24,6 +24,17 @@ export class ViewStaff implements OnInit {
   billingForm!: FormGroup;
   loading: boolean = true;
   isPaymentProcessing: boolean = false;
+// ⏳ Payment timer
+// paymentTimeLeft = 0; // in seconds
+// paymentTimerInterval: any;
+// isPaymentExpired = false;
+// readonly PAYMENT_DURATION = 10 * 60;
+countdown: string = '10:00';
+private timerSubscription: any;
+private PAYMENT_TIME_LIMIT = 10 * 60; // 10 minutes (seconds)
+private paymentTimerStarted = false;
+showPaymentTimer = false;
+paymentExpired = false;
 
   constructor(
     private fb: FormBuilder,
@@ -39,7 +50,7 @@ export class ViewStaff implements OnInit {
     this.fetchBookingResponses();
     this.checkToken();
   }
-
+ 
   private checkToken(): void {
     const token = this.getToken();
     console.log('🔑 Token Check - Available:', !!token);
@@ -47,6 +58,23 @@ export class ViewStaff implements OnInit {
       console.log('📝 Token Preview:', token.substring(0, 20) + '...');
     }
   }
+  ngOnDestroy(): void {
+  this.stopPaymentCountdown();
+}
+reloadPage(): void {
+  console.log('🔄 Reload button clicked');
+
+  // reset state
+  this.staffDetails = [];
+  this.selectedStaff = null;
+  this.loading = true;
+
+  // force UI update
+  this.cd.detectChanges();
+
+  // re-fetch data
+  this.fetchBookingResponses();
+}
 
   private getToken(): string | null {
     return localStorage.getItem('token') ||
@@ -65,6 +93,80 @@ export class ViewStaff implements OnInit {
       gstNumber: ['']
     });
   }
+private startPaymentCountdown(): void {
+  if (this.paymentTimerStarted) {
+    return; // 🔒 prevent multiple timers
+  }
+
+  this.paymentTimerStarted = true;
+  this.showPaymentTimer = true;
+  this.paymentExpired = false;
+
+  let remainingSeconds = this.PAYMENT_TIME_LIMIT;
+  this.updateCountdownDisplay(remainingSeconds);
+
+  this.timerSubscription = setInterval(() => {
+    remainingSeconds--;
+    this.updateCountdownDisplay(remainingSeconds);
+
+    if (remainingSeconds <= 0) {
+      this.stopPaymentCountdown();
+      this.paymentExpired = true;
+      this.callMarkPaymentIncompleteApi();
+    }
+  }, 1000);
+}
+
+
+private updateCountdownDisplay(seconds: number): void {
+  const minutes = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  this.countdown = `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+}
+
+private stopPaymentCountdown(): void {
+  if (this.timerSubscription) {
+    clearInterval(this.timerSubscription);
+    this.timerSubscription = null;
+  }
+  this.showPaymentTimer = false;
+}
+
+private callMarkPaymentIncompleteApi(): void {
+  const bookingIds = this.getAllBookingIds();
+
+  if (!bookingIds.length) {
+    console.warn('No booking IDs found. Skipping incomplete API.');
+    return;
+  }
+
+  console.log('⏰ Payment expired → marking bookings incomplete:', bookingIds);
+
+  bookingIds.forEach((bookingId) => {
+    this.paymentService.markIncompletePayment(bookingId).subscribe({
+      next: () => {
+        console.log(`✅ Booking ${bookingId} marked incomplete`);
+      },
+      error: (err) => {
+        console.error(`❌ Failed for booking ${bookingId}`, err);
+      }
+    });
+  });
+
+  this.snackBar.open(
+    'Payment expired. Booking marked as incomplete.',
+    'Close',
+    {
+      duration: 4000,
+      panelClass: ['error-snackbar'],
+      horizontalPosition: 'right',
+      verticalPosition: 'top'
+    }
+  );
+
+  this.fetchBookingResponses();
+}
+
 
   fetchBookingResponses() {
     const MIN_LOADING_TIME = 8000;
@@ -110,6 +212,16 @@ export class ViewStaff implements OnInit {
           });
 
           this.staffDetails = Object.values(grouped);
+          // ⏳ Start payment timer only if staff exists
+if (this.getTotalStaff() > 0 && !this.paymentTimerStarted) {
+  this.startPaymentCountdown();
+}
+
+if (this.getTotalStaff() === 0) {
+  this.stopPaymentCountdown();
+  this.paymentTimerStarted = false;
+}
+
           console.log("👥 FINAL FORMATTED STAFF:", this.staffDetails);
 
           const elapsed = Date.now() - startTime;
@@ -133,19 +245,36 @@ export class ViewStaff implements OnInit {
     }, 6000);
 
   }
-  private closeModal(modalId: string) {
-    const modalEl = document.getElementById(modalId);
-    if (!modalEl) return;
-    // reuse existing instance if created by Bootstrap when modal opened
-    const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-    try {
-      modalInstance.hide();
-    } catch (e) {
-      console.warn('Could not hide modal', modalId, e);
-    }
+  private closeModal(modalId: string): void {
+  const modalElement = document.getElementById(modalId);
+
+  if (modalElement) {
+    modalElement.classList.remove('show');
+    modalElement.setAttribute('aria-hidden', 'true');
+    modalElement.style.display = 'none';
   }
 
+  // Remove backdrop
+  const backdrops = document.getElementsByClassName('modal-backdrop');
+  while (backdrops.length > 0) {
+    backdrops[0].parentNode?.removeChild(backdrops[0]);
+  }
+
+  // Restore body scroll
+  document.body.classList.remove('modal-open');
+  document.body.style.overflow = '';
+  document.body.style.paddingRight = '';
+}
+
+
   async onProceedToPayment(billingName: string, billingAddress: string, gstNumber: string, phoneNumber: string) {
+//     if (this.isPaymentExpired) {
+//   this.snackBar.open('Payment time expired. Please select staff again.', 'Close', {
+//     duration: 3000,
+//     panelClass: ['error-snackbar']
+//   });
+//   return;
+// }
     if (this.billingForm.invalid) {
       this.markFormGroupTouched();
       return;
@@ -481,12 +610,10 @@ export class ViewStaff implements OnInit {
           this.paymentService.paymentDone(bookingIds).subscribe({
             next: (doneResp: any) => {
               console.log('📡 paymentDone response:', doneResp);
-
-            
-               setTimeout(() => {
+              setTimeout(() => {
            // close modal if open
           this.router.navigate(['/view-staff-booking-history']);
-        }, 2000);
+        },  400);
             },
             error: (err) => {
               console.error('⚠️ paymentDone API failed:', err);
@@ -718,7 +845,7 @@ export class ViewStaff implements OnInit {
         }
         setTimeout(() => {
           this.router.navigate(['/view-staff']);
-        }, 1000);
+        }, 400);
       },
       error: (err) => {
         console.error('Error removing staff:', err);
@@ -816,7 +943,7 @@ export class ViewStaff implements OnInit {
         this.selectedStaff = null;
         setTimeout(() => {
           this.router.navigate(['/view-staff']);
-        }, 1000);
+        }, 400);
       },
       error: (err) => {
         console.error('Error adding staff:', err);

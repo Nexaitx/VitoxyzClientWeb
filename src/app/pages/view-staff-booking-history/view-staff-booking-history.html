@@ -1,12 +1,19 @@
 <div class="orders-container">
 
   <!-- Tabs -->
+   <div class="tabs-wrapper">
   <div class="tabs">
     <button (click)="setTab('upcoming')" [class.active]="activeTab === 'upcoming'">Upcoming</button>
     <button (click)="setTab('ongoing')" [class.active]="activeTab === 'ongoing'">Ongoing</button>
     <button (click)="setTab('past')" [class.active]="activeTab === 'past'">Past</button>
+     <button (click)="setTab('completed')" [class.active]="activeTab === 'completed'">
+    Booking Completed
+  </button>
+  <button (click)="setTab('my-cancellations')" [class.active]="activeTab === 'my-cancellations'">
+  My Cancellations
+</button>
   </div>
-
+</div>
   <!-- Loading / Error -->
   <div class="loading" *ngIf="loading">Loading...</div>
   <div class="error" *ngIf="error">{{ error }}</div>
@@ -17,6 +24,8 @@
   </div>
 
   <!-- Booking Cards -->
+ 
+   <div *ngIf="activeTab !== 'completed'">
   <div class="order-card" *ngFor="let b of items">
 
     <!-- Header -->
@@ -56,7 +65,7 @@
     <div class="order-item">
   <div class="details">
     <p><strong>Booking ID:</strong> {{ b.bookingId ?? '—' }}</p>
-    <p><strong>Staff:</strong> {{ b.staffName ?? '—' }}</p>
+    <p><strong>StaffName:</strong> {{ b.staffName ?? '—' }}</p>
     <p *ngIf="b.clientName"><strong>Client:</strong> {{ b.clientName }}</p>
 
     <p><strong>Status:</strong>
@@ -101,10 +110,13 @@
     <div class="order-footer">
       <button class="btn view" (click)="viewStaffDetails(b.staffId)">👁 View Details</button>
     <button class="btn reorder" (click)="openReorderModal(b)">↻ Reorder</button>
-      <button class="btn cancel">✖ Cancel</button>
+      <button class="btn cancel" (click)="openCancelModal(b)">
+  ✖ Cancel
+</button>
     </div>
 
   </div>
+</div>
 
   <!-- Pagination -->
   <div class="pagination" *ngIf="pages[activeTab] as p">
@@ -114,6 +126,162 @@
     <button (click)="goToPage(page + 1)" [disabled]="p.last">Next</button>
     <button (click)="goToPage(p.totalPages - 1)" [disabled]="p.last">Last</button>
   </div>
+  <!-- COMPLETED BOOKINGS VIEW -->
+<div *ngIf="activeTab === 'completed'">
+
+  <div class="order-card" *ngFor="let b of completedBookings">
+
+    <!-- Header -->
+     <div class="order-header">
+      <div>
+        <h3>Booking #{{ b.bookingId }}</h3>
+        <p>Placed on {{ b.startDate | date:'dd MMM yyyy' }}</p>
+      </div>
+
+      <!-- <div class="status-badges">
+        
+        <span class="badge completed" *ngIf="b.status === 'Completed'">Completed</span>
+       
+      </div> -->
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Booking Details 
+      <div class="col">
+            
+          </div>-->
+    <!-- <div class="order-item">
+      <div class="details">
+        <p><strong>Booking ID:</strong> {{ b.bookingId ?? '—' }}</p>
+        <p><strong>Staff:</strong> {{ b.staffName }}</p>
+        <p><strong>Client:</strong> {{ b.clientName }}</p>
+        <p><strong>Service From:</strong> {{ b.startDate | date:'medium' }}</p>
+        <p><strong>Service To:</strong> {{ b.endDate | date:'medium' }}</p>
+      </div>
+
+      <div class="price">
+        <p class="amount">₹{{ b.Price ?? 0 }}</p>
+      </div>
+    </div> -->
+
+    <div class="order-item">
+  <div class="details">
+    <p><strong>Booking ID:</strong> {{ b.bookingId ?? '—' }}</p>
+    <p><strong>StaffName:</strong> {{ b.staffName ?? '—' }}</p>
+    <p><strong>StaffId:</strong> {{ b.staffId ?? '—' }}</p>
+    <p *ngIf="b.clientName"><strong>Client:</strong> {{ b.clientName }}</p>
+    <p><strong>Service From:</strong> {{ b.startDate | date:'mediumDate' }}</p>
+    <p><strong>Service To:</strong> {{ b.endDate | date:'mediumDate' }}</p>
+      <p><strong>Status:</strong>
+        
+      <span class="statusbgcls  "
+        [ngClass]="{
+          'bg-success  ': (b.status || '').toLowerCase() === 'confirmed' || (b.status || '').toLowerCase() === 'accepted',
+          'bg-warning text-dark': (b.status || '').toLowerCase() === 'pending',
+          'bg-danger': (b.status || '').toLowerCase() === 'cancelled' || (b.status || '').toLowerCase() === 'rejected',
+          'bg-secondary': !(b.status)
+        }">
+        {{ b.status || 'UNKNOWN' }}
+      </span>
+    </p>
+     <!-- <p><strong>CreatedAt:</strong> {{ b.createdAt }} </p> -->
+    <p><strong>Time Slot:</strong>
+      {{ b.timeSlot || (b.startTimeHour + ':' + b.startTimeMinute + ' ' + b.startTimeAmPm + ' - ' +
+                        b.endTimeHour + ':' + b.endTimeMinute + ' ' + b.endTimeAmPm) }}
+    </p>
+     <!-- <p><strong>UpdatedAt:</strong> {{ b.updatedAt }} </p> -->
+    <p><strong>Category:</strong> {{ b.staffCategory }} </p>
+    <p><strong>StaffPhone:</strong> {{maskPhone(b.staffPhone ) }}</p>
+    <!-- <p><strong>StaffEmail:</strong> {{ b.staffEmail  }}</p> -->
+    <p><strong>StaffProfession:</strong> {{ b.staffProfession  }}</p>
+    <p><strong>StaffRating:</strong> {{ b.staffRating  }}</p>
+    <!-- <p><strong>PaymentId:</strong> {{ b.paymentId  }}</p> -->
+    <p><strong>PaymentStatus:</strong> {{ b.paymentStatus  }}</p>
+    <p><strong>PaymentAmount:</strong> {{ b.paymentAmount  }}</p>
+
+
+
+  </div>
+
+ 
+</div>
+
+    <div class="divider"></div>
+
+    <!-- Footer -->
+    <div class="order-footer">
+      <button class="btn view" (click)="viewStaffDetails(b.staffId)">
+        👁 View Staff
+      </button>
+    </div>
+
+  </div>
+
+</div>
+<!-- MY CANCELLATIONS VIEW -->
+<div *ngIf="activeTab === 'my-cancellations'">
+
+  <!-- <div class="empty"
+       *ngIf="!loading && !error && cancellations.length === 0">
+    No cancellations found.
+  </div> -->
+
+  <div class="order-card" *ngFor="let c of cancellations">
+
+    <div class="order-header">
+      <div>
+        <h3>Booking #{{ c.bookingId }}</h3>
+        <p>Cancelled on {{ c.cancelledAt | date:'dd MMM yyyy, hh:mm a' }}</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="order-item">
+      <div class="details">
+
+        <p><strong>Cancellation ID:</strong> {{ c.cancellationId }}</p>
+
+        <p><strong>Reason:</strong> {{ c.reason }}</p>
+
+        <p><strong>Cancellation Type:</strong> {{ c.cancellationType }}</p>
+
+        <p><strong>Booking Amount:</strong> ₹{{ c.bookingAmount }}</p>
+
+        <p>
+          <strong>Refund Amount:</strong>
+          ₹{{ c.refundAmount }}
+        </p>
+
+        <p>
+          <strong>Refund Status:</strong>
+          <span class="badge"
+                [ngClass]="{
+                  'bg-success': c.refundStatus === 'PROCESSED',
+                  'bg-warning text-dark': c.refundStatus !== 'PROCESSED'
+                }">
+            {{ c.refundStatus }}
+          </span>
+        </p>
+
+        <p><strong>Refunded:</strong> {{ c.isRefunded ? 'Yes' : 'No' }}</p>
+
+        <p *ngIf="c.refundTransactionId">
+          <strong>Transaction ID:</strong> {{ c.refundTransactionId }}
+        </p>
+
+        <p>
+          <strong>Eligible For Refund:</strong>
+          {{ c.isEligibleForRefund ? 'Yes' : 'No' }}
+        </p>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <!-- Reorder Modal -->
 <div *ngIf="reorderOpen" class="reorder-modal-backdrop">
   <div class="reorder-modal">
@@ -256,5 +424,42 @@
 
   </div>
 </div>
+
+<!-- Cancel Booking Modal -->
+<div class="modal-backdrop" *ngIf="cancelModalOpen">
+  <div class="modal-card">
+
+    <h3>Cancel Booking</h3>
+
+    <p><strong>Booking ID:</strong> {{ cancelBookingId }}</p>
+
+    <textarea
+      rows="4"
+      placeholder="Enter cancellation reason"
+      [(ngModel)]="cancelReason"
+      class="form-control">
+    </textarea>
+
+    <div class="mt-3 text-end">
+      <button class="btn btn-secondary text-light me-2" (click)="closeCancelModal()">
+        Close
+      </button>
+
+      <button
+        class="btn btn-danger"
+        [disabled]="cancelSubmitting || !cancelReason"
+        (click)="confirmCancelBooking()">
+        {{ cancelSubmitting ? 'Cancelling...' : 'Confirm Cancel' }}
+      </button>
+    </div>
+
+    <!-- Result Message -->
+    <div *ngIf="cancelResult" class="mt-3">
+      <p class="fw-bold">{{ cancelResult }}</p>
+    </div>
+
+  </div>
+</div>
+
 
 </div>
