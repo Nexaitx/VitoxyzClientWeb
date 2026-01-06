@@ -3,13 +3,13 @@
   <!-- Tabs -->
    <div class="tabs-wrapper">
   <div class="tabs">
-    <button (click)="setTab('upcoming')" [class.active]="activeTab === 'upcoming'">Upcoming</button>
-    <button (click)="setTab('ongoing')" [class.active]="activeTab === 'ongoing'">Ongoing</button>
-    <button (click)="setTab('past')" [class.active]="activeTab === 'past'">Past</button>
-     <button (click)="setTab('completed')" [class.active]="activeTab === 'completed'">
+    <button class="rounded-pill  "(click)="setTab('upcoming')" [class.active]="activeTab === 'upcoming'">Upcoming</button>
+    <button class="rounded-pill  " (click)="setTab('ongoing')" [class.active]="activeTab === 'ongoing'">Ongoing</button>
+    <button class="rounded-pill  " (click)="setTab('past')" [class.active]="activeTab === 'past'">Past</button>
+     <button class="rounded-pill  " (click)="setTab('completed')" [class.active]="activeTab === 'completed'">
     Booking Completed
   </button>
-  <button (click)="setTab('my-cancellations')" [class.active]="activeTab === 'my-cancellations'">
+  <button class="rounded-pill  " (click)="setTab('my-cancellations')" [class.active]="activeTab === 'my-cancellations'">
   My Cancellations
 </button>
   </div>
@@ -71,7 +71,7 @@
     <p><strong>Status:</strong>
       <span class="badge"
         [ngClass]="{
-          'bg-success': (b.status || '').toLowerCase() === 'confirmed' || (b.status || '').toLowerCase() === 'accepted',
+          'bg-success text-muted': (b.status || '').toLowerCase() === 'confirmed' || (b.status || '').toLowerCase() === 'accepted',
           'bg-warning text-dark': (b.status || '').toLowerCase() === 'pending',
           'bg-danger': (b.status || '').toLowerCase() === 'cancelled' || (b.status || '').toLowerCase() === 'rejected',
           'bg-secondary': !(b.status)
@@ -119,13 +119,13 @@
 </div>
 
   <!-- Pagination -->
-  <div class="pagination" *ngIf="pages[activeTab] as p">
+  <!-- <div class="pagination" *ngIf="pages[activeTab] as p">
     <button (click)="goToPage(0)" [disabled]="p.first">First</button>
     <button (click)="goToPage(page - 1)" [disabled]="p.first">Prev</button>
     <span>Page {{ p.currentPage + 1 }} / {{ p.totalPages }}</span>
     <button (click)="goToPage(page + 1)" [disabled]="p.last">Next</button>
     <button (click)="goToPage(p.totalPages - 1)" [disabled]="p.last">Last</button>
-  </div>
+  </div> -->
   <!-- COMPLETED BOOKINGS VIEW -->
 <div *ngIf="activeTab === 'completed'">
 
@@ -285,8 +285,15 @@
 <!-- Reorder Modal -->
 <div *ngIf="reorderOpen" class="reorder-modal-backdrop">
   <div class="reorder-modal">
+    <button
+    type="button"
+    class="reorder-close-btn"
+    aria-label="Close"
+    (click)="closeReorderModal()">
+    <i class="bi bi-x-lg  "></i>
+  </button>
     <h4>Reorder Booking(s)</h4>
-
+      
     <form [formGroup]="overrideForm" (ngSubmit)="submitOverride()">
 
       <!-- <div class="form-row">
@@ -301,14 +308,17 @@
           <h5>Booking #{{ idx + 1 }}</h5>
           <label>Staff ID</label>
           <input type="number" formControlName="staffId" />
-           
-          <label>Start Date</label>
-          <input type="date" formControlName="startDate" />
-
-          <label>End Date</label>
-          <input type="date" formControlName="endDate" />
-
           <div class="time-row">
+           <div>
+             <label>Start Date</label>
+          <input type="date" formControlName="startDate" />
+           </div>
+         <div>
+           <label>End Date</label>
+          <input type="date" formControlName="endDate" />
+         </div>
+         </div>
+           <div class="time-row">
             <div>
               <label>Start Time Hour</label>
               <input type="text" formControlName="startTimeHour" />
@@ -419,7 +429,7 @@
     </div>
 
     <div class="text-end mt-2">
-      <button class="btn cancel text-white" (click)="closeViewDetails()">Close</button>
+      <button class="btn cancel rounded-pill text-white" (click)="closeViewDetails()">Close</button>
     </div>
 
   </div>
@@ -441,12 +451,12 @@
     </textarea>
 
     <div class="mt-3 text-end">
-      <button class="btn btn-secondary text-light me-2" (click)="closeCancelModal()">
+      <button class="btn btn-primary rounded-pill text-light me-2" (click)="closeCancelModal()">
         Close
       </button>
 
       <button
-        class="btn btn-danger"
+        class="btn  btn-primary rounded-pill text-light"
         [disabled]="cancelSubmitting || !cancelReason"
         (click)="confirmCancelBooking()">
         {{ cancelSubmitting ? 'Cancelling...' : 'Confirm Cancel' }}
@@ -471,7 +481,7 @@
     </p>
 
     <button
-      class="btn btn-primary mt-3"
+      class="btn btn-primary  rounded-pill mt-3"
       (click)="cancelSuccessOpen = false">
       OK
     </button>
@@ -481,3 +491,10 @@
 
 
 </div>
+<div>
+<app-footer></app-footer>
+</div>
+
+
+
+<app-mobile-footer-nav></app-mobile-footer-nav>

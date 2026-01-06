@@ -33,8 +33,8 @@ import { PushNotificationService } from '@src/app/core/services/push-notificatio
     MobileFooterNavComponent,
     TextBanner,
     TextImageComponent,
-  
-],
+
+  ],
   templateUrl: './user-onboarding.html',
   styleUrl: './user-onboarding.scss'
 })
@@ -42,30 +42,31 @@ export class UserOnboarding implements OnInit {
   private _formBuilder = inject(FormBuilder);
   private router = inject(Router);
   private http = inject(HttpClient);
-  @ViewChild('stepper') stepper!: MatStepper; 
+  @ViewChild('stepper') stepper!: MatStepper;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
   fourthFormGroup: FormGroup;
-  isOnMedication: string = 'no'; 
+  isOnMedication: string = 'no';
   medicalConditionsOptions: string[] = ['Diabetes', 'Thyroid', 'PCOS', 'Hypertension', 'None'];
   displayedMedicalConditionsOptions: string[] = [];
 
   constructor(private notif: PushNotificationService) {
     this.firstFormGroup = this._formBuilder.group({
       fullName: ['', Validators.required],
+      lastName: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(1)]],
       gender: ['', Validators.required],
-      heightValue: [0, [Validators.required, Validators.min(1)]], 
-      heightUnit: ['Feet', Validators.required], 
-      weightValue: [0, [Validators.required, Validators.min(1)]], 
+      heightValue: [0, [Validators.required, Validators.min(1)]],
+      heightUnit: ['Feet', Validators.required],
+      weightValue: [0, [Validators.required, Validators.min(1)]],
     });
 
     this.secondFormGroup = this._formBuilder.group({
       dietPreference: ['', Validators.required],
-      medicalConditions: this._formBuilder.array([], Validators.required), 
-      anyMedication: ['no', Validators.required], 
-      medicationDetails: [''] 
+      medicalConditions: this._formBuilder.array([], Validators.required),
+      anyMedication: ['no', Validators.required],
+      medicationDetails: ['']
     });
 
     this.thirdFormGroup = this._formBuilder.group({
@@ -78,9 +79,9 @@ export class UserOnboarding implements OnInit {
       activityLevel: ['', Validators.required],
       wakeUpTime: ['', Validators.required],
       sleepTime: ['', Validators.required],
-      breakfastTime: [''], 
-      lunchTime: [''],     
-      dinnerTime: ['']     
+      breakfastTime: [''],
+      lunchTime: [''],
+      dinnerTime: ['']
     });
   }
 
@@ -96,7 +97,7 @@ export class UserOnboarding implements OnInit {
         );
         if (pcosIndexInFormArray !== -1) {
           this.medicalConditionsFormArray.removeAt(pcosIndexInFormArray);
-          this.medicalConditionsFormArray.updateValueAndValidity(); 
+          this.medicalConditionsFormArray.updateValueAndValidity();
         }
       } else {
         this.displayedMedicalConditionsOptions = [...this.medicalConditionsOptions];
@@ -113,7 +114,7 @@ export class UserOnboarding implements OnInit {
       }
       medicationDetailsControl?.updateValueAndValidity();
     });
-     console.log('[App] ngOnInit: starting');          // <-- confirm component boots
+    console.log('[App] ngOnInit: starting');          // <-- confirm component boots
     try {
       this.notif.listen();
       console.log('[App] listenMessages() called');
@@ -122,21 +123,21 @@ export class UserOnboarding implements OnInit {
     }
   }
   enable() {
-  console.log('[App] enable() pressed — requesting permission');
+    console.log('[App] enable() pressed — requesting permission');
 
-  this.notif.requestPermission().then(token => {
-    console.log('[App] requestPermission returned:', token);
+    this.notif.requestPermission().then(token => {
+      console.log('[App] requestPermission returned:', token);
 
-    if (!token) {
-      console.warn('[App] No token received. Check SW errors.');
-    } else {
-      console.log('[App] FCM token acquired:', token);
-    }
-  })
-  .catch(err => {
-    console.error('[App] requestPermission threw:', err);
-  });
-}
+      if (!token) {
+        console.warn('[App] No token received. Check SW errors.');
+      } else {
+        console.log('[App] FCM token acquired:', token);
+      }
+    })
+      .catch(err => {
+        console.error('[App] requestPermission threw:', err);
+      });
+  }
   get medicalConditionsFormArray(): FormArray {
     return this.secondFormGroup.get('medicalConditions') as FormArray;
   }
@@ -167,7 +168,7 @@ export class UserOnboarding implements OnInit {
         }
       }
     }
-    medicalConditionsArray.updateValueAndValidity(); 
+    medicalConditionsArray.updateValueAndValidity();
   }
 
   isMedicalConditionSelected(condition: string): boolean {
@@ -181,113 +182,117 @@ export class UserOnboarding implements OnInit {
       if (increment) {
         currentValue++;
       } else {
-        currentValue = Math.max(0, currentValue - 1); 
+        currentValue = Math.max(0, currentValue - 1);
       }
       control.setValue(currentValue);
     }
   }
 
   submitForm() {
-    this.firstFormGroup.markAllAsTouched();
-    this.secondFormGroup.markAllAsTouched();
-    this.thirdFormGroup.markAllAsTouched();
-    this.fourthFormGroup.markAllAsTouched();
-    if (this.firstFormGroup.valid && this.secondFormGroup.valid && this.thirdFormGroup.valid && this.fourthFormGroup.valid) {
-      const selectedMedicalConditions: string[] = this.secondFormGroup.value.medicalConditions;
-      const medicalConditionString = selectedMedicalConditions.length > 0
-        ? selectedMedicalConditions.join(', ')
-        : '';
-      const finalPayload = {
-        fullName: this.firstFormGroup.value.fullName,
-        age: this.firstFormGroup.value.age,
-        gender: this.firstFormGroup.value.gender,
-        height: `${this.firstFormGroup.value.heightValue} ${this.firstFormGroup.value.heightUnit}`,
-        weight: `${this.firstFormGroup.value.weightValue} kg`, 
+  this.firstFormGroup.markAllAsTouched();
+  this.secondFormGroup.markAllAsTouched();
+  this.thirdFormGroup.markAllAsTouched();
+  this.fourthFormGroup.markAllAsTouched();
 
-        health_goals: {
-          dietPreference: this.secondFormGroup.value.dietPreference,
-          medicalCondition: medicalConditionString, 
-          anyMedication: this.secondFormGroup.value.anyMedication === 'yes', 
-          medication: this.secondFormGroup.value.medicationDetails || ""
-        },
-        food_prefrence: {
-          foodPreference: this.thirdFormGroup.value.foodPreference,
-          food_avoid: this.thirdFormGroup.value.foodToAvoid,
-          dailyWaterIntake: this.thirdFormGroup.value.dailyWaterIntake
-        },
-        lifestyle_activity: {
-          activity_level: this.fourthFormGroup.value.activityLevel,
-          wakeup: this.fourthFormGroup.value.wakeUpTime,
-          sleep: this.fourthFormGroup.value.sleepTime,
-          breakfast: this.fourthFormGroup.value.breakfastTime, 
-          lunch: this.fourthFormGroup.value.lunchTime,         
-          dinner: this.fourthFormGroup.value.dinnerTime        
-        }
-      };
-
-      console.log('Final Submission Payload:', finalPayload);
-      // alert('Form Submitted! Check console for payload.');
-       this.goToSubscriptionPlans()
-
-
-     const token = localStorage.getItem('authToken');
-           console.log('token Payload:', token);
-const url = API_URL + ENDPOINTS.ONBOARD_DIET;
-    if (token) {
-      this.http.post(url, finalPayload, {
-        headers: { Authorization: `Bearer ${token}` }
-      }).subscribe({
-        next: (res: any) => {
-          console.log('API Response:', res);
-          this.goToSubscriptionPlans();
-        },
-        error: (error) => {
-          console.error('API Error:', error);
-          this.showErrorToast();
-        }
-      });
-    } else {
-      // this.showLoginAlert = true; 
-    }
-
-       
-    } else {
-      alert('Please complete all required fields in all steps.');
-      if (this.firstFormGroup.invalid) {
-        this.stepper.selectedIndex = 0;
-      } else if (this.secondFormGroup.invalid) {
-        this.stepper.selectedIndex = 1;
-      } else if (this.thirdFormGroup.invalid) {
-        this.stepper.selectedIndex = 2;
-      } else if (this.fourthFormGroup.invalid) {
-        this.stepper.selectedIndex = 3;
-      }
-    }
+  if (
+    this.firstFormGroup.invalid ||
+    this.secondFormGroup.invalid ||
+    this.thirdFormGroup.invalid ||
+    this.fourthFormGroup.invalid
+  ) {
+    alert('Please complete all required fields in all steps.');
+    return;
   }
 
+  const selectedMedicalConditions: string[] =
+    this.secondFormGroup.value.medicalConditions || [];
 
+  const medicalConditionString =
+    selectedMedicalConditions.length > 0
+      ? selectedMedicalConditions.join(', ')
+      : '';
 
-  goToPlans() {
-    this.submitForm(); 
+  // ✅ FINAL PAYLOAD (CORRECT KEYS)
+  const finalPayload = {
+    fullName: this.firstFormGroup.value.fullName,
+     lastName: this.firstFormGroup.value.lastName,
+    age: this.firstFormGroup.value.age,
+    gender: this.firstFormGroup.value.gender.toLowerCase(),
+    height: `${this.firstFormGroup.value.heightValue} ${this.firstFormGroup.value.heightUnit}`,
+    weight: String(this.firstFormGroup.value.weightValue),
+
+    healthGoals: {
+      dietPreference: this.secondFormGroup.value.dietPreference,
+      medicalCondition: selectedMedicalConditions,
+      anyMedication: this.secondFormGroup.value.anyMedication === 'yes',
+      medication: this.secondFormGroup.value.medicationDetails || 'string'
+    },
+
+    foodPreference: {
+      foodPreference: this.thirdFormGroup.value.foodPreference,
+      foodAvoid: this.thirdFormGroup.value.foodToAvoid,
+      dailyWaterIntake: String(this.thirdFormGroup.value.dailyWaterIntake)
+    },
+
+    lifestyleActivity: {
+      activity_level: this.fourthFormGroup.value.activityLevel,
+      wakeUpTime: this.fourthFormGroup.value.wakeUpTime,
+      sleepTime: this.fourthFormGroup.value.sleepTime,
+      breakfastTime: this.fourthFormGroup.value.breakfastTime,
+      lunchTime: this.fourthFormGroup.value.lunchTime,
+      dinnerTime: this.fourthFormGroup.value.dinnerTime
+    }
+  };
+
+  console.log('Final Payload:', finalPayload);
+
+  // ✅ API CALL (THIS IS MY CODE – CORRECT PLACE)
+  const token = localStorage.getItem('authToken');
+const url = API_URL + ENDPOINTS.ONBOARD_DIET + '?enabled=true';
+
+  if (!token) {
+    console.error('No auth token found');
+    return;
   }
 
-    showErrorToast() {
-      const toastEl = document.getElementById('formErrorToast');
-      if (toastEl) {
-        const toast = new Toast(toastEl);
-        toast.show();
-      }
+  this.http.post(url, finalPayload, {
+    headers: { Authorization: `Bearer ${token}` }
+  }).subscribe({
+    next: (res: any) => {
+      console.log('API Success:', res);
+      this.router.navigate(['/subscription-plans']); // ✅ navigate ONLY on success
+    },
+    error: (err) => {
+      console.error('API Failed:', err);
+      this.showErrorToast();
     }
-  
-    goToSubscriptionPlans() {
-     this.router.navigate(['/subscription-plans']);
-    }
-    centerContent() {
-  const banner = document.querySelector('.banner .banner-content');
-  if (banner) {
-    banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
+  });
 }
+
+
+
+
+  // goToPlans() {
+  //   this.submitForm(); 
+  // }
+
+  showErrorToast() {
+    const toastEl = document.getElementById('formErrorToast');
+    if (toastEl) {
+      const toast = new Toast(toastEl);
+      toast.show();
+    }
+  }
+
+  goToSubscriptionPlans() {
+    this.router.navigate(['/subscription-plans']);
+  }
+  centerContent() {
+    const banner = document.querySelector('.banner .banner-content');
+    if (banner) {
+      banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
 
 
 }

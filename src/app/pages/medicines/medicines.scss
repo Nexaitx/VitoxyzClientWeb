@@ -62,7 +62,60 @@ h5 {
   height: 180px !important;
   object-fit: cover;
 }
+.address-modal {
+  border-radius: 14px;
+}
 
+.form-control {
+  border-radius: 10px;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.error {
+  font-size: 12px;
+  color: #d32f2f;
+}
+.address-close-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 30%;
+  background-color: #0d6efd; /* bootstrap primary */
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.address-close-btn i {
+  color: #fff;
+  font-size: 12px;
+}
+
+.address-close-btn:hover {
+  opacity: 0.9;
+}
+
+.form-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.form-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.form-scroll {
+  max-height: 65vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.form-scroll::-webkit-scrollbar-thumb {
+  background: #feb47b;
+  border-radius: 10px;
+}
 .rating {
   position: absolute;
   top: 40%;

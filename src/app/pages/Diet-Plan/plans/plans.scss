@@ -166,7 +166,7 @@ button[disabled] {
     gap: 15px;
     padding: 0;                       /* no extra padding; spacers handle it */
     scroll-snap-type: x mandatory;   /* snap cards */
-    width: 100vw;                     /* full viewport width */
+    width: 95vw;                     /* full viewport width */
     box-sizing: border-box;
     -ms-overflow-style: none;        /* hide scrollbar IE/Edge */
     scrollbar-width: none;           /* hide scrollbar Firefox */

@@ -27,6 +27,18 @@ export class Profile implements OnInit {
   saving = false;
   profileLoaded = false;
 
+  addresses: any[] = [];
+defaultAddress: any = null;
+addressesLoaded = false;
+showAddAddressPopup = false;
+addressSaving = false;
+selectedAddress: any = null;
+addressForm: FormGroup;
+
+private ADD_ADDRESS_URL = `${API_URL}/address/add`;
+private GET_ADDRESS_URL = `${API_URL}/address/my`;
+private UPDATE_ADDRESS_URL = `${API_URL}/address/update`;
+
   private GET_PROFILE_URL = `${API_URL}/user/profile`;
   private UPDATE_PROFILE_URL = `${API_URL}/user/profile/update`;
 
@@ -42,14 +54,63 @@ export class Profile implements OnInit {
       fullAddress: ['', [Validators.required, Validators.minLength(3)]],
       userName: ['']
     });
+    this.addressForm = this.fb.group({
+  fullName: ['', Validators.required],
+  phoneNumber: ['', Validators.required],
+  addressLine1: ['', Validators.required],
+  addressLine2: [''],
+  landmark: [''],
+  city: ['', Validators.required],
+  state: ['', Validators.required],
+  pincode: ['', Validators.required],
+  addressType: ['', Validators.required]
+
+
+});
+
   }
 
   ngOnInit(): void {
     this.loadProfile();
+     this.loadMyAddresses();  
   }
 get f() {
   return this.profileForm.controls;
 }
+openAddAddressPopup(): void {
+  const profile = this.profile;
+
+  this.addressForm.patchValue({
+    fullName: profile?.displayName || profile?.userName || '',
+    phoneNumber: profile?.phoneNumber || ''
+  });
+
+  // store in localStorage as requested
+  localStorage.setItem('address_fullName', this.addressForm.value.fullName);
+  localStorage.setItem('address_phoneNumber', this.addressForm.value.phoneNumber);
+
+  this.showAddAddressPopup = true;
+}
+closeAddAddressPopup(): void {
+  this.showAddAddressPopup = false;
+  this.addressForm.reset({
+    isDefault: true,
+    isaddress: true
+  });
+}
+buildAddress(addr: any): string {
+  if (!addr) return '';
+
+  return [
+    addr.addressLine1,
+    addr.addressLine2,
+    addr.landmark,
+    addr.city,
+    addr.state,
+    addr.pincode
+  ].filter(Boolean).join(', ');
+}
+
   // -------------------------
   // FIXED HEADERS
   // -------------------------
@@ -75,6 +136,37 @@ get f() {
   // -------------------------
   // FIXED LOAD PROFILE
   // -------------------------
+loadMyAddresses(): void {
+  this.addressesLoaded = false;
+  const headers = this.getAuthHeaders();
+
+  this.http.get<any>(this.GET_ADDRESS_URL, { headers }).subscribe({
+    next: (res) => {
+      if (res?.status && Array.isArray(res.data)) {
+        this.addresses = res.data;
+
+      
+     // pick default OR first
+        this.selectedAddress =
+          this.addresses.find(a => a.isDefault) || this.addresses[0] || null;
+
+        // 🔥 show address in profile form (UI only)
+        if (this.selectedAddress) {
+          this.profileForm.patchValue({
+            fullAddress: this.buildAddress(this.selectedAddress)
+          });
+        }
+      }
+      this.addressesLoaded = true;
+    },
+    error: (err) => {
+      console.error('Failed to load addresses', err);
+      this.addressesLoaded = true;
+    }
+  });
+}
+
+
   loadProfile(): void {
     this.profileLoaded = false;
     const headers = this.getAuthHeaders();
@@ -140,6 +232,35 @@ get f() {
       error: (err) => handleError(err, simpleUrl, true)
     });
   }
+  submitAddress(): void {
+  if (this.addressForm.invalid) {
+    this.addressForm.markAllAsTouched();
+    return;
+  }
+
+  this.addressSaving = true;
+  const headers = this.getAuthHeaders();
+  const payload = this.addressForm.value;
+
+  this.http.post<any>(this.ADD_ADDRESS_URL, payload, { headers }).subscribe({
+    next: (res) => {
+      this.addressSaving = false;
+
+      if (res?.status) {
+        this.snackBar.open('Address added successfully', 'Close', { duration: 3000 });
+        this.closeAddAddressPopup();
+        this.loadMyAddresses(); // refresh address list
+      } else {
+        this.snackBar.open(res?.message || 'Failed to add address', 'Close', { duration: 3000 });
+      }
+    },
+    error: (err) => {
+      console.error(err);
+      this.addressSaving = false;
+      this.snackBar.open('Failed to add address', 'Close', { duration: 3000 });
+    }
+  });
+}
 
   // -------------------------
   // EDIT START
@@ -149,7 +270,8 @@ get f() {
     if (this.profile) {
       if (field === 'mobile') this.profileForm.controls['phoneNumber'].setValue(this.profile.phoneNumber || '');
       if (field === 'email') this.profileForm.controls['email'].setValue(this.profile.email || '');
-      if (field === 'address') this.profileForm.controls['fullAddress'].setValue(this.profile.fullAddress || '');
+      // if (field === 'address') this.profileForm.controls['fullAddress'].setValue(this.profile.fullAddress || '');
+
     }
   }
 
@@ -171,54 +293,80 @@ get f() {
   // SUBMIT EDIT (unchanged)
   // -------------------------
   submitEdit(field: 'mobile' | 'email' | 'address'): void {
-    if (!this.profile) return;
+  if (!this.profile) return;
 
+  // ---------------- MOBILE & EMAIL (UNCHANGED)
+  if (field !== 'address') {
     if (field === 'mobile') this.profileForm.controls['phoneNumber'].markAsTouched();
     if (field === 'email') this.profileForm.controls['email'].markAsTouched();
-    if (field === 'address') this.profileForm.controls['fullAddress'].markAsTouched();
 
-    if (this.profileForm.invalid) {
-      this.snackBar.open('Please fix validation errors before saving.', 'Close', { duration: 3000 });
-      return;
-    }
+    if (this.profileForm.invalid) return;
 
     const payload = {
-      userName: this.profileForm.value.userName || this.profile.userName || this.profile.displayName || '',
+      userName: this.profileForm.value.userName || this.profile.userName || '',
       phoneNumber: this.profileForm.value.phoneNumber,
-      email: this.profileForm.value.email,
-      fullAddress: this.profileForm.value.fullAddress
+      email: this.profileForm.value.email
     };
 
     this.saving = true;
     const headers = this.getAuthHeaders();
-    const url = this.UPDATE_PROFILE_URL +
-      '?enabled=true&password=string&username=string&authorities=%5B%7B%22authority%22%3A%22string%22%7D%5D&accountNonExpired=true&accountNonLocked=true&credentialsNonExpired=true';
 
-    this.http.put<any>(url, payload, { headers }).subscribe({
-      next: (res) => {
+    this.http.put<any>(this.UPDATE_PROFILE_URL, payload, { headers }).subscribe({
+      next: () => {
         this.saving = false;
-        if (res?.status && res?.data) {
-          this.profile = res.data;
-
-          this.profileForm.patchValue({
-            phoneNumber: this.profile.phoneNumber || '',
-            email: this.profile.email || '',
-            fullAddress: this.profile.fullAddress || '',
-            userName: this.profile.userName || ''
-          });
-
-          this.editField = null;
-          this.snackBar.open('Profile updated successfully.', 'Close', { duration: 3000 });
-        } else {
-          this.snackBar.open(res?.message || 'Update failed', 'Close', { duration: 3000 });
-        }
+        this.editField = null;
+        this.snackBar.open('Profile updated successfully', 'Close', { duration: 3000 });
       },
-      error: (err) => {
-        console.error('Update error', err);
+      error: () => {
         this.saving = false;
-        const message = err?.error?.message || 'Failed to update profile';
-        this.snackBar.open(message, 'Close', { duration: 3500 });
+        this.snackBar.open('Profile update failed', 'Close', { duration: 3000 });
       }
     });
+
+    return;
   }
+
+  // ---------------- ADDRESS UPDATE (CORRECT API)
+  if (!this.selectedAddress) return;
+
+  const payload = {
+    fullName: this.selectedAddress.fullName,
+    phoneNumber: this.selectedAddress.phoneNumber,
+    addressLine1: this.selectedAddress.addressLine1,
+    addressLine2: this.selectedAddress.addressLine2,
+    landmark: this.selectedAddress.landmark,
+    city: this.selectedAddress.city,
+    state: this.selectedAddress.state,
+    pincode: this.selectedAddress.pincode,
+    addressType: this.selectedAddress.addressType,
+    isDefault: this.selectedAddress.isDefault,
+    isaddress: true
+  };
+
+  this.saving = true;
+  const headers = this.getAuthHeaders();
+
+  this.http.put<any>(
+    `${this.UPDATE_ADDRESS_URL}/${this.selectedAddress.id}`,
+    payload,
+    { headers }
+  ).subscribe({
+    next: (res) => {
+      this.saving = false;
+      if (res?.status) {
+        this.selectedAddress = res.data;
+        this.profileForm.patchValue({
+          fullAddress: this.buildAddress(res.data)
+        });
+        this.editField = null;
+        this.snackBar.open('Address updated successfully', 'Close', { duration: 3000 });
+      }
+    },
+    error: () => {
+      this.saving = false;
+      this.snackBar.open('Address update failed', 'Close', { duration: 3000 });
+    }
+  });
+}
+
 }

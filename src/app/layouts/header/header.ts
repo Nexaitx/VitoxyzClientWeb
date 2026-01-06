@@ -122,56 +122,73 @@ ngOnInit(): void {
     if (this.isLoggedIn && this.redirectAfterLogin) {
       const redirectPath = this.redirectAfterLogin;
       this.redirectAfterLogin = null;
+      if (redirectPath === '/diet') {
+      this.navigateToDiet(); // ✅ smart redirect
+    } else {
       this.router.navigate([redirectPath]);
+    }
+
     }
   }
   setAuthMode(mode: 'login' | 'signup') {
     this.authMode = mode;
   }
 
-  logout() {
-    localStorage.removeItem('authToken');
-    this.isLoggedIn = false;
-    this.router.navigate(['/']);
+  // logout() {
+  //   localStorage.removeItem('authToken');
+  //   this.isLoggedIn = false;
+  //   this.router.navigate(['/']);
+  // }
+  logout(){
+    const token = localStorage.getItem('authToken');
+    if(token){
+      this.http.post('https://vitoxyz.com/Backend/api/user/logoutUser',{},{
+       headers :{
+        Authorization:`Bearer ${token}`
+       }
+      }).subscribe({
+        next:(res:any)=>{
+          console.log('Logout API success:', res);
+          this.clearSessionAndRedirect();
+        },
+          error: (err) => {
+        console.error('Logout API failed:', err);
+        // Even if API fails, still logout locally
+        this.clearSessionAndRedirect();
+      }
+      });
+    }else {
+    this.clearSessionAndRedirect();
   }
-// navigateToDiet() {
-//   const token = localStorage.getItem("authToken");
+  }
+  private clearSessionAndRedirect(): void {
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('userProfile');
+  localStorage.removeItem('justLoggedIn');
 
-//   if (!token) {
-//     // Not logged in → open login modal
-//     const modal = new (window as any).bootstrap.Modal(
-//       document.getElementById("loginModal")
-//     );
-//     modal.show();
-//     return;
-//   }
+  this.isLoggedIn = false;
+  this.router.navigate(['/']);
+}
 
-//   // Logged in → check if user purchased a diet plan
-//  // this.http.get(`${API_URL}${ENDPOINTS.DIET_DASHBOARD}?id=1073741824&username=string&password=string&authorities=%5B%7B%22authority%22%3A%22string%22%7D%5D&userType=string&enabled=true&accountNonExpired=true&accountNonLocked=true&credentialsNonExpired=true`, {
-//    this.http.get(`${API_URL}${ENDPOINTS.DIET_DASHBOARD}` , {
-//   headers: { Authorization: `Bearer ${token}` }
-//   }).subscribe({
-//     next: (res: any) => {
-//        console.log("Diet Dashboard Response:", res);
-//        const hasPlan = res?.totalPlans > 0;
 
-//       if (hasPlan) {
-//         this.router.navigate(["diet-charts"]);
-//       } else {
-//         this.router.navigate(["diet/user-onboarding"]);
-//       }
-//     },
-//     error: () => {
-//       this.router.navigate(["diet/user-onboarding"]);
-//     }
-//   });
-// }
+private hasActiveDietPlan(): boolean {
+  const profileStr = localStorage.getItem('userProfile');
+  if (!profileStr) return false;
+
+  try {
+    const profile = JSON.parse(profileStr);
+    return profile?.hasActiveSubscription === true;
+  } catch {
+    return false;
+  }
+}
+
 navigateToDiet() {
   const token = localStorage.getItem("authToken");
 
   // 1. USER NOT LOGGED IN
   if (!token) {
-    this.redirectAfterLogin = "diet";
+    this.redirectAfterLogin = "/diet";
 
     const modalEl =
       document.getElementById("loginModal") ||
@@ -185,15 +202,13 @@ navigateToDiet() {
     return;
   }
 
-  // 2. USER LOGGED IN → CHECK LOCAL PURCHASE STATUS
-  const planStatus = localStorage.getItem("dietPlanPurchased");
-
-  const hasPlan = planStatus === "true";
+  // 2️⃣ Logged in → check backend subscription flag
+  const hasPlan = this.hasActiveDietPlan();
 
   if (hasPlan) {
-    this.router.navigate(["/diet-charts"]);
+    this.router.navigate(['/diet-charts']);
   } else {
-    this.router.navigate(["/diet/user-onboarding"]);
+    this.router.navigate(['/diet/user-onboarding']);
   }
 }
 

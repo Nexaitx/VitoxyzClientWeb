@@ -358,6 +358,39 @@ incrementTime(unit: 'hours' | 'minutes', staffIndex: number, shiftIndex: number)
       }
     );
   }
+// getAddressFromCoords(lat: number, lng: number) {
+//   this.staffBookingForm.patchValue({
+//     latitude: lat,
+//     longitude: lng
+//   });
+
+//   const url = `https://nominatim.openstreetmap.org/reverse`;
+
+//   const params = {
+//     format: 'jsonv2',
+//     lat: lat.toString(),
+//     lon: lng.toString()
+//   };
+
+//   const headers = new HttpHeaders({
+//     'Accept': 'application/json',
+//     // REQUIRED by Nominatim (mobile fix)
+//     'User-Agent': 'YourAppName/1.0 (support@yourdomain.com)'
+//   });
+
+//   this.http.get<any>(url, { params, headers }).subscribe({
+//     next: (response) => {
+//       if (response?.display_name) {
+//         this.staffBookingForm.patchValue({
+//           userAddress: response.display_name
+//         });
+//       }
+//     },
+//     error: (error) => {
+//       console.error('Reverse geocoding failed:', error);
+//     }
+//   });
+// }
 
   createStaffDetailFormGroup(): FormGroup {
     return this.fb.group({
