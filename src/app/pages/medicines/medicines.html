@@ -372,6 +372,153 @@
   </p>
 </div>
 
+<!-- Address Required Popup -->
+
+
+<!-- Backdrop -->
+<div *ngIf="showAddressAlert" class="modal-backdrop fade show"></div>
+
+<!-- Address Required Popup -->
+<div *ngIf="showAddressAlert" class="modal show d-block">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3">
+
+      <p>Please add your address to continue.</p>
+
+      <div class="d-flex justify-content-end gap-2">
+        <!-- Later Button -->
+        <button
+          class="btn btn-primary rounded-pill text-light"
+          (click)="closeAddressPopup()">
+          Later
+        </button>
+
+        <!-- Add Address Button -->
+        <button
+          class="btn btn-primary rounded-pill text-light"
+          (click)="openAddressForm()">
+          Add Address
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Add Address Form Popup -->
+<div *ngIf="showAddressForm" class="modal-backdrop fade show"> </div>
+
+<div *ngIf="showAddressForm" class="modal show d-block">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3 address-modal">
+
+      <button
+  type="button"
+  class="address-close-btn position-absolute top-0 end-0 m-2"
+  aria-label="Close"
+  (click)="closeAddressForm()">
+  <i class="bi bi-x-lg"></i>
+</button>
+
+
+      <h5 class="mb-3">Add Address</h5>
+      <div class="form-scroll">
+      <form [formGroup]="addressForm">
+        <div>x
+        <!-- Full Name -->
+        <label class="form-label">Full Name</label>
+        <input class="form-control" formControlName="fullName" readonly>
+        </div>
+
+        <!-- Phone -->
+         <div>
+        <label class="form-label mt-2">Phone Number</label>
+        <input class="form-control" formControlName="phoneNumber" readonly>
+        </div>
+        <!-- Address Line 1 -->
+         <div>
+        <label class="form-label mt-2">Address Line 1</label>
+        <input class="form-control" formControlName="addressLine1">
+        <small class="error"
+          *ngIf="addressForm.get('addressLine1')?.touched && addressForm.get('addressLine1')?.invalid">
+          Address Line 1 is required
+        </small>
+        </div>
+        <!-- Address Line 2 -->
+         <div>
+        <label class="form-label mt-2">Address Line 2</label>
+        <input class="form-control" formControlName="addressLine2">
+        <small class="error"
+          *ngIf="addressForm.get('addressLine2')?.touched && addressForm.get('addressLine2')?.invalid">
+          Address Line 1 is required
+        </small>
+          </div>
+        <!-- Landmark -->
+         <div>
+        <label class="form-label mt-2">Landmark</label>
+        <input class="form-control" formControlName="landmark">
+          </div>
+        <!-- City -->
+         <div>
+        <label class="form-label mt-2">City</label>
+        <input class="form-control" formControlName="city">
+        <small class="error"
+          *ngIf="addressForm.get('city')?.touched && addressForm.get('city')?.invalid">
+          City is required
+        </small>
+        </div>
+        <!-- State -->
+         <div>
+        <label class="form-label mt-2">State</label>
+        <input class="form-control" formControlName="state">
+        <small class="error"
+          *ngIf="addressForm.get('state')?.touched && addressForm.get('state')?.invalid">
+          State is required
+        </small>
+        </div>
+        <!-- Pincode -->
+         <div>
+        <label class="form-label mt-2">Pincode</label>
+        <input class="form-control" formControlName="pincode">
+        <small class="error"
+          *ngIf="addressForm.get('pincode')?.touched && addressForm.get('pincode')?.invalid">
+          Enter valid 6-digit pincode
+        </small>
+        </div>
+        <!-- Address Type -->
+         <div>
+        <label class="form-label mt-2">Address Type</label>
+        <select class="form-control" formControlName="addressType">
+          <option value="home">Home</option>
+          <option value="office">Office</option>
+          <option value="other">Other</option>
+        </select>
+        <small class="error"
+          *ngIf="addressForm.get('addressType')?.touched && addressForm.get('addressType')?.invalid">
+          Address type is required
+        </small>
+        </div>
+        <div class="text-end mt-4">
+          <button type="button" class="btn btn-light me-2 text-light rounded-pill" (click)="closeAddressForm()">
+            Cancel
+          </button>
+          <button class="btn btn-success text-light rounded-pill" type="button"
+            [disabled]="addressForm.invalid"
+            (click)="submitAddress()">
+            Save Address
+          </button>
+        </div>
+
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 <!-- App footer -->
  <div>
 <app-footer></app-footer>

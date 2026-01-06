@@ -134,8 +134,8 @@ export class PaymentScreen implements OnInit {
 
     console.log('💰 Plan loaded:', this.plan, 'Price:', this.price, 'Subscription ID:', this.subscriptionId);
 
-    // Calculate tax (18% GST for India)
-    this.tax = this.price * 0.18;
+    // Calculate tax (10% GST for India)
+    this.tax = this.price * 0.10;
   }
 
   private loadUserProfile(): void {
@@ -363,7 +363,7 @@ export class PaymentScreen implements OnInit {
       
       setTimeout(() => {
         this.router.navigate(['/diet-charts']);
-      }, 1500);
+      }, 500);
 
     } catch (error: any) {
       console.error('❌ Payment success handling error:', error);
@@ -548,7 +548,7 @@ export class PaymentScreen implements OnInit {
   }
 
   goBackToPlans() {
-    this.router.navigate(['/plans']);
+    this.router.navigate(['/subscription-plans']);
   }
 
   private showError(message: string): void {

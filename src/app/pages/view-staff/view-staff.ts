@@ -242,7 +242,7 @@ if (this.getTotalStaff() === 0) {
         }
       });
 
-    }, 6000);
+    }, 15000);
 
   }
   private closeModal(modalId: string): void {

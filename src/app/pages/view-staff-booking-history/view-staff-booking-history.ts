@@ -7,13 +7,15 @@ import { BookingItem, CancellationItem, PageMeta, ViewStaffBookingHistoryService
 
 
 import { finalize } from 'rxjs/operators';
+import { Footer } from "../footer/footer";
+import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 
 type TabKey = 'past' | 'ongoing' | 'upcoming' | 'completed'| 'my-cancellations';
 
 @Component({
   selector: 'app-view-staff-booking-history',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, Footer, MobileFooterNavComponent],
   templateUrl: './view-staff-booking-history.html',
   styleUrls: ['./view-staff-booking-history.scss']
 })

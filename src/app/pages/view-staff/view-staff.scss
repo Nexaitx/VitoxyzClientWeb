@@ -147,3 +147,143 @@ footer {
   width: 100%;
   max-width: 420px;
 }
+/* =========================================================
+   📱 SMALL MOBILES (max 360px)
+========================================================= */
+@media (max-width: 360px) {
+  .text-center {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .card {
+    font-size: 11px;
+  }
+
+  .timer-time {
+    font-size: 26px;
+  }
+
+  footer .p-3 {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}
+
+/* =========================================================
+   📱 LARGE MOBILES (361px – 576px)
+========================================================= */
+@media (min-width: 361px) and (max-width: 576px) {
+  .text-center {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .payment-timer-box,
+  .payment-expired-box {
+    max-width: 95%;
+  }
+
+  .timer-time {
+    font-size: 28px;
+  }
+
+  footer .p-3 {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* =========================================================
+   📱 TABLETS (577px – 768px)
+========================================================= */
+@media (min-width: 577px) and (max-width: 768px) {
+  .timer-time {
+    font-size: 32px;
+  }
+
+  .card {
+    font-size: 14px;
+  }
+
+  footer .p-3 {
+    padding: 14px;
+  }
+}
+
+/* =========================================================
+   💻 LAPTOPS (769px – 1200px)
+========================================================= */
+@media (min-width: 769px) and (max-width: 1200px) {
+  .card {
+    font-size: 15px;
+  }
+
+  .timer-time {
+    font-size: 34px;
+  }
+
+  .payment-timer-box,
+  .payment-expired-box {
+    max-width: 420px;
+  }
+}
+
+/* =========================================================
+   🖥️ DESKTOPS (1201px – 1920px)
+========================================================= */
+@media (min-width: 1201px) and (max-width: 1920px) {
+  .card {
+    font-size: 16px;
+  }
+
+  .timer-time {
+    font-size: 36px;
+  }
+
+  footer {
+    position: sticky;
+    bottom: 0;
+  }
+}
+
+/* =========================================================
+   🖥️ 4K SCREENS (1921px – 2560px)
+========================================================= */
+@media (min-width: 1921px) {
+  .card {
+    font-size: 18px;
+  }
+
+  .timer-time {
+    font-size: 40px;
+  }
+
+  .payment-timer-box,
+  .payment-expired-box {
+    max-width: 520px;
+  }
+
+  footer .p-3 {
+    padding: 20px 40px;
+  }
+}
+
+/* =========================================================
+   🖥️ 4K ULTRA-WIDE (2560px+)
+========================================================= */
+@media (min-width: 2560px) {
+  .card {
+    font-size: 20px;
+  }
+
+  .timer-time {
+    font-size: 44px;
+  }
+
+  .payment-timer-box,
+  .payment-expired-box {
+    max-width: 600px;
+  }
+}

@@ -10,10 +10,71 @@ h5 {
   border-color: 1px solid #feb47b;
 }
 .form-control {
-  border-radius : 0px !important;
+  border-radius : 16px !important;
+}
+
+.address-modal {
+  border-radius: 14px;
 }
 
 
+.form-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 12px;
+}
+/* Enable scrolling inside Add Address popup */
+.modal-body-scroll {
+  max-height: 80vh;        // popup height limit
+  overflow-y: auto;        // vertical scroll
+  overflow-x: hidden;
+}
+.address-close-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 30%;
+  background-color: #0d6efd; /* bootstrap primary */
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.address-close-btn i {
+  color: #fff;
+  font-size: 12px;
+}
+
+.address-close-btn:hover {
+  opacity: 0.9;
+}
+/* Optional: smooth scrollbar (works in Chrome/Edge) */
+.form-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.modal-body-scroll::-webkit-scrollbar-thumb {
+  background: #feb47b;
+  border-radius: 10px;
+}
+
+.form-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.form-scroll {
+  max-height: 65vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.form-scroll::-webkit-scrollbar-thumb {
+  background: #feb47b;
+  border-radius: 10px;
+}
 /* --- variables (easy to tweak) --- */
 $bg-color: #ffffff;
 $card-bg: #fff;
@@ -64,7 +125,21 @@ $bp-ultra: 3840px;    // 4k and above
     margin: 0;
   }
 }
-
+.editcls{
+      font-size: 15px;
+    height: 33px;
+    font-weight: 400;
+}
+.savecls{
+    font-size: 15px;
+    height: 33px;
+    font-weight: 400;
+}
+.cancelCls{
+  font-size: 15px;
+    height: 34px;
+    font-weight: 400;
+}
 /* item rows */
 .profile-item {
   display: flex;
@@ -159,6 +234,16 @@ app-footer {
   .welcome-text { font-size: 1rem; }
   .editable-row input, .editable-row textarea { font-size: 0.9rem; padding: 6px 4px; }
   .edit-btn, .save-btn, .cancel-btn { padding: 6px 10px; font-size: 0.85rem; }
+  .savecls{
+    font-size: 11px;
+    height: 30px;
+    font-weight: 400;
+}
+.cancelCls{
+  font-size: 12px;
+        height: 30px;
+        font-weight: 400;
+}
 }
 
 /* Small phones (<= $bp-small) */

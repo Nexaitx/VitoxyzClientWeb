@@ -1,11 +1,11 @@
-<div  >
+<div>
   <div style="margin-top: -11px;">
     <app-text-banner image="assets/staff/book-staff-banner.avif" title="Hire Trusted Staff Easily"
       subtitle="Find verified professionals for your home, office, or business needs" buttonText="Book Now"
       (buttonClick)="centerContent()">
     </app-text-banner>
   </div>
-     <!-- <div >
+  <!-- <div >
       <button class="btn btn-primary" (click)="enable()" type="button">Enable Notifications</button>
     </div> -->
   <div>
@@ -16,7 +16,8 @@
     </app-text-image>
   </div>
 
-  <div class="container  main-container" style="background:  linear-gradient(1deg, rgb(251 248 235) 2%, #fff6e0 70%, #ff8865 160%);">
+  <div class="container  main-container"
+    style="background:  linear-gradient(1deg, rgb(251 248 235) 2%, #fff6e0 70%, #ff8865 160%);">
 
 
     <mat-stepper class="custom-stepper" labelPosition="bottom" #stepper>
@@ -50,6 +51,17 @@
                 Full Name is required.
               </div>
 
+            </div>
+
+            <div class="col-md-12 mb-3 position-relative">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-control with-icon" placeholder="Enter Last Name" formControlName="lastName"
+                [class.is-invalid]="firstFormGroup.get('lastName')?.invalid && firstFormGroup.get('lastName')?.touched">
+
+              <div *ngIf="firstFormGroup.get('lastName')?.invalid && firstFormGroup.get('lastName')?.touched"
+                class="invalid-feedback">
+                Last Name is required.
+              </div>
             </div>
 
             <div class="col-md-6 mb-3 position-relative">
@@ -94,7 +106,7 @@
                 <div class="input-group" style="max-width: 120px;">
                   <button class="btn  action border-0" type="button"
                     (click)="adjustValue('heightValue', 'heightValue', false)">−</button>
-                  <input type="text" class="form-control measure text-center" formControlName="heightValue" >
+                  <input type="text" class="form-control measure text-center" formControlName="heightValue">
                   <button class="btn  action-add border-0" type="button"
                     (click)="adjustValue('heightValue', 'heightValue', true)">+</button>
                 </div>
@@ -117,7 +129,7 @@
                 <div class="input-group" style="max-width: 120px;">
                   <button class="btn  action border-0" type="button"
                     (click)="adjustValue('weightValue', 'weightValue', false)">−</button>
-                  <input type="text" class="form-control measure text-center" formControlName="weightValue" >
+                  <input type="text" class="form-control measure text-center" formControlName="weightValue">
                   <button class="btn  action-add border-0" type="button"
                     (click)="adjustValue('weightValue', 'weightValue', true)">+</button>
                 </div>
@@ -356,7 +368,7 @@
           <div class="text-end mt-3">
             <button matButton matStepperPrevious class="btn px-4 rounded-pill text-light me-2">Back</button>
             <button type="button" class="btn px-4 rounded-pill submission next-button"
-              (click)="goToPlans()">Submit</button>
+              (click)="submitForm()">Submit</button>
           </div>
         </form>
       </mat-step>
@@ -369,7 +381,7 @@
     </app-medicine-slider> -->
   </div>
   <div style="margin-top: 15px;">
-      <app-footer></app-footer>
+    <app-footer></app-footer>
   </div>
   <app-mobile-footer-nav></app-mobile-footer-nav>
 

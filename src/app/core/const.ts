@@ -26,6 +26,7 @@ export const ENDPOINTS = {
   LOGIN_EMAIL: "/user/loginWithEmail",
 
   MEDICINES: "/medicines/getMedicine",
+  ADD_ADDRESS:"/address/add",
 
   MEDICINE_BY_ID: (id: string) => `/medicines/${id}`,
   OTC_MEDICINE_BY_ID: (id: string) => `/products/${id}`,

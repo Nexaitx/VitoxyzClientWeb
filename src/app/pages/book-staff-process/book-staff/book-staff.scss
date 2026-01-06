@@ -1,10 +1,11 @@
 .staff-list {
     overflow-x: hidden;
-    overflow-y: scroll;
+    // overflow-y: scroll;
+    overflow-y: auto;
 
-    &:hover {
-        overflow-y: auto;
-    }
+    // &:hover {
+    //     overflow-y: auto;
+    // }
 
     &:focus-within {
         overflow-y: auto;
@@ -21,7 +22,7 @@
     }
 
     &::-webkit-scrollbar-thumb {
-        background: #09b8c2;
+        background: #feb47b;
         border-radius: 10px;
     }
 
@@ -29,7 +30,13 @@
         background: #fff;
     }
 }
-
+.container {
+  overflow: visible;
+}
+.dropdown-menu {
+  position: absolute;
+  z-index: 9999;
+}
 .indexed-divider-container {
     display: flex;
     align-items: center;
@@ -46,7 +53,7 @@
 }
 
 .index-number {
-    color: #09b8c2;
+    color: #feb47b;
     padding: 5px 12px;
     background-color: #e0fcff;
     border-radius: 50%;
@@ -213,14 +220,27 @@
   min-height: 40px !important;
   padding: 0 8px;
 }
-
+.container,
+.container-fluid {
+  overflow: visible;
+}
 
 .form-scroll-container {
   max-height: 600px;   /* fixed height (adjust as per your layout) */
   overflow-y: auto;    /* enable vertical scrolling */
   overflow-x: hidden;  /* prevent horizontal scroll */
   padding-right: 10px; /* space for scrollbar */
+  -webkit-overflow-scrolling: touch; /* ✅ REQUIRED for iOS */
 }
+/* ============================= */
+/* ✅ iOS SAFARI SELECT FIX */
+/* ============================= */
+
+/* When any select is focused, allow dropdown to escape scroll containers */
+// .form-scroll-container:has(select:focus),
+// .staff-list:has(select:focus) {
+//   overflow: visible !important;
+// }
 
 /* Smooth scrollbar styling (optional, works in modern browsers) */
 .form-scroll-container::-webkit-scrollbar {
@@ -255,7 +275,12 @@
   flex-wrap: wrap;
   gap: 20px; /* increase gap instead of margin-left */
 }
-
+.timeInputcls{
+      border-radius: 12px;
+    width: 130px;
+    height: 30px;
+    border: 2px solid #dff4f6;
+}
 // .time-wrapper {
 //   gap: 12px;
 //   flex-wrap: nowrap;
@@ -277,7 +302,7 @@
   .sub-row .counter-box {
     flex: 1 1 auto;
     min-width: 60px;
-    width: auto;
+    // width: auto;
     height: 36px;
     margin-bottom: 8px;
   }
@@ -361,7 +386,20 @@
     font-size: 1rem;
     text-align: center;
   }
+.timeInputcls{
+    border-radius: 12px;
+    width: 170px;
+    height: 30px;
+    border: 2px solid #dff4f6;
+    margin-left: 7px;
+}
+  .sub-row {
+    flex-direction: column; /* stack them fully */
+  }
 
+  .sub-row .counter-box {
+    width: 100%; /* each input spans full width */
+  }
   .form-scroll-container {
     max-height: 400px;
     padding-right: 6px;
@@ -416,6 +454,13 @@
     margin-bottom: 15px;
   }
 }
+@media (max-width: 768px) {
+  .form-scroll-container {
+    overflow-y: visible ;
+    max-height: none ;
+  }
+}
+
 
 
 
@@ -499,6 +544,7 @@
     max-height: 600px;
   }
 }
+
 /* === MID-DESKTOP (1025px – 1479px) === */
 /* === MID-DESKTOP (1025px – 1479px) === */
 // @media (min-width: 1025px) and (max-width: 1479px) {

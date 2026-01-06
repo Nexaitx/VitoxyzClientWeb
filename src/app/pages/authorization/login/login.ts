@@ -8,6 +8,7 @@ import { Subscription, interval } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ENDPOINTS, API_URL } from '../../../core/const';
 import { Toast } from 'bootstrap';
+import { DeviceService } from '@src/app/core/services/device.service';
 
 @Component({
   selector: 'app-login',
@@ -33,6 +34,8 @@ export class Login implements OnInit, OnDestroy {
   showPhoneInput = true;
   selectedTabIndex: number = 0; // 0 for email/password, 1 for phone/OTP
   timeLeft: number = 30;
+ deviceType!: string;
+
   private otpTimerSubscription: Subscription | undefined;
   phoneNumber: string = ''; // Will be set from the form
   maskedPhoneNumber: string = ''; // Initialize here or in ngOnInit
@@ -41,11 +44,19 @@ export class Login implements OnInit, OnDestroy {
   @Output() loginSuccess = new EventEmitter<void>();
   @Output() loadingChange = new EventEmitter<boolean>();
 
-  constructor() {
+  constructor(private deviceService: DeviceService) {
     this.initForms();
   }
 
-  ngOnInit() {
+   ngOnInit(): void {
+    this.deviceType = this.deviceService.getDeviceType();
+  console.log('Device Type:', this.deviceType);
+
+    console.log('Device Type:', this.deviceService.getDeviceType());
+
+    if (this.deviceService.isMobile()) {
+      console.log('Mobile logic here');
+    }
   }
 
   ngOnDestroy() {
@@ -119,15 +130,16 @@ export class Login implements OnInit, OnDestroy {
       this.loadingChange.emit(true);
       const { username, password, rememberMe } = this.loginForm.value;
       const apiUrl = API_URL + ENDPOINTS.LOGIN;
-      const payload = { username, password };
+      const payload = { username, password,deviceType: this.deviceType };
       this.http.post(apiUrl, payload).subscribe((res: any) => {
         this.isLoading = false;
-        localStorage.setItem('userProfile', JSON.stringify(res.profile));
-        if (rememberMe) {
-          localStorage.setItem('authToken', res.token);
-          this.loginSuccess.emit();
-        }
-        this.loadingChange.emit(false);
+      localStorage.setItem('authToken', res.token);
+  localStorage.setItem('userProfile', JSON.stringify(res.profile));
+// ✅ store address flag separately (important)
+  // localStorage.setItem('isAddress', String(res.profile.isAddress));
+  localStorage.setItem('justLoggedIn', 'true');
+  this.loginSuccess.emit();
+  this.loadingChange.emit(false);
       },
         error => {
           let errorMessage = 'Login failed. Please try again.';
@@ -183,7 +195,7 @@ export class Login implements OnInit, OnDestroy {
     }
     this.isLoading = true;
     const otpCode = this.phoneLoginForm.get('otpCode')?.value;
-    const payload = { phoneNumber: this.phoneNumber, otp: otpCode };
+    const payload = { phoneNumber: this.phoneNumber, otp: otpCode,deviceType: this.deviceType };
     this.http.post(`${API_URL}${ENDPOINTS.VERIFY_OTP_LOGIN}?phoneNumber=${this.phoneNumber}&otp=${otpCode}`, {}).subscribe({
       next: (response: any) => {
         // console.log('OTP verified successfully', response);
@@ -191,6 +203,9 @@ export class Login implements OnInit, OnDestroy {
 
                 localStorage.setItem('userProfile', JSON.stringify(response.profile));
           localStorage.setItem('authToken', response.token);
+          // localStorage.setItem('isAddress', String(response.profile.isAddress));
+          // ✅ ADD THIS LINE
+          localStorage.setItem('justLoggedIn', 'true');
           this.loginSuccess.emit();
 
         // this.router.navigate(['/dashboard']); // Navigate to dashboard on success

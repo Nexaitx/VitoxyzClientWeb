@@ -115,6 +115,12 @@ export class DietDashboard implements OnInit {
   selectedPlan?: DietPlan;
   loading = false;
   error: string | null = null;
+userSubscriptionType?: string;
+totalPlans?: number;
+mealLoading = false;
+mealError: string | null = null;
+mealDetails: any = null;
+selectedMealType: string | null = null;
 
   // Replace with provided endpoint 
   private readonly API_URLs = `${API_URL}${ENDPOINTS.DIET_DASHBOARD}?id=1073741824&username=string&password=string&authorities=%5B%7B%22authority%22%3A%22string%22%7D%5D&userType=string&enabled=true&accountNonExpired=true&accountNonLocked=true&credentialsNonExpired=true`;
@@ -188,7 +194,10 @@ fetchDietPlans() {
       next: (res) => {
         // backend returns { dietPlans: [...] } as in your example
         this.dietPlans = Array.isArray(res?.dietPlans) ? res.dietPlans : [];
-
+        // ✅ STORE EXTRA API VALUES
+this.userSubscriptionType = res?.userSubscriptionType ?? undefined;
+this.totalPlans = res?.totalPlans ?? this.dietPlans.length;
+        
         // choose default selected plan:
         // prefer the first plan with active === true (if backend sets active)
         const activePlan = this.dietPlans.find(p => p.active === true);
@@ -203,7 +212,45 @@ fetchDietPlans() {
       }
     });
   }
-  
+  openMealPopup(mealType: string) {
+  if (!this.selectedPlan?.dietPlanId) return;
+
+  this.selectedMealType = mealType;
+  this.mealLoading = true;
+  this.mealError = null;
+  this.mealDetails = null;
+
+  const token =
+    localStorage.getItem('authToken') ||
+    sessionStorage.getItem('authToken');
+
+  let headers = new HttpHeaders();
+  if (token) {
+    headers = headers.set('Authorization', `Bearer ${token}`);
+  }
+
+  const url = `https://vitoxyz.com/Backend/api/diet-plans/${this.selectedPlan.dietPlanId}/meal-details/type/${mealType}`;
+
+  this.http.get(url, { headers }).subscribe({
+    next: (res) => {
+      this.mealDetails = res;
+      this.mealLoading = false;
+    },
+    error: (err) => {
+      console.error(err);
+      this.mealError = 'Failed to load meal details';
+      this.mealLoading = false;
+    }
+  });
+
+  // open bootstrap modal
+  const modal = document.getElementById('mealDetailsModal');
+  if (modal) {
+    // @ts-ignore
+    new bootstrap.Modal(modal).show();
+  }
+}
+
   selectDay(day: Day) {
     this.weekDays.forEach(d => d.isToday = false);
     day.isToday = true;

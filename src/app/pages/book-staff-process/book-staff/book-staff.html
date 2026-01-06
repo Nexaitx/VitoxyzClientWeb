@@ -3,17 +3,16 @@
   (buttonClick)="centerContent()">
 </app-text-banner> -->
 
-<app-booking-text-banner image="assets/staff/book-staff-banner.avif" title="Hire Trusted Staff Easily"
+<!-- <app-booking-text-banner image="assets/staff/book-staff-banner.avif" title="Hire Trusted Staff Easily"
   subtitle="Find verified professionals for your home, office, or business needs" buttonText="Book Now"
-  (buttonClick)="centerContent()"
-></app-booking-text-banner>
+  (buttonClick)="centerContent()"></app-booking-text-banner>
 
 <app-text-image imageUrl="assets/images/sample.jpg" imageAlt="Sample Image" title="Find, Book & Shop — All in One Place"
   subtitle="Discover Amazing Features"
   description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
   buttonText="" buttonLink="/">
-</app-text-image>
-<div class="container-fluid" #bookingSection  style="margin-top: 60px;">
+</app-text-image> -->
+<div class="container-fluid" #bookingSection style="margin-top: 60px;">
 
   <div class="row">
     <div class="col-md-4 h-100 map-styles">
@@ -108,8 +107,8 @@
                                 titlecase }} Type</label>
                               <i class="bi bi-people address"></i>
                               <select class="form-select ps-4" id="typeOfSubStaff-{{ i }}"
-                                formControlName="typeOfSubStaff" [disabled]="!staffDetails.get('typeOfStaff')?.value" (change)="onSubStaffChange(i)"
-                                [class.is-invalid]="
+                                formControlName="typeOfSubStaff" [disabled]="!staffDetails.get('typeOfStaff')?.value"
+                                (change)="onSubStaffChange(i)" [class.is-invalid]="
                             staffDetails.get('typeOfSubStaff')?.invalid &&
                             staffDetails.get('typeOfSubStaff')?.touched
                           ">
@@ -146,8 +145,8 @@
                         [formGroupName]="sh" class="shift-detail">
                         <div class="row d-flex">
                           <div class="sub-row">
-                            
-                             <div class="d-flex align-items-center">
+
+                            <div class="d-flex align-items-center">
                               <div class="d-flex flex-column">
                                 <!-- <small class="text-muted">Start Time</small>
                                 <div class="d-flex align-items-center"
@@ -193,13 +192,9 @@
                                     <option value="PM">PM</option>
                                   </select>
                                 </div> -->
-                                  <small class="text-muted">Start Time</small>
-  
-                                    <input 
-                                    type="time"
-                                    formControlName="startTime"
-                                    
-                                    />
+                                <small class="text-muted">Start Time</small>
+
+                                <input class="timeInputcls" type="time" formControlName="startTime" />
                               </div>
                             </div>
 
@@ -247,16 +242,12 @@
                                     <option value="PM">PM</option>
                                   </select>
                                 </div> -->
-                                 <small class="text-muted">End Time</small>
-  
-                                 <input 
-                                   type="time"
-                                  formControlName="endTime"
-                                  
-                                 />
+                                <small class="text-muted">End Time</small>
+
+                                <input type="time" class="timeInputcls" formControlName="endTime" />
                               </div>
                             </div>
-                           
+
 
                             <div class="gender-quantity-row">
                               <!-- Preferred Gender -->
@@ -320,7 +311,7 @@
                                 <label class="form-label">Tenure</label>
 
                                 <div class="d-flex align-items-center counter-box mx-2">
-                                  <i class="bi bi-calendar4 text-primary"></i>
+                                  <i class="bi bi-calendar4 text-primary" style="margin-left: 10px;"></i>
                                   <select class="value-font border-0 counter-select" formControlName="tenure"
                                     [class.is-invalid]="shiftDetail.get('tenure')?.invalid && shiftDetail.get('tenure')?.touched">
                                     <option *ngFor="let ten of getTenureOptions(i)" [value]="ten.value">
@@ -337,20 +328,14 @@
                                 }
                               </div>
                             </div>
-                             <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
                               <label class="form-label">Shift Duration</label>
-                              <select
-                                class="d-flex align-items-center counter-box mx-2"
-                                formControlName="preferredTimeSlot"
-                                [class.is-invalid]="
+                              <select class="d-flex align-items-center counter-box mx-2"
+                                formControlName="preferredTimeSlot" [class.is-invalid]="
                             shiftDetail.get('preferredTimeSlot')?.invalid &&
                             shiftDetail.get('preferredTimeSlot')?.touched
-                          "
-                              >
-                                <option
-                                  *ngFor="let type of getSlotsByStaffIndex(i)"
-                                  [value]="type"
-                                >
+                          ">
+                                <option *ngFor="let type of getSlotsByStaffIndex(i)" [value]="type">
                                   {{ type }}
                                 </option>
                               </select>
@@ -373,8 +358,8 @@
                             <div class="col-md-6" *ngIf="shiftDetail.get('tenure')?.value !== '1'">
                               <label class="form-label">Duty End Date</label>
                               <input type="date" class="form-control"
-                                [min]="shiftDetail.get('dutyStartDate')?.value || today"
-                                formControlName="dutyEndDate" readonly />
+                                [min]="shiftDetail.get('dutyStartDate')?.value || today" formControlName="dutyEndDate"
+                                readonly />
 
 
                               <div class="invalid-feedback"
@@ -423,9 +408,7 @@
     </div>
   </div>
 </div>
-<div *ngIf="message" 
-     class="mt-2 p-2 rounded"
-     [ngClass]="{
+<div *ngIf="message" class="mt-2 p-2 rounded" [ngClass]="{
        'bg-success text-white': messageType === 'success',
        'bg-danger text-white': messageType === 'error'
      }">

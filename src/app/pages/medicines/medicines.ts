@@ -10,12 +10,13 @@ import { MatListModule } from "@angular/material/list";
 import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
-import { FormsModule } from "@angular/forms";
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { AfterViewInit } from "@angular/core";
 import { Footer } from "../footer/footer";
 import { Header } from "./header/header";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient,  HttpHeaders } from "@angular/common/http";
+import { HttpClientModule } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from "@src/app/core/const";
 import { CartService } from "@src/app/core/cart.service";
 import { Observable } from "rxjs";
@@ -76,6 +77,7 @@ interface Category {
     CommonModule,
     RouterModule,
     LayoutModule,
+    ReactiveFormsModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -87,11 +89,12 @@ interface Category {
     FormsModule,
     MatInputModule,
     Header,
+     HttpClientModule,
     Footer,
     CommonFilterComponent,
     HealthCarouselComponent,
     BannerSliderComponent,
-     CustomMedicineSliderComponent,
+    CustomMedicineSliderComponent,
     MobileFooterNavComponent
   ],
   templateUrl: "./medicines.html",
@@ -256,8 +259,8 @@ export class Medicines implements AfterViewInit {
   //copy this and make same others category
   categories: Category[] = [
     {
-      name: 'Skin Care', apiValue: ["Cream", "Lotion", "Gel", "Face Wash", "Face Pack", 
-        "Scrub", "Toner", "Serum", "Cleanser", "Moisturiser", "Body Wash","Ointment","Face Cream","Face Gel",
+      name: 'Skin Care', apiValue: ["Cream", "Lotion", "Gel", "Face Wash", "Face Pack",
+        "Scrub", "Toner", "Serum", "Cleanser", "Moisturiser", "Body Wash", "Ointment", "Face Cream", "Face Gel",
         "Soap",], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/skin care.avif', altText: 'Skin Care Products'
     },
     {
@@ -269,8 +272,8 @@ export class Medicines implements AfterViewInit {
     },
     {
       name: 'Sexual Wellness', apiValue: [
-        "Condom", "Lubricant",  "Capsule", "Tablet",
-         "Massage Oil", "Cream", "Tonic", "Patch", "Sublingual Spray",
+        "Condom", "Lubricant", "Capsule", "Tablet",
+        "Massage Oil", "Cream", "Tonic", "Patch", "Sublingual Spray",
         "Test Kit", "Self Test Kit"
       ], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/sexual wellness.avif', altText: 'Sexual Wellness Products'
     },
@@ -307,11 +310,11 @@ export class Medicines implements AfterViewInit {
       name: 'Ayurveda', apiValue: [
         "Churna", "Churna (Powder)", "Bhasma", "Majoon", "Asava",
         "Arishta", "Taila", "Kwath", "Lehyam", "Guggulu", "Tablet",
-        "Capsule", "Syrup", "Tonic", "Arka", "Linctus", "Ointment","Flower","Root","Leaf",
+        "Capsule", "Syrup", "Tonic", "Arka", "Linctus", "Ointment", "Flower", "Root", "Leaf",
         "Seed", "Powder", "Extract", "Herbal Juice", "Herbal Gel"
       ], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.avif', altText: 'Oral care Wellness Products'
     },
- 
+
     {
       name: 'Pet Care', apiValue: [
         "Pet Food", "Pet Spray", "Dog Bone", "Pet Shampoo", "Pet Conditioner",
@@ -325,20 +328,24 @@ export class Medicines implements AfterViewInit {
   ];
 
   categories2: Category[] = [
-    { name: 'Best offers', apiValue: [ "Beard Oil","Yoga Mat","Soap",'Butter',"Oil","Knee Support","Body Wash", "Sanitary Pad", "Pad", "Panty","Face Wash", "Soap", "Shampoo"], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/bestoffer.avif', altText: 'Skin Care Products' },
-    { name: 'Vitamins & Supplements', apiValue: ['Powder','Juice',"Tablet"], cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/vitamins.avif', altText: 'Hair Care Products' },
-    { name: 'Nutritional Drinks', apiValue: ['Protein Powder',"Nutritional Drink","Shake","Tea Bag","Energy Drink","Herbal Juice"], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/drinks.avif', altText: 'Sexual Wellness Products' },
-    { name: 'Skin Care', apiValue: ['Body Wash',"Cream", "Lotion", "Gel", "Face Wash", "Face Pack", 
-        "Scrub", "Toner", "Serum", "Cleanser", "Moisturiser", "Body Wash",], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/skin1.avif', altText: 'Oral care Wellness Products' },
+    { name: 'Best offers', apiValue: ["Beard Oil", "Yoga Mat", "Soap", 'Butter', "Oil", "Knee Support", "Body Wash", "Sanitary Pad", "Pad", "Panty", "Face Wash", "Soap", "Shampoo"], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/bestoffer.avif', altText: 'Skin Care Products' },
+    { name: 'Vitamins & Supplements', apiValue: ['Powder', 'Juice', "Tablet"], cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/vitamins.avif', altText: 'Hair Care Products' },
+    { name: 'Nutritional Drinks', apiValue: ['Protein Powder', "Nutritional Drink", "Shake", "Tea Bag", "Energy Drink", "Herbal Juice"], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/drinks.avif', altText: 'Sexual Wellness Products' },
+    {
+      name: 'Skin Care', apiValue: ['Body Wash', "Cream", "Lotion", "Gel", "Face Wash", "Face Pack",
+        "Scrub", "Toner", "Serum", "Cleanser", "Moisturiser", "Body Wash",], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/skin1.avif', altText: 'Oral care Wellness Products'
+    },
     { name: 'Hair Care', apiValue: ['Hair Mask'], cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/hair1.avif', altText: 'Oral care Wellness Products' },
     { name: 'Sexual Wellness', apiValue: ['Condom'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/sexual wellness.avif', altText: 'Oral care Wellness Products' },
     { name: 'Ayurveda Products', apiValue: ['Mouth Wash'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.avif', altText: 'Oral care Wellness Products' },
     { name: 'Pain Relief', apiValue: ['Spray'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/pain.avif', altText: 'Oral care Wellness Products' },
     { name: 'Homeopathy', apiValue: ['Flower'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/homopathy.avif', altText: 'Oral care Wellness Products' },
-    { name: 'Ayurveda', apiValue: ['Face Pack', "Churna", "Churna (Powder)", "Bhasma", "Majoon", "Asava",
+    {
+      name: 'Ayurveda', apiValue: ['Face Pack', "Churna", "Churna (Powder)", "Bhasma", "Majoon", "Asava",
         "Arishta", "Taila", "Kwath", "Lehyam", "Guggulu", "Tablet",
         "Capsule", "Syrup", "Tonic", "Arka", "Linctus", "Ointment",
-        "Oil", "Powder", "Extract", "Herbal Juice", "Herbal Gel"], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.avif', altText: 'Oral care Wellness Products' },
+        "Oil", "Powder", "Extract", "Herbal Juice", "Herbal Gel"], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/ayurveda.avif', altText: 'Oral care Wellness Products'
+    },
     { name: 'Caring for every tiny move', apiValue: ['Diaper'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/diapper-pants.avif', altText: 'Oral care Wellness Products' },
     { name: 'Top deals of nut& Dry Fruit', apiValue: ['Nut'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/high-muesli.avif', altText: 'Oral care Wellness Products' },
 
@@ -402,7 +409,7 @@ export class Medicines implements AfterViewInit {
     // { name: 'Oral Care', apiValue: 'Oralcare', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
 
   ];
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private fb: FormBuilder) { }
 
   @ViewChild("slider", { static: false }) slider!: ElementRef;
 
@@ -412,6 +419,7 @@ export class Medicines implements AfterViewInit {
   private router: Router = inject(Router);
   selectedMedicine: any;
   private http = inject(HttpClient);
+
   fdaMedicines: any[] = [];
   medicineList: Medicine[] = [];
   otcmedicineList: otcMedicine[] = [];
@@ -419,8 +427,109 @@ export class Medicines implements AfterViewInit {
   cols: { id: string; label: string; type: string }[] = [];
   isLoaded = false;
   hasError = false;
+  showAddressAlert = false;
+  showAddressForm = false;
+  addressForm!: FormGroup;
+  userProfile: any;
+
+ngOnInit(): void {
+
+  // ✅ ALWAYS initialize the form first
+  this.initAddressForm();
+
+  const token = localStorage.getItem('authToken');
+  const profileStr = localStorage.getItem('userProfile');
+  const justLoggedIn = localStorage.getItem('justLoggedIn');
+
+  // Guest user → no popup
+  if (!token || !profileStr) return;
+
+  this.userProfile = JSON.parse(profileStr);
+
+  // Show popup ONLY after login
+  if (justLoggedIn === 'true' && this.userProfile.isAddress === false) {
+    setTimeout(() => {
+      this.showAddressAlert = true;
+    }, 400);
+  }
+
+  localStorage.removeItem('justLoggedIn');
+}
 
 
+closeAddressPopup(): void {
+  this.showAddressAlert = false;
+}
+
+closeAddressForm(): void {
+  this.showAddressForm = false;
+}
+
+  initAddressForm(): void {
+    this.addressForm = this.fb.group({
+      fullName: [{ value: '', disabled: true } ],
+      phoneNumber: [{ value: '', disabled: true }],
+      addressLine1: ['', Validators.required],
+      addressLine2: [''],
+      landmark: [''],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      pincode: ['', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]],
+      addressType: ['home', Validators.required] // ✅ dropdown
+
+    });
+  }
+
+
+  openAddressForm(): void {
+    const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+
+    this.addressForm.patchValue({
+      fullName: profile.displayName,
+      phoneNumber: profile.phoneNumber
+    });
+    this.showAddressAlert = false;
+    this.showAddressForm = true;
+  }
+
+  submitAddress(): void {
+     console.log('🔥 submitAddress() CALLED');
+    if (this.addressForm.invalid) {
+       
+      this.addressForm.markAllAsTouched();
+        console.error('❌ Address form invalid', this.addressForm.value);
+      return;
+    }
+
+    const token = localStorage.getItem('authToken');
+
+    if (!token) {
+      alert('Authentication token missing. Please login again.');
+      return;
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    // enable disabled fields before submit
+    const payload = this.addressForm.getRawValue();
+    console.log('📦 Address Payload:', payload);
+
+    this.http.post(
+      'https://vitoxyz.com/Backend/api/address/add',payload,{ headers }).subscribe({
+      next: (res) => {
+        console.log('✅ Address saved:', res);
+         this.userProfile.isAddress = true;
+      localStorage.setItem('userProfile', JSON.stringify(this.userProfile));
+        this.showAddressForm = false;
+      },
+      error: () => {
+        alert('Failed to add address');
+      }
+    });
+  }
 
   fetchMedicines(page: number = 0, size: number = 10) {
     this.http
@@ -556,10 +665,10 @@ export class Medicines implements AfterViewInit {
   // personal care
 
   fetchProductsByCategory(categoryApiValues: string[]): void {
-      console.log('🔄 Fetching products for category API values:', categoryApiValues);
+    console.log('🔄 Fetching products for category API values:', categoryApiValues);
 
     const categoryName = this.getCategoryNameByApiValues(categoryApiValues);
-      console.log('🔄 Fetching products for category API values:', categoryApiValues);
+    console.log('🔄 Fetching products for category API values:', categoryApiValues);
 
     this.router.navigate(['/products'], {
       queryParams: {
@@ -568,57 +677,57 @@ export class Medicines implements AfterViewInit {
       }
     });
   }
-  
 
 
 
-private getCategoryNameByApiValues(apiValues: string[]): string {
-  console.log('🔍 Searching for category with API values:', apiValues);
-  
-  // Create a map of all categories for better lookup
-  const allCategories = [
-    ...this.categories,
-    ...this.categories2, 
-    ...this.categories4,
-    ...this.categories5
-  ];
-  
-  // Try exact match first (when clicked category has specific values)
-  let category = allCategories.find(cat => {
-    // Check if this category was specifically clicked (exact match of apiValues)
-    const isExactMatch = apiValues.every(value => cat.apiValue.includes(value));
-    console.log(`🔍 Exact match check for "${cat.name}":`, isExactMatch);
-    return isExactMatch;
-  });
-  
-  // If no exact match, try partial match (for backward compatibility)
-  if (!category) {
-    category = allCategories.find(cat => {
-      const hasAnyMatch = apiValues.some(value => cat.apiValue.includes(value));
-      console.log(`🔍 Partial match check for "${cat.name}":`, hasAnyMatch);
-      return hasAnyMatch;
+
+  private getCategoryNameByApiValues(apiValues: string[]): string {
+    console.log('🔍 Searching for category with API values:', apiValues);
+
+    // Create a map of all categories for better lookup
+    const allCategories = [
+      ...this.categories,
+      ...this.categories2,
+      ...this.categories4,
+      ...this.categories5
+    ];
+
+    // Try exact match first (when clicked category has specific values)
+    let category = allCategories.find(cat => {
+      // Check if this category was specifically clicked (exact match of apiValues)
+      const isExactMatch = apiValues.every(value => cat.apiValue.includes(value));
+      console.log(`🔍 Exact match check for "${cat.name}":`, isExactMatch);
+      return isExactMatch;
     });
+
+    // If no exact match, try partial match (for backward compatibility)
+    if (!category) {
+      category = allCategories.find(cat => {
+        const hasAnyMatch = apiValues.some(value => cat.apiValue.includes(value));
+        console.log(`🔍 Partial match check for "${cat.name}":`, hasAnyMatch);
+        return hasAnyMatch;
+      });
+    }
+
+    console.log('🔍 Found category:', category?.name || 'Products');
+    return category ? category.name : 'Products';
   }
-  
-  console.log('🔍 Found category:', category?.name || 'Products');
-  return category ? category.name : 'Products';
-}
 
 
 
   // private getCategoryNameByApiValues(apiValues: string[]): string {
   //   console.log("apiValues",apiValues);
-    
+
   //   const category = this.categories.find(cat =>
   //     cat.apiValue.join(',') === apiValues.join(',')
   //   );
   //   console.log("categoryaame",category);
-    
+
   //   return category ? category.name : 'Products';
   // }
   // Helper method to get category name from API values
   private getCategoryNameByApiValues1(apiValues: string[]): string {
-    const category = this.categories.find(cat => 
+    const category = this.categories.find(cat =>
       cat.apiValue.join(',') === apiValues.join(',')
     );
     return category ? category.name : 'Products';
@@ -693,18 +802,20 @@ private getCategoryNameByApiValues(apiValues: string[]): string {
   //       "Soap",], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/skin care.avif', altText: 'Skin Care Products'
   //   },
 
-// here category
- categories5: Category[] = [
-    { name: 'Stomach Care', apiValue: ['Digestive Tablet',"Syrup","Suspension","Oral Suspension","Oral Solution","Oral Liquid","Oral Gel","Tonic","Granule","Powder for Oral Suspension","Powder for Oral Solution"] ,cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/1.avif', altText: 'Diabetes Care Products' },
-    { name: 'Heart Rate', apiValue: ['Capsule',"Tablet","Injection","Solution for Infusion","Syrup","Infusion"], cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/2.avif', altText: 'Heart Rate Care Products' },
-    { name: 'Diabetes', apiValue: ['Insulin Syringe (Syringe)',"Injection","Test Strip","Tablet",
-      "Test kit","Lancet","Needle","Self Test Kit"
-    ], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/3.avif', altText: 'Stomach Care Products' },
-    { name: 'Liver Care', apiValue: ['Tablet',"Capsule","Granule","Syrup","Tonic","Liver Care Juice"], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/4.avif', altText: 'Liver Care Products' },
-    { name: 'Eye Care', apiValue: ['Eye Drop',"Eye Gel","Eye Cream","Eye Ointment","Eye Pad","Eye Capsule","Eye/Ear Drop","Ophthalmic Solution","Lens Solution","Reading Eyeglass"], cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/5.avif', altText: 'Eye Care Products' },
-    { name: 'Bone & Joint', apiValue: ["Knee Support","Wrist Support","Massager","Liniment","Balm","Ointment","Bone & Joint Tablet","Bone & Joint Oil",'Bandage'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/6.avif', altText: 'Bone & Joint Products' },
-    { name: 'Kidney Care', apiValue: ['Tonic',"Kidney Tablet ","Tablet","Kidney Capsule ","Kidney Syrup ","Kidney Tonic ","Kidney Infusion ","Kidney Solution for Infusion ","Kidney Drop"," Juice"], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/7.avif', altText: 'Kidney Care Products' },
-    { name: 'Derma Care', apiValue: ['Face Cream',"Face Pack","Lotion","Face Wash","Serum","Cream","Moisturiser","Dusting Powder","Body Wash","Conditioner","Wax","Scrub","Gel","Soap"], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/8.avif', altText: 'Derma Care Products' },
+  // here category
+  categories5: Category[] = [
+    { name: 'Stomach Care', apiValue: ['Digestive Tablet', "Syrup", "Suspension", "Oral Suspension", "Oral Solution", "Oral Liquid", "Oral Gel", "Tonic", "Granule", "Powder for Oral Suspension", "Powder for Oral Solution"], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/1.avif', altText: 'Diabetes Care Products' },
+    { name: 'Heart Rate', apiValue: ['Capsule', "Tablet", "Injection", "Solution for Infusion", "Syrup", "Infusion"], cssClass: 'hair-care-bg', imageUrl: 'assets/medicines/2.avif', altText: 'Heart Rate Care Products' },
+    {
+      name: 'Diabetes', apiValue: ['Insulin Syringe (Syringe)', "Injection", "Test Strip", "Tablet",
+        "Test kit", "Lancet", "Needle", "Self Test Kit"
+      ], cssClass: 'sexual-wellness-bg', imageUrl: 'assets/medicines/3.avif', altText: 'Stomach Care Products'
+    },
+    { name: 'Liver Care', apiValue: ['Tablet', "Capsule", "Granule", "Syrup", "Tonic", "Liver Care Juice"], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/4.avif', altText: 'Liver Care Products' },
+    { name: 'Eye Care', apiValue: ['Eye Drop', "Eye Gel", "Eye Cream", "Eye Ointment", "Eye Pad", "Eye Capsule", "Eye/Ear Drop", "Ophthalmic Solution", "Lens Solution", "Reading Eyeglass"], cssClass: 'Eldercare-bg', imageUrl: 'assets/medicines/5.avif', altText: 'Eye Care Products' },
+    { name: 'Bone & Joint', apiValue: ["Knee Support", "Wrist Support", "Massager", "Liniment", "Balm", "Ointment", "Bone & Joint Tablet", "Bone & Joint Oil", 'Bandage'], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/6.avif', altText: 'Bone & Joint Products' },
+    { name: 'Kidney Care', apiValue: ['Tonic', "Kidney Tablet ", "Tablet", "Kidney Capsule ", "Kidney Syrup ", "Kidney Tonic ", "Kidney Infusion ", "Kidney Solution for Infusion ", "Kidney Drop", " Juice"], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/7.avif', altText: 'Kidney Care Products' },
+    { name: 'Derma Care', apiValue: ['Face Cream', "Face Pack", "Lotion", "Face Wash", "Serum", "Cream", "Moisturiser", "Dusting Powder", "Body Wash", "Conditioner", "Wax", "Scrub", "Gel", "Soap"], cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/8.avif', altText: 'Derma Care Products' },
 
     // { name: 'Oral Care', apiValue: 'Oralcare', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
 
@@ -712,8 +823,8 @@ private getCategoryNameByApiValues(apiValues: string[]): string {
   ];
 
 
-  
-    @ViewChild("categoryCarouselWrapper5", { static: false })
+
+  @ViewChild("categoryCarouselWrapper5", { static: false })
   carouselWrapper5!: ElementRef<HTMLDivElement>;
 
   scrollCarousel5(direction: 'left' | 'right'): void {
