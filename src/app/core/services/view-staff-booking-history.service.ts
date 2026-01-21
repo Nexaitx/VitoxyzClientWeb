@@ -66,6 +66,11 @@ export interface BookingItem {
   price?: string | number;
   userAddress?: string;
 
+   // ✅ ADD THESE (FROM PAYMENT_PENDING API)
+  gender?: string | null;
+  experience?: number | null;
+  shiftType?: string | null;
+
   rating?: number | null;
   duties?: string | null;
 

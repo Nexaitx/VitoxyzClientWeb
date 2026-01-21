@@ -102,9 +102,9 @@
 .logcls {
   
   height: 42px;
-  margin-left: 72px;
+  // margin-left: 72px;
       margin-bottom: 10px;
-  padding: 0px 12px;
+  padding: 0px 6px;
 
 }
 
@@ -152,12 +152,12 @@ app-sign-up {
 
 .links {
   cursor: pointer;
-  color: #db9280;
+  color: #67a1e1;
   /* optional: make it look like a link */
 }
 
 .links:hover {
-  color: #db9280;
+  color: #67a1e1;
 }
 
 .login-screen {
@@ -181,10 +181,10 @@ app-sign-up {
     }
 
     .logcls {
-  margin-left: 40px;
-
+  // margin-left: 40px;
+     
 }
-
+   
     .right-panel {
       flex: unset;
       width: 100%;

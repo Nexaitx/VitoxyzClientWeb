@@ -1,9 +1,13 @@
 .navbar {
   position: fixed;
   z-index: 1055;
-  background: linear-gradient(to right, #ff8061, #feb47b);
+  background: linear-gradient(to right, #3c84f3, #1adc00);
+  // background:#3688d1;
+  //  background: linear-gradient(265deg, rgb(212 234 255) 2%, #aad0f2 70%, #89c3f7 160%);
 }
-
+.logoNamecls{
+  font-size: 40px;
+}
 .navbcls {
   margin-right: 174px;
 }
@@ -26,8 +30,6 @@
   line-height: 1;
   border: 2px solid #fff; /* white border around badge like the image */
 }
-
-
 .navbar-nav .nav-item:last-child {
   margin-right: 0;
 }
@@ -87,7 +89,7 @@
 
 .sidebar .mobile-menu-item a.active,
 .sidebar .mobile-menu-item button.active {
-  color: #db9280;
+  color: #67a1e1;
 }
 
 
@@ -136,13 +138,169 @@ body.no-scroll {
 
 .navbar .ms-auto.d-flex {
   position: absolute;
-  right: 8px;
+  right: 8px ;
 }
 
 .destop-alignnment {
   margin: 0px 32px;
+   padding-right: 150px;
+}
+.navbar-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 1050;
+  display: block;
+  min-width: 200px;
+}
+
+/* ===============================
+   LOCATION DISPLAY STYLES
+================================ */
+
+.location-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;                 /* proper spacing */
+  max-width: 260px;         /* prevents overflow */
+  white-space: nowrap;
+  margin-left: 30px;
+}
+
+.location-icon {
+  font-size: 1.2rem;
+  color: #0d6efd;           /* primary */
+  flex-shrink: 0;
+}
+
+.location-text {
+  color: #ffffff;
+  font-size: 14px;
+  max-width: 180px;         /* text control */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.location-action {
+  font-size: 1rem;
+  color: #d1d5db;           /* subtle */
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.location-action:hover {
+  color: #ffffff;
+}
+@media (max-width: 800px) {
+  .location-wrapper {
+    display: none !important;
+  }
+}
+
+/* ===============================
+   DESKTOP NAVBAR CENTER FIX
+================================ */
+@media (min-width: 992px) {
+
+  .navbar > .container-fluid {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+  }
+
+  /* LEFT: logo + location */
+  .navbar > .container-fluid > a,
+  .location-wrapper {
+    grid-column: 1;
+  }
+
+  /* CENTER: search + menu */
+  .navbar-center-wrapper {
+    grid-column: 2;
+    width: 100%;
+  }
+
+  .navbar-center-wrapper app-search {
+    max-width: 650px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .navbar-center-wrapper .navbar-nav {
+    justify-content: center;
+    margin-top: 6px;
+  }
+
+  /* RIGHT: profile + cart */
+  .navbar > .container-fluid > .ms-auto {
+    grid-column: 3;
+    justify-self: end;
+  }
+}
+
+@media (max-width: 1200px) {
+  .navbar-nav .nav-item.mx-4 {
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
+  }
+}
+
+/* ===============================
+   PROFILE DROPDOWN (CDK MENU)
+================================ */
+
+.profile-dropdown {
+  min-width: 220px;
+  padding: 6px 0;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  border: none;
+  right: 0;
+  top: calc(100% + 10px);
+}
+
+/* Dropdown items */
+.profile-dropdown .dropdown-item {
+  padding: 10px 18px;
+  font-size: 14px;
+  color: #333;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Hover effect */
+.profile-dropdown .dropdown-item:hover {
+  background-color: #f2f6ff;
+  color: #1e6dfc;
+}
+
+/* Logout special style */
+.profile-dropdown .logout-item {
+  color: #dc3545;
+}
+
+.profile-dropdown .logout-item:hover {
+  background-color: #ffecec;
+  color: #b02a37;
+}
+
+/* Remove Bootstrap focus outline */
+.profile-dropdown .dropdown-item:focus {
+  outline: none;
+  box-shadow: none;
+}
 
 .sidebar ul {
   margin: 0;
@@ -167,7 +325,7 @@ body.no-scroll {
 
 .sidebar ul li a.active,
 .sidebar ul li button.active {
-  color: #db9280;
+  color: #67a1e1;
 }
 
 .sidebar ul li button i {
@@ -182,4 +340,92 @@ body.no-scroll {
 .list-unstyled li {
   border-bottom: 1px solid #eee;
   padding: 10px;
+}
+/* ===============================
+   MOBILE NAVBAR FIXES ONLY
+================================ */
+@media (max-width: 576px) {
+
+  /* Reduce logo image size */
+  .navbar img {
+    height: 32px !important;
+  }
+
+  /* Reduce Vitoxyz text size */
+  .logoNamecls {
+    font-size: 24px !important;
+  }
+
+  /* Reduce navbar vertical height */
+  .navbar {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  /* Fix right icons alignment */
+  .navbar .ms-auto.d-flex {
+    right: 6px;
+  }
+}
+/* ===============================
+   SMALL LAPTOP FIX (1024px–1199px)
+================================ */
+@media (min-width: 1024px) and (max-width: 1199px) {
+
+  /* Reduce search width */
+  .navbar-center-wrapper app-search {
+    max-width: 520px;
+  }
+
+  /* Reduce menu spacing */
+  .navbar-nav .nav-item.mx-4 {
+    margin-left: 0.75rem !important;
+    margin-right: 0.75rem !important;
+  }
+
+  /* Reduce logo text size slightly */
+  .logoNamecls {
+    font-size: 32px;
+  }
+
+  /* Reduce location text width */
+  .location-text {
+    max-width: 140px;
+  }
+}
+/* ===============================
+   NORMAL LAPTOP FIX (1200px–1366px)
+================================ */
+@media (min-width: 1200px) and (max-width: 1366px) {
+
+  .navbar-center-wrapper app-search {
+    max-width: 600px;
+  }
+
+  .navbar-nav .nav-item.mx-4 {
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
+  }
+
+  .logoNamecls {
+    font-size: 36px;
+  }
+
+  .location-text {
+    max-width: 160px;
+  }
+}
+/* ===============================
+   LARGE DESKTOP POLISH
+================================ */
+@media (min-width: 1367px) {
+
+  .navbar-center-wrapper app-search {
+    max-width: 650px;
+  }
+
+  .navbar-nav .nav-item.mx-4 {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+  }
 }

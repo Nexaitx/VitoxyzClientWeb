@@ -70,10 +70,10 @@ export class Plans implements OnInit {
       return;
     }
 
-    // Confirm purchase
-    if (!confirm(`Are you sure you want to purchase "${plan.title || plan.planTitle}" for ₹${plan.price}?`)) {
-      return;
-    }
+    // // Confirm purchase
+    // if (!confirm(`Are you sure you want to purchase "${plan.title || plan.planTitle}" for ₹${plan.price}?`)) {
+    //   return;
+    // }
 
     // Set purchasing state
     this.purchasingPlanId = plan.id;

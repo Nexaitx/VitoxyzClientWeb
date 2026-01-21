@@ -35,6 +35,7 @@ private PAYMENT_TIME_LIMIT = 10 * 60; // 10 minutes (seconds)
 private paymentTimerStarted = false;
 showPaymentTimer = false;
 paymentExpired = false;
+private readonly GST_PERCENT = 18;
 
   constructor(
     private fb: FormBuilder,
@@ -304,7 +305,8 @@ if (this.getTotalStaff() === 0) {
       console.log('📋 Booking IDs for payment:', bookingIds);
 
       // Calculate total amount
-      const totalAmount = this.calculateTotalAmount();
+      // const totalAmount = this.calculateTotalAmount();
+      const totalAmount = this.getFinalAmount();
       console.log('💰 Total Amount:', totalAmount);
 
       // Create payment request with GST Number
@@ -769,11 +771,26 @@ if (this.getTotalStaff() === 0) {
       control?.markAsTouched();
     });
   }
+// ✅ GST amount (18%)
+getGstAmount(): number {
+  const baseAmount = this.calculateTotalAmount();
+  return +(baseAmount * this.GST_PERCENT / 100).toFixed(2);
+}
+
+// ✅ Final payable amount (Base + GST)
+getFinalAmount(): number {
+  const baseAmount = this.calculateTotalAmount();
+  const gstAmount = this.getGstAmount();
+  return +(baseAmount + gstAmount).toFixed(2);
+}
 
   // Getters for template
-  getTotalAmount(): number {
-    return this.calculateTotalAmount();
-  }
+  // getTotalAmount(): number {
+  //   return this.calculateTotalAmount();
+  // }
+getTotalAmount(): number {
+  return this.getFinalAmount();
+}
 
   getTotalStaff(): number {
     let count = 0;

@@ -37,7 +37,7 @@ body {
     }
 
     &::-webkit-scrollbar-thumb {
-        background: #feb47b;
+        background: #67a1e1;
         border-radius: 10px;
     }
 
@@ -47,7 +47,8 @@ body {
 }
 
 button {
-    background: linear-gradient(to right, #f5a38f, #feb47b) !important;
+    background: #67a1e1 !important;
+    // background: linear-gradient(to right, #3c84f3, #1adc00)
 }
 
 
@@ -56,7 +57,7 @@ button {
 }
 
 .addNewBtn {
-    border: 1px dashed #feb47b;
+    border: 1px dashed #67a1e1;
 }
 
 .bold {
@@ -73,7 +74,7 @@ a {
 }
 
 .cartBoxes {
-    border: 1.35px solid #db9280 !important;
+    border: 1.35px solid #67a1e1 !important;
 }
 
 .strong {

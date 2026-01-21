@@ -75,6 +75,21 @@ export class Login implements OnInit, OnDestroy {
       otpCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]] // 6-digit OTP
     });
   }
+private showToast(message: string, type: 'success' | 'error' = 'error'): void {
+  const toastEl = document.getElementById('loginToast');
+  if (!toastEl) return;
+
+  toastEl.classList.remove('text-bg-success', 'text-bg-danger');
+  toastEl.classList.add(type === 'success' ? 'text-bg-success' : 'text-bg-danger');
+
+  const body = toastEl.querySelector('.toast-body');
+  if (body) {
+    body.textContent = message;
+  }
+
+  const toast = new Toast(toastEl);
+  toast.show();
+}
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
@@ -138,6 +153,7 @@ export class Login implements OnInit, OnDestroy {
 // ✅ store address flag separately (important)
   // localStorage.setItem('isAddress', String(res.profile.isAddress));
   localStorage.setItem('justLoggedIn', 'true');
+  this.showToast('Login successful 🎉', 'success');
   this.loginSuccess.emit();
   this.loadingChange.emit(false);
       },
@@ -152,7 +168,7 @@ export class Login implements OnInit, OnDestroy {
           } else if (error.status === 0) {
             errorMessage = 'Could not connect to the server. Please check your internet connection.';
           }
-          alert(errorMessage);
+          this.showToast(errorMessage, 'error');
           this.isLoading = false;
           this.loadingChange.emit(false);
         }
@@ -181,7 +197,7 @@ export class Login implements OnInit, OnDestroy {
         if (error.error && error.error.message) {
           errorMessage = `Failed to send OTP: ${error.error.message}`;
         }
-        alert(errorMessage);
+         this.showToast(errorMessage, 'error');
         this.isLoading = false;
       }
     });
@@ -218,7 +234,7 @@ export class Login implements OnInit, OnDestroy {
         } else if (error.status === 400) {
           errorMessage = 'Invalid OTP or OTP expired.';
         }
-        alert(errorMessage);
+         this.showToast(errorMessage, 'error');
         this.isLoading = false;
       }
     });

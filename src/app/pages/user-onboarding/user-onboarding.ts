@@ -200,7 +200,7 @@ export class UserOnboarding implements OnInit {
     this.thirdFormGroup.invalid ||
     this.fourthFormGroup.invalid
   ) {
-    alert('Please complete all required fields in all steps.');
+      this.showErrorToast('Please complete all required fields in all steps.');
     return;
   }
 
@@ -276,13 +276,19 @@ const url = API_URL + ENDPOINTS.ONBOARD_DIET + '?enabled=true';
   //   this.submitForm(); 
   // }
 
-  showErrorToast() {
-    const toastEl = document.getElementById('formErrorToast');
-    if (toastEl) {
-      const toast = new Toast(toastEl);
-      toast.show();
-    }
+  showErrorToast(message: string = 'Something went wrong') {
+  const toastEl = document.getElementById('formErrorToast');
+  if (!toastEl) return;
+
+  const body = toastEl.querySelector('.toast-body');
+  if (body) {
+    body.textContent = message;
   }
+
+  const toast = new Toast(toastEl);
+  toast.show();
+}
+
 
   goToSubscriptionPlans() {
     this.router.navigate(['/subscription-plans']);

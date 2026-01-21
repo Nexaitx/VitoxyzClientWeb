@@ -7,9 +7,9 @@
     //     overflow-y: auto;
     // }
 
-    &:focus-within {
-        overflow-y: auto;
-    }
+    // &:focus-within {
+    //     overflow-y: auto;
+    // }
 
     &::-webkit-scrollbar {
         width: 3px;
@@ -22,7 +22,7 @@
     }
 
     &::-webkit-scrollbar-thumb {
-        background: #feb47b;
+        background: #67a1e1;
         border-radius: 10px;
     }
 
@@ -53,7 +53,7 @@
 }
 
 .index-number {
-    color: #feb47b;
+    color: #67a1e1;
     padding: 5px 12px;
     background-color: #e0fcff;
     border-radius: 50%;
@@ -70,7 +70,7 @@
     position: absolute;
     left: 5px;
     top: 36px;
-    color: #feb47b;
+    color: #67a1e1;
 }
 
 .female {
@@ -82,6 +82,15 @@
 }
 .amPm {
     width: 70px !important;;
+}
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-content {
+  flex: 1;
 }
 .counter-box {
   background: #f9fbfd; /* light background */
@@ -175,12 +184,44 @@
 .search-staff-form .form-select {
   height: 40px !important;
   min-height: 40px !important;
-  line-height: 40px;
+  // line-height: 40px;
   padding: 0 10px;
   font-size: 0.9rem;
   border-radius: 6px;
   border-color: #dff4f6;
   background: #f9fbfd;
+}
+/* =========================================
+   ✅ ANDROID OEM SELECT TEXT VISIBILITY FIX
+   (Vivo / iQOO / Oppo / Realme)
+========================================= */
+
+.search-staff-form select.form-select {
+  line-height: normal !important;     /* 🔥 critical */
+  padding-top: 6px;
+  padding-bottom: 6px;
+  min-height: 40px;
+  height: auto;                       /* 🔥 allow native render */
+  box-sizing: border-box;
+}
+
+/* Prevent text clipping inside flex rows */
+.search-staff-form .form-group {
+  overflow: visible;
+}
+
+/* Fix OEM WebView text paint bug */
+@media (max-width: 768px) {
+  .search-staff-form select.form-select {
+    font-size: 14px;
+    -webkit-appearance: none;
+    appearance: none;
+    background-clip: padding-box;
+  }
+}
+/* Prevent select rendering bug inside flex rows */
+.form-group > select {
+  flex: none;
 }
 
 .value-font {
@@ -218,7 +259,7 @@
 .search-staff-form .counter-select {
   height: 40px !important;
   min-height: 40px !important;
-  padding: 0 8px;
+  // padding: 0 8px;
 }
 .container,
 .container-fluid {
@@ -226,12 +267,13 @@
 }
 
 .form-scroll-container {
-  max-height: 600px;   /* fixed height (adjust as per your layout) */
-  overflow-y: auto;    /* enable vertical scrolling */
+  // max-height: 600px;   /* fixed height (adjust as per your layout) */
+  // overflow-y: auto;    /* enable vertical scrolling */
   overflow-x: hidden;  /* prevent horizontal scroll */
   padding-right: 10px; /* space for scrollbar */
   -webkit-overflow-scrolling: touch; /* ✅ REQUIRED for iOS */
 }
+
 /* ============================= */
 /* ✅ iOS SAFARI SELECT FIX */
 /* ============================= */
@@ -281,6 +323,21 @@
     height: 30px;
     border: 2px solid #dff4f6;
 }
+/* ===========================
+   ✅ iPhone Select Fix
+=========================== */
+
+.search-staff-form select {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Prevent horizontal overflow */
+.search-staff-form .form-group {
+  overflow: hidden;
+}
+
 // .time-wrapper {
 //   gap: 12px;
 //   flex-wrap: nowrap;
@@ -353,7 +410,12 @@
   flex: 1 1 0;
   min-width: 0;  /* allow shrinking on small screens */
 }
-
+// @media (max-width: 480px) {
+//   .search-staff-form {
+//     width: 100%;
+//     overflow-x: hidden;
+//   }
+// }
 /* Fix for mobiles <500px */
 @media (max-width: 500px) {
   .gender-quantity-row {
@@ -381,7 +443,10 @@
   .search-staff-form {
     padding: 12px;
   }
-
+//  .search-staff-form .form-control,
+//   .search-staff-form .form-select {
+//     width: 100% !important;  /* prevent 200% overflow */
+//   }
   .form-title {
     font-size: 1rem;
     text-align: center;
@@ -410,7 +475,6 @@
     height: 36px;
     font-size: 0.8rem;
   }
-
   .counter-input {
     font-size: 16px;
     width: 40px !important;
@@ -544,6 +608,75 @@
     max-height: 600px;
   }
 }
+/* ================================
+   ✅ ANDROID DATE INPUT FIX
+================================ */
+
+/* Prevent flex overflow on Android */
+.date-row {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0;
+}
+
+/* Fix Android date input breaking */
+.date-input {
+  width: 100% !important;
+  min-width: 0 !important;      /* 🔥 CRITICAL FIX */
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* Prevent column overflow */
+.date-row > div {
+  min-width: 0;                /* 🔥 CRITICAL FIX */
+}
+
+/* Small mobiles (Vivo / Oppo / iQOO) */
+@media (max-width: 480px) {
+  .date-row {
+    gap: 12px;
+  }
+
+  .date-input {
+    font-size: 14px;
+  }
+}
+
+// @supports (-webkit-touch-callout: none) {
+//   .form-scroll-container,
+//     .form-scroll-container,
+//   .staff-list {
+//     overflow: visible !important;
+//     max-height: none !important;
+//   }
+
+//   select {
+//     position: relative;
+//     z-index: 9999;
+//   }
+// }
+
+// /* =========================================
+//    ✅ iOS SAFARI SELECT POSITION FIX (FINAL)
+//    iPhone 12 / 13 / 14 / Safari
+// ========================================= */
+// @supports (-webkit-touch-callout: none) {
+
+//   /* Stop Safari flex-wrap miscalculation */
+//   .form-content .row {
+//     flex-wrap: nowrap !important;
+//     flex-direction: column !important;
+//   }
+
+//   /* Ensure select gets correct anchor */
+//   select {
+//     position: relative;
+//     z-index: 9999;
+//   }
+
+// }
 
 /* === MID-DESKTOP (1025px – 1479px) === */
 /* === MID-DESKTOP (1025px – 1479px) === */

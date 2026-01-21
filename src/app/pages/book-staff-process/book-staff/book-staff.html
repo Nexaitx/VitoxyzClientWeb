@@ -11,7 +11,10 @@
   subtitle="Discover Amazing Features"
   description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
   buttonText="" buttonLink="/">
-</app-text-image> -->
+</app-text-image>  -->
+<div class="page-wrapper">
+  <div class="page-content">
+
 <div class="container-fluid" #bookingSection style="margin-top: 60px;">
 
   <div class="row">
@@ -29,7 +32,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="form-label">Select your area</label>
-                    <i class="fi fi-rr-navigation address" style="line-height: 2;"></i>
+                    <i class="bi bi-geo-alt address" style="line-height: 2;"></i>
                     <input type="text" class="form-control ps-4" formControlName="userAddress" [class.is-invalid]="
                   staffBookingForm.get('userAddress')?.invalid &&
                   staffBookingForm.get('userAddress')?.touched
@@ -45,7 +48,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="form-label">Address</label>
-                    <i class="fi fi-rr-navigation address" style="line-height: 2;"></i>
+                    <i class="bi bi-geo-alt address" style="line-height: 2;"></i>
                     <input type="text" class="form-control ps-4" placeholder="Enter address"
                       formControlName="address" />
                   </div>
@@ -78,7 +81,7 @@
                           <div class="form-group">
                             <label for="typeOfStaff-{{ i }}" class="form-label">Select Staff Type</label>
                             <i class="bi bi-person address"></i>
-                            <select class="form-select ps-4" id="typeOfStaff-{{ i }}" formControlName="typeOfStaff"
+                            <select class="form-select ps-4" id="typeOfStaff-{{ i }}" formControlName="typeOfStaff" 
                               [class.is-invalid]="
                           staffDetails.get('typeOfStaff')?.invalid &&
                           staffDetails.get('typeOfStaff')?.touched
@@ -310,9 +313,9 @@
                               <div class="form-group">
                                 <label class="form-label">Tenure</label>
 
-                                <div class="d-flex align-items-center counter-box mx-2">
+                                <div class="d-flex align-items-center counter-box ">
                                   <i class="bi bi-calendar4 text-primary" style="margin-left: 10px;"></i>
-                                  <select class="value-font border-0 counter-select" formControlName="tenure"
+                                  <select class="value-font border-0 counter-select  " formControlName="tenure"
                                     [class.is-invalid]="shiftDetail.get('tenure')?.invalid && shiftDetail.get('tenure')?.touched">
                                     <option *ngFor="let ten of getTenureOptions(i)" [value]="ten.value">
                                       {{ ten.label }}
@@ -330,7 +333,7 @@
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-2">
                               <label class="form-label">Shift Duration</label>
-                              <select class="d-flex align-items-center counter-box mx-2"
+                              <select class="d-flex align-items-center counter-box "
                                 formControlName="preferredTimeSlot" [class.is-invalid]="
                             shiftDetail.get('preferredTimeSlot')?.invalid &&
                             shiftDetail.get('preferredTimeSlot')?.touched
@@ -349,7 +352,7 @@
                             </div>
                           </div>
 
-                          <div class="row">
+                          <div class="row date-row">
                             <div class="col-md-6">
                               <label class="form-label">Duty Start Date</label>
                               <input type="date" class="form-control " [min]="today" formControlName="dutyStartDate" />
@@ -422,7 +425,7 @@
   [slideInterval]="5000">
 </app-medicine-slider> -->
 
-<div>
+</div>
   <app-footer></app-footer>
 </div>
 <app-mobile-footer-nav></app-mobile-footer-nav>

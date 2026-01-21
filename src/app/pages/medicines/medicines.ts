@@ -14,18 +14,17 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatInputModule } from "@angular/material/input";
 import { AfterViewInit } from "@angular/core";
 import { Footer } from "../footer/footer";
-import { Header } from "./header/header";
+
 import { HttpClient,  HttpHeaders } from "@angular/common/http";
 import { HttpClientModule } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from "@src/app/core/const";
 import { CartService } from "@src/app/core/cart.service";
 import { Observable } from "rxjs";
-import { CommonFilterComponent } from "../shared/common-filter-component/common-filter-component";
 import { HealthCarouselComponent } from "../shared/health-carousel/health-carousel";
 import { BannerSliderComponent } from "@src/app/shared/banner-slider/banner-slider";
 import { TextBanner } from "@src/app/shared/text-banner/text-banner";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
-import { CustomMedicineSliderComponent } from "../shared/custom-medicine-slider/custom-medicine-slider";
+import { Header } from "./header/header";
 declare var bootstrap: any;
 export interface Medicine {
   id: string;
@@ -88,15 +87,13 @@ interface Category {
     MatSelectModule,
     FormsModule,
     MatInputModule,
-    Header,
-     HttpClientModule,
+    HttpClientModule,
     Footer,
-    CommonFilterComponent,
     HealthCarouselComponent,
     BannerSliderComponent,
-    CustomMedicineSliderComponent,
-    MobileFooterNavComponent
-  ],
+    MobileFooterNavComponent,
+    Header
+],
   templateUrl: "./medicines.html",
   styleUrls: ["./medicines.scss"],
 })

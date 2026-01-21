@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { CartService } from '@src/app/core/cart.service';
 import { HttpClient } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '@src/app/core/const';
+import { Search } from "../search/search";
 declare var bootstrap: any;
 
 @Component({
@@ -31,8 +32,9 @@ declare var bootstrap: any;
     MatTabsModule,
     Authorization,
     CdkMenuModule,
-    RouterLink
-  ],
+    RouterLink,
+    Search
+],
   templateUrl: './header.html',
   styleUrls: ['./header.scss']
 })
@@ -50,7 +52,7 @@ constructor(private http: HttpClient) {}
   isSidebarOpen = false;
   isMobileMenuOpen = signal(false);
 cartCount: number = 0;
-  
+  currentLocation: string = '';
   openSubmenus = new Set<number>();
   redirectAfterLogin: string | null = null; // ✅ added for redirection after login
 
@@ -94,15 +96,19 @@ cartCount: number = 0;
     { label: 'Need Help?', icon: 'fi-rr-exclamation', path: '/help' },
   
   ];
+profileMenuItems: any[] = [];
 
 ngOnInit(): void {
   this.checkLoginStatus();
-
+   this.detectLocation();
   // Count only distinct products in the cart
   this.cartService.cart$.subscribe(cart => {
     const uniqueProducts = new Set(cart.map(item => item.id));
     this.cartCount = uniqueProducts.size;
   });
+    // ✅ extract profile dropdown items ONCE
+  const profileItem = this.menuItems.find(item => item.label === 'Profile');
+  this.profileMenuItems = profileItem?.dropdownItems || [];
 }
 
 
@@ -133,7 +139,46 @@ ngOnInit(): void {
   setAuthMode(mode: 'login' | 'signup') {
     this.authMode = mode;
   }
+   async detectLocation() {
+    if (!navigator.geolocation) {
+      this.currentLocation = 'Geolocation not supported';
+      return;
+    }
 
+    this.currentLocation = 'Detecting...';
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
+          );
+          const data = await response.json();
+
+          if (data.address) {
+            this.currentLocation =
+              data.address.city ||
+              data.address.town ||
+              data.address.village ||
+              data.address.state ||
+              'Your Location';
+          } else {
+            this.currentLocation = 'Unknown Location';
+          }
+        } catch (error) {
+          console.error('Error fetching location:', error);
+          this.currentLocation = 'Unable to fetch location';
+        }
+      },
+      (error) => {
+        console.error('Geolocation error:', error);
+        this.currentLocation = 'Location permission denied';
+      }
+    );
+  }
   // logout() {
   //   localStorage.removeItem('authToken');
   //   this.isLoggedIn = false;

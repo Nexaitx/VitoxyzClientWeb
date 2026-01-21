@@ -57,7 +57,7 @@ button[disabled] {
 
 /* ----- CARD BASE STYLING ----- */
 .plan-item {
-  border: 1px solid #ff8061;
+  border: 1px solid  #3688d1;
   border-radius: 26px;
   padding: 25px;
   display: flex;
@@ -72,14 +72,14 @@ button[disabled] {
 .plan-item:hover,
 .plan-item:hover h3 {
   color: #fff;
-  background: #ff8061;
+  background:  #3688d1;
   cursor: pointer;
 }
 
 .plan-item:hover .bi-check2,
 .plan-item:hover .planBtn {
   background: #fff;
-  color: #ff8061;
+  color:  #3688d1;
 }
 
 .bi-check2 {
@@ -87,14 +87,14 @@ button[disabled] {
   color: white;
   padding: 2px 4px;
   margin-right: 5px;
-  background: #db9280;
+  background: #67a1e1;
 }
 
 .plan-item h3 {
   padding-bottom: 10px;
   margin-top: 0;
   font-size: 1.5em;
-  color: #db9280;
+  color: #67a1e1;
   text-transform: uppercase;
 }
 
@@ -200,7 +200,7 @@ button[disabled] {
 
 /* ----- COLOR CLASSES ----- */
 .primary {
-  background: #db9280;
+  background: #67a1e1;
   color: #fff;
 }
 
@@ -210,5 +210,5 @@ button[disabled] {
 
 .planBtn {
   color: #fff;
-  border: 1px solid #db9280;
+  border: 1px solid #67a1e1;
 }

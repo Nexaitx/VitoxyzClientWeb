@@ -134,8 +134,8 @@ export class PaymentScreen implements OnInit {
 
     console.log('💰 Plan loaded:', this.plan, 'Price:', this.price, 'Subscription ID:', this.subscriptionId);
 
-    // Calculate tax (10% GST for India)
-    this.tax = this.price * 0.10;
+    // Calculate tax (18% GST for India)
+    this.tax = this.price * 0.18;
   }
 
   private loadUserProfile(): void {

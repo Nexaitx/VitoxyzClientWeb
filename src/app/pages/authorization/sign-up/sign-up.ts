@@ -236,7 +236,7 @@ export class SignUp implements OnInit {
       this.orgSignupForm.get('confirmPassword')?.updateValueAndValidity();
     });
   }
-
+  
   onSignupSubmit(): void {
      console.log("personal created ");
         console.log("signup to login");
@@ -268,7 +268,10 @@ export class SignUp implements OnInit {
       error: (err) => {
         this.isLoading = false;
         this.loadingChange.emit(false);
-        alert(err.error?.message || 'Signup failed');
+         this.showToastMessage(
+        err.error?.message || 'Signup failed. Please try again.',
+        true
+      );
       }
     });
   }
@@ -303,20 +306,31 @@ this.showToastMessage('Account created successfully! Please log in.');
     error: (err) => {
       this.isLoading = false;
       this.loadingChange.emit(false);
-      alert(err.error?.message || 'Signup failed');
+       this.showToastMessage(
+        err.error?.message || 'Organization signup failed.',
+        true
+      );
     }
   });
 }
 
- private showToastMessage(message: string): void {
-    const toastElement = document.getElementById('loginToast');
-    if (toastElement) {
-      toastElement.querySelector('.toast-body')!.textContent = message;
-      new Toast(toastElement).show();
-    } else {
-      alert(message); // fallback if toast not available
-    }
+private showToastMessage(message: string, isError: boolean = false): void {
+  const toastElement = document.getElementById('loginToast');
+
+  if (!toastElement) return;
+
+  const toastBody = toastElement.querySelector('.toast-body');
+  if (toastBody) {
+    toastBody.textContent = message;
   }
+
+  // toggle success / error color (NO NEW CLASSES)
+  toastElement.classList.remove('text-bg-success', 'text-bg-danger');
+  toastElement.classList.add(isError ? 'text-bg-danger' : 'text-bg-success');
+
+  new Toast(toastElement, { delay: 3000 }).show();
+}
+
   goToLogin(): void {
                         console.log("login naviagation ");
 

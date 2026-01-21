@@ -4,7 +4,7 @@ import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mob
 import { Footer } from "../footer/footer";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { API_URL } from '@src/app/core/const';
 import { CommonModule } from '@angular/common';
 
@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
     RouterLink,
     MobileFooterNavComponent,
     Footer,
-     ReactiveFormsModule,
+     ReactiveFormsModule, 
      CommonModule  
   ],
   templateUrl: './profile.html',
