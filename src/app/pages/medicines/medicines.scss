@@ -113,7 +113,7 @@ h5 {
   overflow-x: hidden;
 }
 .form-scroll::-webkit-scrollbar-thumb {
-  background: #feb47b;
+  background: #67a1e1;
   border-radius: 10px;
 }
 .rating {
@@ -262,9 +262,7 @@ h5 {
   position: relative;
   box-shadow: inset 0 0 25px #feeece !important;
 
-  img {
-    
-  }
+  
 }
 
 @media (max-width: 768px) {
@@ -574,7 +572,7 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
     border-radius: $tile-radius;
     padding: 5px 4px 10px;
     cursor: pointer;
-    background: linear-gradient(180deg, #fff7e9, #ffcfb8);
+    background: #67a1e1;
     height: 150px; // chhota kar diya
 
     &:hover {
@@ -622,7 +620,7 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
 }
 
 .bynsclsleft {
-  color: #db9280;
+  color: #67a1e1;
   background: none;
   font-weight: 600;
   font-size: 24px;

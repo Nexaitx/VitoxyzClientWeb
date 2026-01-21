@@ -76,6 +76,7 @@ messageType: 'success' | 'error' | '' = '';
     private spinnerService: SpinnerToastService
   ) { }
     @ViewChild('bookingSection', { read: ElementRef }) bookingSection!: ElementRef<HTMLElement>;
+    @ViewChild(MapComponent) mapComponent!: MapComponent;
 
   ngOnInit(): void {
     this.getUserLocation();
@@ -88,6 +89,13 @@ messageType: 'success' | 'error' | '' = '';
       staffForms: this.fb.array([this.createStaffFormGroup()])
     });
     this.subscribeToCategoryChange(0);
+    this.staffBookingForm
+  .get('userAddress')
+  ?.valueChanges
+  .subscribe(value => {
+    this.searchAddressAndMoveMap(value);
+  });
+
   }
   
 getSlotsByStaffIndex(staffIndex: number): string[] {
@@ -340,57 +348,94 @@ incrementTime(unit: 'hours' | 'minutes', staffIndex: number, shiftIndex: number)
     }
   }
 
-  getAddressFromCoords(lat: number, lng: number) {
-    this.staffBookingForm.patchValue({
-      latitude: lat,
-      longitude: lng
-    });
-    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
-    this.http.get<any>(url).subscribe(
-      (response) => {
-        const address = response.display_name;
-        if (address) {
-          this.staffBookingForm.patchValue({ userAddress: address });
-        }
-      },
-      (error) => {
-        console.error('Error fetching address:', error);
+  // getAddressFromCoords(lat: number, lng: number) {
+  //   this.staffBookingForm.patchValue({
+  //     latitude: lat,
+  //     longitude: lng
+  //   });
+  //   const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
+  //   this.http.get<any>(url).subscribe(
+  //     (response) => {
+  //       const address = response.display_name;
+  //       if (address) {
+  //         this.staffBookingForm.patchValue({ userAddress: address });
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching address:', error);
+  //     }
+  //   );
+  // }
+getAddressFromCoords(lat: number, lng: number) {
+  // store coordinates
+  this.staffBookingForm.patchValue({
+    latitude: lat,
+    longitude: lng
+  });
+
+  const url = 'https://nominatim.openstreetmap.org/reverse';
+
+  const params = {
+    format: 'jsonv2',
+    lat: lat.toString(),
+    lon: lng.toString()
+  };
+
+  const headers = new HttpHeaders({
+    Accept: 'application/json',
+    // ✅ REQUIRED by Nominatim (especially for mobile)
+    'User-Agent': 'vitoxyz.com/0.0.0 (support@vitoxyz.com)'
+  });
+
+  this.http.get<any>(url, { params, headers }).subscribe({
+    next: (response) => {
+      if (response?.display_name) {
+        this.staffBookingForm.patchValue({
+          userAddress: response.display_name
+        });
       }
-    );
-  }
-// getAddressFromCoords(lat: number, lng: number) {
-//   this.staffBookingForm.patchValue({
-//     latitude: lat,
-//     longitude: lng
-//   });
+    },
+    error: (error) => {
+      console.error('Reverse geocoding failed:', error);
+    }
+  });
+}
 
-//   const url = `https://nominatim.openstreetmap.org/reverse`;
+searchAddressAndMoveMap(address: string): void {
+  if (!address || address.length < 3) return;
 
-//   const params = {
-//     format: 'jsonv2',
-//     lat: lat.toString(),
-//     lon: lng.toString()
-//   };
+  const url = 'https://nominatim.openstreetmap.org/search';
 
-//   const headers = new HttpHeaders({
-//     'Accept': 'application/json',
-//     // REQUIRED by Nominatim (mobile fix)
-//     'User-Agent': 'YourAppName/1.0 (support@yourdomain.com)'
-//   });
+  const params = {
+    format: 'json',
+    q: address,
+    limit: '1'
+  };
 
-//   this.http.get<any>(url, { params, headers }).subscribe({
-//     next: (response) => {
-//       if (response?.display_name) {
-//         this.staffBookingForm.patchValue({
-//           userAddress: response.display_name
-//         });
-//       }
-//     },
-//     error: (error) => {
-//       console.error('Reverse geocoding failed:', error);
-//     }
-//   });
-// }
+  const headers = new HttpHeaders({
+    Accept: 'application/json',
+    'User-Agent': 'vitoxyz.com/0.0.0 (support@vitoxyz.com)'
+  });
+
+  this.http.get<any[]>(url, { params, headers }).subscribe({
+    next: (res) => {
+      if (!res || !res.length) return;
+
+      const lat = parseFloat(res[0].lat);
+      const lng = parseFloat(res[0].lon);
+
+      // update form
+      this.staffBookingForm.patchValue({
+        latitude: lat,
+        longitude: lng
+      });
+
+      // update map
+      this.mapComponent?.setLocation(lat, lng);
+    },
+    error: err => console.error('Address search failed', err)
+  });
+}
 
   createStaffDetailFormGroup(): FormGroup {
     return this.fb.group({

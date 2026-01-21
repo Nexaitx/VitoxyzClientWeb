@@ -39,14 +39,14 @@
 
     .special-text {
       margin: 0;
-      color: #7b4f3f; // Darker brown color
+      color: #67a1e1; // Darker brown color
       font-weight: 500;
       font-size: 0.7rem;
     }
 
     .special-subtext {
       margin: 0;
-      color: #7b4f3f;
+      color: #67a1e1;
       font-weight: 700;
       font-size: 0.8rem;
     }
@@ -62,7 +62,7 @@
   transition: color 0.3s ease;
 
   &.active .icon-wrapper .fi {
-    color: #db9280; // Active link color (Black/Dark)
+    color: #67a1e1; // Active link color (Black/Dark)
     font-weight: 600;
     background: #fbf8eb;
     border-radius: 2px;

@@ -3,7 +3,7 @@
 
 $color-white: #ffffff;
 $color-muted: #555;
-$orange: #ff8a00;
+$orange: #67a1e1;
 
 // Fluid type helper
 @function fluid($min-size, $max-size, $min-screen: 320px, $max-screen: 1920px) {
@@ -78,6 +78,53 @@ $orange: #ff8a00;
     font-size: 13px;
   }
 }
+/* applies to all status badges */
+.badge {
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Bootstrap bg overrides (Angular adds these classes) */
+.badge.bg-success {
+  background-color: #28a745 !important;
+  color: #fff !important;
+}
+
+.badge.bg-warning {
+  background-color: #efb400 !important;
+  color: #000 !important;
+}
+
+.badge.bg-danger {
+  background-color: #d9534f !important;
+  color: #fff !important;
+}
+
+.badge.bg-secondary {
+  background-color: #6c757d !important;
+  color: #fff !important;
+}
+.statusbgcls.bg-success {
+  background-color: #28a745 !important;
+  color: #fff !important;
+}
+
+.statusbgcls.bg-warning {
+  background-color: #efb400 !important;
+  color: #000 !important;
+}
+
+.statusbgcls.bg-danger {
+  background-color: #d9534f !important;
+  color: #fff !important;
+}
+
+.statusbgcls.bg-secondary {
+  background-color: #6c757d !important;
+  color: #fff !important;
+}
 
 /* badges */
 .status-badges {
@@ -90,16 +137,16 @@ $orange: #ff8a00;
     border-radius: 20px;
     font-size: 12px;
     font-weight: 600;
-    color: rgb(247, 101, 10);
+    color:#67a1e1;
 
-    &.pending { background: #efb400; }
+    &.pending { background: #efb400;  }
     &.completed { background: #28a745; }
     &.cancelled { background: #d9534f; }
   }
 }
 .statusbgcls{
-   color: rgb(247, 184, 10);
-   background: #fff;
+   color: #fff;
+   background: rgb(247, 184, 10);
 }
 /* order item layout */
 .order-item {
@@ -136,6 +183,19 @@ $orange: #ff8a00;
     }
   }
 }
+/* ===============================
+   PAGE LAYOUT – FOOTER FIX
+================================ */
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-top: 89px;
+}
+
+.page-content {
+  flex: 1;
+}
 
 /* footer / actions */
 .order-footer {
@@ -153,9 +213,9 @@ $orange: #ff8a00;
     font-size: 14px;
     font-weight: 600;
 
-    &.view { background: #ffe2d4; color: #fff;}
-    &.reorder { background: #ffd8a8; color: #fff; }
-    &.cancel { background: #f8b8b8; color: #fff; }
+    &.view { background: #67a1e1; color: #fff;}
+    &.reorder { background: #67a1e1; color: #fff; }
+    &.cancel { background: #67a1e1; color: #fff; }
   }
 }
 
@@ -223,21 +283,21 @@ $orange: #ff8a00;
 }
 
 .overridebtn {
-  background-color: #f5a38f;
-  border: 1px solid #f5a38f;
+  background-color: #67a1e1;
+  border: 1px solid #67a1e1;
   border-radius: 19px;
   color: #fff;
   padding: 6px 16px;
   font-weight: 400;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(245, 163, 143, 0.4);
+  box-shadow: 0 4px 10px #67a1e1;
   transition: all 0.3s ease;
 }
 
 /* hover */
 .overridebtn:hover:not(:disabled) {
-  background-color: #ef8f78;
-  box-shadow: 0 6px 14px rgba(245, 163, 143, 0.6);
+  background-color: #67a1e1;
+  box-shadow: 0 6px 14px #67a1e1;
 }
 
 /* disabled state */
@@ -264,9 +324,35 @@ $orange: #ff8a00;
   max-width: 520px;
   max-height: 85vh;
       margin-bottom: -31px;
+  // overflow-y: auto;
+   display: flex;
+  flex-direction: column;
+  position: relative;
+}
+/* ✅ Scroll happens ONLY here */
+.modal-body-scroll {
   overflow-y: auto;
+  flex: 1;
+  padding-right: 2px;
+  
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #67a1e1 transparent;
 }
 
+/* Chrome, Edge, Safari */
+.modal-body-scroll::-webkit-scrollbar {
+  width: 2px;
+}
+
+.modal-body-scroll::-webkit-scrollbar-thumb {
+  background-color: #67a1e1;
+  border-radius: 8px;
+}
+
+.modal-body-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
 .reorder-modal .form-row, .reorder-modal .time-row {
   display:flex;
   gap:8px;
@@ -371,10 +457,10 @@ $orange: #ff8a00;
   }
 
   .tabs button.active {
-    background: linear-gradient(135deg, #ff8a00, #ffb066);
+    background: #67a1e1;
     color: #fff;
     border-bottom: none;
-    box-shadow: 0 3px 8px rgba(255, 138, 0, 0.45);
+    box-shadow: 0 3px 8px #67a1e1;
   }
 }
 

@@ -321,7 +321,7 @@
               <!-- Name -->
               <div class="form-group mb-3 position-relative">
                 <label class="form-label">Full Name</label>
-                <i class="bi bi-person input-icon mt-3"></i>
+                <i class="bi bi-person text-primary input-icon mt-3"></i>
                 <input type="text" class="form-control input-with-icon" placeholder="Enter your full name"
                   formControlName="name" />
               </div>
@@ -329,7 +329,7 @@
               <!-- Email -->
               <div class="form-group mb-3 position-relative">
                 <label class="form-label">Email Address</label>
-                <i class="bi bi-envelope input-icon mt-3"></i>
+                <i class="bi bi-envelope text-primary input-icon mt-3"></i>
                 <input type="email" class="form-control input-with-icon" placeholder="Enter your email"
                   formControlName="email" />
                 <small class="text-danger" *ngIf="email?.invalid && email?.touched">
@@ -340,7 +340,7 @@
               <!-- Phone -->
               <div class="form-group mb-3 position-relative">
                 <label class="form-label">Phone Number (Optional)</label>
-                <i class="bi bi-telephone input-icon mt-3"></i>
+                <i class="bi bi-telephone text-primary input-icon mt-3"></i>
                 <input type="tel" class="form-control input-with-icon" placeholder="Enter phone number"
                   formControlName="phone" />
               </div>
@@ -348,7 +348,7 @@
               <!-- Country -->
               <div class="form-group mb-3 position-relative">
                 <label class="form-label">Country</label>
-                <i class="bi bi-geo-alt input-icon mt-3"></i>
+                <i class="bi bi-geo-alt text-primary input-icon mt-3"></i>
                 <select class="form-control input-with-icon custom-select" formControlName="country">
                   <option value="" disabled selected>Select Country</option>
                   <option *ngFor="let country of countries" [value]="country">
@@ -405,7 +405,7 @@
                   </div>
 
                   <div class="summary-item">
-                    <span>GST (10%)</span>
+                    <span>GST (18%)</span>
                     <span class="amount">₹{{ tax | number:'1.2-2' }}</span>
                   </div>
 
@@ -421,10 +421,10 @@
                 <div class="additional-info mt-4">
                   <h6>What's included:</h6>
                   <ul class="features-list">
-                    <li><mat-icon class="success-icon">check_circle</mat-icon> Full access to diet plans</li>
-                    <li><mat-icon class="success-icon">check_circle</mat-icon> Personalized meal recommendations</li>
-                    <li><mat-icon class="success-icon">check_circle</mat-icon> Expert health consultation</li>
-                    <li><mat-icon class="success-icon">check_circle</mat-icon> 24/7 customer support</li>
+                    <li><mat-icon class="success-icon checklist ">check_circle</mat-icon> Full access to diet plans</li>
+                    <li><mat-icon class="success-icon checklist">check_circle</mat-icon> Personalized meal recommendations</li>
+                    <li><mat-icon class="success-icon checklist">check_circle</mat-icon> Expert health consultation</li>
+                    <li><mat-icon class="success-icon checklist">check_circle</mat-icon> 24/7 customer support</li>
                   </ul>
                 </div>
 
@@ -457,8 +457,8 @@
                 <div class="help-text mt-3">
                   <p class="small text-muted">
                     By proceeding, you agree to our
-                    <a href="#" class="text-primary">Terms of Service</a> and
-                    <a href="#" class="text-primary">Privacy Policy</a>.
+                    <a href="/termsandconditions" class="text-primary">Terms of Service</a> and
+                    <a href="/privacy-policy" class="text-primary">Privacy Policy</a>.
                   </p>
                 </div>
               </mat-card-content>

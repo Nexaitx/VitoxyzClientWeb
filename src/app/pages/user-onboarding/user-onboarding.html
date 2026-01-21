@@ -8,16 +8,16 @@
   <!-- <div >
       <button class="btn btn-primary" (click)="enable()" type="button">Enable Notifications</button>
     </div> -->
-  <div>
+  <!-- <div>
     <app-text-image imageUrl="assets/images/sample.jpg" imageAlt="Sample Image"
       title="Find, Book & Shop — All in One Place" subtitle="Discover Amazing Features"
       description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
       buttonText="" buttonLink="/">
     </app-text-image>
-  </div>
+  </div> -->
 
   <div class="container  main-container"
-    style="background:  linear-gradient(1deg, rgb(251 248 235) 2%, #fff6e0 70%, #ff8865 160%);">
+    style="  background: linear-gradient(265deg, rgb(212 234 255) 2%, #aad0f2 70%, #89c3f7 160%);">
 
 
     <mat-stepper class="custom-stepper" labelPosition="bottom" #stepper>
@@ -55,6 +55,7 @@
 
             <div class="col-md-12 mb-3 position-relative">
               <label class="form-label">Last Name</label>
+              <i class="bi bi-person address"></i>
               <input type="text" class="form-control with-icon" placeholder="Enter Last Name" formControlName="lastName"
                 [class.is-invalid]="firstFormGroup.get('lastName')?.invalid && firstFormGroup.get('lastName')?.touched">
 
@@ -374,7 +375,7 @@
       </mat-step>
     </mat-stepper>
   </div>
-
+  
   <div>
     <!-- <app-medicine-slider title="Experience the Joy of Easy Shopping" [showSeeAll]="true" [maxItems]="8"
       [autoSlide]="true" [slideInterval]="5000">
@@ -384,5 +385,24 @@
     <app-footer></app-footer>
   </div>
   <app-mobile-footer-nav></app-mobile-footer-nav>
-
+  <!-- ✅ ERROR TOAST (ADD HERE, ONLY ONCE) -->
+<div
+  id="formErrorToast"
+  class="toast align-items-center text-bg-danger border-0 position-fixed top-50 start-50 translate-middle"
+  role="alert"
+  aria-live="assertive"
+  aria-atomic="true"
+>
+  <div class="d-flex">
+    <div class="toast-body">
+      <!-- message injected from TS -->
+    </div>
+    <button
+      type="button"
+      class="btn-close btn-close-white me-2 m-auto"
+      data-bs-dismiss="toast"
+      aria-label="Close">
+    </button>
+  </div>
+</div>
 </div>

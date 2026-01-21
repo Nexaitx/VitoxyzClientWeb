@@ -121,13 +121,8 @@
 
       <!-- Calendar -->
       <div class="calendar-container d-flex gap-3 p-3 rounded shadow-sm">
-        <div
-          *ngFor="let day of weekDays; trackBy: trackByDay"
-          class="calendar-day text-center px-3 py-2 rounded"
-          [class.active]="day?.isToday"
-          (click)="selectDay(day)"
-          style="cursor:pointer;"
-        >
+        <div *ngFor="let day of weekDays; trackBy: trackByDay" class="calendar-day text-center px-3 py-2 rounded"
+          [class.active]="day?.isToday" (click)="selectDay(day)" style="cursor:pointer;">
           <div class="date">{{ day?.date }}</div>
           <span>{{ day?.name }}</span>
         </div>
@@ -190,15 +185,9 @@
       <div class="meals mt-3" *ngIf="selectedPlan">
 
         <!-- Breakfast -->
-        <div class="meal-card d-flex gap-3 mb-3"
-        style="cursor:pointer"
-  (click)="openMealPopup('BREAKFAST')"
-        
-        >
-          <img
-            [src]="selectedPlan?.primaryImageUrl || selectedPlan?.imageUrls?.[0] || 'assets/diet/breakfast.avif'"
-            style="width:96px;height:96px;border-radius:8px;object-fit:cover"
-          >
+        <div class="meal-card d-flex gap-3 mb-3" style="cursor:pointer" (click)="openMealPopup('BREAKFAST')">
+          <img [src]="selectedPlan?.primaryImageUrl || selectedPlan?.imageUrls?.[0] || 'assets/diet/breakfast.avif'"
+            style="width:96px;height:96px;border-radius:8px;object-fit:cover">
           <div>
             <div class="fw-semibold">Breakfast</div>
             <p class="mb-0">{{ selectedPlan?.breakfastDetails }}</p>
@@ -206,14 +195,9 @@
         </div>
 
         <!-- Lunch -->
-        <div class="meal-card d-flex gap-3 mb-3"
-        style="cursor:pointer"
-  (click)="openMealPopup('LUNCH')"
-        >
-          <img
-            [src]="selectedPlan?.primaryImageUrl || selectedPlan?.imageUrls?.[0] || 'assets/diet/lunch.avif'"
-            style="width:96px;height:96px;border-radius:8px;object-fit:cover"
-          >
+        <div class="meal-card d-flex gap-3 mb-3" style="cursor:pointer" (click)="openMealPopup('LUNCH')">
+          <img [src]="selectedPlan?.primaryImageUrl || selectedPlan?.imageUrls?.[0] || 'assets/diet/lunch.avif'"
+            style="width:96px;height:96px;border-radius:8px;object-fit:cover">
           <div>
             <div class="fw-semibold">Lunch</div>
             <p class="mb-0">{{ selectedPlan?.lunchDetails }}</p>
@@ -222,11 +206,9 @@
 
         <!-- Snacks -->
         <div class="meal-card d-flex gap-3 mb-3" *ngIf="selectedPlan?.snacksDetails" style="cursor:pointer"
-  (click)="openMealPopup('SNACKS')">
-          <img
-            [src]="selectedPlan?.primaryImageUrl || selectedPlan?.imageUrls?.[0] || 'assets/diet/snack.avif'"
-            style="width:96px;height:96px;border-radius:8px;object-fit:cover"
-          >
+          (click)="openMealPopup('SNACKS')">
+          <img [src]="selectedPlan?.primaryImageUrl || selectedPlan?.imageUrls?.[0] || 'assets/diet/snack.avif'"
+            style="width:96px;height:96px;border-radius:8px;object-fit:cover">
           <div>
             <div class="fw-semibold">Snacks</div>
             <p class="mb-0">{{ selectedPlan?.snacksDetails }}</p>
@@ -235,11 +217,9 @@
 
         <!-- Dinner -->
         <div class="meal-card d-flex gap-3 mb-3" *ngIf="selectedPlan?.dinnerDetails" style="cursor:pointer"
-  (click)="openMealPopup('DINNER')">
-          <img
-            [src]="selectedPlan?.primaryImageUrl || selectedPlan?.imageUrls?.[0] || 'assets/diet/snack.avif'"
-            style="width:96px;height:96px;border-radius:8px;object-fit:cover"
-          >
+          (click)="openMealPopup('DINNER')">
+          <img [src]="selectedPlan?.primaryImageUrl || selectedPlan?.imageUrls?.[0] || 'assets/diet/snack.avif'"
+            style="width:96px;height:96px;border-radius:8px;object-fit:cover">
           <div>
             <div class="fw-semibold">Dinner</div>
             <p class="mb-0">{{ selectedPlan?.dinnerDetails }}</p>
@@ -255,11 +235,8 @@
       <div class="profile-card shadow-sm">
 
         <div class="text-center p-3">
-          <img
-            [src]="selectedPlan?.primaryImageUrl || selectedPlan?.imageUrls?.[0] || 'assets/diet/profileImage.avif'"
-            class="profile-img"
-            style="width:120px;height:120px;border-radius:50%;object-fit:cover"
-          >
+          <img [src]="selectedPlan?.primaryImageUrl || selectedPlan?.imageUrls?.[0] || 'assets/diet/profileImage.avif'"
+            class="profile-img" style="width:120px;height:120px;border-radius:50%;object-fit:cover">
         </div>
 
         <div class="profile-info p-3">
@@ -273,16 +250,13 @@
             Added: {{ selectedPlan?.addedDate | date : 'mediumDate' }}
           </div>
         </div>
-        <div
-  *ngIf="userSubscriptionType || totalPlans"
-  class="profile-info p-3"
->
+        <div *ngIf="userSubscriptionType || totalPlans" class="profile-info p-3">
           <div><span class="text-muted">Subscription:</span> {{ userSubscriptionType | titlecase }}</div>
 
-        <div><span class="text-muted">Total Plans:</span> {{ totalPlans }}</div>
+          <div><span class="text-muted">Total Plans:</span> {{ totalPlans }}</div>
 
- 
-</div>
+
+        </div>
       </div>
     </div>
 
@@ -317,5 +291,3 @@
 
 <app-footer></app-footer>
 <app-mobile-footer-nav></app-mobile-footer-nav>
-
-

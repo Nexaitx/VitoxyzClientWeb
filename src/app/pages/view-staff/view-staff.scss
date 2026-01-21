@@ -1,6 +1,6 @@
 .text-center {
   position: fixed;
-  top: 50%;
+  // top: 50%;
   left: 45%;
 }
 
@@ -66,8 +66,8 @@
   color: white !important;
 }
 footer {
-  position: sticky;
-  bottom: 0;
+  // position: sticky;
+  // bottom: 0;
   width: 100%;
 }
 .colseCls{
@@ -88,6 +88,15 @@ footer {
   height: 60vh; /* adjust height if needed */
   text-align: center;
   position: relative;
+}
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-content {
+  flex: 1;
 }
 
 .status-container h2 {
@@ -159,7 +168,13 @@ footer {
   .card {
     font-size: 11px;
   }
+ .page-wrapper {
+    min-height: calc(100vh - 56px); /* height of mobile footer nav */
+  }
 
+  app-footer {
+    margin-bottom: 56px; /* avoid overlap with mobile nav */
+  }
   .timer-time {
     font-size: 26px;
   }
@@ -188,7 +203,13 @@ footer {
   .timer-time {
     font-size: 28px;
   }
+   .page-wrapper {
+    min-height: calc(100vh - 56px); /* height of mobile footer nav */
+  }
 
+  app-footer {
+    margin-bottom: 56px; /* avoid overlap with mobile nav */
+  }
   footer .p-3 {
     flex-direction: column;
     gap: 10px;

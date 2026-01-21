@@ -21,9 +21,11 @@ declare const google: any;
 export class MapComponent implements AfterViewInit, OnInit {
   @ViewChild('mapElement', { static: false }) mapElement!: ElementRef;
   @Output() locationSelected = new EventEmitter<{ lat: number; lng: number }>();
+    map!: google.maps.Map;
+  marker!: google.maps.Marker;
   userLat = 28.6139; // fallback
   userLng = 77.2090;
-  map: any;
+  // map: any;
 
   ngOnInit(): void {
     if (navigator.geolocation) {
@@ -45,41 +47,58 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    if (!navigator.geolocation) {
-      this.initMap(); // fallback if geolocation not supported
+    if (!this.map) {
+      this.initMap();
     }
   }
 
-  initMap(): void {
-    if (typeof google === 'undefined' || !google.maps) {
-      console.error('Google Maps API not loaded');
-      return;
-    }
+ initMap(): void {
+    if (!this.mapElement?.nativeElement || !google?.maps) return;
+
+    const center = { lat: this.userLat, lng: this.userLng };
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
-      center: { lat: this.userLat, lng: this.userLng },
-      zoom: 12
+      center,
+      zoom: 14
     });
 
-    new google.maps.Marker({
+    // ✅ SINGLE marker (reused)
+    this.marker = new google.maps.Marker({
+      position: center,
       map: this.map,
-      position: { lat: this.userLat, lng: this.userLng },
-      title: 'You are here'
+      draggable: false
     });
 
-    // Click listener to get coordinates
-    this.map.addListener('click', (e: any) => {
+    // ✅ Map click
+    this.map.addListener('click', (e: google.maps.MapMouseEvent) => {
+      if (!e.latLng) return;
+
       const lat = e.latLng.lat();
       const lng = e.latLng.lng();
-      this.locationSelected.emit({ lat, lng });
-      //alert(`Clicked location:\nLatitude: ${lat}\nLongitude: ${lng}`);
+
+      this.updateLocation(lat, lng);
     });
   }
+  public setLocation(lat: number, lng: number): void {
+  if (!this.map || !this.marker) return;
 
-  onMapClick(event: any) {
-    const lat = event.latLng.lat();
-    const lng = event.latLng.lng();
-    this.locationSelected.emit({ lat, lng });
+  const position = { lat, lng };
+
+  this.marker.setPosition(position);
+  this.map.panTo(position);
+}
+
+  private updateLocation(lat: number, lng: number): void {
+    const position = { lat, lng };
+
+    // ✅ Move marker
+    this.marker.setPosition(position);
+
+    // ✅ Move map view
+    this.map.panTo(position);
+
+    // ✅ Emit to parent
+    this.locationSelected.emit(position);
   }
 }
 

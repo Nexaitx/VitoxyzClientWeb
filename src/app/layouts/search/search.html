@@ -1,9 +1,9 @@
 <div class="search-bar d-flex align-items-center justify-content-between py-2"
-  style="margin-top: 102px; margin-bottom: 0px;">
+  style="margin-top: -15px; margin-bottom: 0px;">
   <!-- Left: Location dropdown -->
   <!-- <div class="location d-flex align-items-center px-3">
-    <i class="fi fi-rr-navigation text-primary me-2 pt-1 fs-4"></i>
-    <span>{{ currentLocation || 'Detecting location...' }}</span>
+    <i class="bi bi-geo-alt  text-primary me-2 pt-1 fs-4"></i>
+    <span class="text-white">{{ currentLocation || 'Detecting location...' }}</span>
     <i class="bi bi-crosshair ms-2 text-muted" title="Use current location" (click)="detectLocation()"
       style="cursor: pointer"></i>
   </div> -->
@@ -25,31 +25,28 @@
     />
    
   </div> -->
-  <div class="search-wrapper mobile-only">
+  <div class="search-wrapper">
     <div class="search-input-container">
       <i class="bi bi-search search-icon" (click)="onSearch()"></i>
 
-      <input type="text" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()"
+      <input type="text" [(ngModel)]="searchQuery" class="form-control" (keyup.enter)="onSearch()" 
         placeholder="Search for Medicine and Healthcare items" />
 
       <button class="search-btn btn-primary" (click)="onSearch()">Search</button>
     </div>
   </div>
 
-  <div class="quick-box d-flex align-items-center ms-auto">
+  <div class="quick-box d-flex align-items-center">
     <!-- <h6 style="
     margin-top: 9px;
     margin-right: -19px;
     margin-left: 8px;
    ">
   QUICK BUY! Get 15% off on medicines</h6> -->
-  <div class="d-none d-md-flex align-items-center">
-      <div>Upload for quick order</div>
-      <button class="btn btn-primary btn-quick d-none d-md-inline-flex rounded-pill ms-3 px-4" (click)="onQuickOrder()"
-        aria-label="Quick order">
-        Quick order
-      </button>
-    </div>
+    <!-- <button class="btn btn-primary btn-quick d-none d-md-inline-flex rounded-pill ms-3 px-4" (click)="onQuickOrder()"
+      aria-label="Quick order">
+      Quick order
+    </button> -->
 
     <!-- Mobile-only compact card (matches your second image) -->
     <div class="d-flex d-md-none align-items-center">
@@ -89,4 +86,5 @@
     </div>
   </div>
 </div>
+
 

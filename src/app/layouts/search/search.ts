@@ -1,17 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-
 import { Toast } from 'bootstrap';
+
 @Component({
-  selector: 'app-header',
-  standalone: true,
+  selector: 'app-search',
   imports: [CommonModule, FormsModule],
-  templateUrl: './header.html',
-  styleUrls: ['./header.scss']
+  templateUrl: './search.html',
+  styleUrl: './search.scss',
 })
-export class Header implements OnInit {
+export class Search implements OnInit {
     searchQuery: string = '';
   currentLocation: string = '';
 

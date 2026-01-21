@@ -20,20 +20,22 @@ interface NavItem {
   styleUrl: './mobile-footer-nav.scss'
 })
 export class MobileFooterNavComponent implements OnInit {
-  
-  mobileBreakpoint = 768; 
-  isMobile = false; 
+  isLoggedIn: boolean = false;
+  mobileBreakpoint = 768;
+  isMobile = false;
+  redirectAfterLogin: string | null = null; // ✅ added for redirection after login
   navItems: NavItem[] = [
     { label: 'Pharmacy', icon: 'fi-rr-medicine', link: '/medicines' },
     { label: 'Book Staff', icon: 'fi-rr-together-people', link: '/book-staff' },
     { label: 'Diet Plans', icon: 'fi-rr-salad', link: '/diet/user-onboarding' },
     { label: 'Profile', icon: 'fi-rr-user-pen', link: '/user-profile' }
   ];
-authMode: 'login' | 'signup' | 'forgotPassword' = 'login';
-  constructor(private router: Router,private http: HttpClient) {}
+  authMode: 'login' | 'signup' | 'forgotPassword' = 'login';
+  constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.checkMobileView();
+     this.checkLoginStatus();
   }
 
   @HostListener('window:resize')
@@ -44,98 +46,124 @@ authMode: 'login' | 'signup' | 'forgotPassword' = 'login';
   private checkMobileView() {
     this.isMobile = window.innerWidth <= this.mobileBreakpoint;
   }
-  get isLoggedIn(): boolean {
-    return !!localStorage.getItem('authToken'); // your login check
-  }
+  // get isLoggedIn(): boolean {
+  //   return !!localStorage.getItem('authToken'); // your login check
+  // }
+  checkLoginStatus(): void {
+    const token = localStorage.getItem('authToken');
+    this.isLoggedIn = !!token;
 
+    if (this.isLoggedIn && this.redirectAfterLogin) {
+      const redirectPath = this.redirectAfterLogin;
+      this.redirectAfterLogin = null;
+      if (redirectPath === '/diet') {
+        this.navigateToDiet(); // ✅ smart redirect
+      } else {
+        this.router.navigate([redirectPath]);
+      }
+
+    }
+  }
+  setAuthMode(mode: 'login' | 'signup') {
+    this.authMode = mode;
+  }
   // Handle navigation for footer items
   navigate(item: NavItem) {
-     // ========== Special Case: Diet Plans ==========
-  if (item.label === 'Diet Plans') {
+    // ========== Special Case: Diet Plans ==========
+    if (item.label === 'Diet Plans') {
 
-    // User not logged in → open login modal
-    if (!this.isLoggedIn) {
+      // User not logged in → open login modal
+      if (!this.isLoggedIn) {
+        this.authMode = 'login';
+        localStorage.setItem('redirectAfterLogin', 'diet-check');
+
+        const modalElement = document.getElementById('authModal');
+        if (modalElement) {
+          const modal = new (window as any).bootstrap.Modal(modalElement);
+          modal.show();
+        }
+        return;
+      }
+
+      // User is logged in → check diet plan API
+      this.navigateToDiet();
+      return;
+    }
+    if (item.label === 'Book Staff' && !this.isLoggedIn) {
+      // Open login modal
       this.authMode = 'login';
-      localStorage.setItem('redirectAfterLogin', 'diet-check');
+      localStorage.setItem('redirectAfterLogin', item.link);
 
       const modalElement = document.getElementById('authModal');
       if (modalElement) {
         const modal = new (window as any).bootstrap.Modal(modalElement);
         modal.show();
       }
+    } else if (item.link) {
+      this.router.navigate([item.link]);
+    }
+  }
+  private hasActiveDietPlan(): boolean {
+    const profileStr = localStorage.getItem('userProfile');
+    if (!profileStr) return false;
+
+    try {
+      const profile = JSON.parse(profileStr);
+      return profile?.hasActiveSubscription === true;
+    } catch {
+      return false;
+    }
+  }
+  navigateToDiet() {
+    const token = localStorage.getItem("authToken");
+
+    // 1. USER NOT LOGGED IN
+    if (!token) {
+      this.redirectAfterLogin = "/diet";
+
+      const modalEl =
+        document.getElementById("loginModal") ||
+        document.getElementById("authModal");
+
+      if (modalEl) {
+        const modal = (window as any).bootstrap.Modal.getOrCreateInstance(modalEl);
+        this.setAuthMode("login");
+        modal.show();
+      }
       return;
     }
 
-    // User is logged in → check diet plan API
-    this.navigateToDiet();
-    return;
-  }
-  if (item.label === 'Book Staff' && !this.isLoggedIn) {
-    // Open login modal
-    this.authMode = 'login';
-    localStorage.setItem('redirectAfterLogin', item.link);
+    // 2️⃣ Logged in → check backend subscription flag
+    const hasPlan = this.hasActiveDietPlan();
 
-    const modalElement = document.getElementById('authModal');
-    if (modalElement) {
-      const modal = new (window as any).bootstrap.Modal(modalElement);
-      modal.show();
+    if (hasPlan) {
+      this.router.navigate(['/diet-charts']);
+    } else {
+      this.router.navigate(['/diet/user-onboarding']);
     }
-  } else if (item.link) {
-    this.router.navigate([item.link]);
   }
-}
-navigateToDiet() {
-  const token = localStorage.getItem("authToken");
-
-  if (!token) {
-    // Not logged in → open login modal
-    const modal = new (window as any).bootstrap.Modal(
-      document.getElementById("loginModal")
-    );
-    modal.show();
-    return;
+  // Function to apply active class for current route
+  isActive(path: string): boolean {
+    return this.router.url === path;
   }
-
-  // Logged in → check if user purchased a diet plan
-  this.http.get(`${API_URL}${ENDPOINTS.DIET_DASHBOARD}?id=1073741824&username=string&password=string&authorities=%5B%7B%22authority%22%3A%22string%22%7D%5D&userType=string&enabled=true&accountNonExpired=true&accountNonLocked=true&credentialsNonExpired=true`, {
-    headers: { Authorization: `Bearer ${token}` }
-  }).subscribe({
-    next: (res: any) => {
-      const hasPlan = res?.userSubscriptionType !== null;
-
-      if (hasPlan) {
-        this.router.navigate(["diet/user-onboarding"]);
-      } else {
-        this.router.navigate(["diet-charts"]);
-      }
-    },
-    error: () => {
-      this.router.navigate(["diet/user-onboarding"]);
-    }
-  });
-}
-// Function to apply active class for current route
-isActive(path: string): boolean {
-  return this.router.url === path;
-}
   // Call this after login is successful
   onLoginSuccess() {
-  // Get the stored redirect URL
-  const redirectUrl = localStorage.getItem('redirectAfterLogin');
+    // Get the stored redirect URL
+    const redirectUrl = localStorage.getItem('redirectAfterLogin');
 
-  // Remove it so it doesn't persist
-  localStorage.removeItem('redirectAfterLogin');
-      if (redirectUrl === 'diet-check') {
-    this.navigateToDiet();
-    return;
+    // Remove it so it doesn't persist
+    localStorage.removeItem('redirectAfterLogin');
+    if (redirectUrl === 'diet-check') {
+      this.navigateToDiet();
+      return;
+    }
+    if (redirectUrl) {
+      // If user clicked Book Staff, redirect there
+      this.router.navigate([redirectUrl]);
+    } else {
+      // Otherwise, go to dashboard by default
+      this.router.navigate(['/dashboard']);
+    }
   }
-  if (redirectUrl) {
-    // If user clicked Book Staff, redirect there
-    this.router.navigate([redirectUrl]);
-  } else {
-    // Otherwise, go to dashboard by default
-    this.router.navigate(['/dashboard']);
-  }
-}
 
 }
