@@ -43,13 +43,13 @@
     margin-left: 8px;
    ">
   QUICK BUY! Get 15% off on medicines</h6> -->
-  <div class="d-none d-md-flex align-items-center">
+    <!-- <div class="d-none d-md-flex align-items-center mobile-only">
       <div>Upload for quick order</div>
-      <button class="btn btn-primary btn-quick d-none d-md-inline-flex rounded-pill ms-3 px-4" (click)="onQuickOrder()"
+      <button class="mobile-only btn btn-primary btn-quick d-none d-md-inline-flex rounded-pill ms-3 px-4" (click)="onQuickOrder()"
         aria-label="Quick order">
         Quick order
       </button>
-    </div>
+    </div> -->
 
     <!-- Mobile-only compact card (matches your second image) -->
     <div class="d-flex d-md-none align-items-center">
@@ -67,26 +67,14 @@
       </button>
     </div>
   </div>
-  
+
 </div>
 <!-- 🔔 GLOBAL TOAST (DO NOT NEST INSIDE FLEX) -->
 <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 2000;">
-  <div
-    id="loginToast"
-    class="toast text-bg-danger"
-    role="alert"
-    aria-live="assertive"
-    aria-atomic="true"
-  >
+  <div id="loginToast" class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="d-flex">
       <div class="toast-body"></div>
-      <button
-        type="button"
-        class="btn-close me-2 m-auto"
-        data-bs-dismiss="toast"
-        aria-label="Close"
-      ></button>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
   </div>
 </div>
-
