@@ -62,7 +62,7 @@
 
 .left-panel {
   flex: 1;
-  background: url('/assets/login/login-illustrate.avif') no-repeat center center;
+  background: url('/assets/login/VitoxyzLeftlogin.avif') no-repeat center center;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -75,6 +75,7 @@
 
 .left-panel .overlay-content {
   text-align: center;
+   margin-top: 279px;
 
   h2 {
     font-size: 2rem;

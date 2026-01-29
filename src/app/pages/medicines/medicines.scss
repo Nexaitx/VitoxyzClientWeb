@@ -95,7 +95,9 @@ h5 {
   color: #fff;
   font-size: 12px;
 }
-
+.adjustCls{
+  margin-top: 26px;
+}
 .address-close-btn:hover {
   opacity: 0.9;
 }
@@ -548,6 +550,7 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
 
 .mobile-quick-access-wrapper {
   padding: 20px;
+  width: 100%;
 
   .row {
     --bs-gutter-x: 0; // bootstrap gutter hata diya
@@ -628,11 +631,11 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
 }
 
 /* Hide on desktops */
-@media (min-width: 992px) {
-  .mobile-quick-access-wrapper {
-    display: none !important;
-  }
-}
+// @media (min-width: 992px) {
+//   .mobile-quick-access-wrapper {
+//     display: none !important;
+//   }
+// }
 
 /* Mobile-specific tweaks */
 @media (max-width: 576px) {
@@ -640,7 +643,10 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
     height: 135px;
     padding: 6px 4px 10px;
   }
-
+ .mobile-quick-access-wrapper .col-3 {
+    flex: 0 0 33.333%;
+    max-width: 31.333%;
+  }
   .tile-icon-box {
     width: 60px;
     height: 60px;
@@ -655,13 +661,24 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
     font-size: 11px;
   }
 }
+/* TABLET (577px–991px): 3 tiles */
+@media (min-width: 577px) and (max-width: 991px) {
+  .mobile-quick-access-wrapper .col-3 {
+    flex: 0 0 33.333%;
+    max-width: 33.333%;
+  }
+  
+}
 @media (min-width: 768px) and (max-width: 1199px) {
   .filters-container {
     gap: 12px;
     padding: 10px;
     justify-content: center;
   }
-
+ .mobile-quick-access-wrapper .col-3 {
+    flex: 0 0 33.333%;
+    max-width: 31.333%;
+  }
   .brandBackground {
     width: 120px;
     height: 120px;
@@ -693,10 +710,21 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
       padding: 8px;
     }
 
-    .tile-icon-box {
-      width: 65px;
-      height: 65px;
+    // .tile-icon-box {
+    //   width: 65px;
+    //   height: 65px;
+    // }
+     .tile-icon-box {
+    width: 70px; // icon thoda chhota
+    height: 70px;
+    margin: 5px 0 4px;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
+  }
   }
 }
 @media (min-width: 1920px) {
@@ -729,7 +757,66 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
     height: 180px;
   }
 }
+/* LAPTOP & DESKTOP (992px–1599px): 4 tiles */
+@media (min-width: 992px) and (max-width: 1599px) {
+  .mobile-quick-access-wrapper .col-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+    .mobile-quick-access-wrapper {
+    padding: 24px;
+  }
 
+  .mobile-quick-access-wrapper .quick-access-tile {
+    height: 190px;
+    padding: 14px;
+  }
+
+  .mobile-quick-access-wrapper .tile-icon-box {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 8px;
+  }
+
+  .mobile-quick-access-wrapper .tile-title {
+    font-size: 16px;
+  }
+
+  .mobile-quick-access-wrapper .tile-subtitle-illus {
+    font-size: 13px;
+  }
+}
+@media (min-width: 1600px) and (max-width: 2559px) {
+  .mobile-quick-access-wrapper {
+    padding: 32px;
+  }
+
+  .mobile-quick-access-wrapper .quick-access-tile {
+    height: 220px;
+    padding: 18px;
+  }
+
+  .mobile-quick-access-wrapper .tile-icon-box {
+    width: 110px;
+    height: 110px;
+  }
+
+  .mobile-quick-access-wrapper .tile-title {
+    font-size: 18px;
+  }
+
+  .mobile-quick-access-wrapper .tile-subtitle-illus {
+    font-size: 14px;
+  }
+}
+
+/* 4K & ULTRA 4K (1600px+) */
+@media (min-width: 1600px) {
+  .mobile-quick-access-wrapper .col-3 {
+    flex: 0 0 20%;
+    max-width: 25%;
+  }
+}
 /* For 4K UHD screens (2560px+) */
 @media (min-width: 2560px) {
   html, body {
@@ -774,16 +861,41 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
     font-size: 16px;
   }
 
-  .tile-title {
+  // .tile-title {
+  //   font-size: 16px;
+  // }
+
+  // .tile-subtitle {
+  //   font-size: 14px;
+  // }
+
+  // .tile-icon-box {
+  //   width: 90px;
+  //   height: 90px;
+  // }
+   .mobile-quick-access-wrapper .col-3 {
+    flex: 0 0 20%;
+    max-width: 30%;
+  }
+  .mobile-quick-access-wrapper {
+    padding: 48px;
+  }
+
+  .mobile-quick-access-wrapper .quick-access-tile {
+    height: 260px;
+    padding: 22px;
+  }
+
+  .mobile-quick-access-wrapper .tile-icon-box {
+    width: 150px;
+    height: 150px;
+  }
+
+  .mobile-quick-access-wrapper .tile-title {
+    font-size: 20px;
+  }
+
+  .mobile-quick-access-wrapper .tile-subtitle-illus {
     font-size: 16px;
-  }
-
-  .tile-subtitle {
-    font-size: 14px;
-  }
-
-  .tile-icon-box {
-    width: 90px;
-    height: 90px;
   }
 }

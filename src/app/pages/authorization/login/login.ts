@@ -144,8 +144,12 @@ private showToast(message: string, type: 'success' | 'error' = 'error'): void {
       this.isLoading = true;
       this.loadingChange.emit(true);
       const { username, password, rememberMe } = this.loginForm.value;
+        // Get stored FCM token if exists
+  const fcmToken = localStorage.getItem('fcmToken') || '';
+    // ✅ Console log FCM token
+  console.log('FCM Token:', fcmToken);
       const apiUrl = API_URL + ENDPOINTS.LOGIN;
-      const payload = { username, password,deviceType: this.deviceType };
+      const payload = { username, password,deviceType: this.deviceType ,fcmToken};
       this.http.post(apiUrl, payload).subscribe((res: any) => {
         this.isLoading = false;
       localStorage.setItem('authToken', res.token);

@@ -1,25 +1,61 @@
 <!-- Banner -->
- <app-header></app-header>
-<div class="container-fluid w-100 px-0" >
- <div class="d-none d-md-block">
-  <div class="container-fluid w-100 px-0">
-    <app-banner-slider 
-  [images]="[
+<app-header></app-header>
+<div class="container-fluid adjustCls w-100 px-0">
+   <div class="mobile-quick-access-wrapper ">
+    <div class="container py-6">
+      <div class="row g-3 justify-content-between">
+
+        <div class="col-3 quick-access-tile" (click)="goToPage('pharmacy')">
+          <div class="tile-icon-box">
+            <img src="../../../assets/medicines/pharmacy.avif" alt="Pharmacy" class="img-fluid">
+          </div>
+          <p class="tile-title">Pharmacy</p>
+          <p class="tile-subtitle-illus">Your Trusted Online Pharmacy </p>
+        </div>
+
+        <div class="col-3 quick-access-tile" (click)="goToPage('book-staff')">
+          <div class="tile-icon-box">
+            <img src="../../../assets/medicines/book staff.avif" alt="book staff" class="img-fluid">
+          </div>
+          <p class="tile-title">Book Staff</p>
+          <p class="tile-subtitle-illus">Your Help, On Demand</p>
+        </div>
+
+        <div class="col-3 quick-access-tile" (click)="goToPage('subscription-plans')">
+          <div class="tile-icon-box">
+            <img src="../../../assets/medicines/diet.avif" alt="subscription-plans" class="img-fluid">
+          </div>
+          <p class="tile-title">Dieticiean</p>
+          <p class="tile-subtitle-illus">Your Nutrition, Our Mission</p>
+        </div>
+
+        <!-- <div class="col-3 quick-access-tile" (click)="goToPage('vaccines')">
+        <div class="tile-icon-box">
+          <img src="../../../assets/icons/vaccines-icon.png" alt="Doctor" class="img-fluid">
+        </div>
+        <p class="tile-title">Doctor</p>
+        <p class="tile-subtitle">Doctor Consuts</p>
+      </div> -->
+
+      </div>
+    </div>
+  </div>
+  <div class="d-none d-md-block">
+    <div class="container-fluid w-100 px-0">
+      <app-banner-slider [images]="[
      { src: 'assets/medicines/newupdateBanner1.avif', link: '/medicines' },
     { src: '../../../assets/medicines/newupdateBanner2.avif', link: '/diet/user-onboarding' },
     { src: '../../../assets/medicines/newupdateBanner3.avif', link: '/book-staff', target: '_blank' }
-  ]"
-  [autoSlide]="true"
-  [slideInterval]="4000">
-</app-banner-slider>
-  <!-- <img src="../../../assets/medicines/banner2.avif" class="w-100" alt="" /> -->
-</div>
-</div>
+  ]" [autoSlide]="true" [slideInterval]="4000">
+      </app-banner-slider>
+      <!-- <img src="../../../assets/medicines/banner2.avif" class="w-100" alt="" /> -->
+    </div>
+  </div>
 
-<!-- health conecerns -->
+  <!-- health conecerns -->
 
 
-<!-- <app-text-banner
+  <!-- <app-text-banner
   image="assets/medicines/banner2.avif"
   title="Welcome to Vitoxyz"
   subtitle="Your trusted health partner"
@@ -29,107 +65,59 @@
 
 
 
-<!-- show in mobile -->
-<div class="mobile-quick-access-wrapper d-block d-lg-none">
-  <div class="container py-6">
-    <div class="row g-3 justify-content-between"> 
-      
-      <div class="col-3 quick-access-tile" (click)="goToPage('pharmacy')">
-        <div class="tile-icon-box">
-          <img src="../../../assets/medicines/pharmacy.avif" alt="Pharmacy" class="img-fluid">
-        </div>
-        <p class="tile-title">Pharmacy</p>
-        <p class="tile-subtitle-illus">Your Trusted Online Pharmacy </p>
-      </div>
+  <!-- show in mobile -->
+ 
 
-      <div class="col-3 quick-access-tile" (click)="goToPage('book-staff')">
-        <div class="tile-icon-box">
-          <img src="../../../assets/medicines/book staff.avif" alt="book staff" class="img-fluid">
-        </div>
-        <p class="tile-title">Book Staff</p>
-        <p class="tile-subtitle-illus">Your Help, On Demand</p>
-      </div>
-
-      <div class="col-3 quick-access-tile" (click)="goToPage('subscription-plans')">
-        <div class="tile-icon-box">
-          <img src="../../../assets/medicines/diet.avif" alt="subscription-plans" class="img-fluid">
-        </div>
-        <p class="tile-title">Dieticiean</p>
-        <p class="tile-subtitle-illus">Your Nutrition, Our Mission</p>
-      </div>
-
-      <!-- <div class="col-3 quick-access-tile" (click)="goToPage('vaccines')">
-        <div class="tile-icon-box">
-          <img src="../../../assets/icons/vaccines-icon.png" alt="Doctor" class="img-fluid">
-        </div>
-        <p class="tile-title">Doctor</p>
-        <p class="tile-subtitle">Doctor Consuts</p>
-      </div> -->
-
-    </div>
-  </div>
-</div>
-
-<!-- visible in mobile -->
-<div class="d-block d-md-none">
-<app-banner-slider 
-  [images]="[
+  <!-- visible in mobile -->
+  <div class="d-block d-md-none">
+    <app-banner-slider [images]="[
     'assets/medicines/newupdateBanner1.avif',
     '../../../assets/medicines/newupdateBanner2.avif',
     '../../../assets/medicines/newupdateBanner3.avif',
-  ]"
-  [autoSlide]="true"
-  [slideInterval]="4000">
-</app-banner-slider>
+  ]" [autoSlide]="true" [slideInterval]="4000">
+    </app-banner-slider>
 
-<!-- <app-text-banner
+    <!-- <app-text-banner
   image="../../../assets/medicines"
   title="Welcome to Vitoxyz"
   subtitle="Your trusted health partner"
   buttonText="Shop Now"
   buttonLink="/medicines">
 </app-text-banner> -->
-</div>
-<!-- Brand Carousel Section -->
-
-<!-- human implementation -->
-<div class="category-section">
-  <div class="category-section-header mat-elevation-z2">
-    <h2>Everyday Wellness</h2>
-    </div>
-
-  <div class="carousel-container">
-    
-    <button
-      class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
-      (click)="scrollCarousel('left')"
-    >
-       </button>
-
-    <div #categoryCarouselWrapper class="carousel-wrapper">
-      <mat-card
-        *ngFor="let category of categories"
-        class="category-card mat-elevation-z4"
-        (click)="fetchProductsByCategory(category.apiValue)"
-      >
-        <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
-        <mat-card-content>
-          <h3>{{ category.name }}</h3>
-        </mat-card-content>
-      </mat-card>
-    </div>
-
-    <button
-      class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
-      (click)="scrollCarousel('right')"
-    >
-     </button>
-    
   </div>
-</div>
+  <!-- Brand Carousel Section -->
 
-<!-- Brand Carousel (Manual Scroll Version) -->
-<!-- <div class="featured-brands-section">
+  <!-- human implementation -->
+
+  <!-- <div class="category-section">
+    <div class="category-section-header mat-elevation-z2">
+      <h2>Everyday Wellness</h2>
+    </div>
+
+    <div class="carousel-container">
+
+      <button class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4" (click)="scrollCarousel('left')">
+      </button>
+
+      <div #categoryCarouselWrapper class="carousel-wrapper">
+        <mat-card *ngFor="let category of categories" class="category-card mat-elevation-z4"
+          (click)="fetchProductsByCategory(category.apiValue)">
+          <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
+          <mat-card-content>
+            <h3>{{ category.name }}</h3>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <button class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
+        (click)="scrollCarousel('right')">
+      </button>
+
+    </div>
+  </div> -->
+
+  <!-- Brand Carousel (Manual Scroll Version) -->
+  <!-- <div class="featured-brands-section">
   <div class="featured-header">
     <h2>Featured brands</h2>
   </div>
@@ -160,49 +148,42 @@
   </div>
 </div> -->
 
-<div class="d-none d-md-block">
-    <!-- <app-health-carousel [items]="healthItems"></app-health-carousel> -->
-   <div class="category-section">
-  <div class="category-section-header mat-elevation-z2">
-    <h2>Shop by health concerns</h2>
+  <!-- <div class="d-none d-md-block">
+    <app-health-carousel [items]="healthItems"></app-health-carousel>
+    <div class="category-section">
+      <div class="category-section-header mat-elevation-z2">
+        <h2>Shop by health concerns</h2>
+      </div>
+
+      <div class="carousel-container">
+
+        <button class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
+          (click)="scrollCarousel5('left')">
+        </button>
+
+        <div #categoryCarouselWrapper5 class="carousel-wrapper">
+          <mat-card *ngFor="let category of categories5" class="category-card mat-elevation-z4"
+            (click)="fetchProductsByCategory(category.apiValue)">
+            <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
+            <mat-card-content>
+              <h3>{{ category?.name }}</h3>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <button class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
+          (click)="scrollCarousel5('right')">
+        </button>
+
+      </div>
     </div>
+  </div> -->
 
-  <div class="carousel-container">
-    
-    <button
-      class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
-      (click)="scrollCarousel5('left')"
-    >
-       </button>
-
-    <div #categoryCarouselWrapper5 class="carousel-wrapper">
-      <mat-card
-        *ngFor="let category of categories5"
-        class="category-card mat-elevation-z4"
-        (click)="fetchProductsByCategory(category.apiValue)"
-      >
-        <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
-        <mat-card-content>
-          <h3>{{ category?.name }}</h3>
-        </mat-card-content>
-      </mat-card>
-    </div>
-
-    <button
-       class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
-      (click)="scrollCarousel5('right')"
-    >
-     </button>
-    
-  </div>
-</div>  
-</div>
-
-<div class="d-block d-md-none">
+  <div class="d-block d-md-none">
     <app-health-carousel [items]="healthItems1"></app-health-carousel>
-</div>
+  </div>
 
-<!-- <app-common-filter-component 
+  <!-- <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Tablet'" 
   [title]="' Power Up with Multivitamins '">
@@ -214,94 +195,78 @@
   [title]="'Care your skin deserves.'">
 </app-common-filter-component> -->
 
-<!-- //also uncommited -->
-<div class="category-section">
-  <div class="category-section-header mat-elevation-z2">
-    <h2>Super saving deals</h2>
+  <!-- //also uncommited -->
+  <!-- <div class="category-section">
+    <div class="category-section-header mat-elevation-z2">
+      <h2>Super saving deals</h2>
     </div>
 
-  <div class="carousel-container">
-    
-    <button
-      class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
-      (click)="scrollCarousel3('left')"
-    >
-       </button>
+    <div class="carousel-container">
 
-    <div #categoryCarouselWrapper3 class="carousel-wrapper">
-      <mat-card
-        *ngFor="let category of categories4"
-        class="category-card mat-elevation-z4"
-        (click)="fetchProductsByCategory(category.apiValue)"
-      >
-        <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
-        <mat-card-content>
-          <h3>{{ category.name }}</h3>
-        </mat-card-content>
-      </mat-card>
+      <button class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4" (click)="scrollCarousel3('left')">
+      </button>
+
+      <div #categoryCarouselWrapper3 class="carousel-wrapper">
+        <mat-card *ngFor="let category of categories4" class="category-card mat-elevation-z4"
+          (click)="fetchProductsByCategory(category.apiValue)">
+          <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
+          <mat-card-content>
+            <h3>{{ category.name }}</h3>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <button class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
+        (click)="scrollCarousel3('right')">
+      </button>
+
     </div>
+  </div> -->
 
-    <button
-       class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
-      (click)="scrollCarousel3('right')"
-    >
-     </button>
-    
-  </div>
-</div>
-
-<!-- <app-common-filter-component 
+  <!-- <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Cookie'" 
   [title]="'Sweet moments, healthy choices'">
 </app-common-filter-component> -->
 
 
-<!-- popular category -->
-
-<div class="category-section">
-  <div class="category-section-header mat-elevation-z2">
-    <h2>Trending Now</h2>
+  <!-- popular category -->
+<!-- 
+  <div class="category-section">
+    <div class="category-section-header mat-elevation-z2">
+      <h2>Trending Now</h2>
     </div>
 
-  <div class="carousel-container">
-    
-    <button
-      class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4"
-      (click)="scrollCarousel2('left')"
-    >
-     </button>
-  
-    <div #categoryCarouselWrapper2 class="carousel-wrapper">
-      <mat-card
-        *ngFor="let category of categories2"
-        class="category-card mat-elevation-z4"
-        (click)="fetchProductsByCategory(category.apiValue)"
-      >
-        <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
-        <mat-card-content>
-          <h3>{{ category.name }}</h3>
-        </mat-card-content>
-      </mat-card>
+    <div class="carousel-container">
+
+      <button class="side-nav-button fa fa-chevron-left left-button mat-elevation-z4" (click)="scrollCarousel2('left')">
+      </button>
+
+      <div #categoryCarouselWrapper2 class="carousel-wrapper">
+        <mat-card *ngFor="let category of categories2" class="category-card mat-elevation-z4"
+          (click)="fetchProductsByCategory(category.apiValue)">
+          <img mat-card-image [src]="category.imageUrl" [alt]="category.altText" />
+          <mat-card-content>
+            <h3>{{ category.name }}</h3>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <button class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
+        (click)="scrollCarousel2('right')">
+      </button>
+
     </div>
+  </div> -->
 
-    <button
-      class="side-nav-button fa fa-chevron-right right-button mat-elevation-z4"
-      (click)="scrollCarousel2('right')"
-    >
-    </button>
-    
-  </div>
-</div>
+  <!-- <app-custom-medicine-slider title="Popular Custom Medicines"></app-custom-medicine-slider>  -->
 
-<!-- <app-custom-medicine-slider title="Popular Custom Medicines"></app-custom-medicine-slider>  -->
+  <ng-template #loadingOrError>
+    <p *ngIf="!isLoaded">Loading…</p>
+    <p *ngIf="isLoaded && hasError">Error loading medicine data.</p>
+  </ng-template>
 
-<ng-template #loadingOrError>
-  <p *ngIf="!isLoaded">Loading…</p>
-  <p *ngIf="isLoaded && hasError">Error loading medicine data.</p>
-</ng-template>
-
-<!-- <app-common-filter-component 
+  <!-- <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Shampoo'" 
   [title]="'Healthy Hair Starts Here '">
@@ -318,213 +283,201 @@
   [productForm]="'Yoga Mat'" 
   [title]="' Support your every pose'">
 </app-common-filter-component> -->
-<!-- Content area -->
-<div class="container-fluid px-4 my-5">
-  <h4>Welcome to Vitoxyz: Your Trusted Digital Pharmacy & Health Companion</h4>
-  <p>
-    Say goodbye to long queues and hello to effortless healthcare! At Vitoxyz,
-    we bring the pharmacy to your fingertips—making health and wellness more
-    accessible, affordable, and reliable than ever.
-  </p>
+  <!-- Content area -->
+  <div class="container-fluid px-4 my-5">
+    <h4>Welcome to Vitoxyz: Your Trusted Digital Pharmacy & Health Companion</h4>
+    <p>
+      Say goodbye to long queues and hello to effortless healthcare! At Vitoxyz,
+      we bring the pharmacy to your fingertips—making health and wellness more
+      accessible, affordable, and reliable than ever.
+    </p>
 
-  <h4>Why Choose Vitoxyz?</h4>
-  <h6>Your Health, Our Priority</h6>
-  <p>
-    At Vitoxyz, we prioritize your health and well-being. Our platform offers a
-    wide range of services, from online consultations to medicine delivery, all
-    designed to make healthcare more convenient for you.
-  </p>
-  <h6>Convenience at Your Fingertips</h6>
-  <p>
-    With Vitoxyz, you can order medicines, book staff, and even get personalized
-    diet plans—all from the comfort of your home. Our user-friendly interface
-    ensures a seamless experience, whether you're ordering medicines or
-    consulting with healthcare professionals.
-  </p>
-  <h6>Quality You Can Trust</h6>
-  <p>
-    We partner with licensed pharmacies and certified healthcare professionals
-    to ensure that you receive genuine medicines and expert advice. Your health
-    is our top priority, and we strive to maintain the highest standards of
-    quality and safety.
-  </p>
-  <h6>Affordable Healthcare Solutions</h6>
-  <p>
-    We believe that quality healthcare should be affordable for everyone. That's
-    why we offer competitive prices, exclusive discounts, and various payment
-    options to suit your needs. With Vitoxyz, you can access the healthcare you
-    deserve without breaking the bank.
-  </p>
-  <h6>Stay Connected</h6>
-  <p>
-    Follow us on social media to stay updated on the latest health tips,
-    promotions, and news. Join our community and be part of a movement towards
-    better health and wellness.
-  </p>
-  <h6>Download Our App</h6>
-  <p>
-    Experience the full range of Vitoxyz services at your fingertips. Download
-    our app today!
-  </p>
-  <p>
-    Thank you for choosing Vitoxyz as your trusted healthcare partner. We look
-    forward to serving you and helping you achieve your health goals.
-  </p>
-</div>
-
-<!-- Address Required Popup -->
-
-
-<!-- Backdrop -->
-<div *ngIf="showAddressAlert" class="modal-backdrop fade show"></div>
-
-<!-- Address Required Popup -->
-<div *ngIf="showAddressAlert" class="modal show d-block">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content p-3">
-
-      <p>Please add your address to continue.</p>
-
-      <div class="d-flex justify-content-end gap-2">
-        <!-- Later Button -->
-        <button
-          class="btn btn-primary rounded-pill text-light"
-          (click)="closeAddressPopup()">
-          Later
-        </button>
-
-        <!-- Add Address Button -->
-        <button
-          class="btn btn-primary rounded-pill text-light"
-          (click)="openAddressForm()">
-          Add Address
-        </button>
-      </div>
-
-    </div>
+    <h4>Why Choose Vitoxyz?</h4>
+    <h6>Your Health, Our Priority</h6>
+    <p>
+      At Vitoxyz, we prioritize your health and well-being. Our platform offers a
+      wide range of services, from online consultations to medicine delivery, all
+      designed to make healthcare more convenient for you.
+    </p>
+    <h6>Convenience at Your Fingertips</h6>
+    <p>
+      With Vitoxyz, you can order medicines, book staff, and even get personalized
+      diet plans—all from the comfort of your home. Our user-friendly interface
+      ensures a seamless experience, whether you're ordering medicines or
+      consulting with healthcare professionals.
+    </p>
+    <h6>Quality You Can Trust</h6>
+    <p>
+      We partner with licensed pharmacies and certified healthcare professionals
+      to ensure that you receive genuine medicines and expert advice. Your health
+      is our top priority, and we strive to maintain the highest standards of
+      quality and safety.
+    </p>
+    <h6>Affordable Healthcare Solutions</h6>
+    <p>
+      We believe that quality healthcare should be affordable for everyone. That's
+      why we offer competitive prices, exclusive discounts, and various payment
+      options to suit your needs. With Vitoxyz, you can access the healthcare you
+      deserve without breaking the bank.
+    </p>
+    <h6>Stay Connected</h6>
+    <p>
+      Follow us on social media to stay updated on the latest health tips,
+      promotions, and news. Join our community and be part of a movement towards
+      better health and wellness.
+    </p>
+    <h6>Download Our App</h6>
+    <p>
+      Experience the full range of Vitoxyz services at your fingertips. Download
+      our app today!
+    </p>
+    <p>
+      Thank you for choosing Vitoxyz as your trusted healthcare partner. We look
+      forward to serving you and helping you achieve your health goals.
+    </p>
   </div>
-</div>
+
+  <!-- Address Required Popup -->
 
 
-<!-- Add Address Form Popup -->
-<div *ngIf="showAddressForm" class="modal-backdrop fade show"> </div>
+  <!-- Backdrop -->
+  <div *ngIf="showAddressAlert" class="modal-backdrop fade show"></div>
 
-<div *ngIf="showAddressForm" class="modal show d-block">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content p-3 address-modal">
+  <!-- Address Required Popup -->
+  <div *ngIf="showAddressAlert" class="modal show d-block">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content p-3">
 
-      <button
-  type="button"
-  class="address-close-btn position-absolute top-0 end-0 m-2"
-  aria-label="Close"
-  (click)="closeAddressForm()">
-  <i class="bi bi-x-lg"></i>
-</button>
+        <p>Please add your address to continue.</p>
 
-
-      <h5 class="mb-3">Add Address</h5>
-      <div class="form-scroll">
-      <form [formGroup]="addressForm">
-        <div>x
-        <!-- Full Name -->
-        <label class="form-label">Full Name</label>
-        <input class="form-control" formControlName="fullName" readonly>
-        </div>
-
-        <!-- Phone -->
-         <div>
-        <label class="form-label mt-2">Phone Number</label>
-        <input class="form-control" formControlName="phoneNumber" readonly>
-        </div>
-        <!-- Address Line 1 -->
-         <div>
-        <label class="form-label mt-2">Address Line 1</label>
-        <input class="form-control" formControlName="addressLine1">
-        <small class="error"
-          *ngIf="addressForm.get('addressLine1')?.touched && addressForm.get('addressLine1')?.invalid">
-          Address Line 1 is required
-        </small>
-        </div>
-        <!-- Address Line 2 -->
-         <div>
-        <label class="form-label mt-2">Address Line 2</label>
-        <input class="form-control" formControlName="addressLine2">
-        <small class="error"
-          *ngIf="addressForm.get('addressLine2')?.touched && addressForm.get('addressLine2')?.invalid">
-          Address Line 1 is required
-        </small>
-          </div>
-        <!-- Landmark -->
-         <div>
-        <label class="form-label mt-2">Landmark</label>
-        <input class="form-control" formControlName="landmark">
-          </div>
-        <!-- City -->
-         <div>
-        <label class="form-label mt-2">City</label>
-        <input class="form-control" formControlName="city">
-        <small class="error"
-          *ngIf="addressForm.get('city')?.touched && addressForm.get('city')?.invalid">
-          City is required
-        </small>
-        </div>
-        <!-- State -->
-         <div>
-        <label class="form-label mt-2">State</label>
-        <input class="form-control" formControlName="state">
-        <small class="error"
-          *ngIf="addressForm.get('state')?.touched && addressForm.get('state')?.invalid">
-          State is required
-        </small>
-        </div>
-        <!-- Pincode -->
-         <div>
-        <label class="form-label mt-2">Pincode</label>
-        <input class="form-control" formControlName="pincode">
-        <small class="error"
-          *ngIf="addressForm.get('pincode')?.touched && addressForm.get('pincode')?.invalid">
-          Enter valid 6-digit pincode
-        </small>
-        </div>
-        <!-- Address Type -->
-         <div>
-        <label class="form-label mt-2">Address Type</label>
-        <select class="form-control" formControlName="addressType">
-          <option value="home">Home</option>
-          <option value="office">Office</option>
-          <option value="other">Other</option>
-        </select>
-        <small class="error"
-          *ngIf="addressForm.get('addressType')?.touched && addressForm.get('addressType')?.invalid">
-          Address type is required
-        </small>
-        </div>
-        <div class="text-end mt-4">
-          <button type="button" class="btn btn-light me-2 text-light rounded-pill" (click)="closeAddressForm()">
-            Cancel
+        <div class="d-flex justify-content-end gap-2">
+          <!-- Later Button -->
+          <button class="btn btn-primary rounded-pill text-light" (click)="closeAddressPopup()">
+            Later
           </button>
-          <button class="btn btn-success text-light rounded-pill" type="button"
-            [disabled]="addressForm.invalid"
-            (click)="submitAddress()">
-            Save Address
+
+          <!-- Add Address Button -->
+          <button class="btn btn-primary rounded-pill text-light" (click)="openAddressForm()">
+            Add Address
           </button>
         </div>
 
-      </form>
       </div>
     </div>
   </div>
-</div>
+
+
+  <!-- Add Address Form Popup -->
+  <div *ngIf="showAddressForm" class="modal-backdrop fade show"> </div>
+
+  <div *ngIf="showAddressForm" class="modal show d-block">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content p-3 address-modal">
+
+        <button type="button" class="address-close-btn position-absolute top-0 end-0 m-2" aria-label="Close"
+          (click)="closeAddressForm()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+
+
+        <h5 class="mb-3">Add Address</h5>
+        <div class="form-scroll">
+          <form [formGroup]="addressForm">
+            <div>x
+              <!-- Full Name -->
+              <label class="form-label">Full Name</label>
+              <input class="form-control" formControlName="fullName" readonly>
+            </div>
+
+            <!-- Phone -->
+            <div>
+              <label class="form-label mt-2">Phone Number</label>
+              <input class="form-control" formControlName="phoneNumber" readonly>
+            </div>
+            <!-- Address Line 1 -->
+            <div>
+              <label class="form-label mt-2">Address Line 1</label>
+              <input class="form-control" formControlName="addressLine1">
+              <small class="error"
+                *ngIf="addressForm.get('addressLine1')?.touched && addressForm.get('addressLine1')?.invalid">
+                Address Line 1 is required
+              </small>
+            </div>
+            <!-- Address Line 2 -->
+            <div>
+              <label class="form-label mt-2">Address Line 2</label>
+              <input class="form-control" formControlName="addressLine2">
+              <small class="error"
+                *ngIf="addressForm.get('addressLine2')?.touched && addressForm.get('addressLine2')?.invalid">
+                Address Line 1 is required
+              </small>
+            </div>
+            <!-- Landmark -->
+            <div>
+              <label class="form-label mt-2">Landmark</label>
+              <input class="form-control" formControlName="landmark">
+            </div>
+            <!-- City -->
+            <div>
+              <label class="form-label mt-2">City</label>
+              <input class="form-control" formControlName="city">
+              <small class="error" *ngIf="addressForm.get('city')?.touched && addressForm.get('city')?.invalid">
+                City is required
+              </small>
+            </div>
+            <!-- State -->
+            <div>
+              <label class="form-label mt-2">State</label>
+              <input class="form-control" formControlName="state">
+              <small class="error" *ngIf="addressForm.get('state')?.touched && addressForm.get('state')?.invalid">
+                State is required
+              </small>
+            </div>
+            <!-- Pincode -->
+            <div>
+              <label class="form-label mt-2">Pincode</label>
+              <input class="form-control" formControlName="pincode">
+              <small class="error" *ngIf="addressForm.get('pincode')?.touched && addressForm.get('pincode')?.invalid">
+                Enter valid 6-digit pincode
+              </small>
+            </div>
+            <!-- Address Type -->
+            <div>
+              <label class="form-label mt-2">Address Type</label>
+              <select class="form-control" formControlName="addressType">
+                <option value="home">Home</option>
+                <option value="office">Office</option>
+                <option value="other">Other</option>
+              </select>
+              <small class="error"
+                *ngIf="addressForm.get('addressType')?.touched && addressForm.get('addressType')?.invalid">
+                Address type is required
+              </small>
+            </div>
+            <div class="text-end mt-4">
+              <button type="button" class="btn btn-light me-2 text-light rounded-pill" (click)="closeAddressForm()">
+                Cancel
+              </button>
+              <button class="btn btn-success text-light rounded-pill" type="button" [disabled]="addressForm.invalid"
+                (click)="submitAddress()">
+                Save Address
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
 
-<!-- App footer -->
- <div>
-<app-footer></app-footer>
- </div>
+  <!-- App footer -->
+  <div>
+    <app-footer></app-footer>
+  </div>
 
-<div>
-<app-mobile-footer-nav></app-mobile-footer-nav>
-</div>
-
+  <div>
+    <app-mobile-footer-nav></app-mobile-footer-nav>
+  </div>

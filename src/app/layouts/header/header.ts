@@ -1,6 +1,6 @@
 
 
-import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { CdkMenuModule } from '@angular/cdk/menu';
@@ -15,8 +15,15 @@ import { CartService } from '@src/app/core/cart.service';
 import { HttpClient } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '@src/app/core/const';
 import { Search } from "../search/search";
+import { MatCard } from "@angular/material/card";
 declare var bootstrap: any;
-
+interface Category {
+  name: string;
+  apiValue: string[]; // API mein bhej jaane wali value (e.g., 'skin_care' agar zarurat ho)
+  cssClass: string;
+ 
+  altText: string;
+}
 @Component({
   selector: 'app-header',
   
@@ -33,7 +40,8 @@ declare var bootstrap: any;
     Authorization,
     CdkMenuModule,
     RouterLink,
-    Search
+    Search,
+    MatCard
 ],
   templateUrl: './header.html',
   styleUrls: ['./header.scss']
@@ -53,9 +61,82 @@ constructor(private http: HttpClient) {}
   isMobileMenuOpen = signal(false);
 cartCount: number = 0;
   currentLocation: string = '';
+  searchQuery: string = '';
   openSubmenus = new Set<number>();
-  redirectAfterLogin: string | null = null; // ✅ added for redirection after login
+  redirectAfterLogin: string | null = null; 
+  openCategoryIndex: number | null = null;
 
+
+// ✅ added for redirection after login
+ categories: Category[] = [
+    {
+      name: 'Skin Care', apiValue: ["Cream", "Lotion", "Gel", "Face Wash", "Face Pack",
+        "Scrub", "Toner", "Serum", "Cleanser", "Moisturiser", "Body Wash", "Ointment", "Face Cream", "Face Gel",
+        "Soap",], cssClass: 'skin-care-bg',  altText: 'Skin Care Products'
+    },
+    {
+      name: 'Women Care', apiValue: ["Sanitary Pad", "Pad", "Panty", "Tampon", "Menstrual Cup",
+        "Nursing Bra", "Pumping Bra", "Breast Pad", "Breast Pump",
+        "Cup", "Belt", "Corset", "Panty Liner", "Vaginal Cream",
+        "Vaginal Gel", "Vaginal Ointment", "Vaginal Capsule",
+        "Vaginal Spray", "Vaginal Wash", "Legium"], cssClass: 'hair-care-bg',  altText: 'Hair Care Products'
+    },
+    {
+      name: 'Sexual Wellness', apiValue: [
+        "Condom", "Lubricant", "Capsule", "Tablet",
+        "Massage Oil", "Cream", "Tonic", "Patch", "Sublingual Spray",
+        "Test Kit", "Self Test Kit"
+      ], cssClass: 'sexual-wellness-bg',  altText: 'Sexual Wellness Products'
+    },
+    {
+      name: 'Oral Care', apiValue: [
+        "Toothpaste", "Toothbrush", "Tongue Cleaner", "Mouth Wash",
+        "Mouth Spray", "Mouth Paint", "Gum Paint", "Dental Gel",
+        "Floss", "Dental Brush"
+      ], cssClass: 'Oralcare-bg', altText: 'Oral care Wellness Products'
+    },
+    {
+      name: 'Elder Care', apiValue: [
+        "Knee Support", "Heel Cushion", "Foot Support", "Stocking", "Bed Pan", "Wheelchair", "Walker",
+        "Mask", "Glove", "Cushion", "Sock", "Elastic Bandage",
+        "Crepe Bandage", "Gel Pack", "Support Belt", "Urine Pot"
+      ], cssClass: 'Eldercare-bg', altText: 'Oral care Wellness Products'
+    },
+    {
+      name: 'Baby Care', apiValue: [
+        "Baby Lotion", "Baby Powder", "Diaper", "Feeding Bottle", "Bottle Cleaning Brush", "Pacifier",
+        "Teether", "Nipple", "Baby Oil",
+        "Baby Soap", "Baby Shampoo", "Wipe", "Cup", "Toy", "Sipper"
+      ], cssClass: 'Oralcare-bg',  altText: 'Oral care Wellness Products'
+    },
+    // { name: 'daily dose of health', apiValue: 'Jar', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/jarsdose.avif', altText: 'Oral care Wellness Products' },
+    {
+      name: 'Men Care', apiValue: [
+        "Beard Oil", "Shaving Cream", "Shaving Gel", "After Shave Lotion",
+        "Deodorant", "Body Wash", "Face Wash", "Soap", "Shampoo",
+        "Cream", "Spray", "Gel"
+      ], cssClass: 'Oralcare-bg',  altText: 'Oral care Wellness Products'
+    },
+    {
+      name: 'Ayurveda', apiValue: [
+        "Churna", "Churna (Powder)", "Bhasma", "Majoon", "Asava",
+        "Arishta", "Taila", "Kwath", "Lehyam", "Guggulu", "Tablet",
+        "Capsule", "Syrup", "Tonic", "Arka", "Linctus", "Ointment", "Flower", "Root", "Leaf",
+        "Seed", "Powder", "Extract", "Herbal Juice", "Herbal Gel"
+      ], cssClass: 'Oralcare-bg',  altText: 'Oral care Wellness Products'
+    },
+
+    {
+      name: 'Pet Care', apiValue: [
+        "Pet Food", "Pet Spray", "Dog Bone", "Pet Shampoo", "Pet Conditioner",
+        "Belt", "Cotton", "Pet Lotion", "Pet Soap"
+      ], cssClass: 'Oralcare-bg',  altText: 'Oral care Wellness Products'
+    },
+
+
+    // { name: 'Caring for every tiny move', apiValue: 'Diaper', cssClass: 'Oralcare-bg', imageUrl: 'assets/medicines/babycare.avif', altText: 'Oral care Wellness Products' },
+
+  ];
   menuItems = [
     { label: 'Medicines', icon: 'fi-rr-medicine' , path: '/medicines' },
     {
@@ -139,7 +220,19 @@ ngOnInit(): void {
   setAuthMode(mode: 'login' | 'signup') {
     this.authMode = mode;
   }
-   async detectLocation() {
+ 
+   onSearch() {
+    if (!this.searchQuery.trim()) {
+      // this.showToastMessage('Please enter a search query', true);
+      return;
+    }
+
+    this.router.navigate(['/search'], { queryParams: { q: this.searchQuery } });
+  }
+   onQuickOrder() {
+    this.router.navigate(['/order-prescription']);
+  }
+  async detectLocation() {
     if (!navigator.geolocation) {
       this.currentLocation = 'Geolocation not supported';
       return;
@@ -187,13 +280,14 @@ ngOnInit(): void {
   logout(){
     const token = localStorage.getItem('authToken');
     if(token){
-      this.http.post('https://vitoxyz.com/Backend/api/user/logoutUser',{},{
+      this.http.post('https://vitoxyzbackend-az2e.onrender.com/Backend/api/user/logoutUser',{},{
        headers :{
         Authorization:`Bearer ${token}`
        }
       }).subscribe({
         next:(res:any)=>{
           console.log('Logout API success:', res);
+           localStorage.setItem('authToken', "");
           this.clearSessionAndRedirect();
         },
           error: (err) => {
@@ -280,7 +374,21 @@ navigateToDiet() {
     }
   }
  
+toggleCategoryDropdown(index: number, event: MouseEvent) {
+  event.stopPropagation();
+  this.openCategoryIndex =
+    this.openCategoryIndex === index ? null : index;
+}
 
+selectCategory(form: string, event: MouseEvent) {
+  event.stopPropagation();
+  this.fetchProductsByCategory([form]);
+  this.openCategoryIndex = null; // close after select
+}
+@HostListener('document:click')
+closeCategoryDropdown() {
+  this.openCategoryIndex = null;
+}
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
@@ -324,4 +432,51 @@ navigateToDiet() {
       navbar.classList.toggle('show');
     }
   }
+  fetchProductsByCategory(categoryApiValues: string[]): void {
+    console.log('🔄 Fetching products for category API values:', categoryApiValues);
+
+    const categoryName = this.getCategoryNameByApiValues(categoryApiValues);
+    console.log('🔄 Fetching products for category API values:', categoryApiValues);
+
+    this.router.navigate(['/products'], {
+      queryParams: {
+        category: categoryName,
+        forms: categoryApiValues.join(',')
+      }
+    });
+  }
+
+
+
+
+  private getCategoryNameByApiValues(apiValues: string[]): string {
+    console.log('🔍 Searching for category with API values:', apiValues);
+
+    // Create a map of all categories for better lookup
+    const allCategories = [
+      ...this.categories,
+     
+    ];
+
+    // Try exact match first (when clicked category has specific values)
+    let category = allCategories.find(cat => {
+      // Check if this category was specifically clicked (exact match of apiValues)
+      const isExactMatch = apiValues.every(value => cat.apiValue.includes(value));
+      console.log(`🔍 Exact match check for "${cat.name}":`, isExactMatch);
+      return isExactMatch;
+    });
+
+    // If no exact match, try partial match (for backward compatibility)
+    if (!category) {
+      category = allCategories.find(cat => {
+        const hasAnyMatch = apiValues.some(value => cat.apiValue.includes(value));
+        console.log(`🔍 Partial match check for "${cat.name}":`, hasAnyMatch);
+        return hasAnyMatch;
+      });
+    }
+
+    console.log('🔍 Found category:', category?.name || 'Products');
+    return category ? category.name : 'Products';
+  }
+
 }
