@@ -2,23 +2,36 @@
   position: relative;
   max-width: 100%;
   // height: 250px;
+   aspect-ratio: 16 / 5;  
   overflow: hidden;
 
-  .slides {
-    position: relative;
-    height: 100%;
+  // .slides {
+  //   position: relative;
+  //   height: 100%;
 
-    img {
-      width: 100%;
-      object-fit: cover;
-      display: none;
-      transition: opacity 0.5s ease-in-out;
+  //   img {
+  //     width: 100%;
+  //     object-fit: cover;
+  //     display: none;
+  //     transition: opacity 0.5s ease-in-out;
 
-      &.active {
-        display: block;
-      }
-    }
-  }
+  //     &.active {
+  //       display: block;
+  //     }
+  //   }
+  // }
+.slides {
+   position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slides img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;   /* 🔥 KEY FIX */
+  display: block;
+}
 
   .prev,
   .next {
@@ -47,26 +60,26 @@
     right: 10px;
   }
 
-  .dots {
-    text-align: center;
-    position: absolute;
-    top: 60%;
-    width: 100%;
+  // .dots {
+  //   text-align: center;
+  //   position: absolute;
+  //   top: 60%;
+  //   width: 100%;
 
-    span {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      margin: 0 5px;
-      background: #bbb;
-      border-radius: 50%;
-      cursor: pointer;
+  //   span {
+  //     display: inline-block;
+  //     width: 10px;
+  //     height: 10px;
+  //     margin: 0 5px;
+  //     background: #bbb;
+  //     border-radius: 50%;
+  //     cursor: pointer;
 
-      &.active {
-        background: #333;
-      }
-    }
-  }
+  //     &.active {
+  //       background: #333;
+  //     }
+  //   }
+  // }
 }
 
 /* 📱 Responsive Adjustments */
@@ -74,7 +87,7 @@
 /* Small Mobiles */
 @media (max-width: 576px) {
   .banner-slider {
-    height: 120px !important;
+   aspect-ratio: 16 / 8;
     padding: 10px 0px 14px;
 
     .prev,
@@ -93,7 +106,7 @@
 /* Tablets */
 @media (min-width: 577px) and (max-width: 992px) {
   .banner-slider {
-    height: 200px;
+     aspect-ratio: 16 / 6;
 
     .prev,
     .next {
@@ -106,6 +119,6 @@
 /* Large Screens */
 @media (min-width: 1200px) {
   .banner-slider {
-    height: 430px; // Desktop me banner bada
+    aspect-ratio: 16 / 5;  // Desktop me banner bada
   }
 }

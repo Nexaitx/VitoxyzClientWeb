@@ -1,24 +1,69 @@
 <!-- Banner -->
 <app-header></app-header>
-<div class="container-fluid adjustCls w-100 px-0">
-   <div class="mobile-quick-access-wrapper ">
+<div class="container-fluid  w-100 px-0" style="margin-top: -65px;">
+  
+  <div class="d-none d-md-block">
+    <div class="container-fluid w-100 px-0">
+      <app-banner-slider [images]="[
+     { src: 'assets/medicines/newupdateBanner1.avif', link: '/medicines' },
+    { src: '../../../assets/medicines/newupdateBanner2.avif', link: '/diet/user-onboarding' },
+    { src: '../../../assets/medicines/newupdateBanner3.avif', link: '/book-staff', target: '_blank' }
+  ]" [autoSlide]="true" [slideInterval]="4000">
+      </app-banner-slider>
+      <!-- <img src="../../../assets/medicines/banner2.avif" class="w-100" alt="" /> -->
+       <!-- 🔍 Overlay Search UI -->
+    <div class="banner-search-overlay">
+
+      <!-- <div class="location d-flex align-items-center px-3">
+        <i class="bi-geo-alt text-primary me-2 pt-1 fs-4"></i>
+        <span class="text-primary">{{ currentLocation || 'Detecting location...' }}</span>
+        <i class="bi-crosshair ms-2 text-black" title="Use current location"
+          (click)="detectLocation()" style="cursor:pointer"></i>
+      </div> -->
+
+     <div class="search-wrapper">
+  <div class="search-input-container">
+
+    <!-- Search Icon Inside -->
+    <i class="bi bi-search search-icon" (click)="onSearch()"></i>
+
+    <!-- Input -->
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      class="form-control search-input"
+      (keyup.enter)="onSearch()"
+      placeholder="Search for Medicine and Healthcare items"
+    />
+
+    <!-- Button Inside Input -->
+    <button class="search-btn btn-primary" (click)="onSearch()">Search</button>
+
+  </div>
+</div>
+
+
+    </div>
+
+    </div>
+  </div>
+   <div class="mobile-quick-access-wrapper d-block d-lg-none">
     <div class="container py-6">
       <div class="row g-3 justify-content-between">
-
-        <div class="col-3 quick-access-tile" (click)="goToPage('pharmacy')">
-          <div class="tile-icon-box">
-            <img src="../../../assets/medicines/pharmacy.avif" alt="Pharmacy" class="img-fluid">
-          </div>
-          <p class="tile-title">Pharmacy</p>
-          <p class="tile-subtitle-illus">Your Trusted Online Pharmacy </p>
-        </div>
-
         <div class="col-3 quick-access-tile" (click)="goToPage('book-staff')">
           <div class="tile-icon-box">
             <img src="../../../assets/medicines/book staff.avif" alt="book staff" class="img-fluid">
           </div>
           <p class="tile-title">Book Staff</p>
           <p class="tile-subtitle-illus">Your Help, On Demand</p>
+        </div>
+
+         <div class="col-3 quick-access-tile" (click)="goToPage('pharmacy')">
+          <div class="tile-icon-box">
+            <img src="../../../assets/medicines/pharmacy.avif" alt="Pharmacy" class="img-fluid">
+          </div>
+          <p class="tile-title">Pharmacy</p>
+          <p class="tile-subtitle-illus">Your Trusted Online Pharmacy </p>
         </div>
 
         <div class="col-3 quick-access-tile" (click)="goToPage('subscription-plans')">
@@ -35,23 +80,11 @@
         </div>
         <p class="tile-title">Doctor</p>
         <p class="tile-subtitle">Doctor Consuts</p>
-      </div> -->
+      </div>  -->
 
       </div>
     </div>
-  </div>
-  <div class="d-none d-md-block">
-    <div class="container-fluid w-100 px-0">
-      <app-banner-slider [images]="[
-     { src: 'assets/medicines/newupdateBanner1.avif', link: '/medicines' },
-    { src: '../../../assets/medicines/newupdateBanner2.avif', link: '/diet/user-onboarding' },
-    { src: '../../../assets/medicines/newupdateBanner3.avif', link: '/book-staff', target: '_blank' }
-  ]" [autoSlide]="true" [slideInterval]="4000">
-      </app-banner-slider>
-      <!-- <img src="../../../assets/medicines/banner2.avif" class="w-100" alt="" /> -->
-    </div>
-  </div>
-
+  </div> 
   <!-- health conecerns -->
 
 
@@ -66,7 +99,7 @@
 
 
   <!-- show in mobile -->
- 
+
 
   <!-- visible in mobile -->
   <div class="d-block d-md-none">
@@ -89,7 +122,7 @@
 
   <!-- human implementation -->
 
-  <!-- <div class="category-section">
+   <div class="category-section"> 
     <div class="category-section-header mat-elevation-z2">
       <h2>Everyday Wellness</h2>
     </div>
@@ -114,7 +147,7 @@
       </button>
 
     </div>
-  </div> -->
+  </div> 
 
   <!-- Brand Carousel (Manual Scroll Version) -->
   <!-- <div class="featured-brands-section">
@@ -183,20 +216,10 @@
     <app-health-carousel [items]="healthItems1"></app-health-carousel>
   </div>
 
-  <!-- <app-common-filter-component 
-  [endpoint]="'products/filter'" 
-  [productForm]="'Tablet'" 
-  [title]="' Power Up with Multivitamins '">
-</app-common-filter-component>
-
-<app-common-filter-component 
-  [endpoint]="'products/filter'" 
-  [productForm]="'Cream'" 
-  [title]="'Care your skin deserves.'">
-</app-common-filter-component> -->
+  <!--  -->
 
   <!-- //also uncommited -->
-  <!-- <div class="category-section">
+  <div class="category-section"> 
     <div class="category-section-header mat-elevation-z2">
       <h2>Super saving deals</h2>
     </div>
@@ -221,7 +244,7 @@
       </button>
 
     </div>
-  </div> -->
+  </div> 
 
   <!-- <app-common-filter-component 
   [endpoint]="'products/filter'" 
@@ -231,7 +254,7 @@
 
 
   <!-- popular category -->
-<!-- 
+  
   <div class="category-section">
     <div class="category-section-header mat-elevation-z2">
       <h2>Trending Now</h2>
@@ -257,8 +280,18 @@
       </button>
 
     </div>
-  </div> -->
+  </div> 
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Tablet'" 
+  [title]="' Power Up with Multivitamins '">
+</app-common-filter-component>
 
+<app-common-filter-component 
+  [endpoint]="'products/filter'" 
+  [productForm]="'Cream'" 
+  [title]="'Care your skin deserves.'">
+</app-common-filter-component>
   <!-- <app-custom-medicine-slider title="Popular Custom Medicines"></app-custom-medicine-slider>  -->
 
   <ng-template #loadingOrError>

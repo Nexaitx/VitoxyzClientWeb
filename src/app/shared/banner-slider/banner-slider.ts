@@ -12,7 +12,7 @@ type BannerInput =
   templateUrl: './banner-slider.html',
   styleUrls: ['./banner-slider.scss']
 })
-export class BannerSliderComponent implements OnInit, OnDestroy {
+export class BannerSliderComponent implements OnInit {
   /** Accept either string[] or object[] to support links */
   @Input() images: BannerInput[] = [];
   @Input() autoSlide = true;
@@ -27,16 +27,25 @@ export class BannerSliderComponent implements OnInit, OnDestroy {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.normalizeImages();
+    // this.normalizeImages();
 
-    if (this.autoSlide && this.normalizedImages.length > 1) {
-      this.startAutoSlide();
-    }
+    // if (this.autoSlide && this.normalizedImages.length > 1) {
+    //   this.startAutoSlide();
+    // }
+     this.normalizedImages = (this.images || []).map(item =>
+      typeof item === 'string'
+        ? { src: item }
+        : {
+            src: item.src,
+            link: item.link,
+            target: item.target || '_self'
+          }
+    );
   }
 
-  ngOnDestroy() {
-    this.clearAutoSlide();
-  }
+  // ngOnDestroy() {
+  //   this.clearAutoSlide();
+  // }
 
   private normalizeImages() {
     this.normalizedImages = (this.images || []).map((item) => {
@@ -52,67 +61,76 @@ export class BannerSliderComponent implements OnInit, OnDestroy {
     });
   }
 
-  startAutoSlide() {
-    this.clearAutoSlide();
-    this.intervalId = setInterval(() => {
-      this.nextSlide();
-    }, this.slideInterval);
-  }
+  // startAutoSlide() {
+  //   this.clearAutoSlide();
+  //   this.intervalId = setInterval(() => {
+  //     this.nextSlide();
+  //   }, this.slideInterval);
+  // }
 
-  clearAutoSlide() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-      this.intervalId = null;
-    }
-  }
+  // clearAutoSlide() {
+  //   if (this.intervalId) {
+  //     clearInterval(this.intervalId);
+  //     this.intervalId = null;
+  //   }
+  // }
 
-  nextSlide() {
-    if (this.normalizedImages.length === 0) return;
-    this.currentIndex = (this.currentIndex + 1) % this.normalizedImages.length;
-  }
+  // nextSlide() {
+  //   if (this.normalizedImages.length === 0) return;
+  //   this.currentIndex = (this.currentIndex + 1) % this.normalizedImages.length;
+  // }
 
-  prevSlide() {
-    if (this.normalizedImages.length === 0) return;
-    this.currentIndex =
-      (this.currentIndex - 1 + this.normalizedImages.length) % this.normalizedImages.length;
-  }
+  // prevSlide() {
+  //   if (this.normalizedImages.length === 0) return;
+  //   this.currentIndex =
+  //     (this.currentIndex - 1 + this.normalizedImages.length) % this.normalizedImages.length;
+  // }
 
-  goToSlide(index: number) {
-    if (index < 0 || index >= this.normalizedImages.length) return;
-    this.currentIndex = index;
-    // if auto sliding, reset timer so user sees the clicked slide fully
-    if (this.autoSlide) {
-      this.startAutoSlide();
-    }
-  }
+  // goToSlide(index: number) {
+  //   if (index < 0 || index >= this.normalizedImages.length) return;
+  //   this.currentIndex = index;
+  //   // if auto sliding, reset timer so user sees the clicked slide fully
+  //   if (this.autoSlide) {
+  //     this.startAutoSlide();
+  //   }
+  // }
 
-  onImageClick(item: { src: string; link?: string; target?: string }, index: number) {
-    if (!item || !item.link) return;
+  // onImageClick(item: { src: string; link?: string; target?: string }, index: number) {
+  //   if (!item || !item.link) return;
 
-    // Stop auto sliding while we handle navigation (optional)
-    this.clearAutoSlide();
+  //   // Stop auto sliding while we handle navigation (optional)
+  //   this.clearAutoSlide();
 
-    const link = item.link;
-    const target = item.target || '_self';
+  //   const link = item.link;
+  //   const target = item.target || '_self';
 
-    // External absolute links -> open in new tab/window
-    const isExternal = /^(https?:)?\/\//i.test(link);
+  //   // External absolute links -> open in new tab/window
+  //   const isExternal = /^(https?:)?\/\//i.test(link);
 
-    if (isExternal || target === '_blank') {
-      window.open(link, '_blank');
-      // restart autoSlide if enabled
-      if (this.autoSlide) this.startAutoSlide();
+  //   if (isExternal || target === '_blank') {
+  //     window.open(link, '_blank');
+  //     // restart autoSlide if enabled
+  //     if (this.autoSlide) this.startAutoSlide();
+  //   } else {
+  //     // Internal route - navigate using router
+  //     // Accept either '/path' or ['path','sub'] style - we'll attempt navigateByUrl
+  //     try {
+  //       this.router.navigateByUrl(link);
+  //     } catch (err) {
+  //       // fallback: try navigate with segments if someone passed an array-like string
+  //       this.router.navigate([link]);
+  //     } finally {
+  //       if (this.autoSlide) this.startAutoSlide();
+  //     }
+  //   }
+  // }
+    onImageClick(item: any) {
+    if (!item?.link) return;
+
+    if (item.target === '_blank') {
+      window.open(item.link, '_blank');
     } else {
-      // Internal route - navigate using router
-      // Accept either '/path' or ['path','sub'] style - we'll attempt navigateByUrl
-      try {
-        this.router.navigateByUrl(link);
-      } catch (err) {
-        // fallback: try navigate with segments if someone passed an array-like string
-        this.router.navigate([link]);
-      } finally {
-        if (this.autoSlide) this.startAutoSlide();
-      }
+      this.router.navigateByUrl(item.link);
     }
   }
 }

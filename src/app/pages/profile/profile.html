@@ -163,8 +163,18 @@
           </div>
         </div>
         <hr>
-
+        <!-- DELETE ACCOUNT BUTTON -->
+<div class="mt-4">
+  <button
+    class="btn btn-danger rounded-pill"
+    (click)="deleteAccount()"
+    [disabled]="saving"
+  >
+    Delete Account
+  </button>
+</div>
       </div>
+
 
       <div class="col-12 col-md-6">
         <div class="ps-4 pt-4">

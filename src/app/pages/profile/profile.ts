@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { API_URL } from '@src/app/core/const';
 import { CommonModule } from '@angular/common';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-profile',
   imports: [
@@ -366,6 +366,63 @@ loadMyAddresses(): void {
       this.saving = false;
       this.snackBar.open('Address update failed', 'Close', { duration: 3000 });
     }
+  });
+}
+deleteAccount(): void {
+
+ const userId = this.profile?.id || this.profile?.userId;
+
+  if (!userId) {
+    Swal.fire('Error', 'User ID not found', 'error');
+    return;
+  }
+
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'Do you really want to delete your account?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, Delete',
+    cancelButtonText: 'Cancel',
+    confirmButtonColor: '#d33'
+  }).then((result) => {
+
+    if (!result.isConfirmed) return;
+
+    this.saving = true;
+
+    const headers = this.getAuthHeaders();
+
+    const DELETE_URL = `${API_URL}/user/soft-delete/${userId}`;
+
+    this.http.delete<any>(DELETE_URL,  { headers }).subscribe({
+      next: (res) => {
+        this.saving = false;
+
+        if (res?.status) {
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Account Deleted',
+            text: 'Your account is temporarily deleted successfully but not permanently deleted. Please contact supporter.',
+            confirmButtonColor: '#ff4500'
+          }).then(() => {
+            localStorage.clear();
+            sessionStorage.clear();
+            this.router.navigate(['/login']); // change if needed
+          });
+
+        } else {
+          Swal.fire('Failed', res?.message || 'Delete failed', 'error');
+        }
+      },
+      error: (err) => {
+        this.saving = false;
+        console.error(err);
+        Swal.fire('Error', 'Unable to delete account', 'error');
+      }
+    });
+
   });
 }
 

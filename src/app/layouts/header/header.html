@@ -12,15 +12,15 @@
       <img src="../../../assets/NewUpdateLogo.avif" alt="" style="height: 42px;">
     </a> -->
     <a href="#" class="d-flex align-items-center text-decoration-none">
-      <img src="../../../assets/NewUpdateLogo1.avif" alt="" style="height: 60px;">
+      <img src="../../../assets/NewUpdateLogo1.avif" alt="" style="height: 42px;">
       <h3 class="ms-2 mb-0 text-white logoNamecls">Vitoxyz</h3>
     </a>
-    <!-- <div class=" d-flex align-items-center px-3">
+    <div class=" d-none d-lg-flex align-items-center px-3">
       <i class="bi bi-geo-alt  text-primary me-2 pt-1 fs-4"></i>
       <span class="text-white ">{{ currentLocation || 'Detecting location...' }}</span>
       <i class="bi bi-crosshair ms-2 text-muted" title="Use current location" (click)="detectLocation()"
         style="cursor: pointer"></i>
-    </div> -->
+    </div>
     <!-- <div class="location-wrapper">
   <i class="bi bi-geo-alt location-icon"></i>
 
@@ -40,33 +40,31 @@
 
       <ng-container *ngIf="isLoggedIn">
         <div class="profile-menu-wrapper">
-        <button class="btn border-0 bg-none d-none d-lg-inline-flex" type="button" [cdkMenuTriggerFor]="profileMenu"
-          aria-label="Profile">
-          <i class="bi bi-person-circle fs-4 text-white"></i>
-        </button>
+          <button class="btn border-0 bg-none d-none d-lg-inline-flex" type="button" [cdkMenuTriggerFor]="profileMenu"
+            aria-label="Profile">
+            <i class="bi bi-person-circle fs-4 text-white"></i>
+          </button>
 
-        <!-- ✅ PROFILE DROPDOWN -->
-        <ng-template #profileMenu>
-          <div cdkMenu class="dropdown-menu profile-dropdown">
-            <ng-container *ngFor="let item of profileMenuItems">
+          <!-- ✅ PROFILE DROPDOWN -->
+          <ng-template #profileMenu>
+            <div cdkMenu class="dropdown-menu profile-dropdown">
+              <ng-container *ngFor="let item of profileMenuItems">
 
-              <!-- LOGOUT -->
-              <button *ngIf="item.label === 'Logout'" cdkMenuItem class="dropdown-item" (click)="logout()">
-                {{ item.label }}
-              </button>
+                <!-- LOGOUT -->
+                <button *ngIf="item.label === 'Logout'" cdkMenuItem class="dropdown-item" (click)="logout()">
+                  {{ item.label }}
+                </button>
 
-              <!-- NORMAL LINKS -->
-              <a *ngIf="item.label !== 'Logout'" cdkMenuItem class="dropdown-item" [routerLink]="item.path">
-                {{ item.label }}
-              </a>
+                <!-- NORMAL LINKS -->
+                <a *ngIf="item.label !== 'Logout'" cdkMenuItem class="dropdown-item" [routerLink]="item.path">
+                  {{ item.label }}
+                </a>
 
-            </ng-container>
-          </div>
-        </ng-template>
+              </ng-container>
+            </div>
+          </ng-template>
         </div>
       </ng-container>
-
-
       <!-- ✅ CART (unchanged) -->
       <button class="btn border-0 position-relative bg-none" (click)="goToCart()" aria-label="Cart">
         <i class="fi fi-rr-shopping-bag fs-4 text-white"></i>
@@ -78,8 +76,7 @@
 
     </div>
 
-    <div class="collapse navbar-collapse d-none d-lg-flex  navbar-center-wrapper " 
-      id="navbarNav">
+    <div class="collapse navbar-collapse d-none d-lg-flex  navbar-center-wrapper " id="navbarNav">
       <ul class="navbar-nav align-items-center justify-content-center mt-2">
         <ng-container *ngFor="let item of menuItems; let i = index">
           <ng-container *ngIf="!item.mobileOnly">
@@ -104,8 +101,6 @@
                 </div>
               </ng-template>
             </li> -->
-
-
             <li class="nav-item mx-4" *ngIf="!item.dropdown && item.label !== 'Profile'">
               <!-- <a class="nav-link text-white" [ngClass]="{'active rounded-pill': rla.isActive}" [routerLink]="item.path"
               routerLinkActive #rla="routerLinkActive">
@@ -116,7 +111,6 @@
               <a *ngIf="item.label === 'Diet Plans'" class="nav-link text-white" (click)="navigateToDiet()">
                 {{ item.label }}
               </a>
-
               <!-- ✅ All other menu items -->
               <a *ngIf="item.label !== 'Diet Plans'" class="nav-link text-white"
                 [ngClass]="{'active rounded-pill': rla.isActive}" [routerLink]="item.path" routerLinkActive
@@ -194,120 +188,12 @@
           </li>
         </ng-container>
       </ul>
-      
- 
-
-  <!-- <app-search></app-search> -->
-
-<div class="search-bar">
-  <!-- Left: Location dropdown -->
-  <div class="location d-flex align-items-center px-3">
-    <i class=" bi-geo-alt  text-primary me-2 pt-1 fs-4"></i>
-    <span class="text-primary">{{ currentLocation || 'Detecting location...' }} </span>
-    <i class=" bi-crosshair ms-2 text-black" title="Use current location" (click)="detectLocation()"
-      style="cursor: pointer"></i>
-  </div>
-
-  <!-- Search input -->
-  <!-- <div class="search-box flex-grow-1 position-relative">
-     <i
-      class="bi bi-search position-absolute top-50 translate-middle-y me-3"
-      (click)="onSearch()"
-      style="cursor: pointer"
-    ></i>
-    <input
-      type="text"
-      class="form-control"
-      [(ngModel)]="searchQuery"
-      placeholder="Search for Medicines and Health Products"
-      aria-label="Search field"
-      (keyup.enter)="onSearch()"
-    />
-   
-  </div> -->
-  <div class="search-wrapper">
-    <div class="search-input-container">
-      <i class=" bi-search search-icon searchiconCls " (click)="onSearch()"></i>
-
-      <input type="text" [(ngModel)]="searchQuery" class="form-control bg-none" (keyup.enter)="onSearch()" 
-        placeholder="Search for Medicine and Healthcare items" />
-
-      <button class="search-btn btn-primary" (click)="onSearch()">Search</button>
-    </div>
-  </div>
-
-  <div class="quick-box d-flex align-items-center">
-    <!-- <h6 style="
-    margin-top: 9px;
-    margin-right: -19px;
-    margin-left: 8px;
-   ">
-  QUICK BUY! Get 15% off on medicines</h6> -->
-    <button class="btn QuickOrdercls  btn-quick d-none d-md-inline-flex text-black ms-3 px-4" (click)="onQuickOrder()"
-      aria-label="Quick order">
-      Quick order
-    </button>
-
-    <!-- Mobile-only compact card (matches your second image) -->
-    <div class="d-flex d-md-none align-items-center">
-      <div class="mobile-quick-left d-flex align-items-center">
-        <span class="d-inline-flex align-items-center justify-content-center">
-          <i class="fi fi-tr-file-prescription fs-4 text-primary"></i>
-        </span>
-        <div class="mobile-quick-label ms-2">
-          <div>Upload for quick order</div>
-        </div>
-      </div>
-
-      <button class="btn btn-order-now ms-3 text-white rounded-pill" (click)="onQuickOrder()" aria-label="Order now">
-        Order now
-      </button>
-    </div>
-  </div>
-  
-</div>
-<div class="category-bar ">
-  <div #categoryCarouselWrapper class="carousel-wrapper">
-
-    <div
-      *ngFor="let category of categories; let i = index"
-      class="category-item"
-      [class.open]="openCategoryIndex === i"
-    >
-      <!-- CATEGORY BUTTON -->
-      <button
-        class="category-btn bg-none text-white "
-        (click)="toggleCategoryDropdown(i, $event)"
-      >
-        {{ category.name }}
-         <i
-    class="bi bi-chevron-down category-arrow"
-    [class.rotate]="openCategoryIndex === i"
-  ></i>
-      </button>
-
-      <!-- CLICK DROPDOWN -->
-      <div class="category-dropdown">
-        <div
-          class="dropdown-item"
-          *ngFor="let form of category.apiValue"
-          (click)="selectCategory(form, $event)"
-        >
-          {{ form }}
-        </div>
-      </div>
 
     </div>
-
   </div>
-</div>
-
-
-  </div>
-  </div>  
 </nav>
 
- 
+
 
 <div class="sidebar d-lg-none" [class.open]="isSidebarOpen" role="dialog" aria-modal="true" aria-label="Mobile menu">
   <div class="sidebar-header d-flex justify-content-between align-items-center p-3">

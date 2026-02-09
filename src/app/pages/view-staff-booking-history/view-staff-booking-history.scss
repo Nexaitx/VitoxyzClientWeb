@@ -540,7 +540,7 @@ $orange: #67a1e1;
 
 /* Desktop */
 @media (min-width: 1366px) and (max-width: 1919px) {
-  .orders-container { max-width: 1200px; padding: 24px; margin-top: 33px; }
+  .orders-container { max-width: 1200px; padding: 24px;  }
   .tabs button { font-size: 16px; padding: 12px 20px; }
   .order-card { padding: 22px; margin-bottom: 28px; }
   .order-item { gap: 22px; }
