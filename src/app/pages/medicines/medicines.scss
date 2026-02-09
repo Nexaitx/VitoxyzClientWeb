@@ -32,6 +32,7 @@ h2 {
     flex: 0 0 auto;
     width: 12.8%;
   }
+
 }
 
 h1,
@@ -95,9 +96,7 @@ h5 {
   color: #fff;
   font-size: 12px;
 }
-.adjustCls{
-  margin-top: 26px;
-}
+
 .address-close-btn:hover {
   opacity: 0.9;
 }
@@ -396,6 +395,10 @@ h5 {
 @media (min-width: 1200px) {
   /* on very wide screens keep items in one visual row feel */
   .brand-carousel-wrapper { gap: 32px; padding: 18px 40px; }
+   .banner-search-overlay {
+    top: 22%;
+    max-width: 900px;
+  }
 }
 .category-section {
   margin: 20px 0;
@@ -509,34 +512,76 @@ h5 {
   }
 }
 
+.banner-wrapper {
+  position: relative;
+}
+
+/* Overlay search on banner */
+.banner-search-overlay {
+  position: absolute;
+  top: 17%;
+  left: 75%;
+  transform: translate(-50%,);
+  width: 100%;
+  max-width: 734px;
+  z-index: 10;
+}
+
+/* Glass effect background */
+.banner-search-overlay {
+  // background: rgba(255, 255, 255, 0.9);
+  // backdrop-filter: blur(6px);
+  padding: 0 10px;
+  border-radius: 16px;
+  // box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.search-wrapper {
+  width: 100%;
+}
+
+.search-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  height: 44px;
+  border-radius: 50px;
+  padding-left: 44px;   // space for icon
+  padding-right: 120px; // space for button
+  font-size: 15px;
+}
+
+/* Icon inside input */
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 18px;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #6c757d;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* Button inside input */
+.search-btn {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  height: 34px;
+  padding: 0 18px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  border: white;
+  color: white;
+}
 
 
-//   .category-card {
-//     min-width: 180px;
-//     max-width: 180px;
-//     flex: 0 0 auto;
-//     border-radius: 12px;
-//     cursor: pointer;
-//     transition: transform 0.2s ease-in-out;
-
-//     &:hover {
-//       transform: translateY(-10px);
-//     }
-
-//     img {
-//       height: 190px;
-//       object-fit: cover;
-//       border-radius: 20px;
-//     }
-
-//     h3 {
-//       margin: 8px 0 0;
-//       font-size: 14px;
-//       text-align: center;
-//       font-weight: 500;
-//     }
-
-// }
 /* ---------------------------------------------------- */
 /* 🚀 MOBILE QUICK ACCESS TILES like tata 1mg for mobile 🚀        */
 /* ---------------------------------------------------- */
@@ -549,7 +594,7 @@ $secondary-text: #6B778C;
 $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
 
 .mobile-quick-access-wrapper {
-  padding: 20px;
+  padding: 12px;
   width: 100%;
 
   .row {
@@ -558,6 +603,7 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
     margin: 0;
     display: flex;
     justify-content: space-between; // evenly distribute
+    flex-wrap: wrap;
   }
 
   .col-3 {
@@ -643,13 +689,20 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
     height: 135px;
     padding: 6px 4px 10px;
   }
+  .mobile-quick-access-wrapper{
+    margin-top: 48px;
+  }
  .mobile-quick-access-wrapper .col-3 {
     flex: 0 0 33.333%;
     max-width: 31.333%;
   }
+   .mobile-quick-access-wrapper .quick-access-tile {
+    height: auto;               // ❗ FIX
+    padding: 10px 6px;
+  }
   .tile-icon-box {
-    width: 60px;
-    height: 60px;
+    width: 56px;
+    height: 56px;
   }
 
   .tile-title {
@@ -666,6 +719,9 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
   .mobile-quick-access-wrapper .col-3 {
     flex: 0 0 33.333%;
     max-width: 33.333%;
+  }
+    .mobile-quick-access-wrapper .quick-access-tile {
+    height: 140px;
   }
   
 }
@@ -701,7 +757,7 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
       font-size: 13px;
     }
   }
-
+ 
   .mobile-quick-access-wrapper {
     padding: 10px;
 
@@ -725,6 +781,40 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
       object-fit: contain;
     }
   }
+  }
+}
+@media (min-width: 900px) and (max-width: 1199px) {
+  .banner-search-overlay {
+    top: 10%;
+    max-width: 518px;
+  }
+
+  .search-input {
+    height: 40px;
+    font-size: 14px;
+    padding-right: 110px;
+  }
+
+  .search-btn {
+    height: 30px;
+    font-size: 13px;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1919px) {
+  .banner-search-overlay {
+    top: 10%;
+    max-width: 618px;
+  }
+
+  .search-input {
+    height: 40px;
+    font-size: 14px;
+    padding-right: 110px;
+  }
+
+  .search-btn {
+    height: 30px;
+    font-size: 13px;
   }
 }
 @media (min-width: 1920px) {
@@ -755,6 +845,27 @@ $brand-color-pharmacy: #FFC107; // Pharmacy ke liye Yellow/Amber
   .brandBackground {
     width: 180px;
     height: 180px;
+  }
+  .banner-search-overlay {
+    top: 14%;
+    max-width: 1100px;
+  }
+
+  .search-input {
+    height: 44px;
+    font-size: 18px;
+    padding-left: 52px;
+    padding-right: 150px;
+  }
+
+  .search-icon {
+    font-size: 22px;
+  }
+
+  .search-btn {
+    height: 42px;
+    font-size: 16px;
+    padding: 0 28px;
   }
 }
 /* LAPTOP & DESKTOP (992px–1599px): 4 tiles */

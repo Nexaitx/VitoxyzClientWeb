@@ -9,6 +9,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ENDPOINTS, API_URL } from '../../../core/const';
 import { Toast } from 'bootstrap';
 import { DeviceService } from '@src/app/core/services/device.service';
+import { PushNotificationService } from '@src/app/core/services/push-notification.service';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +36,7 @@ export class Login implements OnInit, OnDestroy {
   selectedTabIndex: number = 0; // 0 for email/password, 1 for phone/OTP
   timeLeft: number = 30;
  deviceType!: string;
-
+fcmToken: string | null = null;
   private otpTimerSubscription: Subscription | undefined;
   phoneNumber: string = ''; // Will be set from the form
   maskedPhoneNumber: string = ''; // Initialize here or in ngOnInit
@@ -44,11 +45,13 @@ export class Login implements OnInit, OnDestroy {
   @Output() loginSuccess = new EventEmitter<void>();
   @Output() loadingChange = new EventEmitter<boolean>();
 
-  constructor(private deviceService: DeviceService) {
+  constructor(private deviceService: DeviceService,
+     private pushService: PushNotificationService
+  ) {
     this.initForms();
   }
 
-   ngOnInit(): void {
+   async ngOnInit(): Promise<void> {
     this.deviceType = this.deviceService.getDeviceType();
   console.log('Device Type:', this.deviceType);
 
@@ -57,7 +60,15 @@ export class Login implements OnInit, OnDestroy {
     if (this.deviceService.isMobile()) {
       console.log('Mobile logic here');
     }
+     // Get FCM Token
+  // this.fcmToken = await this.pushService.requestPermission();
+  // console.log("FCM Token:", this.fcmToken);
   }
+private async ensureFcmToken(): Promise<string | null> {
+  if (this.fcmToken) return this.fcmToken;
+  this.fcmToken = await this.pushService.requestPermission();
+  return this.fcmToken;
+}
 
   ngOnDestroy() {
     this.otpTimerSubscription?.unsubscribe();
@@ -136,49 +147,102 @@ private showToast(message: string, type: 'success' | 'error' = 'error'): void {
   }
 
   //login and save its profile
-  login(): void {
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
-      return;
-    } else {
-      this.isLoading = true;
-      this.loadingChange.emit(true);
-      const { username, password, rememberMe } = this.loginForm.value;
-        // Get stored FCM token if exists
-  const fcmToken = localStorage.getItem('fcmToken') || '';
-    // ✅ Console log FCM token
-  console.log('FCM Token:', fcmToken);
-      const apiUrl = API_URL + ENDPOINTS.LOGIN;
-      const payload = { username, password,deviceType: this.deviceType ,fcmToken};
-      this.http.post(apiUrl, payload).subscribe((res: any) => {
-        this.isLoading = false;
-      localStorage.setItem('authToken', res.token);
-  localStorage.setItem('userProfile', JSON.stringify(res.profile));
-// ✅ store address flag separately (important)
-  // localStorage.setItem('isAddress', String(res.profile.isAddress));
-  localStorage.setItem('justLoggedIn', 'true');
-  this.showToast('Login successful 🎉', 'success');
-  this.loginSuccess.emit();
-  this.loadingChange.emit(false);
-      },
-        error => {
-          let errorMessage = 'Login failed. Please try again.';
-          if (error.error && typeof error.error === 'object' && error.error.message) {
-            errorMessage = `Login failed: ${error.error.message}`;
-          } else if (typeof error.error === 'string' && error.error.length > 0) {
-            errorMessage = `Login failed: ${error.error}`;
-          } else if (error.status === 401) {
-            errorMessage = 'Invalid credentials. Please check your phone number and password.';
-          } else if (error.status === 0) {
-            errorMessage = 'Could not connect to the server. Please check your internet connection.';
-          }
-          this.showToast(errorMessage, 'error');
-          this.isLoading = false;
-          this.loadingChange.emit(false);
-        }
-      )
-    }
+//   login(): void {
+//     if (this.loginForm.invalid) {
+//       this.loginForm.markAllAsTouched();
+//       return;
+//     } else {
+//       this.isLoading = true;
+//       this.loadingChange.emit(true);
+//       const { username, password, rememberMe } = this.loginForm.value;
+
+//       const apiUrl = API_URL + ENDPOINTS.LOGIN;
+//       const payload = { username, password,deviceType: this.deviceType ,fcmToken: this.fcmToken};
+//       this.http.post(apiUrl, payload).subscribe((res: any) => {
+//         this.isLoading = false;
+//       localStorage.setItem('authToken', res.token);
+     
+//   localStorage.setItem('userProfile', JSON.stringify(res.profile));
+// // ✅ store address flag separately (important)
+//   // localStorage.setItem('isAddress', String(res.profile.isAddress));
+//   localStorage.setItem('justLoggedIn', 'true');
+//   this.showToast('Login successful 🎉', 'success');
+//   this.loginSuccess.emit();
+//   this.loadingChange.emit(false);
+//       },
+//         error => {
+//           let errorMessage = 'Login failed. Please try again.';
+//           if (error.error && typeof error.error === 'object' && error.error.message) {
+//             errorMessage = `Login failed: ${error.error.message}`;
+//           } else if (typeof error.error === 'string' && error.error.length > 0) {
+//             errorMessage = `Login failed: ${error.error}`;
+//           } else if (error.status === 401) {
+//             errorMessage = 'Invalid credentials. Please check your phone number and password.';
+//           } else if (error.status === 0) {
+//             errorMessage = 'Could not connect to the server. Please check your internet connection.';
+//           }
+//           this.showToast(errorMessage, 'error');
+//           this.isLoading = false;
+//           this.loadingChange.emit(false);
+//         }
+//       )
+//     }
+//   }
+async login(): Promise<void> {
+  if (this.loginForm.invalid) {
+    this.loginForm.markAllAsTouched();
+    return;
   }
+
+  this.isLoading = true;
+  this.loadingChange.emit(true);
+
+  const { username, password } = this.loginForm.value;
+
+  // Ensure FCM Token exists
+  const fcmToken = await this.ensureFcmToken();
+
+  console.log("🔥 Sending FCM Token to Backend:", fcmToken);
+
+  const payload = {
+    username,
+    password,
+    deviceType: this.deviceType,
+    fcmToken: fcmToken || ''
+  };
+
+  console.log("📦 Final Login Payload:", payload);
+
+  this.http.post(API_URL + ENDPOINTS.LOGIN, payload).subscribe({
+    next: (res: any) => {
+      this.isLoading = false;
+
+      localStorage.setItem('authToken', res.token);
+      localStorage.setItem('userProfile', JSON.stringify(res.profile));
+      localStorage.setItem('justLoggedIn', 'true');
+
+      this.showToast('Login successful 🎉', 'success');
+      this.loginSuccess.emit();
+      this.loadingChange.emit(false);
+    },
+
+    error: error => {
+      let errorMessage = 'Login failed. Please try again.';
+
+      if (error.error?.message) {
+        errorMessage = `Login failed: ${error.error.message}`;
+      } else if (error.status === 401) {
+        errorMessage = 'Invalid credentials.';
+      } else if (error.status === 0) {
+        errorMessage = 'Server connection failed.';
+      }
+
+      this.showToast(errorMessage, 'error');
+      this.isLoading = false;
+      this.loadingChange.emit(false);
+    }
+  });
+}
 
   sendOtp(): void {
     if (this.phoneLoginForm.get('phoneNumber')?.invalid) {

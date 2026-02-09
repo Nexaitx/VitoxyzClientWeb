@@ -173,7 +173,7 @@ body.no-scroll {
 .navbar .ms-auto.d-flex {
    position: absolute;
   right: 10px ;
-  margin-bottom: 70px;
+  
 }
 /* RIGHT ICONS CONTAINER */
 
@@ -338,7 +338,7 @@ body.no-scroll {
 }
 
 .profile-dropdown {
-  margin-top:60px;
+ 
   position: absolute;
   top: calc(100% + 6px);
   right: 0;
@@ -515,7 +515,7 @@ body.no-scroll {
     max-width: 1100px;
   }
 }
-/* Desktop */
+/* Desktop search-bar, search-wrapper */
 @media (min-width: 1201px) and (max-width: 1600px) {
   .search-bar {
     max-width: 1275px;

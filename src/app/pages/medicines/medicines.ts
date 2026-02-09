@@ -25,6 +25,7 @@ import { BannerSliderComponent } from "@src/app/shared/banner-slider/banner-slid
 import { TextBanner } from "@src/app/shared/text-banner/text-banner";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 import { Header } from "./header/header";
+import { CommonFilterComponent } from "../shared/common-filter-component/common-filter-component";
 declare var bootstrap: any;
 export interface Medicine {
   id: string;
@@ -92,7 +93,8 @@ interface Category {
     HealthCarouselComponent,
     BannerSliderComponent,
     MobileFooterNavComponent,
-    Header
+    Header,
+    CommonFilterComponent
 ],
   templateUrl: "./medicines.html",
   styleUrls: ["./medicines.scss"],
@@ -428,9 +430,10 @@ export class Medicines implements AfterViewInit {
   showAddressForm = false;
   addressForm!: FormGroup;
   userProfile: any;
-
+   currentLocation: string = '';
+  searchQuery: string = '';
 ngOnInit(): void {
-
+    this.detectLocation();
   // ✅ ALWAYS initialize the form first
   this.initAddressForm();
 
@@ -477,6 +480,58 @@ closeAddressForm(): void {
     });
   }
 
+ 
+   onSearch() {
+    if (!this.searchQuery.trim()) {
+      // this.showToastMessage('Please enter a search query', true);
+      return;
+    }
+
+    this.router.navigate(['/search'], { queryParams: { q: this.searchQuery } });
+  }
+   onQuickOrder() {
+    this.router.navigate(['/order-prescription']);
+  }
+  async detectLocation() {
+    if (!navigator.geolocation) {
+      this.currentLocation = 'Geolocation not supported';
+      return;
+    }
+
+    this.currentLocation = 'Detecting...';
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
+          );
+          const data = await response.json();
+
+          if (data.address) {
+            this.currentLocation =
+              data.address.city ||
+              data.address.town ||
+              data.address.village ||
+              data.address.state ||
+              'Your Location';
+          } else {
+            this.currentLocation = 'Unknown Location';
+          }
+        } catch (error) {
+          console.error('Error fetching location:', error);
+          this.currentLocation = 'Unable to fetch location';
+        }
+      },
+      (error) => {
+        console.error('Geolocation error:', error);
+        this.currentLocation = 'Location permission denied';
+      }
+    );
+  }
 
   openAddressForm(): void {
     const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
@@ -782,16 +837,16 @@ closeAddressForm(): void {
     this.router.navigate(['/products', category], { queryParams: { endpoint: 'products/filter' } });
   }
 
-  // healthItems = [
-  //   { image: '../../../assets/medicines/1.avif', label: 'Diabetes', link: '/products/Granule' },
-  //   { image: '../../../assets/medicines/2.avif', label: 'Heart Rate', link: '/products/Tablet' },
-  //   { image: '../../../assets/medicines/3.avif', label: 'Stomach Care', link: '/products/Digestive Tablet' },
-  //   { image: '../../../assets/medicines/4.avif', label: 'Liver Care', link: '/products/Tablet' },
-  //   { image: '../../../assets/medicines/5.avif', label: 'Eye Care', link: '/products/Eye Drop' },
-  //   { image: '../../../assets/medicines/6.avif', label: 'Bone & Joint', link: '/products/Bandage' },
-  //   { image: '../../../assets/medicines/7.avif', label: 'Kidney Care', link: '/products/Tonic' },
-  //   { image: '../../../assets/medicines/8.avif', label: 'Derma Care', link: '/products/Face Cream' },
-  // ];
+  healthItems = [
+    { image: '../../../assets/medicines/1.avif', label: 'Diabetes', link: '/products/Granule' },
+    { image: '../../../assets/medicines/2.avif', label: 'Heart Rate', link: '/products/Tablet' },
+    { image: '../../../assets/medicines/3.avif', label: 'Stomach Care', link: '/products/Digestive Tablet' },
+    { image: '../../../assets/medicines/4.avif', label: 'Liver Care', link: '/products/Tablet' },
+    { image: '../../../assets/medicines/5.avif', label: 'Eye Care', link: '/products/Eye Drop' },
+    { image: '../../../assets/medicines/6.avif', label: 'Bone & Joint', link: '/products/Bandage' },
+    { image: '../../../assets/medicines/7.avif', label: 'Kidney Care', link: '/products/Tonic' },
+    { image: '../../../assets/medicines/8.avif', label: 'Derma Care', link: '/products/Face Cream' },
+  ];
 
   // {
   //     name: 'Skin Care', apiValue: ["Cream", "Lotion", "Gel", "Face Wash", "Face Pack", 
