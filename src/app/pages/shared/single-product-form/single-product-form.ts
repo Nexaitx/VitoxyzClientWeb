@@ -91,7 +91,8 @@ export class SingleProductFormComponentComponent implements OnInit {
         category: this.config.label,
         form: this.config.productForm,
         forms: this.config.productForm,
-        endpoint: 'otc-products/form'
+        // endpoint: 'otc-products/form'/
+         endpoint: 'products/filter'
       }
     }).then((success) => {
       console.log('✅ Navigation successful to:', `/products/${this.config.productForm}`);

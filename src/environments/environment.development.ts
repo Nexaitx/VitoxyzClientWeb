@@ -2,9 +2,9 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 export const environment = {
   production: false,
-    apiUrl: 'https://vitoxyz.com/Backend/api',
+   apiUrl: 'https://vitoxyz.com/Backend/api',
    // apiUrl: 'http://localhost:8080/Backend/api',
-
+   // apiUrl: 'https://vitoxyzbackend-az2e.onrender.com/Backend/api',
 
   apiKey: 'dev_api_key',
   googleMapsApiKey: 'AIzaSyAL0m-w-jkSFRy7S8aUhjvZI8KOYNZBNCQ',
