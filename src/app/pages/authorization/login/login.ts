@@ -214,18 +214,29 @@ async login(): Promise<void> {
   console.log("📦 Final Login Payload:", payload);
 
   this.http.post(API_URL + ENDPOINTS.LOGIN, payload).subscribe({
+   
     next: (res: any) => {
       this.isLoading = false;
+            console.log("✅ Login Response:", res);
 
+      if (!res || !res.token) {
+        console.error("❌ Invalid response format:", res);
+        this.showToast('Invalid server response', 'error');
+        return;
+      }
       localStorage.setItem('authToken', res.token);
+      console.log("print the token  ",res.token );
       localStorage.setItem('userProfile', JSON.stringify(res.profile));
       localStorage.setItem('justLoggedIn', 'true');
 
       this.showToast('Login successful 🎉', 'success');
+      console.log("this is profile ",res.profile );
+      console.log("this is profile 11234567789900",res.token );
+      console.log("this is profile ydbdfyfygsydgf ",res );
+      
       this.loginSuccess.emit();
       this.loadingChange.emit(false);
     },
-
     error: error => {
       let errorMessage = 'Login failed. Please try again.';
 
@@ -242,6 +253,7 @@ async login(): Promise<void> {
       this.loadingChange.emit(false);
     }
   });
+ 
 }
 
   sendOtp(): void {

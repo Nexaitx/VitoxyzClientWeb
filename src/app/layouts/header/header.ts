@@ -60,11 +60,14 @@ constructor(private http: HttpClient) {}
   isMobileMenuOpen = signal(false);
 cartCount: number = 0;
   currentLocation: string = '';
+ 
   searchQuery: string = '';
   openSubmenus = new Set<number>();
   redirectAfterLogin: string | null = null; 
   openCategoryIndex: number | null = null;
-
+ isLocationPanelOpen: boolean = false;
+locationSuggestions: any[] = [];
+savedAddresses: any[] = [];
 
 // ✅ added for redirection after login
  categories: Category[] = [
@@ -189,8 +192,15 @@ ngOnInit(): void {
     // ✅ extract profile dropdown items ONCE
   const profileItem = this.menuItems.find(item => item.label === 'Profile');
   this.profileMenuItems = profileItem?.dropdownItems || [];
-}
 
+  const stored = localStorage.getItem('savedAddresses');
+this.savedAddresses = stored ? JSON.parse(stored) : [];
+
+}
+ truncateLocation(text: string, limit: number = 20): string {
+  if (!text) return 'Select delivery location';
+  return text.length > limit ? text.substring(0, limit) + '...' : text;
+}
 
   ngOnDestroy(): void {
    
@@ -276,10 +286,69 @@ ngOnInit(): void {
   //   this.isLoggedIn = false;
   //   this.router.navigate(['/']);
   // }
+toggleLocationPanel() {
+  this.isLocationPanelOpen = !this.isLocationPanelOpen;
+
+  if (this.isLocationPanelOpen) {
+    const stored = localStorage.getItem('savedAddresses');
+    this.savedAddresses = stored ? JSON.parse(stored) : [];
+  }
+}
+
+closeLocationPanel() {
+  this.isLocationPanelOpen = false;
+}
+async searchLocation() {
+  if (!this.searchQuery.trim()) {
+    this.locationSuggestions = [];
+    return;
+  }
+
+  const response = await fetch(
+    `https://nominatim.openstreetmap.org/search?format=json&q=${this.searchQuery}`
+  );
+
+  const data = await response.json();
+  this.locationSuggestions = data.slice(0, 5);
+}
+selectSuggestion(loc: any) {
+  this.currentLocation = loc.display_name;
+  this.locationSuggestions = [];
+  this.searchQuery = '';
+  this.closeLocationPanel();
+}
+
+selectAddress(address: any) {
+  this.currentLocation = address.fullAddress;
+  this.closeLocationPanel();
+}
+// addNewAddress() {
+//   if (!this.searchQuery.trim()) return;
+
+//   const newAddress = {
+//     name: 'New Address',
+//     fullAddress: this.searchQuery
+//   };
+
+//   this.savedAddresses.push(newAddress);
+//   localStorage.setItem(
+//     'savedAddresses',
+//     JSON.stringify(this.savedAddresses)
+//   );
+
+//   this.currentLocation = newAddress.fullAddress;
+//   this.searchQuery = '';
+//   this.closeLocationPanel();
+// }
+goToAddAddress() {
+  this.closeLocationPanel();
+  this.router.navigate(['/add-address']);
+}
+
   logout(){
     const token = localStorage.getItem('authToken');
     if(token){
-      this.http.post('https://vitoxyzbackend-az2e.onrender.com/Backend/api/user/logoutUser',{},{
+      this.http.post('https://vitoxyz.com/Backend/api/user/logoutUser',{},{
        headers :{
         Authorization:`Bearer ${token}`
        }
@@ -292,11 +361,11 @@ ngOnInit(): void {
           error: (err) => {
         console.error('Logout API failed:', err);
         // Even if API fails, still logout locally
-        this.clearSessionAndRedirect();
+        // this.clearSessionAndRedirect();
       }
       });
     }else {
-    this.clearSessionAndRedirect();
+    // this.clearSessionAndRedirect();
   }
   }
   private clearSessionAndRedirect(): void {

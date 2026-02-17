@@ -6,6 +6,7 @@ import { SignUp } from './sign-up/sign-up';
 import * as bootstrap from 'bootstrap';
 import { ForgotPassword } from "./forgot-password/forgot-password";
 import { ResetPassword } from './reset-password/reset-password';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-authorization',
@@ -29,7 +30,7 @@ export class Authorization implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('authModal') authModalElement!: ElementRef;
   isChildLoading = false;
   private modalInstance: bootstrap.Modal | undefined;
-
+  constructor(private router: Router) {}
   ngAfterViewInit() {
     this.modalInstance = new bootstrap.Modal(this.authModalElement.nativeElement, {
       backdrop: 'static',
@@ -78,6 +79,7 @@ onSignupSuccess() {
       modal.hide();
     }
     window.location.reload();
+    //  this.router.navigate(['/medicines']);
     this.loginSuccess.emit();
     this.closeAuthModal();
   }
