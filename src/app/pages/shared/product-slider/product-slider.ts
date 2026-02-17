@@ -6,7 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonFilterConfig, Product, ApiResponse } from './product-slider.interface';
-import { API_URL } from '@src/app/core/const';
+import { API_URL, ENDPOINTS } from '@src/app/core/const';
 import { ProductService } from '@src/app/core/product.service'; // ✅ Import ProductService
 
 @Component({
@@ -247,7 +247,7 @@ export class CommonFilterComponentComponent implements OnInit, OnDestroy {
       .join('&');
 
     const size = this.config.slideCount || 12;
-    const apiUrl = `${API_URL}/${this.config.endpoint}/otc-products/by-forms?${queryParams}&page=0&size=${size}`;
+    const apiUrl = `${API_URL}/${this.config.endpoint}${ENDPOINTS.PRODUCT_FILTER_MULTIPLE}?${queryParams}&page=0&size=${size}`;
 
     console.log('🟡 Fetching products from:', apiUrl);
 

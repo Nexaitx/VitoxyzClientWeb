@@ -1,13 +1,13 @@
 //export const API_URL = 'http://localhost:8080/Backend/api';
 
  //export const API_URL = "https://vitoxyz.com/Backend/api";
-// export const API_URL = "https://vitoxyz.com/Backend/api";
+export const API_URL = "https://vitoxyz.com/Backend/api";
 //  export const API_URL = "https://vitoxyz.com/Backend/api";
 //export const API_URL = "https://vitoxyz.com/api";
   // export const API_URL = "https://vitoxyzbackend.onrender.com/api"
 // export const API_URL = 'https://398ff2efa7fa.ngrok-free.app/api';
 
- export const API_URL = `https://vitoxyzbackend-az2e.onrender.com/Backend/api`;
+ //export const API_URL = `https://vitoxyzbackend-az2e.onrender.com/Backend/api`;
 
 export const ENDPOINTS = {
   LOGIN: "/user/loginWithPasswordUser",
@@ -43,10 +43,10 @@ BOOKING_RESPONSE: "/user/accepted",
 
   BOOK_SINGLE_STAFF: "/booking/staff/complex-booking",
   UPDATE_PROFILE: "/user/update-profile",
-  // PRODUCT_FILTER: "/products/filter",
-  // PRODUCT_FILTER_MULTIPLE: "/products/filter/multiple-forms",
-  PRODUCT_FILTER: "/otc-products/form",
-  PRODUCT_FILTER_MULTIPLE: "/otc-products/by-forms",
+  PRODUCT_FILTER: "/products/filter",
+  PRODUCT_FILTER_MULTIPLE: "/products/filter/multiple-forms",
+  // PRODUCT_FILTER: "/otc-products/form",
+  // PRODUCT_FILTER_MULTIPLE: "/otc-products/by-forms",
   SUBSCRIBEAPI:"/subscribe",
   DIET_DASHBOARD:"/user/active/my-all-dietplans",
 };

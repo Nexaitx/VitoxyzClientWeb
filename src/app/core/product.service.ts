@@ -9,8 +9,8 @@ import { API_URL } from './const';
 export class ProductService {
     // for testing
 //   private readonly API_BASE_URL = 'http://localhost:8080/api/products/filter';
-  private readonly FILTER_ENDPOINT = '/otc-products/form';
-
+  // private readonly FILTER_ENDPOINT = '/otc-products/form';
+ private readonly FILTER_ENDPOINT = '/products/filter';
     private productCache: Map<string, Observable<any>> = new Map();
 
   constructor(private http: HttpClient) { }

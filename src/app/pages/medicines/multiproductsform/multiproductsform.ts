@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { SidebarFilterComponent } from '../../shared/sidebar-filter/sidebar-filter';
-import { API_URL } from '@src/app/core/const';
+import { API_URL, ENDPOINTS } from '@src/app/core/const';
 import { BehaviorSubject } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
@@ -186,7 +186,7 @@ export class MultiproductsformComponent implements OnInit {
       .map((form) => `productForms=${encodeURIComponent(form.trim())}`)
       .join('&');
 
-    const apiUrl = `${API_URL}/otc-products/by-forms?${queryParams}&page=${page}&size=${this.pageSize}`;
+    const apiUrl = `${API_URL}${ENDPOINTS.PRODUCT_FILTER_MULTIPLE}?${queryParams}&page=${page}&size=${this.pageSize}`;
 
     console.log('API URL udaykiran:', apiUrl);
 

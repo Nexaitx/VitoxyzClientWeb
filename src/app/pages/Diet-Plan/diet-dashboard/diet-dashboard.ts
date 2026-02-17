@@ -229,7 +229,7 @@ this.totalPlans = res?.totalPlans ?? this.dietPlans.length;
     headers = headers.set('Authorization', `Bearer ${token}`);
   }
 
-  const url = `https://vitoxyz.com/Backend/api/diet-plans/${this.selectedPlan.dietPlanId}/meal-details/type/${mealType}`;
+  const url = `${API_URL}/diet-plans/${this.selectedPlan.dietPlanId}/meal-details/type/${mealType}`;
 
   this.http.get(url, { headers }).subscribe({
     next: (res) => {

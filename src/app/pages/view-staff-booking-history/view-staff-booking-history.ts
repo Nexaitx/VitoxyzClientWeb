@@ -12,6 +12,7 @@ import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mob
 import { CreatePaymentRequest, PaymentService, VerifyPaymentRequest } from '@src/app/core/services/payment.service';
 import { environment } from '@src/environments/environment.development';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { API_URL } from '@src/app/core/const';
 
 type TabKey = 'past' | 'ongoing' | 'upcoming' | 'completed'| 'my-cancellations'| 'payment-pending';
 
@@ -76,7 +77,7 @@ isPaymentProcessing = false;
 selectedPaymentBooking!: BookingItem;
 
 
-  private overrideUrl = 'https://vitoxyz.com/Backend/api/booking/override/bulk-request?accountNonExpired=true&credentialsNonExpired=true&accountNonLocked=true&authorities=%5B%7B%22authority%22%3A%22string%22%7D%5D&username=string&password=string&enabled=true';
+  private overrideUrl = `${API_URL}/booking/override/bulk-request?accountNonExpired=true&credentialsNonExpired=true&accountNonLocked=true&authorities=%5B%7B%22authority%22%3A%22string%22%7D%5D&username=string&password=string&enabled=true`;
 
   constructor(private viewStaffBookingHistoryService : ViewStaffBookingHistoryService,
       private http: HttpClient,
@@ -227,7 +228,7 @@ private loadPaymentPendingBookings() {
 
   this.http
     .get<BookingItem[]>(
-      'https://vitoxyz.com/Backend/api/user/paymentPending',
+      `${API_URL}/user/paymentPending`,
       { headers }
     )
     .pipe(finalize(() => (this.loading = false)))
@@ -310,7 +311,7 @@ closeModal(id: string) {
     'Authorization': `Bearer ${token}`
   });
 
-  const url = `https://vitoxyz.com/Backend/api/user/viewStaffDetails/${staffId}`;
+  const url = `${API_URL}/user/viewStaffDetails/${staffId}`;
 
   this.http.get<any>(url, { headers }).subscribe({
     next: (res) => {
@@ -534,7 +535,7 @@ confirmCancelBooking() {
   };
 
   this.http.post<any>(
-    'https://vitoxyz.com/Backend/api/bookings/cancel',
+    `${API_URL}/bookings/cancel`,
     payload,
     { headers }
   ).subscribe({

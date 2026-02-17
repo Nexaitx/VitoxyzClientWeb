@@ -15,11 +15,16 @@
       <img src="../../../assets/NewUpdateLogo1.avif" alt="" style="height: 42px;">
       <h3 class="ms-2 mb-0 text-white logoNamecls">Vitoxyz</h3>
     </a>
-    <div class=" d-none d-lg-flex align-items-center px-3">
+    <div class=" d-none d-lg-flex align-items-center px-3" style="cursor:pointer;"
+     (click)="toggleLocationPanel()">
       <i class="bi bi-geo-alt  text-primary me-2 pt-1 fs-4"></i>
-      <span class="text-white ">{{ currentLocation || 'Detecting location...' }}</span>
-      <i class="bi bi-crosshair ms-2 text-muted" title="Use current location" (click)="detectLocation()"
-        style="cursor: pointer"></i>
+      <span class="text-white ">{{ truncateLocation(currentLocation, 20) }}</span>
+      <!-- <i class="bi bi-crosshair ms-2 text-muted" title="Use current location" (click)="detectLocation()"
+        style="cursor: pointer"></i> -->
+         <i class="bi bi-chevron-right ms-2 text-white"
+     style="cursor:pointer;"
+     (click)="toggleLocationPanel()"></i>
+
     </div>
     <!-- <div class="location-wrapper">
   <i class="bi bi-geo-alt location-icon"></i>
@@ -193,6 +198,104 @@
   </div>
 </nav>
 
+<!-- OVERLAY -->
+<div *ngIf="isLocationPanelOpen"
+     (click)="closeLocationPanel()"
+     style="position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1040;">
+</div>
+
+<!-- RIGHT SIDE PANEL -->
+<div *ngIf="isLocationPanelOpen"
+     style="position:fixed;
+            top:66px;
+            right:0;
+            height:100%;
+            width:420px;
+            background:#fff;
+            z-index:1050;
+            overflow-y:auto;
+            box-shadow:-2px 0 8px rgba(0,0,0,0.2);">
+
+  <!-- HEADER -->
+  <div style="padding:20px; border-bottom:1px solid #eee;
+              display:flex; justify-content:space-between; align-items:center;">
+
+    <div style="font-size:18px; font-weight:600;">
+      Select delivery address
+    </div>
+
+    <i class=" bi-x-lg text-black"
+       style="cursor:pointer;"
+       (click)="closeLocationPanel()"></i>
+  </div>
+
+  <div style="padding:20px;">
+
+    <!-- SEARCH -->
+    <input type="text"
+           class="form-control"
+           placeholder="Search by area, street name, pin code"
+           [(ngModel)]="searchQuery"
+           (input)="searchLocation()">
+
+    <!-- SUGGESTIONS -->
+    <div *ngIf="locationSuggestions.length"
+         style="margin-top:10px; border:1px solid #eee; border-radius:6px;">
+
+      <div *ngFor="let loc of locationSuggestions"
+           style="padding:10px; border-bottom:1px solid #eee; cursor:pointer;"
+           (click)="selectSuggestion(loc)">
+        {{ loc.display_name }}
+      </div>
+
+    </div>
+
+    <!-- USE CURRENT LOCATION -->
+    <div style="margin-top:20px;
+                display:flex;
+                align-items:center;
+                color:#2874f0;
+                font-weight:500;
+                cursor:pointer;"
+         (click)="detectLocation(); closeLocationPanel();">
+
+      <i class=" bi-crosshair me-2"></i>
+      Use my current location
+    </div>
+
+    <hr style="margin:20px 0;">
+
+    <!-- SAVED HEADER -->
+    <div style="display:flex;
+                justify-content:space-between;
+                font-weight:600;
+                margin-bottom:15px;">
+
+      <span>Saved addresses</span>
+
+      <span style="color:#2874f0; cursor:pointer;"
+           (click)="goToAddAddress()">
+        + Add New
+      </span>
+    </div>
+
+    <!-- SAVED LIST -->
+    <div *ngFor="let address of savedAddresses"
+         style="padding:12px 0; border-bottom:1px solid #eee; cursor:pointer;"
+         (click)="selectAddress(address)">
+
+      <div style="font-weight:600;">
+        {{ address.name }}
+      </div>
+
+      <div style="font-size:14px; color:#777;">
+        {{ address.fullAddress }}
+      </div>
+
+    </div>
+
+  </div>
+</div>
 
 
 <div class="sidebar d-lg-none" [class.open]="isSidebarOpen" role="dialog" aria-modal="true" aria-label="Mobile menu">

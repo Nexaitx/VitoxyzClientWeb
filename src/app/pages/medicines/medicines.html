@@ -181,8 +181,8 @@
   </div>
 </div> -->
 
-  <!-- <div class="d-none d-md-block">
-    <app-health-carousel [items]="healthItems"></app-health-carousel>
+  <div class="d-none d-md-block">
+    <!-- <app-health-carousel [items]="healthItems"></app-health-carousel> -->
     <div class="category-section">
       <div class="category-section-header mat-elevation-z2">
         <h2>Shop by health concerns</h2>
@@ -210,7 +210,7 @@
 
       </div>
     </div>
-  </div> -->
+  </div>
 
   <div class="d-block d-md-none">
     <app-health-carousel [items]="healthItems1"></app-health-carousel>
@@ -299,7 +299,7 @@
     <p *ngIf="isLoaded && hasError">Error loading medicine data.</p>
   </ng-template>
 
-  <!-- <app-common-filter-component 
+  <app-common-filter-component 
   [endpoint]="'products/filter'" 
   [productForm]="'Shampoo'" 
   [title]="'Healthy Hair Starts Here '">
@@ -315,7 +315,7 @@
   [endpoint]="'products/filter'" 
   [productForm]="'Yoga Mat'" 
   [title]="' Support your every pose'">
-</app-common-filter-component> -->
+</app-common-filter-component>
   <!-- Content area -->
   <div class="container-fluid px-4 my-5">
     <h4>Welcome to Vitoxyz: Your Trusted Digital Pharmacy & Health Companion</h4>
@@ -416,7 +416,7 @@
         <h5 class="mb-3">Add Address</h5>
         <div class="form-scroll">
           <form [formGroup]="addressForm">
-            <div>x
+            <div>
               <!-- Full Name -->
               <label class="form-label">Full Name</label>
               <input class="form-control" formControlName="fullName" readonly>

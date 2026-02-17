@@ -8,6 +8,7 @@ import { MultiproductsformComponent } from './pages/medicines/multiproductsform/
 import { MedicineFilterComponent } from './pages/medicines/medicine-filter/medicine-filter';
 import { DietGuard } from './core/guards/diet.guard';
 import { Empty } from './shared/empty/empty';
+import { AddAddress } from './layouts/add-address/add-address';
 
 export const routes: Routes = [
   {
@@ -26,7 +27,7 @@ export const routes: Routes = [
   },
         { path: 'products', component: MultiproductsformComponent },
           { path: 'medicine', component: MedicineFilterComponent },
-
+ { path: 'add-address', component: AddAddress },
 
 
       {
