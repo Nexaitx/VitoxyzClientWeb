@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 import { Footer } from "../footer/footer";
@@ -14,8 +14,8 @@ import Swal from 'sweetalert2';
     RouterLink,
     MobileFooterNavComponent,
     Footer,
-     ReactiveFormsModule, 
-     CommonModule  
+    ReactiveFormsModule,
+    CommonModule
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.scss'
@@ -28,16 +28,20 @@ export class Profile implements OnInit {
   profileLoaded = false;
 
   addresses: any[] = [];
-defaultAddress: any = null;
-addressesLoaded = false;
-showAddAddressPopup = false;
-addressSaving = false;
-selectedAddress: any = null;
-addressForm: FormGroup;
+  defaultAddress: any = null;
+  addressesLoaded = false;
+  showAddAddressPopup = false;
+  addressSaving = false;
+  selectedAddress: any = null;
+  addressForm: FormGroup;
+@ViewChild('mapSearchInput') mapSearchInput!: ElementRef;
 
-private ADD_ADDRESS_URL = `${API_URL}/address/add`;
-private GET_ADDRESS_URL = `${API_URL}/address/my`;
-private UPDATE_ADDRESS_URL = `${API_URL}/address/update`;
+map: google.maps.Map | undefined;
+marker: google.maps.Marker | undefined;
+
+  private ADD_ADDRESS_URL = `${API_URL}/address/add`;
+  private GET_ADDRESS_URL = `${API_URL}/address/my`;
+  private UPDATE_ADDRESS_URL = `${API_URL}/address/update`;
 
   private GET_PROFILE_URL = `${API_URL}/user/profile`;
   private UPDATE_PROFILE_URL = `${API_URL}/user/profile/update`;
@@ -55,62 +59,195 @@ private UPDATE_ADDRESS_URL = `${API_URL}/address/update`;
       userName: ['']
     });
     this.addressForm = this.fb.group({
-  fullName: ['', Validators.required],
-  phoneNumber: ['', Validators.required],
-  addressLine1: ['', Validators.required],
-  addressLine2: [''],
-  landmark: [''],
-  city: ['', Validators.required],
-  state: ['', Validators.required],
-  pincode: ['', Validators.required],
-  addressType: ['', Validators.required]
+      fullName: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      addressLine1: ['', Validators.required],
+      addressLine2: [''],
+      landmark: [''],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      pincode: ['', Validators.required],
+      addressType: ['', Validators.required],
 
+        // ✅ NEW FIELDS (NOT USED IN UI)
+ // ✅ NEW FIELDS (NOT USED IN UI)
+  latitude: [null],
+  longitude: [null],
+  useMapLocation: [true],
+  mapSelectedAddress: [''],
+ 
 
-});
+    });
+
 
   }
 
   ngOnInit(): void {
     this.loadProfile();
-     this.loadMyAddresses();  
+    this.loadMyAddresses();
   }
-get f() {
-  return this.profileForm.controls;
-}
-openAddAddressPopup(): void {
-  const profile = this.profile;
+  get f() {
+    return this.profileForm.controls;
+  }
+  openAddAddressPopup(): void {
+    const profile = this.profile;
 
-  this.addressForm.patchValue({
-    fullName: profile?.displayName || profile?.userName || '',
-    phoneNumber: profile?.phoneNumber || ''
-  });
-
-  // store in localStorage as requested
-  localStorage.setItem('address_fullName', this.addressForm.value.fullName);
-  localStorage.setItem('address_phoneNumber', this.addressForm.value.phoneNumber);
-
-  this.showAddAddressPopup = true;
-}
-closeAddAddressPopup(): void {
-  this.showAddAddressPopup = false;
-  this.addressForm.reset({
+    this.addressForm.patchValue({
+      fullName: profile?.displayName || profile?.userName || '',
+      phoneNumber: profile?.phoneNumber || '',
+        useMapLocation: true,
     isDefault: true,
     isaddress: true
+    });
+
+    // store in localStorage as requested
+    localStorage.setItem('address_fullName', this.addressForm.value.fullName);
+    localStorage.setItem('address_phoneNumber', this.addressForm.value.phoneNumber);
+
+    this.showAddAddressPopup = true;
+      setTimeout(() => {
+    this.initializeMap();
+  }, 300);
+  }
+  closeAddAddressPopup(): void {
+    this.showAddAddressPopup = false;
+    this.addressForm.reset({
+      isDefault: true,
+      isaddress: true
+    });
+  }
+  buildAddress(addr: any): string {
+    if (!addr) return '';
+
+    return [
+      addr.addressLine1,
+      addr.addressLine2,
+      addr.landmark,
+      addr.city,
+      addr.state,
+      addr.pincode
+    ].filter(Boolean).join(', ');
+  }
+
+initializeMap(): void {
+
+  const defaultLat = 20.5937;
+  const defaultLng = 78.9629;
+
+  const mapElement = document.getElementById('map') as HTMLElement;
+
+  this.map = new google.maps.Map(mapElement, {
+    center: { lat: defaultLat, lng: defaultLng },
+    zoom: 5
+  });
+
+  this.marker = new google.maps.Marker({
+    map: this.map,
+    draggable: true
+  });
+
+  const geocoder = new google.maps.Geocoder();
+
+  // ----------------------------------
+  // 1️⃣ MAP CLICK → UPDATE INPUT
+  // ----------------------------------
+  this.map.addListener('click', (event: google.maps.MapMouseEvent) => {
+
+    if (!event.latLng) return;
+
+    const lat = event.latLng.lat();
+    const lng = event.latLng.lng();
+
+    this.setMarkerAndLocation(lat, lng);
+  });
+
+  // ----------------------------------
+  // 2️⃣ AUTOCOMPLETE SELECT
+  // ----------------------------------
+  const autocomplete = new google.maps.places.Autocomplete(
+    this.mapSearchInput.nativeElement
+  );
+
+  autocomplete.addListener('place_changed', () => {
+
+    const place = autocomplete.getPlace();
+    if (!place.geometry || !place.geometry.location) return;
+
+    const lat = place.geometry.location.lat();
+    const lng = place.geometry.location.lng();
+
+    this.setMarkerAndLocation(lat, lng, place.formatted_address);
+  });
+
+  // ----------------------------------
+  // 3️⃣ LIVE TYPING → GEOCODE UPDATE
+  // ----------------------------------
+  let typingTimer: any;
+
+  this.mapSearchInput.nativeElement.addEventListener('input', () => {
+
+    clearTimeout(typingTimer);
+
+    typingTimer = setTimeout(() => {
+
+      const input = this.mapSearchInput.nativeElement.value;
+
+      if (!input || input.length < 3) return;
+
+      geocoder.geocode({ address: input }, (results, status) => {
+
+        if (status === 'OK' && results && results.length > 0) {
+
+          const location = results[0].geometry.location;
+          const lat = location.lat();
+          const lng = location.lng();
+          const formattedAddress = results[0].formatted_address;
+
+          this.setMarkerAndLocation(lat, lng, formattedAddress);
+        }
+      });
+
+    }, 600); // wait 600ms after typing
   });
 }
-buildAddress(addr: any): string {
-  if (!addr) return '';
+setMarkerAndLocation(lat: number, lng: number, address?: string): void {
 
-  return [
-    addr.addressLine1,
-    addr.addressLine2,
-    addr.landmark,
-    addr.city,
-    addr.state,
-    addr.pincode
-  ].filter(Boolean).join(', ');
+  if (!this.marker || !this.map) return;
+
+  this.marker.setPosition({ lat, lng });
+  this.map.setCenter({ lat, lng });
+  this.map.setZoom(12);
+
+  const geocoder = new google.maps.Geocoder();
+
+  const updateForm = (formattedAddress: string) => {
+
+    this.mapSearchInput.nativeElement.value = formattedAddress;
+
+    this.addressForm.patchValue({
+      latitude: lat,
+      longitude: lng,
+      mapSelectedAddress: formattedAddress,
+      useMapLocation: true
+    });
+
+    // 🔥 VERY IMPORTANT FIX
+    if (this.selectedAddress) {
+      this.selectedAddress.latitude = lat;
+      this.selectedAddress.longitude = lng;
+    }
+  };
+
+  if (address) {
+    updateForm(address);
+  } else {
+    geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+      if (status === 'OK' && results && results.length > 0) {
+        updateForm(results[0].formatted_address);
+      }
+    });
+  }
 }
-
   // -------------------------
   // FIXED HEADERS
   // -------------------------
@@ -136,35 +273,35 @@ buildAddress(addr: any): string {
   // -------------------------
   // FIXED LOAD PROFILE
   // -------------------------
-loadMyAddresses(): void {
-  this.addressesLoaded = false;
-  const headers = this.getAuthHeaders();
+  loadMyAddresses(): void {
+    this.addressesLoaded = false;
+    const headers = this.getAuthHeaders();
 
-  this.http.get<any>(this.GET_ADDRESS_URL, { headers }).subscribe({
-    next: (res) => {
-      if (res?.status && Array.isArray(res.data)) {
-        this.addresses = res.data;
+    this.http.get<any>(this.GET_ADDRESS_URL, { headers }).subscribe({
+      next: (res) => {
+        if (res?.status && Array.isArray(res.data)) {
+          this.addresses = res.data;
 
-      
-     // pick default OR first
-        this.selectedAddress =
-          this.addresses.find(a => a.isDefault) || this.addresses[0] || null;
 
-        // 🔥 show address in profile form (UI only)
-        if (this.selectedAddress) {
-          this.profileForm.patchValue({
-            fullAddress: this.buildAddress(this.selectedAddress)
-          });
+          // pick default OR first
+          this.selectedAddress =
+            this.addresses.find(a => a.isDefault) || this.addresses[0] || null;
+
+          // 🔥 show address in profile form (UI only)
+          if (this.selectedAddress) {
+            this.profileForm.patchValue({
+              fullAddress: this.buildAddress(this.selectedAddress)
+            });
+          }
         }
+        this.addressesLoaded = true;
+      },
+      error: (err) => {
+        console.error('Failed to load addresses', err);
+        this.addressesLoaded = true;
       }
-      this.addressesLoaded = true;
-    },
-    error: (err) => {
-      console.error('Failed to load addresses', err);
-      this.addressesLoaded = true;
-    }
-  });
-}
+    });
+  }
 
 
   loadProfile(): void {
@@ -233,34 +370,50 @@ loadMyAddresses(): void {
     });
   }
   submitAddress(): void {
-  if (this.addressForm.invalid) {
-    this.addressForm.markAllAsTouched();
-    return;
-  }
-
-  this.addressSaving = true;
-  const headers = this.getAuthHeaders();
-  const payload = this.addressForm.value;
-
-  this.http.post<any>(this.ADD_ADDRESS_URL, payload, { headers }).subscribe({
-    next: (res) => {
-      this.addressSaving = false;
-
-      if (res?.status) {
-        this.snackBar.open('Address added successfully', 'Close', { duration: 3000 });
-        this.closeAddAddressPopup();
-        this.loadMyAddresses(); // refresh address list
-      } else {
-        this.snackBar.open(res?.message || 'Failed to add address', 'Close', { duration: 3000 });
-      }
-    },
-    error: (err) => {
-      console.error(err);
-      this.addressSaving = false;
-      this.snackBar.open('Failed to add address', 'Close', { duration: 3000 });
+    if (this.addressForm.invalid) {
+      this.addressForm.markAllAsTouched();
+      return;
     }
-  });
-}
+
+    this.addressSaving = true;
+    const headers = this.getAuthHeaders();
+    const payload = {
+  ...this.addressForm.value,
+  // 🔥 ALWAYS TAKE FROM FORM (NOT selectedAddress)
+  latitude: this.addressForm.value.latitude,
+  longitude: this.addressForm.value.longitude,
+  useMapLocation: true,
+  mapSelectedAddress: this.addressForm.value.mapSelectedAddress
+};
+
+    this.http.post<any>(this.ADD_ADDRESS_URL, payload, { headers }).subscribe({
+      next: (res) => {
+        this.addressSaving = false;
+
+        if (res?.status && res.data) {
+            const newAddress = {
+    ...res.data,
+    latitude: res.data.latitude,
+    longitude: res.data.longitude
+    
+  };
+ console.log(res.data.latitude);
+ 
+  this.selectedAddress = newAddress;
+          this.snackBar.open('Address added successfully', 'Close', { duration: 3000 });
+          this.closeAddAddressPopup();
+          this.loadMyAddresses(); // refresh address list
+        } else {
+          this.snackBar.open(res?.message || 'Failed to add address', 'Close', { duration: 3000 });
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        this.addressSaving = false;
+        this.snackBar.open('Failed to add address', 'Close', { duration: 3000 });
+      }
+    });
+  }
 
   // -------------------------
   // EDIT START
@@ -293,137 +446,142 @@ loadMyAddresses(): void {
   // SUBMIT EDIT (unchanged)
   // -------------------------
   submitEdit(field: 'mobile' | 'email' | 'address'): void {
-  if (!this.profile) return;
+    if (!this.profile) return;
 
-  // ---------------- MOBILE & EMAIL (UNCHANGED)
-  if (field !== 'address') {
-    if (field === 'mobile') this.profileForm.controls['phoneNumber'].markAsTouched();
-    if (field === 'email') this.profileForm.controls['email'].markAsTouched();
+    // ---------------- MOBILE & EMAIL (UNCHANGED)
+    if (field !== 'address') {
+      if (field === 'mobile') this.profileForm.controls['phoneNumber'].markAsTouched();
+      if (field === 'email') this.profileForm.controls['email'].markAsTouched();
 
-    if (this.profileForm.invalid) return;
+      if (this.profileForm.invalid) return;
+
+      const payload = {
+        userName: this.profileForm.value.userName || this.profile.userName || '',
+        phoneNumber: this.profileForm.value.phoneNumber,
+        email: this.profileForm.value.email
+      };
+
+      this.saving = true;
+      const headers = this.getAuthHeaders();
+
+      this.http.put<any>(this.UPDATE_PROFILE_URL, payload, { headers }).subscribe({
+        next: () => {
+          this.saving = false;
+          this.editField = null;
+          this.snackBar.open('Profile updated successfully', 'Close', { duration: 3000 });
+        },
+        error: () => {
+          this.saving = false;
+          this.snackBar.open('Profile update failed', 'Close', { duration: 3000 });
+        }
+      });
+
+      return;
+    }
+
+    // ---------------- ADDRESS UPDATE (CORRECT API)
+    if (!this.selectedAddress) return;
 
     const payload = {
-      userName: this.profileForm.value.userName || this.profile.userName || '',
-      phoneNumber: this.profileForm.value.phoneNumber,
-      email: this.profileForm.value.email
+      fullName: this.selectedAddress.fullName,
+      phoneNumber: this.selectedAddress.phoneNumber,
+      addressLine1: this.selectedAddress.addressLine1,
+      addressLine2: this.selectedAddress.addressLine2,
+      landmark: this.selectedAddress.landmark,
+      city: this.selectedAddress.city,
+      state: this.selectedAddress.state,
+      pincode: this.selectedAddress.pincode,
+      addressType: this.selectedAddress.addressType,
+      isDefault: this.selectedAddress.isDefault,
+      isaddress: true,
+        // ✅ NEW FIELDS
+latitude: this.selectedAddress.latitude,
+  longitude: this.selectedAddress.longitude,
+  useMapLocation: true,
+  mapSelectedAddress: this.buildAddress(this.selectedAddress)
     };
 
     this.saving = true;
     const headers = this.getAuthHeaders();
 
-    this.http.put<any>(this.UPDATE_PROFILE_URL, payload, { headers }).subscribe({
-      next: () => {
+    this.http.put<any>(
+      `${this.UPDATE_ADDRESS_URL}/${this.selectedAddress.id}`,
+      payload,
+      { headers }
+    ).subscribe({
+      next: (res) => {
         this.saving = false;
-        this.editField = null;
-        this.snackBar.open('Profile updated successfully', 'Close', { duration: 3000 });
+        if (res?.status && res.data) {
+            this.selectedAddress = {...this.selectedAddress,...res.data};
+          this.profileForm.patchValue({
+            fullAddress: this.buildAddress(this.selectedAddress)
+          });
+          this.editField = null;
+          this.snackBar.open('Address updated successfully', 'Close', { duration: 3000 });
+        }
       },
       error: () => {
         this.saving = false;
-        this.snackBar.open('Profile update failed', 'Close', { duration: 3000 });
+        this.snackBar.open('Address update failed', 'Close', { duration: 3000 });
       }
     });
-
-    return;
   }
+  deleteAccount(): void {
 
-  // ---------------- ADDRESS UPDATE (CORRECT API)
-  if (!this.selectedAddress) return;
+    const userId = this.profile?.id || this.profile?.userId;
 
-  const payload = {
-    fullName: this.selectedAddress.fullName,
-    phoneNumber: this.selectedAddress.phoneNumber,
-    addressLine1: this.selectedAddress.addressLine1,
-    addressLine2: this.selectedAddress.addressLine2,
-    landmark: this.selectedAddress.landmark,
-    city: this.selectedAddress.city,
-    state: this.selectedAddress.state,
-    pincode: this.selectedAddress.pincode,
-    addressType: this.selectedAddress.addressType,
-    isDefault: this.selectedAddress.isDefault,
-    isaddress: true
-  };
-
-  this.saving = true;
-  const headers = this.getAuthHeaders();
-
-  this.http.put<any>(
-    `${this.UPDATE_ADDRESS_URL}/${this.selectedAddress.id}`,
-    payload,
-    { headers }
-  ).subscribe({
-    next: (res) => {
-      this.saving = false;
-      if (res?.status) {
-        this.selectedAddress = res.data;
-        this.profileForm.patchValue({
-          fullAddress: this.buildAddress(res.data)
-        });
-        this.editField = null;
-        this.snackBar.open('Address updated successfully', 'Close', { duration: 3000 });
-      }
-    },
-    error: () => {
-      this.saving = false;
-      this.snackBar.open('Address update failed', 'Close', { duration: 3000 });
+    if (!userId) {
+      Swal.fire('Error', 'User ID not found', 'error');
+      return;
     }
-  });
-}
-deleteAccount(): void {
 
- const userId = this.profile?.id || this.profile?.userId;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you really want to delete your account?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Delete',
+      cancelButtonText: 'Cancel',
+      confirmButtonColor: '#d33'
+    }).then((result) => {
 
-  if (!userId) {
-    Swal.fire('Error', 'User ID not found', 'error');
-    return;
-  }
+      if (!result.isConfirmed) return;
 
-  Swal.fire({
-    title: 'Are you sure?',
-    text: 'Do you really want to delete your account?',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Yes, Delete',
-    cancelButtonText: 'Cancel',
-    confirmButtonColor: '#d33'
-  }).then((result) => {
+      this.saving = true;
 
-    if (!result.isConfirmed) return;
+      const headers = this.getAuthHeaders();
 
-    this.saving = true;
+      const DELETE_URL = `${API_URL}/user/soft-delete/${userId}`;
 
-    const headers = this.getAuthHeaders();
+      this.http.delete<any>(DELETE_URL, { headers }).subscribe({
+        next: (res) => {
+          this.saving = false;
 
-    const DELETE_URL = `${API_URL}/user/soft-delete/${userId}`;
+          if (res?.status) {
 
-    this.http.delete<any>(DELETE_URL,  { headers }).subscribe({
-      next: (res) => {
-        this.saving = false;
+            Swal.fire({
+              icon: 'success',
+              title: 'Account Deleted',
+              text: 'Your account is temporarily deleted successfully but not permanently deleted. Please contact supporter.',
+              confirmButtonColor: '#ff4500'
+            }).then(() => {
+              localStorage.clear();
+              sessionStorage.clear();
+              this.router.navigate(['/login']); // change if needed
+            });
 
-        if (res?.status) {
-
-          Swal.fire({
-            icon: 'success',
-            title: 'Account Deleted',
-            text: 'Your account is temporarily deleted successfully but not permanently deleted. Please contact supporter.',
-            confirmButtonColor: '#ff4500'
-          }).then(() => {
-            localStorage.clear();
-            sessionStorage.clear();
-            this.router.navigate(['/login']); // change if needed
-          });
-
-        } else {
-          Swal.fire('Failed', res?.message || 'Delete failed', 'error');
+          } else {
+            Swal.fire('Failed', res?.message || 'Delete failed', 'error');
+          }
+        },
+        error: (err) => {
+          this.saving = false;
+          console.error(err);
+          Swal.fire('Error', 'Unable to delete account', 'error');
         }
-      },
-      error: (err) => {
-        this.saving = false;
-        console.error(err);
-        Swal.fire('Error', 'Unable to delete account', 'error');
-      }
-    });
+      });
 
-  });
-}
+    });
+  }
 
 }

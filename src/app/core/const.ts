@@ -7,7 +7,7 @@ export const API_URL = "https://vitoxyz.com/Backend/api";
   // export const API_URL = "https://vitoxyzbackend.onrender.com/api"
 // export const API_URL = 'https://398ff2efa7fa.ngrok-free.app/api';
 
- //export const API_URL = `https://vitoxyzbackend-az2e.onrender.com/Backend/api`;
+ export const API_URL1 = `https://pharmacyvitoxyzbackend.onrender.com/Backend/api`;
 
 export const ENDPOINTS = {
   LOGIN: "/user/loginWithPasswordUser",
