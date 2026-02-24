@@ -7,7 +7,8 @@ export const environment = {
    // apiUrl: 'https://vitoxyzbackend-az2e.onrender.com/Backend/api',
 
   apiKey: 'dev_api_key',
-  googleMapsApiKey: 'AIzaSyAL0m-w-jkSFRy7S8aUhjvZI8KOYNZBNCQ',
+  //googleMapsApiKey: 'AIzaSyAL0m-w-jkSFRy7S8aUhjvZI8KOYNZBNCQ',
+  googleMapsApiKey: 'AIzaSyBwkoBuGelQUiN2YSN-pqGhNv1KJE8CFNs',
   razorpayKey: 'rzp_test_RARA6BGk8D2Y2o',
 
   firebase: {

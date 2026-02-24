@@ -29,12 +29,13 @@
 
           <div class="mt-4 ms-3">
             <ng-container *ngIf="editField === 'mobile'; else editMobileBtn">
-               <div class="d-inline-flex align-items-center gap-2">
-              <button class="btn text-primary savecls border-0 rounded-pill text-light" (click)="submitEdit('mobile')"
-                [disabled]="saving">
-                {{ saving ? 'Saving...' : 'Save' }}
-              </button>
-              <button class="btn text-primary cancelCls text-light rounded-pill " (click)="cancelEdit()">Cancel</button>
+              <div class="d-inline-flex align-items-center gap-2">
+                <button class="btn text-primary savecls border-0 rounded-pill text-light" (click)="submitEdit('mobile')"
+                  [disabled]="saving">
+                  {{ saving ? 'Saving...' : 'Save' }}
+                </button>
+                <button class="btn text-primary cancelCls text-light rounded-pill "
+                  (click)="cancelEdit()">Cancel</button>
               </div>
             </ng-container>
 
@@ -66,11 +67,12 @@
           <div class="mt-4 ms-3">
             <ng-container *ngIf="editField === 'email'; else editEmailBtn">
               <div class="d-inline-flex align-items-center gap-2">
-              <button class="btn text-primary savecls border-0 rounded-pill text-light" (click)="submitEdit('email')"
-                [disabled]="saving">
-                {{ saving ? 'Saving...' : 'Save' }}
-              </button>
-              <button class="btn text-primary cancelCls rounded-pill text-light" (click)="cancelEdit()">Cancel</button>
+                <button class="btn text-primary savecls border-0 rounded-pill text-light" (click)="submitEdit('email')"
+                  [disabled]="saving">
+                  {{ saving ? 'Saving...' : 'Save' }}
+                </button>
+                <button class="btn text-primary cancelCls rounded-pill text-light"
+                  (click)="cancelEdit()">Cancel</button>
               </div>
             </ng-container>
 
@@ -145,8 +147,8 @@
             <ng-container *ngIf="editField === 'address'; else editAddressBtn">
               <div class="d-inline-flex align-items-center gap-2">
 
-                <button class="btn text-primary savecls  border-0 rounded-pill text-light" (click)="submitEdit('address')"
-                  [disabled]="saving">
+                <button class="btn text-primary savecls  border-0 rounded-pill text-light"
+                  (click)="submitEdit('address')" [disabled]="saving">
                   {{ saving ? 'Saving...' : 'Save' }}
                 </button>
                 <button class="btn text-primary cancelCls rounded-pill text-light" (click)="cancelEdit()">
@@ -164,15 +166,11 @@
         </div>
         <hr>
         <!-- DELETE ACCOUNT BUTTON -->
-<div class="mt-4">
-  <button
-    class="btn btn-danger rounded-pill"
-    (click)="deleteAccount()"
-    [disabled]="saving"
-  >
-    Delete Account
-  </button>
-</div>
+        <div class="mt-4">
+          <button class="btn btn-danger rounded-pill" (click)="deleteAccount()" [disabled]="saving">
+            Delete Account
+          </button>
+        </div>
       </div>
 
 
@@ -210,97 +208,117 @@
 <div *ngIf="showAddAddressPopup" class="modal show d-block">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content p-4 address-modal ">
-           <button
-  type="button"
-  class="address-close-btn position-absolute top-0 end-0 m-2"
-  aria-label="Close"
-  (click)="closeAddAddressPopup()">
-  <i class="bi bi-x-lg"></i>
-</button>
+      <button type="button" class="address-close-btn position-absolute top-0 end-0 m-2" aria-label="Close"
+        (click)="closeAddAddressPopup()">
+        <i class="bi bi-x-lg"></i>
+      </button>
       <h5 class="mb-3">Add Address</h5>
       <div class="form-scroll">
-      <form [formGroup]="addressForm" (ngSubmit)="submitAddress()">
+        <form [formGroup]="addressForm" (ngSubmit)="submitAddress()">
 
-        <!-- Full Name -->
-         <div>
-        <label class="form-label">Full Name</label>
-        <input class="form-control" formControlName="fullName" readonly>
-        <small class="error" *ngIf="addressForm.get('fullName')?.touched && addressForm.get('fullName')?.invalid">
-          Full name is required
-        </small>
-        </div>
-        <!-- Phone -->
-         <div>
-        <label class="form-label mt-2">Phone Number</label>
-        <input class="form-control" formControlName="phoneNumber" readonly>
+          <!-- Full Name -->
+          <div>
+            <label class="form-label">Full Name</label>
+            <input class="form-control" formControlName="fullName" readonly>
+            <small class="error" *ngIf="addressForm.get('fullName')?.touched && addressForm.get('fullName')?.invalid">
+              Full name is required
+            </small>
+          </div>
+          <!-- Phone -->
+          <div>
+            <label class="form-label mt-2">Phone Number</label>
+            <input class="form-control" formControlName="phoneNumber" readonly>
           </div>
           <div>
-        <!-- Address Line 1 -->
-        <label class="form-label mt-2">Address Line 1</label>
-        <input class="form-control" formControlName="addressLine1">
-        <small class="error"
-          *ngIf="addressForm.get('addressLine1')?.touched && addressForm.get('addressLine1')?.invalid">
-          Address line 1 is required
-        </small>
-        </div>
-        <div>
-        <!-- Address Line 2 -->
-        <label class="form-label mt-2">Address Line 2</label>
-        <input class="form-control" formControlName="addressLine2">
+            <!-- Address Line 1 -->
+            <label class="form-label mt-2">Address Line 1</label>
+            <input class="form-control" formControlName="addressLine1">
+            <small class="error"
+              *ngIf="addressForm.get('addressLine1')?.touched && addressForm.get('addressLine1')?.invalid">
+              Address line 1 is required
+            </small>
           </div>
           <div>
-        <!-- Landmark -->
-        <label class="form-label mt-2">Landmark</label>
-        <input class="form-control" formControlName="landmark">
+            <!-- Address Line 2 -->
+            <label class="form-label mt-2">Address Line 2</label>
+            <input class="form-control" formControlName="addressLine2">
           </div>
-        <!-- City -->
-         <div>
-        <label class="form-label mt-2">City</label>
-        <input class="form-control" formControlName="city">
-        <small class="error" *ngIf="addressForm.get('city')?.touched && addressForm.get('city')?.invalid">
-          City is required
-        </small>
-        </div>
-        <!-- State -->
-         <div>
-        <label class="form-label mt-2">State</label>
-        <input class="form-control" formControlName="state">
-        <small class="error" *ngIf="addressForm.get('state')?.touched && addressForm.get('state')?.invalid">
-          State is required
-        </small>
-        </div>
-        <!-- Pincode -->
-         <div>
-        <label class="form-label mt-2">Pincode</label>
-        <input class="form-control" formControlName="pincode">
-        <small class="error" *ngIf="addressForm.get('pincode')?.touched && addressForm.get('pincode')?.invalid">
-          Enter valid 6-digit pincode
-        </small>
-        </div>
-        <!-- Address Type -->
-         <div>
-        <label class="form-label mt-2">Address Type</label>
-        <select class="form-control" formControlName="addressType">
-          <option value="">Select</option>
-          <option value="home">Home</option>
-          <option value="office">Office</option>
-        </select>
-        <small class="error" *ngIf="addressForm.get('addressType')?.touched && addressForm.get('addressType')?.invalid">
-          Address type is required
-        </small>
-        </div>
-        <!-- Buttons -->
-        <div class="d-flex justify-content-end mt-4">
-          <button type="button" class="btn btn-light me-2 rounded-pill text-light" (click)="closeAddAddressPopup()">
-            Cancel
-          </button>
-          <button type="submit" class="btn btn-primary  rounded-pill text-light"
-            [disabled]="addressForm.invalid || addressSaving">
-            {{ addressSaving ? 'Saving...' : 'Save Address' }}
-          </button>
-        </div>
+          <div>
+            <!-- Landmark -->
+            <label class="form-label mt-2">Landmark</label>
+            <input class="form-control" formControlName="landmark">
+          </div>
+          <!-- City -->
+          <div>
+            <label class="form-label mt-2">City</label>
+            <input class="form-control" formControlName="city">
+            <small class="error" *ngIf="addressForm.get('city')?.touched && addressForm.get('city')?.invalid">
+              City is required
+            </small>
+          </div>
+          <!-- State -->
+          <div>
+            <label class="form-label mt-2">State</label>
+            <input class="form-control" formControlName="state">
+            <small class="error" *ngIf="addressForm.get('state')?.touched && addressForm.get('state')?.invalid">
+              State is required
+            </small>
+          </div>
+          <!-- Pincode -->
+          <div>
+            <label class="form-label mt-2">Pincode</label>
+            <input class="form-control" formControlName="pincode">
+            <small class="error" *ngIf="addressForm.get('pincode')?.touched && addressForm.get('pincode')?.invalid">
+              Enter valid 6-digit pincode
+            </small>
+          </div>
+          <!-- Address Type -->
+          <div>
+            <label class="form-label mt-2">Address Type</label>
+            <select class="form-control" formControlName="addressType">
+              <option value="">Select</option>
+              <option value="home">Home</option>
+              <option value="office">Office</option>
+            </select>
+            <small class="error"
+              *ngIf="addressForm.get('addressType')?.touched && addressForm.get('addressType')?.invalid">
+              Address type is required
+            </small>
+          </div>
+          <!-- Map Location -->
+<div class="mt-3">
+  <label class="form-label">Select Location on Map</label>
 
-      </form>
+  <!-- Search box -->
+  <input
+    type="text"
+    class="form-control mb-2"
+    placeholder="Search location"
+    #mapSearchInput
+  />
+
+  <!-- Map container -->
+  <div
+    id="map"
+    style="height:250px;width:100%;border-radius:8px;"
+  ></div>
+
+  <small class="text-muted d-block mt-1">
+    Selected: {{ addressForm.value.mapSelectedAddress || 'No location selected' }}
+  </small>
+</div>
+          <!-- Buttons -->
+          <div class="d-flex justify-content-end mt-4">
+            <button type="button" class="btn btn-light me-2 rounded-pill text-light" (click)="closeAddAddressPopup()">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary  rounded-pill text-light"
+              [disabled]="addressForm.invalid || addressSaving">
+              {{ addressSaving ? 'Saving...' : 'Save Address' }}
+            </button>
+          </div>
+
+        </form>
       </div>
     </div>
   </div>
