@@ -8,14 +8,18 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { API_URL } from '@src/app/core/const';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { MapComponent } from '../book-staff-process/map/map';
 @Component({
   selector: 'app-profile',
   imports: [
     RouterLink,
     MobileFooterNavComponent,
     Footer,
+     MapComponent,
     ReactiveFormsModule,
-    CommonModule
+      CommonModule,
+       FormsModule,
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.scss'
@@ -38,6 +42,12 @@ export class Profile implements OnInit {
 
 map: google.maps.Map | undefined;
 marker: google.maps.Marker | undefined;
+  @ViewChild('mapContainer') mapContainer!: ElementRef;
+@ViewChild('mapSearch') mapSearch!: ElementRef;
+
+geocoder: any;
+private addressSearch$ = new Subject<string>();
+@ViewChild(MapComponent) mapComponent!: MapComponent;
 
   private ADD_ADDRESS_URL = `${API_URL}/address/add`;
   private GET_ADDRESS_URL = `${API_URL}/address/my`;
@@ -85,7 +95,131 @@ marker: google.maps.Marker | undefined;
   ngOnInit(): void {
     this.loadProfile();
     this.loadMyAddresses();
+     this.getUserLocation();
+         this.addressSearch$
+    .pipe(
+      debounceTime(1000),        // 1 request per second
+      distinctUntilChanged()
+    )
+    .subscribe(address => {
+      this.searchAddressAndMoveMap(address);
+    });
   }
+  setLocation(lat: number, lng: number) {
+
+  if (!this.map || !this.marker) return;
+
+  this.map.setCenter({ lat, lng });
+  this.map.setZoom(15);
+
+  this.marker.setPosition({ lat, lng });
+
+   this.addressForm.patchValue({
+    latitude: lat,
+    longitude: lng,
+     useMapLocation: true
+  });
+  
+
+  this.geocoder.geocode({ location: { lat, lng } }, (results: any, status: any) => {
+    if (status === 'OK' && results[0]) {
+     this.addressForm.patchValue({
+        mapSelectedAddress: results[0].formatted_address
+      });
+    }
+  });
+}
+  onAddressInputChange(value: string) {
+  this.addressSearch$.next(value);
+}
+  getUserLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          this.getAddressFromCoords(lat, lng);
+        },
+        error => {
+          console.error('Geolocation failed:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation not supported by this browser.');
+    }
+  }
+getAddressFromCoords(lat: number, lng: number) {
+  // store coordinates
+ this.addressForm.patchValue({
+    latitude: lat,
+    longitude: lng
+  });
+
+  const url = 'https://nominatim.openstreetmap.org/reverse';
+
+  const params = {
+    format: 'jsonv2',
+    lat: lat.toString(),
+    lon: lng.toString()
+  };
+
+  const headers = new HttpHeaders({
+    Accept: 'application/json',
+    // ✅ REQUIRED by Nominatim (especially for mobile)
+    'User-Agent': 'vitoxyz.com/0.0.0 (support@vitoxyz.com)'
+  });
+
+  this.http.get<any>(url, { params, headers }).subscribe({
+    next: (response) => {
+      if (response?.display_name) {
+     this.addressForm.patchValue({
+          mapSelectedAddress: response.display_name
+        });
+      }
+    },
+    error: (error) => {
+      console.error('Reverse geocoding failed:', error);
+    }
+  });
+}
+
+searchAddressAndMoveMap(address: string): void {
+  if (!address || address.length < 3) return;
+
+  const url = 'https://nominatim.openstreetmap.org/search';
+
+  const params = {
+    format: 'json',
+    q: address,
+    limit: '1'
+  };
+
+  const headers = new HttpHeaders({
+    Accept: 'application/json',
+    'User-Agent': 'vitoxyz.com/0.0.0 (support@vitoxyz.com)'
+  });
+
+  this.http.get<any[]>(url, { params, headers }).subscribe({
+    next: (res) => {
+      if (!res?.length) return;
+
+      const lat = parseFloat(res[0].lat);
+      const lng = parseFloat(res[0].lon);
+
+      // update form
+  
+      this.addressForm.patchValue({
+        latitude: lat,
+        longitude: lng
+      });
+
+
+      // update map
+      this.mapComponent?.setLocation(lat, lng);
+    },
+    error: err => console.error('Address search failed', err)
+  });
+}
   get f() {
     return this.profileForm.controls;
   }

@@ -290,21 +290,18 @@
   <label class="form-label">Select Location on Map</label>
 
   <!-- Search box -->
-  <input
-    type="text"
-    class="form-control mb-2"
-    placeholder="Search location"
-    #mapSearchInput
-  />
+   <input type="text"
+        class="form-control"
+    formControlName="mapSelectedAddress"
+    (input)="onAddressInputChange($event.target.value)"
+    id="locationInput">
 
-  <!-- Map container -->
-  <div
-    id="map"
-    style="height:250px;width:100%;border-radius:8px;"
-  ></div>
+                   <div class="col-md-4 h-100 w-100 map-styles">
+      <app-map (locationSelected)="getAddressFromCoords($event.lat, $event.lng)"></app-map>
+    </div>
 
   <small class="text-muted d-block mt-1">
-    Selected: {{ addressForm.value.mapSelectedAddress || 'No location selected' }}
+    Selected: {{ addressForm.get('mapSelectedAddress')?.value || 'No location selected' }}
   </small>
 </div>
           <!-- Buttons -->

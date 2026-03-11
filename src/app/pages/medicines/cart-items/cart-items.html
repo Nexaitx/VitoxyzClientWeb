@@ -124,8 +124,11 @@
 <div *ngIf="showPharmacistPopup" class="popup-overlay">
   <div class="popup-box">
 
+    <!-- <h6 class="fw-bold mb-2">
+      {{ pharmacistsAvailable ? 'Pharmacist Available' : 'in your area Pharmacist Not Available' }}
+    </h6> -->
     <h6 class="fw-bold mb-2">
-      {{ pharmacistsAvailable ? 'Pharmacist Available' : 'Pharmacist Not Available' }}
+    {{ popupMessage }}
     </h6>
 
     <!-- <p class="mb-3">
@@ -247,10 +250,16 @@
             </div>
             <div class="mb-3">
               <label class="form-label">Search Location *</label>
-              <input type="text" class="form-control" [(ngModel)]="newAddress.mapSelectedAddress"
-                name="mapSelectedAddress" (input)="onAddressInputChange()">
+              <input type="text"
+       class="form-control"
+       [(ngModel)]="newAddress.mapSelectedAddress"
+       (ngModelChange)="onAddressInputChange($event)"
+       name="mapSelectedAddress"
+       id="locationInput">
             </div>
-            <div id="map" style="height:250px; border-radius:12px;"></div>
+                      <div class="col-md-4 h-100 w-100 map-styles">
+      <app-map (locationSelected)="getAddressFromCoords($event.lat, $event.lng)"></app-map>
+    </div>
             <div class="mb-3">
               <label class="form-label">Address Line 2</label>
               <input type="text" class="form-control" [(ngModel)]="newAddress.addressLine2" name="addressLine2">
@@ -337,13 +346,20 @@
               <input type="text" class="form-control" [(ngModel)]="editingAddress.addressLine1" name="addressLine1"
                 required>
             </div>
-            <div class="mb-3">
+        <div class="mb-3">
               <label class="form-label">Search Location *</label>
-              <input type="text" class="form-control" [(ngModel)]="newAddress.mapSelectedAddress"
-                name="mapSelectedAddress" (input)="onAddressInputChange()">
+              <input type="text"
+       class="form-control"
+       [(ngModel)]="newAddress.mapSelectedAddress"
+       (ngModelChange)="onAddressInputChange($event)"
+       name="mapSelectedAddress"
+       id="locationInput">
             </div>
+                      <div class="col-md-4 h-100 w-100 map-styles">
+      <app-map (locationSelected)="getAddressFromCoords($event.lat, $event.lng)"></app-map>
+    </div>
 
-            <div id="map" style="height:300px;"></div>
+            
             <div class="mb-3">
               <label class="form-label">Address Line 2</label>
               <input type="text" class="form-control" [(ngModel)]="editingAddress.addressLine2" name="addressLine2">
@@ -410,8 +426,17 @@
           Cancel
         </button>
         <button type="button" class="btn btn-primary rounded-pill text-white" (click)="findPharmacist()"
-          [disabled]="!selectedAddress">
-          Deliver to this Address
+          [disabled]="!selectedAddress|| isPharmacistLoading">
+
+  <!-- Loader -->
+  <span *ngIf="isPharmacistLoading"
+        class="spinner-border spinner-border-sm me-2"
+        role="status">
+    <span class="visually-hidden">Loading...</span>
+  </span>
+
+  <!-- Button Text -->
+  {{ isPharmacistLoading ? 'Checking...' : 'Deliver to this Address' }}
         </button>
       </div>
     </div>

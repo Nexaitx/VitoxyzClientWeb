@@ -1,0 +1,182 @@
+input.form-control {
+  border-radius: 20px !important;
+  border: 1px solid #ddd !important;
+  background-color: #fff !important;
+  box-shadow: none !important;
+}
+
+input.form-control:focus {
+  border-color: #67a1e1 !important;
+  box-shadow: 0 0 0 0.1rem rgba(117, 149, 198, 0.25) !important;
+}
+
+/* HEADER */
+
+.header-bar{
+  background:#2874f0;
+  height:56px;
+  display:flex;
+  align-items:center;
+  padding:0 16px;
+  color:#fff;
+  font-size:18px;
+  font-weight:500;
+}
+
+.back-icon{
+  font-size:20px;
+  cursor:pointer;
+}
+
+.header-title{
+  margin-left:16px;
+}
+
+/* PAGE */
+
+.page-wrapper{
+  padding:24px;
+  background:#f1f3f6;
+  min-height:100vh;
+}
+
+/* CARD */
+
+.form-card{
+  background:#fff;
+  padding:24px;
+}
+
+/* INPUT */
+
+.input-field{
+  width:100%;
+  height:48px;
+  border:1px solid #ddd;
+  padding:0 12px;
+  font-size:14px;
+  margin-bottom:20px;
+}
+
+/* FLEX ROW */
+
+.row-flex{
+  display:flex;
+  gap:16px;
+  margin-bottom:20px;
+}
+
+.flex-1{
+  flex:1;
+}
+
+/* MAP */
+
+.map-section{
+  margin-bottom:20px;
+}
+
+#map{
+  width:100%;
+  height:200px;
+  border-radius:12px;
+}
+
+/* ADDRESS TYPE */
+
+.address-type-label{
+  margin-bottom:20px;
+  font-size:14px;
+}
+
+.type-btn{
+  border:1px solid #ddd;
+  padding:10px 20px;
+  font-size:14px;
+  background:#fff;
+}
+
+.active-type{
+  background:#e0e0e0;
+}
+
+/* SAVE BUTTON */
+
+.save-btn{
+  width:100%;
+  height:48px;
+  background:#fb641b;
+  color:#fff;
+  border:none;
+  font-size:16px;
+  font-weight:500;
+}
+/* ---------------- MOBILE ---------------- */
+
+@media (max-width:768px){
+
+.page-wrapper{
+  padding:16px;
+}
+
+.form-card{
+  padding:18px;
+}
+
+.row-flex{
+  flex-direction:column;
+  gap:12px;
+}
+
+.type-btn{
+  width:100%;
+  justify-content:center;
+}
+
+.map-styles{
+  height:220px;
+}
+
+}
+
+/* ---------------- SMALL MOBILE ---------------- */
+
+@media (max-width:480px){
+
+.header-bar{
+  font-size:16px;
+}
+
+.header-title{
+  font-size:16px;
+}
+
+.input-field{
+  font-size:13px;
+}
+
+.save-btn{
+  font-size:15px;
+}
+
+}
+
+/* ---------------- LARGE DESKTOP ---------------- */
+
+@media (min-width:1400px){
+
+.form-card{
+  max-width:800px;
+}
+
+}
+
+/* ---------------- ULTRA WIDE / 4K ---------------- */
+
+@media (min-width:2000px){
+
+.form-card{
+  max-width:900px;
+}
+
+}
