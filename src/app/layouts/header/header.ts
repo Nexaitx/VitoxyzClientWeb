@@ -348,7 +348,7 @@ goToAddAddress() {
   logout(){
     const token = localStorage.getItem('authToken');
     if(token){
-      this.http.post('https://vitoxyz.com/Backend/api/user/logoutUser',{},{
+      this.http.post(`${API_URL}/user/logoutUser`,{},{
        headers :{
         Authorization:`Bearer ${token}`
        }

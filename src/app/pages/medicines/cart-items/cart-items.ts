@@ -1,5 +1,5 @@
 // cart-items.component.ts (UPDATED with Type Safety)
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Footer } from '../../footer/footer';
 import { Header } from '../header/header';
@@ -10,12 +10,15 @@ import { CommonModule } from '@angular/common';
 import { Authorization } from '../../authorization/authorization';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject, Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav"; 
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { API_URL1 } from '@src/app/core/const';
+import { MapComponent } from '../../book-staff-process/map/map';
 
 declare var Razorpay: any;
-
+declare var google: any;
 //  Payment Method Types with proper typing
 export type PaymentMethod = 'ONLINE' | 'CASH_ON_DELIVERY';
 
@@ -29,7 +32,7 @@ interface PaymentMethodOption {
 
 @Component({
   selector: 'app-cart-items',
-  imports: [Footer, CommonModule, Header, Authorization, MatProgressSpinnerModule, MatSnackBarModule, FormsModule, MobileFooterNavComponent],
+  imports: [Footer, CommonModule, Header, Authorization,MapComponent, MatProgressSpinnerModule, MatSnackBarModule, FormsModule, MobileFooterNavComponent],
   standalone: true,
   templateUrl: './cart-items.html',
   styleUrls: ['./cart-items.scss']
@@ -51,7 +54,9 @@ export class CartItems implements OnInit, OnDestroy {
   addresses: Address[] = [];
   selectedAddress: Address | null = null;
   newAddress: Address = this.getEmptyAddress();
-  
+  map: any;
+marker: any;
+geocoder: any;
   //  Payment method related properties with proper typing
   selectedPaymentMethod: PaymentMethod = 'ONLINE';
   paymentMethods: PaymentMethodOption[] = [
@@ -62,8 +67,14 @@ export class CartItems implements OnInit, OnDestroy {
   // Success notification message
   successMessage: string = '';
 
+isPharmacistLoading = false;
+pharmacistsAvailable = false;
 
+showPharmacistPopup = false;
+popupMessage = '';
 
+// successMessage: string = '';
+private addressSearch$ = new Subject<string>();
 
   private readonly razorpayKeyId = 'rzp_test_RARA6BGk8D2Y2o';
   private router = inject(Router);
@@ -78,7 +89,8 @@ export class CartItems implements OnInit, OnDestroy {
   private itemLoadingSubscription!: Subscription;
   private notificationSubscription!: Subscription;
   private addressesSubscription!: Subscription;
- 
+ constructor(private http: HttpClient) {}
+ @ViewChild(MapComponent) mapComponent!: MapComponent;
   ngOnInit() {
        console.log("item",this.cart);
 
@@ -130,6 +142,15 @@ export class CartItems implements OnInit, OnDestroy {
 
     this.refreshCart();
     this.loadUserAddresses();
+     this.getUserLocation();
+     this.addressSearch$
+.pipe(
+  debounceTime(1000),        // 1 request per second
+  distinctUntilChanged()
+)
+.subscribe(address => {
+  this.searchAddressAndMoveMap(address);
+});
   }
 
   ngOnDestroy() {
@@ -141,6 +162,157 @@ export class CartItems implements OnInit, OnDestroy {
     if (this.addressesSubscription) this.addressesSubscription.unsubscribe();
   }
 
+loadGoogleMap() {
+
+  if (!(window as any).google) {
+    console.error('Google map not loaded');
+    return;
+  }
+
+  this.geocoder = new google.maps.Geocoder();
+
+  const mapDiv = document.getElementById('map');
+  if (!mapDiv) {
+    console.error('Map div not found');
+    return;
+  }
+
+  this.map = new google.maps.Map(mapDiv, {
+    center: { lat: 17.385044, lng: 78.486671 }, // Hyderabad default
+    zoom: 12
+  });
+
+  this.marker = new google.maps.Marker({
+    map: this.map,
+    draggable: true
+  });
+
+  // click on map
+  this.map.addListener('click', (event: any) => {
+    const lat = event.latLng.lat();
+    const lng = event.latLng.lng();
+    this.setLocation(lat, lng);
+  });
+
+  // drag marker
+  this.marker.addListener('dragend', (event: any) => {
+    const lat = event.latLng.lat();
+    const lng = event.latLng.lng();
+    this.setLocation(lat, lng);
+  });
+}
+// onAddressInputChange() {
+
+//   const address = this.newAddress.mapSelectedAddress;
+//   if (!address) return;
+
+//   this.geocoder.geocode({ address: address }, (results: any, status: any) => {
+//     if (status === 'OK' && results[0]) {
+
+//       const location = results[0].geometry.location;
+//       const lat = location.lat();
+//       const lng = location.lng();
+
+//       this.setLocation(lat, lng);
+//     }
+//   });
+// }
+
+setLocation(lat: number, lng: number) {
+
+  if (!this.map || !this.marker) return;
+
+  const position = { lat, lng };
+
+  this.map.setView([lat, lng], 15);
+
+  if (this.marker) {
+    this.marker.setLatLng(position);
+  }
+}
+onAddressInputChange(value: string) {
+  this.addressSearch$.next(value);
+}
+  getUserLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          this.getAddressFromCoords(lat, lng);
+        },
+        error => {
+          console.error('Geolocation failed:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation not supported by this browser.');
+    }
+  }
+getAddressFromCoords(lat: number, lng: number) {
+  // store coordinates
+ this.newAddress.latitude = lat;
+this.newAddress.longitude = lng;
+
+  const url = 'https://nominatim.openstreetmap.org/reverse';
+
+  const params = {
+    format: 'jsonv2',
+    lat: lat.toString(),
+    lon: lng.toString()
+  };
+
+  const headers = new HttpHeaders({
+    Accept: 'application/json',
+    // ✅ REQUIRED by Nominatim (especially for mobile)
+    'User-Agent': 'vitoxyz.com/0.0.0 (support@vitoxyz.com)'
+  });
+
+  this.http.get<any>(url, { params, headers }).subscribe({
+    next: (response) => {
+      if (response?.display_name) {
+       this.newAddress.mapSelectedAddress = response.display_name;
+      }
+    },
+    error: (error) => {
+      console.error('Reverse geocoding failed:', error);
+    }
+  });
+}
+
+searchAddressAndMoveMap(address: string): void {
+  if (!address || address.length < 3) return;
+
+  const url = 'https://nominatim.openstreetmap.org/search';
+
+  const params = {
+    format: 'json',
+    q: address,
+    limit: '1'
+  };
+
+  const headers = new HttpHeaders({
+    Accept: 'application/json',
+    'User-Agent': 'vitoxyz.com/0.0.0 (support@vitoxyz.com)'
+  });
+
+  this.http.get<any[]>(url, { params, headers }).subscribe({
+    next: (res) => {
+      if (!res?.length) return;
+
+      const lat = parseFloat(res[0].lat);
+      const lng = parseFloat(res[0].lon);
+
+      // update form
+      this.newAddress.latitude = lat;
+this.newAddress.longitude = lng;
+
+      // update map
+      this.mapComponent?.setLocation(lat, lng);
+    },
+    error: err => console.error('Address search failed', err)
+  });
+}
   //  Get empty address template
   private getEmptyAddress(): Address {
     return {
@@ -152,7 +324,11 @@ export class CartItems implements OnInit, OnDestroy {
       city: '',
       state: '',
       pincode: '',
-      addressType: 'HOME'
+      addressType: 'HOME',
+       latitude: 0,
+    longitude: 0,
+    useMapLocation: true,
+    mapSelectedAddress: ''
     };
   }
 
@@ -206,6 +382,103 @@ export class CartItems implements OnInit, OnDestroy {
       }
     });
   }
+   private getAuthHeaders(): HttpHeaders {
+    const token =
+      localStorage.getItem('authToken') ||
+      sessionStorage.getItem('authToken') ||
+      localStorage.getItem('token') ||
+      sessionStorage.getItem('token') ||
+      '';
+
+    let headers = new HttpHeaders({
+      'Accept': 'application/json'
+    });
+
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    return headers;
+  }
+// ===== FIND PHARMACIST =====
+findPharmacist() {
+
+  console.log('Find pharmacist clicked');
+const headers = this.getAuthHeaders();
+  // 🔴 Check address selected
+   if (!this.selectedAddress || !this.selectedAddress.id) {
+    console.error('Address not selected or invalid');
+    return;
+  }
+
+  this.isPharmacistLoading = true;
+
+  const payload = {
+   addressId: this.selectedAddress.id,
+    useCurrentLocation: false,
+    latitude: null,
+    longitude: null,
+    serviceType: 'MEDICINE',
+    description: 'Pharmacy booking request',
+    radiusKm: 10
+  };
+
+  console.log('Payload:', payload);
+
+  this.http.post<any>(`${API_URL1}/pharmacy-bookings/create`,payload,{ headers })
+    .subscribe({
+
+      next: (response) => {
+        console.log('API Response:', response);
+
+        this.isPharmacistLoading = false;
+        this.showAddressModal = false;
+        // 🟢 Always open popup if API responds
+        this.pharmacistsAvailable = response?.pharmacistsAvailable ?? false;
+
+         // ❌ If NOT available
+        if (!this.pharmacistsAvailable) {
+          this.popupMessage = 'In your area Pharmacist Not Available';
+          this.showPharmacistPopup = true;
+          return;
+        }
+
+        // ✅ If Available
+        this.popupMessage = 'Pharmacist available. Please wait while a pharmacist accepts your booking.';
+        this.showPharmacistPopup = true;
+
+        // 🔥 Auto close popup and navigate after 3 seconds
+        setTimeout(() => {
+          this.showPharmacistPopup = false;
+          this.router.navigate(['/accepted-bookings']);
+        }, 3000);
+      },
+
+      error: (err) => {
+        console.error('Pharmacist API error:', err);
+        this.isPharmacistLoading = false;
+
+        this.pharmacistsAvailable = false;
+        this.popupMessage = 'Something went wrong. Please try again.';
+        this.showPharmacistPopup = true;
+      }
+
+    });
+    // this.showAddressModal = false;
+}
+
+
+// ===== CLOSE POPUP =====
+closePopup() {
+  this.showPharmacistPopup = false;
+}
+
+
+// ===== CONTINUE FROM POPUP =====
+proceedFromPopup() {
+  this.closePopup();
+  this.onProceedToPayment();
+}
 
   // Check what's in local storage
   checkLocalStorage() {
@@ -502,16 +775,26 @@ removeItem(id: string) {
   onAddNewAddress() {
     this.showNewAddressForm = true;
     this.newAddress = this.getEmptyAddress();
+     // wait modal render then load map
+  setTimeout(() => {
+    this.loadGoogleMap();
+  }, 400);
   }
 
   // Save new address
   onSaveNewAddress() {
-    if (!this.isValidAddress(this.newAddress)) {
-      this.showErrorAlert('Please fill all required fields');
-      return;
-    }
-
-    this.addressService.addAddress(this.newAddress).subscribe({
+    // if (!this.isValidAddress(this.newAddress)) {
+    //   this.showErrorAlert('Please fill all required fields');
+    //   return;
+    // }
+const addressRequest: AddressRequest = {
+  ...this.newAddress,
+  latitude: this.newAddress.latitude,
+  longitude: this.newAddress.longitude,
+  useMapLocation: true,
+  mapSelectedAddress: this.newAddress.mapSelectedAddress
+};
+    this.addressService.addAddress(addressRequest).subscribe({
       next: (response) => {
         console.log('✅ New address saved:', response);
         this.showSuccessAlert('Address added successfully!');
@@ -1101,7 +1384,12 @@ getItemTotal(): number {
       state: this.editingAddress.state,
       pincode: this.editingAddress.pincode,
       addressType: this.editingAddress.addressType,
-      isDefault: this.editingAddress.isDefault || false
+      isDefault: this.editingAddress.isDefault || false,
+      latitude: this.editingAddress.latitude,
+  longitude: this.editingAddress.longitude,
+  useMapLocation: true,
+  mapSelectedAddress: this.editingAddress.mapSelectedAddress
+
     };
 
     this.addressService.updateAddress(this.editingAddress.id, addressRequest).subscribe({

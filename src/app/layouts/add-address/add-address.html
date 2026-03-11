@@ -1,63 +1,38 @@
-<div style="background:#2874f0;
-            height:56px;
-            display:flex;
-            align-items:center;
-            padding:0 16px;
-            color:#fff;
-            font-size:18px;
-            font-weight:500;">
+<div class="header-bar">
 
-  <i class="bi bi-arrow-left"
-     style="font-size:20px; cursor:pointer;"
+  <i class="bi bi-arrow-left  back-icon"
      (click)="goBack()"></i>
 
-  <span style="margin-left:16px;">
+  <span class="header-title">
     Add delivery address
   </span>
 </div>
 
-<div style="padding:24px;
-            background:#f1f3f6;
-            min-height:100vh;">
+<div class="page-wrapper">
 
-  <div style="background:#fff;
-              padding:24px;">
+  <div class="form-card">
 
     <!-- FULL NAME -->
     <input type="text"
            placeholder="Full Name (Required)*"
            [(ngModel)]="address.fullName"
-           style="width:100%;
-                  height:48px;
-                  border:1px solid #ddd;
-                  padding:0 12px;
-                  font-size:14px;
-                  margin-bottom:20px;">
+           class="input-field">
 
     <!-- PHONE -->
     <input type="text"
            placeholder="Phone number (Required)*"
            [(ngModel)]="address.phone"
-           style="width:100%;
-                  height:48px;
-                  border:1px solid #ddd;
-                  padding:0 12px;
-                  font-size:14px;
-                  margin-bottom:20px;">
+           class="input-field">
 
     <!-- PINCODE + LOCATION BUTTON -->
-    <div style="display:flex; gap:16px; margin-bottom:20px;">
+    <div class="row-flex">
 
       <input type="text"
              placeholder="Pincode (Required)*"
              [(ngModel)]="address.pincode"
-             style="flex:1;
-                    height:48px;
-                    border:1px solid #ddd;
-                    padding:0 12px;
-                    font-size:14px;">
+             class="input-field flex-1">
 
-      <button style="width:220px;
+      <!-- <button style="width:220px;
                      background:#2874f0;
                      color:#fff;
                      border:none;
@@ -69,30 +44,56 @@
                      gap:8px;">
         <i class=" bi-crosshair"></i>
         Use my location
-      </button>
+      </button> -->
+<!-- MAP SEARCH -->
+<!-- <input type="text"
+       placeholder="Search location on map"
+       (input)="onAddressInputChange()"
+       [(ngModel)]="address.mapSelectedAddress"
+       name="mapSelectedAddress"
+       style="width:100%;
+              height:48px;
+              border:1px solid #ddd;
+              padding:0 12px;
+              font-size:14px;
+              margin-bottom:20px;">
+
+
+<div id="map" 
+     style="width:100%;
+            height:300px;
+            margin-bottom:20px;">
+</div> -->
 
     </div>
+  <div class="map-section">
 
+  <label class="form-label">Search Location *</label>
+
+  <input type="text"
+        class="input-field"
+         [(ngModel)]="address.mapSelectedAddress"
+       (ngModelChange)="onAddressInputChange($event)"
+       name="mapSelectedAddress"
+       id="locationInput">
+
+                   <div class="col-md-4 h-100 w-100 map-styles">
+      <app-map (locationSelected)="getAddressFromCoords($event.lat, $event.lng)"></app-map>
+    </div>
+
+</div>
     <!-- STATE + CITY -->
-    <div style="display:flex; gap:16px; margin-bottom:20px;">
+    <div class="row-flex">
 
       <input type="text"
              placeholder="State (Required)*"
              [(ngModel)]="address.state"
-             style="flex:1;
-                    height:48px;
-                    border:1px solid #ddd;
-                    padding:0 12px;
-                    font-size:14px;">
+             class="input-field flex-1">
 
       <input type="text"
              placeholder="City (Required)*"
              [(ngModel)]="address.city"
-             style="flex:1;
-                    height:48px;
-                    border:1px solid #ddd;
-                    padding:0 12px;
-                    font-size:14px;">
+             class="input-field flex-1">
 
     </div>
 
@@ -100,45 +101,31 @@
     <input type="text"
            placeholder="House No., Building Name (Required)*"
            [(ngModel)]="address.house"
-           style="width:100%;
-                  height:48px;
-                  border:1px solid #ddd;
-                  padding:0 12px;
-                  font-size:14px;
-                  margin-bottom:20px;">
+           class="input-field">
 
     <!-- AREA -->
     <input type="text"
            placeholder="Road name, Area, Colony (Required)*"
            [(ngModel)]="address.area"
-           style="width:100%;
-                  height:48px;
-                  border:1px solid #ddd;
-                  padding:0 12px;
-                  font-size:14px;
-                  margin-bottom:20px;">
+           class="input-field">
 
     <!-- ADDRESS TYPE -->
-    <div style="margin-bottom:20px; font-size:14px;">
+    <div class="address-type-label">
       Type of address
     </div>
 
-    <div style="display:flex; gap:16px; margin-bottom:24px;">
+    <div class="row-flex">
 
       <button (click)="address.type='Home'"
               [style.background]="address.type==='Home' ? '#e0e0e0' : '#fff'"
-              style="border:1px solid #ddd;
-                     padding:10px 20px;
-                     font-size:14px;">
+              class="type-btn">
         <i class="bi bi-house"></i>
         Home
       </button>
 
       <button (click)="address.type='Work'"
               [style.background]="address.type==='Work' ? '#e0e0e0' : '#fff'"
-              style="border:1px solid #ddd;
-                     padding:10px 20px;
-                     font-size:14px;">
+              class="type-btn">
         <i class="bi bi-building"></i>
         Work
       </button>
@@ -147,13 +134,7 @@
 
     <!-- SAVE BUTTON -->
     <button (click)="saveAddress()"
-            style="width:100%;
-                   height:48px;
-                   background:#fb641b;
-                   color:#fff;
-                   border:none;
-                   font-size:16px;
-                   font-weight:500;">
+           class="save-btn">
       Save Address
     </button>
 

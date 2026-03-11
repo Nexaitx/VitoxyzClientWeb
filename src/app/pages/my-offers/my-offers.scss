@@ -1,0 +1,187 @@
+/* Container fix for large screens */
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:0 15px;
+}
+
+.page-title{
+font-weight:600;
+}
+
+/* Tabs */
+
+.offer-tabs{
+display:flex;
+gap:55px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.offer-tabs button{
+padding:8px 18px;
+border-radius:20px;
+border:1px solid #0d6efd;
+background:white;
+color:#0d6efd;
+font-size:14px;
+transition:0.3s;
+white-space:nowrap;
+}
+
+.offer-tabs button:hover{
+background:#0d6efd;
+color:white;
+}
+
+.offer-tabs button.active{
+background:#0d6efd;
+color:white;
+}
+
+/* Offer Card */
+
+.offer-card{
+border:1px solid #e6e6e6;
+border-radius:10px;
+padding:16px;
+margin-bottom:15px;
+background:white;
+transition:0.2s;
+}
+
+.offer-card:hover{
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Header */
+
+.offer-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:8px;
+margin-bottom:8px;
+}
+
+/* Status Badge */
+
+.status{
+padding:4px 10px;
+border-radius:15px;
+font-size:12px;
+}
+
+.status.success{
+background:#22c55e;
+color:white;
+padding:4px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:600;
+}
+
+.status.rejected{
+background:#f1242a;
+color:white;
+padding:4px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:600;
+}
+.status.expired{
+background:#616161;
+color:white;
+padding:4px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:600;
+}
+.status.pending{
+background:#FFC107;
+color:white;
+padding:4px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:600;
+}
+.status.cancelled{
+background:#DA1E28;
+color:white;
+padding:4px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:600;
+}
+/* Empty */
+
+.empty-box{
+text-align:center;
+padding:40px;
+color:#777;
+}
+
+/* ---------------- MOBILE ---------------- */
+
+@media (max-width:768px){
+
+.offer-tabs{
+justify-content:flex-start;
+overflow-x:auto;
+flex-wrap:nowrap;
+gap: 16px;
+padding-bottom:5px;
+}
+
+.offer-tabs button{
+flex-shrink:0;
+font-size:13px;
+padding:7px 14px;
+}
+
+.offer-header{
+display:flex;
+justify-content:space-between
+}
+
+.offer-card{
+padding:14px;
+}
+
+}
+
+/* ---------------- SMALL MOBILE ---------------- */
+
+@media (max-width:480px){
+
+.page-title{
+font-size:18px;
+}
+
+.offer-card p{
+font-size:13px;
+}
+
+}
+
+/* ---------------- LARGE DESKTOP ---------------- */
+
+@media (min-width:1400px){
+
+.container{
+max-width:1200px;
+}
+
+}
+
+/* ---------------- ULTRA WIDE / 4K ---------------- */
+
+@media (min-width:2000px){
+
+.container{
+max-width:1400px;
+}
+
+}

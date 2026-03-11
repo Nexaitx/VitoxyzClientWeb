@@ -99,7 +99,17 @@
     buttonText="Shop Derma Care"
     buttonLink="/medicines">
   </app-text-banner>
-} @else {
+} 
+ @else if (categoryName === 'Pet Care') {
+  <app-text-banner
+    image="assets/medicines/derma-banner.avif"
+    title="Pet Care"
+    subtitle="Specialized care for Pet conditions"
+    buttonText="Shop Pet Care"
+    buttonLink="/medicines">
+  </app-text-banner>
+} 
+ @else {
   <!-- Default Banner -->
   <app-text-banner
     image="assets/medicines/banner.avif"
@@ -145,7 +155,7 @@
   </app-single-product-form-grid>
 } @else if (categoryName === 'Baby Care') {
   <app-single-product-form-grid
-    [items]="babycare"
+    [items]="BabyCare"
     title="Baby Care Products"
     [columns]="3">
   </app-single-product-form-grid>
@@ -416,6 +426,8 @@
             <small>Category: {{ categoryName }}</small>
             <div class="loading-details">
               <small>Please wait while we fetch the products</small>
+
+
             </div>
           </div>
         </div>

@@ -59,7 +59,7 @@ export class MapComponent implements AfterViewInit, OnInit {
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
       center,
-      zoom: 14
+      zoom: 17
     });
 
     // ✅ SINGLE marker (reused)

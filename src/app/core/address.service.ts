@@ -15,6 +15,10 @@ export interface Address {
   pincode: string;
   addressType: 'HOME' | 'OFFICE' | 'OTHER';
   isDefault?: boolean;
+   latitude?: number;
+  longitude?: number;
+  useMapLocation?: boolean;
+  mapSelectedAddress?: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -30,6 +34,10 @@ export interface AddressRequest {
   pincode: string;
   addressType: string;
   isDefault?: boolean;
+    latitude?: number;
+  longitude?: number;
+  useMapLocation?: boolean;
+  mapSelectedAddress?: string;
 }
 
 @Injectable({ providedIn: 'root' })

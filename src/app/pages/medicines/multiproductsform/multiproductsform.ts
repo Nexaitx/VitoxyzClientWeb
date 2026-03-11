@@ -35,6 +35,7 @@ interface Product {
   isAvailable?: boolean;
   type?: string;
   information?: string;
+  brand?: string;   // ✅ ADD THIS
 }
 
 // API Response interface
@@ -99,14 +100,9 @@ export class MultiproductsformComponent implements OnInit {
   categoryName: string = '';
   isLoading: boolean = false;
   quantities: { [key: string]: number } = {};
-  isLoadMoreLoading: boolean = false;
-  error: string = '';
-  productForms: string[] = [];
-  totalProducts: number = 0;
-  showToast: boolean = false;
-  toastMessage: string = '';
-  toastType: 'success' | 'error' = 'success';
-  showQuantityPanel: boolean = false;
+  isLoadMoreLoading: boolean = false; error: string = '';
+  productForms: string[] = []; totalProducts: number = 0;
+  showToast: boolean = false; toastMessage: string = ''; toastType: 'success' | 'error' = 'success'; showQuantityPanel: boolean = false;
 
   // Pagination variables
   currentPage: number = 0;
@@ -119,18 +115,12 @@ export class MultiproductsformComponent implements OnInit {
   availableStrengths: string[] = ['250mg', '500mg', '750mg', '1000mg', '5ml', '10ml'];
   // Additional fields that were referenced but not defined
   currentEndpoint: string = 'otc'; // defaulting to 'otc'
-  addingProducts: Set<string> = new Set();
-  addedProducts: Set<string> = new Set();
-  selectedProduct: Product | null = null;
-  quantity: number = 1;
-  selectedUnit: string = '';
-  selectedStrength: string = '';
+  addingProducts: Set<string> = new Set(); addedProducts: Set<string> = new Set(); selectedProduct: Product | null = null;
+  quantity: number = 1; selectedUnit: string = ''; selectedStrength: string = '';
+  categoryList: { label: string, value: string }[] = [];
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private http: HttpClient,
-    private cartService: CartService
+    private route: ActivatedRoute,private router: Router,private http: HttpClient,private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -141,7 +131,10 @@ export class MultiproductsformComponent implements OnInit {
       this.productForms = params['forms'] ? params['forms'].split(',') : [];
 
       console.log('Product forms:', this.productForms);
-
+       // 🔥 Dynamic category list update
+  this.categoryList =
+    this.categoryMapping[this.categoryName] ||
+    this.categoryMapping['Default'];
       // Reset pagination when category changes
       this.resetPagination();
 
@@ -195,17 +188,31 @@ export class MultiproductsformComponent implements OnInit {
         console.log('API Response uday:', response);
 
         if (response.status && response.data) {
-          const newProducts = response.data.content || [];
+          const newProducts: Product[] = response.data.content || [];
 
-          console.log("newProducts 123455", newProducts);
-          
+        // ✅ APPLY FILTERING HERE (CORRECT PLACE)
+        let filteredProducts: Product[] = newProducts;
 
-          if (isInitialLoad) {
-            this.products = newProducts;
-          } else {
-            this.products = [...this.products, ...newProducts];
+        const selectedCategory = this.selectedCategory$.value;
+        const selectedBrands = this.selectedBrands$.value;
+
+        if (selectedCategory) {
+          filteredProducts = filteredProducts.filter((p: Product) =>
+            p.productForm?.toLowerCase() === selectedCategory.toLowerCase()
+          );
+        }
+
+        if (selectedBrands && selectedBrands.length > 0) {
+          filteredProducts = filteredProducts.filter((p: Product) =>
+            selectedBrands.includes(p.brand ?? '')
+          );
+        }
+
+        if (isInitialLoad) {
+          this.products = filteredProducts;
+        } else {
+          this.products = [...this.products, ...filteredProducts];
           }
-
           this.totalProducts = response.data.page?.totalElements || 0;
           this.currentPage = page;
 
@@ -470,41 +477,328 @@ getProductKey(product: any): string {
     return product.productId || (product.id ? product.id.toString() : index.toString());
   }
 
- categoryList = [
-    { label: 'Syrups ', value: 'syrup' },
-    { label: 'Chest Rubs', value: 'Balm' },
-    { label: 'Cough Syrups', value: 'Syrups' },
-    { label: 'Herbal Juices & Teas', value: 'Juice' },
-    { label: 'Candy & Lozenges', value: 'candy' },
-    { label: 'Yoga Mat', value: 'Yoga Mat' },
-    { label: 'Self Test Kit', value: 'Self Test Kit' },
-    { label: 'Sanitizer', value: 'Sanitizer' },
-    { label: 'Pet Food', value: 'Pet Food' },
-    { label: 'Oxygen Mask', value: 'Oxygen Mask' },
-    { label: 'Massager', value: 'Massager' },
-    { label: 'Inhaler', value: 'Inhaler' },
-    { label: 'Face Mask', value: 'Face Mask' },
+//  categoryList = [
+//     { label: 'Syrups ', value: 'syrup' },
+//     { label: 'Chest Rubs', value: 'Balm' },
+//     { label: 'Cough Syrups', value: 'Syrups' },
+//     { label: 'Herbal Juices & Teas', value: 'Juice' },
+//     { label: 'Candy & Lozenges', value: 'candy' },
+//     { label: 'Yoga Mat', value: 'Yoga Mat' },
+//     { label: 'Self Test Kit', value: 'Self Test Kit' },
+//     { label: 'Sanitizer', value: 'Sanitizer' },
+//     { label: 'Pet Food', value: 'Pet Food' },
+//     { label: 'Oxygen Mask', value: 'Oxygen Mask' },
+//     { label: 'Massager', value: 'Massager' },
+//     { label: 'Inhaler', value: 'Inhaler' },
+//     { label: 'Face Mask', value: 'Face Mask' },
 
-    { label: 'Eye/Ear Drop', value: 'Eye/Ear Drop' },
-    { label: 'Face Wash', value: 'Face Wash' },
-    { label: 'Conditioner', value: 'Conditioner' },
-    { label: 'Cream', value: 'Cream' },
-    { label: 'Contact Lens', value: 'Contact Lens' },
-    { label: 'Body Wash', value: 'Body Wash' },
-    { label: 'Capsule CR', value: 'Capsule CR' },
-    { label: 'Churna', value: 'Churna' },   
-    { label: 'Crepe bandage', value: 'Crepe bandage' },
-    { label: 'Butter', value: 'Butter' },
-    { label: 'Band aid', value: 'Band aid' },
-    { label: 'Mouth Spray', value: 'Mouth Spray' },
-    { label: 'Dropper', value: 'Dropper' },
-    { label: 'Plaster', value: 'Plaster' },
-    { label: 'Elixir', value: 'Elixir' },
-    { label: 'Shampoo', value: 'Shampoo' },
+//     { label: 'Eye/Ear Drop', value: 'Eye/Ear Drop' },
+//     { label: 'Face Wash', value: 'Face Wash' },
+//     { label: 'Conditioner', value: 'Conditioner' },
+//     { label: 'Cream', value: 'Cream' },
+//     { label: 'Contact Lens', value: 'Contact Lens' },
+//     { label: 'Body Wash', value: 'Body Wash' },
+//     { label: 'Capsule CR', value: 'Capsule CR' },
+//     { label: 'Churna', value: 'Churna' },   
+//     { label: 'Crepe bandage', value: 'Crepe bandage' },
+//     { label: 'Butter', value: 'Butter' },
+//     { label: 'Band aid', value: 'Band aid' },
+//     { label: 'Mouth Spray', value: 'Mouth Spray' },
+//     { label: 'Dropper', value: 'Dropper' },
+//     { label: 'Plaster', value: 'Plaster' },
+//     { label: 'Elixir', value: 'Elixir' },
+//     { label: 'Shampoo', value: 'Shampoo' },
 
 
     
-  ];
+//   ];
+// Master category mapping
+private categoryMapping: { [key: string]: { label: string, value: string }[] } = {
+
+  'Women Care': [
+    { label: 'Sanitizer', value: 'Sanitizer' },
+    { label: 'Cream', value: 'Cream' },
+    { label: 'Face Wash', value: 'Face Wash' },
+    { label: 'Shampoo', value: 'Shampoo' },
+    { label: 'Vaginal Wash', value: 'Vaginal Wash' },
+    {label:'Menstrual Cup', value:'Menstrual Cup'},
+    {label:'Panty', value:'Panty'},
+    {label:'Vaginal Spray', value:'Vaginal Spray'},
+    {label:'Breast Pump', value:'Breast Pump'},
+    {label:'Pumping Bra', value:'Pumping Bra'},
+    {label:'Pad', value:'Pad'},
+    {label:'Vaginal Capsule', value:'Vaginal Capsule'},
+    {label:'Vaginal Cream', value:'Vaginal Cream'},
+    {label:'Panty Liner', value:'Panty Liner'},
+    {label:'Vaginal Gel', value:'Vaginal Gel'},
+    {label:'Vaginal Ointment', value:'Vaginal Ointment'},
+    {label:'Nursing Bra', value:'Nursing Bra'},
+  ],
+
+  'Baby Care': [
+    { label: 'Body Wash', value: 'Body Wash' },
+    { label: 'Cream', value: 'Cream' },
+    { label: 'Baby Shampoo', value: 'Baby Shampoo' },
+       { label: 'Diaper', value: 'Diaper' },
+    { label: 'Feeding Bottle', value: 'Feeding Bottle' },
+    { label: 'Teether', value: 'Teether' },
+    { label: 'Pacifier', value: 'Pacifier' },
+    { label: 'Powder', value: 'Powder' },
+    { label: 'Baby Lotion', value: 'Baby Lotion' },
+    { label: 'Baby Powder', value: 'Baby Powder' },
+    { label: 'Bottle Cleaning Brush', value: 'Bottle Cleaning Brush' },
+    { label: 'Nipple', value: 'Nipple' },
+    { label: 'Baby Oil', value: 'Baby Oil' },
+    { label: 'Baby Soap', value: 'Baby Soap' },
+  ],
+   'Skin Care': [
+    { label: 'Face Wash', value: 'Face Wash' },
+    { label: 'Serum', value: 'Serum' },
+    { label: 'Face Pack', value: 'Face Pack' },
+    { label: 'Cream', value: 'Cream' },
+    { label: 'Lotion', value: 'Lotion' },
+    { label: 'Ointment', value: 'Ointment' },
+    { label: 'Scrub', value: 'Scrub' },
+    { label: 'Moisturiser', value: 'Moisturiser' },
+    { label: 'Face Gel', value: 'Face Gel' },
+    { label: 'Toner', value: 'Toner' },
+    { label: 'Face Cream', value: 'Face Cream' },
+    { label: 'Gel', value: 'Gel' },
+    { label: 'Soap', value: 'Soap' },
+    { label: 'Cleanser', value: 'Cleanser' },
+  ],
+  'Sexual Wellness': [
+    { label: 'Condom', value: 'Condom' },
+    { label: 'Lubricant', value: 'Gel' },
+    { label: 'Vaginal Wash', value: 'Vaginal Wash' },
+    { label: 'Vaginal Cream', value: 'Vaginal Cream' },
+    { label: 'Vaginal Gel', value: 'Vaginal Gel' },
+    { label: 'Tampon', value: 'Tampon' },
+    { label: 'Capsule', value: 'Capsule' },
+    { label: 'Tablet', value: 'Tablet' },
+    { label: 'Massage Oil', value: 'Massage Oil' },
+    { label: 'Sublingual Spray', value: 'Sublingual Spray' },
+    { label: 'Self Test Kit', value: 'Self Test Kit' },
+  ],
+
+  'Oral Care': [
+    { label: 'Toothpaste', value: 'Toothpaste' },
+    { label: 'Toothbrush', value: 'Toothbrush' },
+    { label: 'Mouth Wash', value: 'Mouth Wash' },
+    { label: 'Dental Gel', value: 'Dental Gel' },
+    { label: 'Gum Paint', value: 'Gum Paint' },
+    { label: 'Tongue Cleaner', value: 'Tongue Cleaner' },
+    { label: 'Mouth Spray', value: 'Mouth Spray' },
+    { label: 'Dental Brush', value: 'Dental Brush' },
+    { label: 'Mouth Paint', value: 'Mouth Paint' },
+    { label: 'Floss', value: 'Floss' },
+  ],
+
+  'Elder Care': [
+    { label: 'Adult Diaper', value: 'Diaper' },
+    { label: 'Wheelchair', value: 'Wheelchair' },
+    { label: 'Walking Stick', value: 'Walker' },
+    { label: 'Knee Support', value: 'Knee Support' },
+    { label: 'Blood Test Kit', value: 'Test Kit' },
+    { label: 'Support Belt', value: 'Support Belt' },
+    { label: 'Heel Cushion', value: 'Heel Cushion' },
+    { label: 'Foot Support', value: 'Foot Support' },
+    { label: 'Stocking', value: 'Stocking' },
+    { label: 'Bed Pan', value: 'Bed Pan' },
+    { label: 'Urine Pot', value: 'Urine Pot' },
+    { label: 'Support Belt', value: 'Support Belt' },
+    { label: 'Elastic Bandage', value: 'Elastic Bandage' },
+    { label: 'Crepe Bandage', value: 'Crepe Bandage' },
+    { label: 'Glove', value: 'Glove' },
+    { label: 'Mask', value: 'Mask' },
+  ],
+
+  'Men Care': [
+    { label: 'Shaving Cream', value: 'Cream' },
+    { label: 'Hair Gel', value: 'Gel' },
+    { label: 'Body Spray', value: 'Spray' },
+    { label: 'Face Wash', value: 'Face Wash' },
+    { label: 'Beard Oil', value: 'Beard Oil' },
+    { label: 'Shaving Gel', value: 'Shaving Gel' },
+    { label: 'After Shave Lotion', value: 'After Shave Lotion' },
+    { label: 'Deodorant', value: 'Deodorant' },
+    { label: 'Body Wash', value: 'Body Wash' },
+    { label: 'Massage Oil', value: 'Massage Oil' },
+    { label: 'Spray', value: 'Spray' },
+    { label: 'Gel', value: 'Gel' },
+   
+  ],
+
+  'Ayurveda': [
+    { label: 'Churna', value: 'Churna' },
+    { label: 'Juice', value: 'Juice' },
+    { label: 'Oil', value: 'Oil' },
+    { label: 'Bhasma', value: 'Bhasma' },
+    { label: 'Ark', value: 'Ark' },
+    { label: 'Tablet', value: 'Tablet' },
+    { label: 'Herbal Gel', value: 'Herbal Gel' },
+    { label: 'Herbal Juice', value: 'Herbal Juice' },
+    { label: 'Arishta', value: 'Arishta' },
+    { label: 'Asava', value: 'Asava' },
+    { label: 'Majoon', value: 'Majoon' },
+    { label: 'Kwath', value: 'Kwath' },
+    { label: 'Churna (Powder)', value: 'Churna (Powder)' },
+    { label: 'Guggulu', value: 'Guggulu' },
+    { label: 'Lehyam', value: 'Lehyam' },
+    { label: 'Seed', value: 'Seed' },
+    { label: 'Leaf', value: 'Leaf' },
+  ],
+
+  'Pet Care': [
+    { label: 'Pet Food', value: 'Pet Food' },
+    { label: 'Pet Spray', value: 'Pet Spray' },
+    { label: 'Dog Bone', value: 'Dog Bone' },
+    { label: 'Pet Shampoo', value: 'Pet Shampoo' },
+    { label: 'Pet Conditioner', value: 'Pet Conditioner' },
+    { label: 'Pet Soap', value: 'Pet Soap' },
+    { label: 'Pet Lotion', value: 'Pet Lotion' },
+    { label: 'Cotton', value: 'Cotton' },
+    { label: 'Belt', value: 'Belt' },
+  ],
+
+  'Cold & Cough': [
+    { label: 'Syrups', value: 'Syrup' },
+    { label: 'Chest Rubs', value: 'Balm' },
+    { label: 'Inhaler', value: 'Inhaler' },
+  ], 
+  'personal care': [
+    { label: 'Shampoo', value: 'Shampoo' },
+    { label: 'Conditioner', value: 'Conditioner' },
+    { label: 'Soap', value: 'Soap' },
+    { label: 'Body Wash', value: 'Body Wash' },
+    { label: 'Face Wash', value: 'Face Wash' }
+  ],
+  'Stomach Care': [
+    { label: 'Capsule', value: 'Capsule' },
+    { label: 'Oral Suspension', value: 'Oral Suspension' },
+    { label: 'Digestive Tablet', value: 'Digestive Tablet' },
+    { label: 'Tablet', value: 'Tablet' },
+    { label: 'Powder for Oral Suspension', value: 'Powder for Oral Suspension' },
+    { label: 'Oral Solution', value: 'Oral Solution' },
+    { label: 'Oral Liquid', value: 'Oral Liquid' },
+    { label: 'Oral Gel', value: 'Oral Gel' },
+    { label: 'Syrup', value: 'Syrup' },
+    { label: 'Digestive Syrup', value: 'Digestive Syrup' },
+    { label: 'Powder for Oral Solution', value: 'Powder for Oral Solution' },
+  ],
+  'Heart Rate': [
+    { label: 'Oxygen Mask', value: 'Oxygen Mask' },
+    { label: 'Tablet', value: 'Tablet' },
+    { label: 'Injection', value: 'Injection' },
+    { label: 'Tablet', value: 'Tablet' },
+  
+  ],
+  'diabetic care': [
+    { label: 'Injection', value: 'Injection' },
+    { label: 'Tablet', value: 'Tablet' },
+    { label: 'Test Strip', value: 'Test Strip' },
+    { label: 'Lancet', value: 'Lancet' },
+    { label: 'Self Test Kit', value: 'Self Test Kit' },
+    { label: 'Tablet SR', value: 'Tablet SR' },
+    { label: 'Needle', value: 'Needle' },
+    { label: 'Insulin Syringe (Syringe)', value: 'Insulin Syringe (Syringe)' },
+    { label: 'Test kit', value: 'Test kit' },
+  
+  ],
+
+  'liver care': [
+    { label: 'Tablet', value: 'Tablet' },
+    { label: 'Capsule', value: 'Capsule' },
+    { label: 'Syrup', value: 'Syrup' },
+    { label: 'Liver Care Juice', value: 'Liver Care Juice' },
+    { label: 'Granule', value: 'Granule' },
+    { label: 'Tonic', value: 'Tonic' },
+    { label: 'Sachet', value: 'Sachet' },
+    { label: 'Infusion', value: 'Infusion' },
+    { label: 'Softgel', value: 'Softgel' },
+  ],
+
+  'eye care': [
+    { label: 'Eye Drop', value: 'Eye Drop' },
+    { label: 'Eye Gel', value: 'Eye Gel' },
+    { label: 'Eye Cream', value: 'Eye Cream' },
+    { label: 'Eye Ointment', value: 'Eye Ointment' },
+    { label: 'Eye Capsule', value: 'Eye Capsule' },
+    { label: 'Eye Pad', value: 'Eye Pad' },
+    { label: 'Reading Eyeglass', value: 'Reading Eyeglass' },
+    { label: 'Eye/Ear Drop', value: 'Eye/Ear Drop' },
+    { label: 'Lens Solution', value: 'Lens Solution' }
+  ],
+
+  'kidney care': [
+    { label: 'Tablet', value: 'Tablet' },
+    { label: 'Capsule', value: 'Capsule' },
+    { label: 'Kidney Syrup', value: 'Kidney Syrup' },
+    { label: 'Kidney Tablet', value: 'Kidney Tablet' },
+    { label: 'Juice', value: 'Juice' },
+    { label: 'Kidney Solution for Infusion', value: 'Kidney Solution for Infusion' },
+    { label: 'Tonic', value: 'Tonic' },
+    { label: 'Kidney Infusion', value: 'Kidney Infusion' },
+    { label: 'Kidney Capsule', value: 'Kidney Capsule' },
+  ],
+
+  'derma care': [
+    { label: 'Cream', value: 'Cream' },
+    { label: 'Gel', value: 'Gel' },
+    { label: 'Ointment', value: 'Ointment' },
+    { label: 'Face Wash', value: 'Face Wash' },
+    { label: 'Lotion', value: 'Lotion' },
+    { label: 'Serum', value: 'Serum' },
+    { label: 'Face Pack', value: 'Face Pack' },
+    { label: 'Face Cream', value: 'Face Cream' },
+    { label: 'Moisturiser', value: 'Moisturiser' },
+    { label: 'Dusting Powder', value: 'Dusting Powder' },
+    { label: 'Body Wash', value: 'Body Wash' },
+    { label: 'Conditioner', value: 'Conditioner' },
+    { label: 'Wax', value: 'Wax' },
+    { label: 'Scrub', value: 'Scrub' },
+   
+
+  ],
+
+  'bone & joint': [
+    { label: 'Capsule', value: 'Capsule' },
+    { label: 'Tablet', value: 'Tablet' },
+    { label: 'Knee Support', value: 'Knee Support' },
+    { label: 'Gel', value: 'Gel' },
+    { label: 'Oil', value: 'Oil' },
+    { label: 'Liniment', value: 'Liniment' },
+    { label: 'Wrist Support', value: 'Wrist Support' },
+    { label: 'Ointment', value: 'Ointment' },
+    { label: 'Massager', value: 'Massager' },
+    { label: 'Bandage', value: 'Bandage' },
+    { label: 'Bone & Joint Tablet', value: 'Bone & Joint Tablet' },
+    { label: 'Balm', value: 'Balm' },
+    { label: 'Cast Bandage', value: 'Cast Bandage' },
+    { label: 'Crepe bandage', value: 'Crepe bandage' },
+    { label: 'Band aid', value: 'Band aid' },
+  ],
+
+  'Default': [
+    { label: 'Nebuliser', value: 'Nebuliser' },
+    { label: 'Oxygen Mask', value: 'Oxygen Mask' },
+    { label: 'Glucometer', value: 'Device' },
+    { label: 'Syringe', value: 'Syringe' },
+    { label: 'Bandage', value: 'Bandage' },
+    { label: 'Tablet', value: 'Tablet' },
+    { label: 'Capsule', value: 'Capsule' },
+    { label: 'Syrup', value: 'Syrup' },
+    { label: 'Injection', value: 'Injection' },
+    { label: 'Drop', value: 'Drop' },
+    { label: 'Suspension', value: 'Suspension' },
+    { label: 'Syrups', value: 'syrup' },
+    { label: 'Chest Rubs', value: 'Balm' },
+    { label: 'Cough Syrups', value: 'Syrups' },
+    { label: 'Herbal Juices & Teas', value: 'Juice' },
+  ]
+};
+
+// This will be used in template
 
   brandList = [
     { name: 'Volini', count: 21 },
@@ -516,11 +810,15 @@ getProductKey(product: any): string {
 
   filterByCategory(category: string) {
     console.log('🔄 Category filter applied:', category);
-    this.isLoading = true;
+    // this.isLoading = true;
     this.selectedCategory$.next(category);
-    this.currentPage$.next(0);
-    // Optionally call fetchProducts again based on filters
-    // this.resetPagination(); this.fetchProducts(this.productForms, 0, true);
+    // this.currentPage$.next(0);
+     this.selectedBrands$.next([]); // optional: reset brands if needed
+
+  this.resetPagination();
+
+  // this.fetchFilteredProducts(0, true);
+  this.fetchProducts(this.productForms, 0, true);
   }
 
   filterByCategory1(category: string) {
@@ -534,25 +832,122 @@ getProductKey(product: any): string {
 
   filterByBrands(brands: string[]) {
     console.log('🔄 Brands filter applied:', brands);
-    this.isLoading = true;
+    // this.isLoading = true;
     this.selectedBrands$.next(brands);
-    this.currentPage$.next(0);
-    // Optionally call fetchProducts again based on filters
-    // this.resetPagination(); this.fetchProducts(this.productForms, 0, true);
+    // this.currentPage$.next(0);
+      this.selectedBrands$.next(brands);
+
+  this.resetPagination();
+
+  // this.fetchFilteredProducts(0, true);
+  this.fetchProducts(this.productForms, 0, true);
   }
 
    clearFilters(): void {
     console.log('🔄 Clearing filters');
-    this.isLoading = true;
+    // this.isLoading = true;
     this.selectedCategory$.next(null);
     this.selectedBrands$.next([]);
-    this.currentPage$.next(0);
+    // this.currentPage$.next(0);
+      this.resetPagination();
+
+  this.fetchProducts(this.productForms, 0, true);
   }
+//   fetchFilteredProducts(page: number = 0, isInitialLoad: boolean = false): void {
+
+//   if (isInitialLoad) {
+//     this.isLoading = true;
+//   } else {
+//     this.isLoadMoreLoading = true;
+//   }
+
+//   this.error = '';
+
+//   const selectedCategory = this.selectedCategory$.value;
+//   const selectedBrands = this.selectedBrands$.value;
+
+//   const formParams = this.productForms
+//     .map(form => `productForms=${encodeURIComponent(form.trim())}`)
+//     .join('&');
+
+//   let filterParams = '';
+
+//   if (selectedCategory) {
+//     filterParams += `&category=${encodeURIComponent(selectedCategory)}`;
+//   }
+
+//   if (selectedBrands && selectedBrands.length > 0) {
+//     selectedBrands.forEach(brand => {
+//       filterParams += `&brand=${encodeURIComponent(brand)}`;
+//     });
+//   }
+
+//   const apiUrl = `${API_URL}${ENDPOINTS.PRODUCT_FILTER_MULTIPLE}?${formParams}${filterParams}&page=${page}&size=${this.pageSize}`;
+
+//   console.log('Filtered API URL:', apiUrl);
+
+//   this.http.get<ApiResponse>(apiUrl).subscribe({
+//     next: (response) => {
+//       if (response.status && response.data) {
+//         const newProducts = response.data.content || [];
+
+//         if (isInitialLoad) {
+//           this.products = newProducts;
+//         } else {
+//           this.products = [...this.products, ...newProducts];
+//         }
+
+//         this.totalProducts = response.data.page?.totalElements || 0;
+//         this.currentPage = page;
+//         this.hasMoreProducts = this.products.length < this.totalProducts;
+//       } else {
+//         this.error = response.message || 'Failed to load products';
+//       }
+
+//       this.isLoading = false;
+//       this.isLoadMoreLoading = false;
+//     },
+//     error: () => {
+//       this.error = 'Failed to load products. Please try again later.';
+//       this.isLoading = false;
+//       this.isLoadMoreLoading = false;
+//       if (isInitialLoad) {
+//         this.products = [];
+//       }
+//     }
+//   });
+// }
+// getCategoryLabel(value: string): string {
+//     const category = this.categoryList.find(cat => cat.value === value);
+//     return category ? category.label : value;
+//   }
 getCategoryLabel(value: string): string {
-    const category = this.categoryList.find(cat => cat.value === value);
-    return category ? category.label : value;
+
+  if (!value) return '';
+
+  // 1️⃣ First check current dynamic category list
+  const currentCategory = this.categoryList.find(cat =>
+    cat.value.toLowerCase() === value.toLowerCase()
+  );
+
+  if (currentCategory) {
+    return currentCategory.label;
   }
 
+  // 2️⃣ If not found, search in full master map (all categories)
+  for (const key in this.categoryMapping) {
+    const found = this.categoryMapping[key].find(cat =>
+      cat.value.toLowerCase() === value.toLowerCase()
+    );
+
+    if (found) {
+      return found.label;
+    }
+  }
+
+  // 3️⃣ Fallback
+  return value;
+}
   getBrandLabel(value: string): string {
     const brand = this.brandList.find(b => b.name === value);
     return brand ? brand.name : value;
@@ -926,7 +1321,7 @@ getCategoryLabel(value: string): string {
       description: 'Belts for elder support'
     }
   ];
-   babycare = [
+   BabyCare = [
     {
       productForm: 'Diaper',
       label: 'Diapers',
@@ -1439,6 +1834,55 @@ getCategoryLabel(value: string): string {
     
     ];
     LiverCare1 = [
+      
+      {
+        productForm: 'Granule',
+        label: 'Granule',
+        imageUrl: 'assets/product-forms/Granule.avif',
+        altText: 'Medical Granule',
+        cssClass: 'injection-category',
+        description: 'Granule'
+      },
+      {
+        productForm: 'Tonic',
+        label: 'Tonic',
+        imageUrl: 'assets/product-forms/Tonic.avif',
+        altText: 'Medicine Tonic',
+        cssClass: 'capsule-category',
+        description: 'Tonic for  health'
+      },
+      {
+        productForm: 'Liver Care Juice',
+        label: 'Liver Care Juice',
+        imageUrl: 'assets/product-forms/Liver Care Juice.avif',
+        altText: 'Liver Care Juice',
+        cssClass: 'lotion-category',
+        description: 'Liver Care Juice for  health'
+      },
+      {
+        productForm: 'Sachet',
+        label: 'Sachet',
+        imageUrl: 'assets/product-forms/Liver Care Juice.avif',
+        altText: 'Liver Care Sachet',
+        cssClass: 'lotion-category',
+        description: 'Liver Care Sachet for  health'
+      },
+      {
+        productForm: 'Infusion',
+        label: 'Infusion',
+        imageUrl: 'assets/product-forms/Liver Care Juice.avif',
+        altText: 'Liver Care Infusion',
+        cssClass: 'lotion-category',
+        description: 'Liver Care Infusion for  health'
+      },
+      {
+        productForm: 'Softgel',
+        label: 'Softgel',
+        imageUrl: 'assets/product-forms/Liver Care Juice.avif',
+        altText: 'Softgel',
+        cssClass: 'lotion-category',
+        description: 'Liver Care Softgel for  health'
+      },
       {
         productForm: 'Capsule',
         label: 'Capsule',
@@ -1463,30 +1907,6 @@ getCategoryLabel(value: string): string {
         altText: 'Medicinal Tablet',
         cssClass: 'syrup-category',
         description: 'Tablet for  health'
-      },
-      {
-        productForm: 'Granule',
-        label: 'Granule',
-        imageUrl: 'assets/product-forms/Granule.avif',
-        altText: 'Medical Granule',
-        cssClass: 'injection-category',
-        description: 'Granule'
-      },
-      {
-        productForm: 'Tonic',
-        label: 'Tonic',
-        imageUrl: 'assets/product-forms/Tonic.avif',
-        altText: 'Medicine Tonic',
-        cssClass: 'capsule-category',
-        description: 'Tonic for  health'
-      },
-      {
-        productForm: 'Liver Care Juice',
-        label: 'Liver Care Juice',
-        imageUrl: 'assets/product-forms/Liver Care Juice.avif',
-        altText: 'Liver Care Juice',
-        cssClass: 'lotion-category',
-        description: 'Liver Care Juice for  health'
       },
       
     ];

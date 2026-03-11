@@ -9,6 +9,8 @@ import { MedicineFilterComponent } from './pages/medicines/medicine-filter/medic
 import { DietGuard } from './core/guards/diet.guard';
 import { Empty } from './shared/empty/empty';
 import { AddAddress } from './layouts/add-address/add-address';
+import { AcceptedBookings } from './pages/accepted-bookings/accepted-bookings';
+import { MyOffers } from './pages/my-offers/my-offers';
 
 export const routes: Routes = [
   {
@@ -28,8 +30,8 @@ export const routes: Routes = [
         { path: 'products', component: MultiproductsformComponent },
           { path: 'medicine', component: MedicineFilterComponent },
  { path: 'add-address', component: AddAddress },
-
-
+{ path: 'accepted-bookings',component:AcceptedBookings},
+  { path: 'my-offers',component: MyOffers },
       {
         path: 'products/:category', 
         loadComponent: () => import('./pages/medicines/category-products/category-products') 

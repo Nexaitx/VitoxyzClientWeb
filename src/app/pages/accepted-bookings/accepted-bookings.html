@@ -1,0 +1,85 @@
+<div class="container mt-4">
+
+<h4 class="page-title">Accepted Bookings</h4>
+
+<div *ngIf="isLoading" class="text-center">
+  <div class="spinner-border"></div>
+</div>
+
+<div *ngIf="!isLoading && bookings.length === 0" class="empty-state">
+  No accepted bookings found.
+</div>
+
+<div *ngFor="let booking of bookings" class="booking-card">
+
+  <!-- Booking Header -->
+
+  <div class="booking-header">
+
+    <div>
+      <div class="booking-id">
+        Booking ID: {{ booking.bookingId }}
+      </div>
+
+      <div class="booking-date">
+        Accepted On: {{ booking.adminAcceptedAt }}
+      </div>
+    </div>
+
+    <span class="status-badge">
+      {{ booking.status }}
+    </span>
+
+  </div>
+
+ 
+
+  <!-- Pharmacy -->
+
+  <div class="section">
+
+    <div class="section-title">Pharmacy</div>
+
+    <div>{{ booking.pharmacyInfo?.companyName || 'N/A' }}</div>
+
+    <div class="muted">
+      {{ booking.pharmacyInfo?.companyAddress || 'N/A' }}
+    </div>
+
+  </div>
+
+  <!-- Delivery -->
+
+  <div class="section">
+
+    <div class="section-title">Delivery Address</div>
+
+    <div>
+      {{ booking.userAddressInfo?.fullAddress || 'Address not available' }}
+    </div>
+
+  </div>
+
+  <hr>
+
+  <!-- Order Summary -->
+
+  <div class="summary">
+
+    <div>
+      <div class="section-title">Items</div>
+      <div>{{ booking.orderSummary?.totalItems }}</div>
+    </div>
+
+    <div class="text-right">
+      <div class="section-title">Total</div>
+      <div class="price">
+        ₹{{ booking.orderSummary?.finalAmount }}
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+</div>

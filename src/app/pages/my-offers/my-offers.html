@@ -1,0 +1,184 @@
+<div class="container mt-4">
+
+<h5 class="page-title mb-3">My Offers</h5>
+
+<!-- Tabs -->
+<div class="offer-tabs mb-4">
+
+<button
+[ngClass]="activeTab === 'accepted' ? 'active' : ''"
+(click)="changeTab('accepted')">
+Accepted
+</button>
+
+<button
+[ngClass]="activeTab === 'pending' ? 'active' : ''"
+(click)="changeTab('pending')">
+Pending
+</button>
+
+<button
+[ngClass]="activeTab === 'rejected' ? 'active' : ''"
+(click)="changeTab('rejected')">
+Rejected
+</button>
+
+<button
+[ngClass]="activeTab === 'expired' ? 'active' : ''"
+(click)="changeTab('expired')">
+Expired
+</button>
+
+<button
+[ngClass]="activeTab === 'cancelled' ? 'active' : ''"
+(click)="changeTab('cancelled')">
+Cancelled
+</button>
+
+</div>
+
+
+<!-- Loader -->
+<div *ngIf="isLoading" class="text-center">
+<div class="spinner-border"></div>
+</div>
+
+
+<!-- Accepted -->
+<div *ngIf="activeTab === 'accepted'">
+
+<div *ngIf="acceptedOffers.length === 0" class="empty-box">
+No accepted offers available
+</div>
+
+<div *ngFor="let offer of acceptedOffers" class="offer-card">
+
+<div class="offer-header">
+
+<strong>Booking ID : {{offer.bookingId}}</strong>
+
+<span class="status success">
+{{offer.offerStatus}}
+</span>
+
+</div>
+<p>BookingStatus : {{offer.bookingStatus}}</p>
+<p>ItemCount :{{offer.itemCount}}</p>
+<p>OfferAcceptedDate :{{offer.offerAcceptedAt}}</p>
+<p>OfferExpiresDate :{{offer.offerExpiresAt}}</p>
+<p>Pharmacy : {{offer.pharmacyName}}</p>
+<p>Amount : ₹{{offer.finalAmount}}</p>
+<p class="mb-0">Payment : {{offer.paymentType}}</p>
+
+</div>
+
+</div>
+
+
+<!-- Pending -->
+<div *ngIf="activeTab === 'pending'">
+
+<div *ngFor="let offer of pendingOffers" class="offer-card">
+
+<div class="offer-header">
+
+<strong>Booking ID: {{offer.bookingId}}</strong>
+
+<span class="status pending">
+{{offer.offerStatus}}
+</span>
+</div>
+
+<p>BookingStatus : {{offer.bookingStatus}}</p>
+<p>ItemCount :{{offer.itemCount}}</p>
+<p>OfferAcceptedDate :{{offer.offerAcceptedAt}}</p>
+<p>OfferExpiresDate :{{offer.offerExpiresAt}}</p>
+<p>Pharmacy : {{offer.pharmacyName}}</p>
+<p>Amount : ₹{{offer.finalAmount}}</p>
+<p class="mb-0">Payment : {{offer.paymentType}}</p>
+
+</div>
+
+</div>
+
+
+<!-- Rejected -->
+<div *ngIf="activeTab === 'rejected'">
+
+<div *ngFor="let offer of rejectedOffers" class="offer-card">
+  <div class="offer-header">
+
+<strong>Booking ID: {{offer.bookingId}}</strong>
+
+<span class="status rejected">
+{{offer.offerStatus}}
+</span>
+
+</div>  
+
+
+<p>BookingStatus : {{offer.bookingStatus}}</p>
+<p>ItemCount :{{offer.itemCount}}</p>
+<p>OfferAcceptedDate :{{offer.offerAcceptedAt}}</p>
+<p>OfferExpiresDate :{{offer.offerExpiresAt}}</p>
+<p>Pharmacy : {{offer.pharmacyName}}</p>
+<p>Amount : ₹{{offer.finalAmount}}</p>
+<p class="mb-0">Payment : {{offer.paymentType}}</p>
+
+</div>
+
+</div>
+
+
+<!-- Expired -->
+<div *ngIf="activeTab === 'expired'">
+
+<div *ngFor="let offer of expiredOffers" class="offer-card">
+  <div class="offer-header">
+
+<strong>Booking ID: {{offer.bookingId}}</strong>
+
+<span class="status expired">
+{{offer.offerStatus}}
+</span>
+
+</div> 
+<p>BookingStatus : {{offer.bookingStatus}}</p>
+<p>ItemCount :{{offer.itemCount}}</p>
+<p>OfferAcceptedDate :{{offer.offerAcceptedAt}}</p>
+<p>OfferExpiresDate :{{offer.offerExpiresAt}}</p>
+<p>Pharmacy : {{offer.pharmacyName}}</p>
+<p>Amount : ₹{{offer.finalAmount}}</p>
+<p class="mb-0">Payment : {{offer.paymentType}}</p>
+
+</div>
+
+</div>
+
+
+<!-- Cancelled -->
+<div *ngIf="activeTab === 'cancelled'">
+
+<div *ngFor="let offer of cancelledOffers" class="offer-card">
+
+<div class="offer-header">
+
+<strong>Booking ID: {{offer.bookingId}}</strong>
+
+<span class="status cancelled">
+{{offer.offerStatus}}
+</span>
+
+<p>BookingStatus : {{offer.bookingStatus}}</p>
+<p>ItemCount :{{offer.itemCount}}</p>
+<p>OfferAcceptedDate :{{offer.offerAcceptedAt}}</p>
+<p>OfferExpiresDate :{{offer.offerExpiresAt}}</p>
+<p>Pharmacy : {{offer.pharmacyName}}</p>
+<p>Amount : ₹{{offer.finalAmount}}</p>
+<p class="mb-0">Payment : {{offer.paymentType}}</p>
+
+</div>
+
+</div>
+
+</div>
