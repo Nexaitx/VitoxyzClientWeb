@@ -2,20 +2,29 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { API_URL1, API_URL2 } from '@src/app/core/const';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-@Component({
-  selector: 'app-my-offers',
-  imports: [CommonModule, FormsModule],
-  templateUrl: './my-offers.html',
-  styleUrl: './my-offers.scss',
-})
-export class MyOffers implements OnInit {
+import { ActivatedRoute } from '@angular/router';
+import { API_URL1, API_URL2 } from '@src/app/core/const';
 
-  offers: any[] = [];
+@Component({
+  selector: 'app-view-booking-status',
+  imports: [CommonModule, FormsModule],
+  templateUrl: './view-booking-status.html',
+  styleUrl: './view-booking-status.scss',
+})
+export class ViewBookingStatus implements OnInit {
+bookings: any[] = [];
+  isLoading = false;
+selectedStatus = 'PENDING';
+
+showDetailsPopup = false;
+bookingDetails: any = null;
+detailsLoading = false;
+
+offers: any[] = [];
   filteredOffers: any[] = [];
   showBookingPopup = false;
-bookingDetails: any = null;
+// bookingDetails: any = null;
 bookingLoading = false;
 
 showDriverPopup = false;
@@ -27,10 +36,10 @@ mapLoading = false;
 mapUrl: SafeResourceUrl | null = null;
 
 
-  mainTab = 'offers';
+  mainTab = 'Bookingstatus';
   activeTab = 'pending';
 
-  isLoading = false;
+  // isLoading = false;
   orders: any[] = [];
 orderStatus = 'READY_FOR_PICKUP';
 orderLoading = false;
@@ -38,24 +47,26 @@ orderLoading = false;
 showResponsePopup = false;
 responseData: any = null;
 responseLoading = false;
-
- constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
+  
+constructor(private http: HttpClient,
+    private route: ActivatedRoute , private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    this.getOffers();
+    this.getBookings();
   }
-
-  selectMainTab(tab: string) {
+   selectMainTab(tab: string) {
     this.mainTab = tab;
-
+   
     if (tab === 'offers') {
       this.getOffers();
     }
     if (tab === 'orders') {
     this.getOrders();
   }
+    if (tab === 'Bookingstatus') {
+       this.getBookings();
+    }
   }
-
   private getAuthHeaders(): HttpHeaders {
 
     const token =
@@ -76,7 +87,35 @@ responseLoading = false;
     return headers;
   }
 
-  getOffers() {
+  getBookings() {
+
+    const headers = this.getAuthHeaders();
+
+    this.isLoading = true;
+
+    this.http.get<any>(
+      `${API_URL1}/user/pharmacybooking/by-status?status=${this.selectedStatus}`,
+      { headers }
+    )
+    .subscribe({
+
+      next: (res) => {
+
+        // adjust based on API structure
+        this.bookings = res?.bookings || res || [];
+
+        this.isLoading = false;
+
+      },
+
+      error: () => {
+        this.isLoading = false;
+      }
+
+    });
+
+  }
+    getOffers() {
 
     const headers = this.getAuthHeaders();
 
@@ -113,6 +152,36 @@ responseLoading = false;
     );
 
   }
+  viewBookingDetails(bookingId: number) {
+
+  const headers = this.getAuthHeaders();
+
+  this.showDetailsPopup = true;
+  this.detailsLoading = true;
+  this.bookingDetails = null;
+
+  this.http.get<any>(
+    `${API_URL1}/user/pharmacybooking/${bookingId}/details`,
+    { headers }
+  ).subscribe({
+
+    next: (res) => {
+      this.bookingDetails = res;
+      this.detailsLoading = false;
+    },
+
+    error: (err) => {
+      console.error('Details API error', err);
+      this.detailsLoading = false;
+    }
+
+  });
+
+}
+closeDetailsPopup() {
+  this.showDetailsPopup = false;
+}
+
   getOrders() {
 
   const headers = this.getAuthHeaders();
@@ -142,7 +211,7 @@ responseLoading = false;
   });
 
 }
-viewBookingDetails(bookingId: number) {
+viewBookingDetailsOrder(bookingId: number) {
 
   const headers = this.getAuthHeaders();
 
@@ -295,40 +364,5 @@ closeResponsePopup() {
   this.showResponsePopup = false;
   this.responseData = null;
 }
-proceedToPayment() {
 
-  if (!this.responseData) return;
-
-  const headers = this.getAuthHeaders();
-
-  const payload = {
-    bookingId: this.responseData.bookingId,
-    paymentMethod: 'ONLINE',
-    amount: this.responseData.finalAmount,
-    paymentRemarks: 'yes online payment'
-  };
-
-  this.http.post<any>(
-    `${API_URL1}/pharmacy-payments/online/create`,
-    payload,
-    { headers }
-  ).subscribe({
-
-    next: (res) => {
-
-      const data = res?.data;
-
-      if (!data) return;
-
-      // this.openRazorpay(data);
-
-    },
-
-    error: (err) => {
-      console.error('Payment API failed', err);
-    }
-
-  });
-
-}
 }

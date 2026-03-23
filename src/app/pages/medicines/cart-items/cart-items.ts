@@ -450,7 +450,9 @@ const headers = this.getAuthHeaders();
         // 🔥 Auto close popup and navigate after 3 seconds
         setTimeout(() => {
           this.showPharmacistPopup = false;
-          this.router.navigate(['/accepted-bookings']);
+          this.router.navigate(['/booking-status'], {
+  queryParams: { bookingId: response?.bookingId }
+});
         }, 3000);
       },
 

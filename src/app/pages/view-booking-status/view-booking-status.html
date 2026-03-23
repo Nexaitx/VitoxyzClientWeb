@@ -1,10 +1,10 @@
 <div class="container mt-4">
 
-  <h5 class="page-title mb-3">My Activity</h5>
-
-  <!-- MAIN TABS -->
-  <div class="main-tabs mb-4">
-
+  <h5 class="mb-3">Booking Status</h5>
+   <div class="main-tabs mb-4">
+   
+    <button [ngClass]="mainTab === 'Bookingstatus' ? 'active' : ''" (click)="selectMainTab('Bookingstatus')">Booking Status</button>
+    
     <button [ngClass]="mainTab === 'offers' ? 'active' : ''" (click)="selectMainTab('offers')">
       My Offers
     </button>
@@ -12,11 +12,45 @@
     <button [ngClass]="mainTab === 'orders' ? 'active' : ''" (click)="selectMainTab('orders')">
       Order Booking History
     </button>
-
+ 
+  </div>
+<div *ngIf="mainTab === 'Bookingstatus'">
+  <!-- Status Filter -->
+  <div class="mb-3">
+    <select class="w-40" [(ngModel)]="selectedStatus" (change)="getBookings()">
+      <option value="PENDING">PENDING</option>
+      <option value="ACCEPTED">ACCEPTED</option>
+      <option value="REJECTED">REJECTED</option>
+    </select>
   </div>
 
+  <!-- Loader -->
+  <div *ngIf="isLoading" class="text-center">
+    <div class="spinner-border"></div>
+  </div>
 
-  <!-- MY OFFERS TAB -->
+  <!-- No Data -->
+  <div *ngIf="!isLoading && bookings.length === 0">
+    <p>No bookings found</p>
+  </div>
+
+  <!-- Booking List -->
+  <div *ngFor="let b of bookings" class="border rounded p-3 mb-3">
+
+    <p><strong>Booking ID :</strong> {{b.bookingId}}</p>
+    <p><strong>Status :</strong> {{b.status}}</p>
+    <p><strong>Total :</strong> ₹{{b.totalAmount}}</p>
+    <p><strong>Date :</strong> {{b.createdAt}}</p>
+    <p><strong>Message :</strong> {{b.message}}</p>
+
+     <button class="btn btn-primary btn-sm mt-2"
+          (click)="viewBookingDetails(b.bookingId)">
+    View Booking Details
+  </button>
+
+  </div>
+</div>
+   <!-- MY OFFERS TAB -->
   <div *ngIf="mainTab === 'offers'">
 
     <!-- DROPDOWN -->
@@ -136,7 +170,7 @@
         
          <!-- VIEW BUTTON -->
   <button class="btn btn-primary btn-sm mt-2"
-          (click)="viewBookingDetails(order.bookingId)">
+          (click)="viewBookingDetailsOrder(order.bookingId)">
     View Booking Details
   </button>
 
@@ -153,6 +187,57 @@
 </div>
 
 </div>
+<!-- Booking Details Popup -->
+<div *ngIf="showDetailsPopup" class="modal fade show d-block" style="background: rgba(0,0,0,0.5)">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content p-3">
+
+      <h5 class="mb-3">Booking Details</h5>
+
+      <div *ngIf="detailsLoading" class="text-center">
+        <div class="spinner-border"></div>
+      </div>
+
+      <div *ngIf="!detailsLoading && bookingDetails">
+
+        <p><strong>Booking ID:</strong> {{bookingDetails.bookingId}}</p>
+        <p><strong>Status:</strong> {{bookingDetails.status}}</p>
+        <p><strong>Date:</strong> {{bookingDetails.createdAt}}</p>
+
+        <hr>
+
+        <h6>Pharmacy Info</h6>
+        <p>{{bookingDetails.pharmacyInfo?.companyName}}</p>
+        <p>{{bookingDetails.pharmacyInfo?.companyAddress}}</p>
+
+        <hr>
+
+        <h6>Delivery Address</h6>
+        <p>{{bookingDetails.userAddressInfo?.fullAddress}}</p>
+
+        <hr>
+
+        <h6>Items</h6>
+        <div *ngFor="let item of bookingDetails.orderSummary?.items">
+          <p>
+            {{item.productName}} (x{{item.quantity}}) - ₹{{item.offerPrice}}
+          </p>
+        </div>
+
+        <hr>
+
+        <p><strong>Total:</strong> ₹{{bookingDetails.orderSummary?.finalAmount}}</p>
+
+      </div>
+
+      <div class="text-end mt-3">
+        <button class="btn btn-secondary" (click)="closeDetailsPopup()">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!-- BOOKING DETAILS POPUP -->
 
 <div *ngIf="showBookingPopup" class="popup-overlay">
@@ -314,8 +399,6 @@
         <hr>
 
         <p><strong>Payment Required :</strong> {{responseData.paymentRequired}}</p>
-
-        <button (click)="proceedToPayment()">proceed to payment</button>
 
       </div>
 
