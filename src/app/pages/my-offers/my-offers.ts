@@ -118,6 +118,16 @@ export class MyOffers implements OnInit {
     );
   }
 
+  completePendingPayment(offer: any) {
+  if (!offer.paymentType || offer.paymentType !== 'ONLINE') {
+    alert('Please select ONLINE payment method first');
+    return;
+  }
+
+  // Directly call same payment flow
+  this.proceedToOnlinePayment(offer);
+}
+
   // Update payment method API call
   updatePaymentMethod(offer: any) {
     if (!offer.selectedPaymentMethod) {
@@ -475,8 +485,45 @@ export class MyOffers implements OnInit {
   }
 
   // Keep this for backward compatibility if needed
-  proceedToPayment() {
-    if (!this.responseData) return;
-    this.proceedToOnlinePayment(this.responseData);
+ 
+
+  confirmPaymentFromPopup() {
+  if (!this.responseData?.selectedPaymentMethod) {
+    alert('Please select payment method');
+    return;
   }
+
+  const headers = this.getAuthHeaders();
+
+  const payload = {
+    bookingId: this.responseData.bookingId,
+    paymentMethod: this.responseData.selectedPaymentMethod
+  };
+
+  this.paymentMethodLoading = true;
+
+  // ✅ STEP 1: Save payment method
+  this.http.post<any>(
+    `${API_URL1}/user/offers/payment-method`,
+    payload,
+    { headers }
+  ).subscribe({
+    next: (res) => {
+      this.paymentMethodLoading = false;
+
+      // ✅ STEP 2: If ONLINE → proceed to payment
+      if (this.responseData.selectedPaymentMethod === 'ONLINE') {
+        this.proceedToOnlinePayment(this.responseData);
+      } else {
+        alert('Order placed with Cash on Delivery');
+        this.closeResponsePopup();
+        this.getOffers();
+      }
+    },
+    error: () => {
+      this.paymentMethodLoading = false;
+      alert('Failed to save payment method');
+    }
+  });
+}
 }
