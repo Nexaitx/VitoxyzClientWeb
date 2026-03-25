@@ -403,7 +403,10 @@ export class MyOffers implements OnInit {
       next: (res) => {
         this.responseData = res;
         this.responseLoading = false;
-
+        // Initialize selectedPaymentMethod for each offer
+        this.offers.forEach(res => {
+          res.selectedPaymentMethod = res.bookingPaymentType || '';
+        });
         // Update list
         offer.offerStatus = res?.offerStatus;
         offer.bookingStatus = res?.bookingStatus;
@@ -416,6 +419,56 @@ export class MyOffers implements OnInit {
     });
   }
 
+  // Update payment method API call
+  PaymentMethod(offer: any) {
+    if (!offer.selectedPaymentMethod) {
+      alert('Please select a payment method');
+      return;
+    }
+
+    this.paymentMethodLoading = true;
+    const headers = this.getAuthHeaders();
+
+    const payload = {
+      bookingId: offer.bookingId,
+      paymentMethod: offer.selectedPaymentMethod
+    };
+
+    this.http.post<any>(
+      `${API_URL1}/user/offers/payment-method`,
+      payload,
+      { headers }
+    ).subscribe({
+      next: (apiRes) => {
+        // Update the offer's payment type
+        offer.bookingPaymentType = offer.selectedPaymentMethod;
+        
+        // // Update in the main offers array
+        // const mainOffer = this.offers.find(res => res.bookingId === res.bookingId);
+        // if (mainOffer) {
+        //   mainOffer.paymentType = res.selectedPaymentMethod;
+        // }
+        
+        this.paymentMethodLoading = false;
+        
+        // If online payment is selected, proceed to payment
+        if (offer.selectedPaymentMethod === 'ONLINE') {
+          this.proceedToOnlinePayment(offer);
+        } else {
+          // For COD, just show success message
+          alert(`Payment method updated to Cash on Delivery successfully!`);
+        }
+        
+        // Refresh filtered offers to reflect changes
+        this.filterOffers();
+      },
+      error: (err) => {
+        console.error('Failed to update payment method', err);
+        this.paymentMethodLoading = false;
+        alert('Failed to update payment method. Please try again.');
+      }
+    });
+  }
   closeResponsePopup() {
     this.showResponsePopup = false;
     this.responseData = null;

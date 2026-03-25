@@ -138,13 +138,13 @@
     <div class="d-flex justify-content-end gap-2">
 
       <!-- Continue to Pay Button (Only if available) -->
-      <button *ngIf="pharmacistsAvailable" class="btn btn-outline btn-sm text-white rounded-pill payContBts"
+      <!-- <button *ngIf="pharmacistsAvailable" class="btn btn-outline btn-sm text-white rounded-pill payContBts"
         (click)="onProceedWithAddress()" [disabled]="isLoading || isPaymentLoading">
 
         <span *ngIf="isPaymentLoading" class="spinner-border spinner-border-sm me-2"></span>
 
         {{ isPaymentLoading ? 'Processing...' : 'Continue to Pay' }}
-      </button>
+      </button> -->
 
       <!-- Close Button -->
       <button class="btn btn-sm btn-outline rounded-pill payContBts" (click)="closePopup()">
