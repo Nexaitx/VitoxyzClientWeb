@@ -20,6 +20,13 @@ export class MyOffers implements OnInit {
   showBookingPopup = false;
   bookingDetails: any = null;
   bookingLoading = false;
+page = 1;
+pageSize = 10;
+paginatedOffers: any[] = [];
+
+  showDetailsPopup = false;
+bookingDetailed: any = null;
+detailsLoading = false;
 
   showDriverPopup = false;
   driverDetails: any = null;
@@ -32,7 +39,11 @@ export class MyOffers implements OnInit {
   mainTab = 'offers';
   activeTab = 'pending';
 
+bookings: any[] = [];
   isLoading = false;
+selectedStatus = 'PENDING';
+
+  // isLoading = false;
   orders: any[] = [];
   orderStatus = 'READY_FOR_PICKUP';
   orderLoading = false;
@@ -67,6 +78,9 @@ export class MyOffers implements OnInit {
     }
     if (tab === 'orders') {
       this.getOrders();
+    }
+     if (tab === 'Bookingstatus') {
+       this.getBookings();
     }
   }
 
@@ -109,6 +123,63 @@ export class MyOffers implements OnInit {
       }
     });
   }
+ getBookings() {
+
+    const headers = this.getAuthHeaders();
+
+    this.isLoading = true;
+
+    this.http.get<any>(
+      `${API_URL1}/user/pharmacybooking/by-status?status=${this.selectedStatus}`,
+      { headers }
+    )
+    .subscribe({
+
+      next: (res) => {
+
+        // adjust based on API structure
+        this.bookings = res?.bookings || res || [];
+
+        this.isLoading = false;
+
+      },
+
+      error: () => {
+        this.isLoading = false;
+      }
+
+    });
+
+  }
+  viewBookingDetailed(bookingId: number) {
+
+  const headers = this.getAuthHeaders();
+
+  this.showDetailsPopup = true;
+  this.detailsLoading = true;
+  this.bookingDetailed = null;
+
+  this.http.get<any>(
+    `${API_URL1}/user/pharmacybooking/${bookingId}/details`,
+    { headers }
+  ).subscribe({
+
+    next: (res) => {
+      this.bookingDetails = res;
+      this.detailsLoading = false;
+    },
+
+    error: (err) => {
+      console.error('Details API error', err);
+      this.detailsLoading = false;
+    }
+
+  });
+
+}
+  closeDetailsPopup() {
+  this.showDetailsPopup = false;
+}
 
   filterOffers() {
     const status = this.activeTab.toUpperCase();
@@ -116,7 +187,33 @@ export class MyOffers implements OnInit {
       o.offerStatus === status ||
       (status === 'EXPIRED' && o.isExpired === true)
     );
+
+      // 👉 reset page when tab changes
+  this.page = 1;
+
+  this.applyPagination();
   }
+
+  applyPagination() {
+  const start = (this.page - 1) * this.pageSize;
+  const end = start + this.pageSize;
+
+  this.paginatedOffers = this.filteredOffers.slice(start, end);
+}
+
+nextPage() {
+  if (this.page * this.pageSize < this.filteredOffers.length) {
+    this.page++;
+    this.applyPagination();
+  }
+}
+
+prevPage() {
+  if (this.page > 1) {
+    this.page--;
+    this.applyPagination();
+  }
+}
 
   completePendingPayment(offer: any) {
   if (!offer.paymentType || offer.paymentType !== 'ONLINE') {

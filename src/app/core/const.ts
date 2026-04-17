@@ -1,14 +1,14 @@
 //export const API_URL = 'http://localhost:8080/Backend/api';
 
- // export const API_URL = "https://vitoxyz.com/Backend/api";
+  export const API_URL = "https://vitoxyz.com/Backend/api";
 //export const API_URL = "https://vitoxyz.com/Backend/api";
 //  export const API_URL = "https://vitoxyz.com/Backend/api";
 //export const API_URL = "https://vitoxyz.com/api";
- export const API_URL = "https://vitoxyzbackend-az2e.onrender.com/Backend/api"
+ //export const API_URL = "https://vitoxyzbackend-az2e.onrender.com/Backend/api"
 export const API_URL2 = 'https://porterbackend.onrender.com/api';
 
-  // export const API_URL1 = `https://pharmacyvitoxyzbackend.onrender.com/Backend/api`;
- export const API_URL1 = `http://localhost:8082/Backend/api`;
+   export const API_URL1 = `https://pharmacyvitoxyzbackend.onrender.com/Backend/api`;
+ //export const API_URL1 = `http://localhost:8082/Backend/api`;
 
 
 export const ENDPOINTS = {
