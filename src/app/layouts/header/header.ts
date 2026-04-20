@@ -168,7 +168,7 @@ savedAddresses: any[] = [];
       dropdown: true,
       dropdownItems: [
         { label: 'My Profile', path: '/user-profile' },
-        { label: 'My Orders', path: '/orders' },
+        { label: 'My Orders', path: '/my-offers' },
         { label: 'Booked staff', path: '/view-staff' },
         { label: 'Staff Booking History', path: '/view-staff-booking-history' },
         // { label: 'Manage Payments', path: '' },

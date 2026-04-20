@@ -2,7 +2,7 @@ import { Component, inject, Input, OnInit, OnDestroy, Output, EventEmitter } fro
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Submission } from '../../submission/submission';
 import { Subscription, interval } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -65,9 +65,19 @@ fcmToken: string | null = null;
   // console.log("FCM Token:", this.fcmToken);
   }
 private async ensureFcmToken(): Promise<string | null> {
-  if (this.fcmToken) return this.fcmToken;
-  this.fcmToken = await this.pushService.requestPermission();
-  return this.fcmToken;
+  try {
+    if (!this.fcmToken) {
+      console.log("⚡ Fetching FCM token before login...");
+      this.fcmToken = await this.pushService.requestPermission();
+    }
+
+    console.log("✅ Final FCM Token:", this.fcmToken);
+    return this.fcmToken;
+
+  } catch (err) {
+    console.error("FCM Token error:", err);
+    return null;
+  }
 }
 
   ngOnDestroy() {
@@ -188,6 +198,25 @@ private showToast(message: string, type: 'success' | 'error' = 'error'): void {
 //       )
 //     }
 //   }
+   private getAuthHeaders(): HttpHeaders {
+    const token =
+      localStorage.getItem('authToken') ||
+      sessionStorage.getItem('authToken') ||
+      localStorage.getItem('token') ||
+      sessionStorage.getItem('token') ||
+      '';
+
+    let headers = new HttpHeaders({
+      'Accept': 'application/json'
+    });
+
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    return headers;
+  }
+
 async login(): Promise<void> {
   if (this.loginForm.invalid) {
     this.loginForm.markAllAsTouched();
@@ -201,14 +230,16 @@ async login(): Promise<void> {
 
   // Ensure FCM Token exists
   const fcmToken = await this.ensureFcmToken();
+// 🔥 Always fetch fresh token
+  // const fcmToken = await this.pushService.getFcmToken();
 
   console.log("🔥 Sending FCM Token to Backend:", fcmToken);
 
   const payload = {
-    username,
+   username,
     password,
     deviceType: this.deviceType,
-    fcmToken: fcmToken || ''
+    fcmToken: fcmToken ?? ''
   };
 
   console.log("📦 Final Login Payload:", payload);
@@ -216,12 +247,13 @@ async login(): Promise<void> {
   this.http.post(API_URL + ENDPOINTS.LOGIN, payload).subscribe({
    
     next: (res: any) => {
-      this.isLoading = false;
+     
             console.log("✅ Login Response:", res);
 
-      if (!res || !res.token) {
+      if (!res?.token) {
         console.error("❌ Invalid response format:", res);
         this.showToast('Invalid server response', 'error');
+         this.isLoading = false;
         return;
       }
       localStorage.setItem('authToken', res.token);
@@ -233,6 +265,31 @@ async login(): Promise<void> {
       console.log("this is profile ",res.profile );
       console.log("this is profile 11234567789900",res.token );
       console.log("this is profile ydbdfyfygsydgf ",res );
+      // ✅ Register FCM Token after login
+ // 🔥 CALL FCM REGISTER API
+      if (fcmToken) {
+        const headers = this.getAuthHeaders();
+        const fcmPayload = {
+          fcmToken: fcmToken ?? ''
+        };
+
+        console.log("📤 Registering FCM Token:", fcmPayload);
+
+        this.http.post( `${API_URL}/fcm/token/register`, fcmPayload, {headers} ).subscribe({
+
+          next: (fcmRes: any) => {
+            console.log("✅ FCM Token Registered:", fcmRes);
+          },
+
+          error: (err) => {
+            console.error("❌ FCM Register API Failed:", err);
+          }
+
+        });
+
+      } else {
+        console.warn("⚠️ No FCM token available");
+      }
       
       this.loginSuccess.emit();
       this.loadingChange.emit(false);

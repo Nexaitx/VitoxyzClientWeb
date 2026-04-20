@@ -1,14 +1,16 @@
 
-importScripts('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
-importScripts('https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging-compat.js');
 
 firebase.initializeApp({
-  apiKey: "AIzaSyDujboFt_5CS8y1EH7EN5Kzdof0cZbnXaw",
-  authDomain: "vitoxyzclientweb.firebaseapp.com",
-  projectId: "vitoxyzclientweb",
-  storageBucket: "vitoxyzclientweb.firebasestorage.app",
+  apiKey: "AIzaSyA7T4I991z3Cl-5tlPyz79igpLkKWaNzDI",
+  authDomain: "nexaitxclient.firebaseapp.com",
+  projectId: "nexaitxclient",
+  storageBucket: "nexaitxclient.firebasestorage.app",
   messagingSenderId: "675568857186",
-  appId: "1:675568857186:web:0a1f84cec64e7f8f0be13b"
+  appId: "1:377640293333:web:47b6b851d7f3e842bde35c",
+  measurementId: "G-RGQFPXFWB0"
+
 });
 
 const messaging = firebase.messaging();
@@ -66,3 +68,27 @@ self.addEventListener('notificationclick', (event) => {
     }
   }));
 }); 
+
+//Log the received push message in the service worker console
+  try {
+    console.log('[firebase-messaging-sw] push event received:', data);
+  } catch (e) {}
+ 
+  // Send message to all client pages (Angular app)
+  self.clients.matchAll({ includeUncontrolled: true }).then(clients => {
+    clients.forEach(client => {
+      // Post the entire payload so the app can inspect notification + custom data
+      try {
+        client.postMessage({ from: 'service-worker', payload: data });
+      } catch (e) {}
+    });
+  });
+ 
+  // Show Notification (use payload.notification if present)
+  const notif = data.notification || { title: 'New Notification', body: '' };
+  event.waitUntil(
+    self.registration.showNotification(notif.title, {
+      body: notif.body,
+      data: data.data || {}
+    })
+  );

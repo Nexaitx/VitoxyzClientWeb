@@ -12,15 +12,15 @@ export const environment = {
   razorpayKey: 'rzp_test_RARA6BGk8D2Y2o',
 
   firebase: {
-     apiKey: "AIzaSyDujboFt_5CS8y1EH7EN5Kzdof0cZbnXaw",
-  authDomain: "vitoxyzclientweb.firebaseapp.com",
-  projectId: "vitoxyzclientweb",
-  storageBucket: "vitoxyzclientweb.firebasestorage.app",
-  messagingSenderId: "675568857186",
-  appId: "1:675568857186:web:0a1f84cec64e7f8f0be13b",
-  measurementId: "G-RHC0Z5V6Q4"
+     apiKey: "AIzaSyCXe_uurDqHTnVXipvTCCLjx7wtiCV0flw",
+  authDomain: "vitoxyzclient-14684.firebaseapp.com",
+  projectId: "vitoxyzclient-14684",
+  storageBucket: "vitoxyzclient-14684.firebasestorage.app",
+  messagingSenderId: "746882776489",
+  appId: "1:746882776489:web:06843f00b4d6ae970698b8",
+  measurementId: "G-7TF30KVTR5"
   },
-  fcmVapidKey: "BIkNaPgHdFkb5Mts_4tNPTsb437UYTjM2rB6EcdVq8Mzud1CGk273e7s7ngTpVm5Wn3Z08rxw1Bk5h5P5EEBj_w"
+  fcmVapidKey: "BGO5rbCdG438t7Jx5DH87NZ-yLia3Sk0hub8VcLY7EQla5n6vzDlXMQlTT7J6DKaInWySwWO886-VV72r9eoWxQ"
 
 
 };

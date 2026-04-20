@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { MapComponent } from '../book-staff-process/map/map';
+import { PushNotificationService } from '@src/app/core/services/push-notification.service';
 @Component({
   selector: 'app-profile',
   imports: [
@@ -30,8 +31,7 @@ export class Profile implements OnInit {
   editField: 'mobile' | 'email' | 'address' | null = null;
   saving = false;
   profileLoaded = false;
-
-  addresses: any[] = [];
+addresses: any[] = [];
   defaultAddress: any = null;
   addressesLoaded = false;
   showAddAddressPopup = false;
@@ -49,6 +49,10 @@ geocoder: any;
 private addressSearch$ = new Subject<string>();
 @ViewChild(MapComponent) mapComponent!: MapComponent;
 
+notificationsEnabled = false;
+private REGISTER_FCM_URL = `${API_URL}/fcm/token/register`;
+private REMOVE_FCM_URL = `${API_URL}/fcm/token/remove`;
+
   private ADD_ADDRESS_URL = `${API_URL}/address/add`;
   private GET_ADDRESS_URL = `${API_URL}/address/my`;
   private UPDATE_ADDRESS_URL = `${API_URL}/address/update`;
@@ -56,11 +60,7 @@ private addressSearch$ = new Subject<string>();
   private GET_PROFILE_URL = `${API_URL}/user/profile`;
   private UPDATE_PROFILE_URL = `${API_URL}/user/profile/update`;
 
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
-    private snackBar: MatSnackBar,
-    private router: Router
+  constructor(  private fb: FormBuilder, private http: HttpClient, private snackBar: MatSnackBar, private router: Router,private pushService: PushNotificationService
   ) {
     this.profileForm = this.fb.group({
       phoneNumber: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
@@ -69,25 +69,13 @@ private addressSearch$ = new Subject<string>();
       userName: ['']
     });
     this.addressForm = this.fb.group({
-      fullName: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      addressLine1: ['', Validators.required],
-      addressLine2: [''],
-      landmark: [''],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      pincode: ['', Validators.required],
-      addressType: ['', Validators.required],
+      fullName: ['', Validators.required], phoneNumber: ['', Validators.required], addressLine1: ['', Validators.required],addressLine2: [''],
+      landmark: [''],city: ['', Validators.required], state: ['', Validators.required],pincode: ['', Validators.required],addressType: ['', Validators.required],
 
         // ✅ NEW FIELDS (NOT USED IN UI)
  // ✅ NEW FIELDS (NOT USED IN UI)
-  latitude: [null],
-  longitude: [null],
-  useMapLocation: [true],
-  mapSelectedAddress: [''],
- 
-
-    });
+  latitude: [null], longitude: [null],useMapLocation: [true],mapSelectedAddress: [''],
+  });
 
 
   }
@@ -104,6 +92,11 @@ private addressSearch$ = new Subject<string>();
     .subscribe(address => {
       this.searchAddressAndMoveMap(address);
     });
+    const savedNotificationState = localStorage.getItem('notificationsEnabled');
+
+if (savedNotificationState === 'true') {
+  this.notificationsEnabled = true;
+}
   }
   setLocation(lat: number, lng: number) {
 
@@ -114,11 +107,7 @@ private addressSearch$ = new Subject<string>();
 
   this.marker.setPosition({ lat, lng });
 
-   this.addressForm.patchValue({
-    latitude: lat,
-    longitude: lng,
-     useMapLocation: true
-  });
+   this.addressForm.patchValue({ latitude: lat, longitude: lng,useMapLocation: true });
   
 
   this.geocoder.geocode({ location: { lat, lng } }, (results: any, status: any) => {
@@ -404,6 +393,70 @@ setMarkerAndLocation(lat: number, lng: number, address?: string): void {
     return headers;
   }
 
+async toggleNotifications(event: any) {
+
+  const enabled = event.target.checked;
+
+  if (enabled) {
+
+    const token = await this.pushService.requestPermission();
+
+    if (!token) {
+      this.snackBar.open('Notification permission denied', 'Close', { duration: 3000 , verticalPosition: 'top',
+        horizontalPosition: 'center',
+        panelClass: ['top-snackbar'] });
+      this.notificationsEnabled = false;
+      return;
+    }
+
+    const headers = this.getAuthHeaders();
+
+    const payload = {
+      fcmToken: token
+    };
+
+    this.http.post<any>(this.REGISTER_FCM_URL, payload, { headers }).subscribe({
+      next: (res) => {
+
+        if (res?.status) {
+          this.notificationsEnabled = true;
+          localStorage.setItem('notificationsEnabled', 'true');
+
+          this.snackBar.open('Notifications enabled', 'Close', { duration: 3000 ,  verticalPosition: 'top',
+        horizontalPosition: 'center',
+        panelClass: ['top-snackbar'] });
+        }
+      },
+      error: () => {
+        this.notificationsEnabled = false;
+        this.snackBar.open('Failed to enable notifications', 'Close', { duration: 3000 ,  verticalPosition: 'top',
+        horizontalPosition: 'center',
+        panelClass: ['top-snackbar'] });
+      }
+    });
+
+  } else {
+
+    const headers = this.getAuthHeaders();
+
+    this.http.delete<any>(this.REMOVE_FCM_URL, { headers }).subscribe({
+      next: (res) => {
+
+        if (res?.status) {
+          this.notificationsEnabled = false;
+          localStorage.removeItem('notificationsEnabled');
+
+          this.snackBar.open('Notifications disabled', 'Close', { duration: 3000 , });
+        }
+      },
+      error: () => {
+        this.notificationsEnabled = true;
+        this.snackBar.open('Failed to disable notifications', 'Close', { duration: 3000 });
+      }
+    });
+
+  }
+}
   // -------------------------
   // FIXED LOAD PROFILE
   // -------------------------

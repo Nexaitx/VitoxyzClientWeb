@@ -296,10 +296,7 @@ td {
 /* ---------- MAIN TWO-COLUMN LAYOUT ---------- */
 
 .CONSCls {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 24px;
+   display: block;
   width: 100%;
   box-sizing: border-box;
 }
@@ -324,9 +321,9 @@ td {
 
 /* RIGHT: FIXED WIDTH BILL SUMMARY */
 .CONSCls .bill-summary {
-  width: 450px;
+  width: 100%;
   flex: 0 0 450px;
-  position: sticky;
+  position: static;
   top: 20px;
   background: #fbf8eb;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);

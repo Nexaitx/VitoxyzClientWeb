@@ -1,10 +1,10 @@
 <div class="container mt-4">
 
-  <h5 class="page-title mb-3">My Activity</h5>
-
-  <!-- MAIN TABS -->
-  <div class="main-tabs mb-4">
-
+  <h5 class="mb-3">Booking Status</h5>
+   <div class="main-tabs mb-4">
+   
+    <button [ngClass]="mainTab === 'Bookingstatus' ? 'active' : ''" (click)="selectMainTab('Bookingstatus')">Booking Status</button>
+    
     <button [ngClass]="mainTab === 'offers' ? 'active' : ''" (click)="selectMainTab('offers')">
       My Offers
     </button>
@@ -12,41 +12,84 @@
     <button [ngClass]="mainTab === 'orders' ? 'active' : ''" (click)="selectMainTab('orders')">
       Order Booking History
     </button>
-
-    <button [ngClass]="mainTab === 'Bookingstatus' ? 'active' : ''" (click)="selectMainTab('Bookingstatus')">Booking
-      Status</button>
-
+ 
+  </div>
+<div *ngIf="mainTab === 'Bookingstatus'">
+  <!-- Status Filter -->
+  <div class="mb-3">
+    <select class="w-40" [(ngModel)]="selectedStatus" (change)="getBookings()">
+      <option value="PENDING">PENDING</option>
+      <option value="ACCEPTED">ACCEPTED</option>
+      <option value="REJECTED">REJECTED</option>
+    </select>
   </div>
 
+  <!-- Loader -->
+  <div *ngIf="isLoading" class="text-center">
+    <div class="spinner-border"></div>
+  </div>
 
-  <!-- MY OFFERS TAB -->
-  <!-- MY OFFERS TAB -->
+  <!-- No Data -->
+  <div *ngIf="!isLoading && bookings.length === 0">
+    <p>No bookings found</p>
+  </div>
+
+  <!-- Booking List -->
+  <div *ngFor="let b of bookings" class="border rounded p-3 mb-3">
+
+    <p><strong>Booking ID :</strong> {{b.bookingId}}</p>
+    <p><strong>Status :</strong> {{b.status}}</p>
+    <p><strong>Total :</strong> ₹{{b.totalAmount}}</p>
+    <p><strong>Date :</strong> {{b.createdAt}}</p>
+    <p><strong>Message :</strong> {{b.message}}</p>
+
+     <button class="btn btn-primary btn-sm mt-2"
+          (click)="viewBookingDetails(b.bookingId)">
+    View Booking Details
+  </button>
+
+  </div>
+</div>
+   <!-- MY OFFERS TAB -->
   <div *ngIf="mainTab === 'offers'">
 
     <!-- DROPDOWN -->
     <div class="mb-3">
+
       <select class="form-select w-auto" [(ngModel)]="activeTab" (change)="filterOffers()">
+
         <option value="pending">Pending</option>
         <option value="accepted">Accepted</option>
         <option value="rejected">Rejected</option>
         <option value="expired">Expired</option>
         <option value="cancelled">Cancelled</option>
+
       </select>
+
     </div>
+
 
     <!-- Loader -->
     <div *ngIf="isLoading" class="text-center">
       <div class="spinner-border"></div>
     </div>
 
+
     <!-- OFFER LIST -->
     <div *ngIf="!isLoading">
-      <div *ngFor="let offer of paginatedOffers" class="offer-card">
+
+      <div *ngFor="let offer of filteredOffers" class="offer-card">
+
         <div class="offer-header">
+
           <strong>Booking ID : {{offer.bookingId}}</strong>
+
           <span class="status" [ngClass]="offer.offerStatus.toLowerCase()">
+
             {{offer.offerStatus}}
+
           </span>
+
         </div>
 
         <p>BookingStatus : {{offer.bookingStatus}}</p>
@@ -55,96 +98,31 @@
         <p>OfferExpiresDate : {{offer.offerExpiresAt}}</p>
         <p>Pharmacy : {{offer.pharmacyName}}</p>
         <p>Amount : ₹{{offer.finalAmount}}</p>
-        <p class="mb-0">Payment : {{offer.paymentType || 'Not Selected'}}</p>
+        <p class="mb-0">Payment : {{offer.paymentType}}</p>
 
-        <!-- SHOW ONLY FOR PENDING -->
-        <div *ngIf="activeTab === 'pending'" class="mt-2">
-          <button class="btn btn-success btn-sm me-2" (click)="respondOffer(offer, true)">
-            Accept
-          </button>
-          <button class="btn btn-danger btn-sm" (click)="respondOffer(offer, false)">
-            Reject
-          </button>
-        </div>
+        <!-- ✅ SHOW ONLY FOR PENDING -->
+  <div *ngIf="activeTab === 'pending'" class="mt-2">
 
-        <!-- SHOW FOR ACCEPTED - PAYMENT METHOD SELECTION -->
-        <div *ngIf="offer.bookingStatus === 'USER_ACCEPTED'" class="mt-2">
-          <!-- If payment method not selected yet -->
-          <div *ngIf="!offer.paymentType || offer.paymentType === '' || offer.paymentType === 'null'"
-            class="payment-method-section">
-            <label class="form-label fw-bold">Select Payment Method:</label>
-            <div class="payment-options">
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="paymentMethod_{{offer.bookingId}}" [value]="'COD'"
-                  [(ngModel)]="offer.selectedPaymentMethod">
-                <label class="form-check-label">Cash on Delivery (COD)</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="paymentMethod_{{offer.bookingId}}" [value]="'ONLINE'"
-                  [(ngModel)]="offer.selectedPaymentMethod">
-                <label class="form-check-label">Online Payment (Razorpay)</label>
-              </div>
-            </div>
-            <button class="btn btn-primary btn-sm mt-2" (click)="updatePaymentMethod(offer)"
-              [disabled]="!offer.selectedPaymentMethod || paymentMethodLoading">
-              <span *ngIf="paymentMethodLoading" class="spinner-border spinner-border-sm me-1"></span>
-              {{ paymentMethodLoading ? 'Processing...' : 'Save & Proceed' }}
-            </button>
-          </div>
+   <button class="btn btn-success btn-sm me-2"
+          (click)="respondOffer(offer, true)">
+    Accept
+  </button>
 
-          <!-- If payment method already selected -->
-          <div *ngIf="offer.paymentType && offer.paymentType !== '' && offer.paymentType !== 'null'"
-            class="payment-method-selected">
-            <span class="badge" [ngClass]="offer.paymentType === 'ONLINE' ? 'bg-primary' : 'bg-success'">
-              Payment Method: {{offer.paymentType === 'ONLINE' ? 'Online Payment' : 'Cash on Delivery'}}
-            </span>
-            <button class="btn btn-outline-secondary btn-sm ms-2" (click)="editPaymentMethod(offer)">
-              Change
-            </button>
+    <button class="btn btn-danger btn-sm"
+          (click)="respondOffer(offer, false)">
+    Reject
+  </button>
 
-            <!-- Show payment status if online -->
-            <div *ngIf="offer.paymentType === 'ONLINE' && offer.paymentStatus" class="mt-2">
-              <span class="badge" [ngClass]="offer.paymentStatus === 'PAID' ? 'bg-success' : 'bg-warning'">
-                Payment Status: {{offer.paymentStatus}}
-              </span>
-            </div>
-          </div>
-        </div>
-        <!-- PAYMENT PENDING BUTTON -->
-        <div *ngIf="offer.bookingStatus === 'PAYMENT_PENDING'" class="mt-2">
-          <button class="btn btn-warning btn-sm" (click)="completePendingPayment(offer)"
-            [disabled]="paymentMethodLoading">
+  </div>
 
-            <span *ngIf="paymentMethodLoading" class="spinner-border spinner-border-sm me-1"></span>
-            Complete Your Payment
-          </button>
-        </div>
       </div>
 
       <div *ngIf="filteredOffers.length === 0" class="empty-box">
         No offers available
       </div>
+
     </div>
 
-    <div *ngIf="activeTab === 'accepted' && filteredOffers.length > 10" class="mt-3 d-flex justify-content-center">
-
-  <button class="btn btn-sm btn-outline-primary me-2 text-white"
-          (click)="prevPage()"
-          [disabled]="page === 1">
-    Previous
-  </button>
-
-  <span class="align-self-center">
-    Page {{page}}
-  </span>
-
-  <button class="btn btn-sm btn-outline-primary ms-2 text-white"
-          (click)="nextPage()"
-          [disabled]="page * pageSize >= filteredOffers.length">
-    Next
-  </button>
-
-</div>
   </div>
 
 
@@ -189,11 +167,12 @@
         <p>Payment Status : {{order.paymentStatus}}</p>
         <p>Delivery Charge : ₹{{order.deliveryCharge}}</p>
         <p>Created At : {{order.createdAt}}</p>
-
-        <!-- VIEW BUTTON -->
-        <button class="btn btn-primary btn-sm mt-2" (click)="viewBookingDetails(order.bookingId)">
-          View Booking Details
-        </button>
+        
+         <!-- VIEW BUTTON -->
+  <button class="btn btn-primary btn-sm mt-2"
+          (click)="viewBookingDetailsOrder(order.bookingId)">
+    View Booking Details
+  </button>
 
       </div>
 
@@ -203,49 +182,11 @@
 
     </div>
 
-
-
-  </div>
-
-  <div *ngIf="mainTab === 'Bookingstatus'">
-  <!-- Status Filter -->
-  <div class="mb-3">
-    <select class="w-40" [(ngModel)]="selectedStatus" (change)="getBookings()">
-      <option value="PENDING">PENDING</option>
-      <option value="ACCEPTED">ACCEPTED</option>
-      <option value="REJECTED">REJECTED</option>
-    </select>
-  </div>
-
-  <!-- Loader -->
-  <div *ngIf="isLoading" class="text-center">
-    <div class="spinner-border"></div>
-  </div>
-
-  <!-- No Data -->
-  <div *ngIf="!isLoading && bookings.length === 0">
-    <p>No bookings found</p>
-  </div>
-
-  <!-- Booking List -->
-  <div *ngFor="let b of bookings" class="border rounded p-3 mb-3">
-
-    <p><strong>Booking ID :</strong> {{b.bookingId}}</p>
-    <p><strong>Status :</strong> {{b.status}}</p>
-    <p><strong>Total :</strong> ₹{{b.totalAmount}}</p>
-    <p><strong>Date :</strong> {{b.createdAt}}</p>
-    <p><strong>Message :</strong> {{b.message}}</p>
-
-     <button class="btn btn-primary btn-sm mt-2"
-          (click)="viewBookingDetailed(b.bookingId)">
-    View Booking Details
-  </button>
-
-  </div>
-</div>
+  
 
 </div>
 
+</div>
 <!-- Booking Details Popup -->
 <div *ngIf="showDetailsPopup" class="modal fade show d-block" style="background: rgba(0,0,0,0.5)">
   <div class="modal-dialog modal-lg">
@@ -257,7 +198,7 @@
         <div class="spinner-border"></div>
       </div>
 
-      <div *ngIf="!detailsLoading && bookingDetailed">
+      <div *ngIf="!detailsLoading && bookingDetails">
 
         <p><strong>Booking ID:</strong> {{bookingDetails.bookingId}}</p>
         <p><strong>Status:</strong> {{bookingDetails.status}}</p>
@@ -336,11 +277,12 @@
 
       </div>
       <!-- DRIVER BUTTON -->
-      <button *ngIf="bookingDetails?.driverId" class="btn btn-success btn-sm mt-2"
+<button *ngIf="bookingDetails?.driverId"
+        class="btn btn-success btn-sm mt-2"
         (click)="viewDriverDetails(bookingDetails.driverId)">
-        View Driver Details
-      </button>
-
+  View Driver Details
+</button>
+      
     </div>
 
   </div>
@@ -379,9 +321,10 @@
       <p><strong>Color :</strong> {{driverDetails.vehicle?.color}}</p>
 
       <!-- VIEW LOCATION BUTTON -->
-      <button class="btn btn-primary btn-sm mt-2" (click)="viewDriverLocation(driverDetails.driverId)">
-        View Driver Location
-      </button>
+<button class="btn btn-primary btn-sm mt-2"
+        (click)="viewDriverLocation(driverDetails.driverId)">
+  View Driver Location
+</button>
 
     </div>
 
@@ -407,7 +350,12 @@
 
     <div *ngIf="!mapLoading && mapUrl">
 
-      <iframe [src]="mapUrl" width="100%" height="300" style="border:0;" loading="lazy">
+      <iframe
+        [src]="mapUrl"
+        width="100%"
+        height="300"
+        style="border:0;"
+        loading="lazy">
       </iframe>
 
     </div>
@@ -452,31 +400,6 @@
 
         <p><strong>Payment Required :</strong> {{responseData.paymentRequired}}</p>
 
-        <!-- PAYMENT METHOD SELECTION IN POPUP -->
-        <div class="mt-3">
-
-          <label class="fw-bold">Select Payment Method:</label>
-
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="popupPayment" value="COD"
-              [(ngModel)]="responseData.selectedPaymentMethod">
-            <label class="form-check-label">Cash on Delivery</label>
-          </div>
-
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="popupPayment" value="ONLINE"
-              [(ngModel)]="responseData.selectedPaymentMethod">
-            <label class="form-check-label">Online Payment</label>
-          </div>
-
-          <button class="btn btn-primary mt-2" (click)="confirmPaymentFromPopup()"
-            [disabled]="!responseData.selectedPaymentMethod || paymentMethodLoading">
-
-            <span *ngIf="paymentMethodLoading" class="spinner-border spinner-border-sm me-1"></span>
-            {{ paymentMethodLoading ? 'Processing...' : 'Proceed' }}
-          </button>
-
-        </div>
       </div>
 
       <!-- CLOSE -->

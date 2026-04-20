@@ -11,6 +11,7 @@ import { Empty } from './shared/empty/empty';
 import { AddAddress } from './layouts/add-address/add-address';
 import { AcceptedBookings } from './pages/accepted-bookings/accepted-bookings';
 import { MyOffers } from './pages/my-offers/my-offers';
+import { ViewBookingStatus } from './pages/view-booking-status/view-booking-status';
 
 export const routes: Routes = [
   {
@@ -27,6 +28,10 @@ export const routes: Routes = [
     path: 'view-medicine/:id',
     component: ViewMedicine
   },
+  {
+  path: 'booking-status',
+  component: ViewBookingStatus
+},
         { path: 'products', component: MultiproductsformComponent },
           { path: 'medicine', component: MedicineFilterComponent },
  { path: 'add-address', component: AddAddress },
