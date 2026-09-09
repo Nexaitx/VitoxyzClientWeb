@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Footer } from "../footer/footer";
+import { Footer } from "../../components/footer/footer";
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LayoutModule } from '@angular/cdk/layout';

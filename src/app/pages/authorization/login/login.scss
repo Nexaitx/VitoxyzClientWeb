@@ -1,149 +1,744 @@
-.login-screen {
+/* =========================================================
+   VITOXYZ LOGIN MODAL
+   UI ONLY
+========================================================= */
+
+.login-modal {
+  --brand-blue: #1F7AE0;
+  --brand-green: #16BC7E;
+  --brand-deep: #0C3B33;
+  --coral: #FF7A45;
+  --coral-dark: #E85F2A;
+  --ink: #12211E;
+  --slate: #5C6E6A;
+  --line: #E2EDE9;
+  --mint: #F1F8F5;
+  --white: #ffffff;
+
+  width: 100%;
+  max-width: 520px;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+
+  background: var(--white);
+
+  border: 1px solid var(--line);
+  border-radius: 22px;
+
+  box-shadow:
+    0 20px 60px rgba(12, 59, 51, 0.14);
+
+  font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.login-modal-header {
+  position: relative;
+
+  padding: 22px 28px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(31, 122, 224, 0.07),
+      rgba(22, 188, 126, 0.10)
+    );
+
+  border-bottom: 1px solid var(--line);
+}
+
+.login-modal-header::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 3px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--brand-blue),
+      var(--brand-green)
+    );
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.login-brand {
   display: flex;
-  height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
-  background: url('/assets/login/background.avif') no-repeat center center;
+  align-items: center;
 
-  .left-panel {
-    flex: 1;
-    background: url('/assets/login/login-illustrate.avif') no-repeat center center;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    padding: 2rem;
+  gap: 12px;
+}
 
-    .overlay-content {
-      text-align: center;
-      //font: optional;
+.brand-mark {
+  width: 43px;
+  height: 43px;
 
-      h2 {
-        font-size: 2rem;
-        font-weight: 600;
-      }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-      p {
-        font-size: 1rem;
-        margin-top: 0.8rem;
-        line-height: 1.5;
-        margin: 0;
-      }
-    }
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--brand-blue),
+      var(--brand-green)
+    );
+
+  box-shadow:
+    0 7px 18px rgba(31, 122, 224, 0.20);
+}
+
+.brand-mark span {
+  width: 18px;
+  height: 18px;
+
+  position: relative;
+
+  border: 3px solid var(--white);
+  border-radius: 5px;
+}
+
+.brand-mark span::before,
+.brand-mark span::after {
+  content: "";
+
+  position: absolute;
+
+  background: var(--white);
+
+  border-radius: 5px;
+}
+
+.brand-mark span::before {
+  width: 3px;
+  height: 24px;
+
+  left: 5px;
+  top: -6px;
+}
+
+.brand-mark span::after {
+  width: 24px;
+  height: 3px;
+
+  left: -6px;
+  top: 5px;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brand-text strong {
+  color: var(--brand-deep);
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.brand-text small {
+  color: var(--slate);
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+.login-modal-body {
+  padding: 28px;
+}
+
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+.login-welcome {
+  text-align: center;
+
+  margin-bottom: 22px;
+}
+
+.login-welcome h2 {
+  margin: 0 0 7px;
+
+  color: var(--brand-deep);
+
+  font-size: 25px;
+  font-weight: 800;
+
+  letter-spacing: -0.5px;
+}
+
+.login-welcome p {
+  margin: 0;
+
+  color: var(--slate);
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+.login-tabs-wrapper {
+  width: 100%;
+}
+
+.login-tabs {
+  width: 100%;
+}
+
+
+/* Angular Material tab styling */
+
+::ng-deep .login-tabs .mat-mdc-tab-header {
+  margin-bottom: 22px;
+
+  border-bottom: 1px solid var(--line);
+}
+
+::ng-deep .login-tabs .mat-mdc-tab {
+  min-width: 0;
+  flex: 1;
+
+  padding: 0 8px;
+
+  color: var(--slate);
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+::ng-deep .login-tabs .mat-mdc-tab.mdc-tab--active {
+  color: var(--brand-blue);
+}
+
+::ng-deep .login-tabs .mdc-tab-indicator__content--underline {
+  border-color: var(--brand-blue) !important;
+
+  border-width: 3px !important;
+
+  border-radius: 5px 5px 0 0;
+}
+
+::ng-deep .login-tabs .mat-mdc-tab-body-content {
+  overflow: visible;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+
+  padding: 0 !important;
+}
+
+.form-group {
+  width: 100%;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: var(--ink);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-wrapper {
+  position: relative;
+
+  width: 100%;
+}
+
+.input-prefix {
+  position: absolute;
+
+  left: 15px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--brand-blue);
+
+  font-size: 15px;
+
+  pointer-events: none;
+}
+
+.input-wrapper .form-control {
+  width: 100%;
+
+  height: 49px;
+
+  padding: 0 45px 0 43px;
+
+  color: var(--ink);
+
+  background: #fbfdfc;
+
+  border: 1px solid var(--line);
+  border-radius: 12px;
+
+  font-size: 13px;
+
+  outline: none;
+
+  box-shadow: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.input-wrapper .form-control::placeholder {
+  color: #98a8a4;
+}
+
+.input-wrapper .form-control:focus {
+  background: var(--white);
+
+  border-color: var(--brand-blue);
+
+  box-shadow:
+    0 0 0 4px rgba(31, 122, 224, 0.08);
+}
+
+
+/* =========================================================
+   PASSWORD
+========================================================= */
+
+.password-toggle {
+  position: absolute;
+
+  right: 10px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 9px;
+
+  background: transparent;
+
+  color: var(--slate);
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.password-toggle:hover {
+  background: var(--mint);
+  color: var(--brand-blue);
+}
+
+
+/* =========================================================
+   VALIDATION
+========================================================= */
+
+.text-danger {
+  display: block;
+
+  margin-top: 6px;
+
+  color: #dc3545 !important;
+
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   LOGIN OPTIONS
+========================================================= */
+
+.login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-top: -2px;
+}
+
+.remember-option {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+}
+
+.remember-option .form-check-input {
+  width: 16px;
+  height: 16px;
+
+  margin: 0;
+
+  border: 1px solid #b9cbc6;
+
+  cursor: pointer;
+}
+
+.remember-option .form-check-input:checked {
+  background-color: var(--brand-blue);
+  border-color: var(--brand-blue);
+}
+
+.remember-option .form-check-label {
+  margin: 0;
+
+  color: var(--slate);
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.links {
+  color: var(--brand-blue);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.links:hover {
+  color: var(--brand-green);
+
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   SUBMISSION
+========================================================= */
+
+.submit-wrapper {
+  width: 100%;
+
+  margin-top: 2px;
+}
+
+
+/* =========================================================
+   OTP
+========================================================= */
+
+.otp-container {
+  width: 100%;
+}
+
+.otp-verification {
+  width: 100%;
+}
+
+.otp-message {
+  margin: 0 0 18px;
+
+  padding: 13px 15px;
+
+  color: var(--brand-deep) !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(31, 122, 224, 0.06),
+      rgba(22, 188, 126, 0.07)
+    );
+
+  border: 1px solid var(--line);
+
+  border-radius: 12px;
+
+  font-size: 12px !important;
+  line-height: 1.6 !important;
+}
+
+.otp-input {
+  letter-spacing: 5px;
+
+  font-weight: 700;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   RESEND OTP
+========================================================= */
+
+.resend-otp-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 40px;
+
+  margin-top: 15px;
+}
+
+.resend-otp-section p {
+  margin: 0;
+
+  color: var(--slate);
+
+  font-size: 12px;
+}
+
+.resend-otp-section button {
+  padding: 8px 17px;
+
+  border: 1px solid rgba(31, 122, 224, 0.20);
+  border-radius: 50px;
+
+  background: rgba(31, 122, 224, 0.06);
+
+  color: var(--brand-blue);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.resend-otp-section button:hover {
+  background: var(--brand-blue);
+  color: var(--white);
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast-container {
+  z-index: 9999;
+}
+
+.toast {
+  border-radius: 12px;
+
+  box-shadow:
+    0 12px 35px rgba(12, 59, 51, 0.16);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .login-modal {
+    max-width: 100%;
+
+    border-radius: 18px;
   }
 
+  .login-modal-header {
+    padding: 18px 20px;
+  }
 
-  .right-panel {
-    flex: 1;
-    padding: 2rem;
+  .login-modal-body {
+    padding: 22px 20px;
+  }
 
-    .form-container {
-      width: 100%;
-      border-radius: 12px;
+  .login-welcome h2 {
+    font-size: 23px;
+  }
 
-      .login-form {
-        border-radius: 15px;
-        background: #FBFCFC;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .full-width {
-        width: 100%;
-      }
-
-      .form-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.9rem;
-        margin-bottom: 0.5rem;
-
-        .forgot-link {
-          color: #009688;
-          text-decoration: none;
-          font-weight: 500;
-        }
-      }
-
-      .checkbox-right {
-        display: flex;
-        justify-content: flex-end;
-        gap: 12px;
-        margin-top: 0.5rem;
-      }
-
-
-      .toggle-section {
-        margin-top: 10px;
-        display: flex;
-        justify-content: center;
-
-        .auth-toggle {
-          display: flex;
-          gap: 2rem;
-        }
-      }
-
-      button[type="submit"] {
-        margin-top: 1rem;
-      }
-
-      .field-label {
-        font-weight: 500;
-        color: #333;
-        display: block;
-        text-align: left;
-      }
-    }
+  ::ng-deep .login-tabs .mat-mdc-tab {
+    font-size: 12px;
   }
 }
 
 
-@media screen and (max-width: 576px) {
-  .login-screen {
-    padding: 0.5rem;
+/* =========================================================
+   MOBILE
+========================================================= */
 
-    .right-panel {
-      padding: 0.5rem;
+@media (max-width: 576px) {
 
-      .form-container {
-        padding: 0.5rem;
+  .login-modal {
+    width: 100%;
 
-        form {
-          padding: 0;
-        }
+    border-radius: 16px;
 
-        .links {
-          font-size: 0.85rem;
-        }
-      }
-
-      h1.title {
-        font-size: 1.5rem;
-      }
-    }
+    box-shadow:
+      0 12px 35px rgba(12, 59, 51, 0.12);
   }
 
-  /* Reduce mat-tab padding */
-  .login-container.mat-elevation-z2 {
-    padding: 0.5rem;
-
-    .mat-tab-group {
-      .mat-tab-body {
-        padding: 0.5rem;
-      }
-    }
-
-    .auth-form {
-      padding: 0.5rem;
-    }
+  .login-modal-header {
+    padding: 16px 18px;
   }
 
-  /* Toasts */
-  .toast-container {
-    right: 0.5rem;
-    bottom: 0.5rem;
+  .brand-mark {
+    width: 39px;
+    height: 39px;
+
+    border-radius: 11px;
+  }
+
+  .brand-text strong {
+    font-size: 16px;
+  }
+
+  .brand-text small {
+    font-size: 10px;
+  }
+
+  .login-modal-body {
+    padding: 20px 16px;
+  }
+
+  .login-welcome {
+    margin-bottom: 18px;
+  }
+
+  .login-welcome h2 {
+    font-size: 21px;
+  }
+
+  .login-welcome p {
+    font-size: 12px;
+  }
+
+  ::ng-deep .login-tabs .mat-mdc-tab-header {
+    margin-bottom: 19px;
+  }
+
+  ::ng-deep .login-tabs .mat-mdc-tab {
+    padding: 0 4px;
+
+    font-size: 11px;
+  }
+
+  .auth-form {
+    gap: 16px;
+  }
+
+  .input-wrapper .form-control {
+    height: 47px;
+
+    font-size: 12px;
+  }
+
+  .form-group label {
+    font-size: 12px;
+  }
+
+  .login-options {
+    flex-wrap: wrap;
+  }
+
+  .links,
+  .remember-option .form-check-label {
+    font-size: 11px;
+  }
+
+  .otp-message {
+    font-size: 11px !important;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .login-modal-header {
+    padding: 14px;
+  }
+
+  .login-modal-body {
+    padding: 18px 13px;
+  }
+
+  .login-welcome h2 {
+    font-size: 19px;
+  }
+
+  ::ng-deep .login-tabs .mat-mdc-tab {
+    font-size: 10px;
+  }
+
+  .login-options {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .links {
+    align-self: flex-end;
   }
 }

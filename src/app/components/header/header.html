@@ -1,0 +1,447 @@
+<!-- =========================
+     TOP BAR
+========================= -->
+
+<div class="topbar">
+
+  <div class="wrap">
+
+    <span>
+      Free delivery on orders above ₹499
+    </span>
+
+    <span>
+      Care support: +91 7355400002
+    </span>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="site">
+
+  <!-- =========================
+       MAIN HEADER ROW
+  ========================== -->
+
+  <div class="wrap hdr">
+
+    <!-- LOGO -->
+
+    <a
+      routerLink="/"
+      class="logo"
+      aria-label="Vitoxyz Home"
+    >
+
+      <span class="mark">✚</span>
+
+      <b>Vitoxyz</b>
+
+    </a>
+
+
+    <!-- =========================
+         DELIVERY LOCATION
+    ========================== -->
+
+    <button
+      class="pin"
+      type="button"
+      aria-label="Detect delivery location"
+      (click)="detectLocation()"
+    >
+
+      <span aria-hidden="true">
+        📍
+      </span>
+
+      <span>
+
+        <small>
+          Deliver to
+        </small>
+
+        <strong>
+          {{ currentLocation }}
+        </strong>
+
+      </span>
+
+    </button>
+
+
+    <!-- =========================
+         DESKTOP SEARCH
+    ========================== -->
+
+    <form
+      class="search"
+      role="search"
+      (submit)="onSearch(searchInput.value); $event.preventDefault()"
+    >
+
+      <span aria-hidden="true">
+        🔍
+      </span>
+
+      <label
+        class="sr"
+        for="q"
+      >
+        Search medicines and health products
+      </label>
+
+      <input
+        #searchInput
+        id="q"
+        name="q"
+        type="search"
+        placeholder="Search for medicines, vitamins, baby care…"
+      >
+
+      <button type="submit">
+        Search
+      </button>
+
+    </form>
+
+
+    <!-- =========================
+         HEADER ACTIONS
+    ========================== -->
+
+    <div class="hdr-actions">
+
+      <!-- Upload Prescription -->
+
+      <a
+        routerLink="/order-prescription"
+        class="btn-ghost"
+      >
+        Upload prescription
+      </a>
+
+
+
+      <!-- LOGIN -->
+      <button
+        *ngIf="!isLoggedIn"
+        type="button"
+        class="login-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#authModal"
+        (click)="setAuthMode('login')"
+      >
+        Log in
+      </button>
+
+
+      <!-- PROFILE -->
+      <div
+        *ngIf="isLoggedIn"
+        class="profile-wrapper"
+      >
+
+        <button
+          type="button"
+          class="profile-btn"
+          (click)="toggleProfileMenu()"
+          aria-label="Profile"
+          [attr.aria-expanded]="isProfileMenuOpen"
+        >
+          👤
+        </button>
+
+
+        <!-- PROFILE DROPDOWN -->
+        <div
+          *ngIf="isProfileMenuOpen"
+          class="profile-dropdown"
+        >
+
+          <ng-container *ngFor="let item of profileMenuItems">
+
+            <!-- NORMAL LINKS -->
+            <a
+              *ngIf="item.label !== 'Logout'"
+              [routerLink]="item.path"
+              (click)="closeProfileMenu()"
+            >
+              {{ item.label }}
+            </a>
+
+            <!-- LOGOUT -->
+            <button
+              *ngIf="item.label === 'Logout'"
+              type="button"
+              (click)="logout()"
+            >
+              {{ item.label }}
+            </button>
+
+          </ng-container>
+
+        </div>
+
+      </div>
+
+
+      <!-- Cart -->
+
+      <a
+        routerLink="/cart"
+        aria-label="Cart"
+      >
+        🛍️
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       MOBILE SEARCH
+  ========================== -->
+
+  <div class="wrap mobile-search">
+
+    <form
+      class="search"
+      role="search"
+      (submit)="onSearch(mobileSearchInput.value); $event.preventDefault()"
+    >
+
+      <span aria-hidden="true">
+        🔍
+      </span>
+
+      <label
+        class="sr"
+        for="qm"
+      >
+        Search medicines
+      </label>
+
+      <input
+        #mobileSearchInput
+        id="qm"
+        name="q"
+        type="search"
+        placeholder="Search medicines…"
+      >
+
+      <button type="submit">
+        Go
+      </button>
+
+    </form>
+
+  </div>
+
+
+  <!-- =========================
+       MAIN NAVIGATION
+  ========================== -->
+
+  <nav
+  class="main"
+  aria-label="Primary"
+>
+
+  <div class="wrap">
+
+    <!-- MOBILE MENU BUTTON -->
+    <button
+      type="button"
+      class="mobile-menu-btn"
+      (click)="toggleMobileMenu()"
+      [attr.aria-expanded]="isMobileMenuOpen"
+      aria-label="Toggle navigation menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <ul [class.mobile-open]="isMobileMenuOpen">
+
+        <!-- Medicines -->
+
+        <li>
+
+          <a
+            routerLink="/medicines"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="closeMobileMenu()"
+          >
+            Medicines
+          </a>
+
+        </li>
+
+
+        <!-- Book Staff -->
+
+        <li>
+
+          <a
+            routerLink="/book-staff"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="closeMobileMenu()"
+          >
+            Book Staff
+          </a>
+
+        </li>
+
+
+        <!-- Diet Plans -->
+
+        <li>
+
+          <a
+           href="/diet-plans"
+          [class.active]="router.url === '/diet-plans'"
+          (click)="navigateToDiet($event); closeMobileMenu()"
+          >
+            Diet Plans
+          </a>
+
+        </li>
+
+
+        <!-- Skin Care -->
+
+        <li>
+
+          <a
+            routerLink="/skin-care"
+            [class.active]="isSkinCareActive()"
+            (click)="navigateToSkinCare($event); closeMobileMenu()"
+          >
+            Skin Care
+          </a>
+
+        </li>
+
+
+        <!-- Elder Care -->
+
+        <li>
+
+          <a
+            routerLink="/elder-care"
+            [class.active]="isElderCareActive()"
+            (click)="navigateToElderCare($event); closeMobileMenu()"
+          >
+            Elder Care
+          </a>
+
+        </li>
+
+
+        <!-- Health Advice -->
+
+        <li>
+
+          <a
+            routerLink="/health-advice"
+            routerLinkActive="active"
+            (click)="closeMobileMenu()"
+          >
+            Health Advice
+          </a>
+
+        </li>
+
+
+        <!-- Offers -->
+
+        <li>
+
+          <a
+            routerLink="/offers"
+            routerLinkActive="active"
+            (click)="closeMobileMenu()"
+          >
+            Offers
+          </a>
+
+        </li>
+
+        <!-- About Us -->
+
+        <li>
+          <a
+            routerLink="/about-us"
+            routerLinkActive="active"
+            (click)="closeMobileMenu()"
+          >
+            About Us
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </nav>
+
+</header>
+
+<router-outlet></router-outlet>
+
+<!-- =========================
+     AUTHORIZATION MODAL
+========================= -->
+
+<app-authorization
+  [authMode]="authMode"
+  (loginSuccess)="checkLoginStatus()"
+></app-authorization>
+
+
+<!-- =========================
+     GLOBAL TOAST
+========================= -->
+
+<div
+  class="toast-container position-fixed bottom-0 end-0 p-3"
+  style="z-index: 2000;"
+>
+
+  <div
+    id="loginToast"
+    class="toast text-bg-danger"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+
+    <div class="d-flex">
+
+      <div class="toast-body"></div>
+
+      <button
+        type="button"
+        class="btn-close me-2 m-auto"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
+
+    </div>
+
+  </div>
+
+</div>
+
+

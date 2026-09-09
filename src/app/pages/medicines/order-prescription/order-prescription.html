@@ -1,174 +1,1583 @@
-<div class="container">
-  <div class="row gx-4">
-    <!-- LEFT column: Upload card -->
-    <div class="col-lg-6 mb-4">
-      <div class="card upload-card">
-        <div class="card-body">
-          <h4 class="title">Upload Prescription</h4>
-          <p class="muted">Please attach a prescription to proceed</p>
+<div class="order-prescription-page">
 
-          <div class="d-grid gap-3 mt-3">
-            <label for="fileInput" class="action-btn upload-new">
-              <div class="icon"><i class="fi-rr-upload"></i></div>
-              <div class="text">
-                <div class="label">UPLOAD NEW</div>
-                <div class="sub">Attach a photo or pdf of the prescription</div>
+  <!-- =========================================================
+       HERO / INTRO
+  ========================================================== -->
+  <section class="prescription-hero">
+
+    <div class="prescription-hero-inner">
+
+      <div class="hero-copy">
+
+        <div class="hero-eyebrow">
+          <span class="eyebrow-dot"></span>
+          PRESCRIPTION ORDER
+        </div>
+
+        <h1>
+          Upload
+          <span>your prescription</span>
+        </h1>
+
+        <p class="hero-intro">
+          Send us a photo of your doctor's prescription. A registered
+          pharmacist reads it, checks what we have in stock, and calls
+          you back with the total before anything is dispatched.
+        </p>
+
+        <div class="hero-trust">
+
+          <div class="trust-item">
+            <i class="bi bi-shield-check"></i>
+            <span>Handled confidentially</span>
+          </div>
+
+          <div class="trust-item">
+            <i class="bi bi-person-check"></i>
+            <span>Pharmacist reviewed</span>
+          </div>
+
+          <div class="trust-item">
+            <i class="bi bi-lightning-charge"></i>
+            <span>Same-day delivery</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="hero-visual">
+
+        <div class="prescription-illustration">
+
+          <div class="illustration-glow"></div>
+
+          <div class="prescription-paper">
+
+            <div class="paper-top">
+              <div class="paper-logo">V</div>
+
+              <div>
+                <span class="paper-title">Prescription</span>
+                <span class="paper-subtitle">Medical document</span>
               </div>
-            </label>
-            <input
-              id="fileInput"
-              type="file"
-              (change)="onFileSelected($event)"
-              hidden
-            />
+            </div>
+
+            <div class="paper-line long"></div>
+            <div class="paper-line medium"></div>
+
+            <div class="paper-medicine-row">
+              <span></span>
+              <span></span>
+            </div>
+
+            <div class="paper-medicine-row">
+              <span></span>
+              <span></span>
+            </div>
+
+            <div class="paper-medicine-row">
+              <span></span>
+              <span></span>
+            </div>
+
+            <div class="paper-signature">
+              <div></div>
+              <span>Doctor's signature</span>
+            </div>
+
+          </div>
+
+          <div class="floating-badge badge-secure">
+            <i class="bi bi-lock-fill"></i>
+            <span>Secure & private</span>
+          </div>
+
+          <div class="floating-badge badge-pharmacist">
+            <i class="bi bi-person-vcard-fill"></i>
+            <span>Pharmacist checked</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       MAIN CONTENT
+  ========================================================== -->
+  <main class="prescription-main">
+
+    <div class="prescription-container">
+
+      <!-- =====================================================
+           UPLOAD + GUIDE
+      ====================================================== -->
+      <div class="upload-layout">
+
+        <!-- LEFT : UPLOAD -->
+        <section class="upload-panel">
+
+          <div class="section-heading">
+
+            <div class="section-icon">
+              <i class="bi bi-cloud-arrow-up"></i>
+            </div>
+
+            <div>
+              <span class="section-kicker">START HERE</span>
+              <h2>Upload your prescription</h2>
+              <p>
+                Attach a clear photo or PDF of your doctor's prescription.
+              </p>
+            </div>
+
+          </div>
+
+
+          <!-- ACTION BUTTONS -->
+          <div class="upload-actions">
 
             <button
-              class="action-btn saved-btn"
               type="button"
+              class="upload-action upload-action-primary"
+              (click)="openUploadOptions()"
+            >
+
+              <span class="action-icon">
+                <i class="bi bi-cloud-arrow-up"></i>
+              </span>
+
+              <span class="action-content">
+                <strong>Upload new prescription</strong>
+                <small>Attach a photo or PDF</small>
+              </span>
+
+              <i class="bi bi-arrow-right action-arrow"></i>
+
+            </button>
+
+
+            <button
+              type="button"
+              class="upload-action upload-action-secondary"
               (click)="openSavedPrescriptions()"
             >
-              <div class="icon"><i class="fi fi-tr-floppy-disks"></i></div>
-              <div class="text">
-                <div class="label text-white">SAVED PRESCRIPTIONS</div>
-                <div class="sub text-white">Choose from previously uploaded files</div>
-              </div>
+
+              <span class="action-icon">
+                <i class="bi bi-folder2-open"></i>
+              </span>
+
+              <span class="action-content">
+                <strong>Saved prescriptions</strong>
+                <small>Choose a previously uploaded prescription</small>
+              </span>
+
+              <i class="bi bi-arrow-right action-arrow"></i>
+
             </button>
+
           </div>
 
-          <!-- Attached section -->
-          <div class="attached mt-4">
-            <h6 class="attached-title">Attached Prescription</h6>
 
-            <div *ngIf="!attachedFile" class="attached-placeholder">
-              <div class="placeholder-icon">
-                <i class="bi bi-file-earmark-text"></i>
+          <!-- DESKTOP FILE INPUT -->
+          <input
+            id="fileInput"
+            type="file"
+            accept="image/*,.pdf"
+            (change)="onFileSelected($event)"
+            hidden
+          />
+
+
+          <!-- =================================================
+               ATTACHED PRESCRIPTION
+          ================================================== -->
+          <div class="attached-card">
+
+            <div class="attached-heading">
+
+              <div>
+                <span class="small-label">CURRENT FILE</span>
+                <h3>Attached prescription</h3>
               </div>
-              <div class="placeholder-text muted">
-                Uploaded prescriptions will be shown here
-              </div>
+
+              <span
+                class="attached-status"
+                *ngIf="attachedFile"
+              >
+                <i class="bi bi-check-circle-fill"></i>
+                Attached
+              </span>
+
             </div>
 
-            <div *ngIf="attachedFile" class="attached-preview">
-              <div
-                class="preview-row d-flex align-items-center justify-content-between"
+
+            <!-- EMPTY -->
+            <div
+              *ngIf="!attachedFile"
+              class="attached-empty"
+            >
+
+              <div class="empty-icon">
+                <i class="bi bi-file-earmark-medical"></i>
+              </div>
+
+              <h4>No prescription attached</h4>
+
+              <p>
+                Your uploaded prescription will appear here.
+              </p>
+
+              <button
+                type="button"
+                class="empty-upload-btn"
+                (click)="openUploadOptions()"
               >
-                <div class="preview-name">{{ attachedFile.name }}</div>
-                <div class="preview-actions">
+                <i class="bi bi-plus-lg"></i>
+                Add prescription
+              </button>
+
+            </div>
+
+
+            <!-- ATTACHED -->
+            <div
+              *ngIf="attachedFile"
+              class="attached-file"
+            >
+
+              <div class="file-top">
+
+                <div class="file-info">
+
+                  <div class="file-icon">
+                    <i
+                      class="bi"
+                      [ngClass]="
+                        attachedFile.type?.includes('pdf')
+                          ? 'bi-file-earmark-pdf'
+                          : 'bi-file-earmark-image'
+                      "
+                    ></i>
+                  </div>
+
+                  <div class="file-details">
+
+                    <strong>
+                      {{ attachedFile.name }}
+                    </strong>
+
+                    <small>
+                      Prescription document
+                    </small>
+
+                  </div>
+
+                </div>
+
+
+                <div class="file-actions">
+
                   <button
-                    class="btn btn-link p-0"
-                    (click)="removeAttachment()"
-                    aria-label="Remove"
+                    type="button"
+                    class="file-action-btn"
+                    *ngIf="attachedViewUrl"
+                    (click)="viewPrescription()"
                   >
+                    <i class="bi bi-eye"></i>
+                    View
+                  </button>
+
+                  <button
+                    type="button"
+                    class="file-action-btn danger"
+                    (click)="removeAttachment()"
+                    [disabled]="isUploaded"
+                  >
+                    <i class="bi bi-trash3"></i>
                     Remove
                   </button>
+
                 </div>
+
               </div>
 
-              <div class="image-wrap mt-3" *ngIf="attachedPreview">
-                <img [src]="attachedPreview" alt="Prescription preview" />
+
+              <!-- IMAGE PREVIEW -->
+              <div
+                class="attached-image-preview"
+                *ngIf="attachedPreview"
+              >
+
+                <img
+                  [src]="attachedPreview"
+                  alt="Prescription preview"
+                />
+
+                <div class="preview-overlay">
+                  <button
+                    type="button"
+                    (click)="viewPrescription()"
+                  >
+                    <i class="bi bi-eye"></i>
+                    View full prescription
+                  </button>
+                </div>
+
               </div>
+
             </div>
+
           </div>
-          <div *ngIf="message" class="msg-box" [ngClass]="messageType">
-  {{ message }}
-</div>
-<!-- <div *ngIf="isUploading" class="upload-loader">
-  Uploading prescription, please wait...
-</div> -->
-          <div class="d-flex gap-2 mt-4">
-            <button class="btn text-white rounded-pill btn-sm px-3" (click)="goBack()" [disabled]="isUploading">
+
+
+          <!-- MESSAGE -->
+          <div
+            *ngIf="message"
+            class="msg-box"
+            [ngClass]="messageType"
+          >
+            <i
+              class="bi"
+              [ngClass]="
+                messageType === 'success'
+                  ? 'bi-check-circle-fill'
+                  : 'bi-exclamation-circle-fill'
+              "
+            ></i>
+
+            <span>{{ message }}</span>
+          </div>
+
+
+          <!-- =================================================
+               EXTRACTED MEDICINES
+          ================================================== -->
+          <div
+            class="medicine-result-card"
+            *ngIf="medicines.length > 0"
+          >
+
+            <div class="result-heading">
+
+              <div>
+                <span class="small-label">PHARMACIST DATA</span>
+                <h3>Prescription medicines</h3>
+              </div>
+
+              <span class="medicine-count">
+                {{ medicines.length }}
+                {{ medicines.length === 1 ? 'medicine' : 'medicines' }}
+              </span>
+
+            </div>
+
+
+            <div class="medicine-table-wrapper">
+
+              <table class="medicine-table">
+
+                <thead>
+                  <tr>
+                    <th>S.No.</th>
+                    <th>Medicine Name</th>
+                    <th>Dosage</th>
+                    <th>Quantity</th>
+                    <th>Special Instructions</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+
+                  <tr
+                    *ngFor="
+                      let medicine of medicines;
+                      let i = index
+                    "
+                  >
+
+                    <td>
+                      <span class="serial-number">
+                        {{ i + 1 }}
+                      </span>
+                    </td>
+
+                    <td>
+                      <strong>
+                        {{ medicine.medicineName || '-' }}
+                      </strong>
+                    </td>
+
+                    <td>
+                      {{ medicine.dosage || '-' }}
+                    </td>
+
+                    <td>
+                      {{ medicine.quantity || 0 }}
+                    </td>
+
+                    <td>
+                      {{ medicine.specialInstructions || '-' }}
+                    </td>
+
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               BOTTOM ACTIONS
+          ================================================== -->
+          <div class="upload-footer-actions">
+
+            <button
+              type="button"
+              class="back-btn"
+              (click)="goBack()"
+              [disabled]="isUploading"
+            >
+              <i class="bi bi-arrow-left"></i>
               Back
             </button>
-            <!-- <button
-              class="btn ms-auto text-white rounded-pill btn-sm"
-              (click)="onContinue()"
-            >
-              Continue
-            </button> -->
+
+
             <button
-  class="btn ms-auto text-white rounded-pill btn-sm"
-  (click)="onContinue()"
-  [disabled]="isUploading"
->
-  <span *ngIf="!isUploading">Continue</span>
-  <span *ngIf="isUploading" class="spinner"></span>
-</button>
+              type="button"
+              class="continue-btn"
+              (click)="onContinue()"
+              [disabled]="isUploading"
+            >
+
+              <span *ngIf="!isUploading">
+                Continue
+                <i class="bi bi-arrow-right"></i>
+              </span>
+
+              <span
+                *ngIf="isUploading"
+                class="loading-content"
+              >
+                <span class="spinner"></span>
+                Uploading...
+              </span>
+
+            </button>
 
           </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- RIGHT column: Guide card -->
-    <div class="col-lg-6 mb-4">
-      <div class="card guide-card">
-        <div class="card-body">
-          <h4 class="title">Guide for a valid prescription</h4>
+        </section>
 
-          <div class="guide-grid d-flex flex-column flex-lg-row gap-3 mt-3">
-            <div class="guide-art">
-              <div class="doc-sample">
-                <div class="doc-top">Dr. Varun, MBBS, MD</div>
-                <div class="doc-lines">
-                  <div class="line">
-                    Name of Patient ___________ Age __
-                  </div>
-                  <div class="line">
-                    Medicine Name • Strength • Dose • Duration
-                  </div>
-                </div>
-                <div class="doc-sign"></div>
+
+        <!-- =====================================================
+             RIGHT : GUIDE
+        ====================================================== -->
+        <aside class="guide-panel">
+
+          <div class="guide-card">
+
+            <div class="guide-header">
+
+              <div class="guide-icon">
+                <i class="bi bi-file-earmark-check"></i>
               </div>
+
+              <div>
+                <span class="section-kicker">UPLOAD GUIDE</span>
+                <h2>Guide for a valid prescription</h2>
+              </div>
+
             </div>
 
-            <div class="guide-list">
-              <ul>
-                <li>Don't crop out any part of the image</li>
-                <li>Avoid blurred image</li>
-                <li>Include doctor & patient details + date</li>
-                <li>Medicines dispensed as per prescription</li>
-                <li>Supported files: jpeg, jpg, png, pdf</li>
-                <li>Max file size: 5MB</li>
-              </ul>
+
+            <div class="guide-document">
+
+              <div class="guide-document-top">
+
+                <div class="guide-doc-logo">Rx</div>
+
+                <div>
+                  <strong>Doctor's Prescription</strong>
+                  <small>Valid medical prescription</small>
+                </div>
+
+              </div>
+
+              <div class="guide-doc-line"></div>
+              <div class="guide-doc-line short"></div>
+
+              <div class="guide-doc-row">
+                <span></span>
+                <span></span>
+              </div>
+
+              <div class="guide-doc-row">
+                <span></span>
+                <span></span>
+              </div>
+
+              <div class="guide-doc-row">
+                <span></span>
+                <span></span>
+              </div>
+
+              <div class="guide-doc-sign">
+                <span></span>
+                <small>Doctor signature</small>
+              </div>
+
             </div>
+
+
+            <ul class="guide-list">
+
+              <li>
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Don't crop out any part of the image</span>
+              </li>
+
+              <li>
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Avoid blurred images</span>
+              </li>
+
+              <li>
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Include doctor & patient details + date</span>
+              </li>
+
+              <li>
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Medicines are dispensed as per prescription</span>
+              </li>
+
+              <li>
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Supported files: JPEG, JPG, PNG, PDF</span>
+              </li>
+
+              <li>
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Maximum file size: 5MB</span>
+              </li>
+
+            </ul>
+
+
+            <div class="guide-note">
+              <i class="bi bi-info-circle"></i>
+              <span>
+                Government regulations require a valid prescription.
+              </span>
+            </div>
+
           </div>
 
-          <p class="gov-note mt-3">
-            Government regulations require a valid prescription
-          </p>
-        </div>
+        </aside>
+
       </div>
+
+
+      <!-- =====================================================
+           WHAT HAPPENS NEXT
+      ====================================================== -->
+      <section class="next-steps-section">
+
+        <div class="next-steps-heading">
+
+          <span class="section-kicker">SIMPLE PROCESS</span>
+
+          <h2>What happens next</h2>
+
+          <p>
+            Once you upload your prescription, we take care of the rest.
+          </p>
+
+        </div>
+
+
+        <div class="steps-grid">
+
+          <div class="step-card">
+
+            <div class="step-number">01</div>
+
+            <div class="step-icon">
+              <i class="bi bi-person-vcard"></i>
+            </div>
+
+            <h3>Prescription review</h3>
+
+            <p>
+              A registered pharmacist reviews your prescription.
+            </p>
+
+          </div>
+
+
+          <div class="step-card">
+
+            <div class="step-number">02</div>
+
+            <div class="step-icon">
+              <i class="bi bi-box-seam"></i>
+            </div>
+
+            <h3>Availability check</h3>
+
+            <p>
+              We check availability and confirm the price.
+            </p>
+
+          </div>
+
+
+          <div class="step-card">
+
+            <div class="step-number">03</div>
+
+            <div class="step-icon">
+              <i class="bi bi-telephone"></i>
+            </div>
+
+            <h3>You approve</h3>
+
+            <p>
+              You approve the order on the call.
+            </p>
+
+          </div>
+
+
+          <div class="step-card">
+
+            <div class="step-number">04</div>
+
+            <div class="step-icon">
+              <i class="bi bi-house-check"></i>
+            </div>
+
+            <h3>Delivered to you</h3>
+
+            <p>
+              Your medicines reach you the same day.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           PRIVACY
+      ====================================================== -->
+      <section class="privacy-section">
+
+        <div class="privacy-icon">
+          <i class="bi bi-shield-lock-fill"></i>
+        </div>
+
+        <div class="privacy-content">
+
+          <span>YOUR PRIVACY MATTERS</span>
+
+          <p>
+            Prescriptions are handled confidentially and used only
+            to process your order.
+          </p>
+
+        </div>
+
+        <div class="privacy-check">
+          <i class="bi bi-check2"></i>
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           SAVED PRESCRIPTIONS
+      ====================================================== -->
+      <section
+        class="saved-section"
+        *ngIf="savedPrescriptions.length > 0"
+      >
+
+        <div class="saved-section-heading">
+
+          <div>
+
+            <span class="section-kicker">YOUR DOCUMENTS</span>
+
+            <h2>Saved prescriptions</h2>
+
+            <p>
+              View, edit or delete your previously uploaded prescriptions.
+            </p>
+
+          </div>
+
+          <div class="saved-count">
+            {{ savedPrescriptions.length }}
+            {{ savedPrescriptions.length === 1 ? 'saved' : 'saved' }}
+          </div>
+
+        </div>
+
+
+        <div class="saved-table-card">
+
+          <div class="table-responsive">
+
+            <table class="saved-table">
+
+              <thead>
+
+                <tr>
+                  <th>S.No.</th>
+                  <th>Prescription</th>
+                  <th class="saved-action-header">Action</th>
+                </tr>
+
+              </thead>
+
+              <tbody>
+
+                <tr
+                  *ngFor="
+                    let prescription of savedPrescriptions;
+                    let i = index
+                  "
+                >
+
+                  <td>
+                    <span class="serial-number">
+                      {{ i + 1 }}
+                    </span>
+                  </td>
+
+
+                  <td>
+
+                    <button
+                      type="button"
+                      class="prescription-file-link"
+                      (click)="
+                        openPrescriptionImage(
+                          prescription.s3Url,
+                          prescription.fileName
+                        )
+                      "
+                    >
+
+                      <span class="saved-file-icon">
+                        <i
+                          class="bi"
+                          [ngClass]="
+                            prescription.fileName?.toLowerCase().endsWith('.pdf')
+                              ? 'bi-file-earmark-pdf'
+                              : 'bi-file-earmark-image'
+                          "
+                        ></i>
+                      </span>
+
+                      <span>
+                        {{ prescription.fileName }}
+                      </span>
+
+                    </button>
+
+                  </td>
+
+
+                  <td class="action-cell">
+
+                    <div class="action-menu">
+
+                      <button
+                        type="button"
+                        class="three-dot-btn"
+                        (click)="toggleDropdown(prescription.id)"
+                        aria-label="Actions"
+                      >
+                        <i class="bi bi-three-dots"></i>
+                      </button>
+
+
+                      <div
+                        class="custom-dropdown"
+                        *ngIf="openDropdownId === prescription.id"
+                      >
+
+                        <!-- VIEW -->
+                        <button
+                          type="button"
+                          class="dropdown-item"
+                          (click)="
+                            viewSavedPrescription(prescription.id);
+                            closeDropdown()
+                          "
+                        >
+                          <i class="bi bi-eye"></i>
+                          View
+                        </button>
+
+
+                        <!-- EDIT -->
+                        <button
+                          type="button"
+                          class="dropdown-item"
+                          (click)="editPrescription(prescription.id)"
+                        >
+                          <i class="bi bi-pencil"></i>
+                          Edit
+                        </button>
+
+
+                        <!-- DELETE -->
+                        <button
+                          type="button"
+                          class="dropdown-item danger"
+                          (click)="confirmDeletePrescription(prescription)"
+                        >
+                          <i class="bi bi-trash3"></i>
+                          Delete
+                        </button>
+
+                      </div>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </section>
+
     </div>
-  </div>
-</div>
 
-<!-- Mobile bottom sheet -->
-<div class="mobile-sheet-backdrop" *ngIf="showMobileSheet" (click)="closeSheet()"></div>
-<div class="mobile-sheet" [class.active]="showMobileSheet">
-  <div class="sheet-header">
-    <h5>Upload prescriptions</h5>
-    <button class="close-btn" (click)="closeSheet()">
-      <i class="bi bi-x-lg"></i>
-    </button>
-  </div>
-  <div class="sheet-body">
-    <button class="sheet-action" (click)="triggerFileInput()">
-      <i class="bi bi-camera"></i> Take a photo
-    </button>
-    <button class="sheet-action" (click)="triggerFileInput()">
-      <i class="bi bi-image"></i> Choose from gallery
-    </button>
-    <button class="sheet-action" (click)="openSavedPrescriptions()">
-      <i class="bi bi-folder2-open"></i> Your prescriptions
-    </button>
-  </div>
-</div>
+  </main>
 
-<!-- Hidden file input for mobile -->
-<input
-  id="mobileFileInput"
-  type="file"
-  accept="image/*,.pdf"
-  (change)="onFileSelected($event)"
-  hidden
-/>
+
+  <!-- =========================================================
+       MOBILE UPLOAD BOTTOM SHEET
+  ========================================================== -->
+
+  <div
+    class="mobile-sheet-backdrop"
+    *ngIf="showMobileSheet"
+    (click)="closeSheet()"
+  ></div>
+
+
+  <div
+    class="mobile-sheet"
+    [class.active]="showMobileSheet"
+  >
+
+    <div class="sheet-handle"></div>
+
+    <div class="sheet-header">
+
+      <div>
+        <span>QUICK UPLOAD</span>
+        <h3>Upload prescription</h3>
+      </div>
+
+      <button
+        type="button"
+        class="close-btn"
+        (click)="closeSheet()"
+      >
+        <i class="bi bi-x-lg"></i>
+      </button>
+
+    </div>
+
+
+    <div class="sheet-body">
+
+      <button
+        type="button"
+        class="sheet-action"
+        (click)="triggerCameraInput()"
+      >
+
+        <span class="sheet-action-icon">
+          <i class="bi bi-camera"></i>
+        </span>
+
+        <span>
+          <strong>Take a photo</strong>
+          <small>Use your camera</small>
+        </span>
+
+        <i class="bi bi-chevron-right"></i>
+
+      </button>
+
+
+      <button
+        type="button"
+        class="sheet-action"
+        (click)="triggerFileInput()"
+      >
+
+        <span class="sheet-action-icon">
+          <i class="bi bi-image"></i>
+        </span>
+
+        <span>
+          <strong>Choose from gallery</strong>
+          <small>Select an image or PDF</small>
+        </span>
+
+        <i class="bi bi-chevron-right"></i>
+
+      </button>
+
+
+      <button
+        type="button"
+        class="sheet-action"
+        (click)="openSavedPrescriptions()"
+      >
+
+        <span class="sheet-action-icon">
+          <i class="bi bi-folder2-open"></i>
+        </span>
+
+        <span>
+          <strong>Your prescriptions</strong>
+          <small>Choose a saved prescription</small>
+        </span>
+
+        <i class="bi bi-chevron-right"></i>
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- MOBILE FILE INPUT -->
+  <input
+    id="mobileFileInput"
+    type="file"
+    accept="image/*,.pdf"
+    (change)="onFileSelected($event)"
+    hidden
+  />
+
+
+  <!-- MOBILE CAMERA INPUT -->
+  <input
+    id="mobileCameraInput"
+    type="file"
+    accept="image/*"
+    capture="environment"
+    (change)="onFileSelected($event)"
+    hidden
+  />
+
+
+  <!-- =========================================================
+       VIEW PRESCRIPTION MODAL
+  ========================================================== -->
+
+  <div
+    class="prescription-modal-backdrop"
+    *ngIf="showPrescriptionModal"
+    (click)="closePrescriptionModal()"
+  >
+
+    <div
+      class="prescription-modal"
+      (click)="$event.stopPropagation()"
+    >
+
+      <div class="modal-header">
+
+        <div>
+          <span class="modal-kicker">PRESCRIPTION</span>
+          <h3>Prescription details</h3>
+        </div>
+
+        <button
+          type="button"
+          class="modal-close"
+          (click)="closePrescriptionModal()"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+
+      </div>
+
+
+      <div
+        class="modal-body"
+        *ngIf="selectedPrescription"
+      >
+
+        <div class="modal-file-info">
+
+          <div class="modal-file-icon">
+            <i class="bi bi-file-earmark-medical"></i>
+          </div>
+
+          <div>
+            <span>File name</span>
+            <strong>
+              {{ selectedPrescription.fileName }}
+            </strong>
+          </div>
+
+        </div>
+
+
+        <div class="modal-section-heading">
+
+          <div>
+            <span class="small-label">PRESCRIPTION DATA</span>
+            <h4>Medicines</h4>
+          </div>
+
+        </div>
+
+
+        <div class="table-responsive">
+
+          <table class="medicine-table modal-medicine-table">
+
+            <thead>
+
+              <tr>
+                <th>S.No.</th>
+                <th>Medicine Name</th>
+                <th>Dosage</th>
+                <th>Duration</th>
+                <th>Quantity</th>
+                <th>Special Instructions</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr
+                *ngFor="
+                  let medicine of selectedPrescription.medicines;
+                  let i = index
+                "
+              >
+
+                <td>{{ i + 1 }}</td>
+
+                <td>
+                  {{ medicine.medicineName || '-' }}
+                </td>
+
+                <td>
+                  {{ medicine.dosage || '-' }}
+                </td>
+
+                <td>
+                  {{ medicine.duration || '-' }}
+                </td>
+
+                <td>
+                  {{ medicine.quantity || 0 }}
+                </td>
+
+                <td>
+                  {{ medicine.specialInstructions || '-' }}
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+
+        <div class="modal-view-file">
+
+          <button
+            type="button"
+            class="modal-primary-btn"
+            (click)="
+              openPrescriptionImage(
+                selectedPrescription.s3Url,
+                selectedPrescription.fileName
+              )
+            "
+          >
+            <i class="bi bi-eye"></i>
+            View prescription
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       EDIT PRESCRIPTION MODAL
+  ========================================================== -->
+
+  <div
+    class="prescription-modal-backdrop"
+    *ngIf="showEditPrescriptionModal"
+    (click)="closeEditPrescriptionModal()"
+  >
+
+    <div
+      class="prescription-modal edit-prescription-modal"
+      (click)="$event.stopPropagation()"
+    >
+
+      <div class="modal-header">
+
+        <div>
+          <span class="modal-kicker">MANAGE PRESCRIPTION</span>
+          <h3>Edit prescription</h3>
+        </div>
+
+        <button
+          type="button"
+          class="modal-close"
+          (click)="closeEditPrescriptionModal()"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+
+      </div>
+
+
+      <div
+        class="modal-body"
+        *ngIf="editingPrescription"
+      >
+
+        <!-- FILE NAME -->
+        <div class="form-field">
+
+          <label>
+            File name
+          </label>
+
+          <input
+            type="text"
+            class="form-control vitoxyz-input"
+            [value]="editingPrescription.fileName"
+            disabled
+          />
+
+        </div>
+
+
+        <!-- MEDICINES -->
+        <div class="edit-medicines-heading">
+
+          <div>
+            <span class="small-label">MEDICINES</span>
+            <h4>Prescription medicines</h4>
+          </div>
+
+          <button
+            type="button"
+            class="add-medicine-btn"
+            (click)="addMedicineToPrescription()"
+          >
+            <i class="bi bi-plus-lg"></i>
+            Add medicine
+          </button>
+
+        </div>
+
+
+        <!-- MEDICINE CARDS -->
+        <div
+          class="edit-medicine-card"
+          *ngFor="
+            let medicine of editingPrescription.medicines;
+            let i = index
+          "
+        >
+
+          <div class="edit-medicine-top">
+
+            <div class="medicine-index">
+              {{ i + 1 }}
+            </div>
+
+            <strong>
+              Medicine {{ i + 1 }}
+            </strong>
+
+            <button
+              type="button"
+              class="remove-medicine-btn"
+              (click)="removeMedicineFromPrescription(i)"
+              *ngIf="editingPrescription.medicines.length > 1"
+            >
+              <i class="bi bi-trash3"></i>
+              Remove
+            </button>
+
+          </div>
+
+
+          <div class="row g-3">
+
+            <!-- Medicine -->
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Medicine Name
+              </label>
+
+              <input
+                type="text"
+                class="form-control vitoxyz-input"
+                [(ngModel)]="medicine.medicineName"
+              />
+
+            </div>
+
+
+            <!-- Dosage -->
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Dosage
+              </label>
+
+              <input
+                type="text"
+                class="form-control vitoxyz-input"
+                [(ngModel)]="medicine.dosage"
+              />
+
+            </div>
+
+
+            <!-- Frequency -->
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Frequency
+              </label>
+
+              <input
+                type="text"
+                class="form-control vitoxyz-input"
+                [(ngModel)]="medicine.frequency"
+              />
+
+            </div>
+
+
+            <!-- Duration -->
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Duration
+              </label>
+
+              <input
+                type="text"
+                class="form-control vitoxyz-input"
+                [(ngModel)]="medicine.duration"
+              />
+
+            </div>
+
+
+            <!-- Quantity -->
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Quantity
+              </label>
+
+              <input
+                type="number"
+                class="form-control vitoxyz-input"
+                min="0"
+                [(ngModel)]="medicine.quantity"
+              />
+
+            </div>
+
+
+            <!-- Instructions -->
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Special Instructions
+              </label>
+
+              <input
+                type="text"
+                class="form-control vitoxyz-input"
+                [(ngModel)]="medicine.specialInstructions"
+              />
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- EDIT BUTTONS -->
+        <div class="modal-footer-actions">
+
+          <button
+            type="button"
+            class="modal-secondary-btn"
+            (click)="closeEditPrescriptionModal()"
+            [disabled]="isUpdatingPrescription"
+          >
+            Cancel
+          </button>
+
+
+          <button
+            type="button"
+            class="modal-primary-btn"
+            (click)="updatePrescription()"
+            [disabled]="isUpdatingPrescription"
+          >
+
+            <span *ngIf="!isUpdatingPrescription">
+              <i class="bi bi-check-lg"></i>
+              Update prescription
+            </span>
+
+            <span
+              *ngIf="isUpdatingPrescription"
+              class="loading-content"
+            >
+              <span class="spinner"></span>
+              Updating...
+            </span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       DELETE CONFIRMATION MODAL
+  ========================================================== -->
+
+  <div
+    class="prescription-modal-backdrop"
+    *ngIf="showDeletePrescriptionModal"
+    (click)="closeDeletePrescriptionModal()"
+  >
+
+    <div
+      class="delete-confirm-modal"
+      (click)="$event.stopPropagation()"
+    >
+
+      <div class="delete-icon">
+        <i class="bi bi-trash3"></i>
+      </div>
+
+      <span class="modal-kicker">REMOVE DOCUMENT</span>
+
+      <h3>Delete prescription?</h3>
+
+      <p>
+        Are you sure you want to permanently delete
+        <strong>
+          {{ deletingPrescription?.fileName }}
+        </strong>
+        ?
+      </p>
+
+      <small>
+        This action cannot be undone.
+      </small>
+
+
+      <div class="delete-actions">
+
+        <button
+          type="button"
+          class="modal-secondary-btn"
+          (click)="closeDeletePrescriptionModal()"
+          [disabled]="isDeletingPrescription"
+        >
+          Cancel
+        </button>
+
+
+        <button
+          type="button"
+          class="delete-confirm-btn"
+          (click)="deletePrescription()"
+          [disabled]="isDeletingPrescription"
+        >
+
+          <span *ngIf="!isDeletingPrescription">
+            <i class="bi bi-trash3"></i>
+            Delete
+          </span>
+
+          <span
+            *ngIf="isDeletingPrescription"
+            class="loading-content"
+          >
+            <span class="spinner"></span>
+            Deleting...
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       IMAGE PREVIEW MODAL
+  ========================================================== -->
+
+  <div
+    class="prescription-image-modal-backdrop"
+    *ngIf="showImagePreviewModal"
+    (click)="closeImagePreviewModal()"
+  >
+
+    <div
+      class="prescription-image-modal"
+      (click)="$event.stopPropagation()"
+    >
+
+      <div class="image-modal-header">
+
+        <div class="image-title-wrapper">
+
+          <span class="modal-kicker">
+            PRESCRIPTION PREVIEW
+          </span>
+
+          <h3 class="image-preview-title">
+            {{ previewFileName }}
+          </h3>
+
+        </div>
+
+
+        <div class="image-modal-controls">
+
+          <div class="image-zoom-controls">
+
+            <button
+              type="button"
+              class="zoom-btn"
+              (click)="zoomOut()"
+              aria-label="Zoom out"
+            >
+              <i class="bi bi-dash-lg"></i>
+            </button>
+
+            <span class="zoom-percentage">
+              {{ imageZoom * 100 | number:'1.0-0' }}%
+            </span>
+
+            <button
+              type="button"
+              class="zoom-btn"
+              (click)="zoomIn()"
+              aria-label="Zoom in"
+            >
+              <i class="bi bi-plus-lg"></i>
+            </button>
+
+            <button
+              type="button"
+              class="zoom-btn"
+              (click)="resetZoom()"
+              aria-label="Reset zoom"
+            >
+              <i class="bi bi-arrow-counterclockwise"></i>
+            </button>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="image-modal-close"
+            (click)="closeImagePreviewModal()"
+            aria-label="Close"
+          >
+            <i class="bi bi-x-lg"></i>
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="image-modal-body"
+        (wheel)="onImageWheel($event)"
+      >
+
+        <img
+          *ngIf="previewImageUrl"
+          [src]="previewImageUrl"
+          [alt]="previewFileName"
+          class="prescription-full-image"
+          [style.transform]="'scale(' + imageZoom + ')'"
+        />
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

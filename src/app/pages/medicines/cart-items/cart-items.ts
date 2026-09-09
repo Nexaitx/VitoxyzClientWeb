@@ -1,7 +1,7 @@
 // cart-items.component.ts (UPDATED with Type Safety)
 import { Component, inject, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Footer } from '../../footer/footer';
+import { Footer } from '../../../components/footer/footer';
 import { Header } from '../header/header';
 import { CartItem, CartService } from '@src/app/core/cart.service';
 import { AddressService, Address, AddressRequest } from '@src/app/core/address.service';

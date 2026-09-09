@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 // import { AadharVerificationComponent } from "../../aadhar-verification/aadhar-verification.component";
 import { Login } from "../../authorization/login/login";
 import { Authorization } from '../../authorization/authorization';
-import { Footer } from "../../footer/footer";
+import { Footer } from "../../../components/footer/footer";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 import { TextBanner } from "../../../../app/shared/text-banner/text-banner";
 import { TextImageComponent } from "../../../pages/shared/text-image/text-image";

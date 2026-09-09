@@ -25,7 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { SidebarFilterComponent } from "../../shared/sidebar-filter/sidebar-filter";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
-import { Footer } from "../../footer/footer";
+import { Footer } from "../../../components/footer/footer";
 import { BannerSliderComponent } from "@src/app/shared/banner-slider/banner-slider";
 // import { TextBanner } from "@src/app/shared/text-banner/text-banner";
 import { NotificationService } from '@src/app/core/notification.service';

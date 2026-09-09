@@ -1,185 +1,315 @@
-<div class="login-container mat-elevation-z2">
-  <mat-tab-group animationDuration="0ms" [(selectedIndex)]="selectedTabIndex">
+<div class="login-modal">
 
-    <mat-tab label="Login with Phone">
-      <form [formGroup]="loginForm" (ngSubmit)="login()" class="auth-form p-4">
-        <div class="form-group">
-          <label>Phone Number</label>
-          <input
-            class="form-control"
-            formControlName="username"
-            placeholder="Enter your phone number"
-            maxlength="10"
-            required
-          />
-          <span
-            class="text-danger"
-            *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched"
-          >
-            Phone number is required.
-          </span>
-          <span
-            class="text-danger"
-            *ngIf="loginForm.get('username')?.hasError('pattern') && loginForm.get('username')?.touched"
-          >
-            Please enter a valid 10-digit phone number.
-          </span>
-        </div>
+  <div class="login-modal-body">
 
-        <div class="form-group my-2">
-          <label>Password</label>
-          <div class="input-group">
-            <input
-              class="form-control"
-              [type]="showPassword ? 'text' : 'password'"
-              formControlName="password"
-              placeholder="Enter your password"
-              required
-            />
-            <button
-              type="button"
-              (click)="togglePasswordVisibility()"
-              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
-              [attr.aria-pressed]="showPassword"
-              style="
-                position: absolute;
-                right: 0;
-                top: 50%;
-                transform: translateY(-50%);
-                border: none;
-                background: transparent;
-              "
-              class="bg-none text-primary"
-            >
-              <i
-                class="fi"
-                [ngClass]="showPassword ? 'fi-rr-eye' : 'fi-rr-eye-crossed'"
-              ></i>
-            </button>
-          </div>
-          <span
-            class="text-danger"
-            *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"
-          >
-            Password is required.
-          </span>
-          <span
-            class="text-danger"
-            *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched"
-          >
-            Password must be at least 6 characters long.
-          </span>
-        </div>
+    <div class="login-welcome">
+      <h2>Welcome back</h2>
+      <p>Login to continue to your account</p>
+    </div>
 
-        <div class="d-flex justify-content-between">
-          <div class="form-check mb-3">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="rememberMe"
-              formControlName="rememberMe"
-            />
-            <label class="form-check-label" for="rememberMe">Remember Me</label>
-          </div>
-          <a class="links" (click)="goToForgotPassword()" style="cursor: pointer;">Forgot Password?</a>
-        </div>
+    <div class="login-tabs-wrapper">
 
-        <app-submission
-          [buttonType]="'Login'"
-          [disableButton]="isLoading"
-        ></app-submission>
-      </form>
-    </mat-tab>
+      <mat-tab-group
+        animationDuration="0ms"
+        [(selectedIndex)]="selectedTabIndex"
+        class="login-tabs"
+      >
 
-    <mat-tab label="Login with OTP">
-      <div class="p-4">
-        @if(showPhoneInput) {
-        <form
-          [formGroup]="phoneLoginForm"
-          (ngSubmit)="sendOtp()"
-          class="auth-form"
-        >
-          <div class="form-group mb-3">
-            <label>Phone Number</label>
-            <input
-              class="form-control"
-              formControlName="phoneNumber"
-              placeholder="e.g., +919876543210"
-              required
-            />
-            <span
-              class="text-danger"
-              *ngIf="phoneLoginForm.get('phoneNumber')?.hasError('required') && phoneLoginForm.get('phoneNumber')?.touched"
-            >
-              Phone number is required.
-            </span>
-            <span
-              class="text-danger"
-              *ngIf="phoneLoginForm.get('phoneNumber')?.hasError('pattern') && phoneLoginForm.get('phoneNumber')?.touched"
-            >
-              Please enter a valid phone number (e.g., +91XXXXXXXXXX).
-            </span>
-          </div>
+        <!-- PHONE LOGIN -->
+        <mat-tab label="Login with Phone">
 
-          <app-submission [buttonType]="'Send OTP'"></app-submission>
-        </form>
-        } @else {
-        <div>
           <form
-            [formGroup]="phoneLoginForm"
-            (ngSubmit)="verifyOtp()"
+            [formGroup]="loginForm"
+            (ngSubmit)="login()"
             class="auth-form"
           >
-            <p class="otp-message">
-              Please enter the OTP we've shared to {{ maskedPhoneNumber }}
-            </p>
-            <div class="form-group mb-3">
-              <label>OTP</label>
-              <input
-                class="form-control"
-                formControlName="otpCode"
-                placeholder="Enter OTP"
-                required
-              />
+
+            <div class="form-group">
+              <label>Phone Number</label>
+
+              <div class="input-wrapper">
+                <span class="input-prefix">
+                  <i class="fi fi-rr-phone-call"></i>
+                </span>
+
+                <input
+                  class="form-control"
+                  formControlName="username"
+                  placeholder="Enter your phone number"
+                  maxlength="10"
+                  required
+                />
+              </div>
+
               <span
                 class="text-danger"
-                *ngIf="phoneLoginForm.get('otpCode')?.hasError('required') && phoneLoginForm.get('otpCode')?.touched"
+                *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched"
               >
-                OTP is required.
+                Phone number is required.
               </span>
+
               <span
                 class="text-danger"
-                *ngIf="phoneLoginForm.get('otpCode')?.hasError('pattern') && phoneLoginForm.get('otpCode')?.touched"
+                *ngIf="loginForm.get('username')?.hasError('pattern') && loginForm.get('username')?.touched"
               >
-                OTP must be 6 digits.
+                Please enter a valid 10-digit phone number.
               </span>
             </div>
 
-            <app-submission [buttonType]="'Verify OTP'"> </app-submission>
+
+            <div class="form-group password-group">
+
+              <label>Password</label>
+
+              <div class="input-wrapper">
+
+                <span class="input-prefix">
+                  <i class="fi fi-rr-lock"></i>
+                </span>
+
+                <input
+                  class="form-control"
+                  [type]="showPassword ? 'text' : 'password'"
+                  formControlName="password"
+                  placeholder="Enter your password"
+                  required
+                />
+
+                <button
+                  type="button"
+                  (click)="togglePasswordVisibility()"
+                  [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+                  [attr.aria-pressed]="showPassword"
+                  class="password-toggle"
+                >
+                  <i
+                    class="fi"
+                    [ngClass]="showPassword ? 'fi-rr-eye' : 'fi-rr-eye-crossed'"
+                  ></i>
+                </button>
+
+              </div>
+
+              <span
+                class="text-danger"
+                *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"
+              >
+                Password is required.
+              </span>
+
+              <span
+                class="text-danger"
+                *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched"
+              >
+                Password must be at least 6 characters long.
+              </span>
+
+            </div>
+
+
+            <div class="login-options">
+
+              <div class="remember-option">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="rememberMe"
+                  formControlName="rememberMe"
+                />
+
+                <label
+                  class="form-check-label"
+                  for="rememberMe"
+                >
+                  Remember Me
+                </label>
+              </div>
+
+              <a
+                class="links"
+                (click)="goToForgotPassword()"
+                style="cursor: pointer;"
+              >
+                Forgot Password?
+              </a>
+
+            </div>
+
+
+            <div class="submit-wrapper">
+              <app-submission
+                [buttonType]="'Login'"
+                [disableButton]="isLoading"
+              ></app-submission>
+            </div>
+
           </form>
 
-          <!-- <app-submission [buttonType]="'Verify OTP'" (submissionClick)="verifyOtp()">
-          </app-submission> -->
+        </mat-tab>
 
-          <div class="resend-otp-section">
-            <ng-container *ngIf="timeLeft > 0; else resendButton">
-              <p>Resend code in {{ timeLeft }} seconds</p>
-            </ng-container>
 
-            <ng-template #resendButton>
-              <button type="button" color="primary" (click)="resendOtp()">
-                Resend OTP
-              </button>
-            </ng-template>
+        <!-- OTP LOGIN -->
+        <mat-tab label="Login with OTP">
+
+          <div class="otp-container">
+
+            @if(showPhoneInput) {
+
+              <form
+                [formGroup]="phoneLoginForm"
+                (ngSubmit)="sendOtp()"
+                class="auth-form"
+              >
+
+                <div class="form-group">
+
+                  <label>Phone Number</label>
+
+                  <div class="input-wrapper">
+
+                    <span class="input-prefix">
+                      <i class="fi fi-rr-phone-call"></i>
+                    </span>
+
+                    <input
+                      class="form-control"
+                      formControlName="phoneNumber"
+                      placeholder="e.g., +919876543210"
+                      required
+                    />
+
+                  </div>
+
+                  <span
+                    class="text-danger"
+                    *ngIf="phoneLoginForm.get('phoneNumber')?.hasError('required') && phoneLoginForm.get('phoneNumber')?.touched"
+                  >
+                    Phone number is required.
+                  </span>
+
+                  <span
+                    class="text-danger"
+                    *ngIf="phoneLoginForm.get('phoneNumber')?.hasError('pattern') && phoneLoginForm.get('phoneNumber')?.touched"
+                  >
+                    Please enter a valid phone number (e.g., +91XXXXXXXXXX).
+                  </span>
+
+                </div>
+
+                <div class="submit-wrapper">
+                  <app-submission
+                    [buttonType]="'Send OTP'"
+                  ></app-submission>
+                </div>
+
+              </form>
+
+            } @else {
+
+              <div class="otp-verification">
+
+                <form
+                  [formGroup]="phoneLoginForm"
+                  (ngSubmit)="verifyOtp()"
+                  class="auth-form"
+                >
+
+                  <p class="otp-message">
+                    Please enter the OTP we've shared to {{ maskedPhoneNumber }}
+                  </p>
+
+                  <div class="form-group">
+
+                    <label>OTP</label>
+
+                    <div class="input-wrapper">
+
+                      <span class="input-prefix">
+                        <i class="fi fi-rr-shield-check"></i>
+                      </span>
+
+                      <input
+                        class="form-control otp-input"
+                        formControlName="otpCode"
+                        placeholder="Enter OTP"
+                        required
+                      />
+
+                    </div>
+
+                    <span
+                      class="text-danger"
+                      *ngIf="phoneLoginForm.get('otpCode')?.hasError('required') && phoneLoginForm.get('otpCode')?.touched"
+                    >
+                      OTP is required.
+                    </span>
+
+                    <span
+                      class="text-danger"
+                      *ngIf="phoneLoginForm.get('otpCode')?.hasError('pattern') && phoneLoginForm.get('otpCode')?.touched"
+                    >
+                      OTP must be 6 digits.
+                    </span>
+
+                  </div>
+
+
+                  <div class="submit-wrapper">
+
+                    <app-submission
+                      [buttonType]="'Verify OTP'"
+                    >
+                    </app-submission>
+
+                  </div>
+
+                </form>
+
+
+                <div class="resend-otp-section">
+
+                  <ng-container *ngIf="timeLeft > 0; else resendButton">
+
+                    <p>
+                      Resend code in {{ timeLeft }} seconds
+                    </p>
+
+                  </ng-container>
+
+                  <ng-template #resendButton>
+
+                    <button
+                      type="button"
+                      color="primary"
+                      (click)="resendOtp()"
+                    >
+                      Resend OTP
+                    </button>
+
+                  </ng-template>
+
+                </div>
+
+              </div>
+
+            }
+
           </div>
-        </div>
-        }
-      </div>
-    </mat-tab>
-  </mat-tab-group>
+
+        </mat-tab>
+
+      </mat-tab-group>
+
+    </div>
+
+  </div>
+
 </div>
 
+
+<!-- EXISTING TOAST -->
 <div class="toast-container position-fixed top-50 start-50 translate-middle">
+
   <div
     id="loginToast"
     class="toast text-bg-success"
@@ -187,14 +317,22 @@
     aria-live="assertive"
     aria-atomic="true"
   >
+
     <div class="d-flex">
-      <div class="toast-body">You're successfully logged in! 🎉</div>
+
+      <div class="toast-body">
+        You're successfully logged in! 🎉
+      </div>
+
       <button
         type="button"
         class="btn-close me-2 m-auto"
         data-bs-dismiss="toast"
         aria-label="Close"
       ></button>
+
     </div>
+
   </div>
+
 </div>

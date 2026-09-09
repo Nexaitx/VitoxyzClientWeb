@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '@src/app/core/const';
 import { Router } from '@angular/router';
-import { Footer } from "../../footer/footer";
+import { Footer } from "../../../components/footer/footer";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSnackBar } from '@angular/material/snack-bar';
 

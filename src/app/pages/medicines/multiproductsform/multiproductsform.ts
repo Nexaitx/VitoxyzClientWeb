@@ -9,7 +9,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { CartService } from '@src/app/core/cart.service';
 import { BannerSliderComponent } from "@src/app/shared/banner-slider/banner-slider";
-import { Footer } from "../../footer/footer";
+import { Footer } from "../../../components/footer/footer";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 import { TextBanner } from "@src/app/shared/text-banner/text-banner";
 import { MatIconModule } from '@angular/material/icon';

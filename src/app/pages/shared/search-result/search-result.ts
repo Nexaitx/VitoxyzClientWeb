@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { API_URL } from '@src/app/core/const';
-import { Footer } from "../../footer/footer";
+import { Footer } from "../../../components/footer/footer";
 import { CartService } from '@src/app/core/cart.service';
 import { MatCard, MatCardContent } from "@angular/material/card";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";

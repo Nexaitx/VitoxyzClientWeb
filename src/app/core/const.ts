@@ -32,7 +32,14 @@ export const ENDPOINTS = {
   OTC_MEDICINE_BY_ID: (id: string) => `/products/${id}`,
   OTC_MEDICINES: "/products",
     PRODUCT_BY_ID: (id: string) => `/products/${id}`,
-PRESCRIPTION:"/prescriptions/upload-without-medicine",
+    
+  // PRESCRIPTION:"/prescriptions/upload-without-medicine",
+    PRESCRIPTION: "/prescription/upload",
+    PRESCRIPTIONS: "/prescription/all",
+    PRESCRIPTION_BY_ID: (id: string | number) => `/prescription/${id}`,
+    PRESCRIPTION_UPDATE: (id: string | number) => `/prescription/${id}`,
+    PRESCRIPTION_DELETE: (id: string | number) => `/prescription/${id}/permanent`,
+
   // On board to diet plan
   ONBOARD_DIET: "/user/diet/onboard-diet",
   // BOOKING_RESPONSE: "/user/booking-response",user/accepted

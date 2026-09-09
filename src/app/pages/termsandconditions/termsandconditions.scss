@@ -1,9 +1,554 @@
-a {
-  color: #db9280;
-  text-decoration: none;
-  font-weight: 500;
+/* =========================================
+   VITOXYZ TERMS PAGE
+   UI ONLY
+========================================= */
+
+.terms-page {
+  --brand-blue: #1F7AE0;
+  --brand-green: #16BC7E;
+  --brand-deep: #0C3B33;
+  --coral: #FF7A45;
+  --coral-dark: #E85F2A;
+  --ink: #12211E;
+  --slate: #5C6E6A;
+  --line: #E2EDE9;
+  --mint: #F1F8F5;
+  --white: #fff;
+
+  background: #f8fbfa;
+  color: var(--ink);
+
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
 
-a:hover {
+
+/* =========================================
+   HERO
+========================================= */
+
+.terms-hero {
+  position: relative;
+  width: 100%;
+  height: 390px;
+  overflow: hidden;
+  margin-top: -10px;
+}
+
+.terms-hero-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  object-fit: cover;
+}
+
+.terms-hero-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(12, 59, 51, 0.80),
+      rgba(31, 122, 224, 0.42),
+      rgba(22, 188, 126, 0.16)
+    );
+}
+
+.terms-hero-content {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px;
+  text-align: center;
+}
+
+.terms-hero-content h1 {
+  margin: 0;
+
+  color: var(--white);
+
+  font-size: clamp(32px, 5vw, 54px);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+
+  text-shadow:
+    0 3px 16px rgba(0, 0, 0, 0.22);
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.terms-content {
+  padding: 55px 0 75px;
+}
+
+.terms-content .container {
+  max-width: 1050px;
+}
+
+
+/* =========================================
+   CARDS
+========================================= */
+
+.terms-card {
+  position: relative;
+
+  margin-bottom: 22px;
+  padding: 30px 34px;
+
+  background: var(--white);
+
+  border: 1px solid var(--line);
+  border-radius: 18px;
+
+  box-shadow:
+    0 8px 28px rgba(12, 59, 51, 0.055);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.terms-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 14px 35px rgba(12, 59, 51, 0.09);
+}
+
+
+/* =========================================
+   INTRO CARD
+========================================= */
+
+.intro-card {
+  border-top: 4px solid var(--brand-green);
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #f8fcfa 100%
+    );
+}
+
+.intro-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.heading-accent {
+  width: 6px;
+  height: 32px;
+
+  flex: 0 0 auto;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--brand-blue),
+      var(--brand-green)
+    );
+}
+
+.intro-heading h5 {
+  margin: 0;
+
+  color: var(--brand-deep);
+
+  font-size: 24px;
+  font-weight: 800;
+}
+
+
+/* =========================================
+   SECTION HEADING
+========================================= */
+
+.terms-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  margin-bottom: 18px;
+}
+
+.terms-heading h5 {
+  margin: 0;
+
+  color: var(--brand-deep);
+
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+
+/* =========================================
+   SECTION NUMBER
+========================================= */
+
+.section-number {
+  width: 48px;
+  height: 48px;
+
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  color: var(--white);
+
+  font-size: 12px;
+  font-weight: 800;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--brand-blue),
+      var(--brand-green)
+    );
+
+  box-shadow:
+    0 6px 16px rgba(31, 122, 224, 0.18);
+}
+
+
+/* =========================================
+   TEXT
+========================================= */
+
+.terms-card p {
+  margin-bottom: 15px;
+
+  color: var(--slate);
+
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.terms-card p:last-child {
+  margin-bottom: 0;
+}
+
+.terms-card strong {
+  color: var(--ink);
+}
+
+
+/* =========================================
+   LIST
+========================================= */
+
+.terms-list {
+  margin: 12px 0 18px;
+  padding: 0;
+
+  list-style: none;
+}
+
+.terms-list li {
+  position: relative;
+
+  padding-left: 28px;
+  margin-bottom: 11px;
+
+  color: var(--slate);
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.terms-list li:last-child {
+  margin-bottom: 0;
+}
+
+.terms-list li::before {
+  content: "";
+
+  position: absolute;
+
+  left: 3px;
+  top: 9px;
+
+  width: 9px;
+  height: 9px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--brand-blue),
+      var(--brand-green)
+    );
+
+  box-shadow:
+    0 0 0 4px rgba(22, 188, 126, 0.08);
+}
+
+
+/* =========================================
+   SERVICES
+========================================= */
+
+.service-list {
+  margin: 15px 0 20px;
+  padding: 0;
+
+  list-style: none;
+}
+
+.service-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+
+  padding: 14px 16px;
+  margin-bottom: 10px;
+
+  background: var(--mint);
+
+  border: 1px solid var(--line);
+  border-radius: 13px;
+}
+
+.service-number {
+  width: 30px;
+  height: 30px;
+
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--white);
+
+  border: 1px solid var(--line);
+
+  color: var(--brand-blue);
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.service-list p {
+  margin: 3px 0 0;
+
+  font-size: 14px;
+}
+
+
+/* =========================================
+   CONTACT CARD
+========================================= */
+
+.contact-card {
+  border-bottom: 4px solid var(--brand-green);
+}
+
+.contact-details {
+  margin-top: 18px;
+  padding: 18px 20px;
+
+  background: var(--mint);
+
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.contact-details p {
+  margin-bottom: 6px;
+}
+
+.contact-details p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================================
+   FINAL CARD
+========================================= */
+
+.final-card {
+  border-bottom: 4px solid var(--brand-blue);
+
+  margin-bottom: 0;
+}
+
+
+/* =========================================
+   LINKS
+========================================= */
+
+.terms-page a {
+  color: var(--brand-blue);
+
+  font-weight: 600;
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.terms-page a:hover {
+  color: var(--brand-green);
   text-decoration: underline;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 991px) {
+
+  .terms-hero {
+    height: 330px;
+  }
+
+  .terms-content {
+    padding: 42px 0 60px;
+  }
+
+  .terms-card {
+    padding: 27px 28px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .terms-hero {
+    height: 260px;
+  }
+
+  .terms-hero-content {
+    padding: 20px;
+  }
+
+  .terms-hero-content h1 {
+    font-size: 32px;
+    letter-spacing: -0.8px;
+  }
+
+  .terms-content {
+    padding: 28px 0 45px;
+  }
+
+  .terms-content .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .terms-card {
+    padding: 22px 18px;
+    margin-bottom: 17px;
+
+    border-radius: 15px;
+  }
+
+  .intro-heading {
+    gap: 9px;
+  }
+
+  .intro-heading h5 {
+    font-size: 21px;
+  }
+
+  .terms-heading {
+    gap: 11px;
+  }
+
+  .terms-heading h5 {
+    font-size: 18px;
+  }
+
+  .section-number {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    font-size: 11px;
+  }
+
+  .terms-card p,
+  .terms-list li {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .service-list li {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .service-number {
+    width: 27px;
+    height: 27px;
+
+    font-size: 11px;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 450px) {
+
+  .terms-hero {
+    height: 225px;
+  }
+
+  .terms-hero-content h1 {
+    font-size: 28px;
+  }
+
+  .terms-card {
+    padding: 20px 15px;
+  }
+
+  .terms-heading {
+    gap: 9px;
+  }
+
+  .section-number {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 10px;
+  }
+
+  .terms-list li {
+    padding-left: 24px;
+  }
+
+  .contact-details {
+    padding: 15px;
+  }
 }

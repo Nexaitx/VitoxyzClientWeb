@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { Footer } from "../../footer/footer";
+import { Footer } from "../../../components/footer/footer";
 import { Header } from "../header/header";
 import { HttpClient } from "@angular/common/http";
 import { CommonModule } from "@angular/common";

@@ -7,7 +7,7 @@ import { BookingItem, CancellationItem, PageMeta, ViewStaffBookingHistoryService
 
 
 import { finalize } from 'rxjs/operators';
-import { Footer } from "../footer/footer";
+import { Footer } from "../../components/footer/footer";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 import { CreatePaymentRequest, PaymentService, VerifyPaymentRequest } from '@src/app/core/services/payment.service';
 import { environment } from '@src/environments/environment.development';

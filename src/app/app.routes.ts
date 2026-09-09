@@ -11,27 +11,58 @@ import { Empty } from './shared/empty/empty';
 import { AddAddress } from './layouts/add-address/add-address';
 import { AcceptedBookings } from './pages/accepted-bookings/accepted-bookings';
 import { MyOffers } from './pages/my-offers/my-offers';
+import { Header1 } from './components/header/header';
+import { HealthAdvice } from './pages/health-advice/health-advice';
+import { Offers } from './pages/offers/offers';
 
 export const routes: Routes = [
+
+  // ==========================================
+  // HOME PAGE
+  // NO OLD HEADER
+  // HOME HAS ITS OWN NEW HEADER
+  // ==========================================
+
+
+
+
+  // ==========================================
+  // ALL OTHER PAGES
+  // KEEP OLD HEADER
+  // ==========================================
+
+
   {
     path: '',
-    component: Header,
+    component: Header1,
     children: [
   // 
       {
         path: '',
-        loadChildren: () => import('./pages/medicines/medicines-module').then(m => m.MedicinesModule),
-
+        loadComponent: () =>
+          import('./pages/home/home')
+            .then(m => m.Home),
       },
       {
     path: 'view-medicine/:id',
     component: ViewMedicine
+  },
+    {
+    path: '',
+    loadComponent: () =>
+      import('./pages/home/home')
+        .then(m => m.Home),
   },
         { path: 'products', component: MultiproductsformComponent },
           { path: 'medicine', component: MedicineFilterComponent },
  { path: 'add-address', component: AddAddress },
 { path: 'accepted-bookings',component:AcceptedBookings},
   { path: 'my-offers',component: MyOffers },
+  {
+        path: 'medicines', 
+        loadComponent: () => import('./pages/medicines/medicines') 
+          .then(m => m.Medicines),
+      },
       {
         path: 'products/:category', 
         loadComponent: () => import('./pages/medicines/category-products/category-products') 
@@ -50,8 +81,8 @@ export const routes: Routes = [
   component: Empty
 },
       {
-        path: 'diet/user-onboarding',
-        component: UserOnboarding
+        path: 'diet-plans',
+         loadComponent: () => import('./pages/user-onboarding/user-onboarding').then(m => m.UserOnboarding),
       },
       // {
       //   path: 'diet/user-onboarding',
@@ -69,11 +100,19 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/about-us/about-us').then(m => m.AboutUs),
       },
       {
-        path: 'termsandconditions',
+        path: 'terms',
         loadComponent: () => import('./pages/termsandconditions/termsandconditions').then(m => m.Termsandconditions),
       },
+      {
+        path: 'health-advice',
+        component: HealthAdvice
+      },
+      {
+        path: 'offers',
+        component: Offers
+      },
        {
-        path: 'return-refund',
+        path: 'refund-policy',
         loadComponent: () => import('./pages/return-refund/return-refund').then(m => m.ReturnRefund),
       },
       {
@@ -113,6 +152,12 @@ export const routes: Routes = [
       {
         path: 'orders',
         loadComponent: () => import('./pages/medicines/order-history/order-history').then(m => m.OrderHistoryComponent),
+      },
+      {
+        path: 'order-prescription',
+        loadComponent: () =>
+          import('./pages/medicines/order-prescription/order-prescription')
+            .then(m => m.OrderPrescription),
       },
       {
         path: 'help',

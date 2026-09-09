@@ -1,449 +1,816 @@
-<!-- <app-text-banner image="assets/staff/book-staff-banner.avif" title="Hire Trusted Staff Easily"
-  subtitle="Find verified professionals for your home, office, or business needs" buttonText="Book Now"
-  (buttonClick)="centerContent()">
-</app-text-banner> -->
-
-<!-- <app-booking-text-banner image="assets/staff/book-staff-banner.avif" title="Hire Trusted Staff Easily"
-  subtitle="Find verified professionals for your home, office, or business needs" buttonText="Book Now"
-  (buttonClick)="centerContent()"></app-booking-text-banner>
-
-<app-text-image imageUrl="assets/images/sample.jpg" imageAlt="Sample Image" title="Find, Book & Shop — All in One Place"
-  subtitle="Discover Amazing Features"
-  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-  buttonText="" buttonLink="/">
-</app-text-image>  -->
-<div class="page-wrapper">
+<div class="book-staff-page page-wrapper">
   <div class="page-content">
 
-<div class="container-fluid" #bookingSection >
+    <!-- =========================================================
+         HERO / PAGE INTRO
+         ========================================================= -->
+    <section class="staff-hero">
+      <div class="hero-glow hero-glow-one"></div>
+      <div class="hero-glow hero-glow-two"></div>
 
-  <div class="row">
-    <div class="col-md-4 h-100 map-styles">
-      <app-map (locationSelected)="getAddressFromCoords($event.lat, $event.lng)"></app-map>
-    </div>
+      <div class="content-shell hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            Verified home care across Mohali &amp; the Tricity
+          </span>
 
-    <div class="col-md-8 search-staff-form">
-      <h2 class="form-title">Please fill the form</h2>
-      <div class="form-scroll-container">
-        <div class="form-content">
-          <form [formGroup]="staffBookingForm" (ngSubmit)="onSubmit()">
-            <div class="form">
-              <div class="row my-3">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="form-label">Select your area</label>
-                    <i class="bi bi-geo-alt address" style="line-height: 2;"></i>
-                    <input type="text" class="form-control ps-4" formControlName="userAddress" [class.is-invalid]="
-                  staffBookingForm.get('userAddress')?.invalid &&
-                  staffBookingForm.get('userAddress')?.touched
-                " />
-                    @if(staffBookingForm.get('userAddress')?.invalid &&
-                    staffBookingForm.get('userAddress')?.touched) {
-                    <div class="invalid-feedback">Area is required.</div>
-                    }
-                  </div>
-                </div>
+          <h1>
+            Book verified nurses and
+            <span>home care staff</span> in Mohali
+          </h1>
+
+          <p class="hero-description">
+            Recovery is easier at home — as long as the right person is there.
+            Vitoxyz places trained nurses, attendants and physiotherapists in
+            homes across Mohali and the Tricity. Every person on our panel is
+            qualification-checked, interviewed and background-verified before
+            we send them to you. Book for a single visit, or arrange full-time care.
+          </p>
+
+          <div class="hero-actions">
+            <button type="button" class="hero-primary" (click)="bookingSection.scrollIntoView({ behavior: 'smooth', block: 'start' })">
+              <i class="bi bi-calendar2-check"></i>
+              Start a booking
+            </button>
+            <a class="hero-secondary" href="tel:+917355400002">
+              <i class="bi bi-telephone"></i>
+              Talk to care support
+            </a>
+          </div>
+
+          <div class="hero-trust">
+            <div><i class="bi bi-patch-check-fill"></i> Qualification checked</div>
+            <div><i class="bi bi-shield-check"></i> Background verified</div>
+            <div><i class="bi bi-house-heart"></i> Home care in Mohali</div>
+          </div>
+        </div>
+
+        <div class="hero-panel">
+          <div class="hero-panel-top">
+            <div class="hero-panel-icon">
+              <i class="bi bi-heart-pulse-fill"></i>
+            </div>
+            <div>
+              <span class="mini-label">VITOXYZ CARE</span>
+              <strong>Care that comes home</strong>
+            </div>
+          </div>
+
+          <div class="hero-panel-list">
+            <div class="hero-panel-item">
+              <span class="item-icon blue"><i class="bi bi-person-vcard"></i></span>
+              <span><b>Trained professionals</b><small>Nurses, attendants &amp; physiotherapists</small></span>
+            </div>
+            <div class="hero-panel-item">
+              <span class="item-icon green"><i class="bi bi-shield-check"></i></span>
+              <span><b>Verification-first</b><small>Documents, interview &amp; background checks</small></span>
+            </div>
+            <div class="hero-panel-item">
+              <span class="item-icon coral"><i class="bi bi-clock-history"></i></span>
+              <span><b>Flexible care</b><small>Single visits or longer-term arrangements</small></span>
+            </div>
+          </div>
+
+          <div class="hero-panel-bottom">
+            <i class="bi bi-geo-alt-fill"></i>
+            <span>Serving Mohali, Kharar, Chandigarh, Zirakpur &amp; Panchkula</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SERVICE CARDS
+         ========================================================= -->
+    <section class="services-section">
+      <div class="content-shell">
+        <div class="section-heading centered">
+          <span class="section-kicker">CARE SERVICES</span>
+          <h2>Choose the care your family needs</h2>
+          <p>
+            From everyday assistance to specialised home nursing, choose a
+            service and then tell us exactly what support you need.
+          </p>
+        </div>
+
+        <div class="service-grid">
+          <article class="service-card">
+            <div class="service-icon blue"><i class="bi bi-bandaid-fill"></i></div>
+            <div>
+              <h3>Home nurse</h3>
+              <p>Injections, dressing changes, IV lines, catheter care, post-surgery care and vitals monitoring at home.</p>
+            </div>
+            <span class="service-number">01</span>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon green"><i class="bi bi-person-heart"></i></div>
+            <div>
+              <h3>Patient attendant</h3>
+              <p>Day or night support with feeding, hygiene, mobility and medicine reminders.</p>
+            </div>
+            <span class="service-number">02</span>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon coral"><i class="bi bi-person-walking"></i></div>
+            <div>
+              <h3>Elderly care</h3>
+              <p>Companionship and daily assistance for parents living on their own.</p>
+            </div>
+            <span class="service-number">03</span>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon purple"><i class="bi bi-universal-access-circle"></i></div>
+            <div>
+              <h3>Physiotherapy</h3>
+              <p>Post-injury, post-stroke and post-operative rehabilitation sessions in your own home.</p>
+            </div>
+            <span class="service-number">04</span>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon pink"><i class="bi bi-heart-fill"></i></div>
+            <div>
+              <h3>Newborn care</h3>
+              <p>Trained maternity attendants for feeding support, bathing and night care.</p>
+            </div>
+            <span class="service-number">05</span>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon red"><i class="bi bi-activity"></i></div>
+            <div>
+              <h3>ICU-trained nurse</h3>
+              <p>Critical care nurses for ventilator, tracheostomy and high-dependency patients at home.</p>
+            </div>
+            <span class="service-number">06</span>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon teal"><i class="bi bi-droplet-half"></i></div>
+            <div>
+              <h3>Sample collection</h3>
+              <p>A phlebotomist collects blood samples at home and reports reach you online.</p>
+            </div>
+            <span class="service-number">07</span>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon orange"><i class="bi bi-file-medical-fill"></i></div>
+            <div>
+              <h3>Wound care</h3>
+              <p>Dressing for diabetic ulcers, bed sores and post-operative wounds.</p>
+            </div>
+            <span class="service-number">08</span>
+          </article>
+        </div>
+
+        <div class="pricing-note">
+          <i class="bi bi-info-circle-fill"></i>
+          <div>
+            <strong>Pricing is confirmed before booking</strong>
+            <span>
+              Rates should be stated clearly as per visit, per 12 hours or per
+              day. Your final cost is confirmed before anything is booked.
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         BOOKING WORKSPACE
+         ========================================================= -->
+    <section class="booking-section" #bookingSection>
+      <div class="content-shell">
+        <div class="booking-heading">
+          <div>
+            <span class="section-kicker">BOOK YOUR CARE</span>
+            <h2>Tell us what support you need</h2>
+            <p>
+              Select the care type, schedule and number of staff. The map helps
+              us understand your service area.
+            </p>
+          </div>
+          <div class="booking-badge">
+            <i class="bi bi-shield-lock-fill"></i>
+            Secure booking
+          </div>
+        </div>
+
+        <div class="booking-layout">
+
+          <!-- MAP -->
+          <aside class="map-card">
+            <div class="map-card-header">
+              <div>
+                <span class="map-kicker">SERVICE LOCATION</span>
+                <h3>Where is care needed?</h3>
               </div>
-              <div class="row my-3">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="form-label">Address</label>
-                    <i class="bi bi-geo-alt address" style="line-height: 2;"></i>
-                    <input type="text" class="form-control ps-4" placeholder="Enter address"
-                      formControlName="address" />
-                  </div>
-                </div>
+              <span class="map-live"><i class="bi bi-circle-fill"></i> Live map</span>
+            </div>
+
+            <div class="map-container">
+              <app-map (locationSelected)="getAddressFromCoords($event.lat, $event.lng)"></app-map>
+            </div>
+
+            <div class="map-help">
+              <span class="map-help-icon"><i class="bi bi-geo-alt-fill"></i></span>
+              <span>
+                <strong>Select your location on the map</strong>
+                <small>We'll use it to understand the care area.</small>
+              </span>
+            </div>
+          </aside>
+
+          <!-- FORM -->
+          <div class="booking-form-card">
+            <div class="form-card-head">
+              <div class="form-progress">
+                <span class="progress-dot active">1</span>
+                <span class="progress-line"></span>
+                <span class="progress-dot">2</span>
+                <span class="progress-line"></span>
+                <span class="progress-dot">3</span>
               </div>
-              <div formArrayName="staffForms" class="staff-list">
-                <div class="pe-2" *ngFor="let staffGroup of staffListFormArray.controls; let i = index"
-                  [formGroupName]="i">
-                  @if(i > 0){
-                  <div class="indexed-divider-container">
-                    <div class="line"></div>
-                    <span class="index-number">{{ i }}</span>
-                    <div class="line"></div>
+              <div>
+                <h3>Care requirements</h3>
+                <p>Fill in the details below to search for available staff.</p>
+              </div>
+            </div>
+
+            <form [formGroup]="staffBookingForm" (ngSubmit)="onSubmit()" class="staff-booking-form">
+              <div class="location-fields">
+                <div class="field-group">
+                  <label class="field-label">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    Select your area
+                    <span>*</span>
+                  </label>
+                  <div class="input-wrap">
+                    <i class="bi bi-pin-map-fill"></i>
+                    <input
+                      type="text"
+                      formControlName="userAddress"
+                      placeholder="e.g. Mohali, Kharar, Sector 70"
+                      [class.is-invalid]="staffBookingForm.get('userAddress')?.invalid && staffBookingForm.get('userAddress')?.touched"
+                    />
                   </div>
+                  @if(staffBookingForm.get('userAddress')?.invalid && staffBookingForm.get('userAddress')?.touched) {
+                    <small class="field-error">Area is required.</small>
                   }
-                  <div class="col-md-12 d-flex justify-content-end">
+                </div>
+
+                <div class="field-group">
+                  <label class="field-label">
+                    <i class="bi bi-house-door-fill"></i>
+                    Full address
+                    <span>*</span>
+                  </label>
+                  <div class="input-wrap">
+                    <i class="bi bi-geo-alt"></i>
+                    <input
+                      type="text"
+                      formControlName="address"
+                      placeholder="House / flat, street, sector, city"
+                      [class.is-invalid]="staffBookingForm.get('address')?.invalid && staffBookingForm.get('address')?.touched"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div formArrayName="staffForms" class="staff-list">
+                <div
+                  class="staff-request"
+                  *ngFor="let staffGroup of staffListFormArray.controls; let i = index"
+                  [formGroupName]="i"
+                >
+                  @if(i > 0) {
+                    <div class="staff-divider">
+                      <span>Additional staff request</span>
+                      <span class="divider-number">{{ i + 1 }}</span>
+                    </div>
+                  }
+
+                  <div class="staff-request-head">
+                    <div class="staff-request-title">
+                      <span class="request-icon"><i class="bi bi-person-badge-fill"></i></span>
+                      <div>
+                        <span>STAFF REQUEST {{ i + 1 }}</span>
+                        <h4>Who would you like to book?</h4>
+                      </div>
+                    </div>
+
                     @if(i !== 0) {
-                    <button type="button"
-                      class="btn btn-outline-danger btn-lg rounded-circle d-flex align-items-center justify-content-center"
-                      style="width: 20px; height: 30px" (click)="removeStaff(i)" title="Remove Staff">
-                      <i class="bi bi-trash fs-5"></i>
-                    </button>
+                      <button
+                        type="button"
+                        class="remove-staff-btn"
+                        (click)="removeStaff(i)"
+                        title="Remove Staff"
+                      >
+                        <i class="bi bi-trash3"></i>
+                        Remove
+                      </button>
                     }
                   </div>
+
                   <div formArrayName="staffDetails">
-                    <div *ngFor="let staffDetails of getNestedStaffDetailsControls(i); let s = index"
-                      [formGroupName]="s">
-                      <div class="row">
-                        <div class="col-md-12 mb-2">
-                          <div class="form-group">
-                            <label for="typeOfStaff-{{ i }}" class="form-label">Select Staff Type</label>
-                            <i class="bi bi-person address"></i>
-                            <select class="form-select ps-4" id="typeOfStaff-{{ i }}" formControlName="typeOfStaff" 
-                              [class.is-invalid]="
-                          staffDetails.get('typeOfStaff')?.invalid &&
-                          staffDetails.get('typeOfStaff')?.touched
-                        ">
+                    <div
+                      *ngFor="let staffDetails of getNestedStaffDetailsControls(i); let s = index"
+                      [formGroupName]="s"
+                    >
+                      <div class="form-grid">
+                        <div class="field-group">
+                          <label for="typeOfStaff-{{ i }}" class="field-label">
+                            <i class="bi bi-person-fill"></i>
+                            Select staff type
+                            <span>*</span>
+                          </label>
+                          <div class="select-wrap">
+                            <select
+                              id="typeOfStaff-{{ i }}"
+                              formControlName="typeOfStaff"
+                              [class.is-invalid]="staffDetails.get('typeOfStaff')?.invalid && staffDetails.get('typeOfStaff')?.touched"
+                            >
                               <option value="" disabled>Select Type</option>
                               <option *ngFor="let staff of staffCategories" [value]="staff.name">
                                 {{ staff.name }}
                               </option>
                             </select>
-
-                            @if(staffDetails.get('typeOfStaff')?.invalid &&
-                            staffDetails.get('typeOfStaff')?.touched) {
-                            <div class="invalid-feedback">
-                              Type of Staff is required.
-                            </div>
-                            }
+                            <i class="bi bi-chevron-down"></i>
                           </div>
+                          @if(staffDetails.get('typeOfStaff')?.invalid && staffDetails.get('typeOfStaff')?.touched) {
+                            <small class="field-error">Type of Staff is required.</small>
+                          }
                         </div>
-                        @if(staffDetails.get('typeOfStaff')?.value &&
-                        staffDetails.get('typeOfStaff')?.value !== '') {
-                        <ng-container>
-                          <div class="col-md-12 my-3">
-                            <div class="form-group">
-                              <label for="typeOfSubStaff-{{ i }}" class="form-label">Select {{
-                                staffDetails.get('typeOfStaff')?.value |
-                                titlecase }} Type</label>
-                              <i class="bi bi-people address"></i>
-                              <select class="form-select ps-4" id="typeOfSubStaff-{{ i }}"
-                                formControlName="typeOfSubStaff" [disabled]="!staffDetails.get('typeOfStaff')?.value"
-                                (change)="onSubStaffChange(i)" [class.is-invalid]="
-                            staffDetails.get('typeOfSubStaff')?.invalid &&
-                            staffDetails.get('typeOfSubStaff')?.touched
-                          ">
+
+                        @if(staffDetails.get('typeOfStaff')?.value) {
+                          <div class="field-group">
+                            <label for="typeOfSubStaff-{{ i }}" class="field-label">
+                              <i class="bi bi-people-fill"></i>
+                              Select {{ staffDetails.get('typeOfStaff')?.value | titlecase }} type
+                              <span>*</span>
+                            </label>
+                            <div class="select-wrap">
+                              <select
+                                id="typeOfSubStaff-{{ i }}"
+                                formControlName="typeOfSubStaff"
+                                (change)="onSubStaffChange(i)"
+                                [class.is-invalid]="staffDetails.get('typeOfSubStaff')?.invalid && staffDetails.get('typeOfSubStaff')?.touched"
+                              >
                                 <option value="" disabled>
-                                  Select {{
-                                  staffDetails.get('typeOfStaff')?.value |
-                                  titlecase }}
+                                  Select {{ staffDetails.get('typeOfStaff')?.value | titlecase }}
                                 </option>
                                 <option *ngFor="let nurse of staffSubCategories[i]" [value]="nurse.value">
                                   {{ nurse.label }}
                                 </option>
                               </select>
-
-                              @if(staffDetails.get('typeOfSubStaff')?.invalid &&
-                              staffDetails.get('typeOfSubStaff')?.touched) {
-                              <div class="invalid-feedback">
-                                Type of {{
-                                staffDetails.get('typeOfStaff')?.value |
-                                titlecase }} is required.
-                              </div>
-                              }
+                              <i class="bi bi-chevron-down"></i>
                             </div>
+                            @if(staffDetails.get('typeOfSubStaff')?.invalid && staffDetails.get('typeOfSubStaff')?.touched) {
+                              <small class="field-error">
+                                Type of {{ staffDetails.get('typeOfStaff')?.value | titlecase }} is required.
+                              </small>
+                            }
                           </div>
-                        </ng-container>
                         }
                       </div>
                     </div>
                   </div>
-                  @if(getNestedStaffDetailsControls(i)[0].get('typeOfStaff')?.value)
-                  {
-                  <ng-container>
-                    <div formArrayName="shiftDetails">
-                      <div *ngFor="let shiftDetail of getNestedShiftDetailsControls(i); let sh = index"
-                        [formGroupName]="sh" class="shift-detail">
-                        <div class="row d-flex">
-                          <div class="sub-row">
 
-                            <div class="d-flex align-items-center">
-                              <div class="d-flex flex-column">
-                                <!-- <small class="text-muted">Start Time</small>
-                                <div class="d-flex align-items-center"
-                                  [class.is-invalid]="shiftDetail.get('timeSlot')?.errors?.['pastTime'] && shiftDetail.get('timeSlot')?.touched">
-                                  <div class="d-flex align-items-center counter-box">
-                                    <button class="btn-counterLeft btn-minus" type="button"
-                                      (click)="decrementTimes('hours', i, sh, 'start')">
-                                      <i class="bi bi-dash"></i>
-                                    </button>
-
-                                    <input type="number" class="value-font counter-input"
-                                      formControlName="startTimeHour"
-                                      [value]="pad(shiftDetail.get('startTimeHour')?.value)" min="1" max="12"
-                                      (input)="onManualTimeChange('startTimeHour', i, sh, $event)" />
-
-                                    <button class="btn-counterRight btn-plus" type="button"
-                                      (click)="incrementTimes('hours', i, sh, 'start')">
-                                      <i class="bi bi-plus"></i>
-                                    </button>
-                                  </div>
-
-                                  <div class="d-flex align-items-center counter-box mx-2">
-                                    <button class="btn-counterLeft btn-minus" type="button"
-                                      (click)="decrementTimes('minutes', i, sh, 'start')">
-                                      <i class="bi bi-dash"></i>
-                                    </button>
-
-                                    <input type="number" class="value-font counter-input hrsMin"
-                                      formControlName="startTimeMinute"
-                                      [value]="pad(shiftDetail.get('startTimeMinute')?.value)" min="0" max="59"
-                                      (input)="onManualTimeChange('startTimeMinute', i, sh, $event)" />
-
-                                    <button class="btn-counterRight btn-plus" type="button"
-                                      (click)="incrementTimes('minutes', i, sh, 'start')">
-                                      <i class="bi bi-plus"></i>
-                                    </button>
-                                  </div>
-
-                                  <select class="d-flex align-items-center counter-box mx-2"
-                                    formControlName="startTimeAmPm"
-                                    (change)="updateTimeSlot(getNestedShiftDetailsControls(i)[sh])">
-                                    <option value="AM">AM</option>
-                                    <option value="PM">PM</option>
-                                  </select>
-                                </div> -->
-                                <small class="text-muted">Start Time</small>
-
-                                <input class="timeInputcls" type="time" formControlName="startTime" />
-                              </div>
+                  @if(getNestedStaffDetailsControls(i)[0].get('typeOfStaff')?.value) {
+                    <ng-container>
+                      <div formArrayName="shiftDetails" class="shift-list">
+                        <div
+                          *ngFor="let shiftDetail of getNestedShiftDetailsControls(i); let sh = index"
+                          [formGroupName]="sh"
+                          class="shift-card"
+                        >
+                          <div class="shift-card-top">
+                            <div>
+                              <span class="shift-label">SCHEDULE {{ sh + 1 }}</span>
+                              <h5>Set duty timing &amp; staff preference</h5>
                             </div>
 
-                            <!-- END TIME -->
-                            <div class="d-flex align-items-center ">
-                              <div class="d-flex flex-column">
-                                <!-- <small class="text-muted">End Time</small>
-                                <div class="d-flex align-items-center">
-                                  <div class="d-flex align-items-center counter-box">
-                                    <button class="btn-counterLeft btn-minus" type="button"
-                                      (click)="decrementTimes('hours', i, sh, 'end')">
-                                      <i class="bi bi-dash"></i>
-                                    </button>
-
-                                    <input type="number" class="value-font counter-input" formControlName="endTimeHour"
-                                      [value]="pad(shiftDetail.get('endTimeHour')?.value)" min="1" max="12"
-                                      (input)="onManualTimeChange('endTimeHour', i, sh, $event)" />
-
-                                    <button class="btn-counterRight btn-plus" type="button"
-                                      (click)="incrementTimes('hours', i, sh, 'end')">
-                                      <i class="bi bi-plus"></i>
-                                    </button>
-                                  </div>
-
-                                  <div class="d-flex align-items-center counter-box mx-2">
-                                    <button class="btn-counterLeft btn-minus" type="button"
-                                      (click)="decrementTimes('minutes', i, sh, 'end')">
-                                      <i class="bi bi-dash"></i>
-                                    </button>
-
-                                    <input type="number" class="value-font counter-input hrsMin"
-                                      formControlName="endTimeMinute"
-                                      [value]="pad(shiftDetail.get('endTimeMinute')?.value)" min="0" max="59"
-                                      (input)="onManualTimeChange('endTimeMinute', i, sh, $event)" />
-
-                                    <button class="btn-counterRight btn-plus" type="button"
-                                      (click)="incrementTimes('minutes', i, sh, 'end')">
-                                      <i class="bi bi-plus"></i>
-                                    </button>
-                                  </div>
-
-                                  <select class="d-flex align-items-center counter-box mx-2"
-                                    formControlName="endTimeAmPm">
-                                    <option value="AM">AM</option>
-                                    <option value="PM">PM</option>
-                                  </select>
-                                </div> -->
-                                <small class="text-muted">End Time</small>
-
-                                <input type="time" class="timeInputcls" formControlName="endTime" />
-                              </div>
-                            </div>
-
-
-                            <div class="gender-quantity-row">
-                              <!-- Preferred Gender -->
-                              <div class="gender-box">
-                                <label class="form-label d-block">Preferred Gender</label>
-
-                                <div class="d-flex align-items-center counter-box mx-2">
-                                  <i class="bi bi-person text-primary me-2"></i>
-                                  <span class="counter-label">Male</span>
-                                </div>
-
-                                <div class="d-flex align-items-center counter-box mx-2">
-                                  <i class="bi bi-person text-primary me-2"></i>
-                                  <span class="counter-label">Female</span>
-                                </div>
-
-                                @if(shiftDetail.errors?.['zeroQuantity'] &&
-                                (shiftDetail.touched || shiftDetail.dirty)) {
-                                <div class="text-danger">
-                                  Quantity is required.
-                                </div>
-                                }
-                              </div>
-
-                              <!-- Quantity -->
-                              <div class="quantity-box">
-                                <label class="form-label">Quantity</label>
-
-                                <div class="d-flex align-items-center counter-box">
-                                  <button class="btn-counterLeft btn-minus" type="button"
-                                    (click)="decrease('maleQuantity', i, sh)">
-                                    <i class="bi bi-dash"></i>
-                                  </button>
-                                  <input type="number" class="value-font counter-input"
-                                    [formControlName]="'maleQuantity'" min="0" max="10"
-                                    (input)="onManualChange('maleQuantity', i, sh, $event)" />
-                                  <button class="btn-counterRight btn-plus" type="button"
-                                    (click)="increase('maleQuantity', i, sh)">
-                                    <i class="bi bi-plus"></i>
-                                  </button>
-                                </div>
-
-                                <div class="d-flex align-items-center counter-box">
-                                  <button class="btn-counterLeft btn-minus" type="button"
-                                    (click)="decrease('femaleQuantity', i, sh)">
-                                    <i class="bi bi-dash"></i>
-                                  </button>
-                                  <input type="number" class="value-font counter-input"
-                                    [formControlName]="'femaleQuantity'" min="0" max="10"
-                                    (input)="onManualChange('femaleQuantity', i, sh, $event)" />
-                                  <button class="btn-counterRight btn-plus" type="button"
-                                    (click)="increase('femaleQuantity', i, sh)">
-                                    <i class="bi bi-plus"></i>
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                              <div class="form-group">
-                                <label class="form-label">Tenure</label>
-
-                                <div class="d-flex align-items-center counter-box ">
-                                  <i class="bi bi-calendar4 text-primary" style="margin-left: 10px;"></i>
-                                  <select class="value-font border-0 counter-select  " formControlName="tenure"
-                                    [class.is-invalid]="shiftDetail.get('tenure')?.invalid && shiftDetail.get('tenure')?.touched">
-                                    <option *ngFor="let ten of getTenureOptions(i)" [value]="ten.value">
-                                      {{ ten.label }}
-                                    </option>
-                                  </select>
-                                </div>
-
-                                @if(shiftDetail.get('tenure')?.invalid &&
-                                shiftDetail.get('tenure')?.touched) {
-                                <div class="invalid-feedback">
-                                  Tenure is required.
-                                </div>
-                                }
-                              </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                              <label class="form-label">Shift Duration</label>
-                              <select class="d-flex align-items-center counter-box "
-                                formControlName="preferredTimeSlot" [class.is-invalid]="
-                            shiftDetail.get('preferredTimeSlot')?.invalid &&
-                            shiftDetail.get('preferredTimeSlot')?.touched
-                          ">
-                                <option *ngFor="let type of getSlotsByStaffIndex(i)" [value]="type">
-                                  {{ type }}
-                                </option>
-                              </select>
-                              @if(shiftDetail.get('preferredTimeSlot')?.invalid
-                              && shiftDetail.get('preferredTimeSlot')?.touched)
-                              {
-                              <div class="invalid-feedback">
-                                Shift Type is required.
-                              </div>
+                            <div class="shift-actions">
+                              @if(sh === 0 || sh === getNestedShiftDetailsControls(i).length - 1) {
+                                <button type="button" class="icon-action add-action" (click)="addShift(i)" title="Add Time Slot">
+                                  <i class="bi bi-plus-lg"></i>
+                                  <span>Add slot</span>
+                                </button>
+                              }
+                              @if(sh > 0) {
+                                <button type="button" class="icon-action delete-action" (click)="removeShiftDetail(i, sh)" title="Remove Time Slot">
+                                  <i class="bi bi-trash3"></i>
+                                  <span>Remove</span>
+                                </button>
                               }
                             </div>
                           </div>
 
-                          <div class="row date-row">
-                            <div class="col-md-6">
-                              <label class="form-label">Duty Start Date</label>
-                              <input type="date" class="form-control " [min]="today" formControlName="dutyStartDate" />
+                          <div class="schedule-grid">
+                            <div class="field-group">
+                              <label class="field-label"><i class="bi bi-clock-fill"></i> Start time</label>
+                              <div class="time-wrap">
+                                <input class="time-input" type="time" formControlName="startTime" />
+                              </div>
                             </div>
 
-                            <div class="col-md-6" *ngIf="shiftDetail.get('tenure')?.value !== '1'">
-                              <label class="form-label">Duty End Date</label>
-                              <input type="date" class="form-control"
-                                [min]="shiftDetail.get('dutyStartDate')?.value || today" formControlName="dutyEndDate"
-                                readonly />
-
-
-                              <div class="invalid-feedback"
-                                *ngIf="shiftDetail.get('dutyEndDate')?.invalid && shiftDetail.get('dutyEndDate')?.touched">
-                                Duty End Date is required.
+                            <div class="field-group">
+                              <label class="field-label"><i class="bi bi-clock"></i> End time</label>
+                              <div class="time-wrap">
+                                <input class="time-input" type="time" formControlName="endTime" />
                               </div>
+                            </div>
+
+                            <div class="field-group">
+                              <label class="field-label"><i class="bi bi-calendar-event-fill"></i> Tenure</label>
+                              <div class="select-wrap">
+                                <select
+                                  formControlName="tenure"
+                                  [class.is-invalid]="shiftDetail.get('tenure')?.invalid && shiftDetail.get('tenure')?.touched"
+                                >
+                                  <option *ngFor="let ten of getTenureOptions(i)" [value]="ten.value">
+                                    {{ ten.label }}
+                                  </option>
+                                </select>
+                                <i class="bi bi-chevron-down"></i>
+                              </div>
+                              @if(shiftDetail.get('tenure')?.invalid && shiftDetail.get('tenure')?.touched) {
+                                <small class="field-error">Tenure is required.</small>
+                              }
+                            </div>
+
+                            <div class="field-group">
+                              <label class="field-label"><i class="bi bi-hourglass-split"></i> Shift duration</label>
+                              <div class="select-wrap">
+                                <select
+                                  formControlName="preferredTimeSlot"
+                                  [class.is-invalid]="shiftDetail.get('preferredTimeSlot')?.invalid && shiftDetail.get('preferredTimeSlot')?.touched"
+                                >
+                                  <option *ngFor="let type of getSlotsByStaffIndex(i)" [value]="type">
+                                    {{ type }}
+                                  </option>
+                                </select>
+                                <i class="bi bi-chevron-down"></i>
+                              </div>
+                              @if(shiftDetail.get('preferredTimeSlot')?.invalid && shiftDetail.get('preferredTimeSlot')?.touched) {
+                                <small class="field-error">Shift Type is required.</small>
+                              }
                             </div>
                           </div>
 
+                          <div class="date-grid">
+                            <div class="field-group">
+                              <label class="field-label"><i class="bi bi-calendar-plus"></i> Duty start date</label>
+                              <input type="date" class="date-input" [min]="today" formControlName="dutyStartDate" />
+                            </div>
 
+                            <div
+                              class="field-group"
+                              *ngIf="shiftDetail.get('tenure')?.value !== '1'"
+                            >
+                              <label class="field-label"><i class="bi bi-calendar-check"></i> Duty end date</label>
+                              <input
+                                type="date"
+                                class="date-input"
+                                [min]="shiftDetail.get('dutyStartDate')?.value || today"
+                                formControlName="dutyEndDate"
+                                readonly
+                              />
+                              @if(shiftDetail.get('dutyEndDate')?.invalid && shiftDetail.get('dutyEndDate')?.touched) {
+                                <small class="field-error">Duty End Date is required.</small>
+                              }
+                            </div>
+                          </div>
 
-                          <div class="d-flex align-items-start justify-content-end gap-2 mt-3">
-                            @if(sh === 0 || sh ===
-                            getNestedShiftDetailsControls(i).length - 1) {
-                            <i class="bi bi-plus-lg add" (click)="addShift(i)" title="Add Time Slot"></i>
-                            } @if(sh > 0) {
-                            <i class="bi bi-trash text-danger remove" (click)="removeShiftDetail(i, sh)"
-                              title="Remove Time Slot"></i>
+                          <div class="preference-panel">
+                            <div class="preference-heading">
+                              <div>
+                                <span class="preference-kicker">STAFF PREFERENCE</span>
+                                <h6>How many staff members do you need?</h6>
+                              </div>
+                              <span class="preference-note">
+                                <i class="bi bi-info-circle"></i>
+                                Choose 0 if not required
+                              </span>
+                            </div>
+
+                            <div class="gender-quantity-grid">
+                              <div class="quantity-option">
+                                <div class="gender-label">
+                                  <span class="gender-icon male"><i class="bi bi-person"></i></span>
+                                  <span>Male</span>
+                                </div>
+                                <div class="quantity-control">
+                                  <button type="button" (click)="decrease('maleQuantity', i, sh)" aria-label="Decrease male quantity">
+                                    <i class="bi bi-dash"></i>
+                                  </button>
+                                  <input
+                                    type="number"
+                                    class="quantity-input"
+                                    formControlName="maleQuantity"
+                                    min="0"
+                                    max="10"
+                                    (input)="onManualChange('maleQuantity', i, sh, $event)"
+                                  />
+                                  <button type="button" (click)="increase('maleQuantity', i, sh)" aria-label="Increase male quantity">
+                                    <i class="bi bi-plus"></i>
+                                  </button>
+                                </div>
+                              </div>
+
+                              <div class="quantity-option">
+                                <div class="gender-label">
+                                  <span class="gender-icon female"><i class="bi bi-person"></i></span>
+                                  <span>Female</span>
+                                </div>
+                                <div class="quantity-control">
+                                  <button type="button" (click)="decrease('femaleQuantity', i, sh)" aria-label="Decrease female quantity">
+                                    <i class="bi bi-dash"></i>
+                                  </button>
+                                  <input
+                                    type="number"
+                                    class="quantity-input"
+                                    formControlName="femaleQuantity"
+                                    min="0"
+                                    max="10"
+                                    (input)="onManualChange('femaleQuantity', i, sh, $event)"
+                                  />
+                                  <button type="button" (click)="increase('femaleQuantity', i, sh)" aria-label="Increase female quantity">
+                                    <i class="bi bi-plus"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+
+                            @if(shiftDetail.errors?.['zeroQuantity'] && (shiftDetail.touched || shiftDetail.dirty)) {
+                              <small class="quantity-error">
+                                <i class="bi bi-exclamation-circle"></i>
+                                At least one staff quantity is required.
+                              </small>
                             }
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </ng-container>
+                    </ng-container>
                   }
                 </div>
               </div>
-            </div>
 
-            @if(staffListFormArray.controls[0].get('staffDetails')?.get('0')?.get('typeOfStaff')?.value)
-            {
-            <ng-container>
-              <div class="d-flex justify-content-center addNewBtn my-2">
-                <button type="button" class="btn text-light" (click)="addNewStaff()">
-                  <i class="bi bi-plus"></i>Add Another Staff
-                </button>
-              </div>
-              <div class="submission-fixed d-flex justify-content-end">
-                <app-submission [buttonType]="button" [disableButton]="isSubmitting"></app-submission>
-              </div>
-            </ng-container>
-            }
-          </form>
+              @if(staffListFormArray.controls[0].get('staffDetails')?.get('0')?.get('typeOfStaff')?.value) {
+                <div class="form-footer-actions">
+                  <button type="button" class="add-staff-btn" (click)="addNewStaff()">
+                    <i class="bi bi-plus-circle-fill"></i>
+                    Add another staff
+                  </button>
+
+                  <div class="submission-wrap">
+                    <app-submission
+                      [buttonType]="button"
+                      [disableButton]="isSubmitting"
+                    ></app-submission>
+                  </div>
+                </div>
+              }
+            </form>
+          </div>
+        </div>
+
+        @if(message) {
+          <div class="booking-message" [ngClass]="{
+            'success-message': messageType === 'success',
+            'error-message': messageType === 'error'
+          }">
+            <i [class]="messageType === 'success' ? 'bi bi-check-circle-fill' : 'bi bi-exclamation-triangle-fill'"></i>
+            <span>{{ message }}</span>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- =========================================================
+         HOW IT WORKS
+         ========================================================= -->
+    <section class="how-section">
+      <div class="content-shell">
+        <div class="section-heading centered">
+          <span class="section-kicker">SIMPLE PROCESS</span>
+          <h2>How it works</h2>
+          <p>From your first request to care at home, we keep the process clear.</p>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <span class="step-number">01</span>
+            <div class="step-icon"><i class="bi bi-chat-left-text-fill"></i></div>
+            <h3>Tell us what you need</h3>
+            <p>Tell us who the care is for, and what they need help with.</p>
+          </div>
+
+          <div class="step-card">
+            <span class="step-number">02</span>
+            <div class="step-icon"><i class="bi bi-person-check-fill"></i></div>
+            <h3>We match staff</h3>
+            <p>We match you with an available staff member and call you to confirm.</p>
+          </div>
+
+          <div class="step-card">
+            <span class="step-number">03</span>
+            <div class="step-icon"><i class="bi bi-receipt-cutoff"></i></div>
+            <h3>You approve the details</h3>
+            <p>You approve the staff member, timing and cost before anything is booked.</p>
+          </div>
+
+          <div class="step-card">
+            <span class="step-number">04</span>
+            <div class="step-icon"><i class="bi bi-house-check-fill"></i></div>
+            <h3>Care begins at home</h3>
+            <p>The staff member arrives at your address in Mohali or the Tricity.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-<div *ngIf="message" class="mt-2 p-2 rounded" [ngClass]="{
-       'bg-success text-white': messageType === 'success',
-       'bg-danger text-white': messageType === 'error'
-     }">
-  {{ message }}
-</div>
-<!-- <app-medicine-slider 
-  title="Experience the Joy of Easy Shopping"
-  [showSeeAll]="true"
-  [maxItems]="8"
-  [autoSlide]="true"
-  [slideInterval]="5000">
-</app-medicine-slider> -->
+    </section>
 
-</div>
+    <!-- =========================================================
+         VERIFICATION
+         ========================================================= -->
+    <section class="verification-section">
+      <div class="content-shell verification-grid">
+        <div class="verification-visual">
+          <div class="verification-orbit orbit-one"></div>
+          <div class="verification-orbit orbit-two"></div>
+
+          <div class="verification-card-main">
+            <div class="verification-shield">
+              <i class="bi bi-shield-fill-check"></i>
+            </div>
+            <span>VITOXYZ STANDARD</span>
+            <strong>Verification before placement</strong>
+            <p>We check more than a CV before a professional reaches your home.</p>
+          </div>
+
+          <div class="verification-float-card">
+            <i class="bi bi-patch-check-fill"></i>
+            <span>
+              <b>3-step check</b>
+              <small>Documents · Interview · Background</small>
+            </span>
+          </div>
+        </div>
+
+        <div class="verification-copy">
+          <span class="section-kicker">OUR VERIFICATION STANDARD</span>
+          <h2>How we verify our staff</h2>
+          <p>
+            Every applicant submits their nursing or paramedical qualification
+            documents, which we check against the issuing institution. They then
+            sit an interview covering practical scenarios, not just paperwork.
+            Finally, we run background verification including identity and address checks.
+          </p>
+          <p>
+            After each placement, the family rates the staff member. Those
+            ratings stay on the profile, and anyone who falls below our standard
+            is removed from the panel.
+          </p>
+
+          <div class="verification-points">
+            <div><i class="bi bi-check2-circle"></i><span>Qualification documents checked</span></div>
+            <div><i class="bi bi-check2-circle"></i><span>Practical scenario interview</span></div>
+            <div><i class="bi bi-check2-circle"></i><span>Identity &amp; address verification</span></div>
+            <div><i class="bi bi-check2-circle"></i><span>Family feedback after placement</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         WHY VITOXYZ
+         ========================================================= -->
+    <section class="why-section">
+      <div class="content-shell">
+        <div class="section-heading">
+          <span class="section-kicker">WHY VITOXYZ</span>
+          <h2>Designed around the family, not just the booking</h2>
+        </div>
+
+        <div class="why-grid">
+          <div class="why-card">
+            <span class="why-icon"><i class="bi bi-person-vcard-fill"></i></span>
+            <h3>Right-fit staff</h3>
+            <p>We collect the details that help us understand the type of support your family actually needs.</p>
+          </div>
+
+          <div class="why-card">
+            <span class="why-icon"><i class="bi bi-calendar2-week-fill"></i></span>
+            <h3>Flexible schedules</h3>
+            <p>Request a single day, longer tenure or recurring care according to the available service options.</p>
+          </div>
+
+          <div class="why-card">
+            <span class="why-icon"><i class="bi bi-telephone-inbound-fill"></i></span>
+            <h3>Confirmation call</h3>
+            <p>Our team calls to confirm the staff match, timing and cost before the booking is finalised.</p>
+          </div>
+
+          <div class="why-card">
+            <span class="why-icon"><i class="bi bi-house-heart-fill"></i></span>
+            <h3>Care at home</h3>
+            <p>Home is often where recovery feels easiest. We help bring the right support there.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SERVICE PAGE CTA / FAQ PREVIEW
+         ========================================================= -->
+    <section class="care-info-section">
+      <div class="content-shell care-info-grid">
+        <div class="care-info-copy">
+          <span class="section-kicker">HOME CARE, EXPLAINED</span>
+          <h2>Need help deciding which staff type to choose?</h2>
+          <p>
+            A home nurse may be appropriate when clinical nursing tasks are
+            required. Patient attendants can support daily activities and
+            companionship, while physiotherapy focuses on rehabilitation.
+            For specialised situations, tell us what is happening and our team
+            can help identify the appropriate service category.
+          </p>
+
+          <div class="care-tags">
+            <span><i class="bi bi-heart-pulse"></i> Nursing care</span>
+            <span><i class="bi bi-person-wheelchair"></i> Daily assistance</span>
+            <span><i class="bi bi-activity"></i> Rehabilitation</span>
+            <span><i class="bi bi-stars"></i> Family support</span>
+          </div>
+        </div>
+
+        <div class="faq-preview">
+          <details>
+            <summary>Can I book staff for one visit?</summary>
+            <p>Yes. The booking form supports service and schedule selection, including short-duration options where available.</p>
+          </details>
+          <details>
+            <summary>Can I request more than one staff member?</summary>
+            <p>Yes. Use “Add another staff” after selecting your first staff type to create another staff request.</p>
+          </details>
+          <details>
+            <summary>When do I know the final cost?</summary>
+            <p>You approve the staff member, timing and cost before anything is booked.</p>
+          </details>
+          <details>
+            <summary>Which areas do you serve?</summary>
+            <p>Vitoxyz's content specifies home care across Mohali and the Tricity, with service coverage including nearby areas.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         FINAL CTA
+         ========================================================= -->
+    <section class="final-cta-section">
+      <div class="content-shell">
+        <div class="final-cta">
+          <div class="final-cta-glow"></div>
+          <div class="final-cta-content">
+            <span class="section-kicker light">READY WHEN YOU ARE</span>
+            <h2>Bring trusted care closer to home.</h2>
+            <p>
+              Tell us who needs care, where they are and what support is required.
+              We'll help you move from enquiry to confirmed care.
+            </p>
+            <button type="button" class="final-cta-btn" (click)="bookingSection.scrollIntoView({ behavior: 'smooth', block: 'start' })">
+              <i class="bi bi-arrow-up-right-circle-fill"></i>
+              Book home care
+            </button>
+          </div>
+          <div class="final-cta-art">
+            <div class="cta-circle"><i class="bi bi-heart-pulse-fill"></i></div>
+            <span class="cta-pill pill-one">Verified</span>
+            <span class="cta-pill pill-two">At home</span>
+            <span class="cta-pill pill-three">Care first</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
   <app-footer></app-footer>
 </div>
+
 <app-mobile-footer-nav></app-mobile-footer-nav>
-<!-- @if(!showAadharPopup) {
-<app-aadhar-verification (verified)="onAadharVerified()"></app-aadhar-verification>
-} -->
-<!-- Remove this -->
 
 @if (showAuthPopup) {
-<app-authorization [showAuthModal]="showAuthPopup" [authMode]="'login'" (loginSuccess)="onAuthSuccess()"
-  (close)="onAuthClose()"></app-authorization>
+  <app-authorization
+    [showAuthModal]="showAuthPopup"
+    [authMode]="'login'"
+    (loginSuccess)="onAuthSuccess()"
+    (close)="onAuthClose()"
+  ></app-authorization>
 }
-
-<!-- @if(showAuthPopup) {
-<app-authorization
-  [showAuthModal]="showAuthPopup"
-  [authMode]="'login'"
-  (loginSuccess)="onAuthSuccess()"
-  (close)="onAuthClose()"
-></app-authorization>
-} -->

@@ -1,0 +1,570 @@
+/* =========================================
+   VITOXYZ RETURN & REFUND POLICY
+   UI ONLY
+========================================= */
+
+.return-refund-page {
+  --brand-blue: #1F7AE0;
+  --brand-green: #16BC7E;
+  --brand-deep: #0C3B33;
+  --coral: #FF7A45;
+  --coral-dark: #E85F2A;
+  --ink: #12211E;
+  --slate: #5C6E6A;
+  --line: #E2EDE9;
+  --mint: #F1F8F5;
+  --white: #fff;
+
+  background: #f8fbfa;
+  color: var(--ink);
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.policy-hero {
+  position: relative;
+  width: 100%;
+  height: 390px;
+  overflow: hidden;
+  margin-top: -10px;
+}
+
+.policy-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.policy-hero-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(12, 59, 51, 0.78),
+      rgba(31, 122, 224, 0.38),
+      rgba(22, 188, 126, 0.18)
+    );
+}
+
+.policy-hero-content {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  padding: 30px;
+}
+
+.policy-hero-content h1 {
+  margin: 0;
+  color: var(--white);
+  font-size: clamp(32px, 5vw, 54px);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  text-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.policy-content {
+  padding: 55px 0 70px;
+}
+
+.policy-content .container {
+  max-width: 1050px;
+}
+
+
+/* =========================================
+   POLICY CARDS
+========================================= */
+
+.policy-card {
+  position: relative;
+
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+
+  padding: 30px 34px;
+  margin-bottom: 24px;
+
+  box-shadow:
+    0 8px 30px rgba(12, 59, 51, 0.055);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.policy-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 14px 35px rgba(12, 59, 51, 0.09);
+}
+
+
+/* =========================================
+   INTRO CARD
+========================================= */
+
+.intro-card {
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #f8fcfa 100%
+    );
+
+  border-top: 4px solid var(--brand-green);
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.heading-line {
+  width: 6px;
+  height: 32px;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--brand-blue),
+      var(--brand-green)
+    );
+}
+
+.section-heading h5 {
+  margin: 0;
+
+  color: var(--brand-deep);
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.effective-date {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 8px 14px;
+  margin-bottom: 16px;
+
+  background: var(--mint);
+  border: 1px solid var(--line);
+  border-radius: 50px;
+}
+
+.effective-date p {
+  margin: 0;
+  color: var(--slate);
+  font-size: 14px;
+}
+
+.intro-text p {
+  margin-bottom: 0;
+}
+
+
+/* =========================================
+   HEADINGS
+========================================= */
+
+.policy-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  margin-bottom: 18px;
+}
+
+.policy-heading h5 {
+  margin: 3px 0 5px;
+
+  color: var(--brand-deep);
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.policy-heading p {
+  margin: 0;
+}
+
+
+/* =========================================
+   SECTION NUMBER
+========================================= */
+
+.section-number {
+  flex: 0 0 auto;
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 800;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--brand-blue),
+      var(--brand-green)
+    );
+
+  box-shadow:
+    0 6px 15px rgba(31, 122, 224, 0.18);
+}
+
+
+/* =========================================
+   TEXT
+========================================= */
+
+.policy-card p {
+  color: var(--slate);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.policy-card strong {
+  color: var(--ink);
+}
+
+.policy-card h6 {
+  display: inline-block;
+
+  margin-top: 18px;
+  margin-bottom: 12px;
+
+  padding-bottom: 5px;
+
+  color: var(--brand-deep);
+  font-size: 16px;
+  font-weight: 800;
+
+  border-bottom: 3px solid var(--coral);
+}
+
+
+/* =========================================
+   LIST
+========================================= */
+
+.policy-list {
+  margin: 12px 0 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.policy-list li {
+  position: relative;
+
+  padding-left: 28px;
+  margin-bottom: 12px;
+
+  color: var(--slate);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.policy-list li::before {
+  content: "";
+
+  position: absolute;
+  left: 3px;
+  top: 9px;
+
+  width: 9px;
+  height: 9px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--brand-blue),
+      var(--brand-green)
+    );
+
+  box-shadow: 0 0 0 4px rgba(22, 188, 126, 0.08);
+}
+
+
+/* =========================================
+   RETURN PROCESS
+========================================= */
+
+.process-list {
+  margin: 10px 0 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.process-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+
+  padding: 13px 15px;
+  margin-bottom: 10px;
+
+  background: var(--mint);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.process-number {
+  flex: 0 0 auto;
+
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--white);
+  color: var(--brand-blue);
+
+  border: 1px solid var(--line);
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.process-list p {
+  margin: 3px 0 0;
+}
+
+
+/* =========================================
+   FINAL NOTE
+========================================= */
+
+.final-note {
+  margin-top: 20px;
+  padding: 15px 18px;
+
+  background: #fff8f4;
+  border-left: 4px solid var(--coral);
+
+  border-radius: 0 10px 10px 0;
+}
+
+
+/* =========================================
+   GRIEVANCE SECTION
+========================================= */
+
+.grievance-card {
+  border-bottom: 4px solid var(--brand-green);
+}
+
+.support-details {
+  margin-top: 18px;
+  padding: 18px 20px;
+
+  background: var(--mint);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.support-details p {
+  margin-bottom: 5px;
+}
+
+.support-details p:last-child {
+  margin-bottom: 0;
+}
+
+.escalation-box {
+  margin-top: 18px;
+  padding: 17px 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(31, 122, 224, 0.07),
+      rgba(22, 188, 126, 0.08)
+    );
+
+  border: 1px solid rgba(22, 188, 126, 0.18);
+  border-radius: 14px;
+}
+
+.escalation-box p {
+  margin: 0;
+}
+
+
+/* =========================================
+   LINKS
+========================================= */
+
+.return-refund-page a {
+  color: var(--brand-blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.return-refund-page a:hover {
+  color: var(--brand-green);
+  text-decoration: underline;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 991px) {
+
+  .policy-hero {
+    height: 330px;
+  }
+
+  .policy-content {
+    padding: 40px 0 55px;
+  }
+
+  .policy-card {
+    padding: 26px 28px;
+  }
+}
+
+
+@media (max-width: 700px) {
+
+  .policy-hero {
+    height: 260px;
+  }
+
+  .policy-hero-content {
+    padding: 20px;
+  }
+
+  .policy-hero-content h1 {
+    font-size: 32px;
+    letter-spacing: -0.8px;
+  }
+
+  .policy-content {
+    padding: 28px 0 45px;
+  }
+
+  .policy-content .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .policy-card {
+    padding: 22px 18px;
+    border-radius: 15px;
+    margin-bottom: 18px;
+  }
+
+  .section-heading {
+    gap: 9px;
+  }
+
+  .section-heading h5 {
+    font-size: 21px;
+  }
+
+  .policy-heading {
+    gap: 12px;
+  }
+
+  .policy-heading h5 {
+    font-size: 18px;
+  }
+
+  .section-number {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    font-size: 11px;
+  }
+
+  .policy-card p,
+  .policy-list li {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .process-list li {
+    padding: 11px 12px;
+    gap: 10px;
+  }
+
+  .process-number {
+    width: 27px;
+    height: 27px;
+    font-size: 12px;
+  }
+
+  .effective-date {
+    border-radius: 12px;
+  }
+}
+
+
+@media (max-width: 450px) {
+
+  .policy-hero {
+    height: 225px;
+  }
+
+  .policy-hero-content h1 {
+    font-size: 28px;
+  }
+
+  .policy-card {
+    padding: 20px 15px;
+  }
+
+  .policy-heading {
+    gap: 10px;
+  }
+
+  .section-number {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+  }
+
+  .policy-list li {
+    padding-left: 24px;
+  }
+}

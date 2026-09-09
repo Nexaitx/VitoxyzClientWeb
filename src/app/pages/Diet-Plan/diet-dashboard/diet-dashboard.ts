@@ -52,7 +52,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DatePipe, NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { API_URL, ENDPOINTS } from '@src/app/core/const';
-import { Footer } from "../../footer/footer";
+import { Footer } from "../../../components/footer/footer";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 
 interface Day {

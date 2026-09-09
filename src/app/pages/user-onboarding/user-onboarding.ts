@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClient } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '@src/app/core/const';
 import { Toast } from 'bootstrap';
-import { Footer } from "../footer/footer";
+import { Footer } from "../../components/footer/footer";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 import { TextBanner } from "@src/app/shared/text-banner/text-banner";
 import { TextImageComponent } from "../shared/text-image/text-image";

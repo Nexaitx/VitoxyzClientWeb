@@ -1,408 +1,1496 @@
-<div>
-  <div style="margin-top: -11px;">
-    <app-text-banner image="assets/staff/book-staff-banner.avif" title="Hire Trusted Staff Easily"
-      subtitle="Find verified professionals for your home, office, or business needs" buttonText="Book Now"
-      (buttonClick)="centerContent()">
-    </app-text-banner>
+<div class="diet-page">
+
+  <!-- =========================================================
+       EXISTING BANNER
+       Functionality preserved
+  ========================================================== -->
+  <div class="diet-banner-wrap">
+    <div class="vx-banner-wrapper">
+      <app-text-banner
+        image="assets/staff/book-staff-banner.avif"
+        title="Hire Trusted Staff Easily"
+        subtitle="Find verified professionals for your home, office, or business needs"
+        buttonText="Book Now"
+        (buttonClick)="centerContent()">
+      </app-text-banner>
+    </div>
   </div>
-  <!-- <div >
-      <button class="btn btn-primary" (click)="enable()" type="button">Enable Notifications</button>
-    </div> -->
-  <!-- <div>
-    <app-text-image imageUrl="assets/images/sample.jpg" imageAlt="Sample Image"
-      title="Find, Book & Shop — All in One Place" subtitle="Discover Amazing Features"
-      description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-      buttonText="" buttonLink="/">
-    </app-text-image>
-  </div> -->
-
-  <div class="container  main-container"
-    style="  background: linear-gradient(265deg, rgb(212 234 255) 2%, #aad0f2 70%, #89c3f7 160%);">
 
 
-    <mat-stepper class="custom-stepper" labelPosition="bottom" #stepper>
+  <!-- =========================================================
+       DIET PLAN INTRO
+       NEW UI / CONTENT ONLY
+  ========================================================== -->
+  <section class="diet-hero">
+    <div class="diet-wrap">
 
-      <ng-template matStepperIcon="number" let-index="index">
-        <span>{{ index + 1 }}</span>
-      </ng-template>
+      <div class="diet-hero-grid">
 
+        <div class="diet-hero-content">
 
-      <ng-template matStepperIcon="edit">
-        <mat-icon>check</mat-icon>
-      </ng-template>
+          <div class="diet-eyebrow">
+            <span class="eyebrow-dot"></span>
+            Personalised nutrition by qualified dietitians
+          </div>
 
-      <ng-template matStepperIcon="done">
-        <mat-icon>check</mat-icon>
-      </ng-template>
+          <h1>
+            Diet plans built by
+            <span>qualified dietitians</span>
+          </h1>
 
+          <p class="diet-hero-text">
+            No generic PDF that tells you to eat quinoa. You share your health
+            history, your routine and the food you actually eat, and a qualified
+            dietitian builds a plan around it — then adjusts it as your results come in.
+          </p>
 
-      <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup">
-          <ng-template matStepLabel>Personal Info</ng-template>
-          <div class="row">
-            <div class="col-md-12 mb-3 position-relative">
-              <label class="form-label">Full Name</label>
-
-              <i class="bi bi-person address"></i>
-              <input type="text" class="form-control with-icon" placeholder="Enter Full Name" formControlName="fullName"
-                [class.is-invalid]="firstFormGroup.get('fullName')?.invalid && firstFormGroup.get('fullName')?.touched">
-              <div *ngIf="firstFormGroup.get('fullName')?.invalid && firstFormGroup.get('fullName')?.touched"
-                class="invalid-feedback">
-                Full Name is required.
-              </div>
-
+          <div class="diet-hero-points">
+            <div class="hero-point">
+              <span class="point-icon">✓</span>
+              <span>Built around your routine</span>
             </div>
 
-            <div class="col-md-12 mb-3 position-relative">
-              <label class="form-label">Last Name</label>
-              <i class="bi bi-person address"></i>
-              <input type="text" class="form-control with-icon" placeholder="Enter Last Name" formControlName="lastName"
-                [class.is-invalid]="firstFormGroup.get('lastName')?.invalid && firstFormGroup.get('lastName')?.touched">
-
-              <div *ngIf="firstFormGroup.get('lastName')?.invalid && firstFormGroup.get('lastName')?.touched"
-                class="invalid-feedback">
-                Last Name is required.
-              </div>
+            <div class="hero-point">
+              <span class="point-icon">✓</span>
+              <span>Indian food friendly</span>
             </div>
 
-            <div class="col-md-6 mb-3 position-relative">
-              <label class="form-label">Enter Age</label>
-              <!-- <div class="input-group"> -->
-              <!-- <span class="input-group-text"> -->
-              <!-- <i class="bi bi-person"></i> -->
-              <!-- </span> -->
-              <i class="bi bi-person address"></i>
+            <div class="hero-point">
+              <span class="point-icon">✓</span>
+              <span>Adjusted as you progress</span>
+            </div>
+          </div>
 
-              <input type="number" class="form-control with-icon" placeholder="Enter your age" formControlName="age"
-                [class.is-invalid]="firstFormGroup.get('age')?.invalid && firstFormGroup.get('age')?.touched">
-              <div *ngIf="firstFormGroup.get('age')?.invalid && firstFormGroup.get('age')?.touched"
-                class="invalid-feedback">
-                Age is required and must be a positive number.
-              </div>
+          <button
+            type="button"
+            class="hero-scroll-btn"
+            (click)="centerContent()">
+            Build my diet plan
+            <span>↓</span>
+          </button>
+
+        </div>
+
+
+        <div class="diet-hero-visual">
+
+          <div class="nutrition-orbit orbit-one"></div>
+          <div class="nutrition-orbit orbit-two"></div>
+
+          <div class="nutrition-card-main">
+
+            <div class="nutrition-icon">
+              🥗
             </div>
 
-            <div class="col-md-6 d-flex align-items-end mb-3">
-              <div>
-                <label class="form-label d-block">Gender</label>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender" id="male" value="Male"
-                    formControlName="gender">
-                  <label class="pt-1 form-check-label" for="male">Male</label>
+            <div>
+              <span class="nutrition-small">
+                Personalised nutrition
+              </span>
+
+              <h3>
+                Your food.
+                <br>
+                Your routine.
+                <br>
+                Your plan.
+              </h3>
+            </div>
+
+          </div>
+
+          <div class="floating-card floating-card-one">
+            <span>🥕</span>
+            <div>
+              <strong>Real food</strong>
+              <small>Built around what you eat</small>
+            </div>
+          </div>
+
+          <div class="floating-card floating-card-two">
+            <span>📋</span>
+            <div>
+              <strong>Regular check-ins</strong>
+              <small>Plans evolve with your progress</small>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       PLAN TYPES
+  ========================================================== -->
+  <section class="plan-types-section">
+
+    <div class="diet-wrap">
+
+      <div class="section-heading centered">
+
+        <div class="section-label">
+          <span></span>
+          DIET PLAN OPTIONS
+        </div>
+
+        <h2>
+          A plan designed around
+          <span>your needs</span>
+        </h2>
+
+        <p>
+          Choose the kind of support that fits your health goals and lifestyle.
+        </p>
+
+      </div>
+
+
+      <div class="plan-grid">
+
+        <!-- Weight Management -->
+        <article class="plan-card">
+
+          <div class="plan-card-top">
+            <div class="plan-icon weight-icon">
+              ⚖️
+            </div>
+
+            <span class="plan-number">01</span>
+          </div>
+
+          <h3>Weight management</h3>
+
+          <div class="plan-for">
+            <span>WHO IT IS FOR</span>
+            <p>
+              For people looking for structured support with weight goals.
+            </p>
+          </div>
+
+          <div class="plan-description">
+            A calorie-mapped Indian meal plan with a weekly check-in
+            call, a grocery list for local markets, and adjustments every
+            seven days.
+          </div>
+
+          <div class="plan-footer">
+            <span>Weekly adjustments</span>
+            <span>→</span>
+          </div>
+
+        </article>
+
+
+        <!-- Diabetes -->
+        <article class="plan-card featured-plan">
+
+          <div class="featured-badge">
+            Personalised support
+          </div>
+
+          <div class="plan-card-top">
+            <div class="plan-icon diabetes-icon">
+              🩸
+            </div>
+
+            <span class="plan-number">02</span>
+          </div>
+
+          <h3>Diabetes diet</h3>
+
+          <div class="plan-for">
+            <span>WHO IT IS FOR</span>
+            <p>
+              For people managing their diet alongside existing medication.
+            </p>
+          </div>
+
+          <div class="plan-description">
+            Low glycaemic meals built around your existing medication,
+            with sugar-log review, festival and eating-out guidance,
+            and a dietitian on call.
+          </div>
+
+          <div class="plan-footer">
+            <span>Dietitian guidance</span>
+            <span>→</span>
+          </div>
+
+        </article>
+
+
+        <!-- PCOS -->
+        <article class="plan-card">
+
+          <div class="plan-card-top">
+            <div class="plan-icon hormonal-icon">
+              🌸
+            </div>
+
+            <span class="plan-number">03</span>
+          </div>
+
+          <h3>PCOS and hormonal support</h3>
+
+          <div class="plan-for">
+            <span>WHO IT IS FOR</span>
+            <p>
+              For people looking for nutrition support around hormonal health.
+            </p>
+          </div>
+
+          <div class="plan-description">
+            An insulin-friendly meal structure with cycle tracking
+            support and supplement guidance, including two consultations.
+          </div>
+
+          <div class="plan-footer">
+            <span>Two consultations</span>
+            <span>→</span>
+          </div>
+
+        </article>
+
+
+        <!-- Post Surgery -->
+        <article class="plan-card">
+
+          <div class="plan-card-top">
+            <div class="plan-icon recovery-icon">
+              ❤️‍🩹
+            </div>
+
+            <span class="plan-number">04</span>
+          </div>
+
+          <h3>Post-surgery recovery</h3>
+
+          <div class="plan-for">
+            <span>WHO IT IS FOR</span>
+            <p>
+              For people needing nutrition support during recovery.
+            </p>
+          </div>
+
+          <div class="plan-description">
+            High-protein healing meals with soft-diet phase planning,
+            coordinated with your home nurse if you have one, and daily
+            support on WhatsApp.
+          </div>
+
+          <div class="plan-footer">
+            <span>Daily support</span>
+            <span>→</span>
+          </div>
+
+        </article>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       HOW IT WORKS
+       UI ADDITION ONLY
+  ========================================================== -->
+  <section class="diet-process-section">
+
+    <div class="diet-wrap">
+
+      <div class="section-heading">
+
+        <div class="section-label">
+          <span></span>
+          HOW IT WORKS
+        </div>
+
+        <h2>
+          Tell us about yourself.
+          <span>We'll build around you.</span>
+        </h2>
+
+        <p>
+          Complete the short nutrition assessment below so your diet plan
+          can be tailored to your needs.
+        </p>
+
+      </div>
+
+
+      <div class="process-strip">
+
+        <div class="process-item">
+          <div class="process-number">01</div>
+          <div>
+            <h3>Share your details</h3>
+            <p>
+              Tell us about your body, health goals and routine.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-arrow">→</div>
+
+        <div class="process-item">
+          <div class="process-number">02</div>
+          <div>
+            <h3>Tell us what you eat</h3>
+            <p>
+              Share your food preferences and daily habits.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-arrow">→</div>
+
+        <div class="process-item">
+          <div class="process-number">03</div>
+          <div>
+            <h3>Build your plan</h3>
+            <p>
+              A qualified dietitian can use your information to personalise your plan.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       EXISTING FORM / STEPPER
+       ALL ORIGINAL FORM CONTROLS + BINDINGS PRESERVED
+  ========================================================== -->
+  <section class="assessment-section" id="diet-assessment">
+
+    <div class="diet-wrap">
+
+      <div class="assessment-header">
+
+        <div class="section-label">
+          <span></span>
+          PERSONAL NUTRITION ASSESSMENT
+        </div>
+
+        <h2>
+          Let's create your
+          <span>nutrition profile</span>
+        </h2>
+
+        <p>
+          Complete each step with your details. Your existing information
+          will be submitted securely when you finish.
+        </p>
+
+      </div>
+
+
+      <div
+        class="container main-container">
+
+        <mat-stepper
+          class="custom-stepper"
+          labelPosition="bottom"
+          #stepper>
+
+
+          <!-- =====================================================
+               STEP 1
+          ====================================================== -->
+          <ng-template matStepperIcon="number" let-index="index">
+            <span>{{ index + 1 }}</span>
+          </ng-template>
+
+          <ng-template matStepperIcon="edit">
+            <mat-icon>check</mat-icon>
+          </ng-template>
+
+          <ng-template matStepperIcon="done">
+            <mat-icon>check</mat-icon>
+          </ng-template>
+
+
+          <mat-step [stepControl]="firstFormGroup">
+
+            <form [formGroup]="firstFormGroup">
+
+              <ng-template matStepLabel>
+                Personal Info
+              </ng-template>
+
+
+              <div class="step-content">
+
+                <div class="step-intro">
+                  <div class="step-intro-icon">👤</div>
+
+                  <div>
+                    <h3>Let's start with you</h3>
+                    <p>
+                      Tell us a few basic details to help personalise your nutrition plan.
+                    </p>
+                  </div>
                 </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender" id="female" value="Female"
-                    formControlName="gender">
-                  <label class="pt-1 form-check-label" for="female">Female</label>
+
+
+                <div class="row">
+
+                  <div class="col-md-12 mb-3 position-relative">
+
+                    <label class="form-label">
+                      Full Name
+                    </label>
+
+                    <i class="bi bi-person address"></i>
+
+                    <input
+                      type="text"
+                      class="form-control with-icon"
+                      placeholder="Enter Full Name"
+                      formControlName="fullName"
+                      [class.is-invalid]="firstFormGroup.get('fullName')?.invalid && firstFormGroup.get('fullName')?.touched">
+
+                    <div
+                      *ngIf="firstFormGroup.get('fullName')?.invalid && firstFormGroup.get('fullName')?.touched"
+                      class="invalid-feedback">
+                      Full Name is required.
+                    </div>
+
+                  </div>
+
+
+                  <div class="col-md-12 mb-3 position-relative">
+
+                    <label class="form-label">
+                      Last Name
+                    </label>
+
+                    <i class="bi bi-person address"></i>
+
+                    <input
+                      type="text"
+                      class="form-control with-icon"
+                      placeholder="Enter Last Name"
+                      formControlName="lastName"
+                      [class.is-invalid]="firstFormGroup.get('lastName')?.invalid && firstFormGroup.get('lastName')?.touched">
+
+                    <div
+                      *ngIf="firstFormGroup.get('lastName')?.invalid && firstFormGroup.get('lastName')?.touched"
+                      class="invalid-feedback">
+                      Last Name is required.
+                    </div>
+
+                  </div>
+
+
+                  <div class="col-md-6 mb-3 position-relative">
+
+                    <label class="form-label">
+                      Enter Age
+                    </label>
+
+                    <i class="bi bi-person address"></i>
+
+                    <input
+                      type="number"
+                      class="form-control with-icon"
+                      placeholder="Enter your age"
+                      formControlName="age"
+                      [class.is-invalid]="firstFormGroup.get('age')?.invalid && firstFormGroup.get('age')?.touched">
+
+                    <div
+                      *ngIf="firstFormGroup.get('age')?.invalid && firstFormGroup.get('age')?.touched"
+                      class="invalid-feedback">
+                      Age is required and must be a positive number.
+                    </div>
+
+                  </div>
+
+
+                  <div class="col-md-6 d-flex align-items-end mb-3">
+
+                    <div class="gender-field">
+
+                      <label class="form-label d-block">
+                        Gender
+                      </label>
+
+                      <div class="form-check form-check-inline">
+
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="gender"
+                          id="male"
+                          value="Male"
+                          formControlName="gender">
+
+                        <label
+                          class="pt-1 form-check-label"
+                          for="male">
+                          Male
+                        </label>
+
+                      </div>
+
+
+                      <div class="form-check form-check-inline">
+
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="gender"
+                          id="female"
+                          value="Female"
+                          formControlName="gender">
+
+                        <label
+                          class="pt-1 form-check-label"
+                          for="female">
+                          Female
+                        </label>
+
+                      </div>
+
+
+                      <div
+                        *ngIf="firstFormGroup.get('gender')?.invalid && firstFormGroup.get('gender')?.touched"
+                        class="invalid-feedback d-block">
+                        Gender is required.
+                      </div>
+
+                    </div>
+
+                  </div>
+
+
+                  <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                      Height
+                    </label>
+
+                    <div class="d-flex gap-2 align-items-center">
+
+                      <div
+                        class="input-group measure-group">
+
+                        <button
+                          class="btn action border-0"
+                          type="button"
+                          (click)="adjustValue('heightValue', 'heightValue', false)">
+                          −
+                        </button>
+
+                        <input
+                          type="text"
+                          class="form-control measure text-center"
+                          formControlName="heightValue">
+
+                        <button
+                          class="btn action-add border-0"
+                          type="button"
+                          (click)="adjustValue('heightValue', 'heightValue', true)">
+                          +
+                        </button>
+
+                      </div>
+
+
+                      <select
+                        class="form-select measure-unit"
+                        formControlName="heightUnit">
+
+                        <option value="Feet">
+                          Feet
+                        </option>
+
+                        <option value="cm">
+                          cm
+                        </option>
+
+                        <option value="Inches ">
+                          Inches
+                        </option>
+
+                      </select>
+
+                    </div>
+
+                    <div
+                      *ngIf="firstFormGroup.get('heightValue')?.invalid && firstFormGroup.get('heightValue')?.touched"
+                      class="invalid-feedback d-block">
+                      Height is required.
+                    </div>
+
+                  </div>
+
+
+                  <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                      Weight
+                    </label>
+
+                    <div class="d-flex gap-2 align-items-center">
+
+                      <div class="input-group measure-group">
+
+                        <button
+                          class="btn action border-0"
+                          type="button"
+                          (click)="adjustValue('weightValue', 'weightValue', false)">
+                          −
+                        </button>
+
+                        <input
+                          type="text"
+                          class="form-control measure text-center"
+                          formControlName="weightValue">
+
+                        <button
+                          class="btn action-add border-0"
+                          type="button"
+                          (click)="adjustValue('weightValue', 'weightValue', true)">
+                          +
+                        </button>
+
+                      </div>
+
+                      <span class="unit-label">
+                        kg
+                      </span>
+
+                    </div>
+
+                    <div
+                      *ngIf="firstFormGroup.get('weightValue')?.invalid && firstFormGroup.get('weightValue')?.touched"
+                      class="invalid-feedback d-block">
+                      Weight is required.
+                    </div>
+
+                  </div>
+
                 </div>
-                <div *ngIf="firstFormGroup.get('gender')?.invalid && firstFormGroup.get('gender')?.touched"
-                  class="invalid-feedback d-block">
-                  Gender is required.
+
+
+                <div class="step-actions text-end mt-4">
+
+                  <button
+                    matStepperNext
+                    class="btn px-4 rounded-pill submission next-button"
+                    [disabled]="firstFormGroup.invalid">
+                    Next
+                    <span>→</span>
+                  </button>
+
                 </div>
-              </div>
-            </div>
 
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Height</label>
-              <div class="d-flex gap-2 align-items-center">
-                <div class="input-group" style="max-width: 120px;">
-                  <button class="btn  action border-0" type="button"
-                    (click)="adjustValue('heightValue', 'heightValue', false)">−</button>
-                  <input type="text" class="form-control measure text-center" formControlName="heightValue">
-                  <button class="btn  action-add border-0" type="button"
-                    (click)="adjustValue('heightValue', 'heightValue', true)">+</button>
+              </div>
+
+            </form>
+
+          </mat-step>
+
+
+          <!-- =====================================================
+               STEP 2
+          ====================================================== -->
+          <mat-step [stepControl]="secondFormGroup">
+
+            <form [formGroup]="secondFormGroup">
+
+              <ng-template matStepLabel>
+                Health & Goals
+              </ng-template>
+
+
+              <div class="step-content">
+
+                <div class="step-intro">
+
+                  <div class="step-intro-icon">
+                    🎯
+                  </div>
+
+                  <div>
+                    <h3>Tell us about your goals</h3>
+                    <p>
+                      This helps us understand what you're hoping to achieve.
+                    </p>
+                  </div>
+
                 </div>
-                <select class="form-select" style="max-width: 100px;" formControlName="heightUnit">
-                  <option value="Feet">Feet</option>
-                  <option value="cm">cm</option>
-                  <option value="Inches ">Inches </option>
-                </select>
-              </div>
-              <div *ngIf="firstFormGroup.get('heightValue')?.invalid && firstFormGroup.get('heightValue')?.touched"
-                class="invalid-feedback d-block">
-                Height is required.
-              </div>
-            </div>
 
-            <!-- Weight -->
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Weight</label>
-              <div class="d-flex gap-2 align-items-center">
-                <div class="input-group" style="max-width: 120px;">
-                  <button class="btn  action border-0" type="button"
-                    (click)="adjustValue('weightValue', 'weightValue', false)">−</button>
-                  <input type="text" class="form-control measure text-center" formControlName="weightValue">
-                  <button class="btn  action-add border-0" type="button"
-                    (click)="adjustValue('weightValue', 'weightValue', true)">+</button>
+
+                <div class="row">
+
+                  <div class="col-md-12 mb-4">
+
+                    <label class="form-label d-block mb-3">
+                      Diet Preference
+                    </label>
+
+                    <div class="choice-grid">
+
+                      <label class="choice-card">
+
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="dietPreference"
+                          id="weightLoss"
+                          value="Weight Loss"
+                          formControlName="dietPreference">
+
+                        <span class="choice-content">
+                          <strong>Weight Loss</strong>
+                          <small>Support healthy weight reduction</small>
+                        </span>
+
+                      </label>
+
+
+                      <label class="choice-card">
+
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="dietPreference"
+                          id="weightGain"
+                          value="Weight Gain"
+                          formControlName="dietPreference">
+
+                        <span class="choice-content">
+                          <strong>Weight Gain</strong>
+                          <small>Support healthy weight gain</small>
+                        </span>
+
+                      </label>
+
+
+                      <label class="choice-card">
+
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="dietPreference"
+                          id="maintainWeight"
+                          value="Maintain Weight"
+                          formControlName="dietPreference">
+
+                        <span class="choice-content">
+                          <strong>Maintain Weight</strong>
+                          <small>Maintain your current weight</small>
+                        </span>
+
+                      </label>
+
+
+                      <label class="choice-card">
+
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="dietPreference"
+                          id="improveHealth"
+                          value="Improve Health"
+                          formControlName="dietPreference">
+
+                        <span class="choice-content">
+                          <strong>Improve Health</strong>
+                          <small>Build healthier daily habits</small>
+                        </span>
+
+                      </label>
+
+                    </div>
+
+
+                    <div
+                      *ngIf="secondFormGroup.get('dietPreference')?.invalid && secondFormGroup.get('dietPreference')?.touched"
+                      class="invalid-feedback d-block">
+                      Diet Preference is required.
+                    </div>
+
+                  </div>
+
+
+                  <div class="col-md-12 mb-4">
+
+                    <label class="form-label d-block mb-3">
+                      Do you have any medical conditions?
+                    </label>
+
+                    <div class="condition-list">
+
+                      <label
+                        *ngFor="let condition of displayedMedicalConditionsOptions"
+                        class="condition-chip">
+
+                        <input
+                          type="checkbox"
+                          [id]="condition | lowercase"
+                          [value]="condition"
+                          [checked]="isMedicalConditionSelected(condition)"
+                          (change)="onMedicalConditionChange($event)">
+
+                        <span>
+                          {{ condition }}
+                        </span>
+
+                      </label>
+
+                    </div>
+
+
+                    <div
+                      *ngIf="secondFormGroup.get('medicalConditions')?.invalid && secondFormGroup.get('medicalConditions')?.touched"
+                      class="invalid-feedback d-block">
+                      At least one medical condition must be selected.
+                    </div>
+
+                  </div>
+
+
+                  <div class="col-md-12 mb-3">
+
+                    <label class="form-label d-block mb-3">
+                      Are you on any Medications?
+                    </label>
+
+                    <div class="medication-choice">
+
+                      <label class="simple-radio">
+
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          id="medicationsYes"
+                          name="anyMedication"
+                          value="yes"
+                          formControlName="anyMedication">
+
+                        <span>Yes</span>
+
+                      </label>
+
+
+                      <label class="simple-radio">
+
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          id="medicationsNo"
+                          name="anyMedication"
+                          value="no"
+                          formControlName="anyMedication">
+
+                        <span>No</span>
+
+                      </label>
+
+                    </div>
+
+
+                    <div
+                      *ngIf="secondFormGroup.get('anyMedication')?.invalid && secondFormGroup.get('anyMedication')?.touched"
+                      class="invalid-feedback d-block">
+                      This field is required.
+                    </div>
+
+
+                    <div
+                      *ngIf="secondFormGroup.get('anyMedication')?.value === 'yes'"
+                      class="mt-3">
+
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter medication details"
+                        formControlName="medicationDetails"
+                        [class.is-invalid]="secondFormGroup.get('medicationDetails')?.invalid && secondFormGroup.get('medicationDetails')?.touched">
+
+                      <div
+                        *ngIf="secondFormGroup.get('medicationDetails')?.invalid && secondFormGroup.get('medicationDetails')?.touched"
+                        class="invalid-feedback d-block">
+                        Medication details are required if you are on medication.
+                      </div>
+
+                    </div>
+
+                  </div>
+
                 </div>
-                <span>kg</span>
-              </div>
-              <div *ngIf="firstFormGroup.get('weightValue')?.invalid && firstFormGroup.get('weightValue')?.touched"
-                class="invalid-feedback d-block">
-                Weight is required.
-              </div>
-            </div>
-          </div>
-          <div class="text-end mt-3">
-            <button matStepperNext class="btn px-4 rounded-pill submission next-button"
-              [disabled]="firstFormGroup.invalid">Next</button>
-          </div>
-        </form>
-      </mat-step>
 
 
+                <div class="step-actions text-end mt-4">
 
+                  <button
+                    matButton
+                    matStepperPrevious
+                    class="btn px-4 rounded-pill back-button">
+                    Back
+                  </button>
 
-      <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
-          <ng-template matStepLabel>Health & Goals</ng-template>
-          <div class="row">
-            <h3>Tell Us About Your Goals</h3>
-            <div class="col-md-12 mb-3">
-              <label class="form-label d-block mb-2">Diet Preference</label>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="dietPreference" id="weightLoss" value="Weight Loss"
-                  formControlName="dietPreference">
-                <label class="form-check-label" for="weightLoss">Weight Loss</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="dietPreference" id="weightGain" value="Weight Gain"
-                  formControlName="dietPreference">
-                <label class="form-check-label" for="weightGain">Weight Gain</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="dietPreference" id="maintainWeight"
-                  value="Maintain Weight" formControlName="dietPreference">
-                <label class="form-check-label" for="maintainWeight">Maintain Weight</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="dietPreference" id="improveHealth"
-                  value="Improve Health" formControlName="dietPreference">
-                <label class="form-check-label" for="improveHealth">Improve Health</label>
-              </div>
-              <div
-                *ngIf="secondFormGroup.get('dietPreference')?.invalid && secondFormGroup.get('dietPreference')?.touched"
-                class="invalid-feedback d-block">
-                Diet Preference is required.
-              </div>
-            </div>
+                  <button
+                    matStepperNext
+                    class="btn px-4 rounded-pill submission next-button"
+                    [disabled]="secondFormGroup.invalid">
+                    Next
+                    <span>→</span>
+                  </button>
 
-            <div class="col-md-12 mb-3">
-              <label class="form-label d-block mb-2">Do you have any medical conditions?</label>
-              <div *ngFor="let condition of displayedMedicalConditionsOptions" class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" [id]="condition | lowercase" [value]="condition"
-                  [checked]="isMedicalConditionSelected(condition)" (change)="onMedicalConditionChange($event)">
-                <label class="form-check-label" [for]="condition | lowercase">{{ condition }}</label>
-              </div>
-              <div
-                *ngIf="secondFormGroup.get('medicalConditions')?.invalid && secondFormGroup.get('medicalConditions')?.touched"
-                class="invalid-feedback d-block">
-                At least one medical condition must be selected.
-              </div>
-            </div>
-
-            <div class="col-md-12 mb-3">
-              <label class="form-label d-block mb-2">Are you on any Medications?</label>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="medicationsYes" name="anyMedication" value="yes"
-                  formControlName="anyMedication">
-                <label class="form-check-label" for="medicationsYes">Yes</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="medicationsNo" name="anyMedication" value="no"
-                  formControlName="anyMedication">
-                <label class="form-check-label" for="medicationsNo">No</label>
-              </div>
-              <div
-                *ngIf="secondFormGroup.get('anyMedication')?.invalid && secondFormGroup.get('anyMedication')?.touched"
-                class="invalid-feedback d-block">
-                This field is required.
-              </div>
-
-              <div *ngIf="secondFormGroup.get('anyMedication')?.value === 'yes'" class="mt-2">
-                <input type="text" class="form-control" placeholder="Enter medication details"
-                  formControlName="medicationDetails"
-                  [class.is-invalid]="secondFormGroup.get('medicationDetails')?.invalid && secondFormGroup.get('medicationDetails')?.touched">
-                <div
-                  *ngIf="secondFormGroup.get('medicationDetails')?.invalid && secondFormGroup.get('medicationDetails')?.touched"
-                  class="invalid-feedback d-block">
-                  Medication details are required if you are on medication.
                 </div>
-              </div>
-            </div>
-          </div>
 
-          <div class="text-end mt-3">
-            <button matButton matStepperPrevious class="btn px-4 rounded-pill me-2 text-light">Back</button>
-            <button matStepperNext class="btn px-4 rounded-pill submission next-button"
-              [disabled]="secondFormGroup.invalid">Next</button>
-          </div>
-        </form>
-      </mat-step>
+              </div>
 
-      <!-- Step 3: Food Preferences background: linear-gradient(147deg, #f5ede2 78%, #fbdee7 240%);-->
-      <mat-step [stepControl]="thirdFormGroup">
-        <form [formGroup]="thirdFormGroup">
-          <ng-template matStepLabel>Food Preferences</ng-template>
-          <h3>Food & Preferences</h3>
-          <div class="row">
-            <div class="col-md-12 mb-3">
-              <label class="form-label d-block mb-2">Diet Preference</label>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="foodPreference" id="vegetarian" value="Vegetarian"
-                  formControlName="foodPreference">
-                <label class="form-check-label" for="vegetarian">Vegetarian</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="foodPreference" id="nonVegetarian"
-                  value="Non-Vegetarian" formControlName="foodPreference">
-                <label class="form-check-label" for="nonVegetarian">Non-Vegetarian</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="foodPreference" id="eggetarian" value="Eggetarian"
-                  formControlName="foodPreference">
-                <label class="form-check-label" for="eggetarian">Eggetarian</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="foodPreference" id="vegan" value="Vegan"
-                  formControlName="foodPreference">
-                <label class="form-check-label" for="vegan">Vegan</label>
-              </div>
-              <div
-                *ngIf="thirdFormGroup.get('foodPreference')?.invalid && thirdFormGroup.get('foodPreference')?.touched"
-                class="invalid-feedback d-block">
-                Food Preference is required.
-              </div>
-            </div>
-            <div class="col-md-12 mb-3">
-              <label class="form-label">Food to Avoid?</label>
-              <textarea class="form-control" rows="3" placeholder="List any foods you want to avoid"
-                formControlName="foodToAvoid"></textarea>
-            </div>
+            </form>
 
-            <div class="col-md-12 form-group mb-3">
-              <label class="form-label">Daily Water Intake</label>
-              <input type="text" class="form-control" placeholder="e.g., 2 litres or 8 cups"
-                formControlName="dailyWaterIntake"
-                [class.is-invalid]="thirdFormGroup.get('dailyWaterIntake')?.invalid && thirdFormGroup.get('dailyWaterIntake')?.touched">
-              <div
-                *ngIf="thirdFormGroup.get('dailyWaterIntake')?.invalid && thirdFormGroup.get('dailyWaterIntake')?.touched"
-                class="invalid-feedback d-block">
-                Daily Water Intake is required and should be a valid format (e.g., "2 litres").
-              </div>
-            </div>
-          </div>
-          <div class="text-end mt-3">
-            <button matButton matStepperPrevious class="btn px-4 rounded-pill text-light me-2">Back</button>
-            <button matStepperNext class="btn px-4 rounded-pill submission next-button"
-              [disabled]="thirdFormGroup.invalid">Next</button>
-          </div>
-        </form>
-      </mat-step>
+          </mat-step>
 
-      <!-- Step 4: Lifestyle & Activity -->
-      <mat-step [stepControl]="fourthFormGroup">
-        <form [formGroup]="fourthFormGroup">
-          <ng-template matStepLabel>Lifestyle & Activity</ng-template>
-          <h3>Tell Us About Your Day</h3>
-          <div class="col-md-12 mb-3">
-            <label class="form-label d-block mb-2">Activity Level</label>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="activityLevel" id="sedentary" value="Sedentary"
-                formControlName="activityLevel">
-              <label class="form-check-label" for="sedentary">Sedentary</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="activityLevel" id="lightly" value="Lightly Active"
-                formControlName="activityLevel">
-              <label class="form-check-label" for="lightly">Lightly Active</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="activityLevel" id="moderate" value="Moderate"
-                formControlName="activityLevel">
-              <label class="form-check-label" for="moderate">Moderate</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="activityLevel" id="veryActive" value="Very Active"
-                formControlName="activityLevel">
-              <label class="form-check-label" for="veryActive">Very Active</label>
-            </div>
-            <div *ngIf="fourthFormGroup.get('activityLevel')?.invalid && fourthFormGroup.get('activityLevel')?.touched"
-              class="invalid-feedback d-block">
-              Activity Level is required.
-            </div>
-          </div>
 
-          <div class="col-md-12 mb-3">
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label class="form-label">Wake Up Time</label>
-                <input type="time" class="form-control" placeholder="Select wake up time" formControlName="wakeUpTime"
-                  [class.is-invalid]="fourthFormGroup.get('wakeUpTime')?.invalid && fourthFormGroup.get('wakeUpTime')?.touched">
-                <div *ngIf="fourthFormGroup.get('wakeUpTime')?.invalid && fourthFormGroup.get('wakeUpTime')?.touched"
-                  class="invalid-feedback d-block">
-                  Wake Up Time is required.
+          <!-- =====================================================
+               STEP 3
+          ====================================================== -->
+          <mat-step [stepControl]="thirdFormGroup">
+
+            <form [formGroup]="thirdFormGroup">
+
+              <ng-template matStepLabel>
+                Food Preferences
+              </ng-template>
+
+
+              <div class="step-content">
+
+                <div class="step-intro">
+
+                  <div class="step-intro-icon">
+                    🥗
+                  </div>
+
+                  <div>
+                    <h3>Food & Preferences</h3>
+                    <p>
+                      Tell us what you enjoy eating and what you'd rather avoid.
+                    </p>
+                  </div>
+
                 </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label class="form-label">Sleep Time</label>
-                <input type="time" class="form-control" placeholder="Select sleep time" formControlName="sleepTime"
-                  [class.is-invalid]="fourthFormGroup.get('sleepTime')?.invalid && fourthFormGroup.get('sleepTime')?.touched">
-                <div *ngIf="fourthFormGroup.get('sleepTime')?.invalid && fourthFormGroup.get('sleepTime')?.touched"
-                  class="invalid-feedback d-block">
-                  Sleep Time is required.
+
+
+                <div class="row">
+
+                  <div class="col-md-12 mb-4">
+
+                    <label class="form-label d-block mb-3">
+                      Diet Preference
+                    </label>
+
+                    <div class="choice-grid">
+
+                      <label class="choice-card">
+
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="foodPreference"
+                          id="vegetarian"
+                          value="Vegetarian"
+                          formControlName="foodPreference">
+
+                        <span class="choice-content">
+                          <strong>Vegetarian</strong>
+                          <small>Plant-based food choices</small>
+                        </span>
+
+                      </label>
+
+
+                      <label class="choice-card">
+
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="foodPreference"
+                          id="nonVegetarian"
+                          value="Non-Vegetarian"
+                          formControlName="foodPreference">
+
+                        <span class="choice-content">
+                          <strong>Non-Vegetarian</strong>
+                          <small>Includes meat and seafood</small>
+                        </span>
+
+                      </label>
+
+
+                      <label class="choice-card">
+
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="foodPreference"
+                          id="eggetarian"
+                          value="Eggetarian"
+                          formControlName="foodPreference">
+
+                        <span class="choice-content">
+                          <strong>Eggetarian</strong>
+                          <small>Vegetarian plus eggs</small>
+                        </span>
+
+                      </label>
+
+
+                      <label class="choice-card">
+
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="foodPreference"
+                          id="vegan"
+                          value="Vegan"
+                          formControlName="foodPreference">
+
+                        <span class="choice-content">
+                          <strong>Vegan</strong>
+                          <small>Fully plant-based choices</small>
+                        </span>
+
+                      </label>
+
+                    </div>
+
+
+                    <div
+                      *ngIf="thirdFormGroup.get('foodPreference')?.invalid && thirdFormGroup.get('foodPreference')?.touched"
+                      class="invalid-feedback d-block">
+                      Food Preference is required.
+                    </div>
+
+                  </div>
+
+
+                  <div class="col-md-12 mb-4">
+
+                    <label class="form-label">
+                      Food to Avoid?
+                    </label>
+
+                    <textarea
+                      class="form-control textarea-control"
+                      rows="4"
+                      placeholder="List any foods you want to avoid"
+                      formControlName="foodToAvoid">
+                    </textarea>
+
+                  </div>
+
+
+                  <div class="col-md-12 form-group mb-3">
+
+                    <label class="form-label">
+                      Daily Water Intake
+                    </label>
+
+                    <div class="water-input-wrap">
+
+                      <span class="water-icon">
+                        💧
+                      </span>
+
+                      <input
+                        type="text"
+                        class="form-control water-input"
+                        placeholder="e.g., 2 litres or 8 cups"
+                        formControlName="dailyWaterIntake"
+                        [class.is-invalid]="thirdFormGroup.get('dailyWaterIntake')?.invalid && thirdFormGroup.get('dailyWaterIntake')?.touched">
+
+                    </div>
+
+                    <div
+                      *ngIf="thirdFormGroup.get('dailyWaterIntake')?.invalid && thirdFormGroup.get('dailyWaterIntake')?.touched"
+                      class="invalid-feedback d-block">
+                      Daily Water Intake is required and should be a valid format
+                      (e.g., "2 litres").
+                    </div>
+
+                  </div>
+
                 </div>
+
+
+                <div class="step-actions text-end mt-4">
+
+                  <button
+                    matButton
+                    matStepperPrevious
+                    class="btn px-4 rounded-pill back-button">
+                    Back
+                  </button>
+
+                  <button
+                    matStepperNext
+                    class="btn px-4 rounded-pill submission next-button"
+                    [disabled]="thirdFormGroup.invalid">
+                    Next
+                    <span>→</span>
+                  </button>
+
+                </div>
+
               </div>
-              <div class="col-md-6 mb-3">
-                <label class="form-label">Breakfast Time</label>
-                <input type="time" class="form-control" formControlName="breakfastTime">
+
+            </form>
+
+          </mat-step>
+
+
+          <!-- =====================================================
+               STEP 4
+          ====================================================== -->
+          <mat-step [stepControl]="fourthFormGroup">
+
+            <form [formGroup]="fourthFormGroup">
+
+              <ng-template matStepLabel>
+                Lifestyle & Activity
+              </ng-template>
+
+
+              <div class="step-content">
+
+                <div class="step-intro">
+
+                  <div class="step-intro-icon">
+                    🌿
+                  </div>
+
+                  <div>
+                    <h3>Tell us about your day</h3>
+                    <p>
+                      Your routine helps us understand how your meals fit into everyday life.
+                    </p>
+                  </div>
+
+                </div>
+
+
+                <div class="col-md-12 mb-4">
+
+                  <label class="form-label d-block mb-3">
+                    Activity Level
+                  </label>
+
+                  <div class="activity-grid">
+
+                    <label class="activity-card">
+
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="activityLevel"
+                        id="sedentary"
+                        value="Sedentary"
+                        formControlName="activityLevel">
+
+                      <span>
+                        <strong>🪑 Sedentary</strong>
+                        <small>Little physical activity</small>
+                      </span>
+
+                    </label>
+
+
+                    <label class="activity-card">
+
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="activityLevel"
+                        id="lightly"
+                        value="Lightly Active"
+                        formControlName="activityLevel">
+
+                      <span>
+                        <strong>🚶 Lightly Active</strong>
+                        <small>Light activity during the day</small>
+                      </span>
+
+                    </label>
+
+
+                    <label class="activity-card">
+
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="activityLevel"
+                        id="moderate"
+                        value="Moderate"
+                        formControlName="activityLevel">
+
+                      <span>
+                        <strong>🏃 Moderate</strong>
+                        <small>Regular physical activity</small>
+                      </span>
+
+                    </label>
+
+
+                    <label class="activity-card">
+
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="activityLevel"
+                        id="veryActive"
+                        value="Very Active"
+                        formControlName="activityLevel">
+
+                      <span>
+                        <strong>🏋️ Very Active</strong>
+                        <small>High level of activity</small>
+                      </span>
+
+                    </label>
+
+                  </div>
+
+
+                  <div
+                    *ngIf="fourthFormGroup.get('activityLevel')?.invalid && fourthFormGroup.get('activityLevel')?.touched"
+                    class="invalid-feedback d-block">
+                    Activity Level is required.
+                  </div>
+
+                </div>
+
+
+                <div class="time-section">
+
+                  <div class="time-section-heading">
+                    <span>⏰</span>
+
+                    <div>
+                      <h4>Your daily schedule</h4>
+                      <p>Tell us when your day usually starts, ends and when you eat.</p>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                      <label class="form-label">
+                        Wake Up Time
+                      </label>
+
+                      <input
+                        type="time"
+                        class="form-control"
+                        placeholder="Select wake up time"
+                        formControlName="wakeUpTime"
+                        [class.is-invalid]="fourthFormGroup.get('wakeUpTime')?.invalid && fourthFormGroup.get('wakeUpTime')?.touched">
+
+                      <div
+                        *ngIf="fourthFormGroup.get('wakeUpTime')?.invalid && fourthFormGroup.get('wakeUpTime')?.touched"
+                        class="invalid-feedback d-block">
+                        Wake Up Time is required.
+                      </div>
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+
+                      <label class="form-label">
+                        Sleep Time
+                      </label>
+
+                      <input
+                        type="time"
+                        class="form-control"
+                        placeholder="Select sleep time"
+                        formControlName="sleepTime"
+                        [class.is-invalid]="fourthFormGroup.get('sleepTime')?.invalid && fourthFormGroup.get('sleepTime')?.touched">
+
+                      <div
+                        *ngIf="fourthFormGroup.get('sleepTime')?.invalid && fourthFormGroup.get('sleepTime')?.touched"
+                        class="invalid-feedback d-block">
+                        Sleep Time is required.
+                      </div>
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+
+                      <label class="form-label">
+                        Breakfast Time
+                      </label>
+
+                      <input
+                        type="time"
+                        class="form-control"
+                        formControlName="breakfastTime">
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+
+                      <label class="form-label">
+                        Lunch Time
+                      </label>
+
+                      <input
+                        type="time"
+                        class="form-control"
+                        formControlName="lunchTime">
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+
+                      <label class="form-label">
+                        Dinner Time
+                      </label>
+
+                      <input
+                        type="time"
+                        class="form-control"
+                        formControlName="dinnerTime">
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <div class="step-actions text-end mt-4">
+
+                  <button
+                    matButton
+                    matStepperPrevious
+                    class="btn px-4 rounded-pill back-button">
+                    Back
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn px-4 rounded-pill submission next-button submit-button"
+                    (click)="submitForm()">
+                    Submit
+                    <span>✓</span>
+                  </button>
+
+                </div>
+
               </div>
-              <div class="col-md-6 mb-3">
-                <label class="form-label">Lunch Time</label>
-                <input type="time" class="form-control" formControlName="lunchTime">
-              </div>
-              <div class="col-md-6 mb-3">
-                <label class="form-label">Dinner Time</label>
-                <input type="time" class="form-control" formControlName="dinnerTime">
-              </div>
-            </div>
-          </div>
-          <div class="text-end mt-3">
-            <button matButton matStepperPrevious class="btn px-4 rounded-pill text-light me-2">Back</button>
-            <button type="button" class="btn px-4 rounded-pill submission next-button"
-              (click)="submitForm()">Submit</button>
-          </div>
-        </form>
-      </mat-step>
-    </mat-stepper>
-  </div>
-  
-  <div>
-    <!-- <app-medicine-slider title="Experience the Joy of Easy Shopping" [showSeeAll]="true" [maxItems]="8"
-      [autoSlide]="true" [slideInterval]="5000">
-    </app-medicine-slider> -->
-  </div>
-  <div style="margin-top: 15px;">
+
+            </form>
+
+          </mat-step>
+
+        </mat-stepper>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       DISCLAIMER
+  ========================================================== -->
+  <section class="disclaimer-section">
+
+    <div class="diet-wrap">
+
+      <div class="disclaimer-card">
+
+        <div class="disclaimer-icon">
+          ℹ️
+        </div>
+
+        <div>
+
+          <span class="disclaimer-label">
+            IMPORTANT
+          </span>
+
+          <h3>
+            Nutrition support, not medical treatment
+          </h3>
+
+          <p>
+            Our dietitians work on nutrition and lifestyle. They do not diagnose
+            conditions, prescribe medicines, or replace your treating doctor,
+            and they will never ask you to stop any medication your doctor has prescribed.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       EXISTING FOOTER
+  ========================================================== -->
+  <div class="diet-footer">
     <app-footer></app-footer>
   </div>
+
   <app-mobile-footer-nav></app-mobile-footer-nav>
-  <!-- ✅ ERROR TOAST (ADD HERE, ONLY ONCE) -->
-<div
-  id="formErrorToast"
-  class="toast align-items-center text-bg-danger border-0 position-fixed top-50 start-50 translate-middle"
-  role="alert"
-  aria-live="assertive"
-  aria-atomic="true"
->
-  <div class="d-flex">
-    <div class="toast-body">
-      <!-- message injected from TS -->
+
+
+  <!-- =========================================================
+       EXISTING ERROR TOAST
+       PRESERVED
+  ========================================================== -->
+  <div
+    id="formErrorToast"
+    class="toast align-items-center text-bg-danger border-0 position-fixed top-50 start-50 translate-middle"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true">
+
+    <div class="d-flex">
+
+      <div class="toast-body">
+        <!-- message injected from TS -->
+      </div>
+
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast"
+        aria-label="Close">
+      </button>
+
     </div>
-    <button
-      type="button"
-      class="btn-close btn-close-white me-2 m-auto"
-      data-bs-dismiss="toast"
-      aria-label="Close">
-    </button>
+
   </div>
-</div>
+
 </div>

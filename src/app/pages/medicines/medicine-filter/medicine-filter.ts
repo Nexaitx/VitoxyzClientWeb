@@ -6,7 +6,7 @@ import { MedicineService, Medicine, FilterParams } from '../../../core/services/
 import { finalize } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { CartService } from '@src/app/core/cart.service';
-import { Footer } from "../../footer/footer";
+import { Footer } from "../../../components/footer/footer";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 @Component({
   selector: 'app-medicine-filter',

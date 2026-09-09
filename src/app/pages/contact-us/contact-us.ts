@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Footer } from "../footer/footer";
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -13,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { Footer } from '../../components/footer/footer';
 
 @Component({
   selector: 'app-contact-us',

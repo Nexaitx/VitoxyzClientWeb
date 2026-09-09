@@ -1,116 +1,718 @@
-<div class="container py-3">
-    <h5>Need Help?</h5>
+<div class="help-page">
+
+  <!-- HERO -->
+  <section class="help-hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          VITOXYZ SUPPORT
+        </div>
+
+        <h1>
+          Need
+          <span>help?</span>
+        </h1>
+
+        <p class="hero-text">
+          A person answers our phone. If something has gone wrong with an
+          order or a booking, calling is the fastest way to fix it.
+        </p>
+
+        <div class="hero-actions">
+          <a href="tel:+917355400002" class="primary-action">
+            <span class="action-icon">☎</span>
+            Call +91 7355400002
+          </a>
+
+          <a href="mailto:support@vitoxyz.com" class="secondary-action">
+            Email Support
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-decoration">
+        <div class="circle circle-one"></div>
+        <div class="circle circle-two"></div>
+
+        <div class="support-card">
+          <div class="support-icon">?</div>
+          <div>
+            <strong>We're here for you</strong>
+            <span>Need assistance with something?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- QUICK SUPPORT -->
+  <section class="quick-support">
+    <div class="container">
+      <div class="quick-grid">
+
+        <a href="tel:+917355400002" class="quick-card">
+          <div class="quick-icon phone-icon">☎</div>
+          <div>
+            <span class="quick-label">Call us</span>
+            <strong>+91 7355400002</strong>
+            <small>Fastest way to get help</small>
+          </div>
+          <span class="card-arrow">→</span>
+        </a>
+
+        <a href="mailto:support@vitoxyz.com" class="quick-card">
+          <div class="quick-icon mail-icon">@</div>
+          <div>
+            <span class="quick-label">Email us</span>
+            <strong>support@vitoxyz.com</strong>
+            <small>We'll get back to you</small>
+          </div>
+          <span class="card-arrow">→</span>
+        </a>
+
+        <div class="quick-card">
+          <div class="quick-icon location-icon">⌖</div>
+          <div>
+            <span class="quick-label">Visit us</span>
+            <strong>Kharar, Mohali</strong>
+            <small>Punjab, India</small>
+          </div>
+          <span class="card-arrow">→</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <main class="container main-content">
+
+    <!-- UNAUTHORISED ORDER HELP -->
     @if(!authToken){
-    <div class="unAuthorised mb-3">
-        <div class="d-flex justify-content-between shadow p-3">
-            <div>With your orders?</div>
-            <button class="btn btn-primary btn-sm rounded-pill text-light px-3" data-bs-toggle="modal"
-                data-bs-target="#authModal" (click)="setAuthMode('login')">Login</button>
+    <section class="order-help-card">
+
+      <div class="order-help-content">
+        <div class="section-eyebrow">ORDER SUPPORT</div>
+
+        <h2>
+          Having trouble
+          <span>with your order?</span>
+        </h2>
+
+        <p>
+          Log in to access your orders, bookings and account-related
+          information. Our support team can help you resolve issues faster.
+        </p>
+
+        <div class="help-benefits">
+          <div>
+            <span>✓</span>
+            Track your orders
+          </div>
+
+          <div>
+            <span>✓</span>
+            Manage your bookings
+          </div>
+
+          <div>
+            <span>✓</span>
+            Get personalised assistance
+          </div>
         </div>
-    </div>
+
+        <button
+          class="login-button"
+          data-bs-toggle="modal"
+          data-bs-target="#authModal"
+          (click)="setAuthMode('login')">
+
+          Login to your account
+          <span>→</span>
+        </button>
+      </div>
+
+      <div class="order-help-visual">
+        <div class="visual-ring ring-one"></div>
+        <div class="visual-ring ring-two"></div>
+
+        <div class="headset-icon">
+          ☎
+        </div>
+
+        <span class="floating-dot dot-one"></span>
+        <span class="floating-dot dot-two"></span>
+        <span class="floating-dot dot-three"></span>
+      </div>
+
+    </section>
     }
-    @else if(authToken){
-    <div class="accordion" id="accordionExample">
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                    aria-expanded="true" aria-controls="collapseOne">
-                    How do I create an account?
-                </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    You can sign up using your email or social media account. Once verified, you’ll gain access to
-                    personalized diet plans and staff booking services.
-                </div>
+
+
+    <!-- CONTACT + FORM -->
+    <section class="contact-section">
+
+      <div class="section-heading">
+        <div class="section-eyebrow">CONTACT VITOXYZ</div>
+
+        <h2>
+          Let's get things
+          <span>sorted.</span>
+        </h2>
+
+        <p>
+          Whether you have a question about an order, booking, refund,
+          account or anything else, send us a message and our support team
+          will help you.
+        </p>
+      </div>
+
+
+      <div class="contact-layout">
+
+        <!-- CONTACT INFORMATION -->
+        <div class="contact-info">
+
+          <div class="contact-info-card">
+            <div class="info-icon">☎</div>
+
+            <div>
+              <span>Phone</span>
+              <a href="tel:+917355400002">
+                +91 7355400002
+              </a>
+              <small>
+                Call us for the fastest assistance.
+              </small>
             </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    How do I book a staff member (e.g., babysitter, security guard)?
-                </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    Select the staff category, choose a date, time, and location, then confirm through the app. You'll
-                    receive booking confirmation and communication details with the staff member.
-                </div>
+          </div>
+
+
+          <div class="contact-info-card">
+            <div class="info-icon">✉</div>
+
+            <div>
+              <span>Email</span>
+              <a href="mailto:support@vitoxyz.com">
+                support@vitoxyz.com
+              </a>
+              <small>
+                Send us your issue or question.
+              </small>
             </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    How do I track my booking status?
-                </button>
-            </h2>
-            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    The app’s “My Bookings” section shows your upcoming appointments, staff assignments, and real-time
-                    updates.
-                </div>
+          </div>
+
+
+          <div class="contact-info-card">
+            <div class="info-icon">⌖</div>
+
+            <div>
+              <span>Address</span>
+              <strong>
+                413, Sunny Business Centre,<br>
+                Sunny Enclave, Kharar,<br>
+                Mohali, Punjab 140301,<br>
+                India
+              </strong>
             </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                    How are diet plans tailored to me?
-                </button>
-            </h2>
-            <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    After completing your health questionnaire (e.g., goals, allergies, preferences), our system
-                    automatically creates a diet plan. Optionally, you can get further customization with a
-                    nutritionist’s input.
-                </div>
+          </div>
+
+
+          <div class="support-note">
+            <div class="note-icon">✦</div>
+
+            <div>
+              <strong>Need urgent help?</strong>
+              <p>
+                Calling us is usually the quickest way to resolve
+                an order or booking problem.
+              </p>
             </div>
+          </div>
+
         </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                    Can I modify or swap meals in my plan?
-                </button>
-            </h2>
-            <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    Yes. You can swap meals manually or update your preferences to receive regenerated suggestions
-                    aligned with your goals.
-                </div>
+
+
+        <!-- CONTACT FORM -->
+        <div class="contact-form-card">
+
+          <div class="form-header">
+            <span>CONTACT FORM</span>
+
+            <h3>
+              Tell us how we can
+              <span>help.</span>
+            </h3>
+
+            <p>
+              Fill in the details below and we'll take it from there.
+            </p>
+          </div>
+
+
+          <form>
+
+            <div class="form-row">
+
+              <div class="form-group">
+                <label for="helpName">
+                  Your name
+                </label>
+
+                <input
+                  id="helpName"
+                  type="text"
+                  placeholder="Enter your name">
+              </div>
+
+
+              <div class="form-group">
+                <label for="helpMobile">
+                  Mobile number
+                </label>
+
+                <input
+                  id="helpMobile"
+                  type="tel"
+                  placeholder="+91 XXXXX XXXXX">
+              </div>
+
             </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                    Can I book virtual sessions (e.g., with psychiatrist or physiotherapist)?
-                </button>
-            </h2>
-            <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    Yes—virtual consultations are available where indicated in a provider’s profile.
-                </div>
+
+
+            <div class="form-group">
+              <label for="helpTopic">
+                What can we help with?
+              </label>
+
+              <select id="helpTopic">
+                <option value="" selected disabled>
+                  Select a topic
+                </option>
+
+                <option>
+                  Order related issue
+                </option>
+
+                <option>
+                  Booking related issue
+                </option>
+
+                <option>
+                  Payment issue
+                </option>
+
+                <option>
+                  Refund request
+                </option>
+
+                <option>
+                  Account assistance
+                </option>
+
+                <option>
+                  Other
+                </option>
+              </select>
             </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
-                    What happens if a staff member cancels last minute?
-                </button>
-            </h2>
-            <div id="collapseSeven" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    You’ll be notified immediately. The app provides an option to rebook another available staff member
-                    or receive a full refund.
-                </div>
+
+
+            <div class="form-group">
+              <label for="helpMessage">
+                Message
+              </label>
+
+              <textarea
+                id="helpMessage"
+                rows="5"
+                placeholder="Tell us what happened..."></textarea>
             </div>
+
+
+            <button type="button" class="submit-help">
+              Send message
+              <span>→</span>
+            </button>
+
+            <p class="form-disclaimer">
+              Our support team will review your message and get back
+              to you as soon as possible.
+            </p>
+
+          </form>
+
         </div>
-    </div>
+
+      </div>
+
+    </section>
+
+
+        <!-- FAQ -->
+    @if(authToken) {
+    <section class="faq-section">
+
+      <div class="faq-heading">
+        <div>
+          <div class="section-eyebrow">FREQUENTLY ASKED QUESTIONS</div>
+
+          <h2>
+            Find answers
+            <span>quickly.</span>
+          </h2>
+        </div>
+
+        <p>
+          Browse some of the most common questions about your
+          VITOXYZ account, bookings and personalised services.
+        </p>
+      </div>
+
+
+      <div class="accordion help-accordion" id="accordionExample">
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseOne"
+              aria-expanded="true"
+              aria-controls="collapseOne">
+
+              <span class="faq-number">01</span>
+
+              <span>How do I create an account?</span>
+
+            </button>
+          </h2>
+
+          <div
+            id="collapseOne"
+            class="accordion-collapse collapse show"
+            data-bs-parent="#accordionExample">
+
+            <div class="accordion-body">
+              You can sign up using your email or social media account.
+              Once verified, you’ll gain access to personalized diet plans
+              and staff booking services.
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseTwo"
+              aria-expanded="false"
+              aria-controls="collapseTwo">
+
+              <span class="faq-number">02</span>
+
+              <span>
+                How do I book a staff member (e.g., babysitter, security guard)?
+              </span>
+
+            </button>
+          </h2>
+
+          <div
+            id="collapseTwo"
+            class="accordion-collapse collapse"
+            data-bs-parent="#accordionExample">
+
+            <div class="accordion-body">
+              Select the staff category, choose a date, time, and location,
+              then confirm through the app. You'll receive booking
+              confirmation and communication details with the staff member.
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseThree"
+              aria-expanded="false"
+              aria-controls="collapseThree">
+
+              <span class="faq-number">03</span>
+
+              <span>How do I track my booking status?</span>
+
+            </button>
+          </h2>
+
+          <div
+            id="collapseThree"
+            class="accordion-collapse collapse"
+            data-bs-parent="#accordionExample">
+
+            <div class="accordion-body">
+              The app’s “My Bookings” section shows your upcoming
+              appointments, staff assignments, and real-time updates.
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseFour"
+              aria-expanded="false"
+              aria-controls="collapseFour">
+
+              <span class="faq-number">04</span>
+
+              <span>How are diet plans tailored to me?</span>
+
+            </button>
+          </h2>
+
+          <div
+            id="collapseFour"
+            class="accordion-collapse collapse"
+            data-bs-parent="#accordionExample">
+
+            <div class="accordion-body">
+              After completing your health questionnaire (e.g., goals,
+              allergies, preferences), our system automatically creates
+              a diet plan. Optionally, you can get further customization
+              with a nutritionist’s input.
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseFive"
+              aria-expanded="false"
+              aria-controls="collapseFive">
+
+              <span class="faq-number">05</span>
+
+              <span>Can I modify or swap meals in my plan?</span>
+
+            </button>
+          </h2>
+
+          <div
+            id="collapseFive"
+            class="accordion-collapse collapse"
+            data-bs-parent="#accordionExample">
+
+            <div class="accordion-body">
+              Yes. You can swap meals manually or update your preferences
+              to receive regenerated suggestions aligned with your goals.
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseSix"
+              aria-expanded="false"
+              aria-controls="collapseSix">
+
+              <span class="faq-number">06</span>
+
+              <span>
+                Can I book virtual sessions (e.g., with psychiatrist or physiotherapist)?
+              </span>
+
+            </button>
+          </h2>
+
+          <div
+            id="collapseSix"
+            class="accordion-collapse collapse"
+            data-bs-parent="#accordionExample">
+
+            <div class="accordion-body">
+              Yes—virtual consultations are available where indicated
+              in a provider’s profile.
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseSeven"
+              aria-expanded="false"
+              aria-controls="collapseSeven">
+
+              <span class="faq-number">07</span>
+
+              <span>
+                What happens if a staff member cancels last minute?
+              </span>
+
+            </button>
+          </h2>
+
+          <div
+            id="collapseSeven"
+            class="accordion-collapse collapse"
+            data-bs-parent="#accordionExample">
+
+            <div class="accordion-body">
+              You’ll be notified immediately. The app provides an option
+              to rebook another available staff member or receive a
+              full refund.
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </section>
     }
+
+
+    <!-- HELP LINKS -->
+    <section class="help-links">
+
+      <div class="help-links-header">
+        <div>
+          <div class="section-eyebrow">MORE HELP</div>
+
+          <h2>
+            Useful
+            <span>links.</span>
+          </h2>
+        </div>
+
+        <p>
+          Looking for something specific? These pages may help you
+          find the information you need.
+        </p>
+      </div>
+
+
+      <div class="links-grid">
+
+        <a routerLink="/track-order" class="help-link-card">
+          <div class="link-icon">↗</div>
+
+          <div>
+            <strong>Track Order</strong>
+            <span>
+              Check the latest status of your order.
+            </span>
+          </div>
+
+          <span class="link-arrow">→</span>
+        </a>
+
+
+        <a routerLink="/refund-policy" class="help-link-card">
+          <div class="link-icon">↻</div>
+
+          <div>
+            <strong>Refund Policy</strong>
+            <span>
+              Learn about refunds and cancellations.
+            </span>
+          </div>
+
+          <span class="link-arrow">→</span>
+        </a>
+
+
+        <a routerLink="/terms" class="help-link-card">
+          <div class="link-icon">✓</div>
+
+          <div>
+            <strong>Terms & Conditions</strong>
+            <span>
+              Read our terms and service guidelines.
+            </span>
+          </div>
+
+          <span class="link-arrow">→</span>
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FINAL CTA -->
+  <section class="final-support">
+    <div class="container">
+
+      <div class="final-support-inner">
+
+        <div>
+          <span class="section-eyebrow">STILL NEED HELP?</span>
+
+          <h2>
+            We're just a call
+            <span>away.</span>
+          </h2>
+
+          <p>
+            Don't spend time trying to figure it out alone.
+            Talk to our support team and we'll help you get things sorted.
+          </p>
+        </div>
+
+        <a href="tel:+917355400002" class="final-call-button">
+          Call support
+          <span>→</span>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
 </div>
+
+
 @if(showAuth){
-<app-authorization [authMode]="authMode" (loginSuccess)="onLoginSuccess()"></app-authorization>}
+<app-authorization
+  [authMode]="authMode"
+  (loginSuccess)="onLoginSuccess()">
+</app-authorization>
+}

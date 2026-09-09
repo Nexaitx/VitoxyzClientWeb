@@ -503,6 +503,39 @@
     </div>
   </div>
 
+  <!-- Desktop Quick Order Floating Button -->
+<div class="desktop-quick-order">
+
+  <!-- Small message box -->
+  <div class="quick-order-message" *ngIf="showQuickOrderMessage">
+    <button
+      type="button"
+      class="quick-order-close"
+      (click)="closeQuickOrderMessage()"
+      aria-label="Close"
+    >
+      ×
+    </button>
+
+    <div class="quick-order-message-content">
+      <i class="fi fi-tr-file-prescription"></i>
+      <span>Need to order with a prescription?</span>
+    </div>
+  </div>
+
+  <!-- Floating button -->
+  <button
+    type="button"
+    class="quick-order-float-btn"
+    (click)="onQuickOrder()"
+    aria-label="Order with prescription"
+    title="Order with prescription"
+  >
+    <i class="fi fi-tr-file-prescription"></i>
+  </button>
+
+</div>
+
 
 
 

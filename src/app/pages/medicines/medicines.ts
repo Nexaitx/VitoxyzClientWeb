@@ -13,7 +13,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { AfterViewInit } from "@angular/core";
-import { Footer } from "../footer/footer";
+import { Footer } from "../../components/footer/footer";
 
 import { HttpClient,  HttpHeaders } from "@angular/common/http";
 import { HttpClientModule } from '@angular/common/http';
@@ -191,6 +191,9 @@ export class Medicines implements AfterViewInit {
       image: "https://placehold.co/150x150/F08080/FFFFFF?text=Med8",
     },
   ];
+
+  showQuickOrderMessage = true;
+  
   cities: string[] = [
     "Mumbai",
     "Delhi",
@@ -395,6 +398,7 @@ export class Medicines implements AfterViewInit {
     }
   }
 
+  
 
   categories3: Category[] = [
     { name: 'Pet Medicine', apiValue: ['Face Wash'], cssClass: 'skin-care-bg', imageUrl: 'assets/medicines/petcare.avif', altText: 'Skin Care Products' },
@@ -492,6 +496,11 @@ closeAddressForm(): void {
    onQuickOrder() {
     this.router.navigate(['/order-prescription']);
   }
+
+  closeQuickOrderMessage() {
+    this.showQuickOrderMessage = false;
+  }
+
   async detectLocation() {
     if (!navigator.geolocation) {
       this.currentLocation = 'Geolocation not supported';

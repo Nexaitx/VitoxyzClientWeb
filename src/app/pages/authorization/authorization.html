@@ -1,62 +1,133 @@
 <!-- Auth Modal -->
-<div #authModal class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered p-0">
-    <div class="modal-content">
+<div #authModal class="modal fade auth-modal" id="authModal" tabindex="-1"
+  aria-labelledby="authModalLabel" aria-hidden="true">
+
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content auth-modal-content">
+
       <div class="modal-body p-0">
+
+        <!-- Close Button -->
         <div class="modal-close">
-          <button type="button" class="bi bi-x-lg btn bg-none" data-bs-dismiss="modal" aria-label="Close"
-            [disabled]="isChildLoading"></button>
+          <button
+            type="button"
+            class="bi bi-x-lg btn auth-close-btn"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            [disabled]="isChildLoading">
+          </button>
         </div>
+
         <div class="login-screen">
+
+          <!-- Left Illustration -->
           <div class="left-panel">
-            <div class="overlay-content text-black">
+
+            <div class="overlay-content">
               <h2>Care that connects</h2>
+
               <p>Instantly connect with nearby nurses and</p>
               <p>support staff.</p>
             </div>
+
           </div>
 
-          <div class="right-panel d-flex align-items-center">
-            <div class="w-100">
-              <!-- <h1 class="title text-center pt-3 mb-0">Vitoxyz</h1> -->
-      <!-- <img src="../../../assets/NewUpdateLogo.avif" alt=""  class="logcls ">  -->
-       <div class="d-flex align-items-center justify-content-center mb-2">
-  <img src="../../../assets/NewUpdateLogo1.avif" alt="" class="logcls">
-  <h3 class="mb-0 ms-2 hcls">Vitoxyz</h3>
-</div>
+          <!-- Right Form Panel -->
+          <div class="right-panel">
+
+            <div class="auth-form-wrapper w-100">
+
+              <!-- Logo -->
+              <div class="auth-logo">
+
+                <img
+                  src="../../../assets/NewUpdateLogo1.avif"
+                  alt=""
+                  class="logcls">
+
+                <h3 class="hcls">Vitoxyz</h3>
+
+              </div>
 
               <div class="form-container">
-                <!-- Login Form -->
 
+                <!-- Login -->
                 <div *ngIf="authMode === 'login'">
-                  <app-login [authMode]="authMode" (authModeChange)="authMode = $event"
-                    (loginSuccess)="onLoginSuccess()" (loadingChange)="handleLoadingChange($event)"></app-login>
-                  <div class="text-center mt-3">
-                    New to Vitoxyz? <span class="links" (click)="authMode = 'signup'">Sign Up</span>
+
+                  <app-login
+                    [authMode]="authMode"
+                    (authModeChange)="authMode = $event"
+                    (loginSuccess)="onLoginSuccess()"
+                    (loadingChange)="handleLoadingChange($event)">
+                  </app-login>
+
+                  <div class="auth-switch">
+                    <span>New to Vitoxyz?</span>
+
+                    <span
+                      class="links"
+                      (click)="authMode = 'signup'">
+                      Sign Up
+                    </span>
                   </div>
+
                 </div>
 
+                <!-- Signup -->
                 <div *ngIf="authMode === 'signup'">
-                  
-                  <app-sign-up [authMode]="authMode"(authModeChange)="authMode = $event"   (signupSuccess)="onSignupSuccess()"
-                    (loadingChange)="handleLoadingChange($event)"></app-sign-up>
-                  <div class="text-center pb-3">
-                    Already have an account? <span class="links" (click)="authMode = 'login'">Login</span>
+
+                  <app-sign-up
+                    [authMode]="authMode"
+                    (authModeChange)="authMode = $event"
+                    (signupSuccess)="onSignupSuccess()"
+                    (loadingChange)="handleLoadingChange($event)">
+                  </app-sign-up>
+
+                  <div class="auth-switch signup-switch">
+
+                    <span>Already have an account?</span>
+
+                    <span
+                      class="links"
+                      (click)="authMode = 'login'">
+                      Login
+                    </span>
+
                   </div>
+
                 </div>
+
+                <!-- Forgot Password -->
                 <div *ngIf="authMode === 'forgotPassword'">
-                  <app-forgot-password (backToLogin)="authMode = 'login'"  (goToReset)="authMode = 'resetPassword'" (loadingChange)="handleLoadingChange($event)">
+
+                  <app-forgot-password
+                    (backToLogin)="authMode = 'login'"
+                    (goToReset)="authMode = 'resetPassword'"
+                    (loadingChange)="handleLoadingChange($event)">
                   </app-forgot-password>
+
                 </div>
+
+                <!-- Reset Password -->
                 <div *ngIf="authMode === 'resetPassword'">
-                  <app-reset-password (backToLogin)="authMode = 'login'" (loadingChange)="handleLoadingChange($event)">
+
+                  <app-reset-password
+                    (backToLogin)="authMode = 'login'"
+                    (loadingChange)="handleLoadingChange($event)">
                   </app-reset-password>
+
                 </div>
+
               </div>
+
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
   </div>
 </div>

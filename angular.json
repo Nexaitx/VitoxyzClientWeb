@@ -86,6 +86,11 @@
                 },
                 "serve": {
                     "builder": "@angular/build:dev-server",
+                    "options": {
+                        "allowedHosts": [
+                            "facultative-melita-sonorous.ngrok-free.dev"
+                        ]
+                    },
                     "configurations": {
                         "production": {
                             "buildTarget": "VitoxyzClientWeb:build:production"

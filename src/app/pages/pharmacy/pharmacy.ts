@@ -7,7 +7,7 @@ import { CommonFilterComponent } from "../shared/common-filter-component/common-
 import { BannerSliderComponent } from "@src/app/shared/banner-slider/banner-slider";
 import { HealthCarouselComponent } from "../shared/health-carousel/health-carousel";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
-import { Footer } from "../footer/footer";
+import { Footer } from "../../components/footer/footer";
 
 interface Category {
   name: string;

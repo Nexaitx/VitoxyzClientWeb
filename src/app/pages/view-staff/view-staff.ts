@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BookingResponseService } from '../../core/booking-response.service';
 import { PaymentService, CreatePaymentRequest, VerifyPaymentRequest } from '../../core/services/payment.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Footer } from "../footer/footer";
+import { Footer } from "../../components/footer/footer";
 import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 import { environment } from '@src/environments/environment.development';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';

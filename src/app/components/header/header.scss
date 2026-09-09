@@ -1,0 +1,1060 @@
+/* =========================================================
+   VITOXYZ HEADER
+   MATCHED TO REFERENCE HEADER
+========================================================= */
+
+:host {
+  --brand-blue: #1f7ae0;
+  --brand-green: #16bc7e;
+  --ink: #12211e;
+  --slate: #5c6e6a;
+  --line: #e2ede9;
+  --mint: #f1f8f5;
+
+  --grad: linear-gradient(
+    90deg,
+    #1f7ae0 0%,
+    #16bc7e 100%
+  );
+
+  display: block;
+
+  font-family:
+    'Plus Jakarta Sans',
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+
+  color: var(--ink);
+
+  line-height: 1.55;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+:host *,
+:host *::before,
+:host *::after {
+  box-sizing: border-box;
+}
+
+:host a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:host button {
+  font: inherit;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   COMMON WRAPPER
+========================================================= */
+
+.wrap {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+
+/* =========================================================
+   SCREEN READER
+========================================================= */
+
+.sr {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+
+  clip: rect(0 0 0 0);
+
+  white-space: nowrap;
+
+  border: 0;
+}
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar {
+  width: 100%;
+  background: var(--grad);
+  color: #fff;
+  font-size: 13px;
+}
+
+.topbar .wrap {
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 18px;
+}
+
+.topbar span {
+  opacity: 0.96;
+}
+
+
+/* =========================================================
+   MAIN HEADER
+========================================================= */
+
+header.site {
+  width: 100%;
+
+  position: sticky;
+  top: 0;
+
+  z-index: 60;
+
+  background: #fff;
+
+  border-bottom: 1px solid var(--line);
+}
+
+
+/* =========================================================
+   MAIN HEADER ROW
+========================================================= */
+
+.hdr {
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  flex-shrink: 0;
+
+  font-size: 23px;
+  font-weight: 800;
+
+  letter-spacing: -0.5px;
+}
+
+.logo .mark {
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 11px;
+
+  background: var(--grad);
+  color: #fff;
+
+  font-size: 17px;
+  line-height: 1;
+}
+
+
+/* Logo text */
+
+.logo b {
+  background: var(--grad);
+
+  -webkit-background-clip: text;
+
+  background-clip: text;
+
+  color: transparent;
+}
+
+
+/* =========================================================
+   DELIVERY LOCATION
+========================================================= */
+
+.pin {
+  width: auto;
+  min-width: 0;
+
+  height: auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 7px 12px;
+
+  flex-shrink: 0;
+
+  background: #fff !important;
+
+  border: 1px solid var(--line) !important;
+  border-radius: 999px !important;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+}
+
+.pin small {
+  display: block;
+
+  color: var(--slate);
+
+  font-size: 11px;
+
+  line-height: 1.1;
+}
+
+.pin strong {
+  display: block;
+
+  font-weight: 700;
+}
+
+
+/*
+   IMPORTANT:
+   Reference uses WHITE location pill,
+   NOT the blue background from screenshot 1.
+*/
+
+.pin > span {
+  display: block;
+
+  text-align: left;
+}
+
+.pin small {
+  display: block;
+
+  color: var(--slate);
+
+  font-size: 10px;
+
+  line-height: 1.1;
+
+  margin-bottom: 1px;
+}
+
+.pin strong {
+  display: block;
+
+  color: var(--ink);
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  line-height: 1.15;
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search {
+  flex: 1;
+
+  min-width: 180px;
+
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0 6px 0 16px;
+
+  background: var(--mint);
+
+  border: 1px solid var(--line);
+
+  border-radius: 999px;
+}
+
+
+/* Search icon */
+
+.search > span {
+  flex-shrink: 0;
+
+  font-size: 15px;
+
+  line-height: 1;
+}
+
+
+/* Search input */
+
+.search input {
+  flex: 1;
+
+  min-width: 0;
+
+  height: 100%;
+
+  padding: 0;
+
+  border: 0;
+  outline: none;
+
+  background: transparent;
+
+  color: var(--ink);
+
+  font: inherit;
+
+  font-size: 14px;
+}
+
+.search input::placeholder {
+  color: var(--slate);
+
+  opacity: 0.9;
+}
+
+
+/* Search button */
+
+.search button {
+  height: 36px;
+
+  padding: 0 20px;
+
+  border-radius: 999px;
+
+  background: var(--grad) !important;
+
+  color: #fff;
+
+  font-weight: 600;
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   HEADER ACTIONS
+========================================================= */
+
+.hdr-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  flex-shrink: 0;
+
+  white-space: nowrap;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+/* =========================================================
+   MOBILE MENU BUTTON
+   Hidden on desktop
+========================================================= */
+
+.mobile-menu-btn {
+  display: none;
+}
+
+.btn-ghost {
+  height: auto;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 9px 16px;
+
+  border: 1px solid var(--line);
+
+  border-radius: 999px;
+
+  background: #fff;
+}
+
+.btn-ghost:hover {
+  background: var(--mint);
+
+  border-color: var(--brand-green);
+}
+
+
+/* Login */
+
+.hdr-actions > a:not(.btn-ghost) {
+  white-space: nowrap;
+}
+
+.hdr-actions > a:not(.btn-ghost):hover {
+  color: var(--brand-green);
+}
+
+
+/* Cart */
+
+.hdr-actions a[aria-label='Cart'] {
+  font-size: 15px;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+nav.main {
+  width: 100%;
+
+  background: #fff;
+
+  border-top: 1px solid var(--line);
+}
+
+nav.main .wrap {
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+}
+
+nav.main ul {
+  width: 100%;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 28px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  overflow-x: auto;
+
+  scrollbar-width: none;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+nav.main ul::-webkit-scrollbar {
+  display: none;
+}
+
+nav.main li {
+  height: 48px;
+
+  flex-shrink: 0;
+}
+
+nav.main a {
+  position: relative;
+
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+
+  white-space: nowrap;
+
+  color: var(--slate);
+
+  border-bottom: 3px solid transparent;
+
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+nav.main a:hover {
+  color: var(--ink);
+}
+
+nav.main a.active {
+  color: var(--brand-green);
+
+  border-bottom-color: var(--brand-green);
+}
+
+
+/* =========================================================
+   MOBILE SEARCH
+========================================================= */
+
+.mobile-search {
+  display: none;
+
+  padding-top: 10px;
+
+  padding-bottom: 10px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .hdr {
+    gap: 10px;
+  }
+
+  .hdr-actions {
+    gap: 9px;
+  }
+
+  .btn-ghost {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+
+  nav.main ul {
+    gap: 22px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+/* =========================================================
+   MOBILE RESPONSIVE HEADER
+========================================================= */
+
+@media (max-width: 700px) {
+
+  /* =========================
+     TOP BAR
+  ========================== */
+
+  .topbar .wrap {
+    height: 32px;
+    padding: 0 12px;
+
+    gap: 8px;
+
+    font-size: 10px;
+  }
+
+  .topbar span {
+    white-space: nowrap;
+  }
+
+
+  /* =========================
+     HEADER
+  ========================== */
+
+  header.site {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+  }
+
+
+  /* =========================
+     MAIN HEADER ROW
+  ========================== */
+
+  .hdr {
+    width: 100%;
+    height: auto;
+
+    padding: 10px 14px;
+
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    grid-template-areas:
+      "logo actions"
+      "location location";
+
+    gap: 10px;
+  }
+
+
+  /* =========================
+     LOGO
+  ========================== */
+
+  .logo {
+    grid-area: logo;
+
+    font-size: 20px;
+
+    gap: 7px;
+  }
+
+  .logo .mark {
+    width: 31px;
+    height: 31px;
+
+    font-size: 15px;
+    border-radius: 9px;
+  }
+
+
+  /* =========================
+     LOCATION
+  ========================== */
+
+  .pin {
+    grid-area: location;
+
+    width: 100%;
+    min-width: 0;
+
+    height: 42px;
+
+    padding: 5px 12px;
+
+    justify-content: flex-start;
+
+    border-radius: 12px !important;
+
+    font-size: 12px;
+
+    overflow: hidden;
+  }
+
+  .pin > span:last-child {
+    min-width: 0;
+  }
+
+  .pin strong {
+    max-width: 100%;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    font-size: 12px;
+  }
+
+  .pin small {
+    font-size: 9px;
+  }
+
+
+  /* =========================
+     DESKTOP SEARCH
+     HIDE IT
+  ========================== */
+
+  .hdr > .search {
+    display: none;
+  }
+
+
+  /* =========================
+     HEADER ACTIONS
+  ========================== */
+
+  .hdr-actions {
+    grid-area: actions;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    white-space: nowrap;
+  }
+
+
+  /* Upload prescription
+     Hide on mobile */
+
+  .hdr-actions .btn-ghost {
+    display: none;
+  }
+
+
+  /* Login */
+
+  .login-btn {
+    font-size: 13px !important;
+  }
+
+
+  /* Profile */
+
+  .profile-btn {
+    font-size: 21px !important;
+
+    padding: 5px 6px;
+  }
+
+
+  /* Cart */
+
+  .hdr-actions a[aria-label='Cart'] {
+    font-size: 18px;
+  }
+
+
+  /* =========================
+     MOBILE SEARCH
+  ========================== */
+
+  .mobile-search {
+    display: block;
+
+    padding: 0 14px 10px;
+  }
+
+  .mobile-search .search {
+    width: 100%;
+
+    min-width: 0;
+
+    height: 42px;
+
+    padding-left: 13px;
+  }
+
+  .mobile-search .search input {
+    font-size: 13px;
+  }
+
+  .mobile-search .search button {
+    height: 34px;
+
+    padding: 0 15px;
+
+    font-size: 12px;
+  }
+
+
+  /* =========================
+     NAVIGATION
+  ========================== */
+
+  nav.main {
+    width: 100%;
+
+    position: relative;
+
+    height: auto;
+
+    z-index: 61;
+  }
+
+  nav.main .wrap {
+    width: 100%;
+
+    height: auto;
+
+    padding: 0 14px;
+
+    display: block;
+  }
+
+
+  /* =========================
+     HAMBURGER
+  ========================== */
+
+  .mobile-menu-btn {
+    display: flex;
+
+    width: 44px;
+    height: 44px;
+
+    margin: 8px 0;
+
+    padding: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    background: #fff !important;
+
+    border: 1px solid var(--line) !important;
+
+    border-radius: 10px !important;
+
+    cursor: pointer;
+
+    position: relative;
+
+    z-index: 63;
+  }
+
+  .mobile-menu-btn span {
+    display: block;
+
+    width: 20px;
+    height: 2px;
+
+    border-radius: 2px;
+
+    background: var(--ink);
+  }
+
+
+  /* =========================
+     MOBILE NAV LIST
+  ========================== */
+
+  nav.main ul {
+    display: none;
+
+    width: 100%;
+
+    height: auto;
+
+    margin: 0;
+
+    padding: 6px 0 10px;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 0;
+
+    overflow: visible;
+
+    background: #fff;
+
+    border-top: 1px solid var(--line);
+  }
+
+
+  /* OPEN MENU */
+
+  nav.main ul.mobile-open {
+    display: flex;
+  }
+
+
+  /* =========================
+     NAV ITEMS
+  ========================== */
+
+  nav.main li {
+    width: 100%;
+
+    height: auto;
+
+    flex-shrink: 0;
+  }
+
+
+  nav.main a {
+    width: 100%;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 12px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    color: var(--slate);
+
+    font-size: 14px;
+  }
+
+
+  nav.main a:hover {
+    background: var(--mint);
+
+    color: var(--ink);
+  }
+
+
+  nav.main a.active {
+    color: var(--brand-green);
+
+    background: var(--mint);
+
+    border: 0;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .wrap {
+    padding-left: 14px;
+
+    padding-right: 14px;
+  }
+
+  .topbar .wrap {
+    font-size: 9px;
+  }
+
+  .logo {
+    font-size: 19px;
+  }
+
+  .hdr-actions {
+    gap: 8px;
+  }
+
+  nav.main ul {
+    gap: 18px;
+  }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+:host a:focus-visible,
+:host button:focus-visible,
+:host input:focus-visible {
+
+  outline-offset: 2px;
+
+  border-radius: 6px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  :host * {
+    transition: none !important;
+
+    animation: none !important;
+  }
+}
+
+.login-btn {
+  border: none;
+  background: transparent !important;
+  padding: 0;
+  margin: 0;
+
+  font: inherit !important;
+  color: inherit !important;
+
+  cursor: pointer !important;
+  text-decoration: none;
+}
+
+.login-btn:hover {
+  color: inherit;
+}
+
+.profile-wrapper {
+  position: relative;
+}
+
+.profile-btn {
+  border: 0;
+  background: transparent !important;
+  cursor: pointer;
+  font-size: 24px !important;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 210px;
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  padding: 8px;
+  z-index: 2000;
+}
+
+.profile-dropdown a,
+.profile-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 11px 14px;
+  border: 0;
+  background: transparent;
+  color: #222;
+  text-decoration: none;
+  text-align: left;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.profile-dropdown a:hover,
+.profile-dropdown button:hover {
+  background: #f5f7f9;
+}
