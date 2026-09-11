@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Router,
@@ -57,6 +57,32 @@ profileMenuItems: any[] = [
 
 closeMobileMenu(): void {
   this.isMobileMenuOpen = false;
+}
+
+/* =========================
+   HEADER LINK SCROLL
+========================= */
+
+@HostListener('click', ['$event'])
+onHeaderClick(event: MouseEvent): void {
+
+  const target = event.target as HTMLElement;
+
+  const link = target.closest('a');
+
+  if (!link) {
+    return;
+  }
+
+  // Make sure only links inside this header are handled
+  if (!link.closest('header.site')) {
+    return;
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 }
 
 
@@ -408,9 +434,14 @@ isDietPlanActive(): boolean {
   
 navigateToSkinCare(event: MouseEvent): void {
 
-  // Stop the normal /skin-care navigation
   event.preventDefault();
   event.stopPropagation();
+
+  // Scroll to top
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 
   this.router.navigate(['/products'], {
     queryParams: {
@@ -453,12 +484,17 @@ navigateToElderCare(event: MouseEvent): void {
   event.preventDefault();
   event.stopPropagation();
 
+  // Scroll to top
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+
   this.router.navigate(['/products'], {
     queryParams: {
       category: 'Elder Care',
       forms: [
-        // Put the SAME Elder Care apiValue items
-        // that your Medicines page uses here
+        // Keep your existing Elder Care apiValue items here
       ].join(',')
     }
   });

@@ -415,8 +415,6 @@
 
   grid-auto-flow: column;
 
-  grid-auto-columns: minmax(160px, 1fr);
-
   gap: 16px;
 
   overflow-x: auto;
@@ -1608,10 +1606,6 @@
     padding: 0 16px;
   }
 
-  .quick {
-    grid-template-columns: 1fr;
-  }
-
   .hero h1 {
     font-size: 36px;
   }
@@ -1627,10 +1621,6 @@
   .concerns {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  .why-grid {
-  grid-template-columns: 1fr;
-}
 
 .local-section {
   padding: 44px 0;
@@ -1727,4 +1717,25 @@
   max-width: 100%;
 }
 
+}
+
+@media (max-width: 768px) {
+
+  .category-rail .category-card {
+      width: 100% !important;
+      min-width: 180px !important;
+    max-width: 180px !important;
+
+  }
+
+}
+
+@media (max-width: 400px){
+    .quick {
+    grid-template-columns: 1fr;
+  }
+
+    .why-grid {
+  grid-template-columns: 1fr;
+}
 }

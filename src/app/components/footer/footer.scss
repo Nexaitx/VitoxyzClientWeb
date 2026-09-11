@@ -201,6 +201,7 @@
 .footer-socials {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 14px;
   margin-top: 20px;
 }

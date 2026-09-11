@@ -1,15 +1,20 @@
 import { Component } from '@angular/core';
 import { Authorization } from '../authorization/authorization';
+import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
+import { Footer } from "../../components/footer/footer";
 
 @Component({
   selector: 'app-help',
   imports: [
-    Authorization
+    Authorization,
+    Footer,
+    MobileFooterNavComponent
   ],
+
   templateUrl: './help.html',
   styleUrl: './help.scss'
 })
-export class Help {
+export class Help { 
   authToken = localStorage.getItem('authToken');
   authMode: 'login' | 'signup' = 'login';
   isLoggedIn: boolean = false;

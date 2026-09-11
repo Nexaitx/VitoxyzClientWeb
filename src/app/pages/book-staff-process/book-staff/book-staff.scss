@@ -1364,7 +1364,6 @@ select {
 
 .step-card {
   position: relative;
-  min-height: 250px;
   padding: 25px 22px;
   border: 1px solid var(--vx-border);
   border-radius: 20px;
@@ -1810,7 +1809,7 @@ select {
   padding: 0 18px;
   border: 0;
   border-radius: 12px;
-  background: #fff;
+  background: #fff !important;
   color: var(--vx-blue-dark);
   font-size: 12px;
   font-weight: 900;

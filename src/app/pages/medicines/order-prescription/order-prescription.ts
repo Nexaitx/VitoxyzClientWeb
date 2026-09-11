@@ -4,10 +4,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { API_URL1, ENDPOINTS } from '@src/app/core/const';
+import { Footer } from "../../../components/footer/footer";
+import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 
 @Component({
   selector: 'app-order-prescription',
   imports: [
+    Footer,
+    MobileFooterNavComponent,
     CommonModule,
      RouterModule,
      FormsModule

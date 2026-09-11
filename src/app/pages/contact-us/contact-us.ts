@@ -13,11 +13,13 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { Footer } from '../../components/footer/footer';
+import { MobileFooterNavComponent } from "@src/app/layouts/mobile-footer-nav/mobile-footer-nav";
 
 @Component({
   selector: 'app-contact-us',
   standalone: true,
   imports: [Footer,
+    MobileFooterNavComponent,
     CommonModule,
     RouterModule,
     LayoutModule,

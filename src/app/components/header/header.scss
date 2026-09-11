@@ -143,12 +143,13 @@ header.site {
 ========================================================= */
 
 .hdr {
-  height: 72px;
+  min-height: 72px;
+  height: auto;
 
   display: flex;
   align-items: center;
 
-  gap: 20px;
+  gap: 18px;
 }
 
 
@@ -539,33 +540,190 @@ nav.main a.active {
    TABLET
 ========================================================= */
 
+/* =========================================================
+   TABLET
+   2-ROW HEADER
+========================================================= */
+
 @media (max-width: 1000px) {
 
-  .hdr {
-    gap: 10px;
+  .wrap {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
+  /* =========================
+     HEADER ROW
+  ========================== */
+
+  .hdr {
+    min-height: 64px;
+    height: auto;
+
+    display: grid;
+
+    /*
+      Logo | Location | Search | Actions
+    */
+    grid-template-columns:
+      auto
+      minmax(120px, 0.8fr)
+      minmax(180px, 1.5fr)
+      auto;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  /* Logo */
+  .logo {
+    min-width: max-content;
+    font-size: 21px;
+  }
+
+  .logo .mark {
+    width: 32px;
+    height: 32px;
+  }
+
+
+  /* =========================
+     LOCATION
+  ========================== */
+
+  .pin {
+    width: 100%;
+    min-width: 0;
+
+    height: 42px;
+
+    padding: 6px 10px;
+
+    overflow: hidden;
+  }
+
+  .pin > span:last-child {
+    min-width: 0;
+  }
+
+  .pin strong {
+    display: block;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    font-size: 12px;
+  }
+
+
+  /* =========================
+     SEARCH
+  ========================== */
+
+  .hdr > .search {
+    width: 100%;
+    min-width: 0;
+
+    height: 42px;
+  }
+
+  .hdr > .search input {
+    font-size: 13px;
+  }
+
+  .hdr > .search button {
+    height: 34px;
+
+    padding: 0 14px;
+
+    font-size: 12px;
+  }
+
+
+  /* =========================
+     ACTIONS
+  ========================== */
+
   .hdr-actions {
-    gap: 9px;
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    min-width: max-content;
   }
 
   .btn-ghost {
-    padding-left: 11px;
-    padding-right: 11px;
+    height: 38px;
+
+    padding: 0 11px;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+  }
+
+  .login-btn {
+    font-size: 12px !important;
+    white-space: nowrap;
+  }
+
+  .profile-btn {
+    padding: 5px 6px;
+  }
+
+  .hdr-actions a[aria-label='Cart'] {
+    font-size: 18px;
+  }
+
+
+  /* =========================
+     MOBILE SEARCH OFF
+  ========================== */
+
+  .mobile-search {
+    display: none;
+  }
+
+
+  /* =========================
+     NAVIGATION
+  ========================== */
+
+  nav.main .wrap {
+    height: 44px;
   }
 
   nav.main ul {
-    gap: 22px;
+    height: 44px;
+
+    gap: 20px;
+
+    font-size: 13px;
+  }
+
+  nav.main li {
+    height: 44px;
+  }
+
+  nav.main a {
+    height: 44px;
   }
 }
 
 
 /* =========================================================
    MOBILE
-========================================================= */
-
-/* =========================================================
-   MOBILE RESPONSIVE HEADER
+   COMPACT 2-ROW HEADER
 ========================================================= */
 
 @media (max-width: 700px) {
@@ -575,16 +733,13 @@ nav.main a.active {
   ========================== */
 
   .topbar .wrap {
-    height: 32px;
+    height: 30px;
+
     padding: 0 12px;
 
     gap: 8px;
 
-    font-size: 10px;
-  }
-
-  .topbar span {
-    white-space: nowrap;
+    font-size: 9.5px;
   }
 
 
@@ -595,29 +750,44 @@ nav.main a.active {
   header.site {
     position: sticky;
     top: 0;
+
     z-index: 60;
+
+    background: #fff;
   }
 
 
   /* =========================
-     MAIN HEADER ROW
+     MAIN HEADER
   ========================== */
 
   .hdr {
     width: 100%;
+
+    min-height: 0;
     height: auto;
 
-    padding: 10px 14px;
+    padding: 8px 12px;
 
     display: grid;
 
-    grid-template-columns: 1fr auto;
+    /*
+      ROW 1:
+      Logo | Actions
+
+      ROW 2:
+      Location | Search
+    */
+
+    grid-template-columns: minmax(0, 1fr) auto;
 
     grid-template-areas:
       "logo actions"
-      "location location";
+      "location search";
 
-    gap: 10px;
+    align-items: center;
+
+    gap: 8px;
   }
 
 
@@ -628,17 +798,111 @@ nav.main a.active {
   .logo {
     grid-area: logo;
 
+    min-width: 0;
+
     font-size: 20px;
 
     gap: 7px;
   }
 
   .logo .mark {
-    width: 31px;
-    height: 31px;
+    width: 30px;
+    height: 30px;
 
-    font-size: 15px;
+    flex-shrink: 0;
+
+    font-size: 14px;
+
     border-radius: 9px;
+  }
+
+
+  /* =========================
+     ACTIONS
+  ========================== */
+
+  .hdr-actions {
+    grid-area: actions;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 5px;
+
+    min-width: max-content;
+  }
+
+
+  /* Upload stays visible */
+
+  .hdr-actions .btn-ghost {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    height: 34px;
+
+    padding: 0 8px;
+
+    border-radius: 9px;
+
+    font-size: 10px;
+
+    white-space: nowrap;
+  }
+
+
+  /* Login */
+
+  .login-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 34px;
+
+    padding: 0 2px;
+
+    font-size: 11px !important;
+
+    white-space: nowrap;
+  }
+
+
+  /* Profile */
+
+  .profile-wrapper {
+    flex-shrink: 0;
+  }
+
+  .profile-btn {
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+
+    font-size: 20px !important;
+  }
+
+
+  /* Cart */
+
+  .hdr-actions a[aria-label='Cart'] {
+    width: 32px;
+    height: 34px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+
+    flex-shrink: 0;
   }
 
 
@@ -652,21 +916,27 @@ nav.main a.active {
     width: 100%;
     min-width: 0;
 
-    height: 42px;
+    height: 40px;
 
-    padding: 5px 12px;
+    padding: 5px 9px;
 
-    justify-content: flex-start;
-
-    border-radius: 12px !important;
-
-    font-size: 12px;
+    border-radius: 10px !important;
 
     overflow: hidden;
   }
 
+  .pin > span:first-child {
+    flex-shrink: 0;
+  }
+
   .pin > span:last-child {
     min-width: 0;
+  }
+
+  .pin small {
+    font-size: 8px;
+
+    margin-bottom: 1px;
   }
 
   .pin strong {
@@ -678,104 +948,51 @@ nav.main a.active {
 
     white-space: nowrap;
 
-    font-size: 12px;
-  }
-
-  .pin small {
-    font-size: 9px;
+    font-size: 11px;
   }
 
 
   /* =========================
-     DESKTOP SEARCH
-     HIDE IT
+     SEARCH
   ========================== */
 
   .hdr > .search {
-    display: none;
-  }
-
-
-  /* =========================
-     HEADER ACTIONS
-  ========================== */
-
-  .hdr-actions {
-    grid-area: actions;
+    grid-area: search;
 
     display: flex;
 
-    align-items: center;
+    width: 100%;
+    min-width: 0;
 
-    justify-content: flex-end;
+    height: 40px;
 
-    gap: 8px;
-
-    white-space: nowrap;
+    padding: 0 4px 0 11px;
   }
 
+  .hdr > .search input {
+    min-width: 0;
 
-  /* Upload prescription
-     Hide on mobile */
-
-  .hdr-actions .btn-ghost {
-    display: none;
+    font-size: 11.5px;
   }
 
+  .hdr > .search button {
+    height: 32px;
 
-  /* Login */
+    padding: 0 10px;
 
-  .login-btn {
-    font-size: 13px !important;
-  }
-
-
-  /* Profile */
-
-  .profile-btn {
-    font-size: 21px !important;
-
-    padding: 5px 6px;
-  }
-
-
-  /* Cart */
-
-  .hdr-actions a[aria-label='Cart'] {
-    font-size: 18px;
+    font-size: 11px;
   }
 
 
   /* =========================
      MOBILE SEARCH
+     
+     We don't need a second
+     search bar anymore.
   ========================== */
 
   .mobile-search {
-    display: block;
-
-    padding: 0 14px 10px;
-  }
-
-  .mobile-search .search {
-    width: 100%;
-
-    min-width: 0;
-
-    height: 42px;
-
-    padding-left: 13px;
-  }
-
-  .mobile-search .search input {
-    font-size: 13px;
-  }
-
-  .mobile-search .search button {
-    height: 34px;
-
-    padding: 0 15px;
-
-    font-size: 12px;
+    display: none;
   }
 
 
@@ -798,7 +1015,7 @@ nav.main a.active {
 
     height: auto;
 
-    padding: 0 14px;
+    padding: 0 12px;
 
     display: block;
   }
@@ -811,10 +1028,10 @@ nav.main a.active {
   .mobile-menu-btn {
     display: flex;
 
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 38px;
 
-    margin: 8px 0;
+    margin: 6px 0;
 
     padding: 0;
 
@@ -829,9 +1046,7 @@ nav.main a.active {
 
     border: 1px solid var(--line) !important;
 
-    border-radius: 10px !important;
-
-    cursor: pointer;
+    border-radius: 9px !important;
 
     position: relative;
 
@@ -841,7 +1056,7 @@ nav.main a.active {
   .mobile-menu-btn span {
     display: block;
 
-    width: 20px;
+    width: 19px;
     height: 2px;
 
     border-radius: 2px;
@@ -851,7 +1066,7 @@ nav.main a.active {
 
 
   /* =========================
-     MOBILE NAV LIST
+     MOBILE NAV
   ========================== */
 
   nav.main ul {
@@ -863,13 +1078,13 @@ nav.main a.active {
 
     margin: 0;
 
-    padding: 6px 0 10px;
+    padding: 5px 0 9px;
 
     flex-direction: column;
 
     align-items: stretch;
 
-    gap: 0;
+    gap: 2px;
 
     overflow: visible;
 
@@ -878,54 +1093,41 @@ nav.main a.active {
     border-top: 1px solid var(--line);
   }
 
-
-  /* OPEN MENU */
-
   nav.main ul.mobile-open {
     display: flex;
   }
-
-
-  /* =========================
-     NAV ITEMS
-  ========================== */
 
   nav.main li {
     width: 100%;
 
     height: auto;
-
-    flex-shrink: 0;
   }
-
 
   nav.main a {
     width: 100%;
 
-    height: 42px;
+    height: 40px;
 
     display: flex;
 
     align-items: center;
 
-    padding: 0 12px;
+    padding: 0 11px;
 
     border: 0;
 
     border-radius: 8px;
 
+    font-size: 13px;
+
     color: var(--slate);
-
-    font-size: 14px;
   }
-
 
   nav.main a:hover {
     background: var(--mint);
 
     color: var(--ink);
   }
-
 
   nav.main a.active {
     color: var(--brand-green);
@@ -934,35 +1136,132 @@ nav.main a.active {
 
     border: 0;
   }
+
+
+  /* =========================
+     PROFILE DROPDOWN
+  ========================== */
+
+  .profile-dropdown {
+    position: absolute;
+
+    top: calc(100% + 8px);
+
+    right: 0;
+
+    width: min(230px, calc(100vw - 24px));
+
+    min-width: 0;
+  }
 }
 
 
 /* =========================================================
-   VERY SMALL DEVICES
+   VERY SMALL PHONES
 ========================================================= */
 
 @media (max-width: 400px) {
 
-  .wrap {
-    padding-left: 14px;
+  .topbar .wrap {
+    padding: 0 9px;
 
-    padding-right: 14px;
+    font-size: 8.5px;
   }
 
-  .topbar .wrap {
+
+  .hdr {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    gap: 7px;
+  }
+
+
+  .logo {
+    font-size: 18px;
+
+    gap: 6px;
+  }
+
+  .logo .mark {
+    width: 28px;
+    height: 28px;
+
+    font-size: 13px;
+  }
+
+
+  .hdr-actions {
+    gap: 4px;
+  }
+
+  .hdr-actions .btn-ghost {
+    height: 32px;
+
+    padding: 0 6px;
+
     font-size: 9px;
   }
 
-  .logo {
-    font-size: 19px;
+  .login-btn {
+    min-height: 32px;
+
+    font-size: 10px !important;
   }
 
-  .hdr-actions {
-    gap: 8px;
+  .profile-btn {
+    width: 32px;
+    height: 32px;
+
+    font-size: 18px !important;
   }
 
-  nav.main ul {
-    gap: 18px;
+  .hdr-actions a[aria-label='Cart'] {
+    width: 30px;
+    height: 32px;
+
+    font-size: 16px;
+  }
+
+
+  .pin {
+    height: 38px;
+
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .pin small {
+    font-size: 7.5px;
+  }
+
+  .pin strong {
+    font-size: 10px;
+  }
+
+
+  .hdr > .search {
+    height: 38px;
+
+    padding-left: 9px;
+  }
+
+  .hdr > .search input {
+    font-size: 10.5px;
+  }
+
+  .hdr > .search button {
+    height: 30px;
+
+    padding: 0 8px;
+
+    font-size: 10px;
+  }
+
+
+  nav.main .wrap {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 

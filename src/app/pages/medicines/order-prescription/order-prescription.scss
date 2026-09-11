@@ -576,13 +576,13 @@
       135deg,
       #fff8f5,
       #fff
-    );
+    ) !important;
 }
 
 .upload-action-secondary {
   border: 1px solid #eee7df;
 
-  background: #fffdfb;
+  background: #fffdfb !important;
 }
 
 .action-icon {
@@ -1140,7 +1140,7 @@
 .back-btn {
   border: 1px solid #e4dbd3;
 
-  background: #fff;
+  background: #fff !important;
 
   color: #6b6865;
 }
@@ -1667,7 +1667,7 @@
 
   padding: 0;
 
-  background: transparent;
+  background: transparent !important;
 
   color: #4f4d4a;
 
@@ -1723,7 +1723,7 @@
 
   border-radius: 50%;
 
-  background: #fff;
+  background: #fff !important;
 
   color: #777;
 
@@ -1779,7 +1779,7 @@
 
   border-radius: 8px;
 
-  background: transparent;
+  background: transparent !important;
 
   color: #555;
 
@@ -2807,11 +2807,6 @@
     padding: 4px 5px;
   }
 
-  .steps-grid {
-    grid-template-columns: 1fr;
-
-    gap: 10px;
-  }
 
   .step-card {
     min-height: auto;
@@ -2862,7 +2857,7 @@
   }
 
   .saved-table {
-    min-width: 550px;
+    width: 100%;
   }
 
   .prescription-modal-backdrop {
@@ -2991,6 +2986,11 @@
   .hero-copy h1 {
     font-size: 37px;
   }
+
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
 
   .hero-trust {
     display: grid;
